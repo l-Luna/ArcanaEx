@@ -1,0 +1,39 @@
+{
+  "minecraft:dirt": [
+    "3*earth"
+  ],
+  "minecraft:grass_block": [
+    "3*earth",
+    "life"
+  ],
+  "minecraft:stone": [
+    "4*earth"
+  ],
+  "minecraft:cobblestone": [
+    "3*earth",
+    "entropy"
+  ],
+  "minecraft:deepslate": [
+    "6*earth",
+    "2*void"
+  ],
+  "minecraft:cobbled_deepslate": [
+    "4*earth",
+    "2*void",
+    "2*entropy"
+  ],
+  "minecraft:calcite": [
+    "4*earth"
+  ],
+  "minecraft:tuff": [
+    "6*earth"
+  ],
+  "minecraft:dripstone_block": [
+    "4*earth",
+    "2*water"
+  ],
+  "minecraft:gravel": [
+    "2*earth",
+    "2*entropy"
+  ]
+}

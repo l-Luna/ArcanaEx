@@ -18,6 +18,10 @@ public final class Aspects{
 			ORDER = create("order"),
 			ENTROPY = create("entropy");
 	
+	public static final Aspect LIFE = create("life");
+	public static final Aspect VOID = create("void");
+	public static final Aspect METAL = create("metal");
+	
 	public static final Aspect MAGIC = create("magic");
 	
 	public static Aspect byName(Identifier id){

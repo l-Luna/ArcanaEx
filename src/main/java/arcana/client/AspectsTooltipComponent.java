@@ -16,7 +16,7 @@ public record AspectsTooltipComponent(List<AspectStack> aspects, @Nullable Toolt
 	}
 	
 	public int getWidth(TextRenderer text){
-		return Math.max(aspects().size() * 18 + 2, inner == null ? 0 : inner.getWidth(text));
+		return Math.max(aspects().size() * 19 + 2, inner == null ? 0 : inner.getWidth(text));
 	}
 	
 	public void drawItems(TextRenderer textRenderer, int x, int y, MatrixStack matrices, ItemRenderer itemRenderer, int z){
@@ -25,6 +25,6 @@ public record AspectsTooltipComponent(List<AspectStack> aspects, @Nullable Toolt
 			y += inner.getHeight();
 		}
 		for(int i = 0; i < aspects.size(); i++)
-			AspectRenderer.renderAspectStack(aspects.get(i), matrices, textRenderer, x + i * 18 + 1, y + 1, z);
+			AspectRenderer.renderAspectStack(aspects.get(i), matrices, textRenderer, x + i * 19 + 1, y + 1, z);
 	}
 }

@@ -1,0 +1,27 @@
+{
+  "#c:iron_ingots": [
+    "4*metal"
+  ],
+  "#c:gold_ingots": [
+    "4*metal"
+  ],
+  "#c:copper_ingots": [
+    "4*metal"
+  ],
+  "minecraft:raw_iron": [
+    "3*metal",
+    "earth"
+  ],
+  "minecraft:raw_gold": [
+    "3*metal",
+    "earth"
+  ],
+  "minecraft:raw_copper": [
+    "3*metal",
+    "earth"
+  ],
+  "#minecraft:coals": [
+    "3*fire",
+    "entropy"
+  ]
+}

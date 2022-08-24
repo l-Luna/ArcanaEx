@@ -88,6 +88,8 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 		
 		// compute via recipes
 		computeInheritedAspects();
+		
+		logger.info("Assigned aspects to %s items".formatted(itemAspects.size()));
 	}
 	
 	private void addStackFunctions(){
@@ -134,8 +136,22 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 						ret.add(new AspectStack(aspect, amount));
 					else
 						logger.warn("Invalid aspect \"%s\" referenced in file \"%s\", ignoring".formatted(aspectName, file));
+				}else if(element.isJsonPrimitive()){
+					JsonPrimitive p = element.getAsJsonPrimitive();
+					String name = p.getAsString();
+					int amount = 1;
+					if(name.contains("*")){
+						var split = name.split("\\*", 2);
+						amount = Integer.parseInt(split[0]);
+						name = split[1];
+					}
+					Aspect aspect = Aspects.byName(name);
+					if(aspect != null)
+						ret.add(new AspectStack(aspect, amount));
+					else
+						logger.warn("Invalid aspect \"%s\" referenced in file \"%s\", ignoring".formatted(name, file));
 				}else
-					logger.warn("Aspect stack in file \"" + file + "\" is not an object, ignoring");
+					logger.warn("Aspect stack in file \"" + file + "\" is not an object or array, ignoring");
 			}
 			return Optional.of(ret);
 		}else

@@ -19,10 +19,28 @@ public final class Aspects{
 			ENTROPY = create("entropy");
 	
 	public static final Aspect LIFE = create("life");
+	public static final Aspect LIGHT = create("light");
+	public static final Aspect CRYSTAL = create("crystal");
+	public static final Aspect ENERGY = create("energy");
 	public static final Aspect VOID = create("void");
+	public static final Aspect ICE = create("ice");
+	public static final Aspect EXCHANGE = create("exchange");
+	
+	public static final Aspect PLANT = create("plant");
 	public static final Aspect METAL = create("metal");
+	public static final Aspect ARMOUR = create("armour");
+	public static final Aspect SLIME = create("slime");
+	public static final Aspect TOOL = create("tool");
+	
+	public static final Aspect MACHINE = create("machine");
+	public static final Aspect GREED = create("greed");
+	public static final Aspect ENVY = create("envy");
+	public static final Aspect SLOTH = create("sloth");
+	public static final Aspect MIND = create("mind");
 	
 	public static final Aspect MAGIC = create("magic");
+	public static final Aspect TAINT = create("taint");
+	public static final Aspect AURA = create("aura");
 	
 	public static Aspect byName(Identifier id){
 		return ASPECTS.get(id);

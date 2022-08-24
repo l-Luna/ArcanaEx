@@ -3,11 +3,37 @@
     "4*metal"
   ],
   "#c:gold_ingots": [
-    "4*metal"
+    "3*metal",
+    "greed"
   ],
   "#c:copper_ingots": [
-    "4*metal"
+    "3*metal",
+    "tool"
   ],
+  "#c:diamonds": [
+    "7*crystal",
+    "greed"
+  ],
+  "#c:emeralds": [
+    "7*crystal",
+    "envy"
+  ],
+  "#c:redstone_dusts": [
+    "4*energy"
+  ],
+  "#c:lapis": [
+    "3*crystal",
+    "2*envy",
+    "energy"
+  ],
+  "#c:quartz": [
+    "4*crystal"
+  ],
+  "minecraft:amethyst_shard": [
+    "3*crystal",
+    "2*light"
+  ],
+
   "minecraft:raw_iron": [
     "3*metal",
     "earth"
@@ -20,8 +46,85 @@
     "3*metal",
     "earth"
   ],
+
+  "#minecraft:iron_ores": [
+    "3*metal",
+    "earth"
+  ],
+  "#minecraft:gold_ores": [
+    "3*metal",
+    "earth"
+  ],
+  "#minecraft:copper_ores": [
+    "3*metal",
+    "earth"
+  ],
+  "#minecraft:diamond_ores": [
+    "5*crystal",
+    "earth"
+  ],
+  "#minecraft:emerald_ores": [
+    "5*crystal",
+    "earth"
+  ],
+  "#minecraft:redstone_ores": [
+    "3*energy",
+    "earth"
+  ],
+  "#minecraft:lapis_ores": [
+    "2*envy",
+    "earth"
+  ],
+  "#minecraft:coal_ores": [
+    "fire",
+    "earth"
+  ],
+  "#c:quartz_ores": [
+    "3*crystal",
+    "earth"
+  ],
+
+  "minecraft:budding_amethyst": [
+    "12*crystal",
+    "8*light",
+    "3*life"
+  ],
+
+  "minecraft:glass": [
+    "2*crystal",
+    "light"
+  ],
+  "minecraft:tinted_glass": [
+    "2*crystal",
+    "2*void"
+  ],
+
   "#minecraft:coals": [
     "3*fire",
     "entropy"
+  ],
+  "#minecraft:logs": [
+    "8*plant"
+  ],
+
+  "minecraft:book": [
+    "4*mind"
+  ],
+
+  "minecraft:wheat": [
+    "3*plant"
+  ],
+  "minecraft:honey_block": [
+    "8*slime",
+    "4*life"
+  ],
+
+  "minecraft:slime_ball": [
+    "3*slime"
+  ],
+  "minecraft:gunpowder": [
+    "4*energy",
+    "3*fire",
+    "3*entropy"
   ]
 }

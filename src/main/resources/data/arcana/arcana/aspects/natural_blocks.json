@@ -13,6 +13,11 @@
     "3*earth",
     "entropy"
   ],
+  "minecraft:mossy_cobblestone": [
+    "3*earth",
+    "entropy",
+    "plant"
+  ],
   "minecraft:deepslate": [
     "6*earth",
     "2*void"
@@ -23,7 +28,8 @@
     "2*entropy"
   ],
   "minecraft:calcite": [
-    "4*earth"
+    "4*earth",
+    "2*armour"
   ],
   "minecraft:tuff": [
     "6*earth"
@@ -32,8 +38,48 @@
     "4*earth",
     "2*water"
   ],
+
   "minecraft:gravel": [
     "2*earth",
     "2*entropy"
+  ],
+  "#minecraft:sand": [
+    "earth",
+    "3*entropy"
+  ],
+  "minecraft:sandstone": [
+    "3*earth",
+    "entropy"
+  ],
+  "minecraft:ice": [
+    "ice"
+  ],
+
+  "minecraft:glowstone_dust": [
+    "light"
+  ],
+  "minecraft:netherrack": [
+    "earth",
+    "fire"
+  ],
+  "minecraft:blackstone": [
+    "3*earth",
+    "void"
+  ],
+
+  "#minecraft:flowers": [
+    "2*plant"
+  ],
+  "#minecraft:saplings": [
+    "2*plant"
+  ],
+  "#minecraft:leaves": [
+    "plant"
+  ],
+
+  "minecraft:mycelium": [
+    "2*earth",
+    "plant",
+    "taint"
   ]
 }

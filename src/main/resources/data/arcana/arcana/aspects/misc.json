@@ -1,5 +1,11 @@
 {
   "minecraft:bundle": [
     "3*void"
+  ],
+  "minecraft:enchanting_table": [
+    "2*greed",
+    "4*mind",
+    "6*crystal",
+    "8*magic"
   ]
 }

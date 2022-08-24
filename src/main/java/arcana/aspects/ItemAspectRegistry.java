@@ -205,6 +205,7 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 				// squish stacks of the same type & divide by the amount produced
 				collected = squish(collected.stream())
 						.map(x -> new AspectStack(x.type(), x.amount() / recipe.getOutput().getCount()))
+						.filter(x -> x.amount() > 0)
 						.toList();
 				choices.add(collected);
 			}

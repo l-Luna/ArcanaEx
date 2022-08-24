@@ -16,6 +16,9 @@
   "entrypoints": {
     "main": [
       "arcana.Arcana"
+    ],
+    "client": [
+      "arcana.client.ArcanaClient"
     ]
   },
   "mixins": [

@@ -83,6 +83,10 @@
     "3*crystal",
     "earth"
   ],
+  "minecraft:ancient_debris": [
+    "6*metal",
+    "sloth"
+  ],
 
   "minecraft:budding_amethyst": [
     "12*crystal",
@@ -98,25 +102,68 @@
     "2*crystal",
     "2*void"
   ],
+  "minecraft:glass_pane": [
+    "crystal"
+  ],
 
   "#minecraft:coals": [
     "3*fire",
     "entropy"
   ],
-  "#minecraft:logs": [
-    "8*plant"
-  ],
 
+  "minecraft:paper": [
+    "fabric",
+    "mind"
+  ],
   "minecraft:book": [
     "4*mind"
   ],
 
+  "minecraft:wheat_seeds": [
+    "plant",
+    "life"
+  ],
+  "minecraft:pumpkin_seeds": [
+    "plant",
+    "life"
+  ],
+  "minecraft:melon_seeds": [
+    "plant",
+    "life"
+  ],
+  "minecraft:beetroot_seeds": [
+    "plant",
+    "life"
+  ],
   "minecraft:wheat": [
     "3*plant"
+  ],
+  "minecraft:pumpkin": [
+    "9*plant"
+  ],
+  "minecraft:carved_pumpkin": [
+    "6*plant",
+    "senses",
+    "mind"
+  ],
+  "minecraft:melon_slice": [
+    "plant"
+  ],
+  "minecraft:honeycomb": [
+    "3*life",
+    "slime"
   ],
   "minecraft:honey_block": [
     "8*slime",
     "4*life"
+  ],
+  "minecraft:sugar": [
+    "senses"
+  ],
+  "minecraft:nether_wart": [
+    "plant",
+    "fire",
+    "magic"
   ],
 
   "minecraft:slime_ball": [
@@ -126,5 +173,54 @@
     "4*energy",
     "3*fire",
     "3*entropy"
+  ],
+  "minecraft:rotten_flesh": [
+    "3*flesh",
+    "undead"
+  ],
+  "minecraft:bone": [
+    "2*undead"
+  ],
+  "minecraft:bone_meal": [
+    "life"
+  ],
+  "minecraft:string": [
+    "fabric"
+  ],
+  "minecraft:blaze_rod": [
+    "12*fire",
+    "6*energy"
+  ],
+  "minecraft:ender_pearl": [
+    "2*magic",
+    "journey"
+  ],
+  "minecraft:spider_eye": [
+    "3*flesh",
+    "senses"
+  ],
+  "minecraft:feather": [
+    "air",
+    "flight"
+  ],
+
+  "minecraft:leather": [
+    "2*flesh",
+    "fabric"
+  ],
+  "minecraft:rabbit_hide": [
+    "flesh"
+  ],
+
+  "minecraft:nether_star": [
+    "45*light",
+    "30*fire",
+    "30*energy"
+  ],
+  "minecraft:heart_of_the_sea": [
+    "30*water",
+    "30*energy",
+    "25*light",
+    "10*life"
   ]
 }

@@ -1,0 +1,72 @@
+{
+  "minecraft:piston": [
+    "6*movement",
+    "4*metal",
+    "4*earth",
+    "machine"
+  ],
+  "minecraft:observer": [
+    "6*earth",
+    "4*crystal",
+    "4*senses",
+    "machine"
+  ],
+  "minecraft:hopper": [
+    "18*metal",
+    "movement",
+    "machine"
+  ],
+  "minecraft:dispenser": [
+    "18*earth",
+    "4*movement",
+    "machine"
+  ],
+  "minecraft:dropper": [
+    "18*earth",
+    "2*movement",
+    "machine"
+  ],
+  "minecraft:target": [
+    "16*plant",
+    "8*energy",
+    "senses"
+  ],
+  "minecraft:lever": [
+    "earth",
+    "energy"
+  ],
+  "minecraft:lightning_rod": [
+    "8*metal",
+    "3*tool",
+    "energy"
+  ],
+  "minecraft:daylight_detector": [
+    "16*crystal",
+    "6*light",
+    "3*senses"
+  ],
+
+  "minecraft:minecart": [
+    "18*metal",
+    "machine",
+    "journey"
+  ],
+  "#minecraft:chest_boats": [
+    "16*plant",
+    "water",
+    "journey"
+  ],
+  "#minecraft:boats": [
+    "8*plant",
+    "water",
+    "journey"
+  ],
+
+  "minecraft:jukebox": [
+    "12*plant",
+    "6*crystal",
+    "2*senses",
+    "greed",
+    "machine"
+  ]
+}

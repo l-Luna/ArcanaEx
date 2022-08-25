@@ -7,5 +7,37 @@
     "4*mind",
     "6*crystal",
     "8*magic"
+  ],
+  "minecraft:trident": [
+    "8*water",
+    "tool"
+  ],
+  "minecraft:shield": [
+    "8*armour",
+    "3*metal"
+  ],
+  "minecraft:name_tag": [
+    "10*mind"
+  ],
+  "minecraft:flint_and_steel": [
+    "4*metal",
+    "entropy",
+    "fire"
+  ],
+  "minecraft:elytra": [
+    "10*air",
+    "5*journey",
+    "2*flight"
+  ],
+  "minecraft:torch": [
+    "light"
+  ],
+  "minecraft:soul_torch": [
+    "light",
+    "undead"
+  ],
+  "minecraft:redstone_torch": [
+    "4*energy",
+    "light"
   ]
 }

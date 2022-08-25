@@ -25,6 +25,7 @@ public final class Aspects{
 	public static final Aspect VOID = create("void");
 	public static final Aspect ICE = create("ice");
 	public static final Aspect EXCHANGE = create("exchange");
+	public static final Aspect MOVEMENT = create("movement");
 	
 	public static final Aspect PLANT = create("plant");
 	public static final Aspect METAL = create("metal");
@@ -32,11 +33,17 @@ public final class Aspects{
 	public static final Aspect SLIME = create("slime");
 	public static final Aspect TOOL = create("tool");
 	
+	public static final Aspect FLESH = create("flesh");
+	public static final Aspect FABRIC = create("fabric");
+	public static final Aspect JOURNEY = create("journey");
+	
 	public static final Aspect MACHINE = create("machine");
 	public static final Aspect GREED = create("greed");
 	public static final Aspect ENVY = create("envy");
 	public static final Aspect SLOTH = create("sloth");
 	public static final Aspect MIND = create("mind");
+	public static final Aspect SENSES = create("senses");
+	public static final Aspect UNDEAD = create("undead");
 	
 	public static final Aspect MAGIC = create("magic");
 	public static final Aspect TAINT = create("taint");

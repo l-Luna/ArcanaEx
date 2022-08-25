@@ -38,10 +38,31 @@
     "4*earth",
     "2*water"
   ],
+  "minecraft:dirt_path": [
+    "3*earth",
+    "tool"
+  ],
+  "minecraft:mud": [
+    "2*earth",
+    "2*water"
+  ],
+  "minecraft:podzol": [
+    "2*earth",
+    "exchange"
+  ],
+  "minecraft:rooted_dirt": [
+    "2*earth",
+    "entropy",
+    "plant"
+  ],
 
   "minecraft:gravel": [
     "2*earth",
     "2*entropy"
+  ],
+  "minecraft:flint": [
+    "earth",
+    "entropy"
   ],
   "#minecraft:sand": [
     "earth",
@@ -53,6 +74,27 @@
   ],
   "minecraft:ice": [
     "ice"
+  ],
+  "minecraft:snowball": [
+    "ice"
+  ],
+  "minecraft:clay_ball": [
+    "earth",
+    "water"
+  ],
+  "minecraft:brick": [
+    "earth",
+    "tool"
+  ],
+
+  "minecraft:obsidian": [
+    "12*earth",
+    "4*void"
+  ],
+  "minecraft:crying_obsidian": [
+    "12*earth",
+    "4*magic",
+    "2*exchange"
   ],
 
   "minecraft:glowstone_dust": [
@@ -66,6 +108,60 @@
     "3*earth",
     "void"
   ],
+  "minecraft:crimson_nylium": [
+    "earth",
+    "fire",
+    "plant"
+  ],
+  "minecraft:warped_nylium": [
+    "earth",
+    "fire",
+    "plant"
+  ],
+  "#minecraft:soul_fire_base_blocks": [
+    "earth",
+    "undead"
+  ],
+  "minecraft:basalt": [
+    "3*earth",
+    "order"
+  ],
+  "minecraft:weeping_vines": [
+    "plant"
+  ],
+  "minecraft:twisting_vines": [
+    "plant"
+  ],
+  "minecraft:gilded_blackstone": [
+    "2*earth",
+    "void",
+    "greed"
+  ],
+
+  "minecraft:end_stone": [
+    "3*earth",
+    "void"
+  ],
+  "minecraft:chorus_plant": [
+    "plant"
+  ],
+  "minecraft:chorus_flower": [
+    "plant",
+    "senses"
+  ],
+  "minecraft:chorus_fruit": [
+    "plant",
+    "journey"
+  ],
+
+  "minecraft:prismarine_shard": [
+    "earth",
+    "water"
+  ],
+  "minecraft:prismarine_crystals": [
+    "crystal",
+    "water"
+  ],
 
   "#minecraft:flowers": [
     "2*plant"
@@ -76,10 +172,72 @@
   "#minecraft:leaves": [
     "plant"
   ],
+  "#minecraft:logs": [
+    "8*plant"
+  ],
+  "minecraft:sugar_cane": [
+    "plant",
+    "senses"
+  ],
+  "minecraft:lily_pad": [
+    "3*plant",
+    "2*water"
+  ],
+  "minecraft:vine": [
+    "plant"
+  ],
+  "minecraft:glow_lichen": [
+    "plant",
+    "light"
+  ],
+  "minecraft:tall_grass": [
+    "plant"
+  ],
+  "minecraft:fern": [
+    "plant"
+  ],
+  "minecraft:cactus": [
+    "2*plant"
+  ],
+  "minecraft:mangrove_roots": [
+    "plant",
+    "life"
+  ],
+  "minecraft:muddy_mangrove_roots": [
+    "2*earth",
+    "2*water",
+    "plant",
+    "life"
+  ],
+  "minecraft:wither_rose": [
+    "plant",
+    "undead",
+    "taint"
+  ],
+  "minecraft:kelp": [
+    "plant",
+    "water"
+  ],
 
   "minecraft:mycelium": [
     "2*earth",
     "plant",
     "taint"
+  ],
+
+  "minecraft:sculk_sensor": [
+    "6*taint",
+    "2*life",
+    "2*senses"
+  ],
+  "minecraft:sculk": [
+    "taint"
+  ],
+  "minecraft:sculk_vein": [
+    "taint"
+  ],
+  "minecraft:sculk_catalyst": [
+    "12*life",
+    "8*taint"
   ]
 }

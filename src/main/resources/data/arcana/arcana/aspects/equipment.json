@@ -1,0 +1,14 @@
+{
+  "+#arcana:helmets": [
+    "2*armour"
+  ],
+  "+#arcana:chestplates": [
+    "5*armour"
+  ],
+  "+#arcana:leggings": [
+    "4*armour"
+  ],
+  "+#arcana:boots": [
+    "armour"
+  ]
+}

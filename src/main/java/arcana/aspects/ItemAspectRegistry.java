@@ -34,6 +34,7 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 	
 	private static final Map<Item, List<AspectStack>> itemAssociations = new HashMap<>();
 	private static final Map<TagKey<Item>, List<AspectStack>> itemTagAssociations = new HashMap<>();
+	private static final Map<TagKey<Item>, List<AspectStack>> itemTagBonuses = new HashMap<>();
 	private static final Collection<BiConsumer<ItemStack, List<AspectStack>>> stackModifiers = new ArrayList<>();
 	
 	private static final Set<Item> generating = new HashSet<>();
@@ -68,6 +69,7 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 		// reset
 		itemAssociations.clear();
 		itemTagAssociations.clear();
+		itemTagBonuses.clear();
 		itemAspects.clear();
 		stackModifiers.clear();
 		
@@ -89,6 +91,16 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 		// compute via recipes
 		computeInheritedAspects();
 		
+		// add bonuses after
+		for(Item item : Registry.ITEM){
+			var aspects = get(item);
+			for(var tagBonus : itemTagBonuses.entrySet())
+				if(item.getRegistryEntry().isIn(tagBonus.getKey()))
+					aspects = squish(Stream.concat(aspects.stream(), tagBonus.getValue().stream())).toList();
+			if(aspects.size() > 0)
+				itemAspects.put(item, aspects);
+		}
+		
 		logger.info("Assigned aspects to %s items".formatted(itemAspects.size()));
 	}
 	
@@ -107,9 +119,12 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 			for(Map.Entry<String, JsonElement> entry : object.entrySet()){
 				String key = entry.getKey();
 				JsonElement value = entry.getValue();
+				boolean additional = key.startsWith("+");
+				if(additional)
+					key = key.substring(1);
 				if(key.startsWith("#")){
 					TagKey<Item> tag = TagKey.of(Registry.ITEM_KEY, new Identifier(key.substring(1)));
-					parseAspectStackList(file, value).ifPresent(x -> itemTagAssociations.put(tag, x));
+					parseAspectStackList(file, value).ifPresent(x -> (additional ? itemTagBonuses : itemTagAssociations).put(tag, x));
 				}else{
 					Item item = Registry.ITEM.get(new Identifier(key));
 					if(item != Items.AIR)

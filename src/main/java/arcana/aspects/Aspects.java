@@ -30,6 +30,7 @@ public final class Aspects{
 	public static final Aspect PLANT = create("plant");
 	public static final Aspect METAL = create("metal");
 	public static final Aspect ARMOUR = create("armour");
+	public static final Aspect WEAPON = create("weapon");
 	public static final Aspect SLIME = create("slime");
 	public static final Aspect TOOL = create("tool");
 	
@@ -44,6 +45,7 @@ public final class Aspects{
 	public static final Aspect MIND = create("mind");
 	public static final Aspect SENSES = create("senses");
 	public static final Aspect UNDEAD = create("undead");
+	public static final Aspect FLIGHT = create("flight");
 	
 	public static final Aspect MAGIC = create("magic");
 	public static final Aspect TAINT = create("taint");

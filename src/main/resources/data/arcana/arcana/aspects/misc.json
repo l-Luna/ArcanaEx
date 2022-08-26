@@ -57,5 +57,8 @@
   "minecraft:turtle_egg": [
     "3*life",
     "water"
+  ],
+  "+#minecraft:beds": [
+    "6*sloth"
   ]
 }

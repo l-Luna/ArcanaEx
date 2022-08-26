@@ -63,6 +63,10 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 		return orig != null ? new ArrayList<>(orig) : new ArrayList<>();
 	}
 	
+	public static Map<Item, List<AspectStack>> getAllItemAspects(){
+		return Collections.unmodifiableMap(itemAspects);
+	}
+	
 	protected void apply(Map<Identifier, JsonElement> prepared, ResourceManager manager, Profiler profiler){
 		logger.info("Loading item aspects");
 		

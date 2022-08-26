@@ -3,5 +3,48 @@
   "tag.arcana.chestplates": "Chestplates",
   "tag.arcana.leggings": "Leggings",
   "tag.arcana.boots": "Boots",
-  "tag.arcana.horse_armours": "Horse Armours"
+  "tag.arcana.horse_armours": "Horse Armours",
+
+  "emi.category.arcana.aspects": "Aspects",
+
+  "aspect.arcana.air": "Aer",
+  "aspect.arcana.fire": "Ignis",
+  "aspect.arcana.water": "Aqua",
+  "aspect.arcana.earth": "Terra",
+  "aspect.arcana.order": "Ordo",
+  "aspect.arcana.entropy": "Perditio",
+
+  "aspect.arcana.life": "Victus",
+  "aspect.arcana.light": "Lux",
+  "aspect.arcana.crystal": "Crystallo",
+  "aspect.arcana.energy": "Potentia",
+  "aspect.arcana.void": "Tenebris",
+  "aspect.arcana.ice": "Gelum",
+  "aspect.arcana.exchange": "Permutatio",
+  "aspect.arcana.movement": "Motus",
+
+  "aspect.arcana.plant": "Herba",
+  "aspect.arcana.metal": "Metallum",
+  "aspect.arcana.slime": "Limus",
+  "aspect.arcana.tool": "Instrumentum",
+
+  "aspect.arcana.flesh": "Corpus",
+  "aspect.arcana.fabric": "Pannus",
+  "aspect.arcana.journey": "Itla",
+  "aspect.arcana.weapon": "Telum",
+  "aspect.arcana.armour": "Tutamen",
+  "aspect.arcana.mining": "Perodio",
+
+  "aspect.arcana.machine": "Machina",
+  "aspect.arcana.greed": "Cupidias",
+  "aspect.arcana.envy": "Invidia",
+  "aspect.arcana.sloth": "Oitiosum",
+  "aspect.arcana.mind": "Cognito",
+  "aspect.arcana.senses": "Sensus",
+  "aspect.arcana.undead": "Examinis",
+  "aspect.arcana.flight": "Volatus",
+
+  "aspect.arcana.magic": "Praecantatio",
+  "aspect.arcana.taint": "Virimus",
+  "aspect.arcana.aura": "Auram"
 }

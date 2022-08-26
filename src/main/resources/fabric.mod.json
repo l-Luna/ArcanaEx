@@ -19,6 +19,9 @@
     ],
     "client": [
       "arcana.client.ArcanaClient"
+    ],
+    "emi": [
+      "arcana.integration.emi.ArcanaEmiPlugin"
     ]
   },
   "mixins": [

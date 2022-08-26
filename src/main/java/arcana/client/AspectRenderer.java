@@ -13,11 +13,12 @@ public final class AspectRenderer{
 
 	public static void renderAspectStack(AspectStack stack, MatrixStack matrices, TextRenderer text, int x, int y, int z){
 		renderAspect(stack.type(), matrices, x, y, z);
-		renderAspectStackOverlay(stack, matrices, text, x, y, z);
+		if(stack.amount() > 1)
+			renderAspectStackOverlay(stack, matrices, text, x, y, z);
 	}
 	
 	public static void renderAspect(Aspect aspect, MatrixStack matrices, int x, int y, int z){
-		// aspect sprite is "$modid:textures/aspects/$name"
+		// aspect sprite is "$modid:textures/aspects/$id"
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 		RenderSystem.setShaderColor(1, 1, 1, 1);
 		RenderSystem.setShaderTexture(0, texture(aspect));
@@ -25,7 +26,7 @@ public final class AspectRenderer{
 	}
 	
 	public static Identifier texture(Aspect aspect){
-		return new Identifier(aspect.name().getNamespace(), "textures/aspects/%s.png".formatted(aspect.name().getPath()));
+		return new Identifier(aspect.id().getNamespace(), "textures/aspects/%s.png".formatted(aspect.id().getPath()));
 	}
 	
 	public static void renderAspectStackOverlay(AspectStack stack, MatrixStack matricies, TextRenderer text, int x, int y, int z){

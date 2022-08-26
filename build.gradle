@@ -18,7 +18,10 @@ repositories {
 	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
 	// for more information about repositories.
 
-	maven { url = "https://cursemaven.com" }
+	maven {
+		name = "TerraformersMC"
+		url = "https://maven.terraformersmc.com/"
+	}
 }
 
 dependencies {
@@ -35,7 +38,7 @@ dependencies {
 
 	// modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
 
-	modRuntimeOnly "curse.maven:emi-580555:3941564"
+	modImplementation "dev.emi:emi:${emi_version}"
 }
 
 processResources {

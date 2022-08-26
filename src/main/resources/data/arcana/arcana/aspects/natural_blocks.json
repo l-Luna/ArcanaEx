@@ -200,6 +200,9 @@
     "2*plant",
     "weapon"
   ],
+  "minecraft:green_dye": [
+    "2*plant"
+  ],
   "minecraft:mangrove_roots": [
     "plant",
     "life"
@@ -214,6 +217,10 @@
     "plant",
     "undead",
     "taint"
+  ],
+  "minecraft:black_dye": [
+    "plant",
+    "void"
   ],
   "minecraft:kelp": [
     "plant",

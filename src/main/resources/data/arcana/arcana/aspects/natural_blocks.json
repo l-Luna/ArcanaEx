@@ -197,7 +197,8 @@
     "plant"
   ],
   "minecraft:cactus": [
-    "2*plant"
+    "2*plant",
+    "weapon"
   ],
   "minecraft:mangrove_roots": [
     "plant",

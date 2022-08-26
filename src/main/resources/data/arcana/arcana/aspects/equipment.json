@@ -10,5 +10,45 @@
   ],
   "+#arcana:boots": [
     "armour"
+  ],
+  "+#arcana:horse_armours": [
+    "3*armour",
+    "2*journey"
+  ],
+
+  "+#c:swords": [
+    "5*weapon"
+  ],
+  "+#c:bows": [
+    "3*weapon",
+    "flight"
+  ],
+  "+#minecraft:arrows": [
+    "weapon",
+    "flight"
+  ],
+
+  "+#c:pickaxes": [
+    "5*mining"
+  ],
+  "+#c:axes": [
+    "3*mining",
+    "2*weapon"
+  ],
+  "+#c:hoes": [
+    "2*life",
+    "2*order"
+  ],
+  "+#c:shovels": [
+    "4*mining"
+  ],
+
+  "minecraft:trident": [
+    "8*water",
+    "4*weapon"
+  ],
+  "minecraft:shield": [
+    "3*armour",
+    "3*metal"
   ]
 }

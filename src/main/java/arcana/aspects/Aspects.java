@@ -29,14 +29,15 @@ public final class Aspects{
 	
 	public static final Aspect PLANT = create("plant");
 	public static final Aspect METAL = create("metal");
-	public static final Aspect ARMOUR = create("armour");
-	public static final Aspect WEAPON = create("weapon");
 	public static final Aspect SLIME = create("slime");
 	public static final Aspect TOOL = create("tool");
 	
 	public static final Aspect FLESH = create("flesh");
 	public static final Aspect FABRIC = create("fabric");
 	public static final Aspect JOURNEY = create("journey");
+	public static final Aspect WEAPON = create("weapon");
+	public static final Aspect ARMOUR = create("armour");
+	public static final Aspect MINING = create("mining");
 	
 	public static final Aspect MACHINE = create("machine");
 	public static final Aspect GREED = create("greed");

@@ -165,6 +165,10 @@
     "fire",
     "magic"
   ],
+  "minecraft:cocoa_beans": [
+    "3*senses",
+    "plant"
+  ],
 
   "minecraft:slime_ball": [
     "3*slime"
@@ -199,10 +203,6 @@
     "3*flesh",
     "senses"
   ],
-  "minecraft:feather": [
-    "air",
-    "flight"
-  ],
 
   "minecraft:leather": [
     "2*flesh",
@@ -210,6 +210,27 @@
   ],
   "minecraft:rabbit_hide": [
     "flesh"
+  ],
+  "minecraft:feather": [
+    "air",
+    "flight"
+  ],
+  "minecraft:ink_sac": [
+    "void",
+    "senses",
+    "water"
+  ],
+  "minecraft:glow_ink_sac": [
+    "3*light",
+    "senses",
+    "water"
+  ],
+  "minecraft:scute": [
+    "water",
+    "life"
+  ],
+  "minecraft:egg": [
+    "2*life"
   ],
 
   "minecraft:nether_star": [

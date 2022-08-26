@@ -8,14 +8,6 @@
     "6*crystal",
     "8*magic"
   ],
-  "minecraft:trident": [
-    "8*water",
-    "tool"
-  ],
-  "minecraft:shield": [
-    "8*armour",
-    "3*metal"
-  ],
   "minecraft:name_tag": [
     "10*mind"
   ],
@@ -39,5 +31,31 @@
   "minecraft:redstone_torch": [
     "4*energy",
     "light"
+  ],
+  "minecraft:totem_of_undying": [
+    "10*life",
+    "5*undead",
+    "5*magic",
+    "5*armour"
+  ],
+  "#c:water_buckets": [
+    "5*metal",
+    "5*water"
+  ],
+  "minecraft:lava_bucket": [
+    "8*fire",
+    "5*metal"
+  ],
+  "minecraft:powder_snow_bucket": [
+    "5*metal",
+    "5*ice"
+  ],
+  "minecraft:milk_bucket": [
+    "5*metal",
+    "3*life"
+  ],
+  "minecraft:turtle_egg": [
+    "3*life",
+    "water"
   ]
 }

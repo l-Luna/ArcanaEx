@@ -8,7 +8,7 @@ import static arcana.Arcana.arcId;
 
 public final class Aspects{
 	
-	public static final BiMap<Identifier, Aspect> ASPECTS = HashBiMap.create(52);
+	public static final BiMap<Identifier, Aspect> ASPECTS = HashBiMap.create();
 	
 	public static final Aspect
 			AIR = create("air"),

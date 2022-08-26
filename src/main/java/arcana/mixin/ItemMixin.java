@@ -15,6 +15,7 @@ import java.util.Optional;
 @Mixin(Item.class)
 public class ItemMixin{
 
+	// TODO: move to ItemStack so bundle aspects display actually works
 	@Inject(at = @At("RETURN"), method = "getTooltipData", cancellable = true)
 	private void applyAspectsTooltipData(ItemStack stack, CallbackInfoReturnable<Optional<TooltipData>> cir){
 		var aspects = ItemAspectRegistry.get(stack);

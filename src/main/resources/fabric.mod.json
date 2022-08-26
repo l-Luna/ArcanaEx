@@ -22,6 +22,9 @@
     ],
     "emi": [
       "arcana.integration.emi.ArcanaEmiPlugin"
+    ],
+    "cardinal-components-world": [
+      "arcana.components.WorldComponentInit"
     ]
   },
   "mixins": [
@@ -35,6 +38,12 @@
     "java": ">=17"
   },
   "suggests": {
-    "another-mod": "*"
+    "emi": "*"
+  },
+
+  "custom": {
+    "cardinal-components": [
+      "arcana:aura_world"
+    ]
   }
 }

@@ -22,6 +22,10 @@ repositories {
 		name = "TerraformersMC"
 		url = "https://maven.terraformersmc.com/"
 	}
+	maven {
+		name = 'Ladysnake Mods'
+		url = 'https://ladysnake.jfrog.io/artifactory/mods'
+	}
 }
 
 dependencies {
@@ -39,6 +43,8 @@ dependencies {
 	// modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
 
 	modImplementation "dev.emi:emi:${emi_version}"
+	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cardinal_comp_version}"
+	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-world:${cardinal_comp_version}"
 }
 
 processResources {

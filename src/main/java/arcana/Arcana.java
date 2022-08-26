@@ -1,10 +1,13 @@
 package arcana;
 
 import arcana.aspects.ItemAspectRegistry;
+import arcana.commands.NodeCommand;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +23,7 @@ public final class Arcana implements ModInitializer{
 		logger.info("Loading Arcana");
 		
 		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(aspectRegistry);
+		CommandRegistrationCallback.EVENT.register(NodeCommand::register);
 	}
 	
 	public static Identifier arcId(String s){

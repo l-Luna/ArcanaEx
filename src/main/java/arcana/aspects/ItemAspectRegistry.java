@@ -1,6 +1,5 @@
 package arcana.aspects;
 
-import arcana.util.JsonUtil;
 import arcana.util.StreamUtil;
 import com.google.gson.*;
 import com.mojang.logging.LogUtils;
@@ -16,6 +15,7 @@ import net.minecraft.resource.JsonDataLoader;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.tag.TagKey;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.JsonHelper;
 import net.minecraft.util.Pair;
 import net.minecraft.util.profiler.Profiler;
 import net.minecraft.util.registry.Registry;
@@ -149,7 +149,7 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 				if(element.isJsonObject()){
 					JsonObject object = element.getAsJsonObject();
 					String aspectName = object.get("aspect").getAsString();
-					int amount = JsonUtil.getInt(object, "amount", 1);
+					int amount = JsonHelper.getInt(object, "amount", 1);
 					Aspect aspect = Aspects.byName(aspectName);
 					if(aspect != null)
 						ret.add(new AspectStack(aspect, amount));

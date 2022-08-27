@@ -4,6 +4,7 @@ import arcana.nodes.Node;
 import dev.onyxstudios.cca.api.v3.component.Component;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistryV3;
+import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import dev.onyxstudios.cca.api.v3.component.tick.CommonTickingComponent;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
@@ -18,7 +19,7 @@ import java.util.List;
 import static arcana.Arcana.arcId;
 
 @ParametersAreNonnullByDefault
-public class AuraWorld implements Component, CommonTickingComponent{
+public class AuraWorld implements Component, CommonTickingComponent, /* TODO: doesn't work */ AutoSyncedComponent{
 	
 	public static final ComponentKey<AuraWorld> KEY = ComponentRegistryV3.INSTANCE.getOrCreate(arcId("aura_world"), AuraWorld.class);
 	

@@ -74,6 +74,7 @@ public class NodeCommand{
 	private static int performList(CommandContext<ServerCommandSource> context){
 		World world = context.getSource().getWorld();
 		AuraWorld aura = world.getComponent(AuraWorld.KEY);
+		AuraWorld.KEY.sync(world);
 		context.getSource().sendMessage(Text.literal(aura.getNodes().toString()));
 		return 1;
 	}

@@ -2,6 +2,7 @@ package arcana.nodes;
 
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Position;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -78,6 +79,14 @@ public class Node implements Position{
 		return node;
 	}
 	
+	public BlockPos asBlockPos(){
+		return new BlockPos(x, y, z);
+	}
+	
+	public NodeType getType(){
+		return type;
+	}
+	
 	public double getX(){
 		return x;
 	}
@@ -88,5 +97,13 @@ public class Node implements Position{
 	
 	public double getZ(){
 		return z;
+	}
+	
+	public World getWorld(){
+		return world;
+	}
+	
+	public UUID getUuid(){
+		return uuid;
 	}
 }

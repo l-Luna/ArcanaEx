@@ -4,11 +4,16 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import net.minecraft.util.Identifier;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 import static arcana.Arcana.arcId;
 
 public final class Aspects{
 	
 	public static final BiMap<Identifier, Aspect> ASPECTS = HashBiMap.create();
+	protected static final List<Aspect> ORDERED_ASPECTS = new ArrayList<>();
 	
 	public static final Aspect
 			AIR = create("air"),
@@ -52,6 +57,8 @@ public final class Aspects{
 	public static final Aspect TAINT = create("taint");
 	public static final Aspect AURA = create("aura");
 	
+	public static final List<Aspect> PRIMALS = List.of(AIR, FIRE, WATER, EARTH, ORDER, ENTROPY);
+	
 	public static Aspect byName(Identifier id){
 		return ASPECTS.get(id);
 	}
@@ -68,6 +75,7 @@ public final class Aspects{
 		Identifier id = arcId(name);
 		Aspect aspect = new Aspect(id);
 		ASPECTS.put(id, aspect);
+		ORDERED_ASPECTS.add(aspect);
 		return aspect;
 	}
 }

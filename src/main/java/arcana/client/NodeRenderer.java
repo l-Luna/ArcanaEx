@@ -1,5 +1,7 @@
 package arcana.client;
 
+import arcana.aspects.Aspect;
+import arcana.aspects.Aspects;
 import arcana.components.AuraWorld;
 import arcana.nodes.Node;
 import arcana.nodes.NodeType;
@@ -11,6 +13,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
+import net.minecraft.util.math.Position;
 import net.minecraft.util.math.Quaternion;
 import net.minecraft.util.math.Vec3f;
 
@@ -43,9 +46,9 @@ public final class NodeRenderer{
 		
 		Camera camera = context.camera();
 		
-		var nodesByType = context.world()
-				.getComponent(AuraWorld.KEY)
-				.getNodes()
+		List<Node> allNodes = context.world().getComponent(AuraWorld.KEY).getNodes();
+		
+		var nodesByType = allNodes
 				.stream()
 				.collect(Collectors.groupingBy(Node::getType));
 		
@@ -55,55 +58,121 @@ public final class NodeRenderer{
 			RenderSystem.setShaderTexture(0, loadTexture(type));
 			buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);
 			for(Node node : nodes)
-				drawNode(camera, node, buffer, 0.12f);
+				drawNode(camera, node, buffer, .12f);
 			BufferRenderer.drawWithShader(buffer.end());
 		});
 		
-		// second pass, not obscured
+		// second pass, hidden by blocks
 		RenderSystem.enableDepthTest();
 		nodesByType.forEach((type, nodes) -> {
 			RenderSystem.setShaderTexture(0, loadTexture(type));
 			buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);
 			for(Node node : nodes)
-				drawNode(camera, node, buffer, 0.85f);
+				drawNode(camera, node, buffer, .85f);
 			BufferRenderer.drawWithShader(buffer.end());
 		});
+		
+		Aspects.PRIMALS.forEach(primal -> {
+			RenderSystem.setShaderTexture(0, AspectRenderer.texture(primal));
+			buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);
+			for(Node node : allNodes)
+				drawNodeAspect(camera, node, buffer, primal);
+			BufferRenderer.drawWithShader(buffer.end());
+		});
+		
+		for(Node node : allNodes)
+			for(Aspect primal : Aspects.PRIMALS)
+				drawNodeAspectCount(camera, node, buffer, primal);
 		
 		RenderSystem.depthMask(true);
 		context.lightmapTextureManager().disable();
 	}
 	
-	private static void drawNode(Camera camera, Node n, VertexConsumer cons, float alpha){
+	private static void drawNode(Camera camera, Node node, BufferBuilder buffer, float alpha){
+		drawQuad(camera, node, Vec3f.ZERO, buffer, alpha, scale(node), v(node, false), v(node, true), light(node));
+	}
+	
+	private static void drawNodeAspect(Camera camera, Node node, BufferBuilder buffer, Aspect aspect){
+		if(node.getAspects().size() == 0 || !node.getAspects().contains(aspect))
+			return;
+		Vec3f offset = Vec3f.POSITIVE_Y.copy();
+		offset.scale(1.2f);
+		offset.add(0, 0, -0.01f);
+		offset.rotate(Quaternion.fromEulerXyz(0, 0, (float)((Math.PI * 2) * (node.getAspects().indexOf(aspect) / (float)node.getAspects().size()))));
+		// TODO: replace with raytrace check and lerp distance & opacity
+		var alpha = (float)(.85 - Math.sqrt(MinecraftClient.getInstance().player.squaredDistanceTo(node.getX(), node.getY(), node.getZ())) / 10);
+		drawQuad(camera, node, offset, buffer, alpha, .35f, 0, 1, light(node));
+	}
+	
+	private static void drawNodeAspectCount(Camera camera, Node node, BufferBuilder buffer, Aspect aspect){
+		if(node.getAspects().size() == 0 || !node.getAspects().contains(aspect))
+			return;
+		
+		String amount = node.getAspects().underlying().get(aspect).toString();
+		
+		double sqrDist = MinecraftClient.getInstance().player.squaredDistanceTo(node.getX(), node.getY(), node.getZ());
+		if(sqrDist > 8 * 8)
+			return;
+		var alpha = (float)(1 - Math.sqrt(sqrDist) / 10);
+		var intAlpha = (int)(Math.max(0, alpha * 255)) << 24;
+		
+		Vec3f offset = Vec3f.POSITIVE_Y.copy();
+		offset.scale(1.2f);
+		offset.rotate(Quaternion.fromEulerXyz(0, 0, (float)((Math.PI * 2) * (node.getAspects().indexOf(aspect) / (float)node.getAspects().size()))));
+		
+		var stack = RenderSystem.getModelViewStack();
+		stack.push();
+		stack.multiply(camera.getRotation());
+		stack.translate(-node.getX(), node.getY(), -node.getZ());
+		stack.translate(camera.getPos().x, -camera.getPos().y, camera.getPos().z);
+		var o = camera.getRotation().toEulerXyz();
+		stack.multiply(Quaternion.fromEulerXyz(0, o.getY(), 0));
+		stack.multiply(Quaternion.fromEulerXyz(-o.getX(), 0, -o.getZ()));
+		stack.translate(-offset.getX(), offset.getY(), offset.getZ());
+		stack.multiply(Quaternion.fromEulerXyz(0, (float)Math.PI, (float)Math.PI));
+		stack.scale(.035f, .035f, .1f);
+		stack.translate(0, 0, -0.25);
+		MinecraftClient.getInstance().textRenderer.draw(stack, amount, 0, 0, 0xFFFFFF | intAlpha);
+		stack.translate(1, 1, 0.1);
+		MinecraftClient.getInstance().textRenderer.draw(stack, amount, 0, 0, 0x666666 | intAlpha);
+		stack.pop();
+	}
+	
+	private static void drawQuad(Camera camera, Position pos, Vec3f offset, VertexConsumer cons, float alpha, float scale, float minV, float maxV, int light){
+		if(alpha <= 0)
+			return;
+		
 		// based on BillboardParticle
 		Vec3f[] corners = { new Vec3f(-1, -1, 0), new Vec3f(-1, 1, 0), new Vec3f(1, 1, 0), new Vec3f(1, -1, 0) };
 		Quaternion rot = camera.getRotation();
 		for(Vec3f corner : corners){
-			corner.scale(scale(n));
+			corner.scale(scale);
+			corner.add(offset);
 			corner.rotate(rot);
-			corner.add((float)(n.getX() - camera.getPos().x),
-			           (float)(n.getY() - camera.getPos().y),
-			           (float)(n.getZ() - camera.getPos().z));
+			corner.add((float)(pos.getX() - camera.getPos().x),
+			           (float)(pos.getY() - camera.getPos().y),
+			           (float)(pos.getZ() - camera.getPos().z));
 		}
 		
 		cons.vertex(corners[0].getX(), corners[0].getY(), corners[0].getZ())
-				.texture(0, v(n, true))
+				.texture(1, maxV)
 				.color(1, 1, 1, alpha)
-				.light(light(n))
+				.light(light)
 				.next();
 		cons.vertex(corners[1].getX(), corners[1].getY(), corners[1].getZ())
-				.texture(0, v(n, false))
+				.texture(1, minV)
 				.color(1, 1, 1, alpha)
-				.light(light(n))
+				.light(light)
 				.next();
 		cons.vertex(corners[2].getX(), corners[2].getY(), corners[2].getZ())
-				.texture(1, v(n, false))
+				.texture(0, minV)
 				.color(1, 1, 1, alpha)
-				.light(light(n))
+				.light(light)
 				.next();
 		cons.vertex(corners[3].getX(), corners[3].getY(), corners[3].getZ())
-				.texture(1, v(n, true))
+				.texture(0, maxV)
 				.color(1, 1, 1, alpha)
-				.light(light(n))
+				.light(light)
 				.next();
 	}
 	
@@ -111,6 +180,7 @@ public final class NodeRenderer{
 		return 1;
 	}
 	
+	@SuppressWarnings("IntegerDivisionInFloatingPointContext") // intentional
 	private static float v(Node n, boolean max){
 		float f = maxFrames(n.getType());
 		return (1 / f) * ((n.getWorld().getTime() / 2 + n.getUuid().hashCode()) % (int)(f) + (max ? 1 : 0));

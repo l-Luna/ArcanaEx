@@ -1,5 +1,7 @@
 package arcana.nodes;
 
+import arcana.aspects.AspectMap;
+import arcana.aspects.Aspects;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
@@ -15,6 +17,7 @@ public class Node implements Position{
 	private double x, y, z;
 	
 	private int ticksUntilRecharge;
+	private AspectMap aspects;
 	private NbtCompound tag;
 	
 	private World world;
@@ -26,6 +29,7 @@ public class Node implements Position{
 		x = pos.getX();
 		y = pos.getY();
 		z = pos.getZ();
+		aspects = new AspectMap();
 		tag = new NbtCompound();
 		uuid = UUID.randomUUID();
 	}
@@ -37,6 +41,7 @@ public class Node implements Position{
 		y = node.y;
 		z = node.z;
 		ticksUntilRecharge = node.ticksUntilRecharge;
+		aspects = node.aspects.copy();
 		tag = node.tag.copy();
 		uuid = UUID.randomUUID();
 	}
@@ -50,7 +55,10 @@ public class Node implements Position{
 	}
 	
 	protected void doRecharge(){
-		// ...
+		// add 2-5 of 3 primals
+		var rng = world.random;
+		for(int i = 0; i < 3; i++)
+			aspects.addCapped(Aspects.PRIMALS.get(rng.nextInt(6)), rng.nextBetween(2, 5), type.aspectCap());
 	}
 	
 	public NbtCompound toNbt(){
@@ -61,6 +69,7 @@ public class Node implements Position{
 		c.putDouble("z", z);
 		
 		c.putInt("ticksUntilRecharge", ticksUntilRecharge);
+		c.put("aspects", aspects.toNbt());
 		if(tag != null)
 			c.put("tag", tag);
 		
@@ -74,6 +83,7 @@ public class Node implements Position{
 		var node = new Node(NodeTypes.byName(new Identifier(nbt.getString("type"))), world, pos);
 		node.ticksUntilRecharge = nbt.getInt("ticksUntilRecharge");
 		node.uuid = nbt.getUuid("uuid");
+		node.aspects = AspectMap.fromNbt(nbt.getCompound("aspects"));
 		if(nbt.contains("tag"))
 			node.tag = nbt.getCompound("tag");
 		return node;
@@ -105,5 +115,9 @@ public class Node implements Position{
 	
 	public UUID getUuid(){
 		return uuid;
+	}
+	
+	public AspectMap getAspects(){
+		return aspects;
 	}
 }

@@ -29,11 +29,11 @@ public final class AspectRenderer{
 		return new Identifier(aspect.id().getNamespace(), "textures/aspects/%s.png".formatted(aspect.id().getPath()));
 	}
 	
-	public static void renderAspectStackOverlay(AspectStack stack, MatrixStack matricies, TextRenderer text, int x, int y, int z){
-		matricies.push();
-		matricies.translate(0, 0, z + 1);
+	public static void renderAspectStackOverlay(AspectStack stack, MatrixStack matrices, TextRenderer text, int x, int y, int z){
+		matrices.push();
+		matrices.translate(0, 0, z + 1);
 		var label = String.valueOf(stack.amount());
-		text.drawWithShadow(matricies, label, x + 18 - text.getWidth(label), y + 9, 0xFFFFFF);
-		matricies.pop();
+		text.drawWithShadow(matrices, label, x + 18 - text.getWidth(label), y + 9, 0xFFFFFF);
+		matrices.pop();
 	}
 }

@@ -4,6 +4,7 @@ import arcana.aspects.ItemAspectRegistry;
 import arcana.commands.NodeCommand;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.event.lifecycle.v1.CommonLifecycleEvents;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
@@ -22,6 +23,7 @@ public final class Arcana implements ModInitializer{
 		logger.info("Loading Arcana");
 		
 		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(aspectRegistry);
+		CommonLifecycleEvents.TAGS_LOADED.register((registries, client) -> aspectRegistry.applyAssociations());
 		CommandRegistrationCallback.EVENT.register(NodeCommand::register);
 	}
 	

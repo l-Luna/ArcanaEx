@@ -4,6 +4,7 @@ import arcana.util.StreamUtil;
 import com.google.gson.*;
 import com.mojang.logging.LogUtils;
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
+import net.fabricmc.fabric.api.resource.ResourceReloadListenerKeys;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -18,6 +19,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.Pair;
 import net.minecraft.util.profiler.Profiler;
+import net.minecraft.util.registry.DynamicRegistryManager;
 import net.minecraft.util.registry.Registry;
 import org.slf4j.Logger;
 
@@ -41,6 +43,7 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 	
 	private static final Map<Item, List<AspectStack>> itemAspects = new HashMap<>();
 	
+	// TODO: would rather not do this
 	public static RecipeManager recipes;
 	
 	public ItemAspectRegistry(){
@@ -49,6 +52,10 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 	
 	public Identifier getFabricId(){
 		return arcId("aspects");
+	}
+	
+	public Collection<Identifier> getFabricDependencies(){
+		return Set.of(ResourceReloadListenerKeys.TAGS, ResourceReloadListenerKeys.RECIPES);
 	}
 	
 	public static List<AspectStack> get(ItemStack stack){
@@ -80,8 +87,12 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 		// always the same
 		addStackFunctions();
 		
-		// apply hardcoded associations
+		// load associations
 		prepared.forEach(this::applyJson);
+	}
+	
+	// applied after tag load event
+	public void applyAssociations(){
 		for(Item item : Registry.ITEM){
 			if(itemAssociations.containsKey(item))
 				itemAspects.put(item, itemAssociations.get(item));

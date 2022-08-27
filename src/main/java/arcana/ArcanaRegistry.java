@@ -1,5 +1,6 @@
 package arcana;
 
+import arcana.items.*;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.Settings;
@@ -22,13 +23,16 @@ public class ArcanaRegistry{
 		);
 	}
 	
-	public static final Item IRON_WAND_CAP = new Item(new Settings().group(Tab.ARCANA));
-	public static final Item COPPER_WAND_CAP = new Item(new Settings().group(Tab.ARCANA));
-	public static final Item GOLD_WAND_CAP = new Item(new Settings().group(Tab.ARCANA));
+	public static final CapItem IRON_WAND_CAP = new CapItem(new Settings().group(Tab.ARCANA));
+	public static final CapItem COPPER_WAND_CAP = new CapItem(new Settings().group(Tab.ARCANA));
+	public static final CapItem GOLD_WAND_CAP = new CapItem(new Settings().group(Tab.ARCANA));
 	
-	public static final Item BONE_WAND_CORE = new Item(new Settings().group(Tab.ARCANA));
-	public static final Item BLAZE_WAND_CORE = new Item(new Settings().group(Tab.ARCANA));
-	public static final Item ICE_WAND_CORE = new Item(new Settings().group(Tab.ARCANA));
+	public static final CoreItem BONE_WAND_CORE = new CoreItem(new Settings().group(Tab.ARCANA));
+	public static final CoreItem BLAZE_WAND_CORE = new CoreItem(new Settings().group(Tab.ARCANA));
+	public static final CoreItem ICE_WAND_CORE = new CoreItem(new Settings().group(Tab.ARCANA));
+	public static final Core STICK_CORE = new Core.Impl(arcId("stick_wand_core"));
+	
+	public static final Item WAND = new WandItem(new Settings().group(Tab.ARCANA));
 	
 	public static final List<Item> ITEMS = new ArrayList<>();
 	
@@ -40,10 +44,25 @@ public class ArcanaRegistry{
 		register("bone_wand_core", BONE_WAND_CORE);
 		register("blaze_wand_core", BLAZE_WAND_CORE);
 		register("ice_wand_core", ICE_WAND_CORE);
+		registerCoreOnly(STICK_CORE);
+		
+		register("wand", WAND);
 	}
 	
 	private static void register(String name, Item item){
 		Registry.register(Registry.ITEM, arcId(name), item);
 		ITEMS.add(item);
+		if(item  instanceof Cap c)
+			registerCapOnly(c);
+		if(item instanceof Core c)
+			registerCoreOnly(c);
+	}
+	
+	private static void registerCapOnly(Cap cap){
+		Cap.CAPS.put(cap.id(), cap);
+	}
+	
+	private static void registerCoreOnly(Core core){
+		Core.CORES.put(core.id(), core);
 	}
 }

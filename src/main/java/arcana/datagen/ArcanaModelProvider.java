@@ -8,7 +8,12 @@ import net.minecraft.data.client.ItemModelGenerator;
 import net.minecraft.data.client.Models;
 import net.minecraft.item.Item;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ArcanaModelProvider extends FabricModelProvider{
+	
+	private final List<Item> noAutoGen = new ArrayList<>();
 	
 	public ArcanaModelProvider(FabricDataGenerator gen){
 		super(gen);
@@ -19,7 +24,10 @@ public class ArcanaModelProvider extends FabricModelProvider{
 	}
 	
 	public void generateItemModels(ItemModelGenerator itemGen){
+		noAutoGen.add(ArcanaRegistry.WAND);
+		
 		for(Item item : ArcanaRegistry.ITEMS)
-			itemGen.register(item, Models.GENERATED);
+			if(!noAutoGen.contains(item))
+				itemGen.register(item, Models.GENERATED);
 	}
 }

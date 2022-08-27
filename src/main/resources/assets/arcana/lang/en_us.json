@@ -56,5 +56,18 @@
 
   "item.arcana.bone_wand_core": "Bone Core",
   "item.arcana.blaze_wand_core": "Blaze Core",
-  "item.arcana.ice_wand_core": "Ice Core"
+  "item.arcana.ice_wand_core": "Ice Core",
+
+  "item.arcana.wand": "%s %s %s",
+
+  "wand.variant.arcana.wand": "Wand",
+
+  "wand.cap.arcana.iron_wand_cap": "Iron Capped",
+  "wand.cap.arcana.copper_wand_cap": "Copper Capped",
+  "wand.cap.arcana.gold_wand_cap": "Gold Topped",
+
+  "wand.core.arcana.bone_wand_core": "Bone",
+  "wand.core.arcana.blaze_wand_core": "Blazing",
+  "wand.core.arcana.ice_wand_core": "Ice",
+  "wand.core.arcana.stick_wand_core": "Wooden"
 }

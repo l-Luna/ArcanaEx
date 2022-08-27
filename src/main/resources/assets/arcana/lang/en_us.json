@@ -1,4 +1,6 @@
 {
+  "itemGroup.arcana.group": "Arcana",
+
   "tag.arcana.helmets": "Helmets",
   "tag.arcana.chestplates": "Chestplates",
   "tag.arcana.leggings": "Leggings",
@@ -46,5 +48,13 @@
 
   "aspect.arcana.magic": "Praecantatio",
   "aspect.arcana.taint": "Virimus",
-  "aspect.arcana.aura": "Auram"
+  "aspect.arcana.aura": "Auram",
+
+  "item.arcana.iron_wand_cap": "Iron Cap",
+  "item.arcana.copper_wand_cap": "Copper Cap",
+  "item.arcana.gold_wand_cap": "Gold Cap",
+
+  "item.arcana.bone_wand_core": "Bone Core",
+  "item.arcana.blaze_wand_core": "Blaze Core",
+  "item.arcana.ice_wand_core": "Ice Core"
 }

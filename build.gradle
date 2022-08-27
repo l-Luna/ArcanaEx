@@ -28,6 +28,21 @@ repositories {
 	}
 }
 
+loom {
+	runs {
+		datagen {
+			client()
+			vmArg "-Dfabric-api.datagen"
+			vmArg "-Dfabric-api.datagen.modid=arcana"
+			vmArg "-Dfabric-api.datagen.output-dir=${file("src/generated/resources")}"
+		}
+	}
+}
+
+sourceSets.main.resources {
+	srcDir 'src/generated/resources'
+}
+
 dependencies {
 	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"

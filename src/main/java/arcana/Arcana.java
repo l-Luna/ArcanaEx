@@ -24,6 +24,8 @@ public final class Arcana implements ModInitializer{
 	public void onInitialize(){
 		logger.info("Loading Arcana");
 		
+		ArcanaRegistry.setup();
+		
 		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(aspectRegistry);
 		CommonLifecycleEvents.TAGS_LOADED.register((registries, client) -> aspectRegistry.applyAssociations());
 		CommandRegistrationCallback.EVENT.register(NodeCommand::register);

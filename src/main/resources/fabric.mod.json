@@ -20,6 +20,9 @@
     "client": [
       "arcana.client.ArcanaClient"
     ],
+    "fabric-datagen": [
+      "arcana.datagen.DatagenInit"
+    ],
     "emi": [
       "arcana.integration.emi.ArcanaEmiPlugin"
     ],

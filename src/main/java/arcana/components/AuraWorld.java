@@ -19,12 +19,12 @@ import java.util.List;
 import static arcana.Arcana.arcId;
 
 @ParametersAreNonnullByDefault
-public class AuraWorld implements Component, CommonTickingComponent, /* TODO: doesn't work */ AutoSyncedComponent{
+public class AuraWorld implements Component, CommonTickingComponent, AutoSyncedComponent{
 	
 	public static final ComponentKey<AuraWorld> KEY = ComponentRegistryV3.INSTANCE.getOrCreate(arcId("aura_world"), AuraWorld.class);
 	
 	private final List<Node> nodes = new ArrayList<>();
-	private World world;
+	private final World world;
 	
 	public AuraWorld(World world){
 		this.world = world;

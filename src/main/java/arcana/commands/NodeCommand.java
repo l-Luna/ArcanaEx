@@ -64,6 +64,8 @@ public class NodeCommand{
 		
 		Node toAdd = new Node(NodeTypes.byName(getIdentifier(context, "type")), world, getVec3(context, "position"));
 		aura.getNodes().add(toAdd);
+		
+		AuraWorld.KEY.sync(world);
 		return 1;
 	}
 	
@@ -74,7 +76,6 @@ public class NodeCommand{
 	private static int performList(CommandContext<ServerCommandSource> context){
 		World world = context.getSource().getWorld();
 		AuraWorld aura = world.getComponent(AuraWorld.KEY);
-		AuraWorld.KEY.sync(world);
 		context.getSource().sendMessage(Text.literal(aura.getNodes().toString()));
 		return 1;
 	}

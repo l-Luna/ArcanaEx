@@ -48,6 +48,8 @@ public class ArcanaEmiPlugin implements EmiPlugin{
 										.toList(),
 								aspect)));
 		
+		registry.addRecipe(new EmiWandRecipe(arcId("wand")));
+		
 		EmiStackSerializer.register(AspectEmiStackSerializer.ID, AspectEmiStack.class, new AspectEmiStackSerializer());
 	}
 }

@@ -4,7 +4,7 @@
   "package": "arcana.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "ItemMixin",
+    "ItemStackMixin",
     "RecipeManagerMixin"
   ],
   "client": [

@@ -21,7 +21,7 @@ import static net.minecraft.command.argument.Vec3ArgumentType.getVec3;
 import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
 
-public class NodeCommand{
+public final class NodeCommand{
 	
 	private static final SuggestionProvider<ServerCommandSource> SUGGEST_NODE_TYPES =
 			(context, builder) -> CommandSource.suggestIdentifiers(NodeTypes.NODE_TYPES.keySet().stream(), builder);
@@ -35,25 +35,21 @@ public class NodeCommand{
 		// arcana nodes list <nodes>?
 		// <nodes> = @n (nearest) or @i[x1,y1,z1,x2,y2,z2] (in AABB)
 		dispatcher.register(
-				literal("arcana")
+				literal("arcana-nodes")
 						.requires(source -> source.hasPermissionLevel(2))
-						.then(literal("nodes")
-								.then(literal("add")
-										.then(argument("type", identifier())
-												.then(argument("position", Vec3ArgumentType.vec3())
-														.executes(NodeCommand::performAdd)
-												)
-												.suggests(SUGGEST_NODE_TYPES)
+						.then(literal("add")
+								.then(argument("type", identifier())
+										.then(argument("position", Vec3ArgumentType.vec3())
+												.executes(NodeCommand::performAdd)
 										)
+										.suggests(SUGGEST_NODE_TYPES)
 								)
-								.then(literal("remove") // TODO: use NodesArgumentType
-										.then(argument("nodes", EntityArgumentType.entities())
-												.executes(NodeCommand::performRemove)
-										)
+						).then(literal("remove") // TODO: use NodesArgumentType
+								.then(argument("nodes", EntityArgumentType.entities())
+										.executes(NodeCommand::performRemove)
 								)
-								.then(literal("list")
-										.executes(NodeCommand::performList)
-								)
+						).then(literal("list")
+								.executes(NodeCommand::performList)
 						)
 		);
 	}

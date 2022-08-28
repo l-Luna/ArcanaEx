@@ -11,7 +11,7 @@ import net.minecraft.item.Item;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArcanaModelProvider extends FabricModelProvider{
+public final class ArcanaModelProvider extends FabricModelProvider{
 	
 	private final List<Item> noAutoGen = new ArrayList<>();
 	

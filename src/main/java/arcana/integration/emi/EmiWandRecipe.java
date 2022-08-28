@@ -1,6 +1,5 @@
 package arcana.integration.emi;
 
-import arcana.ArcanaRegistry;
 import arcana.items.Cap;
 import arcana.items.Core;
 import arcana.items.WandItem;
@@ -19,7 +18,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public class EmiWandRecipe extends EmiPatternCraftingRecipe{
+public final class EmiWandRecipe extends EmiPatternCraftingRecipe{
 	
 	private static final List<Item> CAPS = Registry.ITEM.stream()
 			.filter(Cap.class::isInstance)
@@ -36,12 +35,12 @@ public class EmiWandRecipe extends EmiPatternCraftingRecipe{
 		super(
 				List.of(
 						EmiIngredient.of(CAPS.stream().map(EmiStack::of).collect(Collectors.toList())),
-						EmiIngredient.of(CAPS.stream().map(EmiStack::of).collect(Collectors.toList())),
 						EmiIngredient.of(CORES.stream().map(EmiStack::of).collect(Collectors.toList()))
 				),
-				WandItem.withCapAndCore(ArcanaRegistry.IRON_WAND_CAP, ArcanaRegistry.STICK_CORE).emi(),
+				WandItem.basicWand().emi(),
 				id
 		);
+		// shapeless = false;
 	}
 	
 	public SlotWidget getInputWidget(int slot, int x, int y){
@@ -82,10 +81,6 @@ public class EmiWandRecipe extends EmiPatternCraftingRecipe{
 	}
 	
 	private Core getCoreAsCore(Random rng){
-		return asCore(getCore(rng));
-	}
-	
-	private static Core asCore(Item is){
-		return is instanceof Core core ? core : is == Items.STICK ? ArcanaRegistry.STICK_CORE : null;
+		return Core.asCore(getCore(rng));
 	}
 }

@@ -32,7 +32,7 @@ import java.util.stream.Stream;
 
 import static arcana.Arcana.arcId;
 
-public class WandModel implements UnbakedModel{
+public final class WandModel implements UnbakedModel{
 	
 	private static final List<SpriteIdentifier> deps = Stream.concat(
 					Cap.CAPS.values().stream().map(WandModel::capTexture),
@@ -41,8 +41,8 @@ public class WandModel implements UnbakedModel{
 	
 	public static final Identifier wandModel = arcId("item/wand/wand");
 	
-	protected static final Identifier defaultCoreTexId = coreTexture(ArcanaRegistry.STICK_CORE);
-	protected static final Identifier defaultCapTexId = capTexture(ArcanaRegistry.IRON_WAND_CAP);
+	private static final Identifier defaultCoreTexId = coreTexture(ArcanaRegistry.STICK_CORE);
+	private static final Identifier defaultCapTexId = capTexture(ArcanaRegistry.IRON_WAND_CAP);
 	
 	public Collection<Identifier> getModelDependencies(){
 		return List.of(wandModel);
@@ -52,7 +52,6 @@ public class WandModel implements UnbakedModel{
 		return deps;
 	}
 	
-	@Nullable
 	public BakedModel bake(ModelLoader loader, Function<SpriteIdentifier, Sprite> textureGetter, ModelBakeSettings bakeSettings, Identifier modelId){
 		return bakeWithTextures(loader, textureGetter, bakeSettings, modelId, defaultCoreTexId, defaultCapTexId);
 	}

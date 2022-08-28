@@ -40,8 +40,8 @@ public class ArcanaRegistry{
 	
 	public static final Item WAND = new WandItem(new Settings().group(Tab.ARCANA));
 	
-	public static final Block ARCANE_CRAFTING_TABLE = new ArcaneCraftingTableBlock(FabricBlockSettings.of(Material.WOOD));
-	public static final Block CRUCIBLE = new CrucibleBlock(FabricBlockSettings.of(Material.METAL));
+	public static final Block ARCANE_CRAFTING_TABLE = new ArcaneCraftingTableBlock(FabricBlockSettings.of(Material.WOOD).nonOpaque());
+	public static final Block CRUCIBLE = new CrucibleBlock(FabricBlockSettings.of(Material.METAL).nonOpaque());
 	
 	public static final List<Item> ITEMS = new ArrayList<>();
 	public static final List<Block> BLOCKS = new ArrayList<>();

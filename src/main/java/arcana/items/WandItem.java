@@ -33,6 +33,10 @@ public class WandItem extends Item{
 		return stack;
 	}
 	
+	public static ItemStack basicWand(){
+		return withCapAndCore(ArcanaRegistry.IRON_WAND_CAP, ArcanaRegistry.STICK_CORE);
+	}
+	
 	public Text getName(ItemStack stack){
 		return Text.translatable(
 				"item.arcana.wand",

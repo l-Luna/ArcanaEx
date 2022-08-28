@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 import static arcana.Arcana.arcId;
 
-public class ArcanaEmiPlugin implements EmiPlugin{
+public final class ArcanaEmiPlugin implements EmiPlugin{
 	
 	public static EmiRecipeCategory ASPECTS = new EmiRecipeCategory(arcId("aspects"), new AspectEmiStack(Aspects.LIGHT));
 	
@@ -54,7 +54,7 @@ public class ArcanaEmiPlugin implements EmiPlugin{
 		
 		registry.addRecipe(new EmiWandRecipe(arcId("wand")));
 		
-		EmiStack basicWand = WandItem.withCapAndCore(ArcanaRegistry.IRON_WAND_CAP, ArcanaRegistry.STICK_CORE).emi();
+		EmiStack basicWand = WandItem.basicWand().emi();
 		registry.addRecipe(EmiWorldInteractionRecipe.builder()
 				.id(arcId("world_convert_arcane_crafting_table"))
 				.leftInput(Blocks.CRAFTING_TABLE.asItem().emi())

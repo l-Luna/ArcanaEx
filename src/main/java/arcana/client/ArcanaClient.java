@@ -1,33 +1,30 @@
 package arcana.client;
 
 import arcana.ArcanaRegistry;
+import arcana.aspects.ItemAspectsTooltipData;
+import arcana.aspects.WandAspectsTooltipData;
 import arcana.screens.ArcaneCraftingScreen;
-import arcana.screens.ArcaneCraftingScreenHandler;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
-import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
-import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.gui.tooltip.BundleTooltipComponent;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
 import net.minecraft.client.item.BundleTooltipData;
 import net.minecraft.client.item.TooltipData;
-import net.minecraft.screen.ScreenHandlerType;
-import net.minecraft.util.registry.Registry;
-
-import static arcana.Arcana.arcId;
 
 public final class ArcanaClient implements ClientModInitializer{
 	
 	public void onInitializeClient(){
 		TooltipComponentCallback.EVENT.register(data ->
-				data instanceof AspectsTooltipData atd
-						? new AspectsTooltipComponent(atd.aspects(), dataToComponent(atd.inner()))
+				data instanceof ItemAspectsTooltipData itd
+						? new ItemAspectsTooltipComponent(itd.aspects(), dataToComponent(itd.inner()))
 						: null);
+		TooltipComponentCallback.EVENT.register(d ->
+				d instanceof WandAspectsTooltipData w ? new WandAspectsTooltipComponent(w.wand()) : null);
 		
 		WorldRenderEvents.LAST.register(NodeRenderer::renderAll);
 		

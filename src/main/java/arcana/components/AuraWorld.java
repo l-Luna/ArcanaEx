@@ -6,15 +6,22 @@ import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistryV3;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import dev.onyxstudios.cca.api.v3.component.tick.CommonTickingComponent;
+import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Position;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static arcana.Arcana.arcId;
 
@@ -42,12 +49,55 @@ public final class AuraWorld implements Component, CommonTickingComponent, AutoS
 		tag.put("nodes", list);
 	}
 	
+	public void tick(){
+		for(Node node : getNodes())
+			node.tick();
+	}
+	
+	// "public" API
+	
 	public List<Node> getNodes(){
 		return nodes;
 	}
 	
-	public void tick(){
-		for(Node node : getNodes())
-			node.tick();
+	public List<Node> getNodesInBounds(Box bounds){
+		return filterBounds(getNodes(), bounds);
+	}
+	
+	public static List<Node> filterBounds(List<Node> nodes, Box bounds){
+		List<Node> ret = new ArrayList<>();
+		for(Node node : nodes)
+			if(bounds.contains(node.asVec3d()))
+				ret.add(node);
+		return ret;
+	}
+	
+	public Optional<Node> raycast(Position from, double length, boolean ignoreBlocks, Entity viewer){
+		return raycast(getNodes(), from, length, ignoreBlocks, viewer);
+	}
+	
+	public static Optional<Node> raycast(List<Node> nodes, Position fromPos, double length, boolean ignoreBlocks, Entity viewer){
+		Vec3d from = new Vec3d(fromPos.getX(), fromPos.getY(), fromPos.getZ());
+		Vec3d to = from.add(viewer.getRotationVector().multiply(length));
+		BlockHitResult bhr = null;
+		if(!ignoreBlocks)
+			bhr = viewer.world.raycast(new RaycastContext(from, to, RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, viewer));
+		Box bounds = new Box(from, to);
+		Node ret = null;
+		double curDist = length;
+		for(Node node : filterBounds(nodes, bounds)){
+			Optional<Vec3d> hit = node.bounds().raycast(from, to);
+			if(hit.isPresent()){ // TODO: use squared distance in comparisons? skip nodes based on block hit?
+				double dist = from.distanceTo(hit.get());
+				if(dist < curDist){
+					ret = node;
+					curDist = dist;
+				}
+			}
+		}
+		if(!ignoreBlocks)
+			if(bhr.getPos().distanceTo(from) < curDist)
+				return Optional.empty(); // blocked by a block
+		return Optional.ofNullable(ret);
 	}
 }

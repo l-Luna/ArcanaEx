@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public record AspectsTooltipComponent(List<AspectStack> aspects, @Nullable TooltipComponent inner) implements TooltipComponent{
+public record ItemAspectsTooltipComponent(List<AspectStack> aspects, @Nullable TooltipComponent inner) implements TooltipComponent{
 	
 	public int getHeight(){
 		return 20 + (inner != null ? inner.getHeight() : 0);

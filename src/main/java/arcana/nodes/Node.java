@@ -5,6 +5,7 @@ import arcana.aspects.Aspects;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Position;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -13,6 +14,8 @@ import java.util.UUID;
 
 public class Node implements Position{
 
+	private static final double HALF_NODE = .7;
+	
 	private NodeType type;
 	private double x, y, z;
 	
@@ -91,6 +94,14 @@ public class Node implements Position{
 	
 	public BlockPos asBlockPos(){
 		return new BlockPos(x, y, z);
+	}
+	
+	public Vec3d asVec3d(){
+		return new Vec3d(x, y, z);
+	}
+	
+	public Box bounds(){
+		return new Box(x - HALF_NODE, y - HALF_NODE, z - HALF_NODE, x + HALF_NODE, y + HALF_NODE, z + HALF_NODE);
 	}
 	
 	public NodeType getType(){

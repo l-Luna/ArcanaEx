@@ -53,7 +53,7 @@ public class WandRecipe extends SpecialCraftingRecipe{
 		return SERIALIZER;
 	}
 	
-	public static void register(){
+	public static void setup(){
 		Registry.register(Registry.RECIPE_SERIALIZER, arcId("wand"), SERIALIZER);
 	}
 }

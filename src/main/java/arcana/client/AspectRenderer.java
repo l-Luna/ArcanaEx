@@ -12,9 +12,13 @@ import net.minecraft.util.Identifier;
 public final class AspectRenderer{
 
 	public static void renderAspectStack(AspectStack stack, MatrixStack matrices, TextRenderer text, int x, int y, int z){
-		renderAspect(stack.type(), matrices, x, y, z);
-		if(stack.amount() > 1)
-			renderAspectStackOverlay(stack, matrices, text, x, y, z);
+		renderAspectStack(stack.type(), stack.amount(), matrices, text, false, x, y, z);
+	}
+	
+	public static void renderAspectStack(Aspect aspect, int amount, MatrixStack matrices, TextRenderer text, boolean alwaysDrawLabel, int x, int y, int z){
+		renderAspect(aspect, matrices, x, y, z);
+		if(alwaysDrawLabel || amount > 1)
+			renderAspectStackOverlay(amount, matrices, text, x, y, z);
 	}
 	
 	public static void renderAspect(Aspect aspect, MatrixStack matrices, int x, int y, int z){
@@ -29,10 +33,10 @@ public final class AspectRenderer{
 		return new Identifier(aspect.id().getNamespace(), "textures/aspects/%s.png".formatted(aspect.id().getPath()));
 	}
 	
-	public static void renderAspectStackOverlay(AspectStack stack, MatrixStack matrices, TextRenderer text, int x, int y, int z){
+	public static void renderAspectStackOverlay(int amount, MatrixStack matrices, TextRenderer text, int x, int y, int z){
 		matrices.push();
 		matrices.translate(0, 0, z + 1);
-		var label = String.valueOf(stack.amount());
+		var label = String.valueOf(amount);
 		text.drawWithShadow(matrices, label, x + 18 - text.getWidth(label), y + 9, 0xFFFFFF);
 		matrices.pop();
 	}

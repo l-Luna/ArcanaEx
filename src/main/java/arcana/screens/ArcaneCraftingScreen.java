@@ -31,6 +31,8 @@ public class ArcaneCraftingScreen extends HandledScreen<ArcaneCraftingScreenHand
 		RenderSystem.setShaderColor(1, 1, 1, 1);
 		RenderSystem.setShaderTexture(0, TEXTURE);
 		drawTexture(matrices, x, y, 0, 0, backgroundWidth, backgroundHeight);
+		
+		// draw required aspects for recipe
 	}
 	
 	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
@@ -40,6 +42,6 @@ public class ArcaneCraftingScreen extends HandledScreen<ArcaneCraftingScreenHand
 	}
 	
 	protected void drawForeground(MatrixStack matrices, int mouseX, int mouseY){
-	
+		// no-op - don't draw label
 	}
 }

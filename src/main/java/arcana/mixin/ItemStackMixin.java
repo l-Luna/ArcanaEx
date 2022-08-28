@@ -1,7 +1,7 @@
 package arcana.mixin;
 
 import arcana.aspects.ItemAspectRegistry;
-import arcana.client.AspectsTooltipData;
+import arcana.aspects.ItemAspectsTooltipData;
 import net.minecraft.client.item.TooltipData;
 import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,6 +18,6 @@ public class ItemStackMixin{
 	private void applyAspectsTooltipData(CallbackInfoReturnable<Optional<TooltipData>> cir){
 		var aspects = ItemAspectRegistry.get((ItemStack)(Object)this);
 		if(aspects.size() > 0)
-			cir.setReturnValue(Optional.of(new AspectsTooltipData(aspects, cir.getReturnValue().orElse(null))));
+			cir.setReturnValue(Optional.of(new ItemAspectsTooltipData(aspects, cir.getReturnValue().orElse(null))));
 	}
 }

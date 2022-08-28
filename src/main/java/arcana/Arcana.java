@@ -3,6 +3,7 @@ package arcana;
 import arcana.aspects.ItemAspectRegistry;
 import arcana.commands.NodeCommand;
 import arcana.components.AuraWorld;
+import arcana.recipes.ShapedArcaneCraftingRecipe;
 import arcana.recipes.WandRecipe;
 import dev.onyxstudios.cca.api.v3.world.WorldSyncCallback;
 import net.fabricmc.api.ModInitializer;
@@ -26,7 +27,8 @@ public final class Arcana implements ModInitializer{
 		logger.info("Loading Arcana");
 		
 		ArcanaRegistry.setup();
-		WandRecipe.register();
+		WandRecipe.setup();
+		ShapedArcaneCraftingRecipe.setup();
 		
 		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(aspectRegistry);
 		CommonLifecycleEvents.TAGS_LOADED.register((registries, client) -> aspectRegistry.applyAssociations());

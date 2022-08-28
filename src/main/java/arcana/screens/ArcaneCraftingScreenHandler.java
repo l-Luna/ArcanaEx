@@ -1,18 +1,17 @@
 package arcana.screens;
 
 import arcana.ArcanaRegistry;
-import arcana.screens.ArcaneCraftingInventory.ArcaneCraftingResultInventory;
+import arcana.items.WandItem;
+import arcana.recipes.ShapedArcaneCraftingRecipe;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.inventory.CraftingResultInventory;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.s2c.play.ScreenHandlerSlotUpdateS2CPacket;
-import net.minecraft.recipe.CraftingRecipe;
-import net.minecraft.recipe.Recipe;
-import net.minecraft.recipe.RecipeMatcher;
-import net.minecraft.recipe.RecipeType;
+import net.minecraft.recipe.*;
 import net.minecraft.recipe.book.RecipeBookCategory;
 import net.minecraft.screen.AbstractRecipeScreenHandler;
 import net.minecraft.screen.ScreenHandler;
@@ -22,12 +21,13 @@ import net.minecraft.screen.slot.Slot;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.world.World;
 
-import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
-public class ArcaneCraftingScreenHandler extends AbstractRecipeScreenHandler<ArcaneCraftingInventory>{
+public class ArcaneCraftingScreenHandler extends AbstractRecipeScreenHandler<CraftingInventory>{
 	
-	private final ArcaneCraftingInventory input = new ArcaneCraftingInventory(this, 3, 3);
-	private final ArcaneCraftingResultInventory result = new ArcaneCraftingResultInventory();
+	private final CraftingInventory input = new CraftingInventory(this, 3, 3);
+	private final CraftingResultInventory result = new CraftingResultInventory();
+	private final Inventory wand = new SimpleInventory(1);
 	private final ScreenHandlerContext context;
 	private final PlayerEntity player;
 	
@@ -47,6 +47,12 @@ public class ArcaneCraftingScreenHandler extends AbstractRecipeScreenHandler<Arc
 			for(int j = 0; j < 3; ++j)
 				addSlot(new Slot(input, j + i * 3, 42 + j * 23, 41 + i * 23));
 		
+		addSlot(new Slot(wand, 0, 160, 18){
+			public boolean canInsert(ItemStack stack){
+				return stack.getItem() instanceof WandItem;
+			}
+		});
+		
 		// player inventory
 		for(int i = 0; i < 3; ++i)
 			for(int j = 0; j < 9; ++j)
@@ -58,26 +64,32 @@ public class ArcaneCraftingScreenHandler extends AbstractRecipeScreenHandler<Arc
 	}
 	
 	protected static void updateResult(
-			ScreenHandler handler, World world, PlayerEntity player, CraftingInventory craftingInventory, CraftingResultInventory result){
+			ScreenHandler handler, World world, PlayerEntity player, CraftingInventory craftInv, CraftingResultInventory result, Inventory wandInv){
 		if(!world.isClient){
-			ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity)player;
-			ItemStack itemStack = ItemStack.EMPTY;
-			Optional<CraftingRecipe> optional = world.getServer().getRecipeManager().getFirstMatch(RecipeType.CRAFTING, craftingInventory, world);
-			if(optional.isPresent()){
-				CraftingRecipe craftingRecipe = optional.get();
-				if(result.shouldCraftRecipe(world, serverPlayerEntity, craftingRecipe))
-					itemStack = craftingRecipe.craft(craftingInventory);
-			}
+			ServerPlayerEntity serverPlayer = (ServerPlayerEntity)player;
+			var itemStack = new AtomicReference<>(ItemStack.EMPTY);
+			RecipeManager manager = world.getServer().getRecipeManager();
+			// this is what if/else will look like in 2024
+			manager.getFirstMatch(ShapedArcaneCraftingRecipe.TYPE, craftInv, world).ifPresentOrElse(recipe -> {
+				// the pattern matches, but the aspects might not
+				// ArcaneCraftingScreen will display the missing aspects for us
+				// TODO: !!!
+				if(result.shouldCraftRecipe(world, serverPlayer, recipe))
+					itemStack.set(recipe.craft(craftInv));
+			}, () -> manager.getFirstMatch(RecipeType.CRAFTING, craftInv, world).ifPresent(recipe -> {
+				if(result.shouldCraftRecipe(world, serverPlayer, recipe))
+					itemStack.set(recipe.craft(craftInv));
+			}));
 			
-			result.setStack(0, itemStack);
-			handler.setPreviousTrackedSlot(0, itemStack);
-			serverPlayerEntity.networkHandler.sendPacket(new ScreenHandlerSlotUpdateS2CPacket(handler.syncId, handler.nextRevision(), 0, itemStack));
+			result.setStack(0, itemStack.get());
+			handler.setPreviousTrackedSlot(0, itemStack.get());
+			serverPlayer.networkHandler.sendPacket(new ScreenHandlerSlotUpdateS2CPacket(handler.syncId, handler.nextRevision(), 0, itemStack.get()));
 		}
 	}
 	
 	@Override
 	public void onContentChanged(Inventory inventory){
-		this.context.run((world, pos) -> updateResult(this, world, player, input, result));
+		context.run((world, pos) -> updateResult(this, world, player, input, result, wand));
 	}
 	
 	public void populateRecipeFinder(RecipeMatcher finder){
@@ -87,9 +99,10 @@ public class ArcaneCraftingScreenHandler extends AbstractRecipeScreenHandler<Arc
 	public void clearCraftingSlots(){
 		input.clear();
 		result.clear();
+		wand.clear();
 	}
 	
-	public boolean matches(Recipe<? super ArcaneCraftingInventory> recipe){
+	public boolean matches(Recipe<? super CraftingInventory> recipe){
 		return recipe.matches(input, player.world);
 	}
 	
@@ -106,7 +119,7 @@ public class ArcaneCraftingScreenHandler extends AbstractRecipeScreenHandler<Arc
 	}
 	
 	public int getCraftingSlotCount(){
-		return 10;
+		return 11;
 	}
 	
 	public RecipeBookCategory getCategory(){
@@ -124,24 +137,26 @@ public class ArcaneCraftingScreenHandler extends AbstractRecipeScreenHandler<Arc
 	public ItemStack transferSlot(PlayerEntity player, int index){
 		ItemStack itemStack = ItemStack.EMPTY;
 		Slot slot = slots.get(index);
-		if(slot != null && slot.hasStack()){
+		if(slot.hasStack()){
 			itemStack = slot.getStack().copy();
 			if(index == 0){
 				// shift click from crafting
 				context.run((world, pos) -> slot.getStack().getItem().onCraft(slot.getStack(), world, player));
-				if(!this.insertItem(slot.getStack(), 10, 46, true))
+				if(!this.insertItem(slot.getStack(), 11, 47, true))
 					return ItemStack.EMPTY;
 				
 				slot.onQuickTransfer(slot.getStack(), itemStack);
-			}else if(index >= 10 && index < 46){
-				if(!insertItem(slot.getStack(), 1, 10, false)){
-					if(index < 37){
-						if(!insertItem(slot.getStack(), 37, 46, false))
+			}else if(index >= 11 && index < 47){
+				// try to place wands in the wand slot first
+				boolean isWand = slot.getStack().getItem() instanceof WandItem;
+				if(!insertItem(slot.getStack(), 1, 11, isWand)){
+					if(index < 38){
+						if(!insertItem(slot.getStack(), 38, 47, false))
 							return ItemStack.EMPTY;
-					}else if(!insertItem(slot.getStack(), 10, 37, false))
+					}else if(!insertItem(slot.getStack(), 11, 38, false))
 						return ItemStack.EMPTY;
 				}
-			}else if(!insertItem(slot.getStack(), 10, 46, false))
+			}else if(!insertItem(slot.getStack(), 11, 47, false))
 				return ItemStack.EMPTY;
 			
 			if(slot.getStack().isEmpty())
@@ -166,6 +181,7 @@ public class ArcaneCraftingScreenHandler extends AbstractRecipeScreenHandler<Arc
 	
 	public void close(PlayerEntity player){
 		super.close(player);
-		context.run((world, pos) -> this.dropInventory(player, this.input));
+		context.run((world, pos) -> dropInventory(player, input));
+		context.run((world, pos) -> dropInventory(player, wand));
 	}
 }

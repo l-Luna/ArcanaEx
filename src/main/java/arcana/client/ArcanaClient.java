@@ -1,17 +1,25 @@
 package arcana.client;
 
 import arcana.ArcanaRegistry;
+import arcana.screens.ArcaneCraftingScreen;
+import arcana.screens.ArcaneCraftingScreenHandler;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
-import net.minecraft.block.Blocks;
+import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
+import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.client.color.world.BiomeColors;
+import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.gui.tooltip.BundleTooltipComponent;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
 import net.minecraft.client.item.BundleTooltipData;
 import net.minecraft.client.item.TooltipData;
+import net.minecraft.screen.ScreenHandlerType;
+import net.minecraft.util.registry.Registry;
+
+import static arcana.Arcana.arcId;
 
 public final class ArcanaClient implements ClientModInitializer{
 	
@@ -29,6 +37,8 @@ public final class ArcanaClient implements ClientModInitializer{
 				(state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.getWaterColor(world, pos) : -1,
 				ArcanaRegistry.CRUCIBLE
 		);
+		
+		HandledScreens.register(ArcanaRegistry.ARCANE_CRAFTING_SCREEN_HANDLER, ArcaneCraftingScreen::new);
 	}
 	
 	private static TooltipComponent dataToComponent(TooltipData data){

@@ -3,6 +3,7 @@ package arcana;
 import arcana.blocks.ArcaneCraftingTableBlock;
 import arcana.blocks.CrucibleBlock;
 import arcana.items.*;
+import arcana.screens.ArcaneCraftingScreenHandler;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
@@ -12,6 +13,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Item.Settings;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.util.registry.Registry;
 
 import java.util.ArrayList;
@@ -43,6 +45,9 @@ public class ArcanaRegistry{
 	public static final Block ARCANE_CRAFTING_TABLE = new ArcaneCraftingTableBlock(FabricBlockSettings.of(Material.WOOD).nonOpaque());
 	public static final Block CRUCIBLE = new CrucibleBlock(FabricBlockSettings.of(Material.METAL).nonOpaque());
 	
+	public static final ScreenHandlerType<ArcaneCraftingScreenHandler> ARCANE_CRAFTING_SCREEN_HANDLER
+			= new ScreenHandlerType<>(ArcaneCraftingScreenHandler::new);
+	
 	public static final List<Item> ITEMS = new ArrayList<>();
 	public static final List<Block> BLOCKS = new ArrayList<>();
 	
@@ -60,6 +65,8 @@ public class ArcanaRegistry{
 		
 		register("arcane_crafting_table", ARCANE_CRAFTING_TABLE);
 		register("crucible", CRUCIBLE);
+		
+		register("arcane_crafting", ARCANE_CRAFTING_SCREEN_HANDLER);
 	}
 	
 	private static void register(String name, Item item){
@@ -75,6 +82,10 @@ public class ArcanaRegistry{
 		Registry.register(Registry.BLOCK, arcId(name), block);
 		BLOCKS.add(block);
 		register(name, new BlockItem(block, new Settings().group(Tab.ARCANA)));
+	}
+	
+	private static void register(String name, ScreenHandlerType<?> type){
+		Registry.register(Registry.SCREEN_HANDLER, arcId(name), type);
 	}
 	
 	private static void registerCapOnly(Cap cap){

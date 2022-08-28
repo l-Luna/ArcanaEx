@@ -1,10 +1,8 @@
 package arcana.items;
 
 import arcana.ArcanaRegistry;
-import arcana.blocks.CrucibleBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.LeveledCauldronBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;

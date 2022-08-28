@@ -1,14 +1,18 @@
 package arcana.integration.emi;
 
+import arcana.ArcanaRegistry;
 import arcana.aspects.Aspect;
 import arcana.aspects.Aspects;
 import arcana.aspects.ItemAspectRegistry;
 import arcana.integration.emi.AspectEmiStack.AspectEmiStackSerializer;
+import arcana.items.WandItem;
 import dev.emi.emi.EmiStackSerializer;
 import dev.emi.emi.api.EmiPlugin;
 import dev.emi.emi.api.EmiRegistry;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
+import dev.emi.emi.api.recipe.EmiWorldInteractionRecipe;
 import dev.emi.emi.api.stack.EmiStack;
+import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Pair;
 
@@ -49,6 +53,20 @@ public class ArcanaEmiPlugin implements EmiPlugin{
 								aspect)));
 		
 		registry.addRecipe(new EmiWandRecipe(arcId("wand")));
+		
+		EmiStack basicWand = WandItem.withCapAndCore(ArcanaRegistry.IRON_WAND_CAP, ArcanaRegistry.STICK_CORE).emi();
+		registry.addRecipe(EmiWorldInteractionRecipe.builder()
+				.id(arcId("world_convert_arcane_crafting_table"))
+				.leftInput(Blocks.CRAFTING_TABLE.asItem().emi())
+				.rightInput(basicWand, true)
+				.output(ArcanaRegistry.ARCANE_CRAFTING_TABLE.asItem().emi())
+				.build());
+		registry.addRecipe(EmiWorldInteractionRecipe.builder()
+				.id(arcId("world_convert_crucible"))
+				.leftInput(Blocks.CAULDRON.asItem().emi())
+				.rightInput(basicWand, true)
+				.output(ArcanaRegistry.CRUCIBLE.asItem().emi())
+				.build());
 		
 		EmiStackSerializer.register(AspectEmiStackSerializer.ID, AspectEmiStack.class, new AspectEmiStackSerializer());
 	}

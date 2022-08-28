@@ -1,9 +1,13 @@
 package arcana.client;
 
+import arcana.ArcanaRegistry;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
+import net.minecraft.block.Blocks;
+import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.gui.tooltip.BundleTooltipComponent;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
 import net.minecraft.client.item.BundleTooltipData;
@@ -20,6 +24,11 @@ public final class ArcanaClient implements ClientModInitializer{
 		WorldRenderEvents.LAST.register(NodeRenderer::renderAll);
 		
 		ModelLoadingRegistry.INSTANCE.registerResourceProvider(__ -> new WandModel.Provider());
+		
+		ColorProviderRegistry.BLOCK.register(
+				(state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.getWaterColor(world, pos) : -1,
+				ArcanaRegistry.CRUCIBLE
+		);
 	}
 	
 	private static TooltipComponent dataToComponent(TooltipData data){

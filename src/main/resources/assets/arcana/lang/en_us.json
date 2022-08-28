@@ -60,6 +60,9 @@
 
   "item.arcana.wand": "%s %s %s",
 
+  "block.arcana.arcane_crafting_table": "Arcane Crafting Table",
+  "block.arcana.crucible": "Crucible",
+
   "wand.variant.arcana.wand": "Wand",
 
   "wand.cap.arcana.iron_wand_cap": "Iron Capped",

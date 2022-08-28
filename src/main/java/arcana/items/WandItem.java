@@ -38,19 +38,19 @@ public class WandItem extends Item{
 		}
 	}
 	
-	private static Cap capFrom(ItemStack stack){
+	public static Cap capFrom(ItemStack stack){
 		return capFrom(stack.getOrCreateNbt());
 	}
 	
-	private static Cap capFrom(NbtCompound nbt){
+	public static Cap capFrom(NbtCompound nbt){
 		return Cap.CAPS.get(new Identifier(nbt.getString("cap_id")));
 	}
 	
-	private static Core coreFrom(ItemStack stack){
+	public static Core coreFrom(ItemStack stack){
 		return coreFrom(stack.getOrCreateNbt());
 	}
 	
-	private static Core coreFrom(NbtCompound nbt){
+	public static Core coreFrom(NbtCompound nbt){
 		return Core.CORES.get(new Identifier(nbt.getString("core_id")));
 	}
 }

@@ -44,6 +44,8 @@
     "emi": "*"
   },
 
+  "accessWidener": "arcana.accesswidener",
+
   "custom": {
     "cardinal-components": [
       "arcana:aura_world"

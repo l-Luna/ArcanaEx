@@ -1,0 +1,4 @@
+accessWidener v1 named
+
+accessible field net/minecraft/client/render/model/BasicBakedModel itemPropertyOverrides Lnet/minecraft/client/render/model/json/ModelOverrideList;
+mutable field net/minecraft/client/render/model/BasicBakedModel itemPropertyOverrides Lnet/minecraft/client/render/model/json/ModelOverrideList;

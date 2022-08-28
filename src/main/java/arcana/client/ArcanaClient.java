@@ -1,6 +1,7 @@
 package arcana.client;
 
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.client.gui.tooltip.BundleTooltipComponent;
@@ -17,6 +18,8 @@ public final class ArcanaClient implements ClientModInitializer{
 						: null);
 		
 		WorldRenderEvents.LAST.register(NodeRenderer::renderAll);
+		
+		ModelLoadingRegistry.INSTANCE.registerResourceProvider(__ -> new WandModel.Provider());
 	}
 	
 	private static TooltipComponent dataToComponent(TooltipData data){

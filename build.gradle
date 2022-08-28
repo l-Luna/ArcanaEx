@@ -29,6 +29,8 @@ repositories {
 }
 
 loom {
+	accessWidenerPath = file("src/main/resources/arcana.accesswidener")
+
 	runs {
 		datagen {
 			client()

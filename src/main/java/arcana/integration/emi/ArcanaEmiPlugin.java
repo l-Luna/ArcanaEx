@@ -6,6 +6,7 @@ import arcana.aspects.Aspects;
 import arcana.aspects.ItemAspectRegistry;
 import arcana.integration.emi.AspectEmiStack.AspectEmiStackSerializer;
 import arcana.items.WandItem;
+import arcana.recipes.AlchemyRecipe;
 import arcana.recipes.ShapedArcaneCraftingRecipe;
 import dev.emi.emi.EmiStackSerializer;
 import dev.emi.emi.api.EmiPlugin;
@@ -27,6 +28,7 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 	
 	public static final EmiRecipeCategory ASPECTS = new EmiRecipeCategory(arcId("aspects"), new AspectEmiStack(Aspects.LIGHT));
 	public static final EmiRecipeCategory ARCANE_CRAFTING = new EmiRecipeCategory(arcId("arcane_crafting"), ArcanaRegistry.ARCANE_CRAFTING_TABLE.asItem().emi());
+	public static final EmiRecipeCategory ALCHEMY = new EmiRecipeCategory(arcId("alchemy"), ArcanaRegistry.CRUCIBLE.asItem().emi());
 	
 	public void register(EmiRegistry registry){
 		
@@ -34,6 +36,7 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 		
 		registry.addCategory(ASPECTS);
 		registry.addCategory(ARCANE_CRAFTING);
+		registry.addCategory(ALCHEMY);
 		
 		for(Aspect value : Aspects.ASPECTS.values())
 			registry.addEmiStack(new AspectEmiStack(value));
@@ -77,10 +80,14 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 		
 		registry.addWorkstation(VanillaEmiRecipeCategories.CRAFTING, ArcanaRegistry.ARCANE_CRAFTING_TABLE.asItem().emi());
 		registry.addWorkstation(ARCANE_CRAFTING, ArcanaRegistry.ARCANE_CRAFTING_TABLE.asItem().emi());
+		registry.addWorkstation(ALCHEMY, ArcanaRegistry.CRUCIBLE.asItem().emi());
 		
 		EmiStackSerializer.register(AspectEmiStackSerializer.ID, AspectEmiStack.class, new AspectEmiStackSerializer());
 		
-		for(ShapedArcaneCraftingRecipe recipe : registry.getRecipeManager().listAllOfType(ShapedArcaneCraftingRecipe.TYPE))
-			registry.addRecipe(new EmiArcaneCraftingRecipe(recipe));
+		var manager = registry.getRecipeManager();
+		for(var arcaneCraftingRecipe : manager.listAllOfType(ShapedArcaneCraftingRecipe.TYPE))
+			registry.addRecipe(new EmiArcaneCraftingRecipe(arcaneCraftingRecipe));
+		for(var alchemyRecipe : manager.listAllOfType(AlchemyRecipe.TYPE))
+			registry.addRecipe(new EmiAlchemyRecipe(alchemyRecipe));
 	}
 }

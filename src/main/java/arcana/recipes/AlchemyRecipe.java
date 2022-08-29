@@ -8,6 +8,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
@@ -60,6 +61,10 @@ public class AlchemyRecipe implements Recipe<AlchemyInventory>{
 	
 	public boolean fits(int width, int height){
 		return true;
+	}
+	
+	public DefaultedList<Ingredient> getIngredients(){
+		return DefaultedList.copyOf(ingredient, ingredient);
 	}
 	
 	public ItemStack getOutput(){

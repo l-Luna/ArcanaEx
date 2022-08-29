@@ -4,7 +4,8 @@
     "item": "minecraft:gunpowder"
   },
   "aspects": [
-    "5*exchange"
+    "5*exchange",
+    "2*energy"
   ],
   "result": {
     "item": "minecraft:redstone"

@@ -26,7 +26,7 @@ import static arcana.Arcana.arcId;
 
 public class AspectEmiStack extends EmiStack{
 	
-	private final AspectStack stack;
+	private AspectStack stack;
 	private final AspectEntry entry;
 	
 	public AspectEmiStack(AspectStack stack){
@@ -85,6 +85,15 @@ public class AspectEmiStack extends EmiStack{
 	
 	public Text getName(){
 		return stack.type().name();
+	}
+	
+	public EmiStack setAmount(long amount){
+		stack = new AspectStack(stack.type(), (int)amount);
+		return this;
+	}
+	
+	public long getAmount(){
+		return stack.amount();
 	}
 	
 	public static class AspectEntry extends Entry<Aspect>{

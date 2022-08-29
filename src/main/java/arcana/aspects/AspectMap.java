@@ -2,10 +2,7 @@ package arcana.aspects;
 
 import net.minecraft.nbt.NbtCompound;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public record AspectMap(Map<Aspect, Integer> underlying){
 	
@@ -90,6 +87,14 @@ public record AspectMap(Map<Aspect, Integer> underlying){
 	
 	public int size(){
 		return underlying.size();
+	}
+	
+	public List<AspectStack> asStacks(){
+		var aspects = aspectSet();
+		List<AspectStack> ret = new ArrayList<>(aspects.size());
+		for(Aspect aspect : aspects)
+			ret.add(new AspectStack(aspect, get(aspect)));
+		return ret;
 	}
 	
 	public NbtCompound toNbt(){

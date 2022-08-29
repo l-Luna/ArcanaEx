@@ -6,11 +6,13 @@ import arcana.aspects.Aspects;
 import arcana.aspects.ItemAspectRegistry;
 import arcana.integration.emi.AspectEmiStack.AspectEmiStackSerializer;
 import arcana.items.WandItem;
+import arcana.recipes.ShapedArcaneCraftingRecipe;
 import dev.emi.emi.EmiStackSerializer;
 import dev.emi.emi.api.EmiPlugin;
 import dev.emi.emi.api.EmiRegistry;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.recipe.EmiWorldInteractionRecipe;
+import dev.emi.emi.api.recipe.VanillaEmiRecipeCategories;
 import dev.emi.emi.api.stack.EmiStack;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
@@ -23,10 +25,15 @@ import static arcana.Arcana.arcId;
 
 public final class ArcanaEmiPlugin implements EmiPlugin{
 	
-	public static EmiRecipeCategory ASPECTS = new EmiRecipeCategory(arcId("aspects"), new AspectEmiStack(Aspects.LIGHT));
+	public static final EmiRecipeCategory ASPECTS = new EmiRecipeCategory(arcId("aspects"), new AspectEmiStack(Aspects.LIGHT));
+	public static final EmiRecipeCategory ARCANE_CRAFTING = new EmiRecipeCategory(arcId("arcane_crafting"), ArcanaRegistry.ARCANE_CRAFTING_TABLE.asItem().emi());
 	
 	public void register(EmiRegistry registry){
+		
+		// TODO: cleanup
+		
 		registry.addCategory(ASPECTS);
+		registry.addCategory(ARCANE_CRAFTING);
 		
 		for(Aspect value : Aspects.ASPECTS.values())
 			registry.addEmiStack(new AspectEmiStack(value));
@@ -68,6 +75,12 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 				.output(ArcanaRegistry.CRUCIBLE.asItem().emi())
 				.build());
 		
+		registry.addWorkstation(VanillaEmiRecipeCategories.CRAFTING, ArcanaRegistry.ARCANE_CRAFTING_TABLE.asItem().emi());
+		registry.addWorkstation(ARCANE_CRAFTING, ArcanaRegistry.ARCANE_CRAFTING_TABLE.asItem().emi());
+		
 		EmiStackSerializer.register(AspectEmiStackSerializer.ID, AspectEmiStack.class, new AspectEmiStackSerializer());
+		
+		for(ShapedArcaneCraftingRecipe recipe : registry.getRecipeManager().listAllOfType(ShapedArcaneCraftingRecipe.TYPE))
+			registry.addRecipe(new EmiArcaneCraftingRecipe(recipe));
 	}
 }

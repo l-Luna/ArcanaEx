@@ -1,0 +1,19 @@
+{
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "X": {
+      "item": "minecraft:gold_nugget"
+    }
+  },
+  "pattern": [
+    "XXX",
+    "X X"
+  ],
+  "result": {
+    "item": "arcana:gold_wand_cap"
+  },
+  "aspects": [
+    "2*fire",
+    "2*order"
+  ]
+}

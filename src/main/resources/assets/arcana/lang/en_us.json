@@ -68,9 +68,11 @@
   "wand.cap.arcana.iron_wand_cap": "Iron Capped",
   "wand.cap.arcana.copper_wand_cap": "Copper Capped",
   "wand.cap.arcana.gold_wand_cap": "Gold Topped",
+  "wand.cap.arcana.missing": "(Broken Cap)",
 
   "wand.core.arcana.bone_wand_core": "Bone",
   "wand.core.arcana.blaze_wand_core": "Blazing",
   "wand.core.arcana.ice_wand_core": "Ice",
-  "wand.core.arcana.stick_wand_core": "Wooden"
+  "wand.core.arcana.stick_wand_core": "Wooden",
+  "wand.core.arcana.missing": "(Broken Core)"
 }

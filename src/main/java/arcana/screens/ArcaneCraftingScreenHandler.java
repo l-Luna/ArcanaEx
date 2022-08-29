@@ -1,6 +1,8 @@
 package arcana.screens;
 
 import arcana.ArcanaRegistry;
+import arcana.aspects.Aspect;
+import arcana.aspects.AspectMap;
 import arcana.items.WandItem;
 import arcana.recipes.ShapedArcaneCraftingRecipe;
 import net.minecraft.entity.player.PlayerEntity;
@@ -11,7 +13,10 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.s2c.play.ScreenHandlerSlotUpdateS2CPacket;
-import net.minecraft.recipe.*;
+import net.minecraft.recipe.Recipe;
+import net.minecraft.recipe.RecipeManager;
+import net.minecraft.recipe.RecipeMatcher;
+import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.book.RecipeBookCategory;
 import net.minecraft.screen.AbstractRecipeScreenHandler;
 import net.minecraft.screen.ScreenHandler;
@@ -19,15 +24,21 @@ import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.slot.CraftingResultSlot;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 
 import java.util.concurrent.atomic.AtomicReference;
 
 public class ArcaneCraftingScreenHandler extends AbstractRecipeScreenHandler<CraftingInventory>{
 	
-	private final CraftingInventory input = new CraftingInventory(this, 3, 3);
+	final CraftingInventory input = new CraftingInventory(this, 3, 3);
+	final Inventory wand = new SimpleInventory(1){
+		public void markDirty(){
+			super.markDirty();
+			onContentChanged(wand);
+		}
+	};
 	private final CraftingResultInventory result = new CraftingResultInventory();
-	private final Inventory wand = new SimpleInventory(1);
 	private final ScreenHandlerContext context;
 	private final PlayerEntity player;
 	
@@ -40,7 +51,7 @@ public class ArcaneCraftingScreenHandler extends AbstractRecipeScreenHandler<Cra
 		context = ctx;
 		player = inv.player;
 		
-		addSlot(new CraftingResultSlot(player, input, result, 0, 160, 64));
+		addSlot(new ArcaneCraftingResultSlot(player, input, result, 0, 160, 64));
 		
 		// crafting slots
 		for(int i = 0; i < 3; ++i)
@@ -73,9 +84,12 @@ public class ArcaneCraftingScreenHandler extends AbstractRecipeScreenHandler<Cra
 			manager.getFirstMatch(ShapedArcaneCraftingRecipe.TYPE, craftInv, world).ifPresentOrElse(recipe -> {
 				// the pattern matches, but the aspects might not
 				// ArcaneCraftingScreen will display the missing aspects for us
-				// TODO: !!!
-				if(result.shouldCraftRecipe(world, serverPlayer, recipe))
-					itemStack.set(recipe.craft(craftInv));
+				ItemStack wandStack = wandInv.getStack(0);
+				if(wandStack.getItem() instanceof WandItem){
+					AspectMap stored = WandItem.aspectsFrom(wandStack);
+					if(stored.contains(recipe.aspects()) && result.shouldCraftRecipe(world, serverPlayer, recipe))
+						itemStack.set(recipe.craft(craftInv));
+				}
 			}, () -> manager.getFirstMatch(RecipeType.CRAFTING, craftInv, world).ifPresent(recipe -> {
 				if(result.shouldCraftRecipe(world, serverPlayer, recipe))
 					itemStack.set(recipe.craft(craftInv));
@@ -138,38 +152,39 @@ public class ArcaneCraftingScreenHandler extends AbstractRecipeScreenHandler<Cra
 		ItemStack itemStack = ItemStack.EMPTY;
 		Slot slot = slots.get(index);
 		if(slot.hasStack()){
-			itemStack = slot.getStack().copy();
+			ItemStack itemStack2 = slot.getStack();
+			itemStack = itemStack2.copy();
 			if(index == 0){
 				// shift click from crafting
-				context.run((world, pos) -> slot.getStack().getItem().onCraft(slot.getStack(), world, player));
-				if(!this.insertItem(slot.getStack(), 11, 47, true))
+				context.run((world, pos) -> itemStack2.getItem().onCraft(itemStack2, world, player));
+				if(!this.insertItem(itemStack2, 11, 47, true))
 					return ItemStack.EMPTY;
 				
-				slot.onQuickTransfer(slot.getStack(), itemStack);
+				slot.onQuickTransfer(itemStack2, itemStack);
 			}else if(index >= 11 && index < 47){
 				// try to place wands in the wand slot first
-				boolean isWand = slot.getStack().getItem() instanceof WandItem;
-				if(!insertItem(slot.getStack(), 1, 11, isWand)){
+				boolean isWand = itemStack2.getItem() instanceof WandItem;
+				if(!insertItem(itemStack2, 1, 11, isWand)){
 					if(index < 38){
-						if(!insertItem(slot.getStack(), 38, 47, false))
+						if(!insertItem(itemStack2, 38, 47, false))
 							return ItemStack.EMPTY;
-					}else if(!insertItem(slot.getStack(), 11, 38, false))
+					}else if(!insertItem(itemStack2, 11, 38, false))
 						return ItemStack.EMPTY;
 				}
-			}else if(!insertItem(slot.getStack(), 11, 47, false))
+			}else if(!insertItem(itemStack2, 11, 47, false))
 				return ItemStack.EMPTY;
 			
-			if(slot.getStack().isEmpty())
+			if(itemStack2.isEmpty())
 				slot.setStack(ItemStack.EMPTY);
 			else
 				slot.markDirty();
 			
-			if(slot.getStack().getCount() == itemStack.getCount())
+			if(itemStack2.getCount() == itemStack.getCount())
 				return ItemStack.EMPTY;
 			
-			slot.onTakeItem(player, slot.getStack());
+			slot.onTakeItem(player, itemStack2);
 			if(index == 0)
-				player.dropItem(slot.getStack(), false);
+				player.dropItem(itemStack2, false);
 		}
 		
 		return itemStack;
@@ -183,5 +198,57 @@ public class ArcaneCraftingScreenHandler extends AbstractRecipeScreenHandler<Cra
 		super.close(player);
 		context.run((world, pos) -> dropInventory(player, input));
 		context.run((world, pos) -> dropInventory(player, wand));
+	}
+	
+	public /* non-static */ class ArcaneCraftingResultSlot extends CraftingResultSlot{
+		
+		public ArcaneCraftingResultSlot(PlayerEntity player, CraftingInventory input, Inventory inventory, int index, int x, int y){
+			super(player, input, inventory, index, x, y);
+		}
+		
+		public void onTakeItem(PlayerEntity player, ItemStack stack){
+			World world = player.world;
+			RecipeManager manager = world.getRecipeManager();
+			var arcaneCrafting = manager.getFirstMatch(ShapedArcaneCraftingRecipe.TYPE, input, world);
+			arcaneCrafting.ifPresent(recipe -> {
+				// also take required aspects
+				ItemStack wandStack = wand.getStack(0);
+				if(wandStack.getItem() instanceof WandItem){
+					// already checked to see if it contains enough
+					WandItem.updateAspects(wandStack, map -> {
+						AspectMap required = recipe.aspects();
+						for(Aspect aspect : required.aspectSet())
+							map.take(aspect, required.get(aspect));
+					});
+				}
+			});
+			// take aspects before taking items
+			// need to allow for *arcane* crafting too
+			this.onCrafted(stack);
+			DefaultedList<ItemStack> remains;
+			if(arcaneCrafting.isPresent())
+				remains = player.world.getRecipeManager().getRemainingStacks(ShapedArcaneCraftingRecipe.TYPE, input, player.world);
+			else
+				remains = player.world.getRecipeManager().getRemainingStacks(RecipeType.CRAFTING, input, player.world);
+			
+			for(int i = 0; i < remains.size(); ++i){
+				ItemStack inputStack = input.getStack(i);
+				ItemStack remainingStack = remains.get(i);
+				if(!inputStack.isEmpty()){
+					input.removeStack(i, 1);
+					inputStack = input.getStack(i);
+				}
+				
+				if(!remainingStack.isEmpty()){
+					if(inputStack.isEmpty())
+						input.setStack(i, remainingStack);
+					else if(ItemStack.areItemsEqualIgnoreDamage(inputStack, remainingStack) && ItemStack.areNbtEqual(inputStack, remainingStack)){
+						remainingStack.increment(inputStack.getCount());
+						input.setStack(i, remainingStack);
+					}else if(!player.getInventory().insertStack(remainingStack))
+						player.dropItem(remainingStack, false);
+				}
+			}
+		}
 	}
 }

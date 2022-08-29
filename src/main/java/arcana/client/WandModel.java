@@ -35,8 +35,8 @@ import static arcana.Arcana.arcId;
 public final class WandModel implements UnbakedModel{
 	
 	private static final List<SpriteIdentifier> deps = Stream.concat(
-					Cap.CAPS.values().stream().map(WandModel::capTexture),
-					Core.CORES.values().stream().map(WandModel::coreTexture)
+					Cap.caps.values().stream().map(WandModel::capTexture),
+					Core.cores.values().stream().map(WandModel::coreTexture)
 			).map(WandModel::atlased).toList();
 	
 	public static final Identifier wandModel = arcId("item/wand/wand");

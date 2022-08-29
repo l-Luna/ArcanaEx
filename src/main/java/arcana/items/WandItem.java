@@ -21,7 +21,6 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
@@ -136,7 +135,7 @@ public class WandItem extends Item{
 	}
 	
 	public static Cap capFrom(NbtCompound nbt){
-		return Cap.CAPS.get(new Identifier(nbt.getString("cap_id")));
+		return Cap.byName(nbt.getString("cap_id"));
 	}
 	
 	public static Core coreFrom(ItemStack stack){
@@ -144,6 +143,6 @@ public class WandItem extends Item{
 	}
 	
 	public static Core coreFrom(NbtCompound nbt){
-		return Core.CORES.get(new Identifier(nbt.getString("core_id")));
+		return Core.byName(nbt.getString("core_id"));
 	}
 }

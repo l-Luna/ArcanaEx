@@ -19,7 +19,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.Pair;
 import net.minecraft.util.profiler.Profiler;
-import net.minecraft.util.registry.DynamicRegistryManager;
 import net.minecraft.util.registry.Registry;
 import org.slf4j.Logger;
 
@@ -30,6 +29,8 @@ import java.util.stream.Stream;
 import static arcana.Arcana.arcId;
 
 public final class ItemAspectRegistry extends JsonDataLoader implements IdentifiableResourceReloadListener{
+	
+	// TODO: replace use of List<AspectStack> with AspectMap
 	
 	private static final Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
 	private static final Logger logger = LogUtils.getLogger();
@@ -152,7 +153,7 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 			logger.warn("Root in aspect map \"%s\" is not a JSON object, ignoring".formatted(file));
 	}
 	
-	private static Optional<List<AspectStack>> parseAspectStackList(Identifier file, JsonElement json){
+	public static Optional<List<AspectStack>> parseAspectStackList(Identifier file, JsonElement json){
 		if(json.isJsonArray()){
 			JsonArray array = json.getAsJsonArray();
 			List<AspectStack> ret = new ArrayList<>();

@@ -9,7 +9,19 @@ import net.minecraft.util.Identifier;
 
 public interface Core{
 	
-	BiMap<Identifier, Core> CORES = HashBiMap.create();
+	// statics
+	
+	BiMap<Identifier, Core> cores = HashBiMap.create();
+	
+	static Core byName(String name){
+		return byName(new Identifier(name));
+	}
+	
+	static Core byName(Identifier name){
+		return cores.getOrDefault(name, ArcanaRegistry.MISSING_CORE);
+	}
+	
+	// members
 	
 	Identifier id();
 	

@@ -3,6 +3,7 @@ package arcana.aspects;
 import net.minecraft.nbt.NbtCompound;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -63,6 +64,10 @@ public record AspectMap(Map<Aspect, Integer> underlying){
 		return contains(stack.type(), stack.amount());
 	}
 	
+	public boolean contains(AspectMap other){
+		return other.aspectSet().stream().allMatch(x -> contains(x, other.get(x)));
+	}
+	
 	public int indexOf(Aspect aspect){
 		int i = 0;
 		for(Aspect asp : aspectSet()){
@@ -100,6 +105,15 @@ public record AspectMap(Map<Aspect, Integer> underlying){
 		for(String key : nbt.getKeys())
 			map.put(Aspects.byName(key), nbt.getInt(key));
 		return new AspectMap(map);
+	}
+	
+	public static AspectMap fromAspectStackList(List<AspectStack> stacks){
+		if(stacks == null)
+			return new AspectMap();
+		AspectMap map = new AspectMap(new LinkedHashMap<>(stacks.size()));
+		for(AspectStack stack : stacks)
+			map.add(stack);
+		return map;
 	}
 	
 	public AspectMap copy(){

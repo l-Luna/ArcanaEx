@@ -33,10 +33,14 @@ public final class AspectRenderer{
 	}
 	
 	public static void renderAspectStackOverlay(int amount, MatrixStack matrices, TextRenderer text, int x, int y, int z){
+		renderAspectStackOverlay(amount, matrices, text, x, y, z, 0xFFFFFF);
+	}
+	
+	public static void renderAspectStackOverlay(int amount, MatrixStack matrices, TextRenderer text, int x, int y, int z, int colour){
 		matrices.push();
 		matrices.translate(0, 0, z + 1);
 		var label = String.valueOf(amount);
-		text.drawWithShadow(matrices, label, x + 18 - text.getWidth(label), y + 9, 0xFFFFFF);
+		text.drawWithShadow(matrices, label, x + 18 - text.getWidth(label), y + 9, colour);
 		matrices.pop();
 	}
 }

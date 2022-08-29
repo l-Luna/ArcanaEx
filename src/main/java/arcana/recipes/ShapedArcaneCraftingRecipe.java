@@ -37,7 +37,7 @@ public class ShapedArcaneCraftingRecipe extends ShapedRecipe implements ArcaneCr
 		);
 	}
 	
-	AspectMap aspects;
+	private AspectMap aspects;
 	
 	public ShapedArcaneCraftingRecipe(Identifier id, String group, int width, int height, DefaultedList<Ingredient> input, ItemStack output){
 		super(id, group, width, height, input, output);

@@ -2,12 +2,15 @@ package arcana;
 
 import arcana.blocks.ArcaneCraftingTableBlock;
 import arcana.blocks.CrucibleBlock;
+import arcana.blocks.CrucibleBlockEntity;
 import arcana.items.*;
 import arcana.screens.ArcaneCraftingScreenHandler;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.Settings;
@@ -50,10 +53,15 @@ public final class ArcanaRegistry{
 	public static final ScreenHandlerType<ArcaneCraftingScreenHandler> ARCANE_CRAFTING_SCREEN_HANDLER
 			= new ScreenHandlerType<>(ArcaneCraftingScreenHandler::new);
 	
+	public static BlockEntityType<CrucibleBlockEntity> CRUCIBLE_BE = FabricBlockEntityTypeBuilder
+			.create(CrucibleBlockEntity::new, CRUCIBLE)
+			.build();
+	
 	public static final List<Item> ITEMS = new ArrayList<>();
 	public static final List<Block> BLOCKS = new ArrayList<>();
 	
 	public static void setup(){
+		// items + wand components
 		register("iron_wand_cap", IRON_WAND_CAP);
 		register("copper_wand_cap", COPPER_WAND_CAP);
 		register("gold_wand_cap", GOLD_WAND_CAP);
@@ -67,10 +75,15 @@ public final class ArcanaRegistry{
 		
 		register("wand", WAND);
 		
+		// blocks
 		register("arcane_crafting_table", ARCANE_CRAFTING_TABLE);
 		register("crucible", CRUCIBLE);
 		
+		// screen handlers
 		register("arcane_crafting", ARCANE_CRAFTING_SCREEN_HANDLER);
+		
+		// block entities
+		register("crucible", CRUCIBLE_BE);
 	}
 	
 	private static void register(String name, Item item){
@@ -90,6 +103,10 @@ public final class ArcanaRegistry{
 	
 	private static void register(String name, ScreenHandlerType<?> type){
 		Registry.register(Registry.SCREEN_HANDLER, arcId(name), type);
+	}
+	
+	private static void register(String name, BlockEntityType<?> type){
+		Registry.register(Registry.BLOCK_ENTITY_TYPE, arcId(name), type);
 	}
 	
 	private static void registerCapOnly(Cap cap){

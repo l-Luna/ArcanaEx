@@ -25,6 +25,10 @@ public record AspectMap(Map<Aspect, Integer> underlying){
 		return underlying.keySet();
 	}
 	
+	public void clear(){
+		underlying.clear();
+	}
+	
 	public void add(Aspect aspect, int amount){
 		set(aspect, get(aspect) + amount);
 	}
@@ -49,6 +53,10 @@ public record AspectMap(Map<Aspect, Integer> underlying){
 		add(stack.type(), -stack.amount());
 	}
 	
+	public void take(AspectMap map){
+		map.asStacks().forEach(this::take);
+	}
+	
 	public boolean contains(Aspect aspect, int amount){
 		return get(aspect) >= amount;
 	}
@@ -62,7 +70,7 @@ public record AspectMap(Map<Aspect, Integer> underlying){
 	}
 	
 	public boolean contains(AspectMap other){
-		return other.aspectSet().stream().allMatch(x -> contains(x, other.get(x)));
+		return other.asStacks().stream().allMatch(this::contains);
 	}
 	
 	public int indexOf(Aspect aspect){
@@ -87,6 +95,10 @@ public record AspectMap(Map<Aspect, Integer> underlying){
 	
 	public int size(){
 		return underlying.size();
+	}
+	
+	public boolean isEmpty(){
+		return size() == 0;
 	}
 	
 	public List<AspectStack> asStacks(){

@@ -62,6 +62,7 @@ dependencies {
 	modImplementation "dev.emi:emi:${emi_version}"
 	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cardinal_comp_version}"
 	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-world:${cardinal_comp_version}"
+	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinal_comp_version}"
 }
 
 processResources {

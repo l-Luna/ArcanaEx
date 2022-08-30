@@ -158,8 +158,32 @@ public final class ResearchLoader extends JsonDataLoader implements Identifiable
 	}
 	
 	private static List<EntrySection> jsonToSections(JsonArray sections, Identifier file){
-		// TODO: sections
-		return List.of();
+		List<EntrySection> ret = new ArrayList<>();
+		for(JsonElement sectionElement : sections)
+			if(sectionElement.isJsonObject()){
+				// expecting type, content
+				JsonObject section = sectionElement.getAsJsonObject();
+				String type = section.get("type").getAsString();
+				String content = section.get("content").getAsString();
+				// TODO: default to arcana namespace
+				EntrySection es = EntrySection.makeSection(new Identifier(type), section);
+				if(es != null){
+					/*if(section.has("requirements"))
+						if(section.get("requirements").isJsonArray()){
+							for(Requirement requirement : jsonToRequirements(section.get("requirements").getAsJsonArray(), file))
+								if(requirement != null)
+									es.addRequirement(requirement);
+						}else
+							LOGGER.error("Non-array named \"requirements\" found in " + file + "!");*/
+					//es.addOwnRequirements();
+					ret.add(es);
+				}/*else if(EntrySection.getFactory(type) == null)
+					LOGGER.error("Invalid EntrySection type \"" + type + "\" referenced in " + file + "!");
+				else
+					LOGGER.error("Invalid EntrySection content \"" + content + "\" for type \"" + type + "\" used in file " + file + "!");*/
+			}/*else
+				LOGGER.error("Non-object found in sections array in " + file + "!");*/
+		return ret;
 	}
 	
 	private static List<Icon> iconsFromJsonArray(JsonArray array, Identifier file){

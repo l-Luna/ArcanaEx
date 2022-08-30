@@ -11,6 +11,12 @@ public final class Research{
 	public static final Map<Identifier, Book> books = new LinkedHashMap<>();
 	public static final Map<Identifier, Puzzle> puzzles = new LinkedHashMap<>();
 	
+	public static void setup(){
+		EntrySection.setup();
+		Requirement.setup();
+		ResearchNetworking.setup();
+	}
+	
 	public static Book getBook(Identifier book){
 		return books.get(book);
 	}

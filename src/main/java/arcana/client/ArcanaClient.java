@@ -3,6 +3,8 @@ package arcana.client;
 import arcana.ArcanaRegistry;
 import arcana.aspects.ItemAspectsTooltipData;
 import arcana.aspects.WandAspectsTooltipData;
+import arcana.client.research.EntrySectionRenderer;
+import arcana.client.research.RequirementRenderer;
 import arcana.research.Research;
 import arcana.research.ResearchNetworking;
 import arcana.screens.ArcaneCraftingScreen;
@@ -48,6 +50,17 @@ public final class ArcanaClient implements ClientModInitializer{
 		
 		ClientPlayNetworking.registerGlobalReceiver(ResearchNetworking.syncPacketId,
 				(client, handler, buf, responseSender) -> ResearchNetworking.deserializeResearch(buf));
+		EntrySectionRenderer.setup();
+		RequirementRenderer.setup();
+		
+		// ensure text section caches are reset when reloading translations
+		/*ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(new IdentifiableResourceReloadListener(){
+			public Identifier getFabricId(){ return arcId("text_section_reset"); }
+			public CompletableFuture<Void> reload(Synchronizer _s, ResourceManager _m, Profiler _pp, Profiler _ap, Executor _pe, Executor _ae){
+				TextSectionRenderer.clearCache();
+				return CompletableFuture.completedFuture(null);
+			}
+		});*/
 	}
 	
 	private static TooltipComponent dataToComponent(TooltipData data){

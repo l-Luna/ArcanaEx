@@ -80,5 +80,14 @@
   "wand.core.arcana.blaze_wand_core": "Blazing",
   "wand.core.arcana.ice_wand_core": "Ice",
   "wand.core.arcana.stick_wand_core": "Wooden",
-  "wand.core.arcana.missing": "(Broken Core)"
+  "wand.core.arcana.missing": "(Broken Core)",
+
+  "research.requirement.arcana.experience": "%sx Experience Levels",
+  "research.requirement.arcana.item": "%sx %s",
+  "research.requirement.arcana.item.have": "Have: %s",
+  "research.requirement.arcana.tag": "Any from %s",
+
+  "research.arcana.aspects": "Aspects of Magic",
+  "research.arcana.aspects.desc": "The Building Blocks",
+  "research.arcana.aspects.text": "My new perspective has enabled me to understand the ramblings of these scribbled notes.{~sep}Among them are key insights into the workings of reality.\nAll matter is composed of Aspects, the fundamental building blocks of reality. Aspects come in a number of varieties, about {c3}{$numOfAspects}{r}, each of which corresponds to some concept.\nAll aspects are composed of two simpler aspects, with the exception of the six Primal aspects: {aspect:arcana:air}{c6}aer{r} (air), {aspect:arcana:earth}{c2}terra{r} (earth), {aspect:arcana:water}{c1}aqua{r} (water), {aspect:arcana:fire}{c4}ignis{r} (fire), {aspect:arcana:order}{c7}ordo{r} (order), and {aspect:arcana:entropy}perditio (chaos).\nChemical elements can also be considered to be the fundamental building blocks of matter. The two co-exist: modifying one modifies the other.\nThese aspects can also, apparently, be isolated, into solid-like, fluid-like, and gaseous-like forms: crystals are solid, and result from overflows of a particular aspect in the aura. The aura, in turn, is made up of the more gaseous vis form, and is almost entirely uniform, except around constant sources of aspects called nodes.\nFinally, equipment can supposedly be used to purify it into a fluid state known as essentia. Being much less stable than crystals, and much more concentrated than vis, essentia requires special measures to contain - though the notes were irritatingly vague on those. The upside is that it can be easily used to produce powerful effects - a controlled spray of ignis essentia here, and you've got easy fire."
 }

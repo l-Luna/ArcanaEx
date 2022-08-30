@@ -5,8 +5,8 @@ import arcana.commands.NodeCommand;
 import arcana.recipes.AlchemyRecipe;
 import arcana.recipes.ShapedArcaneCraftingRecipe;
 import arcana.recipes.WandRecipe;
+import arcana.research.Research;
 import arcana.research.ResearchLoader;
-import arcana.research.ResearchNetworking;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.CommonLifecycleEvents;
@@ -32,7 +32,7 @@ public final class Arcana implements ModInitializer{
 		WandRecipe.setup();
 		ShapedArcaneCraftingRecipe.setup();
 		AlchemyRecipe.setup();
-		ResearchNetworking.setup();
+		Research.setup();
 		
 		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(aspectRegistry);
 		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(researchLoader);

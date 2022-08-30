@@ -13,6 +13,10 @@ public class RenderHelper{
 	
 	// coloured version of DrawableHelper::drawTexture
 	
+	public static void drawTexture(MatrixStack matrices, int x, int y, int z, float u, float v, int width, int height, float r, float g, float b){
+		drawTexture(matrices, x, y, z, u, v, width, height, 256, 256, r, g, b, 1);
+	}
+	
 	public static void drawTexture(MatrixStack matrices, int x, int y, int z, float u, float v, int width, int height, int textureWidth, int textureHeight, float r, float g, float b, float a){
 		drawTexture(matrices, x, x + width, y, y + height, z, width, height, u, v, textureWidth, textureHeight, r, g, b, a);
 	}

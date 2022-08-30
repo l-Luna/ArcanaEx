@@ -24,7 +24,8 @@ import static net.minecraft.util.math.MathHelper.clamp;
 
 public class ResearchBookScreen extends Screen{
 	
-	private static final String bookPrefix = "textures/gui/research/";
+	public static final String bookPrefix = "textures/gui/research/";
+	
 	private static final String bookSuffix = "_book.png";
 	private static final Identifier arrowsAndBasesTexture = arcId("textures/gui/research/research_bases.png");
 	
@@ -249,7 +250,19 @@ public class ResearchBookScreen extends Screen{
 	}
 	
 	public boolean mouseClicked(double mouseX, double mouseY, int button){
-		// TODO: open research entry UI...
+		for(Entry entry : categories.get(tab).entries().values()){
+			PageStyle style;
+			if(hovering(entry, (int)mouseX, (int)mouseY)){
+				if(button != 2){
+					if((style = style(entry)) == PageStyle.complete || style == PageStyle.inProgress)
+						// left/right (& other) click: open page
+						MinecraftClient.getInstance().setScreen(new ResearchEntryScreen(entry, this));
+				}/*else
+					// middle click: try advance
+					Connection.sendTryAdvance(entry.key());*/
+				break;
+			}
+		}
 		return super.mouseClicked(mouseX, mouseY, button);
 	}
 	

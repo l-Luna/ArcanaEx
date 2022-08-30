@@ -9,6 +9,8 @@ import net.minecraft.util.Identifier;
 import java.util.ArrayList;
 import java.util.List;
 
+import static arcana.util.StreamUtil.streamAndApply;
+
 public record Entry(
 		Identifier id,
 		Category in,
@@ -28,7 +30,12 @@ public record Entry(
 		compound.putString("desc", desc);
 		compound.putInt("x", x);
 		compound.putInt("y", y);
-		// TODO: EntrySection
+		
+		NbtList sectionList = new NbtList();
+		for(EntrySection section : sections)
+			sectionList.add(section.getPassData());
+		compound.put("sections", sectionList);
+		
 		NbtList parentList = new NbtList();
 		for(Parent parent : parents)
 			parentList.add(NbtString.of(parent.asString()));
@@ -52,17 +59,22 @@ public record Entry(
 		String name = compound.getString("name"), desc = compound.getString("desc");
 		int x = compound.getInt("x"), y = compound.getInt("y");
 		
-		List<Parent> parents = new ArrayList<>();
-		List<Icon> icons = new ArrayList<>();
-		List<String> meta = new ArrayList<>();
+		List<EntrySection> sections = streamAndApply(
+				compound.getList("sections", NbtElement.COMPOUND_TYPE), NbtCompound.class,
+				EntrySection::deserialize).toList();
 		
+		List<Parent> parents = new ArrayList<>();
 		for(NbtElement parent : compound.getList("parents", NbtElement.STRING_TYPE))
 			parents.add(Parent.parse(parent.asString())); // NbtString overrides it
+		
+		List<Icon> icons = new ArrayList<>();
 		for(NbtElement parent : compound.getList("icons", NbtElement.STRING_TYPE))
 			icons.add(Icon.fromString(parent.asString()));
+		
+		List<String> meta = new ArrayList<>();
 		for(NbtElement parent : compound.getList("meta", NbtElement.STRING_TYPE))
 			meta.add(parent.asString());
 		
-		return new Entry(id, in, name, desc, List.of(), parents, icons, meta, x, y);
+		return new Entry(id, in, name, desc, sections, parents, icons, meta, x, y);
 	}
 }

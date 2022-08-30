@@ -89,8 +89,8 @@ public class CrucibleBlockEntity extends BlockEntity{
 	}
 	
 	public boolean isBoiling(){
-		return world.getBlockState(pos.down()).isIn(ArcanaTags.CRUIBLE_HEATING_BLOCKS)
-		    || world.getFluidState(pos.down()).isIn(ArcanaTags.CRUIBLE_HEATING_FLUIDS);
+		return world.getBlockState(pos.down()).isIn(ArcanaTags.CRUCIBLE_HEATING_BLOCKS)
+		    || world.getFluidState(pos.down()).isIn(ArcanaTags.CRUCIBLE_HEATING_FLUIDS);
 	}
 	
 	protected void writeNbt(NbtCompound nbt){

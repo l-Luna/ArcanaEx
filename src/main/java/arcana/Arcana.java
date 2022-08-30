@@ -5,6 +5,8 @@ import arcana.commands.NodeCommand;
 import arcana.recipes.AlchemyRecipe;
 import arcana.recipes.ShapedArcaneCraftingRecipe;
 import arcana.recipes.WandRecipe;
+import arcana.research.ResearchLoader;
+import arcana.research.ResearchNetworking;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.CommonLifecycleEvents;
@@ -20,6 +22,7 @@ public final class Arcana implements ModInitializer{
 	public static final Logger logger = LoggerFactory.getLogger(modid);
 	
 	public static final ItemAspectRegistry aspectRegistry = new ItemAspectRegistry();
+	public static final ResearchLoader researchLoader = new ResearchLoader();
 	
 	@Override
 	public void onInitialize(){
@@ -29,8 +32,10 @@ public final class Arcana implements ModInitializer{
 		WandRecipe.setup();
 		ShapedArcaneCraftingRecipe.setup();
 		AlchemyRecipe.setup();
+		ResearchNetworking.setup();
 		
 		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(aspectRegistry);
+		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(researchLoader);
 		CommonLifecycleEvents.TAGS_LOADED.register((registries, client) -> aspectRegistry.applyAssociations());
 		CommandRegistrationCallback.EVENT.register(NodeCommand::register);
 	}

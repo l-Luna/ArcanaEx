@@ -3,19 +3,25 @@ package arcana.client;
 import arcana.ArcanaRegistry;
 import arcana.aspects.ItemAspectsTooltipData;
 import arcana.aspects.WandAspectsTooltipData;
+import arcana.research.Research;
+import arcana.research.ResearchNetworking;
 import arcana.screens.ArcaneCraftingScreen;
+import arcana.screens.ResearchBookScreen;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.gui.tooltip.BundleTooltipComponent;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
 import net.minecraft.client.item.BundleTooltipData;
 import net.minecraft.client.item.TooltipData;
+import net.minecraft.util.Identifier;
 
 public final class ArcanaClient implements ClientModInitializer{
 	
@@ -39,6 +45,9 @@ public final class ArcanaClient implements ClientModInitializer{
 		HandledScreens.register(ArcanaRegistry.ARCANE_CRAFTING_SCREEN_HANDLER, ArcaneCraftingScreen::new);
 		
 		BlockEntityRendererRegistry.register(ArcanaRegistry.CRUCIBLE_BE, context -> new CrucibleBlockEntityRenderer());
+		
+		ClientPlayNetworking.registerGlobalReceiver(ResearchNetworking.syncPacketId,
+				(client, handler, buf, responseSender) -> ResearchNetworking.deserializeResearch(buf));
 	}
 	
 	private static TooltipComponent dataToComponent(TooltipData data){
@@ -47,5 +56,11 @@ public final class ArcanaClient implements ClientModInitializer{
 		if(data instanceof BundleTooltipData btd)
 			return new BundleTooltipComponent(btd);
 		return TooltipComponentCallback.EVENT.invoker().getComponent(data);
+	}
+	
+	// Reflectively invoked by ResearchBookItem::use
+	public static void openBook(Identifier bookId){
+		var client = MinecraftClient.getInstance();
+		client.execute(() -> client.setScreen(new ResearchBookScreen(Research.getBook(bookId), null)));
 	}
 }

@@ -1,0 +1,38 @@
+{
+  "entries": [
+    {
+      "key": "arcana:tainted_trailing",
+      "name": "research.arcana.tainted_trailing",
+      "desc": "research.arcana.tainted_trailing.desc",
+      "icons": [
+        "arcana:tainted_codex"
+      ],
+      "category": "arcana:tainted_basics",
+      "parents": [
+        "arcana:root"
+      ],
+      "meta": [
+      "locked"
+      ],
+      "x": 1,
+      "y": 1,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.tainted.stage.1"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:tainted_wand_core"
+        },
+        {
+          "type": "smelting",
+          "content": "arcana:silver_ingot_from_smelting",
+          "requirements": [
+            "0*arcana:silver_ingot"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -28,6 +28,9 @@
     ],
     "cardinal-components-world": [
       "arcana.components.WorldComponentInit"
+    ],
+    "cardinal-components-entity": [
+      "arcana.components.EntityComponentInit"
     ]
   },
   "mixins": [
@@ -48,7 +51,8 @@
 
   "custom": {
     "cardinal-components": [
-      "arcana:aura_world"
+      "arcana:aura_world",
+      "arcana:researcher"
     ]
   }
 }

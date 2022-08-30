@@ -62,6 +62,10 @@
 
   "item.arcana.wand": "%s %s %s",
 
+  "item.arcana.arcanum": "Arcanum",
+  "item.arcana.crimson_rites": "Crimson Rites",
+  "item.arcana.tainted_codex": "Tainted Codex",
+
   "block.arcana.arcane_crafting_table": "Arcane Crafting Table",
   "block.arcana.crucible": "Crucible",
 

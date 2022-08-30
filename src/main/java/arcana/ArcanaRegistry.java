@@ -34,18 +34,24 @@ public final class ArcanaRegistry{
 		);
 	}
 	
-	public static final CapItem IRON_WAND_CAP = new CapItem(new Settings().group(Tab.ARCANA));
-	public static final CapItem COPPER_WAND_CAP = new CapItem(new Settings().group(Tab.ARCANA));
-	public static final CapItem GOLD_WAND_CAP = new CapItem(new Settings().group(Tab.ARCANA));
+	public static final Settings GROUPED = new Settings().group(Tab.ARCANA);
+	
+	public static final CapItem IRON_WAND_CAP = new CapItem(GROUPED);
+	public static final CapItem COPPER_WAND_CAP = new CapItem(GROUPED);
+	public static final CapItem GOLD_WAND_CAP = new CapItem(GROUPED);
 	public static final Cap MISSING_CAP = new Cap.Impl(arcId("missing"));
 	
-	public static final CoreItem BONE_WAND_CORE = new CoreItem(new Settings().group(Tab.ARCANA));
-	public static final CoreItem BLAZE_WAND_CORE = new CoreItem(new Settings().group(Tab.ARCANA));
-	public static final CoreItem ICE_WAND_CORE = new CoreItem(new Settings().group(Tab.ARCANA));
+	public static final CoreItem BONE_WAND_CORE = new CoreItem(GROUPED);
+	public static final CoreItem BLAZE_WAND_CORE = new CoreItem(GROUPED);
+	public static final CoreItem ICE_WAND_CORE = new CoreItem(GROUPED);
 	public static final Core STICK_CORE = new Core.Impl(arcId("stick_wand_core"));
 	public static final Core MISSING_CORE = new Core.Impl(arcId("missing"));
 	
-	public static final Item WAND = new WandItem(new Settings().group(Tab.ARCANA));
+	public static final Item WAND = new WandItem(GROUPED);
+	
+	public static final Item ARCANUM = new ResearchBookItem(GROUPED, arcId("arcanum"));
+	public static final Item CRIMSON_RITES = new ResearchBookItem(GROUPED, arcId("crimson_rites"));
+	public static final Item TAINTED_CODEX = new ResearchBookItem(GROUPED, arcId("tainted_codex"));
 	
 	public static final Block ARCANE_CRAFTING_TABLE = new ArcaneCraftingTableBlock(FabricBlockSettings.of(Material.WOOD).nonOpaque());
 	public static final Block CRUCIBLE = new CrucibleBlock(FabricBlockSettings.of(Material.METAL).nonOpaque());
@@ -75,6 +81,10 @@ public final class ArcanaRegistry{
 		
 		register("wand", WAND);
 		
+		register("arcanum", ARCANUM);
+		register("crimson_rites", CRIMSON_RITES);
+		register("tainted_codex", TAINTED_CODEX);
+		
 		// blocks
 		register("arcane_crafting_table", ARCANE_CRAFTING_TABLE);
 		register("crucible", CRUCIBLE);
@@ -98,7 +108,7 @@ public final class ArcanaRegistry{
 	private static void register(String name, Block block){
 		Registry.register(Registry.BLOCK, arcId(name), block);
 		BLOCKS.add(block);
-		register(name, new BlockItem(block, new Settings().group(Tab.ARCANA)));
+		register(name, new BlockItem(block, GROUPED));
 	}
 	
 	private static void register(String name, ScreenHandlerType<?> type){

@@ -1,0 +1,69 @@
+{
+  "books": [
+    {
+      "key": "arcana:arcanum"
+    },
+    {
+      "key": "arcana:tainted_codex"
+    },
+    {
+      "key": "arcana:crimson_rites"
+    }
+  ],
+  "categories": [
+    {
+      "key": "arcana:fundamentals",
+      "in": "arcana:arcanum",
+      "icon": "arcana:aspects/light.png",
+      "name": "research.arcana.category.fundamentals",
+      "bg": "arcana:research/bg_fundamentals.png"
+    },
+    {
+      "key": "arcana:alchemy",
+      "in": "arcana:arcanum",
+      "icon": "arcana:research/alchemy_cat_icon.png",
+      "name": "research.arcana.category.alchemy",
+      "bg": "arcana:research/bg_fundamentals.png",
+      "requires": "arcana:alchemy"
+    },
+    {
+      "key": "arcana:auromancy",
+      "in": "arcana:arcanum",
+      "icon": "arcana:research/auromancy_cat_icon.png",
+      "name": "research.arcana.category.auromancy",
+      "bg": "arcana:research/bg_fundamentals.png",
+      "requires": "arcana:wandcraft",
+      "bgs": [
+        {
+          "type": "arcana:image",
+          "image": "arcana:research/flow/base",
+          "speed": 0.7
+        },
+        {
+          "type": "arcana:image",
+          "image": "arcana:research/flow/1",
+          "speed": 1.0
+        },
+        {
+          "type": "arcana:image",
+          "image": "arcana:research/flow/2",
+          "speed": 1.4
+        }
+      ]
+    },
+    {
+      "key": "arcana:tainted_basics",
+      "in": "arcana:tainted_codex",
+      "icon": "arcana:research/tainted_basics_cat_icon.png",
+      "name": "research.arcana.category.taint",
+      "bg": "arcana:research/bg_tainted.png"
+    },
+    {
+      "key": "arcana:crimson_basics",
+      "in": "arcana:crimson_rites",
+      "icon": "arcana:research/crimson_basics.png",
+      "name": "research.arcana.category.crimson",
+      "bg": "arcana:research/bg_eldritch.png"
+    }
+  ]
+}

@@ -13,8 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static arcana.screens.ResearchEntryScreen.heightOffset;
-import static arcana.screens.ResearchEntryScreen.textScaling;
+import static arcana.screens.ResearchEntryScreen.*;
 
 public class TextSectionRenderer implements EntrySectionRenderer<TextSection>{
 	
@@ -27,9 +26,9 @@ public class TextSectionRenderer implements EntrySectionRenderer<TextSection>{
 		List<Paragraph> paragraphs = format(section);
 		matrices.push();
 		matrices.scale(textScaling, textScaling, 1);
-		int x = right ? ResearchEntryScreen.pageX + ResearchEntryScreen.rightXOffset : ResearchEntryScreen.pageX;
+		int x = right ? pageX + rightXOffset : pageX;
 		float lineX = ((int)((screenWidth - 256) / 2f) + x) / textScaling;
-		float curY = ((int)((screenHeight - 181) / 2f) + ResearchEntryScreen.pageY + heightOffset) / textScaling;
+		float curY = ((int)((screenHeight - bgHeight) / 2f) + pageY - heightOffset) / textScaling;
 		// pick which paragraphs to display
 		int curPage = 0;
 		float curPageHeight = 0;

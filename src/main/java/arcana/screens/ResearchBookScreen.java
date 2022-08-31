@@ -1,8 +1,11 @@
 package arcana.screens;
 
+import arcana.client.ArcanaClient;
 import arcana.client.RenderHelper;
+import arcana.components.Researcher;
 import arcana.research.*;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.Screen;
@@ -17,6 +20,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static arcana.Arcana.arcId;
 import static java.lang.Math.*;
@@ -257,9 +261,9 @@ public class ResearchBookScreen extends Screen{
 					if((style = style(entry)) == PageStyle.complete || style == PageStyle.inProgress)
 						// left/right (& other) click: open page
 						MinecraftClient.getInstance().setScreen(new ResearchEntryScreen(entry, this));
-				}/*else
+				}else
 					// middle click: try advance
-					Connection.sendTryAdvance(entry.key());*/
+					ArcanaClient.sendTryAdvance(entry);
 				break;
 			}
 		}
@@ -287,10 +291,63 @@ public class ResearchBookScreen extends Screen{
 		return false;
 	}
 	
-	private PageStyle style(Entry entry){
-		// TODO: check research completion
-		return PageStyle.complete;
+	public PageStyle style(Entry entry){
+		// locked entries are always locked
+		if(entry.meta().contains("locked"))
+			return PageStyle.pending;
+		// if the page is at full progress, its complete.
+		Researcher r = Researcher.from(MinecraftClient.getInstance().player);
+		if(r.entryStage(entry) >= entry.sections().size())
+			return PageStyle.complete;
+		// if its progress is greater than zero, then its in progress.
+		if(r.entryStage(entry) > 0)
+			return PageStyle.inProgress;
+		// if it has no parents *and* the "root" tag, its available to do and in progress.
+		if(entry.meta().contains("root") && entry.parents().size() == 0)
+			return PageStyle.inProgress;
+		// if it does not have the "hidden" tag:
+		if(!entry.meta().contains("hidden")){
+			List<PageStyle> parentStyles = entry.parents().stream().map(parent -> Pair.of(Research.getEntry(parent.id()), parent)).map(p -> parentStyle(p.getFirst(), p.getSecond())).toList();
+			// if all of its parents are complete, it is available to do and in progress.
+			if(parentStyles.stream().allMatch(PageStyle.complete::equals))
+				return PageStyle.inProgress;
+			// if at least one of its parents are in progress, its pending.
+			if(parentStyles.stream().anyMatch(PageStyle.inProgress::equals))
+				return PageStyle.pending;
+		}
+		// otherwise, its invisible
+		return PageStyle.none;
 	}
+	
+	public PageStyle parentStyle(Entry entry, Parent parent){
+		// if the parent is greater than required, consider it complete
+		Objects.requireNonNull(entry, "Tried to get the stage of a parent entry that doesn't exist: " + parent.id().toString() + " (from " + parent.asString() + ")");
+		Researcher r = Researcher.from(MinecraftClient.getInstance().player);
+		if(parent.stage() == -1){
+			if(r.entryStage(entry) >= entry.sections().size())
+				return PageStyle.complete;
+		}else if(r.entryStage(entry) >= parent.stage())
+			return PageStyle.complete;
+		// if its progress is greater than zero, then its in progress.
+		if(r.entryStage(entry) > 0)
+			return PageStyle.inProgress;
+		// if it has no parents *and* the "root" tag, its available to do and in progress.
+		if(entry.meta().contains("root") && entry.parents().size() == 0)
+			return PageStyle.inProgress;
+		// if it does not have the "hidden" tag:
+		if(!entry.meta().contains("hidden")){
+			List<PageStyle> parentStyles = entry.parents().stream().map(p -> Pair.of(Research.getEntry(p.id()), p)).map(p -> parentStyle(p.getFirst(), p.getSecond())).toList();
+			// if all of its parents are complete, it is available to do and in progress.
+			if(parentStyles.stream().allMatch(PageStyle.complete::equals))
+				return PageStyle.inProgress;
+			// if at least one of its parents are in progress, its pending.
+			if(parentStyles.stream().anyMatch(PageStyle.inProgress::equals))
+				return PageStyle.pending;
+		}
+		// otherwise, its invisible
+		return PageStyle.none;
+	}
+	
 	
 	private int base(Entry entry){
 		int base = 8;

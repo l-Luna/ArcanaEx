@@ -43,4 +43,12 @@ public final class Arcana implements ModInitializer{
 	public static Identifier arcId(String s){
 		return new Identifier(modid, s);
 	}
+	
+	// resolves non-namespaced IDs in the arcana namespace, otherwise uses the given namespace
+	public static Identifier maybeArcId(String s){
+		if(s.contains(":"))
+			return new Identifier(s);
+		else
+			return arcId(s);
+	}
 }

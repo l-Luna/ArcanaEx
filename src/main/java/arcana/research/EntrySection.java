@@ -42,6 +42,10 @@ public abstract class EntrySection{
 		return null;
 	}
 	
+	public static boolean exists(Identifier type){
+		return factories.containsKey(type);
+	}
+	
 	public static void setup(){
 		factories.put(TextSection.TYPE, withContentsStr(TextSection::new));
 		deserializers.put(TextSection.TYPE, nbt -> new TextSection(nbt.getString("text")));

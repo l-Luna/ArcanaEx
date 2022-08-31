@@ -1,5 +1,8 @@
 package arcana.research;
 
+import arcana.Arcana;
+import arcana.research.requirements.ItemRequirement;
+import arcana.research.requirements.ItemTagRequirement;
 import com.google.gson.*;
 import com.mojang.logging.LogUtils;
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
@@ -158,31 +161,82 @@ public final class ResearchLoader extends JsonDataLoader implements Identifiable
 	}
 	
 	private static List<EntrySection> jsonToSections(JsonArray sections, Identifier file){
+		// TODO: update logging
 		List<EntrySection> ret = new ArrayList<>();
 		for(JsonElement sectionElement : sections)
 			if(sectionElement.isJsonObject()){
-				// expecting type, content
 				JsonObject section = sectionElement.getAsJsonObject();
 				String type = section.get("type").getAsString();
-				String content = section.get("content").getAsString();
-				// TODO: default to arcana namespace
-				EntrySection es = EntrySection.makeSection(new Identifier(type), section);
+				var typeId = Arcana.maybeArcId(type);
+				EntrySection es = EntrySection.makeSection(typeId, section);
 				if(es != null){
-					/*if(section.has("requirements"))
+					if(section.has("requirements"))
 						if(section.get("requirements").isJsonArray()){
 							for(Requirement requirement : jsonToRequirements(section.get("requirements").getAsJsonArray(), file))
 								if(requirement != null)
 									es.addRequirement(requirement);
 						}else
-							LOGGER.error("Non-array named \"requirements\" found in " + file + "!");*/
-					//es.addOwnRequirements();
+							logger.warn("Non-array named \"requirements\" found in " + file);
 					ret.add(es);
-				}/*else if(EntrySection.getFactory(type) == null)
-					LOGGER.error("Invalid EntrySection type \"" + type + "\" referenced in " + file + "!");
+				}else if(!EntrySection.exists(typeId))
+					logger.warn("Invalid EntrySection type \"" + type + "\" referenced in " + file);
 				else
-					LOGGER.error("Invalid EntrySection content \"" + content + "\" for type \"" + type + "\" used in file " + file + "!");*/
-			}/*else
-				LOGGER.error("Non-object found in sections array in " + file + "!");*/
+					logger.warn("Invalid EntrySection content for type \"" + type + "\" used in file " + file);
+			}else
+				logger.warn("Non-object found in sections array in " + file);
+		return ret;
+	}
+	
+	private static List<Requirement> jsonToRequirements(JsonArray requirements, Identifier file){
+		List<Requirement> ret = new ArrayList<>();
+		for(JsonElement requirementElement : requirements){
+			if(requirementElement.isJsonPrimitive()){
+				String desc = requirementElement.getAsString();
+				int amount = 1;
+				// if it has * in it, then its amount is not one
+				if(desc.contains("*")){
+					String[] parts = desc.split("\\*");
+					if(parts.length != 2)
+						logger.warn("Multiple \"*\"s found in requirement in " + file);
+					desc = parts[parts.length - 1];
+					amount = Integer.parseInt(parts[0]);
+				}
+				List<String> params = new ArrayList<>();
+				// document this better.
+				// If this has a "{" it has parameters; remove those
+				if(desc.contains("{") && desc.endsWith("}")){
+					String[] param_parts = desc.split("\\{", 2);
+					desc = param_parts[0];
+					params = Arrays.asList(param_parts[1].substring(0, param_parts[1].length() - 1).split(", *"));
+				}
+				// If this has "::" it's a custom requirement
+				if(desc.contains("::")){
+					String[] parts = desc.split("::");
+					if(parts.length != 2)
+						logger.warn("Multiple \"::\"s found in requirement in " + file);
+					Identifier type = new Identifier(parts[0], parts[1]);
+					Requirement add = Requirement.makeRequirement(type, params);
+					if(add != null){
+						add.amount = amount;
+						ret.add(add);
+					}else
+						logger.warn("Invalid requirement type " + type + " found in file " + file);
+					// if this begins with a hash
+				}else if(desc.startsWith("#")){
+					// it's a tag
+					ItemTagRequirement tagReq = new ItemTagRequirement(new Identifier(desc.substring(1)));
+					tagReq.amount = amount;
+					ret.add(tagReq);
+				}else{
+					// it's an item
+					Identifier item = new Identifier(desc);
+					Item value = Registry.ITEM.get(item);
+					ItemRequirement add = new ItemRequirement(value);
+					add.amount = amount;
+					ret.add(add);
+				}
+			}
+		}
 		return ret;
 	}
 	

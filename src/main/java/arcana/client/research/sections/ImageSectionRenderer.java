@@ -12,7 +12,7 @@ public class ImageSectionRenderer implements EntrySectionRenderer<ImageSection>{
 	
 	public void render(MatrixStack stack, ImageSection image, int idx, int screenW, int screenH, int mX, int mY, boolean right){
 		RenderSystem.setShaderTexture(0, image.getImage());
-		client().currentScreen.drawTexture(stack, (right ? pageX + rightXOffset : pageX) + (screenW - 256) / 2, pageY + (screenH - 181) / 2 + heightOffset, 0, 0, pageWidth, pageHeight);
+		client().currentScreen.drawTexture(stack, (right ? pageX + rightXOffset : pageX) + (screenW - 256) / 2, pageY + (screenH - bgHeight) / 2 - heightOffset, 0, 0, pageWidth, pageHeight);
 	}
 	
 	public void renderAfter(MatrixStack stack, ImageSection image, int idx, int screenW, int screenH, int mX, int mY, boolean right){

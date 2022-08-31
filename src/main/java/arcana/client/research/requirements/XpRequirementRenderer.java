@@ -7,7 +7,6 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
 
 import java.util.List;
 
@@ -26,8 +25,8 @@ public class XpRequirementRenderer implements RequirementRenderer<XpRequirement>
 	public static void doXPRender(MatrixStack stack, int time, int x, int y, float delta){
 		int u = 0, v = 16;
 		float halfTime = (time + delta) / 2f;
-		float red = (MathHelper.sin(halfTime) + 1.0F) * .5f;
-		float blue = (MathHelper.sin(halfTime + 4.1887903f) + 1) * .1f;
+		float red = (float)((Math.sin(halfTime) + 1) * .5f);
+		float blue = (float)((Math.sin((float)(halfTime + (Math.PI * 4 / 3f))) + 1) * .1f);
 		stack.push();
 		RenderSystem.setShaderTexture(0, experienceOrbTexture);
 		RenderSystem.enableBlend();

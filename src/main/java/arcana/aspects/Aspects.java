@@ -1,12 +1,12 @@
 package arcana.aspects;
 
+import arcana.Arcana;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import static arcana.Arcana.arcId;
 
@@ -65,10 +65,7 @@ public final class Aspects{
 	
 	// defaults to the arcana namespace, since minecraft has no aspects
 	public static Aspect byName(String name){
-		if(!name.contains(":"))
-			return byName(arcId(name));
-		else
-			return byName(new Identifier(name));
+		return byName(Arcana.maybeArcId(name));
 	}
 	
 	private static Aspect create(String name){

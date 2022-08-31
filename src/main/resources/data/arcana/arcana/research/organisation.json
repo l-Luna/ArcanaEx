@@ -14,14 +14,14 @@
     {
       "key": "arcana:fundamentals",
       "in": "arcana:arcanum",
-      "icon": "arcana:aspects/light.png",
+      "icon": "arcana:aspects/light",
       "name": "research.arcana.category.fundamentals",
       "bg": "arcana:research/bg_fundamentals.png"
     },
     {
       "key": "arcana:alchemy",
       "in": "arcana:arcanum",
-      "icon": "arcana:research/alchemy_cat_icon.png",
+      "icon": "arcana:research/alchemy_cat_icon",
       "name": "research.arcana.category.alchemy",
       "bg": "arcana:research/bg_fundamentals.png",
       "requires": "arcana:alchemy"

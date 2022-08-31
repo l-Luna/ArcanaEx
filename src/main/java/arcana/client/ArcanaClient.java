@@ -5,10 +5,12 @@ import arcana.aspects.ItemAspectsTooltipData;
 import arcana.aspects.WandAspectsTooltipData;
 import arcana.client.research.EntrySectionRenderer;
 import arcana.client.research.RequirementRenderer;
+import arcana.research.Entry;
 import arcana.research.Research;
 import arcana.research.ResearchNetworking;
 import arcana.screens.ArcaneCraftingScreen;
 import arcana.screens.ResearchBookScreen;
+import arcana.screens.ResearchEntryScreen;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -52,15 +54,6 @@ public final class ArcanaClient implements ClientModInitializer{
 				(client, handler, buf, responseSender) -> ResearchNetworking.deserializeResearch(buf));
 		EntrySectionRenderer.setup();
 		RequirementRenderer.setup();
-		
-		// ensure text section caches are reset when reloading translations
-		/*ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(new IdentifiableResourceReloadListener(){
-			public Identifier getFabricId(){ return arcId("text_section_reset"); }
-			public CompletableFuture<Void> reload(Synchronizer _s, ResourceManager _m, Profiler _pp, Profiler _ap, Executor _pe, Executor _ae){
-				TextSectionRenderer.clearCache();
-				return CompletableFuture.completedFuture(null);
-			}
-		});*/
 	}
 	
 	private static TooltipComponent dataToComponent(TooltipData data){
@@ -75,5 +68,16 @@ public final class ArcanaClient implements ClientModInitializer{
 	public static void openBook(Identifier bookId){
 		var client = MinecraftClient.getInstance();
 		client.execute(() -> client.setScreen(new ResearchBookScreen(Research.getBook(bookId), null)));
+	}
+	
+	// Reflectively invokes by Researcher::applySyncPacket
+	public static void refreshResearchEntryUi(){
+		var client = MinecraftClient.getInstance();
+		if(client.currentScreen instanceof ResearchEntryScreen entryScreen)
+			entryScreen.updateButtons();
+	}
+	
+	public static void sendTryAdvance(Entry entry){
+		ClientPlayNetworking.send(ResearchNetworking.tryAdvanceId, ResearchNetworking.serializeTryAdvance(entry));
 	}
 }

@@ -1,8 +1,10 @@
 package arcana.screens;
 
+import arcana.client.ArcanaClient;
 import arcana.client.RenderHelper;
 import arcana.client.research.EntrySectionRenderer;
 import arcana.client.research.RequirementRenderer;
+import arcana.components.Researcher;
 import arcana.research.Entry;
 import arcana.research.EntrySection;
 import arcana.research.Requirement;
@@ -10,11 +12,14 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,13 +40,13 @@ public class ResearchEntryScreen extends Screen{
 	
 	public static final float textScaling = .7f;
 	
-	public Identifier bg;
-	private Entry entry;
+	public final Identifier bg;
+	private final Entry entry;
 	private int idx;
 	
-	private @Nullable Screen parent;
+	private final @Nullable Screen parent;
 	
-	private ButtonWidget left, right, cont/*inue*/, ret/*urn*/;
+	private ButtonWidget left, right, cont/*inue*/;
 	
 	protected ResearchEntryScreen(Entry entry, @Nullable Screen parent){
 		super(Text.literal(""));
@@ -53,7 +58,7 @@ public class ResearchEntryScreen extends Screen{
 	
 	protected void init(){
 		int x = width / 2 - 6;
-		int y = (height - 181) / 2 + 190 + heightOffset;
+		int y = (height - bgHeight) / 2 + 190 - heightOffset;
 		int dist = 127;
 		left = addDrawableChild(new ChangePageButton(x - dist, y, false, button -> {
 			if(canTurnLeft())
@@ -65,8 +70,20 @@ public class ResearchEntryScreen extends Screen{
 				idx += 2;
 			updateButtons();
 		}));
-		ret = addDrawableChild(new ReturnToBookButton(width / 2 - 7, (height - 181) / 2 - 26, b -> MinecraftClient.getInstance().setScreen(parent)));
-		// TODO: continue button
+		var mc = MinecraftClient.getInstance();
+		addDrawableChild(new ReturnToBookButton(width / 2 - 7, (height - 181) / 2 - 26, b -> mc.setScreen(parent)));
+		String text = I18n.translate("research.entry.continue");
+		var w = mc.textRenderer.getWidth(text);
+		cont = addDrawableChild(new ButtonWidget(x - w / 2 + 2, y + 15, w + 10, 16, Text.literal(text), button -> {
+			ArcanaClient.sendTryAdvance(entry);
+		}){
+			public void render(MatrixStack matrices, int mouseX, int mouseY, float delta){
+				var player = mc.player;
+				var researcher = Researcher.from(player);
+				active = researcher.entryStage(entry) < entry.sections().size() && entry.sections().get(researcher.entryStage(entry)).getRequirements().stream().allMatch(it -> it.satisfiedBy(player));
+				super.render(matrices, mouseX, mouseY, delta);
+			}
+		});
 		// pins...
 		updateButtons();
 	}
@@ -75,7 +92,7 @@ public class ResearchEntryScreen extends Screen{
 		renderBackground(matrices);
 		super.render(matrices, mouseX, mouseY, delta);
 		RenderSystem.setShaderTexture(0, bg);
-		drawTexture(matrices, (width - 256) / 2, (height - 181) / 2 + heightOffset, 0, 0, 256, 181);
+		drawTexture(matrices, (width - 256) / 2, (height - 181) / 2 - heightOffset, 0, 0, 256, 181);
 		
 		// Main rendering
 		if(totalLength() > idx){
@@ -90,31 +107,32 @@ public class ResearchEntryScreen extends Screen{
 		}
 		
 		// Requirements
-		/*Researcher r = Researcher.from(MinecraftClient.getInstance().player);
+		var player = MinecraftClient.getInstance().player;
+		Researcher r = Researcher.from(player);
 		if(r.entryStage(entry) < entry.sections().size() && entry.sections().get(r.entryStage(entry)).getRequirements().size() > 0){
 			List<Requirement> requirements = entry.sections().get(r.entryStage(entry)).getRequirements();
-			final int y = (height - 181) / 2 + 180;
+			final int y = (height - bgHeight) / 2 + 175;
 			final int reqWidth = 20;
 			final int baseX = (width / 2) - (reqWidth * requirements.size() / 2);
 			for(int i = 0, size = requirements.size(); i < size; i++){
 				Requirement requirement = requirements.get(i);
-				renderer(requirement).render(stack, baseX + i * reqWidth + 2, y, requirement, getMinecraft().player.ticksExisted, partialTicks, getMinecraft().player);
-				renderAmount(stack, requirement, baseX + i * reqWidth + 2, y, requirement.getAmount(), requirement.satisfied(getMinecraft().player));
+				renderer(requirement).render(matrices, baseX + i * reqWidth + 2, y, requirement, (int)player.world.getTime(), delta);
+				renderAmount(matrices, requirement, baseX + i * reqWidth + 2, y, requirement.getAmount(), requirement.satisfiedBy(player));
 			}
 			// Show tooltips
 			for(int i = 0, size = requirements.size(); i < size; i++)
 				if(mouseX >= 20 * i + baseX + 2 && mouseX <= 20 * i + baseX + 18 && mouseY >= y && mouseY <= y + 18){
-					List<Component> tooltip = renderer(requirements.get(i)).tooltip(requirements.get(i), getMinecraft().player);
-					List<String> lines = new ArrayList<>();
-					for(int i1 = 0, tooltipSize = tooltip.size(); i1 < tooltipSize; i1++){
-						String s = tooltip.get(i1).getString();
-						s = (i1 == 0 ? ChatFormatting.WHITE : ChatFormatting.GRAY) + s;
+					List<Text> tooltip = renderer(requirements.get(i)).tooltip(requirements.get(i), (int)player.world.getTime());
+					List<Text> lines = new ArrayList<>();
+					for(int tIdx = 0, tooltipSize = tooltip.size(); tIdx < tooltipSize; tIdx++){
+						Text s = tooltip.get(tIdx);
+						s.getWithStyle(s.getStyle().withFormatting(tIdx == 0 ? Formatting.WHITE : Formatting.GRAY));
 						lines.add(s);
 					}
-					GuiUtils.drawHoveringText(stack, lines.stream().map(Component::literal).collect(Collectors.toList()), mouseX, mouseY, width, height, -1, getMinecraft().fontRenderer);
+					renderTooltip(matrices, lines, mouseX, mouseY);
 					break;
 				}
-		}*/
+		}
 		
 		// After-renders (such as tooltips)
 		if(totalLength() > idx){
@@ -129,9 +147,11 @@ public class ResearchEntryScreen extends Screen{
 		}
 	}
 	
-	private void updateButtons(){
+	public void updateButtons(){
 		left.visible = canTurnLeft();
 		right.visible = canTurnRight();
+		Researcher researcher = Researcher.from(MinecraftClient.getInstance().player);
+		cont.visible = researcher.entryStage(entry) < getVisibleSections().size();
 		// pins...
 	}
 	
@@ -190,9 +210,7 @@ public class ResearchEntryScreen extends Screen{
 	}
 	
 	private boolean visible(EntrySection section){
-		return true;
-		// cant use getMinecraft here because this is called from ResearchBookScreen before this is set
-		//return Researcher.from(MinecraftClient.getInstance().player).entryStage(entry) >= entry.sections().indexOf(section);
+		return  Researcher.from(MinecraftClient.getInstance().player).entryStage(entry) >= entry.sections().indexOf(section);
 	}
 	
 	private <T extends Requirement> RequirementRenderer<T> renderer(T requirement){
@@ -200,22 +218,21 @@ public class ResearchEntryScreen extends Screen{
 	}
 	
 	private void renderAmount(MatrixStack stack, Requirement requirement, int x, int y, int amount, boolean complete){
-		/*if(renderer(requirement).shouldDrawTickOrCross(requirement, amount)){
+		if(renderer(requirement).shouldDrawTickOrCross(requirement, amount)){
 			//display tick or cross
-			getMinecraft().getTextureManager().bindTexture(bg);
-			RenderSystem.color4f(1f, 1f, 1f, 1f);
+			RenderSystem.setShaderTexture(0, bg);
 			// ensure it renders over items
-			setBlitOffset(300);
-			drawTexturedModalRect(stack, x + 10, y + 9, complete ? 0 : 8, 247, 8, 9);
-			setBlitOffset(0);
+			setZOffset(300);
+			drawTexture(stack, x + 10, y + 8, complete ? 0 : 8, 247, 8, 9);
+			setZOffset(0);
 		}else{
 			String s = String.valueOf(amount);
-			IRenderTypeBuffer.Impl buffer = IRenderTypeBuffer.getImpl(Tessellator.getInstance().getBuffer());
-			Matrix4f matrix = TransformationMatrix.identity().getMatrix();
-			matrix.translate(new Vector3f(0, 0, 300));
-			getMinecraft().fontRenderer.renderString(s, (float)(x + 17 - getMinecraft().fontRenderer.getStringWidth(s)), (float)(y + 9), complete ? 0xaaffaa : 0xffaaaa, true, matrix, buffer, false, 0, 15728880);
-			buffer.finish();
-		}*/
+			var text = MinecraftClient.getInstance().textRenderer;
+			stack.push();
+			stack.translate(0, 0, 300);
+			text.draw(stack, s, x + 17 - text.getWidth(s), y + 9, complete ? 0xAAFFAA : 0xEE9999);
+			stack.pop();
+		}
 	}
 	
 	private int span(EntrySection section){

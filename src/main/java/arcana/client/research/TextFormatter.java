@@ -16,7 +16,6 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Style;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.Nullable;
 
@@ -264,7 +263,7 @@ public class TextFormatter{
 					if(s.startsWith("{") && s.endsWith("}")){
 						s = s.substring(1, s.length() - 1);
 						if(s.startsWith("aspect:"))
-							list.add(new AspectSpan(Aspects.byName(new Identifier(s.substring(7)))));
+							list.add(new AspectSpan(Aspects.byName(s.substring(7))));
 							// todo: move config inlining here?
 						else if(s.equals("r")){
 							curStyle = CustomTextStyle.EMPTY;

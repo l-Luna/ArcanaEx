@@ -1,5 +1,7 @@
 package arcana.research;
 
+import arcana.research.sections.ArcaneCraftingRecipeSection;
+import arcana.research.sections.CraftingRecipeSection;
 import arcana.research.sections.ImageSection;
 import arcana.research.sections.TextSection;
 import com.google.gson.JsonObject;
@@ -49,16 +51,22 @@ public abstract class EntrySection{
 	public static void setup(){
 		factories.put(TextSection.TYPE, withContentsStr(TextSection::new));
 		deserializers.put(TextSection.TYPE, nbt -> new TextSection(nbt.getString("text")));
-//		factories.put(CraftingSection.TYPE, withContents(CraftingSection::new));
-//		deserializers.put(CraftingSection.TYPE, nbt -> new CraftingSection(nbt.getString("recipe")));
+		
+		factories.put(CraftingRecipeSection.TYPE, withContentsId(CraftingRecipeSection::new));
+		deserializers.put(CraftingRecipeSection.TYPE, nbt -> new CraftingRecipeSection(new Identifier(nbt.getString("recipe"))));
+		
+		factories.put(ArcaneCraftingRecipeSection.TYPE, withContentsId(ArcaneCraftingRecipeSection::new));
+		deserializers.put(ArcaneCraftingRecipeSection.TYPE, nbt -> new ArcaneCraftingRecipeSection(new Identifier(nbt.getString("recipe"))));
+		
+		factories.put(ImageSection.TYPE, withContentsId(ImageSection::new));
+		deserializers.put(ImageSection.TYPE, nbt -> new ImageSection(new Identifier(nbt.getString("image"))));
+
 //		factories.put(SmeltingSection.TYPE, withContents(SmeltingSection::new));
 //		deserializers.put(SmeltingSection.TYPE, nbt -> new SmeltingSection(nbt.getString("recipe")));
 //		factories.put(AlchemySection.TYPE, withContents(AlchemySection::new));
 //		deserializers.put(AlchemySection.TYPE, nbt -> new AlchemySection(nbt.getString("recipe")));
 //		factories.put(ArcaneCraftingSection.TYPE, withContents(ArcaneCraftingSection::new));
 //		deserializers.put(ArcaneCraftingSection.TYPE, nbt -> new ArcaneCraftingSection(nbt.getString("recipe")));
-		factories.put(ImageSection.TYPE, withContentsId(ImageSection::new));
-		deserializers.put(ImageSection.TYPE, nbt -> new ImageSection(new Identifier(nbt.getString("image"))));
 	}
 	
 	private static <T> Function<JsonObject, T> withContentsStr(Function<String, T> builder){

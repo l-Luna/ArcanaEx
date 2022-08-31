@@ -117,6 +117,18 @@
         {
           "type": "text",
           "content": "research.arcana.arcane_crafting.stage.3"
+        },
+        {
+          "type": "crafting",
+          "content": "minecraft:crafting_table"
+        },
+        {
+          "type": "crafting",
+          "content": "minecraft:furnace"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:gold_wand_cap"
         }
       ]
     }

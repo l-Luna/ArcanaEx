@@ -1,18 +1,31 @@
 package arcana.client.research;
 
+import arcana.aspects.Aspect;
+import arcana.client.research.sections.ArcaneCraftingRecipeSectionRenderer;
+import arcana.client.research.sections.CraftingRecipeSectionRenderer;
 import arcana.client.research.sections.ImageSectionRenderer;
 import arcana.client.research.sections.TextSectionRenderer;
 import arcana.research.EntrySection;
+import arcana.research.Research;
+import arcana.research.sections.ArcaneCraftingRecipeSection;
+import arcana.research.sections.CraftingRecipeSection;
 import arcana.research.sections.ImageSection;
 import arcana.research.sections.TextSection;
+import arcana.screens.ResearchEntryScreen;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+
+import static arcana.screens.ResearchBookScreen.bookPrefix;
 
 public interface EntrySectionRenderer<T extends EntrySection>{
 
@@ -23,6 +36,8 @@ public interface EntrySectionRenderer<T extends EntrySection>{
 	static void setup(){
 		renderers.put(TextSection.TYPE, new TextSectionRenderer());
 		renderers.put(ImageSection.TYPE, new ImageSectionRenderer());
+		renderers.put(CraftingRecipeSection.TYPE, new CraftingRecipeSectionRenderer());
+		renderers.put(ArcaneCraftingRecipeSection.TYPE, new ArcaneCraftingRecipeSectionRenderer());
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -45,6 +60,7 @@ public interface EntrySectionRenderer<T extends EntrySection>{
 	
 	// onClick...
 	
+	@NotNull
 	default MinecraftClient client(){
 		return MinecraftClient.getInstance();
 	}
@@ -53,7 +69,38 @@ public interface EntrySectionRenderer<T extends EntrySection>{
 		return client().textRenderer;
 	}
 	
+	default ResearchEntryScreen screen(){
+		return (ResearchEntryScreen)client().currentScreen;
+	}
+	
 	default boolean onClick(T section, int pageIdx, int screenWidth, int screenHeight, double mouseX, double mouseY, boolean right){
 		return false;
+	}
+	
+	default Identifier overlayTexture(EntrySection section){
+		var bookId = Research.getEntry(section.getIn()).in().in().id();
+		return new Identifier(bookId.getNamespace(), bookPrefix + bookId.getPath() + ResearchEntryScreen.overlaySuffix);
+	}
+	
+	default void tooltipArea(MatrixStack matrices, ItemStack stack, int mouseX, int mouseY, int areaX, int areaY){
+		if(mouseX >= areaX && mouseX < areaX + 16 && mouseY >= areaY && mouseY < areaY + 16)
+			drawTooltip(matrices, stack, mouseX, mouseY);
+	}
+	
+	default void tooltipArea(MatrixStack matrices, Aspect aspect, int mouseX, int mouseY, int areaX, int areaY){
+		if(mouseX >= areaX && mouseX < areaX + 16 && mouseY >= areaY && mouseY < areaY + 16)
+			drawTooltip(matrices, aspect, mouseX, mouseY);
+	}
+	
+	default void drawTooltip(MatrixStack matrices, Aspect aspect, int mouseX, int mouseY){
+		drawTooltip(matrices, List.of(aspect.name()), mouseX, mouseY);
+	}
+	
+	default void drawTooltip(MatrixStack matrices, ItemStack stack, int mouseX, int mouseY){
+		drawTooltip(matrices, screen().getTooltipFromItem(stack), mouseX, mouseY);
+	}
+	
+	default void drawTooltip(MatrixStack matrices, List<Text> tooltip, int mouseX, int mouseY){
+		screen().renderTooltip(matrices, tooltip, mouseX, mouseY);
 	}
 }

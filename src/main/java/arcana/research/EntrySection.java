@@ -1,9 +1,6 @@
 package arcana.research;
 
-import arcana.research.sections.ArcaneCraftingRecipeSection;
-import arcana.research.sections.CraftingRecipeSection;
-import arcana.research.sections.ImageSection;
-import arcana.research.sections.TextSection;
+import arcana.research.sections.*;
 import com.google.gson.JsonObject;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
@@ -52,21 +49,20 @@ public abstract class EntrySection{
 		factories.put(TextSection.TYPE, withContentsStr(TextSection::new));
 		deserializers.put(TextSection.TYPE, nbt -> new TextSection(nbt.getString("text")));
 		
+		factories.put(ImageSection.TYPE, withContentsId(ImageSection::new));
+		deserializers.put(ImageSection.TYPE, nbt -> new ImageSection(new Identifier(nbt.getString("image"))));
+		
 		factories.put(CraftingRecipeSection.TYPE, withContentsId(CraftingRecipeSection::new));
 		deserializers.put(CraftingRecipeSection.TYPE, nbt -> new CraftingRecipeSection(new Identifier(nbt.getString("recipe"))));
 		
 		factories.put(ArcaneCraftingRecipeSection.TYPE, withContentsId(ArcaneCraftingRecipeSection::new));
 		deserializers.put(ArcaneCraftingRecipeSection.TYPE, nbt -> new ArcaneCraftingRecipeSection(new Identifier(nbt.getString("recipe"))));
 		
-		factories.put(ImageSection.TYPE, withContentsId(ImageSection::new));
-		deserializers.put(ImageSection.TYPE, nbt -> new ImageSection(new Identifier(nbt.getString("image"))));
-
-//		factories.put(SmeltingSection.TYPE, withContents(SmeltingSection::new));
-//		deserializers.put(SmeltingSection.TYPE, nbt -> new SmeltingSection(nbt.getString("recipe")));
-//		factories.put(AlchemySection.TYPE, withContents(AlchemySection::new));
-//		deserializers.put(AlchemySection.TYPE, nbt -> new AlchemySection(nbt.getString("recipe")));
-//		factories.put(ArcaneCraftingSection.TYPE, withContents(ArcaneCraftingSection::new));
-//		deserializers.put(ArcaneCraftingSection.TYPE, nbt -> new ArcaneCraftingSection(nbt.getString("recipe")));
+		factories.put(CookingRecipeSection.TYPE, withContentsId(CookingRecipeSection::new));
+		deserializers.put(CookingRecipeSection.TYPE, nbt -> new CookingRecipeSection(new Identifier(nbt.getString("recipe"))));
+		
+		factories.put(AlchemyRecipeSection.TYPE, withContentsId(AlchemyRecipeSection::new));
+		deserializers.put(AlchemyRecipeSection.TYPE, nbt -> new AlchemyRecipeSection(new Identifier(nbt.getString("recipe"))));
 	}
 	
 	private static <T> Function<JsonObject, T> withContentsStr(Function<String, T> builder){

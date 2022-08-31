@@ -1,16 +1,10 @@
 package arcana.client.research;
 
 import arcana.aspects.Aspect;
-import arcana.client.research.sections.ArcaneCraftingRecipeSectionRenderer;
-import arcana.client.research.sections.CraftingRecipeSectionRenderer;
-import arcana.client.research.sections.ImageSectionRenderer;
-import arcana.client.research.sections.TextSectionRenderer;
+import arcana.client.research.sections.*;
 import arcana.research.EntrySection;
 import arcana.research.Research;
-import arcana.research.sections.ArcaneCraftingRecipeSection;
-import arcana.research.sections.CraftingRecipeSection;
-import arcana.research.sections.ImageSection;
-import arcana.research.sections.TextSection;
+import arcana.research.sections.*;
 import arcana.screens.ResearchEntryScreen;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
@@ -38,6 +32,8 @@ public interface EntrySectionRenderer<T extends EntrySection>{
 		renderers.put(ImageSection.TYPE, new ImageSectionRenderer());
 		renderers.put(CraftingRecipeSection.TYPE, new CraftingRecipeSectionRenderer());
 		renderers.put(ArcaneCraftingRecipeSection.TYPE, new ArcaneCraftingRecipeSectionRenderer());
+		renderers.put(CookingRecipeSection.TYPE, new CookingRecipeSectionRenderer());
+		renderers.put(AlchemyRecipeSection.TYPE, new AlchemyRecipeSectionRenderer());
 	}
 	
 	@SuppressWarnings("unchecked")

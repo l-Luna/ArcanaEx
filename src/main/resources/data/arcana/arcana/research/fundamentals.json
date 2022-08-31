@@ -129,6 +129,14 @@
         {
           "type": "arcane_crafting",
           "content": "arcana:gold_wand_cap"
+        },
+        {
+          "type": "cooking",
+          "content": "minecraft:charcoal"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:redstone_dust_by_hedge_alchemy"
         }
       ]
     }

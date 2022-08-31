@@ -4,12 +4,12 @@ import arcana.client.ArcanaClient;
 import arcana.client.RenderHelper;
 import arcana.client.research.EntrySectionRenderer;
 import arcana.client.research.RequirementRenderer;
+import arcana.client.research.sections.TextSectionRenderer;
 import arcana.components.Researcher;
 import arcana.research.Entry;
 import arcana.research.EntrySection;
 import arcana.research.Requirement;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.resource.language.I18n;
@@ -18,6 +18,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +71,7 @@ public class ResearchEntryScreen extends Screen{
 				idx += 2;
 			updateButtons();
 		}));
-		var mc = MinecraftClient.getInstance();
+		var mc = client;
 		addDrawableChild(new ReturnToBookButton(width / 2 - 7, (height - 181) / 2 - 26, b -> mc.setScreen(parent)));
 		String text = I18n.translate("research.entry.continue");
 		var w = mc.textRenderer.getWidth(text);
@@ -107,7 +108,7 @@ public class ResearchEntryScreen extends Screen{
 		}
 		
 		// Requirements
-		var player = MinecraftClient.getInstance().player;
+		var player = client.player;
 		Researcher r = Researcher.from(player);
 		if(r.entryStage(entry) < entry.sections().size() && entry.sections().get(r.entryStage(entry)).getRequirements().size() > 0){
 			List<Requirement> requirements = entry.sections().get(r.entryStage(entry)).getRequirements();
@@ -150,7 +151,7 @@ public class ResearchEntryScreen extends Screen{
 	public void updateButtons(){
 		left.visible = canTurnLeft();
 		right.visible = canTurnRight();
-		Researcher researcher = Researcher.from(MinecraftClient.getInstance().player);
+		Researcher researcher = Researcher.from(client.player);
 		cont.visible = researcher.entryStage(entry) < getVisibleSections().size();
 		// pins...
 	}
@@ -192,7 +193,8 @@ public class ResearchEntryScreen extends Screen{
 	}
 	
 	// Index of the given stage
-	@SuppressWarnings("unused") // used by pins
+	@SuppressWarnings("unused")
+	// used by pins
 	int indexOfStage(int stage){
 		int cur = 0;
 		List<EntrySection> sections = getVisibleSections();
@@ -210,7 +212,7 @@ public class ResearchEntryScreen extends Screen{
 	}
 	
 	private boolean visible(EntrySection section){
-		return  Researcher.from(MinecraftClient.getInstance().player).entryStage(entry) >= entry.sections().indexOf(section);
+		return Researcher.from(client.player).entryStage(entry) >= entry.sections().indexOf(section);
 	}
 	
 	private <T extends Requirement> RequirementRenderer<T> renderer(T requirement){
@@ -227,7 +229,7 @@ public class ResearchEntryScreen extends Screen{
 			setZOffset(0);
 		}else{
 			String s = String.valueOf(amount);
-			var text = MinecraftClient.getInstance().textRenderer;
+			var text = client.textRenderer;
 			stack.push();
 			stack.translate(0, 0, 300);
 			text.draw(stack, s, x + 17 - text.getWidth(s), y + 9, complete ? 0xAAFFAA : 0xEE9999);
@@ -236,10 +238,69 @@ public class ResearchEntryScreen extends Screen{
 	}
 	
 	private int span(EntrySection section){
-		return EntrySectionRenderer.get(section).span(section, MinecraftClient.getInstance().player);
+		return EntrySectionRenderer.get(section).span(section, client.player);
 	}
 	
 	public boolean shouldPause(){
+		return false;
+	}
+	
+	public boolean keyPressed(int keyCode, int scanCode, int modifiers){
+		if(super.keyPressed(keyCode, scanCode, modifiers))
+			return true;
+		else if(client.options.inventoryKey.matchesKey(keyCode, scanCode)){
+			client.setScreen(parent);
+			return true;
+		}else if(keyCode == GLFW.GLFW_KEY_F3){
+			TextSectionRenderer.clearCache();
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean mouseScrolled(double mouseX, double mouseY, double scroll){
+		if(scroll > 0 && canTurnLeft()){
+			idx -= 2;
+			updateButtons();
+			return true;
+		}
+		if(scroll < 0 && canTurnRight()){
+			idx += 2;
+			updateButtons();
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean mouseClicked(double mouseX, double mouseY, int mouseButton){
+		if(super.mouseClicked(mouseX, mouseY, mouseButton))
+			return true;
+		// mouse button 1 is right click, just return
+		if(mouseButton == 1){
+			client.setScreen(parent);
+			return true;
+		}
+		// mouse button 0 is left click, defer to entries and requirements
+		Researcher r = Researcher.from(client.player);
+		if(r.entryStage(entry) < entry.sections().size() && entry.sections().get(r.entryStage(entry)).getRequirements().size() > 0){
+			List<Requirement> requirements = entry.sections().get(r.entryStage(entry)).getRequirements();
+			final int y = (height - 181) / 2 + 180;
+			final int reqSize = 20;
+			final int baseX = (width / 2) - (reqSize * requirements.size() / 2);
+			for(int i = 0, size = requirements.size(); i < size; i++)
+				if(mouseX >= reqSize * i + baseX && mouseX <= reqSize * i + baseX + reqSize && mouseY >= y && mouseY <= y + reqSize)
+					return requirements.get(i).onClick(entry, client.player);
+		}
+		if(totalLength() > idx){
+			EntrySection section = getSectionAtIndex(idx);
+			if(section != null)
+				return EntrySectionRenderer.get(section).onClick(section, sectionIndex(idx), width, height, mouseX, mouseY, false);
+		}
+		if(totalLength() > idx + 1){
+			EntrySection section = getSectionAtIndex(idx + 1);
+			if(section != null)
+				return EntrySectionRenderer.get(section).onClick(section, sectionIndex(idx + 1), width, height, mouseX, mouseY, true);
+		}
 		return false;
 	}
 	

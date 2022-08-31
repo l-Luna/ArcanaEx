@@ -52,4 +52,8 @@ public interface EntrySectionRenderer<T extends EntrySection>{
 	default TextRenderer textRenderer(){
 		return client().textRenderer;
 	}
+	
+	default boolean onClick(T section, int pageIdx, int screenWidth, int screenHeight, double mouseX, double mouseY, boolean right){
+		return false;
+	}
 }

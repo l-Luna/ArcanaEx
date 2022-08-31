@@ -16,7 +16,7 @@ public class XpRequirement extends Requirement{
 	}
 	
 	public void takeFrom(PlayerEntity player){
-		player.experienceLevel -= amount;
+		player.addExperienceLevels(-amount);
 	}
 	
 	public Identifier type(){

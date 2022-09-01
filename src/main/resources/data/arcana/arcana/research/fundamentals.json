@@ -123,6 +123,16 @@
           "content": "minecraft:crafting_table"
         },
         {
+          "type": "wand_interaction",
+          "input": "minecraft:crafting_table",
+          "result": "arcana:arcane_crafting_table"
+        },
+        {
+          "type": "wand_interaction",
+          "input": "minecraft:cauldron",
+          "result": "arcana:crucible"
+        },
+        {
           "type": "crafting",
           "content": "minecraft:furnace"
         },

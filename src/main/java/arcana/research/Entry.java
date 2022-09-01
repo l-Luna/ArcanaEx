@@ -83,4 +83,13 @@ public record Entry(
 		
 		return new Entry(id, in, name, desc, sections, parents, icons, meta, x, y);
 	}
+	
+	// recursive equality with parent category
+	public boolean equals(Object obj){
+		return obj instanceof Entry e && e.id().equals(id());
+	}
+	
+	public int hashCode(){
+		return id().hashCode();
+	}
 }

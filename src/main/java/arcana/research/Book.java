@@ -39,4 +39,13 @@ public record Book(Identifier id, Map<Identifier, Category> categories){
 		}
 		return book;
 	}
+	
+	// recursive equality with contained categories
+	public boolean equals(Object obj){
+		return obj instanceof Book book && book.id().equals(id());
+	}
+	
+	public int hashCode(){
+		return id().hashCode();
+	}
 }

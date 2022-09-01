@@ -8,6 +8,7 @@ import net.minecraft.recipe.CraftingRecipe;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.ShapedRecipe;
 
+import static arcana.client.research.EntrySectionRenderer.overlayTexture;
 import static arcana.screens.ResearchEntryScreen.*;
 
 public class CraftingRecipeSectionRenderer extends AbstractRecipeSectionRenderer<CraftingRecipeSection>{

@@ -51,4 +51,13 @@ public record Category(
 		
 		return category;
 	}
+	
+	// recursive equality with parent book
+	public boolean equals(Object obj){
+		return obj instanceof Category cat && cat.id().equals(id());
+	}
+	
+	public int hashCode(){
+		return id().hashCode();
+	}
 }

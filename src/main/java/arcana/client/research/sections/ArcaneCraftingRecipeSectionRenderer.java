@@ -8,6 +8,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Recipe;
 
+import static arcana.client.research.EntrySectionRenderer.overlayTexture;
 import static arcana.screens.ResearchEntryScreen.*;
 
 public class ArcaneCraftingRecipeSectionRenderer extends AbstractRecipeSectionRenderer<ArcaneCraftingRecipeSection>{

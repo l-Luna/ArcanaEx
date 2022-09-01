@@ -15,6 +15,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
+import static arcana.client.research.EntrySectionRenderer.overlayTexture;
 import static arcana.screens.ResearchEntryScreen.*;
 
 public class AlchemyRecipeSectionRenderer extends AbstractRecipeSectionRenderer<AlchemyRecipeSection>{

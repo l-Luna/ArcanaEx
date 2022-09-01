@@ -34,6 +34,7 @@ public interface EntrySectionRenderer<T extends EntrySection>{
 		renderers.put(ArcaneCraftingRecipeSection.TYPE, new ArcaneCraftingRecipeSectionRenderer());
 		renderers.put(CookingRecipeSection.TYPE, new CookingRecipeSectionRenderer());
 		renderers.put(AlchemyRecipeSection.TYPE, new AlchemyRecipeSectionRenderer());
+		renderers.put(WandInteractionSection.TYPE, new WandInteractionSectionRenderer());
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -73,7 +74,7 @@ public interface EntrySectionRenderer<T extends EntrySection>{
 		return false;
 	}
 	
-	default Identifier overlayTexture(EntrySection section){
+	static Identifier overlayTexture(EntrySection section){
 		var bookId = Research.getEntry(section.getIn()).category().book().id();
 		return new Identifier(bookId.getNamespace(), bookPrefix + bookId.getPath() + ResearchEntryScreen.overlaySuffix);
 	}

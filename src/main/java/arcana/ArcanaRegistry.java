@@ -1,9 +1,6 @@
 package arcana;
 
-import arcana.blocks.ArcaneCraftingTableBlock;
-import arcana.blocks.CrucibleBlock;
-import arcana.blocks.CrucibleBlockEntity;
-import arcana.blocks.ResearchTableBlock;
+import arcana.blocks.*;
 import arcana.items.*;
 import arcana.screens.ArcaneCraftingScreenHandler;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
@@ -64,6 +61,9 @@ public final class ArcanaRegistry{
 	public static BlockEntityType<CrucibleBlockEntity> CRUCIBLE_BE = FabricBlockEntityTypeBuilder
 			.create(CrucibleBlockEntity::new, CRUCIBLE)
 			.build();
+	public static BlockEntityType<ResearchTableBlockEntity> RESEARCH_TABLE_BE = FabricBlockEntityTypeBuilder
+			.create(ResearchTableBlockEntity::new, RESEARCH_TABLE)
+			.build();
 	
 	public static final List<Item> ITEMS = new ArrayList<>();
 	public static final List<Block> BLOCKS = new ArrayList<>();
@@ -98,6 +98,7 @@ public final class ArcanaRegistry{
 		
 		// block entities
 		register("crucible", CRUCIBLE_BE);
+		register("research_table", RESEARCH_TABLE_BE);
 	}
 	
 	private static void register(String name, Item item){

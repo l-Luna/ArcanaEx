@@ -2,8 +2,10 @@ package arcana.blocks;
 
 import com.unascribed.lib39.weld.api.BigBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Waterloggable;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
@@ -11,9 +13,11 @@ import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.math.BlockPos;
+import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
-public class ResearchTableBlock extends BigBlock implements Waterloggable{
+public class ResearchTableBlock extends BigBlock implements Waterloggable, BlockEntityProvider{
 	
 	public static final BooleanProperty left = BooleanProperty.of("left");
 	public static final DirectionProperty facing = Properties.HORIZONTAL_FACING;
@@ -73,5 +77,10 @@ public class ResearchTableBlock extends BigBlock implements Waterloggable{
 		return super.getPlacementState(ctx)
 				.with(waterlogged, fluidState.getFluid() == Fluids.WATER)
 				.with(facing, ctx.getPlayerFacing().rotateYCounterclockwise());
+	}
+	
+	@Nullable
+	public BlockEntity createBlockEntity(BlockPos pos, BlockState state){
+		return state.get(left) ? new ResearchTableBlockEntity(pos, state) : null;
 	}
 }

@@ -27,12 +27,12 @@ import net.minecraft.world.WorldAccess;
 @SuppressWarnings("deprecation")
 public class ArcaneCraftingTableBlock extends Block implements Waterloggable{
 	
-	public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
-	private static final Text TITLE = Text.translatable("container.crafting");
+	public static final BooleanProperty waterlogged = Properties.WATERLOGGED;
+	private static final Text title = Text.translatable("container.crafting");
 	
 	public ArcaneCraftingTableBlock(Settings settings){
 		super(settings);
-		setDefaultState(stateManager.getDefaultState().with(WATERLOGGED, Boolean.FALSE));
+		setDefaultState(stateManager.getDefaultState().with(waterlogged, Boolean.FALSE));
 	}
 	
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit){
@@ -47,26 +47,26 @@ public class ArcaneCraftingTableBlock extends Block implements Waterloggable{
 	
 	public NamedScreenHandlerFactory createScreenHandlerFactory(BlockState state, World world, BlockPos pos) {
 		return new SimpleNamedScreenHandlerFactory(
-				(syncId, inventory, player) -> new ArcaneCraftingScreenHandler(syncId, inventory, ScreenHandlerContext.create(world, pos)), TITLE
+				(syncId, inventory, player) -> new ArcaneCraftingScreenHandler(syncId, inventory, ScreenHandlerContext.create(world, pos)), title
 		);
 	}
 	
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder){
-		builder.add(WATERLOGGED);
+		builder.add(waterlogged);
 	}
 	
 	public FluidState getFluidState(BlockState state){
-		return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
+		return state.get(waterlogged) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
 	}
 	
 	public BlockState getPlacementState(ItemPlacementContext ctx){
 		FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
 		boolean bl = fluidState.getFluid() == Fluids.WATER;
-		return super.getPlacementState(ctx).with(WATERLOGGED, bl);
+		return super.getPlacementState(ctx).with(waterlogged, bl);
 	}
 	
 	public BlockState getStateForNeighborUpdate(BlockState state, Direction dir, BlockState neighbor, WorldAccess world, BlockPos pos, BlockPos neighborPos){
-		if(state.get(WATERLOGGED))
+		if(state.get(waterlogged))
 			world.createAndScheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
 		
 		return super.getStateForNeighborUpdate(state, dir, neighbor, world, pos, neighborPos);

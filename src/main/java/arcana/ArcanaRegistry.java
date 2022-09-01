@@ -3,10 +3,10 @@ package arcana;
 import arcana.blocks.ArcaneCraftingTableBlock;
 import arcana.blocks.CrucibleBlock;
 import arcana.blocks.CrucibleBlockEntity;
+import arcana.blocks.ResearchTableBlock;
 import arcana.items.*;
 import arcana.screens.ArcaneCraftingScreenHandler;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static arcana.Arcana.arcId;
+import static net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings.of;
 
 public final class ArcanaRegistry{
 	
@@ -53,8 +54,9 @@ public final class ArcanaRegistry{
 	public static final Item CRIMSON_RITES = new ResearchBookItem(GROUPED, arcId("crimson_rites"));
 	public static final Item TAINTED_CODEX = new ResearchBookItem(GROUPED, arcId("tainted_codex"));
 	
-	public static final Block ARCANE_CRAFTING_TABLE = new ArcaneCraftingTableBlock(FabricBlockSettings.of(Material.WOOD).nonOpaque());
-	public static final Block CRUCIBLE = new CrucibleBlock(FabricBlockSettings.of(Material.METAL).nonOpaque());
+	public static final Block ARCANE_CRAFTING_TABLE = new ArcaneCraftingTableBlock(of(Material.WOOD).nonOpaque());
+	public static final Block CRUCIBLE = new CrucibleBlock(of(Material.METAL).nonOpaque());
+	public static final Block RESEARCH_TABLE = new ResearchTableBlock(of(Material.WOOD).nonOpaque().strength(3));
 	
 	public static final ScreenHandlerType<ArcaneCraftingScreenHandler> ARCANE_CRAFTING_SCREEN_HANDLER
 			= new ScreenHandlerType<>(ArcaneCraftingScreenHandler::new);
@@ -88,6 +90,8 @@ public final class ArcanaRegistry{
 		// blocks
 		register("arcane_crafting_table", ARCANE_CRAFTING_TABLE);
 		register("crucible", CRUCIBLE);
+		register("research_table", RESEARCH_TABLE, false);
+		register("research_table", new ResearchTableItem(GROUPED)); // it's a block item, it doesn't count
 		
 		// screen handlers
 		register("arcane_crafting", ARCANE_CRAFTING_SCREEN_HANDLER);
@@ -106,9 +110,14 @@ public final class ArcanaRegistry{
 	}
 	
 	private static void register(String name, Block block){
+		register(name, block, true);
+	}
+	
+	private static void register(String name, Block block, boolean andItem){
 		Registry.register(Registry.BLOCK, arcId(name), block);
 		BLOCKS.add(block);
-		register(name, new BlockItem(block, GROUPED));
+		if(andItem)
+			register(name, new BlockItem(block, GROUPED));
 	}
 	
 	private static void register(String name, ScreenHandlerType<?> type){

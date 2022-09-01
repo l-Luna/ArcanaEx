@@ -73,6 +73,7 @@
   "_comment": "Blocks",
   "block.arcana.arcane_crafting_table": "Arcane Crafting Table",
   "block.arcana.crucible": "Crucible",
+  "block.arcana.research_table": "Research Table",
 
   "_comment": "Wand components",
   "wand.variant.arcana.wand": "Wand",

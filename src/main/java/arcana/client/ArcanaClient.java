@@ -13,6 +13,7 @@ import arcana.screens.ArcaneCraftingScreen;
 import arcana.screens.ResearchBookScreen;
 import arcana.screens.ResearchEntryScreen;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
@@ -26,6 +27,7 @@ import net.minecraft.client.gui.tooltip.BundleTooltipComponent;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
 import net.minecraft.client.item.BundleTooltipData;
 import net.minecraft.client.item.TooltipData;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.util.Identifier;
 
 public final class ArcanaClient implements ClientModInitializer{
@@ -55,6 +57,8 @@ public final class ArcanaClient implements ClientModInitializer{
 				(client, handler, buf, responseSender) -> ResearchNetworking.deserializeResearch(buf));
 		EntrySectionRenderer.setup();
 		RequirementRenderer.setup();
+		
+		BlockRenderLayerMap.INSTANCE.putBlock(ArcanaRegistry.RESEARCH_TABLE, RenderLayer.getCutout());
 	}
 	
 	private static TooltipComponent dataToComponent(TooltipData data){

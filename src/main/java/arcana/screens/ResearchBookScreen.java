@@ -40,6 +40,7 @@ public class ResearchBookScreen extends Screen{
 	List<Category> categories;
 	Identifier texture;
 	List<TooltipButton> buttons = new ArrayList<>();
+	List<PinButton> pinButtons = new ArrayList<>();
 	Arrows arrows = new Arrows();
 	
 	@Nullable Screen parent;
@@ -64,6 +65,33 @@ public class ResearchBookScreen extends Screen{
 			addDrawableChild(categoryButton);
 			buttons.add(categoryButton);
 		}
+		
+		refreshPins();
+	}
+	
+	protected void refreshPins(){
+		for(PinButton button : pinButtons){
+			buttons.remove(button);
+			remove(button);
+		}
+		pinButtons.clear();
+		var pins = Researcher.from(client.player).getPinned();
+		int i = 0;
+		for(var entryPins : pins.entrySet()){
+			Entry entry = Research.getEntry(entryPins.getKey());
+			if(entry != null && entry.in().in().equals(book)){
+				for(Integer stage : entryPins.getValue()){
+					Pin pin = entry.sections().get(stage).pins(stage, client.world, entry).findFirst().orElse(null);
+					if(pin != null){
+						PinButton pinButton = new PinButton((width + frameWidth()) / 2 + 1, 16 + ((height - frameHeight()) / 2) + i * 22, pin);
+						addDrawableChild(pinButton);
+						buttons.add(pinButton);
+						pinButtons.add(pinButton);
+						i++;
+					}
+				}
+			}
+		}
 	}
 	
 	private float xOffset(){
@@ -76,7 +104,7 @@ public class ResearchBookScreen extends Screen{
 	
 	// TODO: config
 	private int frameWidth(){
-		return width - 30;
+		return width - 60;
 	}
 	
 	private int frameHeight(){
@@ -563,7 +591,7 @@ public class ResearchBookScreen extends Screen{
 		void renderAfter(MatrixStack matrices, int mouseX, int mouseY);
 	}
 	
-	/* non-static */ class CategoryButton extends ButtonWidget implements TooltipButton{
+	private /* non-static */ class CategoryButton extends ButtonWidget implements TooltipButton{
 		
 		int categoryIdx;
 		Category category;
@@ -589,9 +617,71 @@ public class ResearchBookScreen extends Screen{
 		
 		public void renderAfter(MatrixStack matrices, int mouseX, int mouseY){
 			if(hovered){
-				// TODO: show % completion
-				ResearchBookScreen.this.renderTooltip(matrices, Text.translatable(category.name()), mouseX, mouseY);
+				if(category.entries().size() > 0){
+					Researcher researcher = Researcher.from(client.player);
+					int sum = 0;
+					for(Entry entry : category.entries().values())
+						sum += researcher.entryStage(entry) >= entry.sections().size() ? 1 : 0;
+					int percent = (sum * 100) / category.entries().size();
+					ResearchBookScreen.this.renderTooltip(matrices, Text.translatable(
+							"research.book.category_with_completion",
+							Text.translatable(category.name()),
+							Text.literal(String.valueOf(percent))),
+							mouseX, mouseY);
+				}else
+					ResearchBookScreen.this.renderTooltip(matrices, Text.translatable(category.name()), mouseX, mouseY);
 			}
+		}
+	}
+	
+	private /* non-static */ class PinButton extends ButtonWidget implements TooltipButton{
+		
+		private final Pin pin;
+		
+		public PinButton(int x, int y, Pin pin){
+			super(x, y, 18, 18, Text.literal(""), b -> {
+				if(hasControlDown()){
+					// unpin
+					Researcher from = Researcher.from(MinecraftClient.getInstance().player);
+					List<Integer> pinned = from.getPinned().get(pin.entry().id());
+					if(pinned != null){
+						from.removePinned(pin.entry().id(), pin.stage());
+						ArcanaClient.sendModifyPins(pin, false);
+					}
+					// and remove this button
+					ResearchBookScreen thisScreen = (ResearchBookScreen)client.getInstance().currentScreen;
+					thisScreen.refreshPins();
+				}else{
+					Entry entry = pin.entry();
+					if(Researcher.from(MinecraftClient.getInstance().player).entryStage(entry) >= pin.stage()){
+						ResearchEntryScreen in = new ResearchEntryScreen(entry, MinecraftClient.getInstance().currentScreen);
+						int stageIndex = in.indexOfStage(pin.stage());
+						in.idx = stageIndex % 2 == 0 ? stageIndex : stageIndex - 1;
+						MinecraftClient.getInstance().setScreen(in);
+					}
+				}
+			});
+			this.pin = pin;
+		}
+		
+		public void render(MatrixStack matrices, int mouseX, int mouseY, float delta){
+			if(visible){
+				int xOffset = hovered ? 3 : 0;
+				RenderSystem.setShaderTexture(0, texture);
+				drawTexture(matrices, x - 2, y - 1, 6 - xOffset, 140, 34 - (6 - xOffset), 18);
+				RenderHelper.renderIcon(matrices, pin.icon(), x + xOffset, y - 1, 0);
+			}
+		}
+		
+		public void renderAfter(MatrixStack matrices, int mouseX, int mouseY){
+			hovered = mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
+			if(pin.icon().stack() != null)
+				if(hovered){
+					var stack = pin.icon().stack();
+					List<Text> tooltips = new ArrayList<>(getTooltipFromItem(stack));
+					tooltips.add(Text.translatable("research.entry.unpin").formatted(Formatting.AQUA));
+					ResearchBookScreen.this.renderTooltip(matrices, tooltips, stack.getTooltipData(), mouseX, mouseY);
+				}
 		}
 	}
 }

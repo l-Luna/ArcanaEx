@@ -8,8 +8,10 @@ import arcana.client.research.sections.TextSectionRenderer;
 import arcana.components.Researcher;
 import arcana.research.Entry;
 import arcana.research.EntrySection;
+import arcana.research.Pin;
 import arcana.research.Requirement;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.resource.language.I18n;
@@ -43,11 +45,13 @@ public class ResearchEntryScreen extends Screen{
 	
 	public final Identifier bg;
 	private final Entry entry;
-	private int idx;
+	// modified by ResearchBookScreen.PinButton
+	int idx;
 	
 	private final @Nullable Screen parent;
 	
 	private ButtonWidget left, right, cont/*inue*/;
+	private List<PinButton> pins;
 	
 	protected ResearchEntryScreen(Entry entry, @Nullable Screen parent){
 		super(Text.literal(""));
@@ -55,6 +59,7 @@ public class ResearchEntryScreen extends Screen{
 		this.parent = parent;
 		Identifier bookKey = entry.in().in().id();
 		bg = new Identifier(bookKey.getNamespace(), bookPrefix + bookKey.getPath() + suffix);
+		client = MinecraftClient.getInstance(); // needs to be set early for pin button
 	}
 	
 	protected void init(){
@@ -85,7 +90,7 @@ public class ResearchEntryScreen extends Screen{
 				super.render(matrices, mouseX, mouseY, delta);
 			}
 		});
-		// pins...
+		pins = new ArrayList<>();
 		updateButtons();
 	}
 	
@@ -135,7 +140,7 @@ public class ResearchEntryScreen extends Screen{
 				}
 		}
 		
-		// After-renders (such as tooltips)
+		// After-renders (e.g. tooltips)
 		if(totalLength() > idx){
 			EntrySection section = getSectionAtIndex(idx);
 			if(section != null)
@@ -146,6 +151,9 @@ public class ResearchEntryScreen extends Screen{
 			if(section != null)
 				EntrySectionRenderer.get(section).renderAfter(matrices, section, sectionIndex(idx + 1), width, height, mouseX, mouseY, true);
 		}
+		
+		// Pins
+		pins.forEach(button -> button.renderAfter(matrices, mouseX, mouseY));
 	}
 	
 	public void updateButtons(){
@@ -153,7 +161,16 @@ public class ResearchEntryScreen extends Screen{
 		right.visible = canTurnRight();
 		Researcher researcher = Researcher.from(client.player);
 		cont.visible = researcher.entryStage(entry) < getVisibleSections().size();
-		// pins...
+		
+		pins.forEach(this::remove);
+		pins.clear();
+		List<Pin> collect = entry.getAllPins(client.world).filter(p -> researcher.entryStage(p.entry()) >= p.stage()).toList();
+		for(int i = 0, size = collect.size(); i < size; i++){
+			Pin pin = collect.get(i);
+			PinButton e = new PinButton((width / 2) + pageWidth + 21, (height - bgHeight) / 2 + i * (size > 7 ? 21 : 22) - (size > 7 ? 15 : 0), pin);
+			pins.add(e);
+			addDrawableChild(e);
+		}
 	}
 	
 	private boolean canTurnRight(){
@@ -304,7 +321,7 @@ public class ResearchEntryScreen extends Screen{
 		return false;
 	}
 	
-	private class ChangePageButton extends ButtonWidget{
+	private /* non-static */ class ChangePageButton extends ButtonWidget{
 		
 		private final boolean right;
 		
@@ -325,7 +342,7 @@ public class ResearchEntryScreen extends Screen{
 		}
 	}
 	
-	private class ReturnToBookButton extends ButtonWidget{
+	private /* non-static */ class ReturnToBookButton extends ButtonWidget{
 		
 		public ReturnToBookButton(int x, int y, PressAction onPress){
 			super(x, y, 15, 8, Text.literal(""), onPress);
@@ -343,5 +360,62 @@ public class ResearchEntryScreen extends Screen{
 		}
 	}
 	
-	// class PinButton extends ButtonWidget{ ... }
+	private /* non-static */ class PinButton extends ButtonWidget{
+		
+		private final Pin pin;
+		
+		public PinButton(int x, int y, Pin pin){
+			super(x, y, 18, 18, Text.literal(""), b -> {
+				ResearchEntryScreen screen = (ResearchEntryScreen)MinecraftClient.getInstance().currentScreen;
+				if(!Screen.hasControlDown()){
+					// if stage index is an even number, skip there; else skip to before it.
+					int stageIndex = screen.indexOfStage(pin.stage());
+					screen.idx = stageIndex % 2 == 0 ? stageIndex : stageIndex - 1;
+					screen.updateButtons();
+				}else{
+					Researcher from = Researcher.from(client.player);
+					List<Integer> pinned = from.getPinned().get(pin.entry().id());
+					if(pinned != null){
+						if(!pinned.contains(pin.stage())){
+							from.addPinned(pin.entry().id(), pin.stage());
+							ArcanaClient.sendModifyPins(pin, true);
+						}else{
+							from.removePinned(pin.entry().id(), pin.stage());
+							ArcanaClient.sendModifyPins(pin, false);
+						}
+					}else{
+						// well we know for sure its not been pinned so we have no pins here
+						from.addPinned(pin.entry().id(), pin.stage());
+						ArcanaClient.sendModifyPins(pin, true);
+					}
+				}
+			});
+			this.pin = pin;
+			visible = true;
+		}
+		
+		public void render(MatrixStack matrices, int mouseX, int mouseY, float delta){
+			if(visible){
+				int stageIndex = indexOfStage(pin.stage());
+				int xOffset = idx == (stageIndex % 2 == 0 ? stageIndex : stageIndex - 1) ? 6 : hovered ? 4 : 0;
+				
+				RenderSystem.setShaderTexture(0, bg);
+				drawTexture(matrices, x - 2, y - 1, 16 + (6 - xOffset), 238, 34 - (6 - xOffset), 18);
+				RenderHelper.renderIcon(matrices, pin.icon(), x + xOffset - 1, y - 1, getZOffset() + 1);
+			}
+		}
+		
+		public void renderAfter(MatrixStack matrices, int mouseX, int mouseY){
+			hovered = mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
+			if(pin.icon().stack() != null)
+				if(hovered){
+					var stack = pin.icon().stack();
+					List<Text> tooltips = new ArrayList<>(getTooltipFromItem(stack));
+					List<Integer> pinned = Researcher.from(client.player).getPinned().get(entry.id());
+					boolean isPinned = pinned != null && pinned.contains(pin.stage());
+					tooltips.add(Text.translatable(isPinned ? "research.entry.unpin" : "research.entry.pin").formatted(Formatting.AQUA));
+					ResearchEntryScreen.this.renderTooltip(matrices, tooltips, stack.getTooltipData(), mouseX, mouseY);
+				}
+		}
+	}
 }

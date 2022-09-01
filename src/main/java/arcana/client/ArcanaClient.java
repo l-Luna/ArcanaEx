@@ -6,6 +6,7 @@ import arcana.aspects.WandAspectsTooltipData;
 import arcana.client.research.EntrySectionRenderer;
 import arcana.client.research.RequirementRenderer;
 import arcana.research.Entry;
+import arcana.research.Pin;
 import arcana.research.Research;
 import arcana.research.ResearchNetworking;
 import arcana.screens.ArcaneCraftingScreen;
@@ -70,7 +71,7 @@ public final class ArcanaClient implements ClientModInitializer{
 		client.execute(() -> client.setScreen(new ResearchBookScreen(Research.getBook(bookId), null)));
 	}
 	
-	// Reflectively invokes by Researcher::applySyncPacket
+	// Reflectively invoked by Researcher::applySyncPacket
 	public static void refreshResearchEntryUi(){
 		var client = MinecraftClient.getInstance();
 		if(client.currentScreen instanceof ResearchEntryScreen entryScreen)
@@ -79,5 +80,9 @@ public final class ArcanaClient implements ClientModInitializer{
 	
 	public static void sendTryAdvance(Entry entry){
 		ClientPlayNetworking.send(ResearchNetworking.tryAdvanceId, ResearchNetworking.serializeTryAdvance(entry));
+	}
+	
+	public static void sendModifyPins(Pin pin, boolean add){
+		ClientPlayNetworking.send(ResearchNetworking.modifyPinsId, ResearchNetworking.serializeModifyPins(pin, add));
 	}
 }

@@ -5,9 +5,11 @@ import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtString;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static arcana.util.StreamUtil.streamAndApply;
 
@@ -22,6 +24,10 @@ public record Entry(
 		List<String> meta,
 		int x,
 		int y){
+	
+	public Stream<Pin> getAllPins(World world){
+		return sections().stream().flatMap(section -> section.pins(sections.indexOf(section), world, this));
+	}
 	
 	public NbtCompound toNbt(){
 		NbtCompound compound = new NbtCompound();

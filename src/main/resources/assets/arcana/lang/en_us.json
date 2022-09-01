@@ -90,6 +90,10 @@
 
   "_comment": "Research UI",
   "research.entry.continue": "Continue",
+  "research.entry.pin": "Ctrl-click to pin",
+  "research.entry.unpin": "Ctrl-click to unpin",
+
+  "research.book.category_with_completion": "%s (%s%%)",
 
   "research.requirement.arcana.experience": "%sx Experience Levels",
   "research.requirement.arcana.item": "%sx %s",

@@ -13,16 +13,18 @@ import net.minecraft.util.Identifier;
 
 import static arcana.Arcana.arcId;
 
-public class ResearchNetworking{
+public final class ResearchNetworking{
 	
 	public static final Identifier syncPacketId = arcId("sync_research");
 	public static final Identifier tryAdvanceId = arcId("try_advance");
+	public static final Identifier modifyPinsId = arcId("modify_pins");
 	
 	public static void setup(){
 		ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, didJoin) ->
 				ServerPlayNetworking.send(player, syncPacketId, serializeResearch()));
 		
 		ServerPlayNetworking.registerGlobalReceiver(tryAdvanceId, ResearchNetworking::receiveTryAdvance);
+		ServerPlayNetworking.registerGlobalReceiver(modifyPinsId, ResearchNetworking::receiveModifyPins);
 	}
 	
 	// server -> client
@@ -56,5 +58,31 @@ public class ResearchNetworking{
 		Entry entry = Research.getEntry(buf.readIdentifier());
 		var researcher = Researcher.from(player);
 		server.execute(() -> researcher.tryAdvance(entry));
+	}
+	
+	// client -> server
+	public static PacketByteBuf serializeModifyPins(Pin pin, boolean add){
+		var buf = PacketByteBufs.create().writeIdentifier(pin.entry().id()).writeVarInt(pin.stage());
+		buf.writeBoolean(add); // me when ByteBuf
+		return buf;
+	}
+	
+	private static void receiveModifyPins(MinecraftServer server,
+	                                      ServerPlayerEntity player,
+	                                      ServerPlayNetworkHandler handler,
+	                                      PacketByteBuf buf,
+	                                      PacketSender responseSender){
+		var researcher = Researcher.from(player);
+		Identifier entry = buf.readIdentifier();
+		int stage = buf.readVarInt();
+		boolean add = buf.readBoolean();
+		server.execute(() -> {
+			if(add)
+				researcher.addPinned(entry, stage);
+			else
+				researcher.removePinned(entry, stage);
+			// pinning/unpinning UI keeps track on the client side
+			//player.syncComponent(Researcher.KEY);
+		});
 	}
 }

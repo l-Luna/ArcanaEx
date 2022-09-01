@@ -12,8 +12,8 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static arcana.Arcana.arcId;
 
@@ -28,6 +28,7 @@ public final class Researcher implements Component, AutoSyncedComponent{
 	
 	private final PlayerEntity player;
 	private final Map<Identifier, Integer> stages = new HashMap<>();
+	private final Map<Identifier, ArrayList<Integer>> pinned = new HashMap<>();
 	
 	public Researcher(PlayerEntity player){
 		this.player = player;
@@ -80,13 +81,43 @@ public final class Researcher implements Component, AutoSyncedComponent{
 	
 	}
 	
+	public Map<Identifier, ? extends List<Integer>> getPinned(){
+		return pinned;
+	}
+	
+	public void addPinned(Identifier entry, int stage){
+		List<Integer> stages = pinned.computeIfAbsent(entry, k -> new ArrayList<>(1));
+		if(!stages.contains(stage))
+			stages.add(stage);
+	}
+	
+	public void removePinned(Identifier entry, Integer stage){
+		List<Integer> integers = pinned.get(entry);
+		if(integers == null)
+			return;
+		integers.remove(stage);
+		if(integers.isEmpty())
+			pinned.remove(entry);
+	}
+	
 	public void readFromNbt(NbtCompound tag){
-		for(String key : tag.getKeys())
-			stages.put(new Identifier(key), tag.getInt(key));
+		NbtCompound entries = tag.getCompound("stages");
+		for(String key : entries.getKeys())
+			stages.put(new Identifier(key), entries.getInt(key));
+		
+		NbtCompound pins = tag.getCompound("pins");
+		for(String key : pins.getKeys())
+			pinned.put(new Identifier(key), Arrays.stream(pins.getIntArray(key)).boxed().collect(Collectors.toCollection(ArrayList::new)));
 	}
 	
 	public void writeToNbt(NbtCompound tag){
-		stages.forEach((entry, stage) -> tag.putInt(entry.toString(), stage));
+		NbtCompound stagesTag = new NbtCompound();
+		stages.forEach((entry, stage) -> stagesTag.putInt(entry.toString(), stage));
+		tag.put("stages", stagesTag);
+		
+		NbtCompound pinsTag = new NbtCompound();
+		getPinned().forEach((entry, pins) -> pinsTag.putIntArray(entry.toString(), pins));
+		tag.put("pins", pinsTag);
 	}
 	
 	public void applySyncPacket(PacketByteBuf buf){

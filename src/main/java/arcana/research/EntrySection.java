@@ -6,9 +6,11 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.World;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Stream;
 
 import static arcana.util.StreamUtil.streamAndApply;
 
@@ -107,5 +109,7 @@ public abstract class EntrySection{
 		return nbt;
 	}
 	
-	// addOwnRequirements, getPins
+	public Stream<Pin> pins(int idx, World world, Entry entry){
+		return Stream.empty();
+	}
 }

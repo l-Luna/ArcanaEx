@@ -15,7 +15,7 @@ public record Category(
 		Identifier bg,
 		Identifier requirement,
 		String name,
-		Book in){
+		Book book){
 	
 	public NbtCompound toNbt(){
 		NbtCompound compound = new NbtCompound();

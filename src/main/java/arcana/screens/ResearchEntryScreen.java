@@ -57,7 +57,7 @@ public class ResearchEntryScreen extends Screen{
 		super(Text.literal(""));
 		this.entry = entry;
 		this.parent = parent;
-		Identifier bookKey = entry.in().in().id();
+		Identifier bookKey = entry.category().book().id();
 		bg = new Identifier(bookKey.getNamespace(), bookPrefix + bookKey.getPath() + suffix);
 		client = MinecraftClient.getInstance(); // needs to be set early for pin button
 	}

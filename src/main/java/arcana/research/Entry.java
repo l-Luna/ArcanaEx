@@ -15,7 +15,7 @@ import static arcana.util.StreamUtil.streamAndApply;
 
 public record Entry(
 		Identifier id,
-		Category in,
+		Category category,
 		String name,
 		String desc,
 		List<EntrySection> sections,

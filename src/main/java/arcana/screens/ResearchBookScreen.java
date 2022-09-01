@@ -79,7 +79,7 @@ public class ResearchBookScreen extends Screen{
 		int i = 0;
 		for(var entryPins : pins.entrySet()){
 			Entry entry = Research.getEntry(entryPins.getKey());
-			if(entry != null && entry.in().in().equals(book)){
+			if(entry != null && entry.category().book().equals(book)){
 				for(Integer stage : entryPins.getValue()){
 					Pin pin = entry.sections().get(stage).pins(stage, client.world, entry).findFirst().orElse(null);
 					if(pin != null){
@@ -184,7 +184,7 @@ public class ResearchBookScreen extends Screen{
 				RenderSystem.setShaderTexture(0, arrowsAndBasesTexture);
 				for(Parent parent : entry.parents()){
 					Entry pEntry = Research.getEntry(parent.id());
-					if(pEntry != null && parent.show() && pEntry.in().equals(entry.in()) && style(pEntry) != PageStyle.none){
+					if(pEntry != null && parent.show() && pEntry.category().equals(entry.category()) && style(pEntry) != PageStyle.none){
 						int xdiff = entry.x() - pEntry.x();
 						int ydiff = entry.y() - pEntry.y();
 						if(xdiff == 0){

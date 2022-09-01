@@ -74,7 +74,7 @@ public interface EntrySectionRenderer<T extends EntrySection>{
 	}
 	
 	default Identifier overlayTexture(EntrySection section){
-		var bookId = Research.getEntry(section.getIn()).in().in().id();
+		var bookId = Research.getEntry(section.getIn()).category().book().id();
 		return new Identifier(bookId.getNamespace(), bookPrefix + bookId.getPath() + ResearchEntryScreen.overlaySuffix);
 	}
 	

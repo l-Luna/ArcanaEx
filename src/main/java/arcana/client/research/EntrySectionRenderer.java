@@ -35,6 +35,7 @@ public interface EntrySectionRenderer<T extends EntrySection>{
 		renderers.put(CookingRecipeSection.TYPE, new CookingRecipeSectionRenderer());
 		renderers.put(AlchemyRecipeSection.TYPE, new AlchemyRecipeSectionRenderer());
 		renderers.put(WandInteractionSection.TYPE, new WandInteractionSectionRenderer());
+		renderers.put(AspectCombosSection.TYPE, new AspectCombosSectionRenderer());
 	}
 	
 	@SuppressWarnings("unchecked")

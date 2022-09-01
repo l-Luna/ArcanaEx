@@ -20,6 +20,10 @@ public final class AspectRenderer{
 			renderAspectStackOverlay(amount, matrices, text, x, y, z);
 	}
 	
+	public static void renderAspect(Aspect aspect, MatrixStack matrices, int x, int y, int z){
+		renderAspect(aspect, matrices, x, y, z, 1, 1, 1, 1);
+	}
+	
 	public static void renderAspect(Aspect aspect, MatrixStack matrices, int x, int y, int z, float r, float g, float b, float a){
 		// aspect sprite is "$modid:textures/aspects/$id"
 		RenderSystem.setShader(GameRenderer::getPositionColorTexShader);

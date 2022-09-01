@@ -68,6 +68,9 @@ public abstract class EntrySection{
 		
 		factories.put(WandInteractionSection.TYPE, WandInteractionSection::new);
 		deserializers.put(WandInteractionSection.TYPE, WandInteractionSection::new);
+		
+		factories.put(AspectCombosSection.TYPE, __ -> new AspectCombosSection());
+		deserializers.put(AspectCombosSection.TYPE, __ -> new AspectCombosSection());
 	}
 	
 	private static <T> Function<JsonObject, T> withContentsStr(Function<String, T> builder){

@@ -1,6 +1,7 @@
 package arcana.client;
 
 import arcana.ArcanaRegistry;
+import arcana.Networking;
 import arcana.aspects.ItemAspectsTooltipData;
 import arcana.aspects.WandAspectsTooltipData;
 import arcana.client.research.EntrySectionRenderer;
@@ -8,10 +9,10 @@ import arcana.client.research.RequirementRenderer;
 import arcana.research.Entry;
 import arcana.research.Pin;
 import arcana.research.Research;
-import arcana.research.ResearchNetworking;
 import arcana.screens.ArcaneCraftingScreen;
 import arcana.screens.ResearchBookScreen;
 import arcana.screens.ResearchEntryScreen;
+import arcana.screens.ResearchTableScreen;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
@@ -50,11 +51,12 @@ public final class ArcanaClient implements ClientModInitializer{
 		);
 		
 		HandledScreens.register(ArcanaRegistry.ARCANE_CRAFTING_SCREEN_HANDLER, ArcaneCraftingScreen::new);
+		HandledScreens.register(ArcanaRegistry.RESEARCH_TABLE_SCREEN_HANDLER, ResearchTableScreen::new);
 		
 		BlockEntityRendererRegistry.register(ArcanaRegistry.CRUCIBLE_BE, context -> new CrucibleBlockEntityRenderer());
 		
-		ClientPlayNetworking.registerGlobalReceiver(ResearchNetworking.syncPacketId,
-				(client, handler, buf, responseSender) -> ResearchNetworking.deserializeResearch(buf));
+		ClientPlayNetworking.registerGlobalReceiver(Networking.syncPacketId,
+				(client, handler, buf, responseSender) -> Networking.deserializeResearch(buf));
 		EntrySectionRenderer.setup();
 		RequirementRenderer.setup();
 		
@@ -83,10 +85,10 @@ public final class ArcanaClient implements ClientModInitializer{
 	}
 	
 	public static void sendTryAdvance(Entry entry){
-		ClientPlayNetworking.send(ResearchNetworking.tryAdvanceId, ResearchNetworking.serializeTryAdvance(entry));
+		ClientPlayNetworking.send(Networking.tryAdvanceId, Networking.serializeTryAdvance(entry));
 	}
 	
 	public static void sendModifyPins(Pin pin, boolean add){
-		ClientPlayNetworking.send(ResearchNetworking.modifyPinsId, ResearchNetworking.serializeModifyPins(pin, add));
+		ClientPlayNetworking.send(Networking.modifyPinsId, Networking.serializeModifyPins(pin, add));
 	}
 }

@@ -1,6 +1,10 @@
-package arcana.research;
+package arcana;
 
 import arcana.components.Researcher;
+import arcana.research.Book;
+import arcana.research.Entry;
+import arcana.research.Pin;
+import arcana.research.Research;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
@@ -13,18 +17,24 @@ import net.minecraft.util.Identifier;
 
 import static arcana.Arcana.arcId;
 
-public final class ResearchNetworking{
+public final class Networking{
 	
+	// datapack sync
 	public static final Identifier syncPacketId = arcId("sync_research");
+	
+	// research book UIs
 	public static final Identifier tryAdvanceId = arcId("try_advance");
 	public static final Identifier modifyPinsId = arcId("modify_pins");
+	
+	// research table UI
+	public static final Identifier aspectClickId = arcId("aspect_click");
 	
 	public static void setup(){
 		ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, didJoin) ->
 				ServerPlayNetworking.send(player, syncPacketId, serializeResearch()));
 		
-		ServerPlayNetworking.registerGlobalReceiver(tryAdvanceId, ResearchNetworking::receiveTryAdvance);
-		ServerPlayNetworking.registerGlobalReceiver(modifyPinsId, ResearchNetworking::receiveModifyPins);
+		ServerPlayNetworking.registerGlobalReceiver(tryAdvanceId, Networking::receiveTryAdvance);
+		ServerPlayNetworking.registerGlobalReceiver(modifyPinsId, Networking::receiveModifyPins);
 	}
 	
 	// server -> client
@@ -82,7 +92,6 @@ public final class ResearchNetworking{
 			else
 				researcher.removePinned(entry, stage);
 			// pinning/unpinning UI keeps track on the client side
-			//player.syncComponent(Researcher.KEY);
 		});
 	}
 }

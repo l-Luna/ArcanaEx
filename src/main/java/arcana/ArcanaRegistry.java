@@ -3,6 +3,7 @@ package arcana;
 import arcana.blocks.*;
 import arcana.items.*;
 import arcana.screens.ArcaneCraftingScreenHandler;
+import arcana.screens.ResearchTableScreenHandler;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.Block;
@@ -57,6 +58,8 @@ public final class ArcanaRegistry{
 	
 	public static final ScreenHandlerType<ArcaneCraftingScreenHandler> ARCANE_CRAFTING_SCREEN_HANDLER
 			= new ScreenHandlerType<>(ArcaneCraftingScreenHandler::new);
+	public static final ScreenHandlerType<ResearchTableScreenHandler> RESEARCH_TABLE_SCREEN_HANDLER
+			= new ScreenHandlerType<>(ResearchTableScreenHandler::new);
 	
 	public static BlockEntityType<CrucibleBlockEntity> CRUCIBLE_BE = FabricBlockEntityTypeBuilder
 			.create(CrucibleBlockEntity::new, CRUCIBLE)
@@ -95,6 +98,7 @@ public final class ArcanaRegistry{
 		
 		// screen handlers
 		register("arcane_crafting", ARCANE_CRAFTING_SCREEN_HANDLER);
+		register("research_table", RESEARCH_TABLE_SCREEN_HANDLER);
 		
 		// block entities
 		register("crucible", CRUCIBLE_BE);

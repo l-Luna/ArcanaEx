@@ -1,5 +1,6 @@
 package arcana.research;
 
+import arcana.Networking;
 import net.minecraft.util.Identifier;
 
 import java.util.LinkedHashMap;
@@ -14,7 +15,7 @@ public final class Research{
 	public static void setup(){
 		EntrySection.setup();
 		Requirement.setup();
-		ResearchNetworking.setup();
+		Networking.setup();
 	}
 	
 	public static Book getBook(Identifier book){

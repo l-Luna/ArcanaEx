@@ -61,12 +61,14 @@ dependencies {
 
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	// TODO: include components
+	// TODO: include cardinal components
 	modImplementation "dev.emi:emi:${emi_version}"
 	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cardinal_comp_version}"
 	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-world:${cardinal_comp_version}"
 	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinal_comp_version}"
+
 	modApi include("com.unascribed:lib39-weld:1.2.1")
+	modApi include("com.unascribed:lib39-tunnel:1.2.1")
 }
 
 processResources {

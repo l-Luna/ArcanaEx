@@ -1,10 +1,11 @@
 package arcana;
 
 import arcana.components.Researcher;
-import arcana.research.Book;
+import arcana.network.PkSyncResearchData;
 import arcana.research.Entry;
 import arcana.research.Pin;
 import arcana.research.Research;
+import com.unascribed.lib39.tunnel.api.NetworkContext;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
@@ -19,40 +20,19 @@ import static arcana.Arcana.arcId;
 
 public final class Networking{
 	
-	// datapack sync
-	public static final Identifier syncPacketId = arcId("sync_research");
+	public static final NetworkContext arcCtx = NetworkContext.forChannel(arcId("network"));
 	
 	// research book UIs
 	public static final Identifier tryAdvanceId = arcId("try_advance");
 	public static final Identifier modifyPinsId = arcId("modify_pins");
 	
-	// research table UI
-	public static final Identifier aspectClickId = arcId("aspect_click");
-	
 	public static void setup(){
-		ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, didJoin) ->
-				ServerPlayNetworking.send(player, syncPacketId, serializeResearch()));
+		ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, didJoin) -> new PkSyncResearchData().sendTo(player));
+		
+		arcCtx.register(PkSyncResearchData.class);
 		
 		ServerPlayNetworking.registerGlobalReceiver(tryAdvanceId, Networking::receiveTryAdvance);
 		ServerPlayNetworking.registerGlobalReceiver(modifyPinsId, Networking::receiveModifyPins);
-	}
-	
-	// server -> client
-	private static PacketByteBuf serializeResearch(){
-		var buf = PacketByteBufs.create();
-		buf.writeVarInt(Research.books.size());
-		for(Book book : Research.books.values())
-			buf.writeNbt(book.toNbt());
-		return buf;
-	}
-	
-	public static void deserializeResearch(PacketByteBuf buf){
-		Research.books.clear();
-		int size = buf.readVarInt();
-		for(int i = 0; i < size; i++){
-			Book book = Book.fromNbt(buf.readNbt());
-			Research.books.put(book.id(), book);
-		}
 	}
 	
 	// client -> server

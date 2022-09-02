@@ -55,8 +55,6 @@ public final class ArcanaClient implements ClientModInitializer{
 		
 		BlockEntityRendererRegistry.register(ArcanaRegistry.CRUCIBLE_BE, context -> new CrucibleBlockEntityRenderer());
 		
-		ClientPlayNetworking.registerGlobalReceiver(Networking.syncPacketId,
-				(client, handler, buf, responseSender) -> Networking.deserializeResearch(buf));
 		EntrySectionRenderer.setup();
 		RequirementRenderer.setup();
 		

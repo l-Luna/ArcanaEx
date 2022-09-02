@@ -1,12 +1,12 @@
 package arcana.client;
 
 import arcana.ArcanaRegistry;
-import arcana.Networking;
 import arcana.ReflectivelyUtilized;
 import arcana.aspects.ItemAspectsTooltipData;
 import arcana.aspects.WandAspectsTooltipData;
 import arcana.client.research.EntrySectionRenderer;
 import arcana.client.research.RequirementRenderer;
+import arcana.network.PkModifyPins;
 import arcana.network.PkTryAdvance;
 import arcana.research.Entry;
 import arcana.research.Pin;
@@ -18,7 +18,6 @@ import arcana.screens.ResearchTableScreen;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
@@ -91,6 +90,6 @@ public final class ArcanaClient implements ClientModInitializer{
 	}
 	
 	public static void sendModifyPins(Pin pin, boolean add){
-		ClientPlayNetworking.send(Networking.modifyPinsId, Networking.serializeModifyPins(pin, add));
+		new PkModifyPins(pin, add).sendToServer();
 	}
 }

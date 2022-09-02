@@ -2,6 +2,7 @@ package arcana.client;
 
 import arcana.ArcanaRegistry;
 import arcana.Networking;
+import arcana.ReflectivelyUtilized;
 import arcana.aspects.ItemAspectsTooltipData;
 import arcana.aspects.WandAspectsTooltipData;
 import arcana.client.research.EntrySectionRenderer;
@@ -70,12 +71,14 @@ public final class ArcanaClient implements ClientModInitializer{
 	}
 	
 	// Reflectively invoked by ResearchBookItem::use
+	@ReflectivelyUtilized
 	public static void openBook(Identifier bookId){
 		var client = MinecraftClient.getInstance();
 		client.execute(() -> client.setScreen(new ResearchBookScreen(Research.getBook(bookId), null)));
 	}
 	
 	// Reflectively invoked by Researcher::applySyncPacket
+	@ReflectivelyUtilized
 	public static void refreshResearchEntryUi(){
 		var client = MinecraftClient.getInstance();
 		if(client.currentScreen instanceof ResearchEntryScreen entryScreen)

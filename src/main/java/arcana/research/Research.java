@@ -35,10 +35,10 @@ public final class Research{
 	}
 	
 	public static Stream<Category> streamCategories(){
-		return streamBooks().flatMap(x -> x.categories().values().stream());
+		return streamBooks().flatMap(x -> x.categories().stream());
 	}
 	
 	public static Stream<Entry> streamEntries(){
-		return streamCategories().flatMap(x -> x.entries().values().stream());
+		return streamCategories().flatMap(x -> x.entries().stream());
 	}
 }

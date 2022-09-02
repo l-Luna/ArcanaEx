@@ -86,4 +86,8 @@ public final class Aspects{
 		aspects.removeAll(PRIMALS);
 		return aspects;
 	}
+	
+	public static List<Aspect> getOrderedAspects(){
+		return ORDERED_ASPECTS;
+	}
 }

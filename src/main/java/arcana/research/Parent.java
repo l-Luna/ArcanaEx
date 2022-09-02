@@ -2,7 +2,12 @@ package arcana.research;
 
 import net.minecraft.util.Identifier;
 
-public record Parent(Identifier id, int stage, boolean show, boolean hasArrowhead, boolean showReverse){
+public record Parent(
+		Identifier id,
+		int stage,
+		boolean show,
+		boolean hasArrowhead,
+		boolean showReverse){
 	
 	// ~ means don't show
 	// & means no arrowhead

@@ -1,6 +1,7 @@
 package arcana.network;
 
 import arcana.Networking;
+import arcana.ReflectivelyUtilized;
 import arcana.research.Book;
 import arcana.research.Research;
 import com.unascribed.lib39.tunnel.api.NetworkContext;
@@ -20,6 +21,7 @@ public class PkSyncResearchData extends S2CMessage{
 	@MarshalledAs("nbt-list")
 	List<NbtCompound> bookNbts = new ArrayList<>();
 	
+	@ReflectivelyUtilized
 	public PkSyncResearchData(NetworkContext ctx){
 		super(ctx);
 	}

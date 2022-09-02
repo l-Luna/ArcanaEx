@@ -5,12 +5,12 @@ import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.util.Identifier;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public record Category(
 		Identifier id,
-		Map<Identifier, Entry> entries,
+		List<Entry> entries,
 		Icon icon,
 		Identifier bg,
 		Identifier requirement,
@@ -27,7 +27,7 @@ public record Category(
 		compound.putString("name", name);
 		
 		NbtList list = new NbtList();
-		for(Entry entry : entries.values())
+		for(Entry entry : entries)
 			list.add(entry.toNbt());
 		compound.put("entries", list);
 		
@@ -41,13 +41,11 @@ public record Category(
 		Identifier requirement = nbt.contains("requirement") ? new Identifier(nbt.getString("requirement")) : null;
 		String name = nbt.getString("name");
 		
-		Map<Identifier, Entry> entries = new LinkedHashMap<>();
+		List<Entry> entries = new ArrayList<>();
 		Category category = new Category(id, entries, icon, bg, requirement, name, in);
 		
-		for(NbtElement entryElem : nbt.getList("entries", NbtElement.COMPOUND_TYPE)){
-			Entry entry = Entry.fromNbt((NbtCompound)entryElem, category);
-			entries.put(entry.id(), entry);
-		}
+		for(NbtElement entryElem : nbt.getList("entries", NbtElement.COMPOUND_TYPE))
+			entries.add(Entry.fromNbt((NbtCompound)entryElem, category));
 		
 		return category;
 	}

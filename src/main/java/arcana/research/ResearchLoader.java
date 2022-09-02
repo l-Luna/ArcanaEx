@@ -74,7 +74,7 @@ public final class ResearchLoader extends JsonDataLoader implements Identifiable
 				JsonObject bookObj = bookElement.getAsJsonObject();
 				// expecting key, prefix
 				Identifier key = new Identifier(bookObj.get("key").getAsString());
-				Research.books.put(key, new Book(key, new LinkedHashMap<>()));
+				Research.books.put(key, new Book(key, new ArrayList<>()));
 				logger.info("Loaded book " + key);
 			}
 		}
@@ -94,7 +94,7 @@ public final class ResearchLoader extends JsonDataLoader implements Identifiable
 				String name = categoryObj.get("name").getAsString();
 				Identifier requirement = categoryObj.has("requires") ? new Identifier(categoryObj.get("requires").getAsString()) : null;
 				Book in = Research.books.get(new Identifier(categoryObj.get("in").getAsString()));
-				Category category = new Category(key, new LinkedHashMap<>(), icon, bg, requirement, name, in);
+				Category category = new Category(key, new ArrayList<>(), icon, bg, requirement, name, in);
 				// TODO: background layers
 				/*if(categoryObj.has("bgs")){
 					JsonArray layers = categoryObj.getAsJsonArray("bgs");
@@ -110,7 +110,7 @@ public final class ResearchLoader extends JsonDataLoader implements Identifiable
 							category.getBgs().add(layer);
 					}
 				}*/
-				in.categories().putIfAbsent(key, category);
+				in.categories().add(category);
 			}
 		}
 	}
@@ -150,7 +150,7 @@ public final class ResearchLoader extends JsonDataLoader implements Identifiable
 				}
 				
 				Entry entryObject = new Entry(key, category, name, desc, sections, parents, icons, meta, x, y);
-				category.entries().putIfAbsent(key, entryObject);
+				category.entries().add(entryObject);
 				sections.forEach(section -> section.in = entryObject.id());
 			}
 		}

@@ -53,7 +53,7 @@ public class ResearchBookScreen extends Screen{
 		super(Text.literal(""));
 		this.book = book;
 		this.parent = parent;
-		categories = book.categoryList();
+		categories = book.categories();
 		texture = new Identifier(book.id().getNamespace(), bookPrefix + book.id().getPath() + bookSuffix);
 	}
 	
@@ -155,7 +155,7 @@ public class ResearchBookScreen extends Screen{
 		matrices.push();
 		matrices.scale(zoom, zoom, 1);
 		var time = MinecraftClient.getInstance().world.getTime() + delta;
-		for(Entry entry : categories.get(tab).entries().values()){
+		for(Entry entry : categories.get(tab).entries()){
 			PageStyle style = style(entry);
 			if(style != PageStyle.none){
 				// render base
@@ -261,7 +261,7 @@ public class ResearchBookScreen extends Screen{
 	}
 	
 	private void renderEntryTooltip(MatrixStack matrices, int mouseX, int mouseY){
-		for(Entry entry : categories.get(tab).entries().values()){
+		for(Entry entry : categories.get(tab).entries()){
 			if(hovering(entry, mouseX, mouseY)){
 				List<Text> lines = new ArrayList<>(2);
 				lines.add(Text.translatable(entry.name()));
@@ -282,7 +282,7 @@ public class ResearchBookScreen extends Screen{
 	}
 	
 	public boolean mouseClicked(double mouseX, double mouseY, int button){
-		for(Entry entry : categories.get(tab).entries().values()){
+		for(Entry entry : categories.get(tab).entries()){
 			PageStyle style;
 			if(hovering(entry, (int)mouseX, (int)mouseY)){
 				if(button != 2){
@@ -620,7 +620,7 @@ public class ResearchBookScreen extends Screen{
 				if(category.entries().size() > 0){
 					Researcher researcher = Researcher.from(client.player);
 					int sum = 0;
-					for(Entry entry : category.entries().values())
+					for(Entry entry : category.entries())
 						sum += researcher.entryStage(entry) >= entry.sections().size() ? 1 : 0;
 					int percent = (sum * 100) / category.entries().size();
 					ResearchBookScreen.this.renderTooltip(matrices, Text.translatable(

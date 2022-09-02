@@ -7,6 +7,7 @@ import arcana.aspects.ItemAspectsTooltipData;
 import arcana.aspects.WandAspectsTooltipData;
 import arcana.client.research.EntrySectionRenderer;
 import arcana.client.research.RequirementRenderer;
+import arcana.network.PkTryAdvance;
 import arcana.research.Entry;
 import arcana.research.Pin;
 import arcana.research.Research;
@@ -86,7 +87,7 @@ public final class ArcanaClient implements ClientModInitializer{
 	}
 	
 	public static void sendTryAdvance(Entry entry){
-		ClientPlayNetworking.send(Networking.tryAdvanceId, Networking.serializeTryAdvance(entry));
+		new PkTryAdvance(entry).sendToServer();
 	}
 	
 	public static void sendModifyPins(Pin pin, boolean add){

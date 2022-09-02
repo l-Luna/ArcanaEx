@@ -2,9 +2,8 @@ package arcana;
 
 import arcana.components.Researcher;
 import arcana.network.PkSyncResearchData;
-import arcana.research.Entry;
+import arcana.network.PkTryAdvance;
 import arcana.research.Pin;
-import arcana.research.Research;
 import com.unascribed.lib39.tunnel.api.NetworkContext;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
@@ -22,32 +21,15 @@ public final class Networking{
 	
 	public static final NetworkContext arcCtx = NetworkContext.forChannel(arcId("network"));
 	
-	// research book UIs
-	public static final Identifier tryAdvanceId = arcId("try_advance");
 	public static final Identifier modifyPinsId = arcId("modify_pins");
 	
 	public static void setup(){
+		arcCtx.register(PkSyncResearchData.class);
+		arcCtx.register(PkTryAdvance.class);
+		
 		ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, didJoin) -> new PkSyncResearchData().sendTo(player));
 		
-		arcCtx.register(PkSyncResearchData.class);
-		
-		ServerPlayNetworking.registerGlobalReceiver(tryAdvanceId, Networking::receiveTryAdvance);
 		ServerPlayNetworking.registerGlobalReceiver(modifyPinsId, Networking::receiveModifyPins);
-	}
-	
-	// client -> server
-	public static PacketByteBuf serializeTryAdvance(Entry entry){
-		return PacketByteBufs.create().writeIdentifier(entry.id());
-	}
-	
-	private static void receiveTryAdvance(MinecraftServer server,
-	                                      ServerPlayerEntity player,
-	                                      ServerPlayNetworkHandler handler,
-	                                      PacketByteBuf buf,
-	                                      PacketSender responseSender){
-		Entry entry = Research.getEntry(buf.readIdentifier());
-		var researcher = Researcher.from(player);
-		server.execute(() -> researcher.tryAdvance(entry));
 	}
 	
 	// client -> server

@@ -153,16 +153,6 @@
   ],
   "puzzles": [
     {
-      "key": "arcana:gw_enchanting_table",
-      "type": "guesswork",
-      "recipe": "minecraft:enchanting_table",
-      "hints": [
-        "minecraft:book=requirement.guesswork.ench.hint.book",
-        "minecraft:diamond=requirement.guesswork.ench.hint.diamond",
-        "minecraft:obsidian=requirement.guesswork.ench.hint.obsidian"
-      ]
-    },
-    {
       "key": "arcana:chemistry_intro_puzzle",
       "type": "chemistry",
       "nodes": [

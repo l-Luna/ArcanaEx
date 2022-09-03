@@ -156,8 +156,15 @@ public final class ResearchLoader extends JsonDataLoader implements Identifiable
 		}
 	}
 	
-	private static void applyPuzzles(Identifier identifier, JsonArray puzzles){
-		// TODO: puzzles
+	private static void applyPuzzles(Identifier file, JsonArray puzzles){
+		for(JsonElement puzzleElement : puzzles){
+			if(!puzzleElement.isJsonObject())
+				logger.warn("Non-object found in \"puzzles\" array in research file \"" + file + "\", ignoring");
+			else{
+				Puzzle puzzle = Puzzle.makePuzzle(puzzleElement.getAsJsonObject());
+				Research.puzzles.put(puzzle.id(), puzzle);
+			}
+		}
 	}
 	
 	private static List<EntrySection> jsonToSections(JsonArray sections, Identifier file){

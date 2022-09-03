@@ -16,6 +16,7 @@ public final class Research{
 		EntrySection.setup();
 		Requirement.setup();
 		Networking.setup();
+		Puzzle.setup();
 	}
 	
 	public static Book getBook(Identifier book){

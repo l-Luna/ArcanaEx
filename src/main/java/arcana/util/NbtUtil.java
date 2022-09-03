@@ -1,6 +1,7 @@
 package arcana.util;
 
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.util.Identifier;
 
 import java.util.Map;
@@ -18,6 +19,8 @@ public class NbtUtil{
 				compound.putString(key, s);
 			else if(value instanceof Identifier i)
 				compound.putString(key, i.toString());
+			else if(value instanceof NbtElement e)
+				compound.put(key, e);
 			// ...
 		}
 		return compound;

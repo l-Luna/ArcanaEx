@@ -3,6 +3,7 @@ package arcana.network;
 import arcana.Networking;
 import arcana.ReflectivelyUtilized;
 import arcana.research.Book;
+import arcana.research.Puzzle;
 import arcana.research.Research;
 import com.unascribed.lib39.tunnel.api.NetworkContext;
 import com.unascribed.lib39.tunnel.api.S2CMessage;
@@ -21,6 +22,9 @@ public class PkSyncResearchData extends S2CMessage{
 	@MarshalledAs("nbt-list")
 	List<NbtCompound> bookNbts = new ArrayList<>();
 	
+	@MarshalledAs("nbt-list")
+	List<NbtCompound> puzzleNbts = new ArrayList<>();
+	
 	@ReflectivelyUtilized
 	public PkSyncResearchData(NetworkContext ctx){
 		super(ctx);
@@ -29,6 +33,7 @@ public class PkSyncResearchData extends S2CMessage{
 	public PkSyncResearchData(){
 		super(Networking.arcCtx);
 		bookNbts = Research.books.values().stream().map(Book::toNbt).toList();
+		puzzleNbts = Research.puzzles.values().stream().map(Puzzle::getPassData).toList();
 	}
 	
 	@Environment(EnvType.CLIENT)
@@ -37,6 +42,12 @@ public class PkSyncResearchData extends S2CMessage{
 		for(NbtCompound nbt : bookNbts){
 			Book book = Book.fromNbt(nbt);
 			Research.books.put(book.id(), book);
+		}
+		
+		Research.puzzles.clear();
+		for(NbtCompound nbt : puzzleNbts){
+			Puzzle puzzle = Puzzle.deserialize(nbt);
+			Research.puzzles.put(puzzle.id(), puzzle);
 		}
 	}
 }

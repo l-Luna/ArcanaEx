@@ -2,10 +2,12 @@ package arcana.client.research;
 
 import arcana.client.research.requirements.ItemRequirementRenderer;
 import arcana.client.research.requirements.ItemTagRequirementRenderer;
+import arcana.client.research.requirements.PuzzleRequirementRenderer;
 import arcana.client.research.requirements.XpRequirementRenderer;
 import arcana.research.Requirement;
 import arcana.research.requirements.ItemRequirement;
 import arcana.research.requirements.ItemTagRequirement;
+import arcana.research.requirements.PuzzleRequirement;
 import arcana.research.requirements.XpRequirement;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
@@ -26,6 +28,7 @@ public interface RequirementRenderer<T extends Requirement>{
 		renderers.put(ItemRequirement.TYPE, new ItemRequirementRenderer());
 		renderers.put(ItemTagRequirement.TYPE, new ItemTagRequirementRenderer());
 		renderers.put(XpRequirement.TYPE, new XpRequirementRenderer());
+		renderers.put(PuzzleRequirement.TYPE, new PuzzleRequirementRenderer());
 	}
 	
 	@SuppressWarnings("unchecked")

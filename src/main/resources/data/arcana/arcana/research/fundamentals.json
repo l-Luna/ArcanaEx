@@ -76,7 +76,7 @@
           "type": "text",
           "content": "research.arcana.flux.stage.1",
           "requirements": [
-            "arcana::puzzle{arcana:flux_build_research}"
+            "arcana::puzzle{flux_build_research}"
           ]
         },
         {
@@ -167,7 +167,7 @@
     {
       "key": "arcana:flux_build_research",
       "type": "fieldwork",
-      "desc": "puzzle.arcana.flux_build"
+      "desc": "puzzle.arcana.fieldwork.flux_build"
     },
     {
       "key": "arcana:crystal_farming_puzzle",

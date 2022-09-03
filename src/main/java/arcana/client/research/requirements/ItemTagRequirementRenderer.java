@@ -53,6 +53,6 @@ public class ItemTagRequirementRenderer implements RequirementRenderer<ItemTagRe
 		if(I18n.hasTranslation(key))
 			return Text.translatable(key);
 		else
-			return Text.literal("#" + id.toString());
+			return Text.literal("#" + id);
 	}
 }

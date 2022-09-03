@@ -100,6 +100,8 @@
   "research.entry.continue": "Continue",
   "research.entry.pin": "Ctrl-click to pin",
   "research.entry.unpin": "Ctrl-click to unpin",
+  "research.entry.get_note.1": "Click to get research note",
+  "research.entry.get_note.2": "Requires scribing tools and paper",
 
   "research.book.category_with_completion": "%s (%s%%)",
 
@@ -107,6 +109,10 @@
   "research.requirement.arcana.item": "%sx %s",
   "research.requirement.arcana.item.have": "Have: %s",
   "research.requirement.arcana.tag": "Any from %s",
+
+  "puzzle.arcana.chemistry": "Complete the Chemistry",
+  "puzzle.arcana.fieldwork": "<Specify fieldwork descriptions>",
+  "puzzle.arcana.aspect_chess": "Win the game of Aspect Chess",
 
   "_comment": "Research Categories",
   "research.arcana.category.fundamentals": "Fundamentals",
@@ -125,7 +131,7 @@
   "research.arcana.flux.desc": "No such thing as free lunch",
   "research.arcana.flux.stage.1": "My new perspective has enabled me to understand the ramblings of these scribbled notes.{~sep}Among them were various vague warnings of \"flux\", \"taint\", as consequences for mishandling magic.\nFlux is a kind of pollution of the aura, produced through wasteful alchemy, or inefficient equipment. While nothing arcane is without risks, a buildup of flux can pose serious risks to yourself and the world.\nTaint being one of them. Some sort of corruption, or parasite, or {i}something{i}, that works its way through the world, and twists living beings into horrific monsters when left to its own devices; feeding on the flux created by ambitious or negligent alchemists.\nAnd while I couldn't fully parse the notes on warp... the dark rituals and grim compulsions that surrounded it were certainly enough to provide a bad first impression.\nIf I don't study these risks, how am I supposed to protect myself from them? I should get a look of this \"flux\" myself. A small amount should be perfectly manageable.",
   "research.arcana.flux.stage.2": "...that was probably a mistake. Everything just {i}feels{i} off here. I would do well not to let it grow much higher, lest it start producing physical effects more serious than a headache and stomachache... ugh, I don't even want to know what warp feels like.",
-  "puzzle.arcana.flux_build": "Taste the \"flux\" for yourself",
+  "puzzle.arcana.fieldwork.flux_build": "Taste the \"flux\" for yourself",
 
   "research.arcana.arcane_crafting": "Arcane Crafting",
   "research.arcana.arcane_crafting.desc": "blah blah blah",

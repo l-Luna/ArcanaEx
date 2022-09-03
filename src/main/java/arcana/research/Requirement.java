@@ -1,7 +1,9 @@
 package arcana.research;
 
+import arcana.Arcana;
 import arcana.research.requirements.ItemRequirement;
 import arcana.research.requirements.ItemTagRequirement;
+import arcana.research.requirements.PuzzleRequirement;
 import arcana.research.requirements.XpRequirement;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
@@ -45,6 +47,9 @@ public abstract class Requirement{
 		
 		factories.put(XpRequirement.TYPE, __ -> new XpRequirement());
 		deserializers.put(XpRequirement.TYPE, __ -> new XpRequirement());
+		
+		factories.put(PuzzleRequirement.TYPE, args -> new PuzzleRequirement(Arcana.maybeArcId(args.get(0))));
+		deserializers.put(PuzzleRequirement.TYPE, compound -> new PuzzleRequirement(new Identifier(compound.getString("puzzle"))));
 	}
 	
 	//

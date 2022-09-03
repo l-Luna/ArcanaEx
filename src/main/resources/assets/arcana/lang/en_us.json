@@ -89,6 +89,13 @@
   "wand.core.arcana.stick_wand_core": "Wooden",
   "wand.core.arcana.missing": "(Broken Core)",
 
+  "_comment": "Command messages",
+  "message.arcana.research.reset": "Reset research for %s",
+  "message.arcana.research.give.entry": "Completed entry \"%s\" for %s",
+  "message.arcana.research.give.puzzle": "Completed puzzle %s for %s",
+  "message.arcana.research.take.entry": "Reset entry \"%s\" for %s",
+  "message.arcana.research.take.puzzle": "Reset puzzle %s for %s",
+
   "_comment": "Research UI",
   "research.entry.continue": "Continue",
   "research.entry.pin": "Ctrl-click to pin",

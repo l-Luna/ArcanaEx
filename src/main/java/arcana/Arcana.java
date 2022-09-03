@@ -2,6 +2,7 @@ package arcana;
 
 import arcana.aspects.ItemAspectRegistry;
 import arcana.commands.NodeCommand;
+import arcana.commands.ResearchCommand;
 import arcana.recipes.AlchemyRecipe;
 import arcana.recipes.ShapedArcaneCraftingRecipe;
 import arcana.recipes.WandRecipe;
@@ -38,6 +39,7 @@ public final class Arcana implements ModInitializer{
 		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(researchLoader);
 		CommonLifecycleEvents.TAGS_LOADED.register((registries, client) -> aspectRegistry.applyAssociations());
 		CommandRegistrationCallback.EVENT.register(NodeCommand::register);
+		CommandRegistrationCallback.EVENT.register(ResearchCommand::register);
 	}
 	
 	public static Identifier arcId(String s){

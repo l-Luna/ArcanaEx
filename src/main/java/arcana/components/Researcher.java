@@ -8,6 +8,9 @@ import dev.onyxstudios.cca.api.v3.component.ComponentRegistryV3;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtList;
+import net.minecraft.nbt.NbtString;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 
@@ -29,6 +32,7 @@ public final class Researcher implements Component, AutoSyncedComponent{
 	private final PlayerEntity player;
 	private final Map<Identifier, Integer> stages = new HashMap<>();
 	private final Map<Identifier, ArrayList<Integer>> pinned = new HashMap<>();
+	private final Set<Identifier> completedPuzzles = new HashSet<>();
 	
 	public Researcher(PlayerEntity player){
 		this.player = player;
@@ -43,7 +47,7 @@ public final class Researcher implements Component, AutoSyncedComponent{
 	}
 	
 	public boolean isPuzzleComplete(Puzzle puzzle){
-		return false;
+		return completedPuzzles.contains(puzzle.id());
 	}
 	
 	// checks if all requirements are complete, takes requirements if so, and syncs with client if anything did happen
@@ -69,16 +73,25 @@ public final class Researcher implements Component, AutoSyncedComponent{
 	}
 	
 	public void completePuzzle(Puzzle puzzle){
-	
+		completedPuzzles.add(puzzle.id());
 	}
 	
 	// for commands
+	public void completeEntry(Entry entry){
+		stages.put(entry.id(), entry.sections().size());
+	}
+	
+	public void reset(){
+		stages.clear();
+		completedPuzzles.clear();
+	}
+	
 	public void resetEntry(Entry entry){
 		stages.remove(entry.id());
 	}
 	
 	public void uncompletePuzzle(Puzzle puzzle){
-	
+		completedPuzzles.remove(puzzle.id());
 	}
 	
 	public Map<Identifier, ? extends List<Integer>> getPinned(){
@@ -100,6 +113,10 @@ public final class Researcher implements Component, AutoSyncedComponent{
 			pinned.remove(entry);
 	}
 	
+	public void doSync(){
+		KEY.sync(player);
+	}
+	
 	public void readFromNbt(NbtCompound tag){
 		NbtCompound entries = tag.getCompound("stages");
 		for(String key : entries.getKeys())
@@ -108,6 +125,10 @@ public final class Researcher implements Component, AutoSyncedComponent{
 		NbtCompound pins = tag.getCompound("pins");
 		for(String key : pins.getKeys())
 			pinned.put(new Identifier(key), Arrays.stream(pins.getIntArray(key)).boxed().collect(Collectors.toCollection(ArrayList::new)));
+		
+		NbtList puzzles = tag.getList("puzzles", NbtElement.STRING_TYPE);
+		for(NbtElement puzzle : puzzles)
+			completedPuzzles.add(new Identifier(puzzle.asString()));
 	}
 	
 	public void writeToNbt(NbtCompound tag){
@@ -118,6 +139,10 @@ public final class Researcher implements Component, AutoSyncedComponent{
 		NbtCompound pinsTag = new NbtCompound();
 		getPinned().forEach((entry, pins) -> pinsTag.putIntArray(entry.toString(), pins));
 		tag.put("pins", pinsTag);
+		
+		NbtList puzzlesTag = new NbtList();
+		completedPuzzles.forEach(x -> puzzlesTag.add(NbtString.of(x.toString())));
+		tag.put("puzzles", puzzlesTag);
 	}
 	
 	public void applySyncPacket(PacketByteBuf buf){

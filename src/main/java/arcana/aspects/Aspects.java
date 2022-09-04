@@ -7,6 +7,7 @@ import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static arcana.Arcana.arcId;
 
@@ -85,6 +86,13 @@ public final class Aspects{
 		List<Aspect> aspects = new ArrayList<>(ORDERED_ASPECTS);
 		aspects.removeAll(PRIMALS);
 		return aspects;
+	}
+	
+	public static Optional<Aspect> combined(Aspect left, Aspect right){
+		for(Aspect value : ASPECTS.values())
+			if((left.equals(value.left()) && right.equals(value.right())) || (left.equals(value.right()) && right.equals(value.left())))
+				return Optional.of(value);
+		return Optional.empty();
 	}
 	
 	public static List<Aspect> getOrderedAspects(){

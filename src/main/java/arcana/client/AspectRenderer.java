@@ -3,13 +3,18 @@ package arcana.client;
 import arcana.aspects.Aspect;
 import arcana.aspects.AspectStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
 public final class AspectRenderer{
-
+	
+	public static void renderAspectStack(AspectStack stack, MatrixStack matrices,  int x, int y, int z){
+		renderAspectStack(stack, matrices, MinecraftClient.getInstance().textRenderer, x, y, z);
+	}
+	
 	public static void renderAspectStack(AspectStack stack, MatrixStack matrices, TextRenderer text, int x, int y, int z){
 		renderAspectStack(stack.type(), stack.amount(), matrices, text, false, x, y, z);
 	}

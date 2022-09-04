@@ -5,6 +5,7 @@ import arcana.ReflectivelyUtilized;
 import arcana.aspects.ItemAspectsTooltipData;
 import arcana.aspects.WandAspectsTooltipData;
 import arcana.client.research.EntrySectionRenderer;
+import arcana.client.research.PuzzleRenderer;
 import arcana.client.research.RequirementRenderer;
 import arcana.network.PkModifyPins;
 import arcana.network.PkTryAdvance;
@@ -58,6 +59,7 @@ public final class ArcanaClient implements ClientModInitializer{
 		
 		EntrySectionRenderer.setup();
 		RequirementRenderer.setup();
+		PuzzleRenderer.setup();
 		
 		BlockRenderLayerMap.INSTANCE.putBlock(ArcanaRegistry.RESEARCH_TABLE, RenderLayer.getCutout());
 	}

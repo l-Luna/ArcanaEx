@@ -3,6 +3,7 @@ package arcana.screens;
 import arcana.ArcanaRegistry;
 import arcana.blocks.ResearchTableBlock;
 import arcana.blocks.ResearchTableBlockEntity;
+import arcana.items.ResearchNotesItem;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -40,12 +41,37 @@ public class ResearchTableScreenHandler extends ScreenHandler{
 		}).orElse(new SimpleInventory(2));
 		
 		addSlot(new Slot(entityInv, 0, 74, 10));
-		addSlot(new Slot(entityInv, 1, 92, 10));
+		addSlot(new Slot(entityInv, 1, 92, 10){
+			public boolean canInsert(ItemStack stack){
+				return stack.getItem() instanceof ResearchNotesItem;
+			}
+		});
 	}
 	
 	public ItemStack transferSlot(PlayerEntity player, int index){
+		ItemStack itemStack = ItemStack.EMPTY;
 		Slot slot = slots.get(index);
-		return slot.hasStack() ? slot.getStack() : ItemStack.EMPTY;
+		if(slot != null && slot.hasStack()){
+			ItemStack itemStack2 = slot.getStack();
+			itemStack = itemStack2.copy();
+			if(index >= 36){
+				if(!insertItem(itemStack2, 0, 36, true))
+					return ItemStack.EMPTY;
+			}else if(!insertItem(itemStack2, 36, 38, true))
+				return ItemStack.EMPTY;
+			
+			if(itemStack2.isEmpty())
+				slot.setStack(ItemStack.EMPTY);
+			else
+				slot.markDirty();
+			
+			if(itemStack2.getCount() == itemStack.getCount())
+				return ItemStack.EMPTY;
+			
+			slot.onTakeItem(player, itemStack2);
+		}
+		
+		return itemStack;
 	}
 	
 	public boolean canUse(PlayerEntity player){

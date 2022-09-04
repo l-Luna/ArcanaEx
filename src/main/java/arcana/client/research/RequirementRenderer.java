@@ -45,7 +45,7 @@ public interface RequirementRenderer<T extends Requirement>{
 	
 	void render(MatrixStack matrices, int x, int y, T requirement, int time, float delta);
 	
-	List<Text> tooltip(T requirement, int time);
+	List<? extends Text> tooltip(T requirement, int time);
 	
 	default boolean shouldDrawTickOrCross(T requirement, int amount){
 		return amount == 1;

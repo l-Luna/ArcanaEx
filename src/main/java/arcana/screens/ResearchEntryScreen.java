@@ -128,7 +128,7 @@ public class ResearchEntryScreen extends Screen{
 			// Show tooltips
 			for(int i = 0, size = requirements.size(); i < size; i++)
 				if(mouseX >= 20 * i + baseX + 2 && mouseX <= 20 * i + baseX + 18 && mouseY >= y && mouseY <= y + 18){
-					List<Text> tooltip = renderer(requirements.get(i)).tooltip(requirements.get(i), (int)player.world.getTime());
+					List<? extends Text> tooltip = renderer(requirements.get(i)).tooltip(requirements.get(i), (int)player.world.getTime());
 					List<Text> lines = new ArrayList<>();
 					for(int tIdx = 0, tooltipSize = tooltip.size(); tIdx < tooltipSize; tIdx++){
 						Text s = tooltip.get(tIdx);

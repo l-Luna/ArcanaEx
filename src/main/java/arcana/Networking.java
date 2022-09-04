@@ -1,8 +1,6 @@
 package arcana;
 
-import arcana.network.PkModifyPins;
-import arcana.network.PkSyncResearchData;
-import arcana.network.PkTryAdvance;
+import arcana.network.*;
 import com.unascribed.lib39.tunnel.api.NetworkContext;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 
@@ -16,6 +14,9 @@ public final class Networking{
 		arcCtx.register(PkSyncResearchData.class);
 		arcCtx.register(PkTryAdvance.class);
 		arcCtx.register(PkModifyPins.class);
+		arcCtx.register(PkGetNote.class);
+		arcCtx.register(PkChemistryClick.class);
+		arcCtx.register(PkChemistryCombineAspects.class);
 		
 		ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, didJoin) -> new PkSyncResearchData().sendTo(player));
 	}

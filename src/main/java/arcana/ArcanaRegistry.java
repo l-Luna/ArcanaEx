@@ -33,7 +33,11 @@ public final class ArcanaRegistry{
 		);
 	}
 	
-	public static final Settings GROUPED = new Settings().group(Tab.ARCANA);
+	private static final Settings GROUPED = new Settings().group(Tab.ARCANA);
+	private static final Settings GROUPED_SINGLE = new Settings().group(Tab.ARCANA).maxCount(1);
+	
+	public static final Item RESEARCH_NOTES = new ResearchNotesItem(new Settings().maxCount(1), false);
+	public static final Item COMPLETE_RESEARCH_NOTES = new ResearchNotesItem(new Settings().maxCount(1), true);
 	
 	public static final CapItem IRON_WAND_CAP = new CapItem(GROUPED);
 	public static final CapItem COPPER_WAND_CAP = new CapItem(GROUPED);
@@ -46,7 +50,7 @@ public final class ArcanaRegistry{
 	public static final Core STICK_CORE = new Core.Impl(arcId("stick_wand_core"));
 	public static final Core MISSING_CORE = new Core.Impl(arcId("missing"));
 	
-	public static final Item WAND = new WandItem(GROUPED);
+	public static final Item WAND = new WandItem(GROUPED_SINGLE);
 	
 	public static final Item ARCANUM = new ResearchBookItem(GROUPED, arcId("arcanum"));
 	public static final Item CRIMSON_RITES = new ResearchBookItem(GROUPED, arcId("crimson_rites"));
@@ -73,6 +77,9 @@ public final class ArcanaRegistry{
 	
 	public static void setup(){
 		// items + wand components
+		register("research_notes", RESEARCH_NOTES);
+		register("complete_research_notes", COMPLETE_RESEARCH_NOTES);
+		
 		register("iron_wand_cap", IRON_WAND_CAP);
 		register("copper_wand_cap", COPPER_WAND_CAP);
 		register("gold_wand_cap", GOLD_WAND_CAP);

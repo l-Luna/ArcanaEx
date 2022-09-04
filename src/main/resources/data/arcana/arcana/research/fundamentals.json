@@ -111,7 +111,7 @@
           "type": "text",
           "content": "research.arcana.arcane_crafting.stage.2",
           "requirements": [
-            "2*arcana:gold_wand_cap", "0*stick", "8*arcana::xp"
+            "arcana::puzzle{chemistry_intro_puzzle}"
           ]
         },
         {

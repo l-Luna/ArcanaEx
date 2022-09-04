@@ -9,6 +9,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
@@ -29,19 +30,24 @@ public class PuzzleRequirementRenderer implements RequirementRenderer<PuzzleRequ
 		DrawableHelper.drawTexture(matrices, x, y, 101, 0, 0, 16, 16, 16, 16);
 	}
 	
-	public List<Text> tooltip(PuzzleRequirement requirement, int time){
+	public List<? extends Text> tooltip(PuzzleRequirement requirement, int time){
 		Puzzle puzzle = Research.getPuzzle(requirement.getPuzzleId());
-		List<Text> ret = new ArrayList<>(3);
-		if(I18n.hasTranslation(puzzle.desc()))
-			ret.add(Text.translatable(puzzle.desc()));
-		else{
-			var t = puzzle.type();
-			ret.add(Text.translatable("research." + t.getNamespace() + "." + t.getPath().replace("/", ".")));
-		}
+		List<MutableText> ret = tooltipForPuzzle(puzzle);
 		if(!(puzzle instanceof Fieldwork)){
 			ret.add(Text.translatable("research.entry.get_note.1").formatted(Formatting.AQUA));
 			Formatting color = canGetNote() ? Formatting.GRAY : Formatting.RED;
 			ret.add(Text.translatable("research.entry.get_note.2").formatted(color));
+		}
+		return ret;
+	}
+	
+	public static List<MutableText> tooltipForPuzzle(Puzzle puzzle){
+		List<MutableText> ret = new ArrayList<>(3);
+		if(I18n.hasTranslation(puzzle.desc()))
+			ret.add(Text.translatable(puzzle.desc()));
+		else{
+			var t = puzzle.type();
+			ret.add(Text.translatable("puzzle." + t.getNamespace() + "." + t.getPath().replace("/", ".")));
 		}
 		return ret;
 	}

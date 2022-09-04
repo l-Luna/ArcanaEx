@@ -56,6 +56,9 @@
   "aspect.arcana.aura": "Auram",
 
   "_comment": "Items",
+  "item.arcana.research_notes": "Research Notes",
+  "item.arcana.complete_research_notes": "Complete Research Notes",
+
   "item.arcana.iron_wand_cap": "Iron Cap",
   "item.arcana.copper_wand_cap": "Copper Cap",
   "item.arcana.gold_wand_cap": "Gold Cap",

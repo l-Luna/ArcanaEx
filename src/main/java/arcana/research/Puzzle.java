@@ -79,4 +79,8 @@ public abstract class Puzzle{
 	public NbtCompound getPassData(){
 		return NbtUtil.from(Map.of("type", type(), "data", data(), "id", id().toString(), "desc", desc()));
 	}
+	
+	public NbtCompound getInitialNoteTag(){
+		return new NbtCompound();
+	}
 }

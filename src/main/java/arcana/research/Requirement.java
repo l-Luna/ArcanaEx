@@ -62,8 +62,8 @@ public abstract class Requirement{
 	public abstract Identifier type();
 	public abstract NbtCompound data();
 	
+	/** Called on the client side. */
 	public boolean onClick(Entry entry, PlayerEntity player){
-		// for puzzles providing their research notes
 		return false;
 	}
 	

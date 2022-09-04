@@ -1,5 +1,9 @@
 package arcana.screens;
 
+import arcana.ArcanaRegistry;
+import arcana.client.research.PuzzleRenderer;
+import arcana.research.Puzzle;
+import arcana.research.Research;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;
@@ -12,6 +16,8 @@ import static arcana.Arcana.arcId;
 public class ResearchTableScreen extends HandledScreen<ResearchTableScreenHandler>{
 	
 	private static final Identifier texture = arcId("textures/gui/container/research_table.png");
+	
+	public static final int bgWidth = 338, bgHeight = 241;
 	
 	public ResearchTableScreen(ResearchTableScreenHandler handler, PlayerInventory inventory, Text title){
 		super(handler, inventory, title);
@@ -27,6 +33,20 @@ public class ResearchTableScreen extends HandledScreen<ResearchTableScreenHandle
 	protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY){
 		RenderSystem.setShaderTexture(0, texture);
 		drawRtTexture(matrices, x, y, 0, 0, 0, backgroundWidth, backgroundHeight);
+		var notes = handler.slots.get(37).getStack();
+		var nbt = notes.getNbt();
+		if(!notes.isEmpty() && nbt != null && nbt.contains("puzzle_id")){
+			Puzzle puzzle = Research.getPuzzle(new Identifier(nbt.getString("puzzle_id")));
+			var renderer = PuzzleRenderer.get(puzzle);
+			if(renderer != null){
+				var data = nbt.getCompound("puzzle_data");
+				if(notes.getItem() == ArcanaRegistry.RESEARCH_NOTES){
+					renderer.render(matrices, puzzle, data, width, height, mouseX, mouseY);
+					renderer.renderAfter(matrices, puzzle, data, width, height, mouseX, mouseY);
+				}else if(notes.getItem() == ArcanaRegistry.COMPLETE_RESEARCH_NOTES)
+					renderer.renderComplete(matrices, puzzle, data, width, height, mouseX, mouseY);
+			}
+		}
 	}
 	
 	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta){
@@ -35,11 +55,38 @@ public class ResearchTableScreen extends HandledScreen<ResearchTableScreenHandle
 		drawMouseoverTooltip(matrices, mouseX, mouseY);
 	}
 	
-	protected void drawRtTexture(MatrixStack matrices, int x, int y, int z, float u, float v, int width, int height){
+	public static void drawRtTexture(MatrixStack matrices, int x, int y, int z, float u, float v, int width, int height){
 		drawTexture(matrices, x, y, z, u, v, width, height, 338, 338);
 	}
 	
 	protected void drawForeground(MatrixStack matrices, int mouseX, int mouseY){
 		// no-op - don't draw label
+	}
+	
+	public boolean mouseClicked(double mouseX, double mouseY, int button){
+		super.mouseClicked(mouseX, mouseY, button);
+		
+		var notes = handler.slots.get(37).getStack();
+		var nbt = notes.getNbt();
+		if(!notes.isEmpty() && nbt != null && nbt.contains("puzzle_id")){
+			Puzzle puzzle = Research.getPuzzle(new Identifier(nbt.getString("puzzle_id")));
+			var renderer = PuzzleRenderer.get(puzzle);
+			if(renderer != null)
+				return renderer.onClick(button, puzzle, nbt.getCompound("puzzle_data"), width, height, (int)mouseX, (int)mouseY);
+		}
+		
+		return false;
+	}
+	
+	public void close(){
+		var notes = handler.slots.get(37).getStack();
+		var nbt = notes.getNbt();
+		if(!notes.isEmpty() && nbt != null && nbt.contains("puzzle_id")){
+			Puzzle puzzle = Research.getPuzzle(new Identifier(nbt.getString("puzzle_id")));
+			var renderer = PuzzleRenderer.get(puzzle);
+			if(renderer != null)
+				renderer.onClose();
+		}
+		super.close();
 	}
 }

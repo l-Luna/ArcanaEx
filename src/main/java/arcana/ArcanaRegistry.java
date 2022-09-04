@@ -2,6 +2,7 @@ package arcana;
 
 import arcana.blocks.*;
 import arcana.items.*;
+import arcana.items.foci.FireFocusItem;
 import arcana.screens.ArcaneCraftingScreenHandler;
 import arcana.screens.ResearchTableScreenHandler;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
@@ -52,7 +53,7 @@ public final class ArcanaRegistry{
 	
 	public static final Item WAND = new WandItem(GROUPED_SINGLE);
 	
-	public static final Item FIRE_FOCUS = new FocusItem(GROUPED_SINGLE);
+	public static final Item FIRE_FOCUS = new FireFocusItem(GROUPED_SINGLE);
 	public static final Item PRISMATIC_LIGHT_FOCUS = new FocusItem(GROUPED_SINGLE);
 	
 	public static final Item ARCANUM = new ResearchBookItem(GROUPED, arcId("arcanum"));

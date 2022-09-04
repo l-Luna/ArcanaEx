@@ -70,21 +70,36 @@ public class WandItem extends Item{
 		PlayerEntity player = context.getPlayer();
 		BlockPos pos = context.getBlockPos();
 		BlockState state = world.getBlockState(pos);
-		if(state.getBlock() == Blocks.CAULDRON){
-			world.setBlockState(pos, ArcanaRegistry.CRUCIBLE.getDefaultState());
-			world.playSound(player, pos, SoundEvents.ENTITY_EVOKER_CAST_SPELL, SoundCategory.PLAYERS, 1, 1);
-			for(int i = 0; i < 20; i++)
-				world.addParticle(ParticleTypes.END_ROD, pos.getX() + world.random.nextDouble(), pos.getY() + world.random.nextDouble(), pos.getZ() + world.random.nextDouble(), 0, 0, 0);
-			return ActionResult.SUCCESS;
-		}
-		if(state.getBlock() == Blocks.CRAFTING_TABLE){
-			world.setBlockState(pos, ArcanaRegistry.ARCANE_CRAFTING_TABLE.getDefaultState());
-			world.playSound(player, pos, SoundEvents.ENTITY_EVOKER_CAST_SPELL, SoundCategory.PLAYERS, 1, 1);
-			for(int i = 0; i < 20; i++)
-				world.addParticle(ParticleTypes.END_ROD, (pos.getX() - .1f) + world.random.nextDouble() * 1.2f, (pos.getY() - .1f) + world.random.nextDouble() * 1.2f, (pos.getZ() - .1f) + world.random.nextDouble() * 1.2f, 0, 0, 0);
-			return ActionResult.SUCCESS;
-		}
+		
+		ItemStack wandStack = context.getStack();
+		ItemStack focusStack = focusFrom(wandStack);
+		
+		if((player != null && player.isSneaking()) || focusStack.isEmpty()){
+			if(state.getBlock() == Blocks.CAULDRON){
+				world.setBlockState(pos, ArcanaRegistry.CRUCIBLE.getDefaultState());
+				world.playSound(player, pos, SoundEvents.ENTITY_EVOKER_CAST_SPELL, SoundCategory.PLAYERS, 1, 1);
+				for(int i = 0; i < 20; i++)
+					world.addParticle(ParticleTypes.END_ROD, pos.getX() + world.random.nextDouble(), pos.getY() + world.random.nextDouble(), pos.getZ() + world.random.nextDouble(), 0, 0, 0);
+				return ActionResult.SUCCESS;
+			}
+			if(state.getBlock() == Blocks.CRAFTING_TABLE){
+				world.setBlockState(pos, ArcanaRegistry.ARCANE_CRAFTING_TABLE.getDefaultState());
+				world.playSound(player, pos, SoundEvents.ENTITY_EVOKER_CAST_SPELL, SoundCategory.PLAYERS, 1, 1);
+				for(int i = 0; i < 20; i++)
+					world.addParticle(ParticleTypes.END_ROD, (pos.getX() - .1f) + world.random.nextDouble() * 1.2f, (pos.getY() - .1f) + world.random.nextDouble() * 1.2f, (pos.getZ() - .1f) + world.random.nextDouble() * 1.2f, 0, 0, 0);
+				return ActionResult.SUCCESS;
+			}
+		}else if(focusStack.getItem() instanceof FocusItem fi)
+			return fi.castOnBlock(context);
+		
 		return ActionResult.PASS;
+	}
+	
+	public ActionResult useOnEntity(ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand){
+		ItemStack focusStack = focusFrom(stack);
+		if(focusStack.getItem() instanceof FocusItem fi)
+			return fi.castOnEntity(stack, focusStack, user, entity, hand);
+		return super.useOnEntity(stack, user, entity, hand);
 	}
 	
 	public int getMaxUseTime(ItemStack stack){

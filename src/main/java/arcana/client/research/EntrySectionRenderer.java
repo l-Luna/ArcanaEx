@@ -95,7 +95,7 @@ public interface EntrySectionRenderer<T extends EntrySection>{
 	}
 	
 	default void drawTooltip(MatrixStack matrices, ItemStack stack, int mouseX, int mouseY){
-		drawTooltip(matrices, screen().getTooltipFromItem(stack), mouseX, mouseY);
+		screen().renderTooltip(matrices, screen().getTooltipFromItem(stack), stack.getTooltipData(), mouseX, mouseY);
 	}
 	
 	default void drawTooltip(MatrixStack matrices, List<Text> tooltip, int mouseX, int mouseY){

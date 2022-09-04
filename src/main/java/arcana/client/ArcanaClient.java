@@ -2,6 +2,8 @@ package arcana.client;
 
 import arcana.ArcanaRegistry;
 import arcana.ReflectivelyUtilized;
+import arcana.aspects.Aspect;
+import arcana.aspects.Aspects;
 import arcana.aspects.ItemAspectsTooltipData;
 import arcana.aspects.WandAspectsTooltipData;
 import arcana.client.research.EntrySectionRenderer;
@@ -32,6 +34,7 @@ import net.minecraft.client.item.TooltipData;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 
@@ -102,5 +105,21 @@ public final class ArcanaClient implements ClientModInitializer{
 	
 	public static void sendModifyPins(Pin pin, boolean add){
 		new PkModifyPins(pin, add).sendToServer();
+	}
+	
+	public static Formatting colourForPrimal(Aspect aspect){
+		if(aspect.equals(Aspects.AIR))
+			return Formatting.YELLOW;
+		if(aspect.equals(Aspects.FIRE))
+			return Formatting.RED;
+		if(aspect.equals(Aspects.WATER))
+			return Formatting.BLUE;
+		if(aspect.equals(Aspects.EARTH))
+			return Formatting.GREEN;
+		if(aspect.equals(Aspects.ORDER))
+			return Formatting.GRAY;
+		if(aspect.equals(Aspects.ENTROPY))
+			return Formatting.DARK_GRAY;
+		return Formatting.WHITE;
 	}
 }

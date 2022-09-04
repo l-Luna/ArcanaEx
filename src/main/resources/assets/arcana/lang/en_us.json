@@ -85,6 +85,10 @@
   "block.arcana.crucible": "Crucible",
   "block.arcana.research_table": "Research Table",
 
+  "_comment": "Tooltips",
+  "tooltip.arcana.wand.focus_cost.total": "Cost: %s",
+  "tooltip.arcana.wand.focus.cost.individual": "%sx %s ",
+
   "_comment": "Wand components",
   "wand.variant.arcana.wand": "Wand",
 

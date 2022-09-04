@@ -3,10 +3,15 @@ package arcana.items;
 import arcana.ArcanaRegistry;
 import arcana.aspects.Aspect;
 import arcana.aspects.AspectMap;
+import arcana.aspects.AspectStack;
 import arcana.aspects.WandAspectsTooltipData;
+import arcana.client.ArcanaClient;
 import arcana.components.AuraWorld;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.item.TooltipData;
 import net.minecraft.entity.LivingEntity;
@@ -19,6 +24,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -145,10 +151,22 @@ public class WandItem extends Item{
 		return Optional.of(new WandAspectsTooltipData(stack));
 	}
 	
+	@Environment(EnvType.CLIENT) // access The Player and Text
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context){
 		ItemStack focusStack = focusFrom(stack);
-		if(focusStack.getItem() instanceof FocusItem fi)
+		if(focusStack.getItem() instanceof FocusItem fi){
 			tooltip.add(fi.nameForTooltip(focusStack));
+			tooltip.add(costText(fi.castCost(stack, focusStack, MinecraftClient.getInstance().player)));
+		}
+	}
+	
+	@Environment(EnvType.CLIENT)
+	public static Text costText(AspectMap map){
+		MutableText costs = Text.literal("");
+		for(AspectStack stack : map.asStacks())
+			costs.append(Text.translatable("tooltip.arcana.wand.focus.cost.individual", stack.amount(), stack.type().name())
+					.formatted(ArcanaClient.colourForPrimal(stack.type())));
+		return Text.translatable("tooltip.arcana.wand.focus_cost.total", costs);
 	}
 	
 	// TODO: NBT-backed aspect map?

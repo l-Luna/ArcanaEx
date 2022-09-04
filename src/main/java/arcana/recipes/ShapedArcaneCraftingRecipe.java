@@ -60,7 +60,7 @@ public class ShapedArcaneCraftingRecipe extends ShapedRecipe implements ArcaneCr
 		public ShapedRecipe read(Identifier id, JsonObject json){
 			ShapedRecipe orig = super.read(id, json);
 			ShapedArcaneCraftingRecipe recipe = new ShapedArcaneCraftingRecipe(orig);
-			recipe.aspects = AspectMap.fromAspectStackList(ItemAspectRegistry.parseAspectStackList(id, JsonHelper.getArray(json, "aspects")).orElse(null));
+			recipe.aspects = AspectMap.fromAspectStacks(ItemAspectRegistry.parseAspectStackList(id, JsonHelper.getArray(json, "aspects")).orElse(null));
 			return recipe;
 		}
 		

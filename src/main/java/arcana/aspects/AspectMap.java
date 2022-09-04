@@ -124,13 +124,17 @@ public record AspectMap(Map<Aspect, Integer> underlying){
 		return new AspectMap(map);
 	}
 	
-	public static AspectMap fromAspectStackList(List<AspectStack> stacks){
+	public static AspectMap fromAspectStacks(List<AspectStack> stacks){
 		if(stacks == null)
 			return new AspectMap();
 		AspectMap map = new AspectMap(new LinkedHashMap<>(stacks.size()));
 		for(AspectStack stack : stacks)
 			map.add(stack);
 		return map;
+	}
+	
+	public static AspectMap fromAspectStack(AspectStack stack){
+		return fromAspectStacks(List.of(stack));
 	}
 	
 	public AspectMap copy(){

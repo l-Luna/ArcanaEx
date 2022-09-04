@@ -89,16 +89,29 @@ public class WandItem extends Item{
 					world.addParticle(ParticleTypes.END_ROD, (pos.getX() - .1f) + world.random.nextDouble() * 1.2f, (pos.getY() - .1f) + world.random.nextDouble() * 1.2f, (pos.getZ() - .1f) + world.random.nextDouble() * 1.2f, 0, 0, 0);
 				return ActionResult.SUCCESS;
 			}
-		}else if(focusStack.getItem() instanceof FocusItem fi)
-			return fi.castOnBlock(context);
+		}else if(focusStack.getItem() instanceof FocusItem fi){
+			AspectMap cost = fi.castCost(wandStack, focusStack, player);
+			if(aspectsFrom(wandStack).contains(cost)){
+				updateAspects(wandStack, aspects -> aspects.take(cost));
+				return fi.castOnBlock(context);
+			}
+		}
 		
 		return ActionResult.PASS;
 	}
 	
 	public ActionResult useOnEntity(ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand){
-		ItemStack focusStack = focusFrom(stack);
-		if(focusStack.getItem() instanceof FocusItem fi)
-			return fi.castOnEntity(stack, focusStack, user, entity, hand);
+		// creative mode "helpfully" copies the stack before use on entities, so we get the real thing here
+		ItemStack wand = user.getStackInHand(hand);
+		ItemStack focusStack = focusFrom(wand);
+		AspectMap stored = aspectsFrom(wand);
+		if(focusStack.getItem() instanceof FocusItem fi){
+			var cost = fi.castCost(wand, focusStack, user);
+			if(stored.contains(cost)){
+				updateAspects(wand, aspects -> aspects.take(cost));
+				return fi.castOnEntity(wand, focusStack, user, entity, hand);
+			}
+		}
 		return super.useOnEntity(stack, user, entity, hand);
 	}
 	

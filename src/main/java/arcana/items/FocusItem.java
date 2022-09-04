@@ -1,5 +1,6 @@
 package arcana.items;
 
+import arcana.aspects.AspectMap;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -21,6 +22,10 @@ public class FocusItem extends Item{
 	}
 	
 	// TODO: split into Focus interface, like Cap/Core?
+	public AspectMap castCost(ItemStack wand, ItemStack focus, PlayerEntity user){
+		return new AspectMap();
+	}
+	
 	public ActionResult castOnBlock(ItemUsageContext ctx){
 		return ActionResult.PASS;
 	}

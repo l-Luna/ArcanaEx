@@ -1,5 +1,8 @@
 package arcana.items.foci;
 
+import arcana.aspects.AspectMap;
+import arcana.aspects.AspectStack;
+import arcana.aspects.Aspects;
 import arcana.items.FocusItem;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.*;
@@ -21,6 +24,10 @@ public class FireFocusItem extends FocusItem{
 	
 	public FireFocusItem(Settings settings){
 		super(settings);
+	}
+	
+	public AspectMap castCost(ItemStack wand, ItemStack focus, PlayerEntity user){
+		return AspectMap.fromAspectStack(new AspectStack(Aspects.FIRE, 4));
 	}
 	
 	public ActionResult castOnBlock(ItemUsageContext ctx){
@@ -53,6 +60,6 @@ public class FireFocusItem extends FocusItem{
 	
 	public ActionResult castOnEntity(ItemStack wand, ItemStack focus, PlayerEntity user, LivingEntity target, Hand hand){
 		target.setOnFireFor(5);
-		return ActionResult.SUCCESS;
+		return ActionResult.success(user.world.isClient);
 	}
 }

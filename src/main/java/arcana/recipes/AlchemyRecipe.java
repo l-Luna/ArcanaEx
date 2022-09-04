@@ -94,7 +94,7 @@ public class AlchemyRecipe implements Recipe<AlchemyInventory>{
 					JsonHelper.hasArray(json, "ingredient")
 					? JsonHelper.getArray(json, "ingredient")
 					: JsonHelper.getObject(json, "ingredient"));
-			var aspects = AspectMap.fromAspectStackList(ItemAspectRegistry.parseAspectStackList(id, JsonHelper.getArray(json, "aspects")).orElse(null));
+			var aspects = AspectMap.fromAspectStacks(ItemAspectRegistry.parseAspectStackList(id, JsonHelper.getArray(json, "aspects")).orElse(null));
 			ItemStack output = ShapedRecipe.outputFromJson(JsonHelper.getObject(json, "result"));
 			return new AlchemyRecipe(id, ingredient, aspects, output);
 		}

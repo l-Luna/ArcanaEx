@@ -1,7 +1,6 @@
 package arcana.screens;
 
 import arcana.ArcanaRegistry;
-import arcana.aspects.Aspect;
 import arcana.aspects.AspectMap;
 import arcana.items.WandItem;
 import arcana.recipes.ShapedArcaneCraftingRecipe;
@@ -215,11 +214,7 @@ public class ArcaneCraftingScreenHandler extends AbstractRecipeScreenHandler<Cra
 				ItemStack wandStack = wand.getStack(0);
 				if(wandStack.getItem() instanceof WandItem){
 					// already checked to see if it contains enough
-					WandItem.updateAspects(wandStack, map -> {
-						AspectMap required = recipe.aspects();
-						for(Aspect aspect : required.aspectSet())
-							map.take(aspect, required.get(aspect));
-					});
+					WandItem.updateAspects(wandStack, map -> map.take(recipe.aspects()));
 				}
 			});
 			// take aspects before taking items

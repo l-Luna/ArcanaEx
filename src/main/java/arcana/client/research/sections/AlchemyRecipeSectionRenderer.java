@@ -54,8 +54,8 @@ public class AlchemyRecipeSectionRenderer extends AbstractRecipeSectionRenderer<
 			tooltipArea(matrices, stacks[displayIdx(stacks.length)], mouseX, mouseY, inputX, inputY);
 			
 			// Display aspects
-			int aspectStartX = ulX + 9;
-			int aspectStartY = ulY + 30;
+			int aspectStartX = ulX + 12;
+			int aspectStartY = ulY + 20;
 			positionAspects(ar.getAspects(), aspectStartX, aspectStartY).forEach((stack, pos) ->
 					tooltipArea(matrices, stack.type(), mouseX, mouseY, pos.getLeft(), pos.getRight()));
 		}

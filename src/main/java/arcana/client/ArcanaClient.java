@@ -12,12 +12,11 @@ import arcana.network.PkTryAdvance;
 import arcana.research.Entry;
 import arcana.research.Pin;
 import arcana.research.Research;
-import arcana.screens.ArcaneCraftingScreen;
-import arcana.screens.ResearchBookScreen;
-import arcana.screens.ResearchEntryScreen;
-import arcana.screens.ResearchTableScreen;
+import arcana.screens.*;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
@@ -30,8 +29,11 @@ import net.minecraft.client.gui.tooltip.BundleTooltipComponent;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
 import net.minecraft.client.item.BundleTooltipData;
 import net.minecraft.client.item.TooltipData;
+import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.util.InputUtil;
 import net.minecraft.util.Identifier;
+import org.lwjgl.glfw.GLFW;
 
 public final class ArcanaClient implements ClientModInitializer{
 	
@@ -44,6 +46,7 @@ public final class ArcanaClient implements ClientModInitializer{
 				d instanceof WandAspectsTooltipData w ? new WandAspectsTooltipComponent(w.wand()) : null);
 		
 		WorldRenderEvents.LAST.register(NodeRenderer::renderAll);
+		ClientTickEvents.END_CLIENT_TICK.register(SwapFocusScreen::tryOpen);
 		
 		ModelLoadingRegistry.INSTANCE.registerResourceProvider(__ -> new WandModel.Provider());
 		
@@ -56,12 +59,18 @@ public final class ArcanaClient implements ClientModInitializer{
 		HandledScreens.register(ArcanaRegistry.RESEARCH_TABLE_SCREEN_HANDLER, ResearchTableScreen::new);
 		
 		BlockEntityRendererRegistry.register(ArcanaRegistry.CRUCIBLE_BE, context -> new CrucibleBlockEntityRenderer());
+		BlockRenderLayerMap.INSTANCE.putBlock(ArcanaRegistry.RESEARCH_TABLE, RenderLayer.getCutout());
 		
 		EntrySectionRenderer.setup();
 		RequirementRenderer.setup();
 		PuzzleRenderer.setup();
 		
-		BlockRenderLayerMap.INSTANCE.putBlock(ArcanaRegistry.RESEARCH_TABLE, RenderLayer.getCutout());
+		SwapFocusScreen.swapFocus = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+				"key.arcana.swap_focus",
+				InputUtil.Type.KEYSYM,
+				GLFW.GLFW_KEY_G,
+				"category.arcana"
+		));
 	}
 	
 	private static TooltipComponent dataToComponent(TooltipData data){

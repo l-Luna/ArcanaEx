@@ -1,5 +1,6 @@
 {
   "itemGroup.arcana.group": "Arcana",
+  "category.arcana": "Arcana",
 
   "_comment": "Tags",
   "tag.arcana.helmets": "Helmets",
@@ -12,6 +13,9 @@
   "emi.category.arcana.aspects": "Aspects",
   "emi.category.arcana.arcane_crafting": "Arcane Crafting",
   "emi.category.arcana.alchemy": "Alchemy",
+
+  "_comment": "Keybindings",
+  "key.arcana.swap_focus": "Swap Focus",
 
   "_comment": "Aspects",
   "aspect.arcana.air": "Aer",
@@ -68,6 +72,9 @@
   "item.arcana.ice_wand_core": "Ice Core",
 
   "item.arcana.wand": "%s %s %s",
+
+  "item.arcana.fire_focus": "Wand Focus: Flame",
+  "item.arcana.prismatic_light_focus": "Wand Focus: Prismatic Light",
 
   "item.arcana.arcanum": "Arcanum",
   "item.arcana.crimson_rites": "Crimson Rites",

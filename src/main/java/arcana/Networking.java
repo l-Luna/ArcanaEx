@@ -17,6 +17,7 @@ public final class Networking{
 		arcCtx.register(PkGetNote.class);
 		arcCtx.register(PkChemistryClick.class);
 		arcCtx.register(PkChemistryCombineAspects.class);
+		arcCtx.register(PkSwapFocus.class);
 		
 		ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, didJoin) -> new PkSyncResearchData().sendTo(player));
 	}

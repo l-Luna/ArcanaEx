@@ -52,6 +52,9 @@ public final class ArcanaRegistry{
 	
 	public static final Item WAND = new WandItem(GROUPED_SINGLE);
 	
+	public static final Item FIRE_FOCUS = new FocusItem(GROUPED_SINGLE);
+	public static final Item PRISMATIC_LIGHT_FOCUS = new FocusItem(GROUPED_SINGLE);
+	
 	public static final Item ARCANUM = new ResearchBookItem(GROUPED, arcId("arcanum"));
 	public static final Item CRIMSON_RITES = new ResearchBookItem(GROUPED, arcId("crimson_rites"));
 	public static final Item TAINTED_CODEX = new ResearchBookItem(GROUPED, arcId("tainted_codex"));
@@ -92,6 +95,9 @@ public final class ArcanaRegistry{
 		registerCoreOnly(MISSING_CORE);
 		
 		register("wand", WAND);
+		
+		register("prismatic_light_focus", PRISMATIC_LIGHT_FOCUS);
+		register("fire_focus", FIRE_FOCUS);
 		
 		register("arcanum", ARCANUM);
 		register("crimson_rites", CRIMSON_RITES);

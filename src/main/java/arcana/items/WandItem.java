@@ -7,6 +7,7 @@ import arcana.aspects.WandAspectsTooltipData;
 import arcana.components.AuraWorld;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.item.TooltipData;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -25,7 +26,9 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -114,6 +117,12 @@ public class WandItem extends Item{
 		return Optional.of(new WandAspectsTooltipData(stack));
 	}
 	
+	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context){
+		ItemStack focusStack = focusFrom(stack);
+		if(focusStack.getItem() instanceof FocusItem fi)
+			tooltip.add(fi.nameForTooltip(focusStack));
+	}
+	
 	// TODO: NBT-backed aspect map?
 	
 	public static void updateAspects(ItemStack stack, Consumer<AspectMap> updater){
@@ -131,18 +140,20 @@ public class WandItem extends Item{
 	}
 	
 	public static Cap capFrom(ItemStack stack){
-		return capFrom(stack.getOrCreateNbt());
-	}
-	
-	public static Cap capFrom(NbtCompound nbt){
-		return Cap.byName(nbt.getString("cap_id"));
+		return Cap.byName(stack.getOrCreateNbt().getString("cap_id"));
 	}
 	
 	public static Core coreFrom(ItemStack stack){
-		return coreFrom(stack.getOrCreateNbt());
+		return Core.byName(stack.getOrCreateNbt().getString("core_id"));
 	}
 	
-	public static Core coreFrom(NbtCompound nbt){
-		return Core.byName(nbt.getString("core_id"));
+	public static ItemStack focusFrom(ItemStack stack){
+		return ItemStack.fromNbt(stack.getOrCreateNbt().getCompound("focus"));
+	}
+	
+	public static void putFocus(ItemStack wand, ItemStack focus){
+		var focusTag = new NbtCompound();
+		focus.writeNbt(focusTag);
+		wand.setSubNbt("focus", focusTag);
 	}
 }

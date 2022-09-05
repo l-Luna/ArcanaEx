@@ -38,7 +38,7 @@ public final class WandModel implements UnbakedModel{
 	private static final List<SpriteIdentifier> deps = Stream.of(
 					Cap.caps.values().stream().map(WandModel::capTexture),
 					Core.cores.values().stream().map(WandModel::coreTexture),
-					Stream.of(arcId("item/wand/foci/wand_focus"), arcId("item/wand/foci/wand_focus_t"))
+					Stream.of(arcId("item/wand/foci/wand_focus"))
 			).flatMap(x -> x).map(WandModel::atlased).toList();
 	
 	public static final Identifier wandModel = arcId("item/wand/wand");

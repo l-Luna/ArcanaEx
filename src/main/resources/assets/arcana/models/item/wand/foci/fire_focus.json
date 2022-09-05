@@ -2,8 +2,8 @@
 	"credit": "Made by Falkor",
 	"texture_size": [16, 32],
 	"textures": {
-		"1": "arcana:item/wand/foci/wand_focus",
-		"particle": "arcana:item/wand/foci/wand_focus"
+		"1": "arcana:item/wand/foci/fire_focus",
+		"particle": "arcana:item/wand/foci/fire_focus"
 	},
 	"elements": [
 		{

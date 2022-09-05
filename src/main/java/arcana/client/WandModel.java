@@ -3,6 +3,7 @@ package arcana.client;
 import arcana.ArcanaRegistry;
 import arcana.items.Cap;
 import arcana.items.Core;
+import arcana.items.FocusItem;
 import arcana.items.WandItem;
 import arcana.mixin.JsonUnbakedModelAccessor;
 import com.mojang.datafixers.util.Either;
@@ -18,16 +19,15 @@ import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -35,25 +35,29 @@ import static arcana.Arcana.arcId;
 
 public final class WandModel implements UnbakedModel{
 	
-	private static final List<SpriteIdentifier> deps = Stream.of(
+	private static final List<SpriteIdentifier> texDeps = Stream.of(
 					Cap.caps.values().stream().map(WandModel::capTexture),
 					Core.cores.values().stream().map(WandModel::coreTexture),
-					Stream.of(arcId("item/wand/foci/wand_focus"))
+					Registry.ITEM.stream().filter(FocusItem.class::isInstance).map(WandModel::focusTexture)
 			).flatMap(x -> x).map(WandModel::atlased).toList();
 	
+	
 	public static final Identifier wandModel = arcId("item/wand/wand");
-	// TODO: per-focus models
-	public static final Identifier focusModel = arcId("item/wand/wand_focus");
 	
 	private static final Identifier defaultCoreTexId = coreTexture(ArcanaRegistry.STICK_CORE);
 	private static final Identifier defaultCapTexId = capTexture(ArcanaRegistry.IRON_WAND_CAP);
 	
+	private static final List<Identifier> modelDeps = new ArrayList<>(Registry.ITEM.stream().filter(FocusItem.class::isInstance).map(WandModel::focusModel).toList());
+	static{
+		modelDeps.add(wandModel);
+	}
+	
 	public Collection<Identifier> getModelDependencies(){
-		return List.of(wandModel, focusModel);
+		return modelDeps;
 	}
 	
 	public Collection<SpriteIdentifier> getTextureDependencies(Function<Identifier, UnbakedModel> ubModels, Set<Pair<String, String>> unresolvedTextureReferences){
-		return deps;
+		return texDeps;
 	}
 	
 	public BakedModel bake(ModelLoader loader, Function<SpriteIdentifier, Sprite> textureGetter, ModelBakeSettings bakeSettings, Identifier modelId){
@@ -100,6 +104,16 @@ public final class WandModel implements UnbakedModel{
 		return new Identifier(core.id().getNamespace(), "item/wand/cores/" + core.id().getPath());
 	}
 	
+	public static Identifier focusTexture(Item focus){
+		Identifier id = Registry.ITEM.getId(focus);
+		return new Identifier(id.getNamespace(), "item/wand/foci/" + id.getPath());
+	}
+	
+	public static Identifier focusModel(Item focus){
+		Identifier id = Registry.ITEM.getId(focus);
+		return new Identifier(id.getNamespace(), "item/wand/foci/" + id.getPath());
+	}
+	
 	@SuppressWarnings("deprecation")
 	public static SpriteIdentifier atlased(Identifier i){
 		return new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, i);
@@ -122,7 +136,8 @@ public final class WandModel implements UnbakedModel{
 		public BakedModel apply(BakedModel model, ItemStack stack, @Nullable ClientWorld world, @Nullable LivingEntity entity, int seed){
 			Cap cap = WandItem.capFrom(stack);
 			Core core = WandItem.coreFrom(stack);
-			Identifier f = WandItem.focusFrom(stack).isEmpty() ? null : focusModel;
+			var fstack = WandItem.focusFrom(stack);
+			Identifier f = fstack.isEmpty() ? null : focusModel(fstack.getItem());
 			return bakeWithTextures(loader, spriteFn, mbs, arcId("wand"), coreTexture(core), capTexture(cap), f);
 		}
 	}

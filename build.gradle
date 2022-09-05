@@ -34,6 +34,10 @@ repositories {
 			includeGroup 'com.unascribed'
 		}
 	}
+	maven {
+		name = "maven.gegy.dev"
+		url = "https://maven.gegy.dev"
+	}
 }
 
 loom {
@@ -69,6 +73,10 @@ dependencies {
 
 	modApi include("com.unascribed:lib39-weld:1.2.1")
 	modApi include("com.unascribed:lib39-tunnel:1.2.1")
+
+	modRuntimeOnly ("supercoder79:databreaker:0.2.10") {
+		exclude module : "fabric-loader"
+	}
 }
 
 processResources {

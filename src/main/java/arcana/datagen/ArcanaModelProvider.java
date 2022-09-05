@@ -1,6 +1,7 @@
 package arcana.datagen;
 
 import arcana.ArcanaRegistry;
+import arcana.blocks.ResearchTableBlock;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.block.Block;
@@ -31,6 +32,7 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 				itemGen.register(item, Models.GENERATED);
 		
 		for(Block block : ArcanaRegistry.BLOCKS)
-			itemGen.writer.accept(ModelIds.getItemModelId(block.asItem()), new SimpleModelSupplier(ModelIds.getBlockModelId(block)));
+			if(!(block instanceof ResearchTableBlock))
+				itemGen.writer.accept(ModelIds.getItemModelId(block.asItem()), new SimpleModelSupplier(ModelIds.getBlockModelId(block)));
 	}
 }

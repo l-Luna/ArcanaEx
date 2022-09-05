@@ -71,7 +71,7 @@ public final class ResearchCommand{
 		Researcher researcher = Researcher.from(player);
 		researcher.reset();
 		researcher.doSync();
-		context.getSource().sendMessage(Text.translatable("message.arcana.research.reset", player.getDisplayName()));
+		context.getSource().sendMessage(Text.translatable("message.arcana.command.research.reset", player.getDisplayName()));
 		return 1;
 	}
 	
@@ -83,7 +83,7 @@ public final class ResearchCommand{
 		researcher.completeEntry(entry);
 		researcher.doSync();
 		context.getSource().sendMessage(Text.translatable(
-				"message.arcana.research.give.entry",
+				"message.arcana.command.research.give.entry",
 				Text.translatable(entry.name()),
 				player.getDisplayName()));
 		return researcher.entryStage(entry) - prevStage;
@@ -97,7 +97,7 @@ public final class ResearchCommand{
 		researcher.completePuzzle(puzzle);
 		researcher.doSync();
 		context.getSource().sendMessage(Text.translatable(
-				"message.arcana.research.give.puzzle",
+				"message.arcana.command.research.give.puzzle",
 				Text.literal(puzzle.id().toString()),
 				player.getDisplayName()));
 		return had ? 0 : 1;
@@ -111,7 +111,7 @@ public final class ResearchCommand{
 		researcher.resetEntry(entry);
 		researcher.doSync();
 		context.getSource().sendMessage(Text.translatable(
-				"message.arcana.research.take.entry",
+				"message.arcana.command.research.take.entry",
 				Text.translatable(entry.name()),
 				player.getDisplayName()));
 		return stage;
@@ -125,7 +125,7 @@ public final class ResearchCommand{
 		researcher.uncompletePuzzle(puzzle);
 		researcher.doSync();
 		context.getSource().sendMessage(Text.translatable(
-				"message.arcana.research.take.puzzle",
+				"message.arcana.command.research.take.puzzle",
 				Text.literal(puzzle.id().toString()),
 				player.getDisplayName()));
 		return had ? 1 : 0;

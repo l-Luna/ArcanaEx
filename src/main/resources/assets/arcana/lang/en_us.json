@@ -89,6 +89,7 @@
   "tooltip.arcana.wand.focus_cost.total": "Cost: %s",
   "tooltip.arcana.wand.focus.cost.individual": "%sx %s ",
 
+  "_comment": "Enchantments",
   "enchantment.arcana.warping": "Warping",
 
   "_comment": "Wand components",
@@ -106,16 +107,23 @@
   "wand.core.arcana.missing": "(Broken Core)",
 
   "_comment": "Command messages",
-  "message.arcana.research.reset": "Reset research for %s",
-  "message.arcana.research.give.entry": "Completed entry \"%s\" for %s",
-  "message.arcana.research.give.puzzle": "Completed puzzle %s for %s",
-  "message.arcana.research.take.entry": "Reset entry \"%s\" for %s",
-  "message.arcana.research.take.puzzle": "Reset puzzle %s for %s",
+  "message.arcana.command.research.reset": "Reset research for %s",
+  "message.arcana.command.research.give.entry": "Completed entry \"%s\" for %s",
+  "message.arcana.command.research.give.puzzle": "Completed puzzle %s for %s",
+  "message.arcana.command.research.take.entry": "Reset entry \"%s\" for %s",
+  "message.arcana.command.research.take.puzzle": "Reset puzzle %s for %s",
 
-  "message.arcana.warp.show": "%s has %s warp",
-  "message.arcana.warp.show.effective": "%s effectively has %s warp",
-  "message.arcana.warp.add": "Gave %s %s warp (had %s, now has %s)",
-  "message.arcana.warp.set": "Set %s's warp to %s (had %s)",
+  "message.arcana.command.warp.show": "%s has %s warp",
+  "message.arcana.command.warp.show.effective": "%s effectively has %s warp",
+  "message.arcana.command.warp.add": "Gave %s %s warp (had %s, now has %s)",
+  "message.arcana.command.warp.set": "Set %s's warp to %s (had %s)",
+  "message.arcana.command.warp.trigger": "Triggered random warp event for %s",
+  "message.arcana.command.warp.trigger.specific": "Triggered warp event %s for %s",
+
+  "_comment": "Warp effect messages",
+  "message.arcana.warp.nausea": "You don't feel so good...",
+  "message.arcana.warp.peek": "What was that?",
+  "message.arcana.warp.pass": "Something passes over you...",
 
   "_comment": "Research UI",
   "research.entry.continue": "Continue",

@@ -33,12 +33,20 @@ public final class Researcher implements Component, AutoSyncedComponent{
 		return entity.getComponent(KEY);
 	}
 	
+	// the player
 	private final PlayerEntity player;
+	
+	// research progress
 	private final Map<Identifier, Integer> stages = new HashMap<>();
 	private final Map<Identifier, ArrayList<Integer>> pinned = new HashMap<>();
 	private final Set<Identifier> completedPuzzles = new HashSet<>();
 	
+	// warp level
 	private int warp;
+	
+	// warp event tracking
+	private long lastWarpEventTime = -1;
+	private boolean wasPrecursor = false;
 	
 	public Researcher(PlayerEntity player){
 		this.player = player;
@@ -93,6 +101,19 @@ public final class Researcher implements Component, AutoSyncedComponent{
 	
 	public void completePuzzle(Puzzle puzzle){
 		completedPuzzles.add(puzzle.id());
+	}
+	
+	public long getLastWarpEventTime(){
+		return lastWarpEventTime;
+	}
+	
+	public boolean wasLastWarpEventPrecursor(){
+		return wasPrecursor;
+	}
+	
+	public void setLastWarpEvent(long time, boolean wasPrecursor){
+		lastWarpEventTime = time;
+		this.wasPrecursor = wasPrecursor;
 	}
 	
 	// for commands
@@ -166,6 +187,8 @@ public final class Researcher implements Component, AutoSyncedComponent{
 	
 	public void readFromNbt(NbtCompound tag){
 		warp = tag.getInt("warp");
+		lastWarpEventTime = tag.getLong("last_warp_event_time");
+		wasPrecursor = tag.getBoolean("was_precursor");
 		
 		NbtCompound entries = tag.getCompound("stages");
 		for(String key : entries.getKeys())
@@ -182,6 +205,8 @@ public final class Researcher implements Component, AutoSyncedComponent{
 	
 	public void writeToNbt(NbtCompound tag){
 		tag.putInt("warp", warp);
+		tag.putLong("last_warp_event_time", lastWarpEventTime);
+		tag.putBoolean("was_precursor", wasPrecursor);
 		
 		NbtCompound stagesTag = new NbtCompound();
 		stages.forEach((entry, stage) -> stagesTag.putInt(entry.toString(), stage));

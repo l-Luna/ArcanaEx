@@ -89,6 +89,8 @@
   "tooltip.arcana.wand.focus_cost.total": "Cost: %s",
   "tooltip.arcana.wand.focus.cost.individual": "%sx %s ",
 
+  "enchantment.arcana.warping": "Warping",
+
   "_comment": "Wand components",
   "wand.variant.arcana.wand": "Wand",
 
@@ -111,6 +113,7 @@
   "message.arcana.research.take.puzzle": "Reset puzzle %s for %s",
 
   "message.arcana.warp.show": "%s has %s warp",
+  "message.arcana.warp.show.effective": "%s effectively has %s warp",
   "message.arcana.warp.add": "Gave %s %s warp (had %s, now has %s)",
   "message.arcana.warp.set": "Set %s's warp to %s (had %s)",
 

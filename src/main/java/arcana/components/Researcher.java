@@ -1,12 +1,16 @@
 package arcana.components;
 
+import arcana.ArcanaRegistry;
+import arcana.items.WarpingItem;
 import arcana.research.Entry;
 import arcana.research.Puzzle;
 import dev.onyxstudios.cca.api.v3.component.Component;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistryV3;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
@@ -141,6 +145,23 @@ public final class Researcher implements Component, AutoSyncedComponent{
 	
 	public void doSync(){
 		KEY.sync(player);
+	}
+	
+	public int getEffectiveWarp(){
+		return getWarp() + bonusWarp(player);
+	}
+	
+	public static int bonusWarp(PlayerEntity player){
+		int total = 0;
+		for(int i = 0; i < player.getInventory().size(); i++){
+			ItemStack stack = player.getInventory().getStack(i);
+			if(!stack.isEmpty()){
+				total += EnchantmentHelper.getLevel(ArcanaRegistry.WARPING, stack);
+				if(stack.getItem() instanceof WarpingItem wi)
+					total += wi.warping(stack, player);
+			}
+		}
+		return total;
 	}
 	
 	public void readFromNbt(NbtCompound tag){

@@ -28,6 +28,8 @@ public final class WarpCommand{
 						.then(argument("player", EntityArgumentType.player())
 								.then(literal("show")
 										.executes(WarpCommand::performShow)
+								).then(literal("show-effective")
+										.executes(WarpCommand::performShowEffective)
 								).then(literal("add")
 										.then(argument("amount", IntegerArgumentType.integer())
 												.executes(WarpCommand::performAdd)
@@ -45,6 +47,13 @@ public final class WarpCommand{
 		var player = EntityArgumentType.getPlayer(context, "player");
 		Researcher researcher = Researcher.from(player);
 		context.getSource().sendMessage(Text.translatable("message.arcana.warp.show", player.getDisplayName(), researcher.getWarp()));
+		return researcher.getWarp();
+	}
+	
+	private static int performShowEffective(CommandContext<ServerCommandSource> context) throws CommandSyntaxException{
+		var player = EntityArgumentType.getPlayer(context, "player");
+		Researcher researcher = Researcher.from(player);
+		context.getSource().sendMessage(Text.translatable("message.arcana.warp.show.effective", player.getDisplayName(), researcher.getEffectiveWarp()));
 		return researcher.getWarp();
 	}
 	

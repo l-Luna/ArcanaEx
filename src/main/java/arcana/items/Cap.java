@@ -23,6 +23,10 @@ public interface Cap{
 	
 	Identifier id();
 	
+	default int warping(){
+		return 0;
+	}
+	
 	default String translationKey(){
 		return "wand.cap." + id().getNamespace() + "." + id().getPath();
 	}

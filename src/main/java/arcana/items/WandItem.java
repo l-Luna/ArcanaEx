@@ -38,7 +38,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-public class WandItem extends Item{
+public class WandItem extends Item implements WarpingItem{
 	
 	public WandItem(Settings settings){
 		super(settings);
@@ -154,10 +154,14 @@ public class WandItem extends Item{
 	@Environment(EnvType.CLIENT) // access The Player and Text
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context){
 		ItemStack focusStack = focusFrom(stack);
+		var player = MinecraftClient.getInstance().player;
 		if(focusStack.getItem() instanceof FocusItem fi){
 			tooltip.add(fi.nameForTooltip(focusStack));
-			tooltip.add(costText(fi.castCost(stack, focusStack, MinecraftClient.getInstance().player)));
+			tooltip.add(costText(fi.castCost(stack, focusStack, player)));
 		}
+		int warping = warping(stack, player);
+		if(warping != 0)
+			tooltip.add(ArcanaRegistry.WARPING.getName(warping));
 	}
 	
 	@Environment(EnvType.CLIENT)
@@ -201,5 +205,9 @@ public class WandItem extends Item{
 		var focusTag = new NbtCompound();
 		focus.writeNbt(focusTag);
 		wand.setSubNbt("focus", focusTag);
+	}
+	
+	public int warping(ItemStack stack, PlayerEntity player){
+		return capFrom(stack).warping() + coreFrom(stack).warping();
 	}
 }

@@ -1,6 +1,7 @@
 package arcana;
 
 import arcana.blocks.*;
+import arcana.enchantments.WarpingCurseEnchantment;
 import arcana.items.*;
 import arcana.items.foci.FireFocusItem;
 import arcana.screens.ArcaneCraftingScreenHandler;
@@ -10,6 +11,8 @@ import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityT
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.Settings;
@@ -37,6 +40,7 @@ public final class ArcanaRegistry{
 	private static final Settings GROUPED = new Settings().group(Tab.ARCANA);
 	private static final Settings GROUPED_SINGLE = new Settings().group(Tab.ARCANA).maxCount(1);
 	
+	// items...
 	public static final Item RESEARCH_NOTES = new ResearchNotesItem(new Settings().maxCount(1), false);
 	public static final Item COMPLETE_RESEARCH_NOTES = new ResearchNotesItem(new Settings().maxCount(1), true);
 	
@@ -45,7 +49,7 @@ public final class ArcanaRegistry{
 	public static final CapItem GOLD_WAND_CAP = new CapItem(GROUPED);
 	public static final Cap MISSING_CAP = new Cap.Impl(arcId("missing"));
 	
-	public static final CoreItem BONE_WAND_CORE = new CoreItem(GROUPED);
+	public static final CoreItem BONE_WAND_CORE = new CoreItem(GROUPED, 1);
 	public static final CoreItem BLAZE_WAND_CORE = new CoreItem(GROUPED);
 	public static final CoreItem ICE_WAND_CORE = new CoreItem(GROUPED);
 	public static final Core STICK_CORE = new Core.Impl(arcId("stick_wand_core"));
@@ -60,21 +64,27 @@ public final class ArcanaRegistry{
 	public static final Item CRIMSON_RITES = new ResearchBookItem(GROUPED, arcId("crimson_rites"));
 	public static final Item TAINTED_CODEX = new ResearchBookItem(GROUPED, arcId("tainted_codex"));
 	
+	// blocks...
 	public static final Block ARCANE_CRAFTING_TABLE = new ArcaneCraftingTableBlock(of(Material.WOOD).nonOpaque());
 	public static final Block CRUCIBLE = new CrucibleBlock(of(Material.METAL).nonOpaque());
 	public static final Block RESEARCH_TABLE = new ResearchTableBlock(of(Material.WOOD).nonOpaque().strength(3));
 	
+	// screen handlers...
 	public static final ScreenHandlerType<ArcaneCraftingScreenHandler> ARCANE_CRAFTING_SCREEN_HANDLER
 			= new ScreenHandlerType<>(ArcaneCraftingScreenHandler::new);
 	public static final ScreenHandlerType<ResearchTableScreenHandler> RESEARCH_TABLE_SCREEN_HANDLER
 			= new ScreenHandlerType<>(ResearchTableScreenHandler::new);
 	
+	// block entities...
 	public static BlockEntityType<CrucibleBlockEntity> CRUCIBLE_BE = FabricBlockEntityTypeBuilder
 			.create(CrucibleBlockEntity::new, CRUCIBLE)
 			.build();
 	public static BlockEntityType<ResearchTableBlockEntity> RESEARCH_TABLE_BE = FabricBlockEntityTypeBuilder
 			.create(ResearchTableBlockEntity::new, RESEARCH_TABLE)
 			.build();
+	
+	// enchantments...
+	public static Enchantment WARPING = new WarpingCurseEnchantment(Enchantment.Rarity.VERY_RARE, EquipmentSlot.values());
 	
 	public static final List<Item> ITEMS = new ArrayList<>();
 	public static final List<Block> BLOCKS = new ArrayList<>();
@@ -117,6 +127,9 @@ public final class ArcanaRegistry{
 		// block entities
 		register("crucible", CRUCIBLE_BE);
 		register("research_table", RESEARCH_TABLE_BE);
+		
+		// enchantments
+		register("warping", WARPING);
 	}
 	
 	private static void register(String name, Item item){
@@ -145,6 +158,10 @@ public final class ArcanaRegistry{
 	
 	private static void register(String name, BlockEntityType<?> type){
 		Registry.register(Registry.BLOCK_ENTITY_TYPE, arcId(name), type);
+	}
+	
+	private static void register(String name, Enchantment enchantment){
+		Registry.register(Registry.ENCHANTMENT, arcId(name), enchantment);
 	}
 	
 	private static void registerCapOnly(Cap cap){

@@ -29,6 +29,10 @@ public interface Core{
 		return "wand.core." + id().getNamespace() + "." + id().getPath();
 	}
 	
+	default int warping(){
+		return 0;
+	}
+	
 	// TODO: metrics, come balancing
 	
 	static Core asCore(Item is){

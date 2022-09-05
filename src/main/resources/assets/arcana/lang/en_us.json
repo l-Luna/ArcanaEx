@@ -110,6 +110,10 @@
   "message.arcana.research.take.entry": "Reset entry \"%s\" for %s",
   "message.arcana.research.take.puzzle": "Reset puzzle %s for %s",
 
+  "message.arcana.warp.show": "%s has %s warp",
+  "message.arcana.warp.add": "Gave %s %s warp (had %s, now has %s)",
+  "message.arcana.warp.set": "Set %s's warp to %s (had %s)",
+
   "_comment": "Research UI",
   "research.entry.continue": "Continue",
   "research.entry.pin": "Ctrl-click to pin",

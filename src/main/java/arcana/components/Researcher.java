@@ -34,7 +34,7 @@ public final class Researcher implements Component, AutoSyncedComponent{
 	private final Map<Identifier, ArrayList<Integer>> pinned = new HashMap<>();
 	private final Set<Identifier> completedPuzzles = new HashSet<>();
 	
-	private int warp; //
+	private int warp;
 	
 	public Researcher(PlayerEntity player){
 		this.player = player;
@@ -50,6 +50,14 @@ public final class Researcher implements Component, AutoSyncedComponent{
 	
 	public boolean isPuzzleComplete(Puzzle puzzle){
 		return completedPuzzles.contains(puzzle.id());
+	}
+	
+	public int getWarp(){
+		return warp;
+	}
+	
+	public void setWarp(int warp){
+		this.warp = warp;
 	}
 	
 	// checks if all requirements are complete, takes requirements if so, and syncs with client if anything did happen
@@ -85,15 +93,26 @@ public final class Researcher implements Component, AutoSyncedComponent{
 	
 	// for commands
 	public void completeEntry(Entry entry){
+		if(entryStage(entry) != entry.sections().size()){
+			int warping = entry.warping();
+			if(warping > 0 && warping <= 5)
+				warp += warping;
+		}
 		stages.put(entry.id(), entry.sections().size());
 	}
 	
 	public void reset(){
 		stages.clear();
 		completedPuzzles.clear();
+		warp = 0;
 	}
 	
 	public void resetEntry(Entry entry){
+		if(entryStage(entry) == entry.sections().size()){
+			int warping = entry.warping();
+			if(warping > 0 && warping <= 5)
+				warp -= warping;
+		}
 		stages.remove(entry.id());
 	}
 	

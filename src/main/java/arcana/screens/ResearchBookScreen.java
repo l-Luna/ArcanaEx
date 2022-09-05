@@ -15,6 +15,8 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Quaternion;
+import net.minecraft.util.math.Vec3f;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -158,6 +160,25 @@ public class ResearchBookScreen extends Screen{
 		for(Entry entry : categories.get(tab).entries()){
 			PageStyle style = style(entry);
 			if(style != PageStyle.none){
+				int x = (int)(entry.x() * 30 + xOffset());
+				int y = (int)(entry.y() * 30 + yOffset());
+				
+				// render warp effect
+				int warping = entry.warping();
+				if(warping > 0 && warping <= 5){
+					matrices.push();
+					matrices.translate(x + 15, y + 15, getZOffset());
+					final int sq = 20;
+					for(int i = 0; i < sq; i++){
+						matrices.push();
+						matrices.multiply(Quaternion.fromEulerXyzDegrees(new Vec3f(0, 0, (360f / sq) * i)));
+						matrices.translate(sin(time / 20f) * warping + warping, 0, 0);
+						fill(matrices, 0, 0, 12, 12, 0x11ff00ff);
+						matrices.pop();
+					}
+					matrices.pop();
+				}
+				
 				// render base
 				RenderSystem.setShader(GameRenderer::getPositionColorTexShader);
 				RenderSystem.setShaderTexture(0, arrowsAndBasesTexture);
@@ -169,13 +190,11 @@ public class ResearchBookScreen extends Screen{
 				else if(style == PageStyle.pending)
 					mult = 0.2f;
 				RenderSystem.setShaderColor(mult, mult, mult, 1);
-				drawTexture(matrices, (int)(entry.x() * 30 + xOffset() + 2), (int)(entry.y() * 30 + yOffset() + 2), base % 4 * 26, base / 4 * 26, 26, 26);
+				drawTexture(matrices, x + 2, y + 2, base % 4 * 26, base / 4 * 26, 26, 26);
 				
 				if(entry.icons().size() > 0){
 					Icon icon = entry.icons().get((int)((time / 30) % entry.icons().size()));
-					int x = (int)(entry.x() * 30 + xOffset() + 7);
-					int y = (int)(entry.y() * 30 + yOffset() + 7);
-					RenderHelper.renderIcon(matrices, icon, x, y, getZOffset(), zoom);
+					RenderHelper.renderIcon(matrices, icon, x + 7, y + 7, getZOffset(), zoom);
 				}
 				
 				// render arrows
@@ -267,6 +286,9 @@ public class ResearchBookScreen extends Screen{
 				lines.add(Text.translatable(entry.name()));
 				if(entry.desc() != null && !entry.desc().equals(""))
 					lines.add(Text.translatable(entry.desc()).formatted(Formatting.GRAY));
+				int warping = entry.warping();
+				if(warping > 0 && warping <= 5)
+					lines.add(Text.translatable("research.book.warping." + warping).formatted(Formatting.DARK_PURPLE));
 				renderTooltip(matrices, lines, mouseX, mouseY);
 				break;
 			}

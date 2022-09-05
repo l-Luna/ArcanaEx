@@ -34,6 +34,8 @@ public final class Researcher implements Component, AutoSyncedComponent{
 	private final Map<Identifier, ArrayList<Integer>> pinned = new HashMap<>();
 	private final Set<Identifier> completedPuzzles = new HashSet<>();
 	
+	private int warp; //
+	
 	public Researcher(PlayerEntity player){
 		this.player = player;
 	}
@@ -69,6 +71,11 @@ public final class Researcher implements Component, AutoSyncedComponent{
 			// unlock all following stages that have no requirements, too
 			// ends up on entry.sections().size(); an entry with 1 section is on stage 0 by default and can be incremented to 1
 		}while(entryStage(entry) < entry.sections().size() && entry.sections().get(entryStage(entry)).getRequirements().size() == 0);
+		if(entryStage(entry) == entry.sections().size()){
+			int warping = entry.warping();
+			if(warping > 0 && warping <= 5) // anything out of this range doesn't get displayed, so it's unfair to add
+				warp += warping;
+		}
 		// TODO: auto-progress children entries
 	}
 	
@@ -118,6 +125,8 @@ public final class Researcher implements Component, AutoSyncedComponent{
 	}
 	
 	public void readFromNbt(NbtCompound tag){
+		warp = tag.getInt("warp");
+		
 		NbtCompound entries = tag.getCompound("stages");
 		for(String key : entries.getKeys())
 			stages.put(new Identifier(key), entries.getInt(key));
@@ -132,6 +141,8 @@ public final class Researcher implements Component, AutoSyncedComponent{
 	}
 	
 	public void writeToNbt(NbtCompound tag){
+		tag.putInt("warp", warp);
+		
 		NbtCompound stagesTag = new NbtCompound();
 		stages.forEach((entry, stage) -> stagesTag.putInt(entry.toString(), stage));
 		tag.put("stages", stagesTag);

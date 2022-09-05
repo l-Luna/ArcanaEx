@@ -29,6 +29,15 @@ public record Entry(
 		return sections().stream().flatMap(section -> section.pins(sections.indexOf(section), world, this));
 	}
 	
+	public int warping(){
+		for(String s : meta)
+			if(s.startsWith("warping:"))
+				try{
+					return Integer.parseInt(s.substring("warping:".length()));
+				}catch(NumberFormatException ignored){}
+		return 0;
+	}
+	
 	public NbtCompound toNbt(){
 		NbtCompound compound = new NbtCompound();
 		compound.putString("id", id.toString());

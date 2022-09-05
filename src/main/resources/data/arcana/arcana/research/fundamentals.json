@@ -67,7 +67,8 @@
       "meta": [
         "square_base",
         "purple_base",
-        "root"
+        "root",
+        "warping:1"
       ],
       "x": 3,
       "y": 0,

@@ -118,6 +118,11 @@
   "research.entry.get_note.2": "Requires scribing tools and paper",
 
   "research.book.category_with_completion": "%s (%s%%)",
+  "research.book.warping.1": "Forbidden Knowledge: Benign",
+  "research.book.warping.2": "Forbidden Knowledge: Minor",
+  "research.book.warping.3": "Forbidden Knowledge: Secret",
+  "research.book.warping.4": "Forbidden Knowledge: Dangerous",
+  "research.book.warping.5": "Forbidden Knowledge: Taboo",
 
   "research.requirement.arcana.experience": "%sx Experience Levels",
   "research.requirement.arcana.item": "%sx %s",

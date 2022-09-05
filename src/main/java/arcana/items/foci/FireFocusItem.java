@@ -33,6 +33,8 @@ public class FireFocusItem extends FocusItem{
 	public ActionResult castOnBlock(ItemUsageContext ctx){
 		// from FlintAndSteelItem
 		// can't just use `Items.FLINT_AND_STEEL.useOnBlock(ctx)` since it damages the item
+		// TODO: use a dummy item context with a fake stack?
+		// or do we want to do further changes?
 		PlayerEntity player = ctx.getPlayer();
 		World world = ctx.getWorld();
 		BlockPos pos = ctx.getBlockPos();

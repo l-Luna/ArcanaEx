@@ -1,0 +1,65 @@
+{
+	"credit": "Made by Falkor",
+	"texture_size": [16, 32],
+	"textures": {
+		"1": "arcana:item/wand/foci/wand_focus",
+		"2": "arcana:item/wand/foci/wand_focus_t",
+		"particle": "arcana:item/wand/foci/wand_focus_t"
+	},
+	"elements": [
+		{
+			"name": "Focus Outer",
+			"from": [6.7, 17.4, 6.7],
+			"to": [9.3, 20, 9.3],
+			"rotation": {"angle": 0, "axis": "y", "origin": [15, 23, 15]},
+			"faces": {
+				"north": {"uv": [0, 8, 16, 16], "texture": "#2"},
+				"east": {"uv": [0, 8, 16, 16], "texture": "#2"},
+				"south": {"uv": [0, 8, 16, 16], "texture": "#2"},
+				"west": {"uv": [0, 8, 16, 16], "texture": "#2"},
+				"up": {"uv": [0, 8, 16, 16], "texture": "#2"},
+				"down": {"uv": [0, 0, 16, 8], "texture": "#2"}
+			}
+		},
+		{
+			"name": "Focus Centre",
+			"from": [6.8, 17.5, 6.8],
+			"to": [9.2, 19.9, 9.2],
+			"rotation": {"angle": 0, "axis": "y", "origin": [15, 23, 15]},
+			"faces": {
+				"north": {"uv": [0, 8, 16, 16], "texture": "#1"},
+				"east": {"uv": [0, 8, 16, 16], "texture": "#1"},
+				"south": {"uv": [0, 8, 16, 16], "texture": "#1"},
+				"west": {"uv": [0, 8, 16, 16], "texture": "#1"},
+				"up": {"uv": [0, 0, 16, 8], "texture": "#1"},
+				"down": {"uv": [0, 0, 16, 8], "texture": "#1"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"translation": [0, 0.25, 0]
+		},
+		"firstperson_righthand": {
+			"translation": [0, 1.25, 0],
+			"scale": [0.75, 0.75, 0.75]
+		},
+		"firstperson_lefthand": {
+			"translation": [0, 1.25, 0],
+			"scale": [0.75, 0.75, 0.75]
+		},
+		"gui": {
+			"rotation": [0, 0, -45]
+		},
+		"fixed": {
+			"translation": [0, 0, -0.75]
+		}
+	},
+	"groups": [
+		{
+			"name": "Focus",
+			"origin": [8, 8, 8],
+			"children": [0, 1]
+		}
+	]
+}

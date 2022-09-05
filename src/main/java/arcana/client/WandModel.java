@@ -20,6 +20,7 @@ import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Direction;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -34,18 +35,21 @@ import static arcana.Arcana.arcId;
 
 public final class WandModel implements UnbakedModel{
 	
-	private static final List<SpriteIdentifier> deps = Stream.concat(
+	private static final List<SpriteIdentifier> deps = Stream.of(
 					Cap.caps.values().stream().map(WandModel::capTexture),
-					Core.cores.values().stream().map(WandModel::coreTexture)
-			).map(WandModel::atlased).toList();
+					Core.cores.values().stream().map(WandModel::coreTexture),
+					Stream.of(arcId("item/wand/foci/wand_focus"), arcId("item/wand/foci/wand_focus_t"))
+			).flatMap(x -> x).map(WandModel::atlased).toList();
 	
 	public static final Identifier wandModel = arcId("item/wand/wand");
+	// TODO: per-focus models
+	public static final Identifier focusModel = arcId("item/wand/wand_focus");
 	
 	private static final Identifier defaultCoreTexId = coreTexture(ArcanaRegistry.STICK_CORE);
 	private static final Identifier defaultCapTexId = capTexture(ArcanaRegistry.IRON_WAND_CAP);
 	
 	public Collection<Identifier> getModelDependencies(){
-		return List.of(wandModel);
+		return List.of(wandModel, focusModel);
 	}
 	
 	public Collection<SpriteIdentifier> getTextureDependencies(Function<Identifier, UnbakedModel> ubModels, Set<Pair<String, String>> unresolvedTextureReferences){
@@ -53,11 +57,17 @@ public final class WandModel implements UnbakedModel{
 	}
 	
 	public BakedModel bake(ModelLoader loader, Function<SpriteIdentifier, Sprite> textureGetter, ModelBakeSettings bakeSettings, Identifier modelId){
-		return bakeWithTextures(loader, textureGetter, bakeSettings, modelId, defaultCoreTexId, defaultCapTexId);
+		return bakeWithTextures(loader, textureGetter, bakeSettings, modelId, defaultCoreTexId, defaultCapTexId, null);
 	}
 	
 	@NotNull
-	private static BakedModel bakeWithTextures(ModelLoader loader, Function<SpriteIdentifier, Sprite> textureGetter, ModelBakeSettings bakeSettings, Identifier modelId, Identifier coreTexId, Identifier capTexId){
+	private static BakedModel bakeWithTextures(ModelLoader loader,
+	                                           Function<SpriteIdentifier, Sprite> textureGetter,
+	                                           ModelBakeSettings bakeSettings,
+	                                           Identifier modelId,
+	                                           Identifier coreTexId,
+	                                           Identifier capTexId,
+	                                           @Nullable Identifier focusModel){
 		JsonUnbakedModel model = (JsonUnbakedModel)loader.getOrLoadModel(wandModel);
 		// substitute sprites
 		Map<String, Either<SpriteIdentifier, String>> texMap = ((JsonUnbakedModelAccessor)model).getTextureMap();
@@ -66,8 +76,19 @@ public final class WandModel implements UnbakedModel{
 		// bake
 		BakedModel baked = model.bake(loader, textureGetter, bakeSettings, modelId);
 		assert baked != null;
+		var bbm = (BasicBakedModel)baked;
+		// merge focus model if needed
+		if(focusModel != null){
+			BasicBakedModel fbbm = (BasicBakedModel)loader.getOrLoadModel(focusModel).bake(loader, textureGetter, bakeSettings, focusModel);
+			assert fbbm != null;
+			for(BakedQuad quad : fbbm.getQuads(null, null, null))
+				bbm.getQuads(null, null, null).add(quad);
+			for(Direction dir : Direction.values())
+				for(BakedQuad quad : fbbm.getQuads(null, dir, null))
+					bbm.getQuads(null, dir, null).add(quad);
+		}
 		// apply overrides
-		((BasicBakedModel)baked).itemPropertyOverrides = new WandModelOverrideList(loader, model, loader::getOrLoadModel, List.of(), textureGetter, bakeSettings);
+		bbm.itemPropertyOverrides = new WandModelOverrideList(loader, model, loader::getOrLoadModel, List.of(), textureGetter, bakeSettings);
 		return baked;
 	}
 	
@@ -101,7 +122,8 @@ public final class WandModel implements UnbakedModel{
 		public BakedModel apply(BakedModel model, ItemStack stack, @Nullable ClientWorld world, @Nullable LivingEntity entity, int seed){
 			Cap cap = WandItem.capFrom(stack);
 			Core core = WandItem.coreFrom(stack);
-			return bakeWithTextures(loader, spriteFn, mbs, arcId("wand"), coreTexture(core), capTexture(cap));
+			Identifier f = WandItem.focusFrom(stack).isEmpty() ? null : focusModel;
+			return bakeWithTextures(loader, spriteFn, mbs, arcId("wand"), coreTexture(core), capTexture(cap), f);
 		}
 	}
 	

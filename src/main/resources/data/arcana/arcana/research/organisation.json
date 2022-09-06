@@ -32,7 +32,7 @@
       "icon": "arcana:research/auromancy_cat_icon.png",
       "name": "research.arcana.category.auromancy",
       "bg": "arcana:research/bg_fundamentals.png",
-      "requires": "arcana:arcane_crafting"
+      "requires": "arcana:auromancy"
     },
     {
       "key": "arcana:alchemy",

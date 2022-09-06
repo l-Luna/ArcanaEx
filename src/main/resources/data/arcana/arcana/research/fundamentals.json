@@ -277,6 +277,38 @@
           "content": "research.arcana.node_channelling_2.stage.2"
         }
       ]
+    },
+    {
+      "key": "arcana:auromancy",
+      "name": "research.arcana.auromancy",
+      "desc": "research.arcana.auromancy.desc",
+      "icons": [
+        "arcana:gold_wand_cap"
+      ],
+      "category": "arcana:fundamentals",
+      "parents": [
+        "arcana:arcane_crafting",
+        "arcana:node_channelling"
+      ],
+      "x": -2,
+      "y": 6,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.auromancy.stage.1",
+          "requirements": [
+            "arcana::puzzle{auromancy_intro}"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.auromancy.stage.2"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:gold_wand_cap"
+        }
+      ]
     }
   ],
   "puzzles": [
@@ -318,6 +350,16 @@
         "arcana:magic",
         "arcana:slime",
         "arcana:crystal"
+      ]
+    },
+    {
+      "key": "arcana:auromancy_intro",
+      "type": "chemistry",
+      "desc": "puzzle.arcana.chemistry.auromancy_intro",
+      "nodes": [
+        "arcana:aura",
+        "arcana:greed",
+        "arcana:plant"
       ]
     }
   ]

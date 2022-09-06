@@ -186,7 +186,7 @@
   "research.arcana.arcane_crafting": "Arcane Crafting",
   "research.arcana.arcane_crafting.desc": "Tools of the Trade",
   "research.arcana.arcane_crafting.stage.1": "The regular crafting table, while immensely useful, is simply not capable of handling vis in the way I require.\nIt should only require some slight tweaks - a touch of my wand's magic - to bring it up to par.",
-  "research.arcana.arcane_crafting.stage.2": "An Arcane Crafting Table is capable of everything it's ordinary variant is capable of, but can additionally craft magical items that require vis, supplied by my wand.\nOne such critical item is the Goggles of Revealing, which makes visible the vis around me.\nWhen the goggles are worn, nodes become brighter and visible through terrain, and I can see the aspects contained within them.",
+  "research.arcana.arcane_crafting.stage.2": "An Arcane Crafting Table is capable of everything it's ordinary variant is capable of, but can additionally craft magical items that require vis, supplied by my wand.\nOne such critical item is the Goggles of Revealing, which makes visible the vis around me.\nWhen the goggles are worn, nodes become brighter and visible through terrain, and I can see the aspects contained within them.\nOf course, further investigation into arcane devices is in order. I'll store this in the {c3}Artifice{r} tab of the Arcanum, accessible by selecting the goggles icon on the left.",
 
   "research.arcana.research": "Research",
   "research.arcana.research.desc": "Knowledge is power",
@@ -202,5 +202,11 @@
   "research.arcana.node_channelling_2": "Greater Node Channelling",
   "research.arcana.node_channelling_2.stage.1": "I'm sure I can do better than that.\nWith my better wands and increased knowledge, I should be able to control nodes to a far greater degree than... this.",
   "research.arcana.node_channelling_2.stage.2": "Now, I can pull vis from nodes even faster, approaching the speed at which vis diffuses in air. Additionally, draining a node completely of a single aspect no longer has a chance of paling it. Fully draining multiple, however, still might.\nI do wonder if I could increase the rate of recharge by submerging the node... or if I can alter it to become more powerful in some other way...\nThis will require further investigation.",
-  "puzzle.arcana.chemistry.node_channelling_2": "Investigate how the aura moves in a variety of substances"
+  "puzzle.arcana.chemistry.node_channelling_2": "Investigate how the aura moves in a variety of substances",
+
+  "research.arcana.auromancy": "Auromancy",
+  "research.arcana.auromancy.desc": "The gateway of miracles",
+  "research.arcana.auromancy.stage.1": "This wood-and-iron wand isn't always going to cut it. Really, it's a terrible, glorified vis battery, with few ways to put it's magic to good use. Surely I can build something better?",
+  "research.arcana.auromancy.stage.2": "Gold is certainly an improvement over iron, but it doesn't take a genius to know that. Even ordinary enchanting prefers it over everything.\nI believe some dedicated study towards wands and vis manipulation is in order. I'll store this in the {c3}Auromancy{r} tab of the Arcanum, accessible by selecting the wand icon on the left.",
+  "puzzle.arcana.chemistry.auromancy_intro": "Try a new vis conductor"
 }

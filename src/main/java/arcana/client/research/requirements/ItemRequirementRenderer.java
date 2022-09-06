@@ -1,6 +1,7 @@
 package arcana.client.research.requirements;
 
 import arcana.client.research.RequirementRenderer;
+import arcana.items.WandItem;
 import arcana.research.requirements.ItemRequirement;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.util.math.MatrixStack;
@@ -13,11 +14,17 @@ import java.util.List;
 public class ItemRequirementRenderer implements RequirementRenderer<ItemRequirement>{
 	
 	public void render(MatrixStack matrices, int x, int y, ItemRequirement requirement, int time, float delta){
-		client().getItemRenderer().renderGuiItemIcon(new ItemStack(requirement.getItem()), x, y);
+		var stack = new ItemStack(requirement.getItem());
+		if(requirement.getItem() instanceof WandItem)
+			stack = WandItem.basicWand();
+		client().getItemRenderer().renderGuiItemIcon(stack, x, y);
 	}
 	
 	public List<Text> tooltip(ItemRequirement requirement, int time){
-		var tooltips = new ItemStack(requirement.getItem()).getTooltip(
+		var stack = new ItemStack(requirement.getItem());
+		if(requirement.getItem() instanceof WandItem)
+			stack = WandItem.basicWand();
+		var tooltips = stack.getTooltip(
 				client().player,
 				client().options.advancedItemTooltips ? TooltipContext.Default.ADVANCED : TooltipContext.Default.NORMAL
 		);

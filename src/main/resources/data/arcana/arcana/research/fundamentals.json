@@ -87,6 +87,65 @@
       ]
     },
     {
+      "key": "arcana:wandcraft",
+      "name": "research.arcana.wandcraft",
+      "desc": "research.arcana.wandcraft.desc",
+      "icons": [
+        "arcana:research/auromancy_cat_icon"
+      ],
+      "category": "arcana:fundamentals",
+      "parents": [
+        "arcana:root"
+      ],
+      "meta": [],
+      "x": 0,
+      "y": 2,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.wandcraft.stage.1"
+        },
+        {
+          "type": "crafting",
+          "content": "arcana:iron_wand_cap"
+        },
+        {
+          "type": "image",
+          "content": "arcana:textures/research/wand_crafting_diagram.png",
+          "requirements": [
+            "0*arcana:wand"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.wandcraft.stage.2"
+        }
+      ]
+    },
+    {
+      "key": "arcana:nodes",
+      "name": "research.arcana.nodes",
+      "desc": "research.arcana.nodes.desc",
+      "icons": [
+        "arcana:research/nodes_icon"
+      ],
+      "meta": [
+        "round_base"
+      ],
+      "category": "arcana:fundamentals",
+      "parents": [
+        "&/arcana:wandcraft"
+      ],
+      "x": -1,
+      "y": 3,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.nodes.text"
+        }
+      ]
+    },
+    {
       "key": "arcana:arcane_crafting",
       "name": "research.arcana.arcane_crafting",
       "desc": "research.arcana.arcane_crafting.desc",
@@ -96,11 +155,11 @@
       ],
       "category": "arcana:fundamentals",
       "parents": [
-        "arcana:root"
+        "arcana:wandcraft"
       ],
       "meta": [],
       "x": 0,
-      "y": 2,
+      "y": 4,
       "sections": [
         {
           "type": "text",

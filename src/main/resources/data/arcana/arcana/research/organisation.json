@@ -19,12 +19,12 @@
       "bg": "arcana:research/bg_fundamentals.png"
     },
     {
-      "key": "arcana:alchemy",
+      "key": "arcana:artifice",
       "in": "arcana:arcanum",
-      "icon": "arcana:research/alchemy_cat_icon",
-      "name": "research.arcana.category.alchemy",
+      "icon": "arcana:item/goggles_of_revealing",
+      "name": "research.arcana.category.artifice",
       "bg": "arcana:research/bg_fundamentals.png",
-      "requires": "arcana:alchemy"
+      "requires": "arcana:arcane_crafting"
     },
     {
       "key": "arcana:auromancy",
@@ -32,24 +32,15 @@
       "icon": "arcana:research/auromancy_cat_icon.png",
       "name": "research.arcana.category.auromancy",
       "bg": "arcana:research/bg_fundamentals.png",
-      "requires": "arcana:wandcraft",
-      "bgs": [
-        {
-          "type": "arcana:image",
-          "image": "arcana:research/flow/base",
-          "speed": 0.7
-        },
-        {
-          "type": "arcana:image",
-          "image": "arcana:research/flow/1",
-          "speed": 1.0
-        },
-        {
-          "type": "arcana:image",
-          "image": "arcana:research/flow/2",
-          "speed": 1.4
-        }
-      ]
+      "requires": "arcana:arcane_crafting"
+    },
+    {
+      "key": "arcana:alchemy",
+      "in": "arcana:arcanum",
+      "icon": "arcana:research/alchemy_cat_icon",
+      "name": "research.arcana.category.alchemy",
+      "bg": "arcana:research/bg_fundamentals.png",
+      "requires": "arcana:alchemy"
     },
     {
       "key": "arcana:tainted_basics",

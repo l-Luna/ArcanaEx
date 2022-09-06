@@ -156,8 +156,9 @@
 
   "_comment": "Research Categories",
   "research.arcana.category.fundamentals": "Fundamentals",
-  "research.arcana.category.alchemy": "Alchemy",
+  "research.arcana.category.artifice": "Artifice",
   "research.arcana.category.auromancy": "Auromancy",
+  "research.arcana.category.alchemy": "Alchemy",
 
   "_comment": "Research Entries",
   "research.arcana.root": "Arcana",
@@ -172,6 +173,15 @@
   "research.arcana.flux.stage.1": "My new perspective has enabled me to understand the ramblings of these scribbled notes.{~sep}Among them were various vague warnings of \"flux\", \"taint\", and \"warp\", as consequences for mishandling magic.\nFlux is a kind of pollution of the aura, produced through wasteful alchemy, or inefficient equipment. While nothing arcane is without risks, a buildup of flux can pose serious risks to yourself and the world.\nTaint being one of them. Some sort of corruption, or parasite, or {i}something{i}, that works its way through the world, and twists living beings into horrific monsters when left to its own devices; feeding on the flux created by ambitious or negligent alchemists.\nAnd while I couldn't fully parse the notes on warp... the dark rituals and grim compulsions that surrounded it were certainly enough to provide a bad first impression.\nIf I don't study these risks, how am I supposed to protect myself from them? I should get a look of this \"flux\" myself. A small amount should be perfectly manageable.",
   "research.arcana.flux.stage.2": "...that was probably a mistake. Everything just {i}feels{i} off here. I would do well not to let it grow much higher, lest it start producing physical effects more serious than a headache and stomachache... ugh, I don't even want to know what warp feels like.",
   "puzzle.arcana.fieldwork.flux_build": "Taste the \"flux\" for yourself",
+
+  "research.arcana.wandcraft": "Wandcraft",
+  "research.arcana.wandcraft.desc": "Equipment from long past",
+  "research.arcana.wandcraft.stage.1": "To continue any further, I'll need some way of directly manipulating vis. The tools once used for this were wands, constructed from a wide variety of materials that combine to create powerful magic.\nConstructing a simple wand is as simple as capping off a stick with purpose-build metal wand caps, the same design reusable as I improve my materials and skills.\n{i}Some{r} notes seem to refer to the use of a special glove, directly grabbing the vis with my hands; constructing such a thing seems impossible with what I have available, however.",
+  "research.arcana.wandcraft.stage.2": "Now, I have a real way to control magic. Soon, I'll be tapping on walls and whispering spells to open hidden gateways...\nBut first, I'll need to charge my wand with energy, by draining a node of it's power.",
+
+  "research.arcana.nodes": "Nodes",
+  "research.arcana.nodes.desc": "Wells of Power",
+  "research.arcana.nodes.text": "At the start of my journey, I was given a glimpse of knowledge from a source of magic. These sources - or nodes, as I have come to know them - seem to be scattered across the world, constantly {i}creating{r} new energy. Something I believed to be impossible.{~sep}Nodes aren't quite uniform. Different nodes are attuned to different aspects, only producing those, and holding onto larger amounts of them.\nSome nodes are brighter than others, producing vis more rapidly and holding onto more.\nI can drain their vis into a wand by holding right-click. As long as I don't completely drain them, their aspects will simply replenish over time.\nFully emptying one can damage it, lowering it's aspect caps - or worse, paling it - so I should be careful.{~sep}A few of them seem to act... strangely. Sucking in terrain, corrupting nearby crystals, emitting a depressing aura... I would do well to study these properly.",
 
   "research.arcana.arcane_crafting": "Arcane Crafting",
   "research.arcana.arcane_crafting.desc": "Tools of the Trade",

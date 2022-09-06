@@ -61,11 +61,16 @@ public class ResearchBookScreen extends Screen{
 	
 	protected void init(){
 		super.init();
+		int passed = 0;
 		for(int i = 0; i < categories.size(); i++){
 			Category category = categories.get(i);
-			CategoryButton categoryButton = new CategoryButton((width - frameWidth()) / 2 - 12, 16 + ((height - frameHeight()) / 2) + 20 * i, i, category);
-			addDrawableChild(categoryButton);
-			buttons.add(categoryButton);
+			Entry required = Research.getEntry(category.requirement());
+			if(required == null || Researcher.from(client.player).entryStage(required) == required.sections().size()){
+				CategoryButton categoryButton = new CategoryButton((width - frameWidth()) / 2 - 12, 16 + ((height - frameHeight()) / 2) + 20 * passed, i, category);
+				addDrawableChild(categoryButton);
+				buttons.add(categoryButton);
+				passed++;
+			}
 		}
 		
 		refreshPins();
@@ -203,6 +208,7 @@ public class ResearchBookScreen extends Screen{
 				RenderSystem.enableBlend();
 				RenderSystem.setShader(GameRenderer::getPositionTexShader);
 				RenderSystem.setShaderTexture(0, arrowsAndBasesTexture);
+				RenderSystem.setShaderColor(1, 1, 1, 1);
 				for(Parent parent : entry.parents()){
 					Entry pEntry = Research.getEntry(parent.id());
 					if(pEntry != null && parent.show() && pEntry.category().equals(entry.category()) && style(pEntry) != PageStyle.none){
@@ -231,32 +237,40 @@ public class ResearchBookScreen extends Screen{
 								arrows.drawSizedHorizontalLine(matrices, pEntry.y(), pEntry.x(), entry.x(), large);
 								if(xdiff > 0 && ydiff > 0){
 									arrows.drawSizedLdCurve(matrices, entry.x(), pEntry.y(), large);
-									arrows.drawDownArrowTo(matrices, entry);
+									if(parent.hasArrowhead())
+										arrows.drawDownArrowTo(matrices, entry);
 								}else if(xdiff > 0 && ydiff < 0){
 									arrows.drawSizedLuCurve(matrices, pEntry.x(), entry.y(), large);
-									arrows.drawUpArrowTo(matrices, entry);
+									if(parent.hasArrowhead())
+										arrows.drawUpArrowTo(matrices, entry);
 								}else if(xdiff < 0 && ydiff > 0){
 									arrows.drawSizedRdCurve(matrices, entry.x(), pEntry.y(), large);
-									arrows.drawDownArrowTo(matrices, entry);
+									if(parent.hasArrowhead())
+										arrows.drawDownArrowTo(matrices, entry);
 								}else if(xdiff < 0 && ydiff < 0){
 									arrows.drawSizedRuCurve(matrices, entry.x(), pEntry.y(), large);
-									arrows.drawUpArrowTo(matrices, entry);
+									if(parent.hasArrowhead())
+										arrows.drawUpArrowTo(matrices, entry);
 								}
 							}else{
 								arrows.drawSizedHorizontalLine(matrices, entry.y(), entry.x(), pEntry.x(), large);
 								arrows.drawSizedVerticalLine(matrices, pEntry.x(), pEntry.y(), entry.y(), large);
 								if(xdiff > 0 && ydiff > 0){
 									arrows.drawSizedRuCurve(matrices, pEntry.x(), entry.y(), large);
-									arrows.drawRightArrowTo(matrices, entry);
+									if(parent.hasArrowhead())
+										arrows.drawRightArrowTo(matrices, entry);
 								}else if(xdiff > 0 && ydiff < 0){
 									arrows.drawSizedRdCurve(matrices, pEntry.x(), entry.y(), large);
-									arrows.drawRightArrowTo(matrices, entry);
+									if(parent.hasArrowhead())
+										arrows.drawRightArrowTo(matrices, entry);
 								}else if(xdiff < 0 && ydiff > 0){
 									arrows.drawSizedLuCurve(matrices, pEntry.x(), entry.y(), large);
-									arrows.drawLeftArrowTo(matrices, entry);
+									if(parent.hasArrowhead())
+										arrows.drawLeftArrowTo(matrices, entry);
 								}else if(xdiff < 0 && ydiff < 0){
 									arrows.drawSizedLdCurve(matrices, pEntry.x(), entry.y(), large);
-									arrows.drawLeftArrowTo(matrices, entry);
+									if(parent.hasArrowhead())
+										arrows.drawLeftArrowTo(matrices, entry);
 								}
 							}
 						}

@@ -68,7 +68,7 @@ public class ResearchTableScreen extends HandledScreen<ResearchTableScreenHandle
 		
 		var notes = handler.slots.get(37).getStack();
 		var nbt = notes.getNbt();
-		if(!notes.isEmpty() && nbt != null && nbt.contains("puzzle_id")){
+		if(!notes.isEmpty() && nbt != null && nbt.contains("puzzle_id") && notes.getItem() == ArcanaRegistry.RESEARCH_NOTES){
 			Puzzle puzzle = Research.getPuzzle(new Identifier(nbt.getString("puzzle_id")));
 			var renderer = PuzzleRenderer.get(puzzle);
 			if(renderer != null)

@@ -78,6 +78,10 @@ public final class Researcher implements Component, AutoSyncedComponent{
 		return entryStage(entry) == entry.sections().size();
 	}
 	
+	public int getCompletedPuzzleCount(){
+		return completedPuzzles.size();
+	}
+	
 	// checks if all requirements are complete, takes requirements if so, and syncs with client if anything did happen
 	public void tryAdvance(Entry entry){
 		if(entryStage(entry) < entry.sections().size()){

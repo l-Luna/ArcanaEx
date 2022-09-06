@@ -353,7 +353,7 @@ public class TextFormatter{
 		// There's currently only config-formatted sections, but hey, might wanna extend that later.
 		if(section != null/* && ArcanaConfig.ENTRY_TITLES.get()*/){
 			Entry entry = Research.getEntry(section.getIn());
-			if(entry.sections().get(0) == section)
+			if(entry.sections().get(0).equals(section))
 				in = "{c}{size:1.5}" + I18n.translate(entry.name()) + "{r}{~sep}" + in;
 		}
 		if(in.contains("{$")){

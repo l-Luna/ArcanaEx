@@ -151,6 +151,8 @@
   "research.requirement.arcana.item": "%sx %s",
   "research.requirement.arcana.item.have": "Have: %s",
   "research.requirement.arcana.tag": "Any from %s",
+  "research.requirement.arcana.puzzles_completed": "Complete %s puzzles",
+  "research.requirement.arcana.puzzles_completed.progress": "%s/%s complete",
 
   "puzzle.arcana.chemistry": "Complete the Chemistry",
   "puzzle.arcana.fieldwork": "<Specify fieldwork descriptions>",
@@ -215,5 +217,15 @@
   "research.arcana.alchemy": "Alchemy",
   "research.arcana.alchemy.desc": "Fission and Fusion",
   "research.arcana.alchemy.stage.1": "Like the mundane elements, I will benefit by learning to separate and combine aspects, and the simplest method available to me to do so is plain old heat.\nOf course, magic must be used to catalyze this breakdown, and no mundane material could possibly handle the heat required - but a flick of my wand should upgrade a regular cauldron to do just that.",
-  "research.arcana.alchemy.stage.2": "A Crucible can be used to melt down items into their constituent aspects. When filled with water and placed over a heat source (like fire, lava, or magma), anything thrown inside will be dissolved, and their aspects added to the water-essentia solution.\nActually purifying this essentia into a usable form is far beyond me, and will require dedicated equipment, but that's not to say it's useless in its current form; a variety of alchemical recipes can be performed with it.\nIf I throw a catalyst for an alchemy recipe I know into a crucible (and it contains all the required aspects), instead of being broken down, it'll absorb those aspects and be transformed into something new.\nOne basic application of this is Nitor: a stable and bright flame, created from coal and light.\nI can empty a crucible by sneak-right-clicking on it, releasing all of its currently stored aspects. If it has no aspects (only water), I can also empty it with a bucket.\nI should note that, since blocks and other entities know no alchemy, items they drop will {i}always{i} be broken down; also, that my Goggles of Revealing allow me to see the aspects stored inside.\nI believe some dedicated study of alchemy is in order. I'll store this in the {c3}Alchemy{r} tab of the Arcanum, accessible by selecting the crucible icon on the left."
+  "research.arcana.alchemy.stage.2": "A Crucible can be used to melt down items into their constituent aspects. When filled with water and placed over a heat source (like fire, lava, or magma), anything thrown inside will be dissolved, and their aspects added to the water-essentia solution.\nActually purifying this essentia into a usable form is far beyond me, and will require dedicated equipment, but that's not to say it's useless in its current form; a variety of alchemical recipes can be performed with it.\nIf I throw a catalyst for an alchemy recipe I know into a crucible (and it contains all the required aspects), instead of being broken down, it'll absorb those aspects and be transformed into something new.\nOne basic application of this is Nitor: a stable and bright flame, created from coal and light.\nI can empty a crucible by sneak-right-clicking on it, releasing all of its currently stored aspects. If it has no aspects (only water), I can also empty it with a bucket.\nI should note that, since blocks and other entities know no alchemy, items they drop will {i}always{i} be broken down; also, that my Goggles of Revealing allow me to see the aspects stored inside.\nI believe some dedicated study of alchemy is in order. I'll store this in the {c3}Alchemy{r} tab of the Arcanum, accessible by selecting the crucible icon on the left.",
+
+  "research.arcana.research_expertise": "Research Expertise",
+  "research.arcana.research_expertise.desc": "Improving my improvements",
+  "research.arcana.research_expertise.stage.1": "Performing more research will teach me more about the research process itself.\nWith a little practical experience, I should be able to simplify the process, and offset the increasing difficulty of these puzzles.",
+  "research.arcana.research_expertise.stage.2": "I'm getting better at this.{~sep}Holding shift while hovering over an aspect in the research table will now show it's components. Additionally, removing an aspect from the chemistry grid has a 25%% chance of returning it to the note.",
+
+  "research.arcana.research_mastery": "Research Mastery",
+  "research.arcana.research_mastery.desc": "You can never know all the facts.",
+  "research.arcana.research_mastery.stage.1": "There's always more to learn, yet more exciting opportunities to chase after - and my slow, inefficient research is holding me back.",
+  "research.arcana.research_mastery.stage.2": "No matter how hard I work, how long I try, how much focus and effort I put in - my work is never finished.{~sep}Removing an aspect from the chemistry grid now has a 50%% chance of returning it to the note. Notes also start out with more aspects."
 }

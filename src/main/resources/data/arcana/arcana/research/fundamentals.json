@@ -345,6 +345,63 @@
           "content": "arcana:nitor"
         }
       ]
+    },
+    {
+      "key": "arcana:research_expertise",
+      "name": "research.arcana.research_expertise",
+      "desc": "research.arcana.research_expertise.desc",
+      "icons": [
+        "arcana:research/research_expertise_icon"
+      ],
+      "category": "arcana:fundamentals",
+      "parents": [
+        "/arcana:research"
+      ],
+      "x": 4,
+      "y": 4,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.research_expertise.stage.1",
+          "requirements": [
+            "5*arcana::puzzles_completed"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.research_expertise.stage.2"
+        }
+      ]
+    },
+    {
+      "key": "arcana:research_mastery",
+      "name": "research.arcana.research_mastery",
+      "desc": "research.arcana.research_mastery.desc",
+      "icons": [
+        "arcana:research/research_mastery_icon"
+      ],
+      "category": "arcana:fundamentals",
+      "parents": [
+        "arcana:research_expertise"
+      ],
+      "meta": [
+        "warping:1"
+      ],
+      "x": 5,
+      "y": 5,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.research_mastery.stage.1",
+          "requirements": [
+            "25*arcana::puzzles_completed"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.research_mastery.stage.2"
+        }
+      ]
     }
   ],
   "puzzles": [

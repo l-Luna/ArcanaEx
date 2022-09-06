@@ -249,7 +249,7 @@ public class ResearchEntryScreen extends Screen{
 			var text = client.textRenderer;
 			stack.push();
 			stack.translate(0, 0, 300);
-			text.draw(stack, s, x + 17 - text.getWidth(s), y + 9, complete ? 0xAAFFAA : 0xEE9999);
+			text.drawWithShadow(stack, s, x + 17 - text.getWidth(s), y + 9, complete ? 0xAAFFAA : 0xEE9999);
 			stack.pop();
 		}
 	}

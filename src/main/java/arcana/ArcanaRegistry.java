@@ -1,5 +1,7 @@
 package arcana;
 
+import arcana.aspects.Aspect;
+import arcana.aspects.Aspects;
 import arcana.blocks.*;
 import arcana.enchantments.WarpingCurseEnchantment;
 import arcana.items.*;
@@ -41,6 +43,9 @@ public final class ArcanaRegistry{
 	private static final Settings GROUPED_SINGLE = new Settings().group(Tab.ARCANA).maxCount(1);
 	
 	// items...
+	public static final Item SCRIBBLED_NOTES = new ScribbledNotesItem(GROUPED_SINGLE);
+	public static final Item GOGGLES_OF_REVEALING = new GogglesOfRevealingItem(GROUPED_SINGLE);
+	
 	public static final Item RESEARCH_NOTES = new ResearchNotesItem(new Settings().maxCount(1), false);
 	public static final Item COMPLETE_RESEARCH_NOTES = new ResearchNotesItem(new Settings().maxCount(1), true);
 	
@@ -60,9 +65,9 @@ public final class ArcanaRegistry{
 	public static final Item FIRE_FOCUS = new FireFocusItem(GROUPED_SINGLE);
 	public static final Item PRISMATIC_LIGHT_FOCUS = new FocusItem(GROUPED_SINGLE);
 	
-	public static final Item ARCANUM = new ResearchBookItem(GROUPED, arcId("arcanum"));
-	public static final Item CRIMSON_RITES = new ResearchBookItem(GROUPED, arcId("crimson_rites"));
-	public static final Item TAINTED_CODEX = new ResearchBookItem(GROUPED, arcId("tainted_codex"));
+	public static final Item ARCANUM = new ResearchBookItem(GROUPED_SINGLE, arcId("arcanum"));
+	public static final Item CRIMSON_RITES = new ResearchBookItem(GROUPED_SINGLE, arcId("crimson_rites"));
+	public static final Item TAINTED_CODEX = new ResearchBookItem(GROUPED_SINGLE, arcId("tainted_codex"));
 	
 	// blocks...
 	public static final Block ARCANE_CRAFTING_TABLE = new ArcaneCraftingTableBlock(of(Material.WOOD).nonOpaque());
@@ -86,11 +91,14 @@ public final class ArcanaRegistry{
 	// enchantments...
 	public static Enchantment WARPING = new WarpingCurseEnchantment(Enchantment.Rarity.VERY_RARE, EquipmentSlot.values());
 	
-	public static final List<Item> ITEMS = new ArrayList<>();
-	public static final List<Block> BLOCKS = new ArrayList<>();
+	public static final List<Item> items = new ArrayList<>();
+	public static final List<Block> blocks = new ArrayList<>();
 	
 	public static void setup(){
 		// items + wand components
+		register("scribbled_notes", SCRIBBLED_NOTES);
+		register("goggles_of_revealing", GOGGLES_OF_REVEALING);
+		
 		register("research_notes", RESEARCH_NOTES);
 		register("complete_research_notes", COMPLETE_RESEARCH_NOTES);
 		
@@ -114,6 +122,12 @@ public final class ArcanaRegistry{
 		register("crimson_rites", CRIMSON_RITES);
 		register("tainted_codex", TAINTED_CODEX);
 		
+		for(Aspect primal : Aspects.primals){ // TODO: give all aspects crystals?
+			CrystalItem crystalItem = new CrystalItem(GROUPED, primal);
+			register("crystals/" + primal.id().getPath(), crystalItem);
+			Aspects.crystals.put(primal, crystalItem);
+		}
+		
 		// blocks
 		register("arcane_crafting_table", ARCANE_CRAFTING_TABLE);
 		register("crucible", CRUCIBLE);
@@ -134,7 +148,7 @@ public final class ArcanaRegistry{
 	
 	private static void register(String name, Item item){
 		Registry.register(Registry.ITEM, arcId(name), item);
-		ITEMS.add(item);
+		items.add(item);
 		if(item instanceof Cap c)
 			registerCapOnly(c);
 		if(item instanceof Core c)
@@ -147,7 +161,7 @@ public final class ArcanaRegistry{
 	
 	private static void register(String name, Block block, boolean andItem){
 		Registry.register(Registry.BLOCK, arcId(name), block);
-		BLOCKS.add(block);
+		blocks.add(block);
 		if(andItem)
 			register(name, new BlockItem(block, GROUPED));
 	}

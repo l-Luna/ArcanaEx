@@ -60,6 +60,9 @@
   "aspect.arcana.aura": "Auram",
 
   "_comment": "Items",
+  "item.arcana.scribbled_notes": "Scribbled Notes",
+  "item.arcana.goggles_of_revealing": "Goggles of Revealing",
+
   "item.arcana.research_notes": "Research Notes",
   "item.arcana.complete_research_notes": "Complete Research Notes",
 
@@ -79,6 +82,8 @@
   "item.arcana.arcanum": "Arcanum",
   "item.arcana.crimson_rites": "Crimson Rites",
   "item.arcana.tainted_codex": "Tainted Codex",
+
+  "item.arcana.aspect_crystal": "%s Crystal",
 
   "_comment": "Blocks",
   "block.arcana.arcane_crafting_table": "Arcane Crafting Table",

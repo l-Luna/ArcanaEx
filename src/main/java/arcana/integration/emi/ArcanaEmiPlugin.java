@@ -38,7 +38,7 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 		registry.addCategory(ARCANE_CRAFTING);
 		registry.addCategory(ALCHEMY);
 		
-		for(Aspect value : Aspects.ASPECTS.values())
+		for(Aspect value : Aspects.aspects.values())
 			registry.addEmiStack(new AspectEmiStack(value));
 		
 		// This code takes all item-aspect assignments,

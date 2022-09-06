@@ -11,9 +11,9 @@ public class NodeTypes{
 	public static final BiMap<Identifier, NodeType> NODE_TYPES = HashBiMap.create();
 	
 	public static final NodeType
-			NORMAL = create("normal", 18 * 20, 20),
-			BRIGHT = create("bright", 10 * 20, 35),
-			FADING = create("fading", 26 * 20, 13);
+			NORMAL = create("normal", 43 * 20, 20),
+			BRIGHT = create("bright", 33 * 20, 35),
+			FADING = create("fading", 65 * 20, 13);
 	
 	private static NodeType create(String id, int rechargeTime, int aspectCap){
 		Identifier identifier = arcId(id);

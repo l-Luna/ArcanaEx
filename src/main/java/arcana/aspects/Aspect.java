@@ -11,7 +11,7 @@ public record Aspect(Identifier id, Aspect left, Aspect right) implements Compar
 	}
 	
 	public int compareTo(@NotNull Aspect o){
-		return Aspects.ORDERED_ASPECTS.indexOf(this) - Aspects.ORDERED_ASPECTS.indexOf(o);
+		return Aspects.orderedAspects.indexOf(this) - Aspects.orderedAspects.indexOf(o);
 	}
 	
 	public boolean equals(Object obj){

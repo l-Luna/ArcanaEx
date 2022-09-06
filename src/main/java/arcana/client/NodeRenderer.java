@@ -3,6 +3,7 @@ package arcana.client;
 import arcana.aspects.Aspect;
 import arcana.aspects.Aspects;
 import arcana.components.AuraWorld;
+import arcana.items.GogglesOfRevealingItem;
 import arcana.nodes.Node;
 import arcana.nodes.NodeType;
 import arcana.nodes.NodeTypes;
@@ -11,6 +12,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.math.Position;
@@ -32,6 +34,9 @@ public final class NodeRenderer{
 	
 	@SuppressWarnings("resource") // ???
 	public static void renderAll(WorldRenderContext context){
+		var player = MinecraftClient.getInstance().player;
+		boolean hasGoggles = player == null || player.getEquippedStack(EquipmentSlot.HEAD).getItem() instanceof GogglesOfRevealingItem;
+		
 		context.lightmapTextureManager().enable();
 		RenderSystem.disableCull();
 		RenderSystem.enableBlend();
@@ -52,8 +57,9 @@ public final class NodeRenderer{
 				.stream()
 				.collect(Collectors.groupingBy(Node::getType));
 		
-		// first pass, visible through blocks
-		RenderSystem.disableDepthTest();
+		// first pass, visible through blocks if you have goggles of revealing
+		if(hasGoggles)
+			RenderSystem.disableDepthTest();
 		nodesByType.forEach((type, nodes) -> {
 			RenderSystem.setShaderTexture(0, loadTexture(type));
 			buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);
@@ -62,27 +68,29 @@ public final class NodeRenderer{
 			BufferRenderer.drawWithShader(buffer.end());
 		});
 		
-		// second pass, hidden by blocks
+		// second pass, hidden by blocks, requires goggles
 		RenderSystem.enableDepthTest();
-		nodesByType.forEach((type, nodes) -> {
-			RenderSystem.setShaderTexture(0, loadTexture(type));
-			buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);
-			for(Node node : nodes)
-				drawNode(camera, node, buffer, .85f);
-			BufferRenderer.drawWithShader(buffer.end());
-		});
-		
-		Aspects.PRIMALS.forEach(primal -> {
-			RenderSystem.setShaderTexture(0, AspectRenderer.texture(primal));
-			buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);
+		if(hasGoggles){
+			nodesByType.forEach((type, nodes) -> {
+				RenderSystem.setShaderTexture(0, loadTexture(type));
+				buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);
+				for(Node node : nodes)
+					drawNode(camera, node, buffer, .85f);
+				BufferRenderer.drawWithShader(buffer.end());
+			});
+			
+			Aspects.primals.forEach(primal -> {
+				RenderSystem.setShaderTexture(0, AspectRenderer.texture(primal));
+				buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);
+				for(Node node : allNodes)
+					drawNodeAspect(camera, node, buffer, primal);
+				BufferRenderer.drawWithShader(buffer.end());
+			});
+			
 			for(Node node : allNodes)
-				drawNodeAspect(camera, node, buffer, primal);
-			BufferRenderer.drawWithShader(buffer.end());
-		});
-		
-		for(Node node : allNodes)
-			for(Aspect primal : Aspects.PRIMALS)
-				drawNodeAspectCount(camera, node, buffer, primal);
+				for(Aspect primal : Aspects.primals)
+					drawNodeAspectCount(camera, node, buffer, primal);
+		}
 		
 		RenderSystem.depthMask(true);
 		context.lightmapTextureManager().disable();

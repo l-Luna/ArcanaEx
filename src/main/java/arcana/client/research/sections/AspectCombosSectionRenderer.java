@@ -48,6 +48,6 @@ public class AspectCombosSectionRenderer implements EntrySectionRenderer<AspectC
 	}
 	
 	public int span(AspectCombosSection section, PlayerEntity player){
-		return (int)(Math.ceil((Aspects.ASPECTS.size() - 6) / 5f));
+		return (int)(Math.ceil((Aspects.aspects.size() - 6) / 5f));
 	}
 }

@@ -27,11 +27,11 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 	public void generateItemModels(ItemModelGenerator itemGen){
 		noAutoGen.add(ArcanaRegistry.WAND);
 		
-		for(Item item : ArcanaRegistry.ITEMS)
+		for(Item item : ArcanaRegistry.items)
 			if(!noAutoGen.contains(item) && !(item instanceof BlockItem))
 				itemGen.register(item, Models.GENERATED);
 		
-		for(Block block : ArcanaRegistry.BLOCKS)
+		for(Block block : ArcanaRegistry.blocks)
 			if(!(block instanceof ResearchTableBlock))
 				itemGen.writer.accept(ModelIds.getItemModelId(block.asItem()), new SimpleModelSupplier(ModelIds.getBlockModelId(block)));
 	}

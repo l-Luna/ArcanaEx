@@ -1,20 +1,20 @@
 package arcana.aspects;
 
 import arcana.Arcana;
+import arcana.items.CrystalItem;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import net.minecraft.util.Identifier;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static arcana.Arcana.arcId;
 
 public final class Aspects{
 	
-	public static final BiMap<Identifier, Aspect> ASPECTS = HashBiMap.create();
-	static final List<Aspect> ORDERED_ASPECTS = new ArrayList<>();
+	public static final BiMap<Identifier, Aspect> aspects = HashBiMap.create();
+	public static final Map<Aspect, CrystalItem> crystals = new HashMap<>();
+	static final List<Aspect> orderedAspects = new ArrayList<>();
 	
 	public static final Aspect
 			AIR = create("air"),
@@ -59,10 +59,10 @@ public final class Aspects{
 	public static final Aspect TAINT = create("taint", MAGIC, ENTROPY);
 	public static final Aspect AURA = create("aura", MAGIC, AIR);
 	
-	public static final List<Aspect> PRIMALS = List.of(AIR, FIRE, WATER, EARTH, ORDER, ENTROPY);
+	public static final List<Aspect> primals = List.of(AIR, FIRE, WATER, EARTH, ORDER, ENTROPY);
 	
 	public static Aspect byName(Identifier id){
-		return ASPECTS.get(id);
+		return aspects.get(id);
 	}
 	
 	// defaults to the arcana namespace, since minecraft has no aspects
@@ -77,25 +77,25 @@ public final class Aspects{
 	private static Aspect create(String name, Aspect left, Aspect right){
 		Identifier id = arcId(name);
 		Aspect aspect = new Aspect(id, left, right);
-		ASPECTS.put(id, aspect);
-		ORDERED_ASPECTS.add(aspect);
+		aspects.put(id, aspect);
+		orderedAspects.add(aspect);
 		return aspect;
 	}
 	
 	public static List<Aspect> getCompoundAspects(){
-		List<Aspect> aspects = new ArrayList<>(ORDERED_ASPECTS);
-		aspects.removeAll(PRIMALS);
+		List<Aspect> aspects = new ArrayList<>(orderedAspects);
+		aspects.removeAll(primals);
 		return aspects;
 	}
 	
 	public static Optional<Aspect> combined(Aspect left, Aspect right){
-		for(Aspect value : ASPECTS.values())
+		for(Aspect value : aspects.values())
 			if((left.equals(value.left()) && right.equals(value.right())) || (left.equals(value.right()) && right.equals(value.left())))
 				return Optional.of(value);
 		return Optional.empty();
 	}
 	
 	public static List<Aspect> getOrderedAspects(){
-		return ORDERED_ASPECTS;
+		return orderedAspects;
 	}
 }

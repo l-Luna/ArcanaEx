@@ -3,11 +3,13 @@ package arcana.client;
 import arcana.aspects.AspectMap;
 import arcana.aspects.AspectStack;
 import arcana.blocks.CrucibleBlockEntity;
+import arcana.items.GogglesOfRevealingItem;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.util.math.Quaternion;
 import net.minecraft.util.math.Vec3f;
 
@@ -21,6 +23,12 @@ public class CrucibleBlockEntityRenderer implements BlockEntityRenderer<Crucible
 	                   VertexConsumerProvider consumers,
 	                   int light,
 	                   int overlay){
+		var player = MinecraftClient.getInstance().player;
+		boolean hasGoggles = player.getEquippedStack(EquipmentSlot.HEAD).getItem() instanceof GogglesOfRevealingItem;
+		
+		if(!hasGoggles)
+			return;
+		
 		// display aspects above the crucible
 		matrices.push();
 		matrices.translate(0.5, 2, 0.5);
@@ -29,7 +37,7 @@ public class CrucibleBlockEntityRenderer implements BlockEntityRenderer<Crucible
 		List<AspectStack> stacks = aspects.asStacks();
 		
 		var pos = entity.getPos();
-		double sqrDist = MinecraftClient.getInstance().player.squaredDistanceTo(pos.getX() + .5, pos.getY() + .5, pos.getZ() + .5);
+		double sqrDist = player.squaredDistanceTo(pos.getX() + .5, pos.getY() + .5, pos.getZ() + .5);
 		if(sqrDist > 8 * 8){
 			matrices.pop();
 			return;
@@ -46,6 +54,8 @@ public class CrucibleBlockEntityRenderer implements BlockEntityRenderer<Crucible
 			matrices.scale(1 / scale, 1 / scale, -1 / scale);
 			matrices.multiply(Quaternion.fromEulerXyz(0, 0, (float)Math.PI));
 			RenderSystem.enableDepthTest();
+			RenderSystem.enableBlend();
+			RenderSystem.defaultBlendFunc();
 			AspectRenderer.renderAspect(stack.type(), matrices, 0, 0, 0, 1, 1, 1, alpha);
 			AspectRenderer.renderAspectStackOverlay(stack.amount(), matrices, MinecraftClient.getInstance().textRenderer, 0, 0, 0, 0xFFFFFF | intAlpha);
 			matrices.pop();

@@ -1,0 +1,20 @@
+{
+  "arcana:crystals/air": [
+    "air"
+  ],
+  "arcana:crystals/fire": [
+    "fire"
+  ],
+  "arcana:crystals/water": [
+    "water"
+  ],
+  "arcana:crystals/earth": [
+    "earth"
+  ],
+  "arcana:crystals/order": [
+    "order"
+  ],
+  "arcana:crystals/entropy": [
+    "entropy"
+  ]
+}

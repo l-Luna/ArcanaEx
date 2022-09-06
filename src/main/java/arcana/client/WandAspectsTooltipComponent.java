@@ -24,7 +24,7 @@ public record WandAspectsTooltipComponent(ItemStack wand) implements TooltipComp
 	
 	public void drawItems(TextRenderer text, int x, int y, MatrixStack matrices, ItemRenderer itemRenderer, int z){
 		AspectMap aspects = WandItem.aspectsFrom(wand);
-		List<Aspect> primals = Aspects.PRIMALS;
+		List<Aspect> primals = Aspects.primals;
 		for(int i = 0; i < primals.size(); i++){
 			Aspect primal = primals.get(i);
 			int py = y + 1 + (i % 2 == 0 ? 7 : 0);

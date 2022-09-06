@@ -56,7 +56,7 @@ public class Chemistry extends Puzzle{
 		NbtCompound tag = new NbtCompound();
 		AspectMap aspects = new AspectMap();
 		Random rng = new Random();
-		for(Aspect primal : Aspects.PRIMALS)
+		for(Aspect primal : Aspects.primals)
 			aspects.add(primal, rng.nextInt(9, 17));
 		tag.put("stored_aspects", aspects.toNbt());
 		return tag;

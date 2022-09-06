@@ -61,7 +61,7 @@ public class Node implements Position{
 		// add 2-5 of 3 primals
 		var rng = world.random;
 		for(int i = 0; i < 3; i++)
-			aspects.addCapped(Aspects.PRIMALS.get(rng.nextInt(6)), rng.nextBetween(2, 5), type.aspectCap());
+			aspects.addCapped(Aspects.primals.get(rng.nextInt(6)), rng.nextBetween(2, 5), type.aspectCap());
 	}
 	
 	public NbtCompound toNbt(){

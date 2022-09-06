@@ -367,7 +367,7 @@ public class TextFormatter{
 				if(name.equals("config") && parts.length == 3)
 					replaceWith = inlineConfig(parts[1], parts[2]);
 				else if(name.equals("numOfAspects"))
-					replaceWith = String.valueOf(Aspects.ASPECTS.size());
+					replaceWith = String.valueOf(Aspects.aspects.size());
 				in = in.replace(braces.group(), replaceWith);
 			}
 		}

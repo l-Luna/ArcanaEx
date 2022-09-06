@@ -8,6 +8,7 @@
   "tag.arcana.leggings": "Leggings",
   "tag.arcana.boots": "Boots",
   "tag.arcana.horse_armours": "Horse Armours",
+  "tag.arcana.aspect_crystals": "Aspect Crystals",
 
   "_comment": "EMI categories",
   "emi.category.arcana.aspects": "Aspects",
@@ -168,13 +169,12 @@
 
   "research.arcana.flux": "Flux, Taint, Warp",
   "research.arcana.flux.desc": "No such thing as free lunch",
-  "research.arcana.flux.stage.1": "My new perspective has enabled me to understand the ramblings of these scribbled notes.{~sep}Among them were various vague warnings of \"flux\", \"taint\", as consequences for mishandling magic.\nFlux is a kind of pollution of the aura, produced through wasteful alchemy, or inefficient equipment. While nothing arcane is without risks, a buildup of flux can pose serious risks to yourself and the world.\nTaint being one of them. Some sort of corruption, or parasite, or {i}something{i}, that works its way through the world, and twists living beings into horrific monsters when left to its own devices; feeding on the flux created by ambitious or negligent alchemists.\nAnd while I couldn't fully parse the notes on warp... the dark rituals and grim compulsions that surrounded it were certainly enough to provide a bad first impression.\nIf I don't study these risks, how am I supposed to protect myself from them? I should get a look of this \"flux\" myself. A small amount should be perfectly manageable.",
+  "research.arcana.flux.stage.1": "My new perspective has enabled me to understand the ramblings of these scribbled notes.{~sep}Among them were various vague warnings of \"flux\", \"taint\", and \"warp\", as consequences for mishandling magic.\nFlux is a kind of pollution of the aura, produced through wasteful alchemy, or inefficient equipment. While nothing arcane is without risks, a buildup of flux can pose serious risks to yourself and the world.\nTaint being one of them. Some sort of corruption, or parasite, or {i}something{i}, that works its way through the world, and twists living beings into horrific monsters when left to its own devices; feeding on the flux created by ambitious or negligent alchemists.\nAnd while I couldn't fully parse the notes on warp... the dark rituals and grim compulsions that surrounded it were certainly enough to provide a bad first impression.\nIf I don't study these risks, how am I supposed to protect myself from them? I should get a look of this \"flux\" myself. A small amount should be perfectly manageable.",
   "research.arcana.flux.stage.2": "...that was probably a mistake. Everything just {i}feels{i} off here. I would do well not to let it grow much higher, lest it start producing physical effects more serious than a headache and stomachache... ugh, I don't even want to know what warp feels like.",
   "puzzle.arcana.fieldwork.flux_build": "Taste the \"flux\" for yourself",
 
   "research.arcana.arcane_crafting": "Arcane Crafting",
-  "research.arcana.arcane_crafting.desc": "blah blah blah",
-  "research.arcana.arcane_crafting.stage.1": "go make an Arcane Crafting Table",
-  "research.arcana.arcane_crafting.stage.2": "now make a gold wand cap and give me XP pls",
-  "research.arcana.arcane_crafting.stage.3": "ty"
+  "research.arcana.arcane_crafting.desc": "Tools of the Trade",
+  "research.arcana.arcane_crafting.stage.1": "The regular crafting table, while immensely useful, is simply not capable of handling vis in the way I require.\nIt should only require some slight tweaks - a touch of my wand's magic - to bring it up to par.",
+  "research.arcana.arcane_crafting.stage.2": "An Arcane Crafting Table is capable of everything it's ordinary variant is capable of, but can additionally craft magical items that require vis, supplied by my wand.\nOne such critical item is the Goggles of Revealing, which makes visible the vis around me.\nWhen the goggles are worn, nodes become brighter and visible through terrain, and I can see the aspects contained within them."
 }

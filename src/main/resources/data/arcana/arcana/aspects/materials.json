@@ -88,6 +88,13 @@
     "sloth"
   ],
 
+  "minecraft:iron_nugget": [
+    "metal"
+  ],
+  "minecraft:gold_nugget": [
+    "metal"
+  ],
+
   "minecraft:budding_amethyst": [
     "12*crystal",
     "8*light",

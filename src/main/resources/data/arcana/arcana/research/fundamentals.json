@@ -91,7 +91,8 @@
       "name": "research.arcana.arcane_crafting",
       "desc": "research.arcana.arcane_crafting.desc",
       "icons": [
-        "arcana:arcane_crafting_table"
+        "arcana:arcane_crafting_table",
+        "arcana:goggles_of_revealing"
       ],
       "category": "arcana:fundamentals",
       "parents": [
@@ -103,51 +104,23 @@
       "sections": [
         {
           "type": "text",
-          "content": "research.arcana.arcane_crafting.stage.1",
-          "requirements": [
-            "arcana:arcane_crafting_table"
-          ]
-        },
-        {
-          "type": "text",
-          "content": "research.arcana.arcane_crafting.stage.2",
-          "requirements": [
-            "arcana::puzzle{chemistry_intro_puzzle}"
-          ]
-        },
-        {
-          "type": "text",
-          "content": "research.arcana.arcane_crafting.stage.3"
-        },
-        {
-          "type": "crafting",
-          "content": "minecraft:crafting_table"
+          "content": "research.arcana.arcane_crafting.stage.1"
         },
         {
           "type": "wand_interaction",
           "input": "minecraft:crafting_table",
-          "result": "arcana:arcane_crafting_table"
+          "result": "arcana:arcane_crafting_table",
+          "requirements": [
+            "0*arcana:arcane_crafting_table"
+          ]
         },
         {
-          "type": "wand_interaction",
-          "input": "minecraft:cauldron",
-          "result": "arcana:crucible"
-        },
-        {
-          "type": "crafting",
-          "content": "minecraft:furnace"
+          "type": "text",
+          "content": "research.arcana.arcane_crafting.stage.2"
         },
         {
           "type": "arcane_crafting",
-          "content": "arcana:gold_wand_cap"
-        },
-        {
-          "type": "cooking",
-          "content": "minecraft:charcoal"
-        },
-        {
-          "type": "alchemy",
-          "content": "arcana:redstone_dust_by_hedge_alchemy"
+          "content": "arcana:goggles_of_revealing"
         }
       ]
     }

@@ -1,0 +1,33 @@
+{
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "L": {
+      "item": "minecraft:leather"
+    },
+    "P": {
+      "item": "minecraft:glass_pane"
+    },
+    "C": {
+      "tag": "arcana:aspect_crystals"
+    }
+  },
+  "pattern": [
+    "GCG",
+    "PLP",
+    "GCG"
+  ],
+  "result": {
+    "item": "arcana:goggles_of_revealing"
+  },
+  "aspects": [
+    "air",
+    "fire",
+    "water",
+    "earth",
+    "order",
+    "entropy"
+  ]
+}

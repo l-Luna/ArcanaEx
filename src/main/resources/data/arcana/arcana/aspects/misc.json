@@ -60,5 +60,25 @@
   ],
   "+#minecraft:beds": [
     "6*sloth"
+  ],
+
+  "arcana:scribbled_notes": [
+    "fabric",
+    "mind",
+    "senses"
+  ],
+  "arcana:research_table": [
+    "10*mind",
+    "8*plant",
+    "3*senses",
+    "2*fabric"
+  ],
+  "arcana:arcane_crafting_table": [
+    "8*plant",
+    "magic"
+  ],
+  "arcana:crucible": [
+    "28*metal",
+    "magic"
   ]
 }

@@ -83,13 +83,15 @@ public class ResearchBookScreen extends Screen{
 			Entry entry = Research.getEntry(entryPins.getKey());
 			if(entry != null && entry.category().book().equals(book)){
 				for(Integer stage : entryPins.getValue()){
-					Pin pin = entry.sections().get(stage).pins(stage, client.world, entry).findFirst().orElse(null);
-					if(pin != null){
-						PinButton pinButton = new PinButton((width + frameWidth()) / 2 + 1, 16 + ((height - frameHeight()) / 2) + i * 22, pin);
-						addDrawableChild(pinButton);
-						buttons.add(pinButton);
-						pinButtons.add(pinButton);
-						i++;
+					if(stage < entry.sections().size()){
+						Pin pin = entry.sections().get(stage).pins(stage, client.world, entry).findFirst().orElse(null);
+						if(pin != null){
+							PinButton pinButton = new PinButton((width + frameWidth()) / 2 + 1, 16 + ((height - frameHeight()) / 2) + i * 22, pin);
+							addDrawableChild(pinButton);
+							buttons.add(pinButton);
+							pinButtons.add(pinButton);
+							i++;
+						}
 					}
 				}
 			}

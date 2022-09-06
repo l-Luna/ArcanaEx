@@ -327,7 +327,7 @@ public class ResearchBookScreen extends Screen{
 					if((style = style(entry)) == PageStyle.complete || style == PageStyle.inProgress)
 						// left/right (& other) click: open page
 						MinecraftClient.getInstance().setScreen(new ResearchEntryScreen(entry, this));
-				}else
+				}else if(style(entry) == PageStyle.inProgress)
 					// middle click: try advance
 					ArcanaClient.sendTryAdvance(entry);
 				break;

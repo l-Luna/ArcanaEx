@@ -130,7 +130,8 @@
         "arcana:research/nodes_icon"
       ],
       "meta": [
-        "round_base"
+        "round_base",
+        "hidden"
       ],
       "category": "arcana:fundamentals",
       "parents": [

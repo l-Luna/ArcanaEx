@@ -2,6 +2,7 @@ package arcana.research;
 
 import arcana.Networking;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Pair;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -49,5 +50,12 @@ public final class Research{
 	
 	public static Stream<Puzzle> streamPuzzles(){
 		return puzzles.values().stream();
+	}
+	
+	public static Stream<Pair<Entry, Parent>> streamChildrenOf(Entry parent){
+		return streamEntries()
+				.map(x -> new Pair<>(x, x.parents().stream().filter(p -> p.id().equals(parent.id())).toList()))
+				.filter(x -> x.getRight().size() > 0)
+				.map(x -> new Pair<>(x.getLeft(), x.getRight().get(0)));
 	}
 }

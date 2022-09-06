@@ -3,7 +3,9 @@ package arcana.components;
 import arcana.ArcanaRegistry;
 import arcana.items.WarpingItem;
 import arcana.research.Entry;
+import arcana.research.Parent;
 import arcana.research.Puzzle;
+import arcana.research.Research;
 import dev.onyxstudios.cca.api.v3.component.Component;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistryV3;
@@ -72,6 +74,10 @@ public final class Researcher implements Component, AutoSyncedComponent{
 		this.warp = warp;
 	}
 	
+	public boolean isEntryComplete(Entry entry){
+		return entryStage(entry) == entry.sections().size();
+	}
+	
 	// checks if all requirements are complete, takes requirements if so, and syncs with client if anything did happen
 	public void tryAdvance(Entry entry){
 		if(entryStage(entry) < entry.sections().size()){
@@ -91,12 +97,17 @@ public final class Researcher implements Component, AutoSyncedComponent{
 			// unlock all following stages that have no requirements, too
 			// ends up on entry.sections().size(); an entry with 1 section is on stage 0 by default and can be incremented to 1
 		}while(entryStage(entry) < entry.sections().size() && entry.sections().get(entryStage(entry)).getRequirements().size() == 0);
-		if(entryStage(entry) == entry.sections().size()){
+		if(isEntryComplete(entry)){
 			int warping = entry.warping();
 			if(warping > 0 && warping <= 5) // anything out of this range doesn't get displayed, so it's unfair to add
 				warp += warping;
 		}
-		// TODO: auto-progress children entries
+		// auto-progress unlockable children entries
+		Research.streamChildrenOf(entry).forEach(x -> {
+			Parent parent = x.getRight();
+			if((parent.stage() != -1 && parent.stage() <= entryStage(entry)) || (parent.stage() == -1 && isEntryComplete(entry)))
+				tryAdvance(x.getLeft());
+		});
 	}
 	
 	public void completePuzzle(Puzzle puzzle){
@@ -118,7 +129,7 @@ public final class Researcher implements Component, AutoSyncedComponent{
 	
 	// for commands
 	public void completeEntry(Entry entry){
-		if(entryStage(entry) != entry.sections().size()){
+		if(!isEntryComplete(entry)){
 			int warping = entry.warping();
 			if(warping > 0 && warping <= 5)
 				warp += warping;
@@ -133,7 +144,7 @@ public final class Researcher implements Component, AutoSyncedComponent{
 	}
 	
 	public void resetEntry(Entry entry){
-		if(entryStage(entry) == entry.sections().size()){
+		if(isEntryComplete(entry)){
 			int warping = entry.warping();
 			if(warping > 0 && warping <= 5)
 				warp -= warping;

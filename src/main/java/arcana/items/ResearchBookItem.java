@@ -1,5 +1,7 @@
 package arcana.items;
 
+import arcana.components.Researcher;
+import arcana.research.Research;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -19,10 +21,17 @@ public class ResearchBookItem extends Item{
 	}
 	
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand){
-		ItemStack stack = user.getStackInHand(hand);
-		openBook(bookId);
+		if(world.isClient)
+			openBook(bookId);
+		else{
+			// get root entries out of the way
+			Research.streamEntries()
+					.filter(x -> x.category().book().id().equals(bookId))
+					.filter(x -> x.meta().contains("root"))
+					.forEach(Researcher.from(user)::tryAdvance);
+		}
 		user.incrementStat(Stats.USED.getOrCreateStat(this));
-		return TypedActionResult.success(stack, world.isClient());
+		return TypedActionResult.success(user.getStackInHand(hand), world.isClient());
 	}
 	
 	// "just use packets" no

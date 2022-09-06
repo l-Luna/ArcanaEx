@@ -137,8 +137,8 @@
       "parents": [
         "&/arcana:wandcraft"
       ],
-      "x": -1,
-      "y": 3,
+      "x": -2,
+      "y": 2,
       "sections": [
         {
           "type": "text",
@@ -181,6 +181,45 @@
         {
           "type": "arcane_crafting",
           "content": "arcana:goggles_of_revealing"
+        }
+      ]
+    },
+    {
+      "key": "arcana:research",
+      "name": "research.arcana.research",
+      "desc": "research.arcana.research.desc",
+      "icons": [
+        "arcana:research_table",
+        "arcana:complete_research_notes"
+      ],
+      "category": "arcana:fundamentals",
+      "parents": [
+        "arcana:wandcraft"
+      ],
+      "x": 2,
+      "y": 2,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.research.stage.1"
+        },
+        {
+          "type": "crafting",
+          "content": "arcana:research_table",
+          "requirements": [
+            "0*arcana:research_table"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.research.stage.2",
+          "requirements": [
+            "arcana::puzzle{chemistry_intro_puzzle}"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.research.stage.3"
         }
       ]
     }

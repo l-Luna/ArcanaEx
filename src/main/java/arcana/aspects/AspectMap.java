@@ -37,6 +37,10 @@ public record AspectMap(Map<Aspect, Integer> underlying){
 		add(stack.type(), stack.amount());
 	}
 	
+	public void add(AspectMap aspects){
+		aspects.asStacks().forEach(this::add);
+	}
+	
 	public void addCapped(Aspect aspect, int amount, int cap){
 		set(aspect, Math.min(get(aspect) + amount, cap));
 	}

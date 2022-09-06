@@ -61,7 +61,7 @@ public class CrucibleBlockEntity extends BlockEntity{
 					}
 				}
 				if(melt){
-					List<AspectStack> itemAspects = ItemAspectRegistry.get(stack);
+					List<AspectStack> itemAspects = ItemAspectRegistry.get(stack).asStacks();
 					if(itemAspects.size() > 0){
 						item.remove(Entity.RemovalReason.KILLED);
 						world.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, 1.0F);

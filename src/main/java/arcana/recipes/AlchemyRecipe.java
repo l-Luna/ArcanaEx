@@ -1,6 +1,7 @@
 package arcana.recipes;
 
 import arcana.aspects.AspectMap;
+import arcana.aspects.AspectRecipe;
 import arcana.aspects.ItemAspectRegistry;
 import com.google.gson.JsonObject;
 import net.minecraft.item.ItemStack;
@@ -14,7 +15,7 @@ import net.minecraft.world.World;
 
 import static arcana.Arcana.arcId;
 
-public class AlchemyRecipe implements Recipe<AlchemyInventory>{
+public class AlchemyRecipe implements Recipe<AlchemyInventory>, AspectRecipe{
 	
 	public static RecipeType<AlchemyRecipe> TYPE;
 	public static Serializer SERIALIZER;
@@ -87,6 +88,10 @@ public class AlchemyRecipe implements Recipe<AlchemyInventory>{
 		return aspects;
 	}
 	
+	public void affect(AspectMap aspects){
+		aspects.add(this.aspects);
+	}
+	
 	public static class Serializer implements RecipeSerializer<AlchemyRecipe>{
 		
 		public AlchemyRecipe read(Identifier id, JsonObject json){
@@ -94,7 +99,7 @@ public class AlchemyRecipe implements Recipe<AlchemyInventory>{
 					JsonHelper.hasArray(json, "ingredient")
 					? JsonHelper.getArray(json, "ingredient")
 					: JsonHelper.getObject(json, "ingredient"));
-			var aspects = AspectMap.fromAspectStacks(ItemAspectRegistry.parseAspectStackList(id, JsonHelper.getArray(json, "aspects")).orElse(null));
+			var aspects = ItemAspectRegistry.parseAspectStackList(id, JsonHelper.getArray(json, "aspects")).orElse(null);
 			ItemStack output = ShapedRecipe.outputFromJson(JsonHelper.getObject(json, "result"));
 			return new AlchemyRecipe(id, ingredient, aspects, output);
 		}

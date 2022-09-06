@@ -1,6 +1,5 @@
 package arcana.aspects;
 
-import arcana.util.StreamUtil;
 import com.google.gson.*;
 import com.mojang.logging.LogUtils;
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
@@ -24,7 +23,6 @@ import org.slf4j.Logger;
 
 import java.util.*;
 import java.util.function.BiConsumer;
-import java.util.stream.Stream;
 
 import static arcana.Arcana.arcId;
 
@@ -35,14 +33,14 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 	private static final Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
 	private static final Logger logger = LogUtils.getLogger();
 	
-	private static final Map<Item, List<AspectStack>> itemAssociations = new HashMap<>();
-	private static final Map<TagKey<Item>, List<AspectStack>> itemTagAssociations = new HashMap<>();
-	private static final Map<TagKey<Item>, List<AspectStack>> itemTagBonuses = new HashMap<>();
-	private static final Collection<BiConsumer<ItemStack, List<AspectStack>>> stackModifiers = new ArrayList<>();
+	private static final Map<Item, AspectMap> itemAssociations = new HashMap<>();
+	private static final Map<TagKey<Item>, AspectMap> itemTagAssociations = new HashMap<>();
+	private static final Map<TagKey<Item>, AspectMap> itemTagBonuses = new HashMap<>();
+	private static final Collection<BiConsumer<ItemStack, AspectMap>> stackModifiers = new ArrayList<>();
 	
 	private static final Set<Item> generating = new HashSet<>();
 	
-	private static final Map<Item, List<AspectStack>> itemAspects = new HashMap<>();
+	private static final Map<Item, AspectMap> itemAspects = new HashMap<>();
 	
 	// TODO: would rather not do this
 	public static RecipeManager recipes;
@@ -59,19 +57,19 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 		return Set.of(ResourceReloadListenerKeys.TAGS, ResourceReloadListenerKeys.RECIPES);
 	}
 	
-	public static List<AspectStack> get(ItemStack stack){
+	public static AspectMap get(ItemStack stack){
 		var fromItem = get(stack.getItem());
 		for(var fn : stackModifiers)
 			fn.accept(stack, fromItem);
 		return fromItem;
 	}
 	
-	public static List<AspectStack> get(Item item){
+	public static AspectMap get(Item item){
 		var orig = itemAspects.get(item);
-		return orig != null ? new ArrayList<>(orig) : new ArrayList<>();
+		return orig != null ? orig.copy() : new AspectMap();
 	}
 	
-	public static Map<Item, List<AspectStack>> getAllItemAspects(){
+	public static Map<Item, AspectMap> getAllItemAspects(){
 		return Collections.unmodifiableMap(itemAspects);
 	}
 	
@@ -111,8 +109,12 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 		for(Item item : Registry.ITEM){
 			var aspects = get(item);
 			for(var tagBonus : itemTagBonuses.entrySet())
-				if(item.getRegistryEntry().isIn(tagBonus.getKey()))
-					aspects = squish(Stream.concat(aspects.stream(), tagBonus.getValue().stream())).toList();
+				if(item.getRegistryEntry().isIn(tagBonus.getKey())){
+					var newAspects = new AspectMap();
+					newAspects.add(aspects);
+					newAspects.add(tagBonus.getValue());
+					aspects = newAspects;
+				}
 			if(aspects.size() > 0)
 				itemAspects.put(item, aspects);
 		}
@@ -153,10 +155,10 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 			logger.warn("Root in aspect map \"%s\" is not a JSON object, ignoring".formatted(file));
 	}
 	
-	public static Optional<List<AspectStack>> parseAspectStackList(Identifier file, JsonElement json){
+	public static Optional<AspectMap> parseAspectStackList(Identifier file, JsonElement json){
 		if(json.isJsonArray()){
 			JsonArray array = json.getAsJsonArray();
-			List<AspectStack> ret = new ArrayList<>();
+			AspectMap ret = new AspectMap();
 			for(JsonElement element : array){
 				if(element.isJsonObject()){
 					JsonObject object = element.getAsJsonObject();
@@ -164,7 +166,7 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 					int amount = JsonHelper.getInt(object, "amount", 1);
 					Aspect aspect = Aspects.byName(aspectName);
 					if(aspect != null)
-						ret.add(new AspectStack(aspect, amount));
+						ret.add(aspect, amount);
 					else
 						logger.warn("Invalid aspect \"%s\" referenced in file \"%s\", ignoring".formatted(aspectName, file));
 				}else if(element.isJsonPrimitive()){
@@ -178,7 +180,7 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 					}
 					Aspect aspect = Aspects.byName(name);
 					if(aspect != null)
-						ret.add(new AspectStack(aspect, amount));
+						ret.add(aspect, amount);
 					else
 						logger.warn("Invalid aspect \"%s\" referenced in file \"%s\", ignoring".formatted(name, file));
 				}else
@@ -209,20 +211,20 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 		}
 	}
 	
-	private List<AspectStack> getOrGenerate(ItemStack stack){
+	private AspectMap getOrGenerate(ItemStack stack){
 		// TODO: apply stack modifiers to generated items here
 		return itemAspects.containsKey(stack.getItem()) ? get(stack) : generate(stack.getItem());
 	}
 	
-	private List<AspectStack> generate(Item item){
+	private AspectMap generate(Item item){
 		if(generating.contains(item)) // counts as nothing to itself
-			return Collections.emptyList();
+			return new AspectMap();
 		generating.add(item);
 		// consider every recipe that produces this
-		List<List<AspectStack>> choices = new ArrayList<>();
+		List<AspectMap> choices = new ArrayList<>();
 		for(Recipe<?> recipe : recipes.values()){
 			if(recipe.getOutput().getItem().equals(item)){
-				List<AspectStack> collected = new ArrayList<>();
+				AspectMap collected = new AspectMap();
 				// collect aspects from every ingredient
 				for(Ingredient ingredient : recipe.getIngredients()){
 					var stacks = ingredient.getMatchingStacks();
@@ -230,30 +232,26 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 						// currently only look at the first possible stack
 						var stack = stacks[0];
 						if(!generating.contains(stack.getItem()))
-							collected.addAll(getOrGenerate(stack));
+							collected.add(getOrGenerate(stack));
 					}
 				}
-				// squish stacks of the same type & divide by the amount produced
-				collected = squish(collected.stream())
-						.map(x -> new AspectStack(x.type(), x.amount() / recipe.getOutput().getCount()))
-						.filter(x -> x.amount() > 0)
-						.toList();
+				if(recipe instanceof AspectRecipe ar)
+					ar.affect(collected);
+				// divide by the amount produced
+				for(AspectStack stack : collected.asStacks())
+					collected.set(stack.type(), stack.amount() / recipe.getOutput().getCount());
 				choices.add(collected);
 			}
 		}
 		// choose the recipe that provides the fewest aspects
 		var choice = choices.stream()
-				.map(x -> new Pair<>(x, x.stream().mapToInt(AspectStack::amount).sum()))
+				.map(x -> new Pair<>(x, x.asStacks().stream().mapToInt(AspectStack::amount).sum()))
 				.filter(x -> x.getRight() > 0)
 				.min(Comparator.comparingInt(Pair::getRight))
-				.map(Pair::getLeft).orElseGet(ArrayList::new);
+				.map(Pair::getLeft).orElseGet(AspectMap::new);
 		// store the choice for future use
 		itemAspects.put(item, choice);
 		generating.remove(item);
 		return choice;
-	}
-	
-	private static Stream<AspectStack> squish(Stream<AspectStack> unsquished){
-		return StreamUtil.partialReduce(unsquished, AspectStack::type, (x, y) -> new AspectStack(x.type(), x.amount() + y.amount()));
 	}
 }

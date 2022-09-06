@@ -49,7 +49,7 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 				.entrySet()
 				.stream()
 				.flatMap(entry ->
-						entry.getValue()
+						entry.getValue().asStacks()
 								.stream()
 								.map(stack -> new Pair<>(stack.type(), new ItemStack(entry.getKey(), stack.amount()))))
 				.sorted(Comparator.comparingInt(x -> -x.getRight().getCount()))

@@ -18,6 +18,6 @@ public class ItemStackMixin{
 	private void applyAspectsTooltipData(CallbackInfoReturnable<Optional<TooltipData>> cir){
 		var aspects = ItemAspectRegistry.get((ItemStack)(Object)this);
 		if(aspects.size() > 0)
-			cir.setReturnValue(Optional.of(new ItemAspectsTooltipData(aspects, cir.getReturnValue().orElse(null))));
+			cir.setReturnValue(Optional.of(new ItemAspectsTooltipData(aspects.asStacks(), cir.getReturnValue().orElse(null))));
 	}
 }

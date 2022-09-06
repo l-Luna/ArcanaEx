@@ -44,7 +44,7 @@ public final class ArcanaRegistry{
 	
 	// items...
 	public static final Item SCRIBBLED_NOTES = new ScribbledNotesItem(GROUPED_SINGLE);
-	public static final Item GOGGLES_OF_REVEALING = new GogglesOfRevealingItem(GROUPED_SINGLE);
+	public static final Item GOGGLES_OF_REVEALING = new GogglesOfRevealingItem(new Settings().group(Tab.ARCANA).maxCount(1));
 	
 	public static final Item RESEARCH_NOTES = new ResearchNotesItem(new Settings().maxCount(1), false);
 	public static final Item COMPLETE_RESEARCH_NOTES = new ResearchNotesItem(new Settings().maxCount(1), true);

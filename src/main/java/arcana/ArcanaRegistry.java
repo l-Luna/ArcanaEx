@@ -46,8 +46,14 @@ public final class ArcanaRegistry{
 	public static final Item SCRIBBLED_NOTES = new ScribbledNotesItem(GROUPED_SINGLE);
 	public static final Item GOGGLES_OF_REVEALING = new GogglesOfRevealingItem(new Settings().group(Tab.ARCANA).maxCount(1));
 	
+	public static final Item ARCANUM = new ResearchBookItem(GROUPED_SINGLE, arcId("arcanum"));
+	public static final Item CRIMSON_RITES = new ResearchBookItem(GROUPED_SINGLE, arcId("crimson_rites"));
+	public static final Item TAINTED_CODEX = new ResearchBookItem(GROUPED_SINGLE, arcId("tainted_codex"));
+	
 	public static final Item RESEARCH_NOTES = new ResearchNotesItem(new Settings().maxCount(1), false);
 	public static final Item COMPLETE_RESEARCH_NOTES = new ResearchNotesItem(new Settings().maxCount(1), true);
+	
+	public static final Item NITOR = new Item(GROUPED);
 	
 	public static final CapItem IRON_WAND_CAP = new CapItem(GROUPED);
 	public static final CapItem COPPER_WAND_CAP = new CapItem(GROUPED);
@@ -64,10 +70,6 @@ public final class ArcanaRegistry{
 	
 	public static final Item FIRE_FOCUS = new FireFocusItem(GROUPED_SINGLE);
 	public static final Item PRISMATIC_LIGHT_FOCUS = new FocusItem(GROUPED_SINGLE);
-	
-	public static final Item ARCANUM = new ResearchBookItem(GROUPED_SINGLE, arcId("arcanum"));
-	public static final Item CRIMSON_RITES = new ResearchBookItem(GROUPED_SINGLE, arcId("crimson_rites"));
-	public static final Item TAINTED_CODEX = new ResearchBookItem(GROUPED_SINGLE, arcId("tainted_codex"));
 	
 	// blocks...
 	public static final Block ARCANE_CRAFTING_TABLE = new ArcaneCraftingTableBlock(of(Material.WOOD).nonOpaque());
@@ -99,8 +101,14 @@ public final class ArcanaRegistry{
 		register("scribbled_notes", SCRIBBLED_NOTES);
 		register("goggles_of_revealing", GOGGLES_OF_REVEALING);
 		
+		register("arcanum", ARCANUM);
+		register("crimson_rites", CRIMSON_RITES);
+		register("tainted_codex", TAINTED_CODEX);
+		
 		register("research_notes", RESEARCH_NOTES);
 		register("complete_research_notes", COMPLETE_RESEARCH_NOTES);
+		
+		register("nitor", NITOR);
 		
 		register("iron_wand_cap", IRON_WAND_CAP);
 		register("copper_wand_cap", COPPER_WAND_CAP);
@@ -117,10 +125,6 @@ public final class ArcanaRegistry{
 		
 		register("prismatic_light_focus", PRISMATIC_LIGHT_FOCUS);
 		register("fire_focus", FIRE_FOCUS);
-		
-		register("arcanum", ARCANUM);
-		register("crimson_rites", CRIMSON_RITES);
-		register("tainted_codex", TAINTED_CODEX);
 		
 		for(Aspect primal : Aspects.primals){ // TODO: give all aspects crystals?
 			CrystalItem crystalItem = new CrystalItem(GROUPED, primal);

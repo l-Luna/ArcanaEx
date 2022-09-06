@@ -64,8 +64,14 @@
   "item.arcana.scribbled_notes": "Scribbled Notes",
   "item.arcana.goggles_of_revealing": "Goggles of Revealing",
 
+  "item.arcana.arcanum": "Arcanum",
+  "item.arcana.crimson_rites": "Crimson Rites",
+  "item.arcana.tainted_codex": "Tainted Codex",
+
   "item.arcana.research_notes": "Research Notes",
   "item.arcana.complete_research_notes": "Complete Research Notes",
+
+  "item.arcana.nitor": "Nitor",
 
   "item.arcana.iron_wand_cap": "Iron Cap",
   "item.arcana.copper_wand_cap": "Copper Cap",
@@ -79,10 +85,6 @@
 
   "item.arcana.fire_focus": "Wand Focus: Flame",
   "item.arcana.prismatic_light_focus": "Wand Focus: Prismatic Light",
-
-  "item.arcana.arcanum": "Arcanum",
-  "item.arcana.crimson_rites": "Crimson Rites",
-  "item.arcana.tainted_codex": "Tainted Codex",
 
   "item.arcana.aspect_crystal": "%s Crystal",
 
@@ -208,5 +210,10 @@
   "research.arcana.auromancy.desc": "The gateway of miracles",
   "research.arcana.auromancy.stage.1": "This wood-and-iron wand isn't always going to cut it. Really, it's a terrible, glorified vis battery, with few ways to put it's magic to good use. Surely I can build something better?",
   "research.arcana.auromancy.stage.2": "Gold is certainly an improvement over iron, but it doesn't take a genius to know that. Even ordinary enchanting prefers it over everything.\nI believe some dedicated study towards wands and vis manipulation is in order. I'll store this in the {c3}Auromancy{r} tab of the Arcanum, accessible by selecting the wand icon on the left.",
-  "puzzle.arcana.chemistry.auromancy_intro": "Try a new vis conductor"
+  "puzzle.arcana.chemistry.auromancy_intro": "Try a new vis conductor",
+
+  "research.arcana.alchemy": "Alchemy",
+  "research.arcana.alchemy.desc": "Fission and Fusion",
+  "research.arcana.alchemy.stage.1": "Like the mundane elements, I will benefit by learning to separate and combine aspects, and the simplest method available to me to do so is plain old heat.\nOf course, magic must be used to catalyze this breakdown, and no mundane material could possibly handle the heat required - but a flick of my wand should upgrade a regular cauldron to do just that.",
+  "research.arcana.alchemy.stage.2": "A Crucible can be used to melt down items into their constituent aspects. When filled with water and placed over a heat source (like fire, lava, or magma), anything thrown inside will be dissolved, and their aspects added to the water-essentia solution.\nActually purifying this essentia into a usable form is far beyond me, and will require dedicated equipment, but that's not to say it's useless in its current form; a variety of alchemical recipes can be performed with it.\nIf I throw a catalyst for an alchemy recipe I know into a crucible (and it contains all the required aspects), instead of being broken down, it'll absorb those aspects and be transformed into something new.\nOne basic application of this is Nitor: a stable and bright flame, created from coal and light.\nI can empty a crucible by sneak-right-clicking on it, releasing all of its currently stored aspects. If it has no aspects (only water), I can also empty it with a bucket.\nI should note that, since blocks and other entities know no alchemy, items they drop will {i}always{i} be broken down; also, that my Goggles of Revealing allow me to see the aspects stored inside.\nI believe some dedicated study of alchemy is in order. I'll store this in the {c3}Alchemy{r} tab of the Arcanum, accessible by selecting the crucible icon on the left."
 }

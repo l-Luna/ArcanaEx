@@ -309,6 +309,42 @@
           "content": "arcana:gold_wand_cap"
         }
       ]
+    },
+    {
+      "key": "arcana:alchemy",
+      "name": "research.arcana.alchemy",
+      "desc": "research.arcana.alchemy.desc",
+      "icons": [
+        "arcana:crucible"
+      ],
+      "category": "arcana:fundamentals",
+      "parents": [
+        "arcana:arcane_crafting"
+      ],
+      "x": 2,
+      "y": 6,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.alchemy.stage.1"
+        },
+        {
+          "type": "wand_interaction",
+          "input": "minecraft:cauldron",
+          "result": "arcana:crucible",
+          "requirements": [
+            "0*arcana:crucible"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.alchemy.stage.2"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:nitor"
+        }
+      ]
     }
   ],
   "puzzles": [

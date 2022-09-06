@@ -1,0 +1,14 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "tag": "minecraft:coals"
+  },
+  "aspects": [
+    "3*light",
+    "3*energy",
+    "3*fire"
+  ],
+  "result": {
+    "item": "arcana:nitor"
+  }
+}

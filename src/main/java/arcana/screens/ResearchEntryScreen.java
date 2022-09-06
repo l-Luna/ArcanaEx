@@ -301,7 +301,7 @@ public class ResearchEntryScreen extends Screen{
 		Researcher r = Researcher.from(client.player);
 		if(r.entryStage(entry) < entry.sections().size() && entry.sections().get(r.entryStage(entry)).getRequirements().size() > 0){
 			List<Requirement> requirements = entry.sections().get(r.entryStage(entry)).getRequirements();
-			final int y = (height - 181) / 2 + 180;
+			final int y = (height - bgHeight) / 2 + 175;
 			final int reqSize = 20;
 			final int baseX = (width / 2) - (reqSize * requirements.size() / 2);
 			for(int i = 0, size = requirements.size(); i < size; i++)

@@ -10,7 +10,7 @@
       "parents": [],
       "meta": [
         "spiky_base",
-        "purple_base",
+        "yellow_base",
         "root"
       ],
       "x": 0,
@@ -36,7 +36,7 @@
       "category": "arcana:fundamentals",
       "meta": [
         "square_base",
-        "purple_base",
+        "yellow_base",
         "root"
       ],
       "x": -3,
@@ -66,7 +66,7 @@
       "category": "arcana:fundamentals",
       "meta": [
         "square_base",
-        "purple_base",
+        "yellow_base",
         "root",
         "warping:1"
       ],
@@ -222,6 +222,61 @@
           "content": "research.arcana.research.stage.3"
         }
       ]
+    },
+    {
+      "key": "arcana:node_channelling",
+      "name": "research.arcana.node_channelling",
+      "icons": [
+        "arcana:research/node_channelling_icon"
+      ],
+      "category": "arcana:fundamentals",
+      "parents": [
+        "/arcana:nodes"
+      ],
+      "x": -4,
+      "y": 4,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.node_channelling.stage.1",
+          "requirements": [
+            "arcana::puzzle{node_channelling}"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.node_channelling.stage.2"
+        }
+      ]
+    },
+    {
+      "key": "arcana:node_channelling_2",
+      "name": "research.arcana.node_channelling_2",
+      "icons": [
+        "arcana:research/node_channelling_2_icon"
+      ],
+      "category": "arcana:fundamentals",
+      "parents": [
+        "arcana:node_channelling"
+      ],
+      "meta": [
+        "warping:1"
+      ],
+      "x": -5,
+      "y": 5,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.node_channelling_2.stage.1",
+          "requirements": [
+            "arcana::puzzle{node_channelling_2}"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.node_channelling_2.stage.2"
+        }
+      ]
     }
   ],
   "puzzles": [
@@ -243,18 +298,26 @@
       "desc": "puzzle.arcana.fieldwork.flux_build"
     },
     {
-      "key": "arcana:crystal_farming_puzzle",
+      "key": "arcana:node_channelling",
       "type": "chemistry",
-      "desc": "puzzle.arcana.crystal_farming",
+      "desc": "puzzle.arcana.chemistry.node_channelling",
       "nodes": [
-        "arcana:air",
-        "arcana:earth",
-        "arcana:fire",
-        "arcana:crystal",
-        "arcana:water",
-        "arcana:order",
-        "arcana:entropy",
-        "arcana:aura"
+        "arcana:aura",
+        "arcana:magic",
+        "arcana:metal"
+      ]
+    },
+    {
+      "key": "arcana:node_channelling_2",
+      "type": "chemistry",
+      "desc": "puzzle.arcana.chemistry.node_channelling_2",
+      "nodes": [
+        "arcana:aura",
+        "arcana:metal",
+        "arcana:flesh",
+        "arcana:magic",
+        "arcana:slime",
+        "arcana:crystal"
       ]
     }
   ]

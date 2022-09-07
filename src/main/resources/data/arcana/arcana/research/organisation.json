@@ -31,7 +31,7 @@
       "in": "arcana:arcanum",
       "icon": "arcana:research/auromancy_cat_icon.png",
       "name": "research.arcana.category.auromancy",
-      "bg": "arcana:research/bg_fundamentals.png",
+      "bg": "arcana:research/bg_flow.png",
       "requires": "arcana:auromancy"
     },
     {

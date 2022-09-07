@@ -82,6 +82,8 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 		registry.addWorkstation(ARCANE_CRAFTING, ArcanaRegistry.ARCANE_CRAFTING_TABLE.asItem().emi());
 		registry.addWorkstation(ALCHEMY, ArcanaRegistry.CRUCIBLE.asItem().emi());
 		
+		registry.addRecipeHandler(ArcanaRegistry.ARCANE_CRAFTING_SCREEN_HANDLER, new EmiArcaneCraftingRecipeHandler());
+		
 		EmiStackSerializer.register(AspectEmiStackSerializer.ID, AspectEmiStack.class, new AspectEmiStackSerializer());
 		
 		var manager = registry.getRecipeManager();

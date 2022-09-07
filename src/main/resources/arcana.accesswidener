@@ -2,7 +2,6 @@ accessWidener v1 named
 
 accessible field net/minecraft/client/render/model/BasicBakedModel itemPropertyOverrides Lnet/minecraft/client/render/model/json/ModelOverrideList;
 mutable field net/minecraft/client/render/model/BasicBakedModel itemPropertyOverrides Lnet/minecraft/client/render/model/json/ModelOverrideList;
-
 accessible method net/minecraft/client/font/TextRenderer getFontStorage (Lnet/minecraft/util/Identifier;)Lnet/minecraft/client/font/FontStorage;
 
 accessible field net/minecraft/data/client/ItemModelGenerator writer Ljava/util/function/BiConsumer;
@@ -10,3 +9,6 @@ accessible field net/minecraft/data/client/ItemModelGenerator writer Ljava/util/
 accessible method net/minecraft/item/PickaxeItem <init> (Lnet/minecraft/item/ToolMaterial;IFLnet/minecraft/item/Item$Settings;)V
 accessible method net/minecraft/item/AxeItem <init> (Lnet/minecraft/item/ToolMaterial;FFLnet/minecraft/item/Item$Settings;)V
 accessible method net/minecraft/item/HoeItem <init> (Lnet/minecraft/item/ToolMaterial;IFLnet/minecraft/item/Item$Settings;)V
+
+accessible field net/minecraft/recipe/SmithingRecipe base Lnet/minecraft/recipe/Ingredient;
+accessible field net/minecraft/recipe/SmithingRecipe addition Lnet/minecraft/recipe/Ingredient;

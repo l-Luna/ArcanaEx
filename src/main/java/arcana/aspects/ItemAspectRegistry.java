@@ -11,6 +11,7 @@ import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeManager;
+import net.minecraft.recipe.SmithingRecipe;
 import net.minecraft.resource.JsonDataLoader;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.tag.TagKey;
@@ -23,12 +24,11 @@ import org.slf4j.Logger;
 
 import java.util.*;
 import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 import static arcana.Arcana.arcId;
 
 public final class ItemAspectRegistry extends JsonDataLoader implements IdentifiableResourceReloadListener{
-	
-	// TODO: replace use of List<AspectStack> with AspectMap
 	
 	private static final Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
 	private static final Logger logger = LogUtils.getLogger();
@@ -36,11 +36,13 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 	private static final Map<Item, AspectMap> itemAssociations = new HashMap<>();
 	private static final Map<TagKey<Item>, AspectMap> itemTagAssociations = new HashMap<>();
 	private static final Map<TagKey<Item>, AspectMap> itemTagBonuses = new HashMap<>();
-	private static final Collection<BiConsumer<ItemStack, AspectMap>> stackModifiers = new ArrayList<>();
+	
+	private static final Map<Class<? extends Recipe<?>>, Function<Recipe<?>, List<Ingredient>>> ingredientProviders = new HashMap<>();
 	
 	private static final Set<Item> generating = new HashSet<>();
 	
 	private static final Map<Item, AspectMap> itemAspects = new HashMap<>();
+	private static final Collection<BiConsumer<ItemStack, AspectMap>> stackModifiers = new ArrayList<>();
 	
 	// TODO: would rather not do this
 	public static RecipeManager recipes;
@@ -82,9 +84,11 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 		itemTagBonuses.clear();
 		itemAspects.clear();
 		stackModifiers.clear();
+		ingredientProviders.clear();
 		
 		// always the same
 		addStackFunctions();
+		addIngredientProviders();
 		
 		// load associations
 		prepared.forEach(this::applyJson);
@@ -128,6 +132,15 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 			var enchants = EnchantmentHelper.get(stack);
 			if(enchants.size() > 0)
 				out.add(new AspectStack(Aspects.MAGIC, enchants.values().stream().mapToInt(x -> x).sum() * 2));
+		});
+	}
+	
+	private void addIngredientProviders(){
+		// smithing doesn't properly implement getIngredients
+		ingredientProviders.put(SmithingRecipe.class, recipe -> {
+			if(recipe instanceof SmithingRecipe sr){
+				return List.of(sr.base, sr.addition);
+			}else return null; // unreachable
 		});
 	}
 	
@@ -225,8 +238,14 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 		for(Recipe<?> recipe : recipes.values()){
 			if(recipe.getOutput().getItem().equals(item)){
 				AspectMap collected = new AspectMap();
+				List<Ingredient> ingredients = recipe.getIngredients();
+				if(ingredientProviders.containsKey(recipe.getClass())){
+					var i = ingredientProviders.get(recipe.getClass()).apply(recipe);
+					if(i != null)
+						ingredients = i;
+				}
 				// collect aspects from every ingredient
-				for(Ingredient ingredient : recipe.getIngredients()){
+				for(Ingredient ingredient : ingredients){
 					var stacks = ingredient.getMatchingStacks();
 					if(stacks.length > 0){
 						// currently only look at the first possible stack

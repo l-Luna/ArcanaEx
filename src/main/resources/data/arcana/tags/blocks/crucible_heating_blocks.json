@@ -1,6 +1,7 @@
 {
   "values": [
     "minecraft:fire",
-    "minecraft:magma_block"
+    "minecraft:magma_block",
+    "arcana:nitor"
   ]
 }

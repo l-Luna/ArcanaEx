@@ -71,8 +71,6 @@
   "item.arcana.research_notes": "Research Notes",
   "item.arcana.complete_research_notes": "Complete Research Notes",
 
-  "item.arcana.nitor": "Nitor",
-
   "item.arcana.arcanium_ingot": "Arcanium Ingot",
   "item.arcana.arcanium_axe": "Arcanium Axe",
   "item.arcana.arcanium_pickaxe": "Arcanium Pickaxe",
@@ -103,6 +101,8 @@
   "block.arcana.arcane_crafting_table": "Arcane Crafting Table",
   "block.arcana.crucible": "Crucible",
   "block.arcana.research_table": "Research Table",
+
+  "block.arcana.nitor": "Nitor",
 
   "block.arcana.arcanium_block": "Arcanium Block",
 

@@ -23,11 +23,16 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 	
 	public void generateBlockStateModels(BlockStateModelGenerator blockGen){
 		blockGen.registerSimpleState(ArcanaRegistry.ARCANE_CRAFTING_TABLE);
+		blockGen.registerSimpleState(ArcanaRegistry.NITOR);
+		
 		blockGen.registerSimpleCubeAll(ArcanaRegistry.ARCANIUM_BLOCK);
 	}
 	
 	public void generateItemModels(ItemModelGenerator itemGen){
 		noAutoGen.add(ArcanaRegistry.WAND);
+		noAutoGen.add(ArcanaRegistry.NITOR.asItem());
+		
+		itemGen.register(ArcanaRegistry.NITOR.asItem(), Models.GENERATED);
 		
 		for(Item item : ArcanaRegistry.items)
 			if(!noAutoGen.contains(item) && !(item instanceof BlockItem))
@@ -38,6 +43,7 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		
 		for(Block block : ArcanaRegistry.blocks)
 			if(!(block instanceof ResearchTableBlock))
-				itemGen.writer.accept(ModelIds.getItemModelId(block.asItem()), new SimpleModelSupplier(ModelIds.getBlockModelId(block)));
+				if(!noAutoGen.contains(block.asItem()))
+					itemGen.writer.accept(ModelIds.getItemModelId(block.asItem()), new SimpleModelSupplier(ModelIds.getBlockModelId(block)));
 	}
 }

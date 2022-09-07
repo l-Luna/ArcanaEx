@@ -1,0 +1,78 @@
+{
+  "entries": [
+    {
+      "key": "arcana:alchemy_root",
+      "name": "research.arcana.alchemy_root",
+      "icons": [
+        "arcana:crucible"
+      ],
+      "category": "arcana:alchemy",
+      "parents": [
+        "arcana:alchemy"
+      ],
+      "meta": [
+        "spiky_base",
+        "yellow_base",
+        "root"
+      ],
+      "x": 0,
+      "y": 0,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.alchemy_root.text"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:nitor"
+        }
+      ]
+    },
+    {
+      "key": "arcana:magical_metallurgy",
+      "name": "research.arcana.magical_metallurgy",
+      "desc": "research.arcana.magical_metallurgy.desc",
+      "icons": [
+        "arcana:arcanium_ingot"
+      ],
+      "category": "arcana:alchemy",
+      "parents": [
+        "arcana:alchemy_root"
+      ],
+      "x": 3,
+      "y": 0,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.magical_metallurgy.stage.1",
+          "requirements": [
+            "arcana::puzzle{arcanium}"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.magical_metallurgy.stage.2"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:arcanium_ingot"
+        }
+      ]
+    }
+  ],
+  "puzzles": [
+    {
+      "key": "arcana:arcanium",
+      "type": "chemistry",
+      "desc": "puzzle.arcana.chemistry.arcanium",
+      "nodes": [
+        "metal",
+        "magic",
+        "tool",
+        "magic",
+        "greed",
+        "magic"
+      ]
+    }
+  ]
+}

@@ -238,5 +238,14 @@
   "research.arcana.research_mastery": "Research Mastery",
   "research.arcana.research_mastery.desc": "You can never know all the facts.",
   "research.arcana.research_mastery.stage.1": "There's always more to learn, yet more exciting opportunities to chase after - and my slow, inefficient research is holding me back.",
-  "research.arcana.research_mastery.stage.2": "No matter how hard I work, how long I try, how much focus and effort I put in - my work is never finished.{~sep}Removing an aspect from the chemistry grid now has a 50%% chance of returning it to the note. Notes also start out with more aspects."
+  "research.arcana.research_mastery.stage.2": "No matter how hard I work, how long I try, how much focus and effort I put in - my work is never finished.{~sep}Removing an aspect from the chemistry grid now has a 50%% chance of returning it to the note. Notes also start out with more aspects.",
+
+  "research.arcana.alchemy_root": "Alchemy",
+  "research.arcana.alchemy_root.text": "The study of {i}alchemy{r}, the conversion of items into essentia and utilization thereof, will be documented here.\nThe Nitor recipe from {c3}Fundamentals{r} is included here for completeness.",
+
+  "research.arcana.magical_metallurgy": "Magical Metallurgy",
+  "research.arcana.magical_metallurgy.desc": "Where metals meet magic",
+  "research.arcana.magical_metallurgy.stage.1": "Mundane materials just aren't cutting it anymore.\nTools break too quickly, armour doesn't protect well enough, and these materials simply aren't as conductive to the arcane crafts as I would like. Even enchantment is a nuisance.\nThe notes often reference a material named {u}Thaumium{r}, created by alchemically imbuing a metal with magic itself. I don't know what their metallurgy was like - it seems that the set of ores available to me differ to what they had - but the principle seems sound.",
+  "research.arcana.magical_metallurgy.stage.2": "This isn't thaumium. At least, not like they described. It's similar in strength and conductivity, but blindingly bright, and seems to be giving off it's infused magic over time... maybe I overshot somewhat.\nEither way, it's stronger than most materials I have in plentiful supply, and more conductive to vis than any.\nEntire blocks can be transmuted, at nine times the cost.",
+  "puzzle.arcana.chemistry.arcanium": "Connect metals and magic"
 }

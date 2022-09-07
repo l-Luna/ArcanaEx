@@ -5,6 +5,7 @@ import arcana.aspects.AspectMap;
 import arcana.aspects.Aspects;
 import arcana.research.Puzzle;
 import arcana.util.StreamUtil;
+import com.google.common.graph.EndpointPair;
 import com.google.common.graph.GraphBuilder;
 import com.google.common.graph.MutableGraph;
 import com.google.common.graph.Traverser;
@@ -99,7 +100,7 @@ public class Chemistry extends Puzzle{
 		// fill grid
 		Map<HexOffset, AspectGraphNode> grid = new HashMap<>(gridTag.getKeys().size() + getNodes().size());
 		AtomicReference<AspectGraphNode> firstNode = new AtomicReference<>();
-		processHexes(getSize(), 0, 0, (xPos, yPos, turn, rx, ry) -> {
+		processHexes(getSize(), 0, 0, (_x, _y, turn, rx, ry) -> {
 			if(turn % nodeGap == 0){
 				var value = new AspectGraphNode(getNodes().get(turn / nodeGap), true);
 				firstNode.set(value);
@@ -123,13 +124,29 @@ public class Chemistry extends Puzzle{
 					AspectGraphNode neighbor = grid.get(neighborPos);
 					if(neighbor != null){
 						Aspect nAspect = neighbor.aspect;
-						if(aspect.equals(nAspect.left()) || aspect.equals(nAspect.right()))
+						if(aspect.equals(nAspect.left()) || aspect.equals(nAspect.right())
+							|| nAspect.equals(aspect.left()) || nAspect.equals(aspect.right()))
 							graph.putEdge(self, neighbor);
 					}
 				}
 			}
 			return false;
 		});
+		
+		// export the graph to Mermaid and print to stdout for debugging
+		if(false){
+			StringBuilder sb = new StringBuilder();
+			for(EndpointPair<AspectGraphNode> edge : graph.edges()){
+				var u = edge.nodeU();
+				var v = edge.nodeV();
+				sb.append(System.identityHashCode(u)).append("::").append(u.aspect.id())
+						.append(" --> ")
+						.append(System.identityHashCode(v)).append("::").append(v.aspect.id())
+						.append("\n");
+			}
+			System.out.println(sb);
+		}
+		
 		// traverse the graph to count reachable connections
 		if(firstNode.get() != null && graph.nodes().contains(firstNode.get())){
 			int found = 0;
@@ -225,5 +242,24 @@ public class Chemistry extends Puzzle{
 		}
 	}
 	
-	private record AspectGraphNode(Aspect aspect, boolean isPuzzleNode){}
+	// we rely on identity comparisons in the graph
+	// we could add the hex position as an additional record component,
+	// or override equals/hashCode to use identity,
+	// but that would be more complicated than just Not
+	@SuppressWarnings("ClassCanBeRecord")
+	private static final class AspectGraphNode{
+		private final Aspect aspect;
+		private final boolean isPuzzleNode;
+		
+		private AspectGraphNode(Aspect aspect, boolean isPuzzleNode){
+			this.aspect = aspect;
+			this.isPuzzleNode = isPuzzleNode;
+		}
+		
+		public String toString(){
+			return "AspectGraphNode[" +
+					"aspect=" + aspect + ", " +
+					"isPuzzleNode=" + isPuzzleNode + ']';
+		}
+	}
 }

@@ -11,6 +11,7 @@ import arcana.screens.ResearchTableScreenHandler;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.Block;
+import net.minecraft.block.MapColor;
 import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.enchantment.Enchantment;
@@ -18,6 +19,7 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.*;
 import net.minecraft.item.Item.Settings;
 import net.minecraft.screen.ScreenHandlerType;
+import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.registry.Registry;
 
 import java.util.ArrayList;
@@ -58,6 +60,10 @@ public final class ArcanaRegistry{
 	public static final Item ARCANIUM_PICKAXE = new PickaxeItem(ArcanaToolMaterials.ARCANIUM, 1, -2.8f, new Settings().group(Tab.ARCANA));
 	public static final Item ARCANIUM_AXE = new AxeItem(ArcanaToolMaterials.ARCANIUM, 5.5f, -3, new Settings().group(Tab.ARCANA));
 	public static final Item ARCANIUM_HOE = new HoeItem(ArcanaToolMaterials.ARCANIUM, -2, -1, new Settings().group(Tab.ARCANA));
+	public static final Item ARCANIUM_HELMET = new ArmorItem(ArcanaArmourMaterials.ARCANIUM, EquipmentSlot.HEAD, new Settings().group(Tab.ARCANA));
+	public static final Item ARCANIUM_CHESTPLATE = new ArmorItem(ArcanaArmourMaterials.ARCANIUM, EquipmentSlot.CHEST, new Settings().group(Tab.ARCANA));
+	public static final Item ARCANIUM_LEGGINGS = new ArmorItem(ArcanaArmourMaterials.ARCANIUM, EquipmentSlot.LEGS, new Settings().group(Tab.ARCANA));
+	public static final Item ARCANIUM_BOOTS = new ArmorItem(ArcanaArmourMaterials.ARCANIUM, EquipmentSlot.FEET, new Settings().group(Tab.ARCANA));
 	
 	public static final CapItem IRON_WAND_CAP = new CapItem(GROUPED);
 	public static final CapItem COPPER_WAND_CAP = new CapItem(GROUPED);
@@ -79,6 +85,8 @@ public final class ArcanaRegistry{
 	public static final Block ARCANE_CRAFTING_TABLE = new ArcaneCraftingTableBlock(of(Material.WOOD).nonOpaque());
 	public static final Block CRUCIBLE = new CrucibleBlock(of(Material.METAL).nonOpaque());
 	public static final Block RESEARCH_TABLE = new ResearchTableBlock(of(Material.WOOD).nonOpaque().strength(3));
+	
+	public static final Block ARCANIUM_BLOCK = new Block(of(Material.METAL, MapColor.PINK).requiresTool().strength(5, 6).sounds(BlockSoundGroup.METAL));
 	
 	// screen handlers...
 	public static final ScreenHandlerType<ArcaneCraftingScreenHandler> ARCANE_CRAFTING_SCREEN_HANDLER
@@ -120,6 +128,10 @@ public final class ArcanaRegistry{
 		register("arcanium_pickaxe", ARCANIUM_PICKAXE);
 		register("arcanium_axe", ARCANIUM_AXE);
 		register("arcanium_hoe", ARCANIUM_HOE);
+		register("arcanium_helmet", ARCANIUM_HELMET);
+		register("arcanium_chestplate", ARCANIUM_CHESTPLATE);
+		register("arcanium_leggings", ARCANIUM_LEGGINGS);
+		register("arcanium_boots", ARCANIUM_BOOTS);
 		
 		register("iron_wand_cap", IRON_WAND_CAP);
 		register("copper_wand_cap", COPPER_WAND_CAP);
@@ -148,6 +160,8 @@ public final class ArcanaRegistry{
 		register("crucible", CRUCIBLE);
 		register("research_table", RESEARCH_TABLE, false);
 		register("research_table", new ResearchTableItem(GROUPED)); // it's a block item, it doesn't count
+		
+		register("arcanium_block", ARCANIUM_BLOCK);
 		
 		// screen handlers
 		register("arcane_crafting", ARCANE_CRAFTING_SCREEN_HANDLER);

@@ -1,0 +1,12 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "minecraft:iron_block"
+  },
+  "aspects": [
+    "54*magic"
+  ],
+  "result": {
+    "item": "arcana:arcanium_block"
+  }
+}

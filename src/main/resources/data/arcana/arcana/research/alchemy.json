@@ -56,6 +56,18 @@
         {
           "type": "alchemy",
           "content": "arcana:arcanium_ingot"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:arcanium_block_by_alchemy"
+        },
+        {
+          "type": "crafting",
+          "content": "arcana:equipment/arcanium_sword"
+        },
+        {
+          "type": "crafting",
+          "content": "arcana:equipment/arcanium_chestplate"
         }
       ]
     }

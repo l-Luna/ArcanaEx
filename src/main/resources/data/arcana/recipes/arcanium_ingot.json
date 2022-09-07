@@ -1,0 +1,12 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "tag": "c:iron_ingots"
+  },
+  "aspects": [
+    "6*magic"
+  ],
+  "result": {
+    "item": "arcana:arcanium_ingot"
+  }
+}

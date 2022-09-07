@@ -8,6 +8,7 @@ import net.minecraft.block.Block;
 import net.minecraft.data.client.*;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ToolItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,10 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		
 		for(Item item : ArcanaRegistry.items)
 			if(!noAutoGen.contains(item) && !(item instanceof BlockItem))
-				itemGen.register(item, Models.GENERATED);
+				if(item instanceof ToolItem)
+					itemGen.register(item, Models.HANDHELD);
+				else
+					itemGen.register(item, Models.GENERATED);
 		
 		for(Block block : ArcanaRegistry.blocks)
 			if(!(block instanceof ResearchTableBlock))

@@ -15,11 +15,8 @@ import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
+import net.minecraft.item.*;
 import net.minecraft.item.Item.Settings;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.util.registry.Registry;
 
@@ -54,6 +51,13 @@ public final class ArcanaRegistry{
 	public static final Item COMPLETE_RESEARCH_NOTES = new ResearchNotesItem(new Settings().maxCount(1), true);
 	
 	public static final Item NITOR = new Item(GROUPED);
+	
+	public static final Item ARCANIUM_INGOT = new Item(GROUPED);
+	public static final Item ARCANIUM_SWORD = new SwordItem(ArcanaToolMaterials.ARCANIUM, 3, -2.4f, new Settings().group(Tab.ARCANA));
+	public static final Item ARCANIUM_SHOVEL = new ShovelItem(ArcanaToolMaterials.ARCANIUM, 1.5f, -3, new Settings().group(Tab.ARCANA));
+	public static final Item ARCANIUM_PICKAXE = new PickaxeItem(ArcanaToolMaterials.ARCANIUM, 1, -2.8f, new Settings().group(Tab.ARCANA));
+	public static final Item ARCANIUM_AXE = new AxeItem(ArcanaToolMaterials.ARCANIUM, 5.5f, -3, new Settings().group(Tab.ARCANA));
+	public static final Item ARCANIUM_HOE = new HoeItem(ArcanaToolMaterials.ARCANIUM, -2, -1, new Settings().group(Tab.ARCANA));
 	
 	public static final CapItem IRON_WAND_CAP = new CapItem(GROUPED);
 	public static final CapItem COPPER_WAND_CAP = new CapItem(GROUPED);
@@ -109,6 +113,13 @@ public final class ArcanaRegistry{
 		register("complete_research_notes", COMPLETE_RESEARCH_NOTES);
 		
 		register("nitor", NITOR);
+		
+		register("arcanium_ingot", ARCANIUM_INGOT);
+		register("arcanium_sword", ARCANIUM_SWORD);
+		register("arcanium_shovel", ARCANIUM_SHOVEL);
+		register("arcanium_pickaxe", ARCANIUM_PICKAXE);
+		register("arcanium_axe", ARCANIUM_AXE);
+		register("arcanium_hoe", ARCANIUM_HOE);
 		
 		register("iron_wand_cap", IRON_WAND_CAP);
 		register("copper_wand_cap", COPPER_WAND_CAP);

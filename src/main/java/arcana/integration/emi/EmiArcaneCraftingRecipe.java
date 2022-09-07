@@ -21,7 +21,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import static arcana.Arcana.arcId;
 
@@ -64,7 +63,7 @@ public class EmiArcaneCraftingRecipe implements EmiRecipe{
 	}
 	
 	public List<EmiIngredient> getInputs(){
-		return Stream.concat(input.stream(), aspects.asStacks().stream().map(AspectEmiStack::new)).toList();
+		return input;
 	}
 	
 	public List<EmiStack> getOutputs(){

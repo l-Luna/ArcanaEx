@@ -172,6 +172,10 @@
     "fire",
     "magic"
   ],
+  "minecraft:red_nether_bricks": [
+    "4*fire",
+    "3*earth"
+  ],
   "minecraft:cocoa_beans": [
     "3*senses",
     "plant"

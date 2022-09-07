@@ -73,6 +73,17 @@
 
   "item.arcana.nitor": "Nitor",
 
+  "item.arcana.arcanium_ingot": "Arcanium Ingot",
+  "item.arcana.arcanium_axe": "Arcanium Axe",
+  "item.arcana.arcanium_pickaxe": "Arcanium Pickaxe",
+  "item.arcana.arcanium_sword": "Arcanium Sword",
+  "item.arcana.arcanium_hoe": "Arcanium Hoe",
+  "item.arcana.arcanium_shovel": "Arcanium Shovel",
+  "item.arcana.arcanium_helmet": "Arcanium Helmet",
+  "item.arcana.arcanium_chestplate": "Arcanium Chestplate",
+  "item.arcana.arcanium_leggings": "Arcanium Leggings",
+  "item.arcana.arcanium_boots": "Arcanium Boots",
+
   "item.arcana.iron_wand_cap": "Iron Cap",
   "item.arcana.copper_wand_cap": "Copper Cap",
   "item.arcana.gold_wand_cap": "Gold Cap",

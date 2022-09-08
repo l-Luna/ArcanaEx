@@ -240,7 +240,7 @@ public class ResearchBookScreen extends Screen{
 									if(parent.hasArrowhead())
 										arrows.drawDownArrowTo(matrices, entry);
 								}else if(xdiff > 0 && ydiff < 0){
-									arrows.drawSizedLuCurve(matrices, pEntry.x(), entry.y(), large);
+									arrows.drawSizedLuCurve(matrices, entry.x(), pEntry.y(), large);
 									if(parent.hasArrowhead())
 										arrows.drawUpArrowTo(matrices, entry);
 								}else if(xdiff < 0 && ydiff > 0){
@@ -298,14 +298,18 @@ public class ResearchBookScreen extends Screen{
 	private void renderEntryTooltip(MatrixStack matrices, int mouseX, int mouseY){
 		for(Entry entry : categories.get(tab).entries()){
 			if(hovering(entry, mouseX, mouseY)){
-				List<Text> lines = new ArrayList<>(2);
-				lines.add(Text.translatable(entry.name()));
-				if(entry.desc() != null && !entry.desc().equals(""))
-					lines.add(Text.translatable(entry.desc()).formatted(Formatting.GRAY));
-				int warping = entry.warping();
-				if(warping > 0 && warping <= 5)
-					lines.add(Text.translatable("research.book.warping." + warping).formatted(Formatting.DARK_PURPLE));
-				renderTooltip(matrices, lines, mouseX, mouseY);
+				PageStyle style = style(entry);
+				if(style == PageStyle.complete || style == PageStyle.inProgress
+						|| (style == PageStyle.pending && !entry.meta().contains("hidden"))){
+					List<Text> lines = new ArrayList<>(2);
+					lines.add(Text.translatable(entry.name()));
+					if(entry.desc() != null && !entry.desc().equals(""))
+						lines.add(Text.translatable(entry.desc()).formatted(Formatting.GRAY));
+					int warping = entry.warping();
+					if(warping > 0 && warping <= 5)
+						lines.add(Text.translatable("research.book.warping." + warping).formatted(Formatting.DARK_PURPLE));
+					renderTooltip(matrices, lines, mouseX, mouseY);
+				}
 				break;
 			}
 		}

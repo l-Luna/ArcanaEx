@@ -48,6 +48,7 @@ public abstract class AbstractRecipeSectionRenderer<T extends AbstractRecipeSect
 		int rY = y + (screenHeight - bgHeight) / 2 + 16 - heightOffset;
 		drawTexture(matrices, rX, rY, 101, 1, 167, 58, 20, 256, 256);
 		client.getItemRenderer().renderInGui(stack, rX + 29 - 8, rY + 10 - 8);
+		client.getItemRenderer().renderGuiItemOverlay(textRenderer, stack, rX + 29 - 8, rY + 10 - 8);
 		var name = stack.getName().getString();
 		int stX = x + (screenWidth - 256) / 2 + (pageWidth - textRenderer.getWidth(name)) / 2;
 		int stY = y + (screenHeight - bgHeight) / 2 + 11 - textRenderer.fontHeight - heightOffset;

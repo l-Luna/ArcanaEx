@@ -85,6 +85,14 @@ public final class Researcher implements Component, AutoSyncedComponent{
 	// checks if all requirements are complete, takes requirements if so, and syncs with client if anything did happen
 	public void tryAdvance(Entry entry){
 		if(entryStage(entry) < entry.sections().size()){
+			for(Parent parent : entry.parents()){
+				Entry pEntry = Research.getEntry(parent.id());
+				if(parent.stage() == -1){
+					if(!isEntryComplete(pEntry))
+						return; // missing a parent that must be complete
+				}else if(entryStage(pEntry) < parent.stage())
+					return; // not enough progress on that parent
+			}
 			var sections = entry.sections().get(entryStage(entry));
 			if(sections.getRequirements().stream().allMatch(x -> x.satisfiedBy(player))){
 				sections.getRequirements().forEach(x -> x.takeFrom(player));

@@ -1,0 +1,14 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "tag": "c:copper_ingots"
+  },
+  "aspects": [
+    "3*exchange",
+    "metal",
+    "greed"
+  ],
+  "result": {
+    "item": "minecraft:gold_ingot"
+  }
+}

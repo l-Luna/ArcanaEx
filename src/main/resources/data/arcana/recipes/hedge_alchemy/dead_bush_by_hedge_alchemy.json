@@ -1,0 +1,14 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "tag": "minecraft:leaves"
+  },
+  "aspects": [
+    "3*undead",
+    "fire",
+    "exchange"
+  ],
+  "result": {
+    "item": "minecraft:dead_bush"
+  }
+}

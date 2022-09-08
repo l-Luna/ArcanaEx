@@ -70,6 +70,310 @@
           "content": "arcana:equipment/arcanium_chestplate"
         }
       ]
+    },
+    {
+      "key": "arcana:transmutation",
+      "name": "research.arcana.transmutation",
+      "desc": "research.arcana.transmutation.desc",
+      "icons": [
+        "minecraft:iron_ingot",
+        "minecraft:copper_ingot",
+        "minecraft:gold_ingot"
+      ],
+      "category": "arcana:alchemy",
+      "parents": [
+        "arcana:alchemy_root"
+      ],
+      "x": -2,
+      "y": 2,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.transmutation.stage.1",
+          "requirements": [
+            "arcana::puzzle{copper_transmutation}"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.transmutation.stage.2"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:transmutation/copper_ingot_by_transmutation",
+          "requirements": [
+            "arcana::puzzle{gold_transmutation}"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.transmutation.stage.3"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:transmutation/gold_ingot_by_transmutation",
+          "requirements": [
+            "arcana::puzzle{iron_transmutation}"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.transmutation.stage.4"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:transmutation/iron_ingot_by_transmutation"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:transmutation/copper_block_by_transmutation"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:transmutation/gold_block_by_transmutation"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:transmutation/iron_block_by_transmutation"
+        }
+      ]
+    },
+    {
+      "key": "arcana:purification",
+      "name": "research.arcana.purification",
+      "icons": [
+        "arcana:alchemical_iron",
+        "arcana:alchemical_copper",
+        "arcana:alchemical_gold"
+      ],
+      "category": "arcana:alchemy",
+      "parents": [
+        "arcana:alchemy_root"
+      ],
+      "x": 2,
+      "y": 2,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.purification.stage.1",
+          "requirements": [
+            "arcana::puzzle{iron_purification}"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.purification.stage.2"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:alchemical_metals/alchemical_iron"
+        },
+        {
+          "type": "cooking",
+          "content": "arcana:alchemical_metals/iron_ingot_from_alchemical_iron_by_smelting",
+          "requirements": [
+            "arcana::puzzle{other_purification}"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.purification.stage.3"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:alchemical_metals/alchemical_copper"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:alchemical_metals/alchemical_gold"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:alchemical_metals/alchemical_iron_from_raw_iron_block"
+        }
+      ]
+    },
+    {
+      "key": "arcana:transmutation_shortcut",
+      "name": "research.arcana.transmutation_shortcut",
+      "icons": [
+        "arcana:alchemical_iron",
+        "arcana:aspects/exchange",
+        "arcana:alchemical_copper",
+        "arcana:aspects/exchange",
+        "arcana:alchemical_gold",
+        "arcana:aspects/exchange"
+      ],
+      "category": "arcana:alchemy",
+      "parents": [
+        "&arcana:transmutation",
+        "&arcana:purification"
+      ],
+      "meta": [
+        "hidden",
+        "round_base"
+      ],
+      "x": 0,
+      "y": 4,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.transmutation_shortcut.text"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:transmutation/alchemical_iron_by_transmutation"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:transmutation/alchemical_copper_by_transmutation"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:transmutation/alchemical_gold_by_transmutation"
+        }
+      ]
+    },
+    {
+      "key": "arcana:metallurgy_shortcut",
+      "name": "research.arcana.metallurgy_shortcut",
+      "icons": [
+        "arcana:altered_iron"
+      ],
+      "category": "arcana:alchemy",
+      "parents": [
+        "&arcana:magical_metallurgy",
+        "&arcana:purification"
+      ],
+      "meta": [
+        "hidden",
+        "round_base"
+      ],
+      "x": 3,
+      "y": 3,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.metallurgy_shortcut.text"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:alchemical_metals/altered_iron"
+        },
+        {
+          "type": "cooking",
+          "content": "arcana:alchemical_metals/arcanium_ingot_from_altered_iron_by_smelting"
+        }
+      ]
+    },
+    {
+      "key": "arcana:alumentum",
+      "name": "research.arcana.alumentum",
+      "icons": [
+        "arcana:alumentum"
+      ],
+      "category": "arcana:alchemy",
+      "parents": [
+        "/arcana:alchemy_root"
+      ],
+      "x": 2,
+      "y": -2,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.alumentum.stage.1",
+          "requirements": [
+            "arcana::puzzle{alumentum}"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.alumentum.stage.2"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:alumentum"
+        }
+      ]
+    },
+    {
+      "key": "arcana:hedge_alchemy",
+      "name": "research.arcana.hedge_alchemy",
+      "desc": "research.arcana.hedge_alchemy.desc",
+      "icons": [
+        "minecraft:blaze_powder",
+        "minecraft:cobweb",
+        "minecraft:dead_bush",
+        "minecraft:diamond",
+        "minecraft:glowstone_dust",
+        "minecraft:ice",
+        "minecraft:leather"
+      ],
+      "category": "arcana:alchemy",
+      "parents": [
+        "arcana:alchemy_root"
+      ],
+      "x": 0,
+      "y": -3,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.hedge_alchemy.stage.1",
+          "requirements": [
+            "3*minecraft:gunpowder",
+            "2*minecraft:blaze_powder",
+            "6*minecraft:redstone",
+            "6*minecraft:glowstone_dust",
+            "3*minecraft:quartz",
+            "minecraft:diamond",
+            "minecraft:lava_bucket",
+            "10*minecraft:rotten_flesh",
+            "2*minecraft:leather",
+            "minecraft:snow_block",
+            "4*#minecraft:leaves",
+            "3*minecraft:string"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.hedge_alchemy.stage.2",
+          "requirements": [
+            "arcana::puzzle{hedge_alchemy}"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.hedge_alchemy.stage.3"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:hedge_alchemy/blaze_powder_by_hedge_alchemy"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:hedge_alchemy/cobweb_by_hedge_alchemy"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:hedge_alchemy/dead_bush_by_hedge_alchemy"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:hedge_alchemy/flint_by_hedge_alchemy"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:hedge_alchemy/glowstone_dust_by_hedge_alchemy"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:hedge_alchemy/ice_by_hedge_alchemy"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:hedge_alchemy/leather_by_hedge_alchemy"
+        }
+      ]
     }
   ],
   "puzzles": [
@@ -84,6 +388,88 @@
         "magic",
         "greed",
         "magic"
+      ]
+    },
+    {
+      "key": "arcana:copper_transmutation",
+      "type": "chemistry",
+      "desc": "puzzle.arcana.chemistry.transmutation.copper",
+      "nodes": [
+        "metal",
+        "tool",
+        "exchange"
+      ]
+    },
+    {
+      "key": "arcana:gold_transmutation",
+      "type": "chemistry",
+      "desc": "puzzle.arcana.chemistry.transmutation.gold",
+      "nodes": [
+        "tool",
+        "greed",
+        "exchange"
+      ]
+    },
+    {
+      "key": "arcana:iron_transmutation",
+      "type": "chemistry",
+      "desc": "puzzle.arcana.chemistry.transmutation.iron",
+      "nodes": [
+        "greed",
+        "metal",
+        "exchange"
+      ]
+    },
+    {
+      "key": "arcana:iron_purification",
+      "type": "chemistry",
+      "desc": "puzzle.arcana.chemistry.purification.iron",
+      "nodes": [
+        "metal",
+        "earth",
+        "earth",
+        "earth",
+        "earth",
+        "earth",
+        "earth",
+        "earth",
+        "earth"
+      ]
+    },
+    {
+      "key": "arcana:other_purification",
+      "type": "chemistry",
+      "desc": "puzzle.arcana.chemistry.purification.other",
+      "nodes": [
+        "earth",
+        "earth",
+        "greed",
+        "earth",
+        "earth",
+        "tool"
+      ]
+    },
+    {
+      "key": "arcana:alumentum",
+      "type": "chemistry",
+      "desc": "puzzle.arcana.chemistry.alumentum",
+      "nodes": [
+        "fire",
+        "energy",
+        "weapon"
+      ]
+    },
+    {
+      "key": "arcana:hedge_alchemy",
+      "type": "chemistry",
+      "desc": "puzzle.arcana.chemistry.hedge_alchemy",
+      "nodes": [
+        "exchange",
+        "light",
+        "fire",
+        "ice",
+        "flesh",
+        "undead"
       ]
     }
   ]

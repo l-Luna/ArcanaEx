@@ -4,9 +4,11 @@
     "item": "minecraft:iron_block"
   },
   "aspects": [
-    "50*magic"
+    "25*exchange",
+    "8*metal",
+    "8*tool"
   ],
   "result": {
-    "item": "arcana:arcanium_block"
+    "item": "minecraft:copper_block"
   }
 }

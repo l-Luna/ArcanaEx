@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "cookingtime": 100,
+  "experience": 0.7,
+  "group": "copper_ingot",
+  "ingredient": {
+    "item": "arcana:alchemical_copper"
+  },
+  "result": "minecraft:copper_ingot",
+  "arcana:amount": 2
+}

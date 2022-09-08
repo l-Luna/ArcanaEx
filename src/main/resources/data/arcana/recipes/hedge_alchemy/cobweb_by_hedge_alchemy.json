@@ -1,0 +1,14 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "minecraft:string"
+  },
+  "aspects": [
+    "4*order",
+    "armour",
+    "exchange"
+  ],
+  "result": {
+    "item": "minecraft:cobweb"
+  }
+}

@@ -82,6 +82,12 @@
   "item.arcana.arcanium_leggings": "Arcanium Leggings",
   "item.arcana.arcanium_boots": "Arcanium Boots",
 
+  "item.arcana.alchemical_iron": "Alchemical Iron",
+  "item.arcana.alchemical_gold": "Alchemical Gold",
+  "item.arcana.alchemical_copper": "Alchemical Copper",
+  "item.arcana.altered_iron": "Altered Iron",
+  "item.arcana.alumentum": "Alumentum",
+
   "item.arcana.iron_wand_cap": "Iron Cap",
   "item.arcana.copper_wand_cap": "Copper Cap",
   "item.arcana.gold_wand_cap": "Gold Cap",
@@ -248,6 +254,41 @@
   "research.arcana.magical_metallurgy": "Magical Metallurgy",
   "research.arcana.magical_metallurgy.desc": "Where metals meet magic",
   "research.arcana.magical_metallurgy.stage.1": "Mundane materials just aren't cutting it anymore.\nTools break too quickly, armour doesn't protect well enough, and these materials simply aren't as conductive to the arcane crafts as I would like. Even enchantment is a nuisance.\nThe notes often reference a material named {u}Thaumium{r}, created by alchemically imbuing a metal with magic itself. I don't know what their metallurgy was like - it seems that the set of ores available to me differ to what they had - but the principle seems sound.",
-  "research.arcana.magical_metallurgy.stage.2": "This isn't thaumium. At least, not like they described. It's similar in strength and conductivity, but blindingly bright, and seems to be giving off it's infused magic over time... maybe I overshot somewhat.\nEither way, it's stronger than most materials I have in plentiful supply, and more conductive to vis than any.\nEntire blocks can be transmuted, at nine times the cost. All the usual tool and armour recipes work.",
-  "puzzle.arcana.chemistry.arcanium": "Connect metals and magic"
+  "research.arcana.magical_metallurgy.stage.2": "This isn't thaumium. At least, not like they described. It's similar in strength and conductivity, but blindingly bright, and seems to be giving off it's infused magic over time... maybe I overshot somewhat.\nEither way, it's stronger than most materials I have in plentiful supply, and more conductive to vis than any.\nEntire blocks can be transmuted, at a slight discount. All the usual tool and armour recipes work.",
+  "puzzle.arcana.chemistry.arcanium": "Connect metals and magic",
+
+  "research.arcana.transmutation": "Transmutation",
+  "research.arcana.transmutation.desc": "Connecting the dots",
+  "research.arcana.transmutation.stage.1": "One popular trope is that of an alchemist attempting to create the valuable from the dull - lead to gold. They knew neither chemistry nor magic; I know both.\nI believe I can use my newfound knowledge to do better at the transmutation of metals.",
+  "research.arcana.transmutation.stage.2": "Converting iron into copper is not my most impressive achievement - though the alchemy behind this recipe {wavy}does{r} prompt more research into it's properties. No, gold is my target. Though copper may make a useful stepping stone...",
+  "research.arcana.transmutation.stage.3": "Yes! Where thousands of fictional alchemists have failed, I have succeeded in transforming iron into gold.\nI do wonder if the process is reversible, though... or could be performed in bulk.",
+  "research.arcana.transmutation.stage.4": "The transmutations form a loop: iron into copper, copper into gold, and gold into iron. Could be useful given a particular shortage of iron.. perhaps if I was into mundane science.\nWhat's also interesting is that each of these recipes can be applied in block form, at a slight discount.",
+  "puzzle.arcana.chemistry.transmutation.copper": "Understand the transmutation of Copper",
+  "puzzle.arcana.chemistry.transmutation.gold": "Understand the transmutation of Gold",
+  "puzzle.arcana.chemistry.transmutation.iron": "Understand the transmutation of Iron",
+
+  "research.arcana.purification": "Purification",
+  "research.arcana.purification.stage.1": "Simply baking ores and letting the metal melt out is an immensely inefficient process. Crushing the ores might be less so, but would still leave me waiting twice as long to process them. I have a better idea.\nWith alchemy, it should be possibly to wash away the stone and all other impurities, and leave behind a pure structure of metal to be melted into ingots all at once.\n...I just need to figure out how.",
+  "research.arcana.purification.stage.2": "This is certainly one way of doing it.\nThe aspects added reinforce the metal's structure, with the extra metallum acting as a substitute for the impurities. This does mean that some metal is required as input, and some of the input is still wasted, but I could not find a better way around it.\nNow, to apply this to other metals. With luck, there should be no nasty surprises awaiting me.",
+  "research.arcana.purification.stage.3": "Copper and gold can be purified and cast in exactly the same manner as iron; their disparate properties seem to have had no effect on the process.\nAdditionally, the process can be applied in bulk to raw metal blocks, at a slight discount.",
+  "puzzle.arcana.chemistry.purification.iron": "Study impure ferrous metal",
+  "puzzle.arcana.chemistry.purification.other": "Study impure unreactive metal",
+
+  "research.arcana.transmutation_shortcut": "Transmutation Shortcut",
+  "research.arcana.transmutation_shortcut.text": "Extending my transmutation knowledge to purified metal turned out to be surprisingly trivial.\nAll transmutation recipes work on alchemical metal for the cost of a single ingot.",
+
+  "research.arcana.metallurgy_shortcut": "Metallurgy Shortcut",
+  "research.arcana.metallurgy_shortcut.text": "Extending my metallurgy knowledge to purified metal turned out to be surprisingly trivial.\nAlchemical iron can be converted to Altered Iron for the cost of a single arcanium ingot. Altered iron can then be smelted to produce two arcanium ingots at once.",
+
+  "research.arcana.alumentum": "Mystical Fuel",
+  "research.arcana.alumentum.stage.1": "Nitor was a start, but its stability makes it useless as a fuel, barely warm enough to heat a crucible; I'd be better off using a campfire than trying to make that work.\nNo, what I need is something far more energetic and excitable, only stable enough to transport to a blast furnace; perhaps it could even double as a weapon...",
+  "research.arcana.alumentum.stage.2": "And Alumentum is the solution. Like nitor, it is a never-ending flame, but this one can only barely keep itself together.\nAs a fuel, it should last about {c3}4x{r} as good as coal.\nIf I throw it, it will violently explode upon hitting a surface. I should take great care handling this... or not, depending on where I find myself.",
+  "puzzle.arcana.chemistry.alumentum": "Create a high-energy flame",
+
+  "research.arcana.hedge_alchemy": "Hedge Alchemy",
+  "research.arcana.hedge_alchemy.desc": "Material science",
+  "research.arcana.hedge_alchemy.stage.1": "There are a great few items that are incredibly tedious to obtain, in constant short supply when I need them most. Perhaps I can use alchemy to create them?\nMy first step will be to examine some samples, and find similar structures that can - fingers crossed - be converted into eachother.",
+  "research.arcana.hedge_alchemy.stage.2": "From my observation, {i}Gunpowder{r} is closely alchemically related to {i}Blaze Powder{r}; {i}Redstone{r} and {i}Glowstone{r} have similar structures; and {i}Quartz{r} has an odd (but promising) resemblance to {i}Diamond{r}. The Lava was a dud.\nI believe I can alchemy to emulate more mundane reactions: tanning {i}Rotten Flesh{r} into {i}Leather{r}, freezing {i}Snow{r} into {i}Ice{r}, drying {i}Leaves{r} into {i}Dead Bushes{r}, and binding {i}String{r} into {i}Cobwebs{r}.\nSome experimental verification is needed.",
+  "research.arcana.hedge_alchemy.stage.3": "Most of these conversions are viable alchemy recipes. Quartz-to-diamond was a dud too, simply turning into flint in any practical setting, and converting snow into ice proved far less efficient than expected.\nCould this be due to my equipment, or my technique? Perhaps, but in any case, the remainder remain useful.",
+  "puzzle.arcana.chemistry.hedge_alchemy": "Manipulate material properties"
 }

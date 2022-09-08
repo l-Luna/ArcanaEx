@@ -1,0 +1,14 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "minecraft:rotten_flesh"
+  },
+  "aspects": [
+    "2*flesh",
+    "fabric",
+    "exchange"
+  ],
+  "result": {
+    "item": "minecraft:leather"
+  }
+}

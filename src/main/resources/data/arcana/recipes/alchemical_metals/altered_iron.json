@@ -1,12 +1,12 @@
 {
   "type": "arcana:alchemy",
   "ingredient": {
-    "item": "minecraft:iron_block"
+    "item": "arcana:alchemical_iron"
   },
   "aspects": [
-    "50*magic"
+    "6*magic"
   ],
   "result": {
-    "item": "arcana:arcanium_block"
+    "item": "arcana:altered_iron"
   }
 }

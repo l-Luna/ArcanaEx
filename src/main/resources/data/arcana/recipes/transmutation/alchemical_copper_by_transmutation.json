@@ -1,0 +1,14 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "arcana:alchemical_iron"
+  },
+  "aspects": [
+    "3*exchange",
+    "metal",
+    "tool"
+  ],
+  "result": {
+    "item": "arcana:alchemical_copper"
+  }
+}

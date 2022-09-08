@@ -1,0 +1,15 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "minecraft:raw_copper_block"
+  },
+  "aspects": [
+    "8*metal",
+    "8*order",
+    "8*crystal"
+  ],
+  "result": {
+    "item": "arcana:alchemical_copper",
+    "count": 9
+  }
+}

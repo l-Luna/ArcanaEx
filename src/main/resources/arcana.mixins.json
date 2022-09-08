@@ -4,6 +4,8 @@
   "package": "arcana.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "AbstractFurnaceBlockEntityMixin",
+    "CookingRecipeSerializerMixin",
     "ItemStackMixin",
     "RecipeManagerMixin"
   ],

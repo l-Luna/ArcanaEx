@@ -1,0 +1,14 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "minecraft:raw_gold"
+  },
+  "aspects": [
+    "metal",
+    "order",
+    "crystal"
+  ],
+  "result": {
+    "item": "arcana:alchemical_gold"
+  }
+}

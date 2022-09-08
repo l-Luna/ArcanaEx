@@ -4,10 +4,12 @@
     "item": "minecraft:gunpowder"
   },
   "aspects": [
-    "5*exchange",
-    "2*energy"
+    "2*energy",
+    "2*fire",
+    "light",
+    "exchange"
   ],
   "result": {
-    "item": "minecraft:redstone"
+    "item": "minecraft:blaze_powder"
   }
 }

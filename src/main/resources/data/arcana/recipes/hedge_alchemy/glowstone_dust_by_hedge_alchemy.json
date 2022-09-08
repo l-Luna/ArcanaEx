@@ -1,0 +1,14 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "minecraft:redstone"
+  },
+  "aspects": [
+    "3*light",
+    "fire",
+    "exchange"
+  ],
+  "result": {
+    "item": "minecraft:glowstone_dust"
+  }
+}

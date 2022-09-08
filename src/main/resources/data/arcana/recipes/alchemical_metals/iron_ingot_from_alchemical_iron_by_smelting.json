@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 0.7,
+  "group": "iron_ingot",
+  "ingredient": {
+    "item": "arcana:alchemical_iron"
+  },
+  "result": "minecraft:iron_ingot",
+  "arcana:amount": 2
+}

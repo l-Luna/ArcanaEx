@@ -1,0 +1,14 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "arcana:alchemical_copper"
+  },
+  "aspects": [
+    "3*exchange",
+    "metal",
+    "greed"
+  ],
+  "result": {
+    "item": "arcana:alchemical_gold"
+  }
+}

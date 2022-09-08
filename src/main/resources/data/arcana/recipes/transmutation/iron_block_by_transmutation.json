@@ -1,0 +1,13 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "minecraft:gold_block"
+  },
+  "aspects": [
+    "25*exchange",
+    "17*metal"
+  ],
+  "result": {
+    "item": "minecraft:iron_block"
+  }
+}

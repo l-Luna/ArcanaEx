@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 0.7,
+  "group": "arcanium_ingot",
+  "ingredient": {
+    "item": "arcana:altered_iron"
+  },
+  "result": "arcana:arcanium_ingot",
+  "arcana:amount": 2
+}

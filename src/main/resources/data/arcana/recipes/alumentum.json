@@ -1,0 +1,14 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "tag": "minecraft:coals"
+  },
+  "aspects": [
+    "6*entropy",
+    "6*fire",
+    "4*energy"
+  ],
+  "result": {
+    "item": "arcana:alumentum"
+  }
+}

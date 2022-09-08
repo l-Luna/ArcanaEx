@@ -10,6 +10,7 @@ import arcana.screens.ArcaneCraftingScreenHandler;
 import arcana.screens.ResearchTableScreenHandler;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
+import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.Material;
@@ -62,6 +63,12 @@ public final class ArcanaRegistry{
 	public static final Item ARCANIUM_CHESTPLATE = new ArmorItem(ArcanaArmourMaterials.ARCANIUM, EquipmentSlot.CHEST, new Settings().group(Tab.ARCANA));
 	public static final Item ARCANIUM_LEGGINGS = new ArmorItem(ArcanaArmourMaterials.ARCANIUM, EquipmentSlot.LEGS, new Settings().group(Tab.ARCANA));
 	public static final Item ARCANIUM_BOOTS = new ArmorItem(ArcanaArmourMaterials.ARCANIUM, EquipmentSlot.FEET, new Settings().group(Tab.ARCANA));
+	
+	public static final Item ALCHEMICAL_IRON = new Item(GROUPED);
+	public static final Item ALCHEMICAL_GOLD = new Item(GROUPED);
+	public static final Item ALCHEMICAL_COPPER = new Item(GROUPED);
+	public static final Item ALTERED_IRON = new Item(GROUPED);
+	public static final Item ALUMENTUM = new Item(GROUPED);
 	
 	public static final CapItem IRON_WAND_CAP = new CapItem(GROUPED);
 	public static final CapItem COPPER_WAND_CAP = new CapItem(GROUPED);
@@ -130,6 +137,13 @@ public final class ArcanaRegistry{
 		register("arcanium_chestplate", ARCANIUM_CHESTPLATE);
 		register("arcanium_leggings", ARCANIUM_LEGGINGS);
 		register("arcanium_boots", ARCANIUM_BOOTS);
+		
+		register("alchemical_iron", ALCHEMICAL_IRON);
+		register("alchemical_gold", ALCHEMICAL_GOLD);
+		register("alchemical_copper", ALCHEMICAL_COPPER);
+		register("altered_iron", ALTERED_IRON);
+		register("alumentum", ALUMENTUM);
+		FuelRegistry.INSTANCE.add(ALUMENTUM, 1600 * 4); // 4x coal = half stack
 		
 		register("iron_wand_cap", IRON_WAND_CAP);
 		register("copper_wand_cap", COPPER_WAND_CAP);

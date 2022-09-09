@@ -139,6 +139,14 @@ public final class Researcher implements Component, AutoSyncedComponent{
 		this.wasPrecursor = wasPrecursor;
 	}
 	
+	public Map<Identifier, Integer> getAllResearch(){
+		return stages;
+	}
+	
+	public Set<Identifier> getAllCompletedPuzzles(){
+		return completedPuzzles;
+	}
+	
 	// for commands
 	public void completeEntry(Entry entry){
 		if(!isEntryComplete(entry)){

@@ -53,6 +53,8 @@ public final class ArcanaRegistry{
 	public static final Item RESEARCH_NOTES = new ResearchNotesItem(new Settings().maxCount(1), false);
 	public static final Item COMPLETE_RESEARCH_NOTES = new ResearchNotesItem(new Settings().maxCount(1), true);
 	
+	public static final Item TOME_OF_SHARING = new TomeOfSharingItem(GROUPED_SINGLE);
+	
 	public static final Item ARCANIUM_INGOT = new Item(GROUPED);
 	public static final Item ARCANIUM_SWORD = new SwordItem(ArcanaToolMaterials.ARCANIUM, 3, -2.4f, new Settings().group(Tab.ARCANA));
 	public static final Item ARCANIUM_SHOVEL = new ShovelItem(ArcanaToolMaterials.ARCANIUM, 1.5f, -3, new Settings().group(Tab.ARCANA));
@@ -90,6 +92,7 @@ public final class ArcanaRegistry{
 	public static final Block ARCANE_CRAFTING_TABLE = new ArcaneCraftingTableBlock(of(Material.WOOD).nonOpaque());
 	public static final Block CRUCIBLE = new CrucibleBlock(of(Material.METAL).nonOpaque());
 	public static final Block RESEARCH_TABLE = new ResearchTableBlock(of(Material.WOOD).nonOpaque().strength(3));
+	public static final Block KNOWLEDGEABLE_DROPPER = new Block(of(Material.STONE).requiresTool().strength(3));
 	
 	public static final Block NITOR = new NitorBlock(of(Material.DECORATION).strength(0).luminance(15));
 	
@@ -126,6 +129,8 @@ public final class ArcanaRegistry{
 		
 		register("research_notes", RESEARCH_NOTES);
 		register("complete_research_notes", COMPLETE_RESEARCH_NOTES);
+		
+		register("tome_of_sharing", TOME_OF_SHARING);
 		
 		register("arcanium_ingot", ARCANIUM_INGOT);
 		register("arcanium_sword", ARCANIUM_SWORD);
@@ -172,6 +177,7 @@ public final class ArcanaRegistry{
 		register("crucible", CRUCIBLE);
 		register("research_table", RESEARCH_TABLE, false);
 		register("research_table", new ResearchTableItem(GROUPED)); // it's a block item, it doesn't count
+		register("knowledgeable_dropper", KNOWLEDGEABLE_DROPPER);
 		
 		register("nitor", NITOR);
 		

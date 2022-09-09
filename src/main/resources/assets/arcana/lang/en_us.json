@@ -67,6 +67,10 @@
   "item.arcana.arcanum": "Arcanum",
   "item.arcana.crimson_rites": "Crimson Rites",
   "item.arcana.tainted_codex": "Tainted Codex",
+  "item.arcana.tome_of_sharing": "Tome of Sharing",
+  "item.arcana.tome_of_sharing.unbound": "Empty",
+  "item.arcana.tome_of_sharing.bound.greater": "Knows something you don't",
+  "item.arcana.tome_of_sharing.bound.lesser": "Has nothing to teach you",
 
   "item.arcana.research_notes": "Research Notes",
   "item.arcana.complete_research_notes": "Complete Research Notes",
@@ -107,6 +111,7 @@
   "block.arcana.arcane_crafting_table": "Arcane Crafting Table",
   "block.arcana.crucible": "Crucible",
   "block.arcana.research_table": "Research Table",
+  "block.arcana.knowledgeable_dropper": "Knowledgeable Dropper",
 
   "block.arcana.nitor": "Nitor",
 

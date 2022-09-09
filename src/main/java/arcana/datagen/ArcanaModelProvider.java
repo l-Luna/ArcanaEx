@@ -24,6 +24,7 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 	public void generateBlockStateModels(BlockStateModelGenerator blockGen){
 		blockGen.registerSimpleState(ArcanaRegistry.ARCANE_CRAFTING_TABLE);
 		blockGen.registerSimpleState(ArcanaRegistry.NITOR);
+		blockGen.registerSimpleState(ArcanaRegistry.KNOWLEDGEABLE_DROPPER);
 		
 		blockGen.registerSimpleCubeAll(ArcanaRegistry.ARCANIUM_BLOCK);
 	}
@@ -31,6 +32,7 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 	public void generateItemModels(ItemModelGenerator itemGen){
 		noAutoGen.add(ArcanaRegistry.WAND);
 		noAutoGen.add(ArcanaRegistry.NITOR.asItem());
+		noAutoGen.add(ArcanaRegistry.TOME_OF_SHARING);
 		
 		itemGen.register(ArcanaRegistry.NITOR.asItem(), Models.GENERATED);
 		

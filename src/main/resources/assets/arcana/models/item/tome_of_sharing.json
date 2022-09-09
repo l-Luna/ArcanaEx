@@ -1,0 +1,14 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "arcana:item/tome_of_sharing_unbound"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "arcana:bound": 1
+      },
+      "model": "arcana:item/tome_of_sharing_bound"
+    }
+  ]
+}

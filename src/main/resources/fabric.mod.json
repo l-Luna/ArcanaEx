@@ -52,7 +52,8 @@
   "custom": {
     "cardinal-components": [
       "arcana:aura_world",
-      "arcana:researcher"
+      "arcana:researcher",
+      "arcana:kd_item"
     ]
   }
 }

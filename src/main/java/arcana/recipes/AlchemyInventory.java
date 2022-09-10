@@ -2,19 +2,24 @@ package arcana.recipes;
 
 import arcana.aspects.AspectMap;
 import arcana.blocks.CrucibleBlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import arcana.research.Parent;
+import arcana.research.Research;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Identifier;
+
+import java.util.Map;
 
 public class AlchemyInventory extends SimpleInventory{
 	
 	private final CrucibleBlockEntity crucible;
-	private final PlayerEntity alchemist;
+	// mirror Researcher and TomeOfSharingItem
+	private final Map<Identifier, Integer> stages;
 	
-	public AlchemyInventory(CrucibleBlockEntity crucible, PlayerEntity alchemist, ItemStack stack){
+	public AlchemyInventory(CrucibleBlockEntity crucible, ItemStack stack, Map<Identifier, Integer> stages){
 		super(stack);
 		this.crucible = crucible;
-		this.alchemist = alchemist;
+		this.stages = stages;
 	}
 	
 	public boolean isEmpty(){
@@ -31,11 +36,15 @@ public class AlchemyInventory extends SimpleInventory{
 		crucible.markDirty();
 	}
 	
-	public PlayerEntity getAlchemist(){
-		return alchemist;
-	}
-	
 	public AspectMap getAspects(){
 		return crucible.getAspects();
+	}
+	
+	public int entryStage(Identifier entryId){
+		return stages.getOrDefault(entryId, 0);
+	}
+	
+	public boolean complete(Parent parent){
+		return entryStage(parent.id()) >= (parent.stage() == -1 ? Research.getEntry(parent.id()).sections().size() : parent.stage());
 	}
 }

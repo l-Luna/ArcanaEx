@@ -7,6 +7,7 @@ import arcana.enchantments.WarpingCurseEnchantment;
 import arcana.items.*;
 import arcana.items.foci.FireFocusItem;
 import arcana.screens.ArcaneCraftingScreenHandler;
+import arcana.screens.KnowledgeableDropperScreenHandler;
 import arcana.screens.ResearchTableScreenHandler;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
@@ -92,7 +93,7 @@ public final class ArcanaRegistry{
 	public static final Block ARCANE_CRAFTING_TABLE = new ArcaneCraftingTableBlock(of(Material.WOOD).nonOpaque());
 	public static final Block CRUCIBLE = new CrucibleBlock(of(Material.METAL).nonOpaque());
 	public static final Block RESEARCH_TABLE = new ResearchTableBlock(of(Material.WOOD).nonOpaque().strength(3));
-	public static final Block KNOWLEDGEABLE_DROPPER = new Block(of(Material.STONE).requiresTool().strength(3));
+	public static final Block KNOWLEDGEABLE_DROPPER = new KnowledgeableDropperBlock(of(Material.STONE).requiresTool().strength(3));
 	
 	public static final Block NITOR = new NitorBlock(of(Material.DECORATION).strength(0).luminance(15));
 	
@@ -103,6 +104,8 @@ public final class ArcanaRegistry{
 			= new ScreenHandlerType<>(ArcaneCraftingScreenHandler::new);
 	public static final ScreenHandlerType<ResearchTableScreenHandler> RESEARCH_TABLE_SCREEN_HANDLER
 			= new ScreenHandlerType<>(ResearchTableScreenHandler::new);
+	public static final ScreenHandlerType<KnowledgeableDropperScreenHandler> KNOWLEDGEABLE_DROPPER_SCREEN_HANDLER
+			= new ScreenHandlerType<>(KnowledgeableDropperScreenHandler::new);
 	
 	// block entities...
 	public static BlockEntityType<CrucibleBlockEntity> CRUCIBLE_BE = FabricBlockEntityTypeBuilder
@@ -110,6 +113,9 @@ public final class ArcanaRegistry{
 			.build();
 	public static BlockEntityType<ResearchTableBlockEntity> RESEARCH_TABLE_BE = FabricBlockEntityTypeBuilder
 			.create(ResearchTableBlockEntity::new, RESEARCH_TABLE)
+			.build();
+	public static BlockEntityType<KnowledgeableDropperBlockEntity> KNOWLEDGEABLE_DROPPER_BE = FabricBlockEntityTypeBuilder
+			.create(KnowledgeableDropperBlockEntity::new, KNOWLEDGEABLE_DROPPER)
 			.build();
 	
 	// enchantments...
@@ -186,10 +192,12 @@ public final class ArcanaRegistry{
 		// screen handlers
 		register("arcane_crafting", ARCANE_CRAFTING_SCREEN_HANDLER);
 		register("research_table", RESEARCH_TABLE_SCREEN_HANDLER);
+		register("knowledgeable_dropper", KNOWLEDGEABLE_DROPPER_SCREEN_HANDLER);
 		
 		// block entities
 		register("crucible", CRUCIBLE_BE);
 		register("research_table", RESEARCH_TABLE_BE);
+		register("knowledgeable_dropper", KNOWLEDGEABLE_DROPPER_BE);
 		
 		// enchantments
 		register("warping", WARPING);

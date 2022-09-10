@@ -79,6 +79,8 @@ public class TomeOfSharingItem extends Item{
 	// we don't store player UUIDs since the player could be offline, but droppers should still work
 	
 	public static Map<Identifier, Integer> getBoundResearch(ItemStack tome){
+		if(tome.isEmpty())
+			return Map.of();
 		NbtCompound researchTag = tome.getSubNbt("research");
 		if(researchTag != null){
 			Map<Identifier, Integer> research = new HashMap<>(researchTag.getKeys().size());

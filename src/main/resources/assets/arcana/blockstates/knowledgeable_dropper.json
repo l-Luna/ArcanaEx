@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "arcana:block/knowledgeable_dropper"
+    },
+    "facing=south": {
+      "model": "arcana:block/knowledgeable_dropper",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "arcana:block/knowledgeable_dropper",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "arcana:block/knowledgeable_dropper",
+      "y": 270
+    },
+    "facing=up": {
+      "model": "arcana:block/knowledgeable_dropper",
+      "x": 270
+    },
+    "facing=down": {
+      "model": "arcana:block/knowledgeable_dropper",
+      "x": 90
+    }
+  }
+}

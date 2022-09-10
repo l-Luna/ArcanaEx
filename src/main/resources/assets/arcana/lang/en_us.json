@@ -182,6 +182,9 @@
   "puzzle.arcana.fieldwork": "<Specify fieldwork descriptions>",
   "puzzle.arcana.aspect_chess": "Win the game of Aspect Chess",
 
+  "_comment": "Other UIs",
+  "container.arcana.knowledgeable_dropper": "Knowledgeable Dropper",
+
   "_comment": "Research Categories",
   "research.arcana.category.fundamentals": "Fundamentals",
   "research.arcana.category.artifice": "Artifice",
@@ -189,6 +192,7 @@
   "research.arcana.category.alchemy": "Alchemy",
 
   "_comment": "Research Entries",
+  "_comment": "Fundamentals Tab",
   "research.arcana.root": "Arcana",
   "research.arcana.root.text": "A sudden burst of inspiration, key insights that make clear the meaning of these scribbled notes... the way forward is unclear, but I know that this is the start of something magical.\nI'll write down my research in this book: the Arcanum, with all of the old notes stored inside for reference.",
 
@@ -253,6 +257,49 @@
   "research.arcana.research_mastery.stage.1": "There's always more to learn, yet more exciting opportunities to chase after - and my slow, inefficient research is holding me back.",
   "research.arcana.research_mastery.stage.2": "No matter how hard I work, how long I try, how much focus and effort I put in - my work is never finished.{~sep}Removing an aspect from the chemistry grid now has a 50%% chance of returning it to the note. Notes also start out with more aspects.",
 
+  "research.arcana.tome_of_sharing": "Tome of Sharing",
+  "research.arcana.tome_of_sharing.desc": "Sharing is caring",
+  "research.arcana.tome_of_sharing.stage.1": "So far, it has been highly convenient to have my knowledge bound to my mind, persisting after death and across any copies of this book. This is less true when trying to share my work with friends.\nI {i}would{r} simply write down the solutions to every puzzle I know; sadly, I've forgotten most of them, and others (like fieldwork) I might not be able to describe on paper easily. Besides, a magical solution seems more fun to implement",
+  "research.arcana.tome_of_sharing.stage.2": "Enchanting another copy of the Arcanum to copy knowledge from my mind in a highly readable format was surprisingly simple. Perhaps I should be worried about that.\nWhen a Tome of Sharing is used by any player when crouched, they will have their research progress added. When another player uses it normally, all puzzles stored in the book are completed for them.\nThe tome does not automatically complete research entries, and will not skip item or XP requirements; only puzzles.",
+
+  "_comment": "Artifice Tab",
+  "research.arcana.artifice_root": "Artifice",
+  "research.arcana.artifice_root.text": "The study of {i}artifice{r}, the construction of magical devices through arcane crafting, will be documented here.\nThe Goggles of Revealing Recipe from {c3}Fundamentals{r} is included here for completeness.",
+
+  "research.arcana.arcane_stone": "Arcane Stone",
+  "research.arcana.arcane_stone.text": "Arcane Stone is a fairly simple application of arcane crafting. It looks nice, it's stronger than ordinary stone, and may be useful in further crafting.",
+
+  "research.arcana.paving_stones": "Arcane Paving Stones",
+  "research.arcana.paving_stones.desc": "Essential infrastructure",
+  "research.arcana.paving_stones.stage.1": "My home could do with a fair few magical upgrades. Improving my mobility inside and increasing its protection are among my top priorities.",
+  "research.arcana.paving_stones.stage.2": "Easier to walk along a flat surface than a rough cliff edge, and even moreso to walk along some enchanted floor tiles. The enchantment on the Paving Stones of Travel boost my speed when I walk on top.",
+  "research.arcana.paving_stones.stage.3": "Like a fence, the Paving Stones of Warding will keep out hostile monsters, but also allow me to walk over them unaffected.\nI should keep in mind that any ranged attack can still pass by, and that protecting an area is worthless if monsters can simply spawn inside.",
+
+  "research.arcana.infernal_forge": "Infernal Forge",
+  "research.arcana.infernal_forge.stage.1": "My new perspective has enabled me to understand the ramblings of these scribbled notes, but in the time since their creation, much has been lost.{~sep}Several records speak of a hellish device, the \"In---na- F-r---e\", that used the power of a Nether being to perform the thaumaturge's wishes at no cost.\nLike many other entries, much of it has been torn out or burnt, but this is the earliest such page by far; and I believe that enough has been left behind for me to reconstitute its meaning, regardless of how well hidden it has been.",
+  "research.arcana.infernal_forge.stage.2": "These components, like many others sourced from the Nether, are not entirely mundane nor dead, instead holding a link to... something.\nPerhaps I could put that {i}something{r} to good use.",
+  "research.arcana.infernal_forge.stage.3": "This structure is designed to pull forth and capture those lost souls, but these won't work without pay. They want a sacrifice for their work, whatever it is they do, but what would satisfy them?",
+
+  "research.arcana.arcane_lamp": "Arcane Lamp",
+
+  "research.arcana.lamp_of_growth": "Lamp of Growth",
+
+  "research.arcana.lamp_of_fertility": "Lamp of Fertility",
+
+  "research.arcana.monocle_of_revealing": "Monocle of Revealing",
+  "research.arcana.monocle_of_revealing.desc": "Eye Spy",
+  "research.arcana.monocle_of_revealing.stage.1": "Wearing the Goggles of Revealing is essentially a requirement for doing any kind of magical work - yet doing so prevents me from wearing important protected headwear.",
+
+  "_comment": "Auromancy Tab",
+  "research.arcana.auromancy_root": "Auromancy",
+  "research.arcana.auromancy_root.text": "The study of {i}auromancy{r}, the manipulation of the aura and vis around me, will be documented here.\nThe iron and gold wand caps, and the general wand recipe are included here for completeness.",
+
+  "research.arcana.copper_wand_caps": "Copper Wand Caps",
+  "research.arcana.copper_wand_caps.desc": "The other one",
+  "research.arcana.copper_wand_caps.stage.1": "The properties of copper make it quite convenient for electrical work. It's conductivity and alignment with Instrumentum may make it a highly useful material in my artifice.",
+  "research.arcana.copper_wand_caps.stage.2": "Wand caps crafted from copper are slightly worse than gold when it comes to drawing vis from nodes, or focusing them into spells, but come with a useful vis discount in arcane crafting.",
+
+  "_comment": "Alchemy Tab",
   "research.arcana.alchemy_root": "Alchemy",
   "research.arcana.alchemy_root.text": "The study of {i}alchemy{r}, the conversion of items into essentia and utilization thereof, will be documented here.\nThe Nitor recipe from {c3}Fundamentals{r} is included here for completeness.",
 
@@ -295,5 +342,41 @@
   "research.arcana.hedge_alchemy.stage.1": "There are a great few items that are incredibly tedious to obtain, in constant short supply when I need them most. Perhaps I can use alchemy to create them?\nMy first step will be to examine some samples, and find similar structures that can - fingers crossed - be converted into eachother.",
   "research.arcana.hedge_alchemy.stage.2": "From my observation, {i}Gunpowder{r} is closely alchemically related to {i}Blaze Powder{r}; {i}Redstone{r} and {i}Glowstone{r} have similar structures; and {i}Quartz{r} has an odd (but promising) resemblance to {i}Diamond{r}. The Lava was a dud.\nI believe I can alchemy to emulate more mundane reactions: tanning {i}Rotten Flesh{r} into {i}Leather{r}, freezing {i}Snow{r} into {i}Ice{r}, drying {i}Leaves{r} into {i}Dead Bushes{r}, and binding {i}String{r} into {i}Cobwebs{r}.\nSome experimental verification is needed.",
   "research.arcana.hedge_alchemy.stage.3": "Most of these conversions are viable alchemy recipes. Quartz-to-diamond was a dud too, simply turning into flint in any practical setting, and converting snow into ice proved far less efficient than expected.\nCould this be due to my equipment, or my technique? Perhaps, but in any case, the remainder remain useful.",
-  "puzzle.arcana.chemistry.hedge_alchemy": "Manipulate material properties"
+  "puzzle.arcana.chemistry.hedge_alchemy": "Manipulate material properties",
+
+  "research.arcana.automated_alchemy": "Automated Alchemy",
+  "research.arcana.automated_alchemy.desc": "On demand",
+  "research.arcana.automated_alchemy.stage.1": "There's nothing particularly remarkable about alchemy.{~sep}Sure, it takes a bit of know-how to figure out which reactions are possible, and gently guide the liquid concepts in the pot to approach that. But really, what's stopping me from simply... teaching a dropper how to do it?",
+  "research.arcana.automated_alchemy.stage.2": "Prototype after prototype wasted. Something odd is afoot here. Even getting a machine to perform identical actions to myself does not cause the proper reactions. Almost like some {i}intent{r} is necessary.",
+  "research.arcana.automated_alchemy.stage.3": "Now, a thinking machine. That would do it.",
+  "research.arcana.automated_alchemy.stage.4": "Giving a Dropper a basic level of \"understanding\" is a perfectly safe and simple method of automating alchemy.\nThe Knowledgeable Dropper can be given a Tome of Sharing within it's extra tenth slot. Items it drops will be eligible for any alchemy recipes stored within the research bound to the book. When an alchemy recipe is performed automatically, the result will be thrown from the crucible in a random, free horizontal direction (or just randomly if none are free).\nAnother minor feature is that these droppers have slightly less variation in how they drop items.\nIt turns out that Tomes of Sharing do remember research entries, but simply choose not to show them to players. The thought of my equipment colluding to snoop on my mind is unsettling... but what can a book really do?",
+
+  "research.arcana.alchemical_glass": "Alchemical Glass",
+  "research.arcana.alchemical_glass.desc": "Advancing my material knowledge",
+  "research.arcana.alchemical_glass.stage.1": "Glass is a wonderful substance. Unreactive, transparent, commonly available... and extremely flimsy. Correcting mistakes while should not require specialist equipment, and I wouldn't put too much trust in ordinary glass as a component in my devices.\nSome upgrades are in order.",
+  "research.arcana.alchemical_glass.stage.2": "The first fruits of my work come in the form of Hardened Glass. Stronger - resisting explosions and less prone to accidents - yet more resilient - dropping itself in one piece when broken.\nI do have questions about what other properties I can give to glass this way... how about making it even more conductive to light and vis?",
+  "research.arcana.alchemical_glass.stage.3": "As-is, glass isn't much more opaque than empty space. No, the interesting part is when you allow it to capture light and vis.\nLuminiferous Glass, while appearing transparent, has a huge amount of photons and lux captured within. On the outside, this manifests as a bright glow, on par with Glowstone. In the future, a material like this will be useful to use as a component in magical devices.\nNow, I wonder if it's possible to make glass conductive to not just energy, but matter. Would it simply fall through the crucible? Is it even a well-formed question?",
+  "research.arcana.alchemical_glass.stage.4": "...apparently, yes, this is fully possible.\nPlanar Glass is usually solid, but becomes like a gas in the presence of a crouching player - allowing their passage (or fall) - before reforming into a solid.\nThis has a couple of potential applications in home decor. Artifice? Perhaps, if I can trigger it mechanically.",
+
+  "research.arcana.aspect_candy": "Aspect Candy",
+  "research.arcana.aspect_candy.desc": "Chemist's Cuisine",
+
+  "research.arcana.essentia_distillation": "Essentia Distillation",
+  "research.arcana.essentia_distillation.desc": "Specks of Universe",
+
+  "research.arcana.essentia_pipes": "Essentia Tubes, Valves, and Pumps",
+  "research.arcana.essentia_pipes.desc": "From A to B",
+
+  "research.arcana.alchemical_boiler": "Alchemical Boiler",
+  "research.arcana.alchemical_boiler.desc": "Fan the flames",
+
+  "research.arcana.essentia_centrifuge": "Essentia Centrifuge",
+
+  "research.arcana.essentia_crystalizer": "Essentia Crystalizer",
+
+  "_comment": "Infusion Tab",
+
+  "_comment": "Eldritch Tab",
+
+  "_comment": "Crimson Rites"
 }

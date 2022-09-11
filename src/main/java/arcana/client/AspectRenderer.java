@@ -7,7 +7,11 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
+
+import java.util.List;
 
 public final class AspectRenderer{
 	
@@ -51,5 +55,16 @@ public final class AspectRenderer{
 		var label = String.valueOf(amount);
 		text.drawWithShadow(matrices, label, x + 18 - text.getWidth(label), y + 9, colour);
 		matrices.pop();
+	}
+	
+	public static void renderAspectTooltip(Aspect aspect, MatrixStack matrices, int x, int y){
+		// i would like to give it a custom background colour, but...
+		MinecraftClient.getInstance().currentScreen.renderTooltip(matrices, tooltips(aspect), x, y);
+	}
+	
+	public static List<Text> tooltips(Aspect aspect){
+		if(MinecraftClient.getInstance().options.advancedItemTooltips)
+			return List.of(aspect.name(), Text.literal(aspect.id().toString()).formatted(Formatting.DARK_GRAY));
+		else return List.of(aspect.name());
 	}
 }

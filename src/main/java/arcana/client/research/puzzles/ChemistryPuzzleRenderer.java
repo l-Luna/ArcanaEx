@@ -221,7 +221,55 @@ public class ChemistryPuzzleRenderer implements PuzzleRenderer<Chemistry>{
 	}
 	
 	public void renderAfter(MatrixStack matrices, Chemistry puzzle, NbtCompound notesTag, int screenWidth, int screenHeight, int mouseX, int mouseY){
-		// TODO: tooltips
+		if(selected != null)
+			return;
+		
+		int x = (screenWidth - bgWidth) / 2, y = (screenHeight - bgHeight) / 2;
+		
+		// draw stored aspects
+		AspectMap aspects = AspectMap.fromNbt(notesTag.getCompound("stored_aspects"));
+		List<AspectStack> stacks = aspects.asStacks();
+		stacks.sort(Comparator.comparing(AspectStack::type));
+		for(int i = 0; i < stacks.size(); i++){
+			var xPos = x + 9 + (i % 6) * 17;
+			var yPos = y + 33 + (i / 6) * 18;
+			if(within(mouseX, mouseY, xPos, yPos, 16)){
+				AspectRenderer.renderAspectTooltip(stacks.get(i).type(), matrices, mouseX, mouseY);
+				return;
+			}
+		}
+		
+		// bottom of sidebar
+		if(combineLeft != null && within(mouseX, mouseY, x + 35, y + 141, 16)){
+			AspectRenderer.renderAspectTooltip(combineLeft, matrices, mouseX, mouseY);
+			return;
+		}
+		
+		if(combineRight != null && within(mouseX, mouseY, x + 67, y + 141, 16)){
+			AspectRenderer.renderAspectTooltip(combineRight, matrices, mouseX, mouseY);
+			return;
+		}
+		
+		// grid tooltips
+		int size = puzzle.getSize();
+		int nodeGap = (size - 1) * 6 / puzzle.getNodes().size();
+		NbtCompound gridTag = notesTag.getCompound("grid_aspects");
+		processHexes(size, x, y, (xPos, yPos, turn, rx, ry) -> {
+			if(turn % nodeGap == 0 && within(mouseX, mouseY, xPos + 1, yPos + 2, 18, 16)){
+				var node = puzzle.getNodes().get(turn / nodeGap);
+				AspectRenderer.renderAspectTooltip(node, matrices, mouseX, mouseY);
+				return true;
+			}
+			
+			String hexId = rx + "," + ry;
+			if(gridTag.contains(hexId) && within(mouseX, mouseY, xPos + 1, yPos + 2, 18, 16)){
+				var aspect = Aspects.byName(gridTag.getString(hexId));
+				AspectRenderer.renderAspectTooltip(aspect, matrices, mouseX, mouseY);
+				return true;
+			}
+			
+			return false;
+		});
 	}
 	
 	public void renderComplete(MatrixStack matrices, Chemistry puzzle, NbtCompound notesTag, int screenWidth, int screenHeight, int mouseX, int mouseY){
@@ -276,6 +324,10 @@ public class ChemistryPuzzleRenderer implements PuzzleRenderer<Chemistry>{
 			
 			return false;
 		});
+		
+		// tooltips
+		selected = combineLeft = combineRight = null;
+		renderAfter(matrices, puzzle, notesTag, screenWidth, screenHeight, mouseX, mouseY);
 	}
 	
 	public void onClose(){

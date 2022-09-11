@@ -15,6 +15,7 @@ import net.minecraft.client.render.*;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Position;
 import net.minecraft.util.math.Quaternion;
 import net.minecraft.util.math.Vec3f;
@@ -26,11 +27,14 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.WeakHashMap;
 import java.util.stream.Collectors;
 
 public final class NodeRenderer{
 	
 	private static final Map<NodeType, Integer> framesByType = new HashMap<>(NodeTypes.NODE_TYPES.size());
+	
+	private static final Map<Node, Float> lerpView = new WeakHashMap<>();
 	
 	@SuppressWarnings("resource") // ???
 	public static void renderAll(WorldRenderContext context){
@@ -51,7 +55,8 @@ public final class NodeRenderer{
 		
 		Camera camera = context.camera();
 		
-		List<Node> allNodes = context.world().getComponent(AuraWorld.KEY).getNodes();
+		var auraWorld = context.world().getComponent(AuraWorld.KEY);
+		List<Node> allNodes = auraWorld.getNodes();
 		
 		var nodesByType = allNodes
 				.stream()
@@ -79,6 +84,14 @@ public final class NodeRenderer{
 				BufferRenderer.drawWithShader(buffer.end());
 			});
 			
+			// only render aspects for the one you look at
+			var looking = auraWorld.raycast(player.getEyePos(), 6.5, false, player).orElse(null);
+			for(Node node : allNodes)
+				if(node == looking)
+					lerpView.put(node, MathHelper.lerp(context.tickDelta() / 5f, lerpView.computeIfAbsent(node, __ -> 0f), 1));
+				else
+					lerpView.put(node, MathHelper.lerp(context.tickDelta() / 5f, lerpView.computeIfAbsent(node, __ -> 1f), 0));
+			
 			Aspects.primals.forEach(primal -> {
 				RenderSystem.setShaderTexture(0, AspectRenderer.texture(primal));
 				buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);
@@ -104,11 +117,11 @@ public final class NodeRenderer{
 		if(node.getAspects().size() == 0 || !node.getAspects().contains(aspect))
 			return;
 		Vec3f offset = Vec3f.POSITIVE_Y.copy();
-		offset.scale(1.2f);
+		offset.scale(1.2f * lerpView.get(node));
 		offset.add(0, 0, -0.01f);
 		offset.rotate(Quaternion.fromEulerXyz(0, 0, (float)((Math.PI * 2) * (node.getAspects().indexOf(aspect) / (float)node.getAspects().size()))));
-		// TODO: replace with raytrace check and lerp distance & opacity
 		var alpha = (float)(.85 - Math.sqrt(MinecraftClient.getInstance().player.squaredDistanceTo(node.getX(), node.getY(), node.getZ())) / 10);
+		alpha *= lerpView.get(node);
 		drawQuad(camera, node, offset, buffer, alpha, .35f, 0, 1, light(node));
 	}
 	
@@ -119,13 +132,14 @@ public final class NodeRenderer{
 		String amount = node.getAspects().underlying().get(aspect).toString();
 		
 		double sqrDist = MinecraftClient.getInstance().player.squaredDistanceTo(node.getX(), node.getY(), node.getZ());
-		if(sqrDist > 8 * 8)
-			return;
 		var alpha = (float)(1 - Math.sqrt(sqrDist) / 10);
-		var intAlpha = (int)(Math.max(0, alpha * 255)) << 24;
+		alpha *= lerpView.get(node);
+		if(alpha < 4 / 255f) // text renderer thinks zero/very low alpha = full alpha but i forgot to say it
+			alpha = 4 / 255f;
+		var intAlpha = (int)(alpha * 255) << 24;
 		
 		Vec3f offset = Vec3f.POSITIVE_Y.copy();
-		offset.scale(1.2f);
+		offset.scale(1.2f * lerpView.get(node));
 		offset.rotate(Quaternion.fromEulerXyz(0, 0, (float)((Math.PI * 2) * (node.getAspects().indexOf(aspect) / (float)node.getAspects().size()))));
 		
 		var stack = RenderSystem.getModelViewStack();

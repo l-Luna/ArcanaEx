@@ -131,4 +131,12 @@ public class Node implements Position{
 	public AspectMap getAspects(){
 		return aspects;
 	}
+	
+	public int hashCode(){
+		return uuid.hashCode();
+	}
+	
+	public boolean equals(Object obj){
+		return obj instanceof Node other && other.uuid.equals(uuid);
+	}
 }

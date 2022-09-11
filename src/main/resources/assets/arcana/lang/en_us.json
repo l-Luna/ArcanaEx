@@ -6,7 +6,7 @@
 
   "category.arcana": "Arcana",
 
-  "_comment": "Tags",
+  // Tags
   "tag.arcana.helmets": "Helmets",
   "tag.arcana.chestplates": "Chestplates",
   "tag.arcana.leggings": "Leggings",
@@ -14,15 +14,15 @@
   "tag.arcana.horse_armours": "Horse Armours",
   "tag.arcana.aspect_crystals": "Primal Crystals",
 
-  "_comment": "EMI categories",
+  // EMI categories
   "emi.category.arcana.aspects": "Aspects",
   "emi.category.arcana.arcane_crafting": "Arcane Crafting",
   "emi.category.arcana.alchemy": "Alchemy",
 
-  "_comment": "Keybindings",
+  // Keybindings
   "key.arcana.swap_focus": "Swap Focus",
 
-  "_comment": "Aspects",
+  // Aspects
   "aspect.arcana.air": "Aer",
   "aspect.arcana.fire": "Ignis",
   "aspect.arcana.water": "Aqua",
@@ -64,7 +64,7 @@
   "aspect.arcana.taint": "Virimus",
   "aspect.arcana.aura": "Auram",
 
-  "_comment": "Items",
+  // Items
   "item.arcana.scribbled_notes": "Scribbled Notes",
   "item.arcana.goggles_of_revealing": "Goggles of Revealing",
 
@@ -111,7 +111,7 @@
 
   "item.arcana.aspect_crystal": "%s Crystal",
 
-  "_comment": "Blocks",
+  // Blocks
   "block.arcana.arcane_crafting_table": "Arcane Crafting Table",
   "block.arcana.crucible": "Crucible",
   "block.arcana.research_table": "Research Table",
@@ -123,14 +123,22 @@
   "block.arcana.arcane_stone": "Arcane Stone",
   "block.arcana.arcane_stone_bricks": "Arcane Stone Bricks",
 
-  "_comment": "Tooltips",
+  "item.arcana.aspect_crystal_cluster": "%s Cluster",
+  "block.arcana.clusters.air": "Aer Cluster",
+  "block.arcana.clusters.fire": "Ignis Cluster",
+  "block.arcana.clusters.water": "Aqua Cluster",
+  "block.arcana.clusters.earth": "Terra Cluster",
+  "block.arcana.clusters.order": "Ordo Cluster",
+  "block.arcana.clusters.entropy": "Perditio Cluster",
+
+  // Tooltips
   "tooltip.arcana.wand.focus_cost.total": "Cost: %s",
   "tooltip.arcana.wand.focus.cost.individual": "%sx %s ",
 
-  "_comment": "Enchantments",
+  // Enchantments
   "enchantment.arcana.warping": "Warping",
 
-  "_comment": "Wand components",
+  // Wand components
   "wand.variant.arcana.wand": "Wand",
 
   "wand.cap.arcana.iron_wand_cap": "Iron Capped",
@@ -144,7 +152,7 @@
   "wand.core.arcana.stick_wand_core": "Wooden",
   "wand.core.arcana.missing": "(Broken Core)",
 
-  "_comment": "Command messages",
+  // Command messages
   "message.arcana.command.research.reset": "Reset research for %s",
   "message.arcana.command.research.give.entry": "Completed entry \"%s\" for %s",
   "message.arcana.command.research.give.puzzle": "Completed puzzle %s for %s",
@@ -158,12 +166,12 @@
   "message.arcana.command.warp.trigger": "Triggered random warp event for %s",
   "message.arcana.command.warp.trigger.specific": "Triggered warp event %s for %s",
 
-  "_comment": "Warp effect messages",
+  // Warp effect messages
   "message.arcana.warp.nausea": "You don't feel so good...",
   "message.arcana.warp.peek": "What was that?",
   "message.arcana.warp.pass": "Something passes over you...",
 
-  "_comment": "Research UI",
+  // Research UI
   "research.entry.continue": "Continue",
   "research.entry.pin": "Ctrl-click to pin",
   "research.entry.unpin": "Ctrl-click to unpin",
@@ -188,17 +196,17 @@
   "puzzle.arcana.fieldwork": "<Specify fieldwork descriptions>",
   "puzzle.arcana.aspect_chess": "Win the game of Aspect Chess",
 
-  "_comment": "Other UIs",
+  // Other UIs
   "container.arcana.knowledgeable_dropper": "Knowledgeable Dropper",
 
-  "_comment": "Research Categories",
+  // Research Categories
   "research.arcana.category.fundamentals": "Fundamentals",
   "research.arcana.category.artifice": "Artifice",
   "research.arcana.category.auromancy": "Auromancy",
   "research.arcana.category.alchemy": "Alchemy",
 
-  "_comment": "Research Entries",
-  "_comment": "Fundamentals Tab",
+  // Research Entries
+  // Fundamentals Tab
   "research.arcana.root": "Arcana",
   "research.arcana.root.text": "A sudden burst of inspiration, key insights that make clear the meaning of these scribbled notes... the way forward is unclear, but I know that this is the start of something magical.\nI'll write down my research in this book: the Arcanum, with all of the old notes stored inside for reference.",
 
@@ -268,7 +276,7 @@
   "research.arcana.tome_of_sharing.stage.1": "So far, it has been highly convenient to have my knowledge bound to my mind, persisting after death and across any copies of this book. This is less true when trying to share my work with friends.\nI {i}would{r} simply write down the solutions to every puzzle I know; sadly, I've forgotten most of them, and others (like fieldwork) I might not be able to describe on paper easily. Besides, a magical solution seems more fun to implement",
   "research.arcana.tome_of_sharing.stage.2": "Enchanting another copy of the Arcanum to copy knowledge from my mind in a highly readable format was surprisingly simple. Perhaps I should be worried about that.\nWhen a Tome of Sharing is used by any player when crouched, they will have their research progress added. When another player uses it normally, all puzzles stored in the book are completed for them.\nThe tome does not automatically complete research entries, and will not skip item or XP requirements; only puzzles.",
 
-  "_comment": "Artifice Tab",
+  // Artifice Tab
   "research.arcana.artifice_root": "Artifice",
   "research.arcana.artifice_root.text": "The study of {i}artifice{r}, the construction of magical devices through arcane crafting, will be documented here.\nThe Goggles of Revealing recipe from {c3}Fundamentals{r} is included here for completeness.",
 
@@ -296,7 +304,7 @@
   "research.arcana.monocle_of_revealing.desc": "Eye Spy",
   "research.arcana.monocle_of_revealing.stage.1": "Wearing the Goggles of Revealing is essentially a requirement for doing any kind of magical work - yet doing so prevents me from wearing important protected headwear.",
 
-  "_comment": "Auromancy Tab",
+  // Auromancy Tab
   "research.arcana.auromancy_root": "Auromancy",
   "research.arcana.auromancy_root.text": "The study of {i}auromancy{r}, the manipulation of the aura and vis around me, will be documented here.\nThe iron and gold wand caps, and the general wand recipe are included here for completeness.",
 
@@ -305,7 +313,7 @@
   "research.arcana.copper_wand_caps.stage.1": "The properties of copper make it quite convenient for electrical work. It's conductivity and alignment with Instrumentum may make it a highly useful material in my artifice.",
   "research.arcana.copper_wand_caps.stage.2": "Wand caps crafted from copper are slightly worse than gold when it comes to drawing vis from nodes, or focusing them into spells, but come with a useful vis discount in arcane crafting.",
 
-  "_comment": "Alchemy Tab",
+  // Alchemy Tab
   "research.arcana.alchemy_root": "Alchemy",
   "research.arcana.alchemy_root.text": "The study of {i}alchemy{r}, the conversion of items into essentia and utilization thereof, will be documented here.\nThe Nitor recipe from {c3}Fundamentals{r} is included here for completeness.",
 
@@ -379,11 +387,11 @@
 
   "research.arcana.essentia_centrifuge": "Essentia Centrifuge",
 
-  "research.arcana.essentia_crystalizer": "Essentia Crystalizer",
+  "research.arcana.essentia_crystalizer": "Essentia Crystalizer"
 
-  "_comment": "Infusion Tab",
+  // Infusion Tab
 
-  "_comment": "Eldritch Tab",
+  // Eldritch Tab
 
-  "_comment": "Crimson Rites"
+  // Crimson Rites
 }

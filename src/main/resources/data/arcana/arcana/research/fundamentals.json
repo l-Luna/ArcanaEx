@@ -87,6 +87,37 @@
       ]
     },
     {
+      "key": "arcana:tome_of_sharing",
+      "name": "research.arcana.tome_of_sharing",
+      "desc": "research.arcana.tome_of_sharing.desc",
+      "icons": [
+        "arcana:tome_of_sharing"
+      ],
+      "category": "arcana:fundamentals",
+      "parents": [
+        "arcana:root"
+      ],
+      "x": 0,
+      "y": -2,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.tome_of_sharing.stage.1",
+          "requirements": [
+            "3*arcana::xp"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.tome_of_sharing.stage.2"
+        },
+        {
+          "type": "crafting",
+          "content": "arcana:tome_of_sharing"
+        }
+      ]
+    },
+    {
       "key": "arcana:wandcraft",
       "name": "research.arcana.wandcraft",
       "desc": "research.arcana.wandcraft.desc",

@@ -102,6 +102,8 @@ public final class ArcanaRegistry{
 	public static final Block NITOR = new NitorBlock(of(Material.DECORATION).strength(0).luminance(15));
 	
 	public static final Block ARCANIUM_BLOCK = new Block(of(Material.METAL, MapColor.PINK).requiresTool().strength(5, 6).sounds(BlockSoundGroup.METAL));
+	public static final Block ARCANE_STONE = new Block(of(Material.STONE).requiresTool().strength(3, 7));
+	public static final Block ARCANE_STONE_BRICKS = new Block(of(Material.STONE).requiresTool().strength(3.5f, 7));
 	
 	// screen handlers...
 	public static final ScreenHandlerType<ArcaneCraftingScreenHandler> ARCANE_CRAFTING_SCREEN_HANDLER
@@ -192,6 +194,8 @@ public final class ArcanaRegistry{
 		register("nitor", NITOR);
 		
 		register("arcanium_block", ARCANIUM_BLOCK);
+		register("arcane_stone", ARCANE_STONE);
+		register("arcane_stone_bricks", ARCANE_STONE_BRICKS);
 		
 		// screen handlers
 		register("arcane_crafting", ARCANE_CRAFTING_SCREEN_HANDLER);

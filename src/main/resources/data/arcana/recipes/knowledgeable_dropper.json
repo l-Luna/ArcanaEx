@@ -1,0 +1,36 @@
+{
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "S": {
+      "item": "arcana:arcane_stone"
+    },
+    "A": {
+      "item": "arcana:arcanium_ingot"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "C": {
+      "item": "arcana:crystals/mind"
+    },
+    "D": {
+      "item": "minecraft:dropper"
+    },
+    "O": {
+      "item": "minecraft:observer"
+    }
+  },
+  "pattern": [
+    "SAS",
+    "RDO",
+    "SCS"
+  ],
+  "result": {
+    "item": "arcana:knowledgeable_dropper"
+  },
+  "aspects": [
+    "30*order",
+    "20*fire",
+    "10*water"
+  ]
+}

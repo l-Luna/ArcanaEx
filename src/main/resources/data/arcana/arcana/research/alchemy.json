@@ -374,6 +374,57 @@
           "content": "arcana:hedge_alchemy/leather_by_hedge_alchemy"
         }
       ]
+    },
+    {
+      "key": "arcana:automated_alchemy",
+      "name": "research.arcana.automated_alchemy",
+      "desc": "research.arcana.automated_alchemy.desc",
+      "icons": [
+        "arcana:knowledgeable_dropper"
+      ],
+      "category": "arcana:alchemy",
+      "parents": [
+        "arcana:magical_metallurgy",
+        "arcana:tome_of_sharing"
+      ],
+      "meta": [
+        "warping:1"
+      ],
+      "x": 5,
+      "y": 2,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.automated_alchemy.stage.1",
+          "requirements": [
+            "10*minecraft:dropper",
+            "10*arcana:crucible",
+            "3*arcana::xp"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.automated_alchemy.stage.2",
+          "requirements": [
+            "0*arcana:crystals/mind"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.automated_alchemy.stage.3",
+          "requirements": [
+            "arcana::puzzle{automated_alchemy}"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.automated_alchemy.stage.4"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:knowledgeable_dropper"
+        }
+      ]
     }
   ],
   "puzzles": [
@@ -470,6 +521,19 @@
         "ice",
         "flesh",
         "undead"
+      ]
+    },
+    {
+      "key": "arcana:automated_alchemy",
+      "type": "chemistry",
+      "desc": "puzzle.arcana.chemistry.automated_alchemy",
+      "nodes": [
+        "machine",
+        "mind",
+        "order",
+        "tool",
+        "magic",
+        "entropy"
       ]
     }
   ]

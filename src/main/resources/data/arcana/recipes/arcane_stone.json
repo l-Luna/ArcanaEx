@@ -1,0 +1,23 @@
+{
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "S": {
+      "item": "minecraft:stone"
+    },
+    "C": {
+      "tag": "arcana:aspect_crystals"
+    }
+  },
+  "pattern": [
+    "SSS",
+    "SCS",
+    "SSS"
+  ],
+  "aspects": [
+    "8*order"
+  ],
+  "result": {
+    "item": "arcana:arcane_stone",
+    "count": 8
+  }
+}

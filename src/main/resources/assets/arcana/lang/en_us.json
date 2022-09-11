@@ -12,7 +12,7 @@
   "tag.arcana.leggings": "Leggings",
   "tag.arcana.boots": "Boots",
   "tag.arcana.horse_armours": "Horse Armours",
-  "tag.arcana.aspect_crystals": "Aspect Crystals",
+  "tag.arcana.aspect_crystals": "Primal Crystals",
 
   "_comment": "EMI categories",
   "emi.category.arcana.aspects": "Aspects",
@@ -120,6 +120,8 @@
   "block.arcana.nitor": "Nitor",
 
   "block.arcana.arcanium_block": "Arcanium Block",
+  "block.arcana.arcane_stone": "Arcane Stone",
+  "block.arcana.arcane_stone_bricks": "Arcane Stone Bricks",
 
   "_comment": "Tooltips",
   "tooltip.arcana.wand.focus_cost.total": "Cost: %s",
@@ -268,10 +270,10 @@
 
   "_comment": "Artifice Tab",
   "research.arcana.artifice_root": "Artifice",
-  "research.arcana.artifice_root.text": "The study of {i}artifice{r}, the construction of magical devices through arcane crafting, will be documented here.\nThe Goggles of Revealing Recipe from {c3}Fundamentals{r} is included here for completeness.",
+  "research.arcana.artifice_root.text": "The study of {i}artifice{r}, the construction of magical devices through arcane crafting, will be documented here.\nThe Goggles of Revealing recipe from {c3}Fundamentals{r} is included here for completeness.",
 
   "research.arcana.arcane_stone": "Arcane Stone",
-  "research.arcana.arcane_stone.text": "Arcane Stone is a fairly simple application of arcane crafting. It looks nice, it's stronger than ordinary stone, and may be useful in further crafting.",
+  "research.arcana.arcane_stone.text": "Arcane Stone is a fairly simple application of arcane crafting. It looks nice, it's stronger than ordinary stone, and may be useful in further crafting.\nArcane Stone Bricks can be created through crafting or stonecutting.",
 
   "research.arcana.paving_stones": "Arcane Paving Stones",
   "research.arcana.paving_stones.desc": "Essential infrastructure",
@@ -354,6 +356,7 @@
   "research.arcana.automated_alchemy.stage.2": "Prototype after prototype wasted. Something odd is afoot here. Even getting a machine to perform identical actions to myself does not cause the proper reactions. Almost like some {i}intent{r} is necessary.",
   "research.arcana.automated_alchemy.stage.3": "Now, a thinking machine. That would do it.",
   "research.arcana.automated_alchemy.stage.4": "Giving a Dropper a basic level of \"understanding\" is a perfectly safe and simple method of automating alchemy.\nThe Knowledgeable Dropper can be given a Tome of Sharing within it's extra tenth slot. Items it drops will be eligible for any alchemy recipes stored within the research bound to the book. When an alchemy recipe is performed automatically, the result will be thrown from the crucible in a random, free horizontal direction (or just randomly if none are free).\nAnother minor feature is that these droppers have slightly less variation in how they drop items.\nIt turns out that Tomes of Sharing do remember research entries, but simply choose not to show them to players. The thought of my equipment colluding to snoop on my mind is unsettling... but what can a book really do?",
+  "puzzle.arcana.chemistry.automated_alchemy": "Teach a machine to want",
 
   "research.arcana.alchemical_glass": "Alchemical Glass",
   "research.arcana.alchemical_glass.desc": "Advancing my material knowledge",

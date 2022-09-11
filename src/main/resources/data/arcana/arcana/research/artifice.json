@@ -1,0 +1,63 @@
+{
+  "entries": [
+    {
+      "key": "arcana:artifice_root",
+      "name": "research.arcana.artifice_root",
+      "icons": [
+        "arcana:goggles_of_revealing"
+      ],
+      "category": "arcana:artifice",
+      "parents": [
+        "arcana:arcane_crafting"
+      ],
+      "meta": [
+        "spiky_base",
+        "yellow_base",
+        "root"
+      ],
+      "x": 0,
+      "y": 0,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.artifice_root.text"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:goggles_of_revealing"
+        }
+      ]
+    },
+    {
+      "key": "arcana:arcane_stone",
+      "name": "research.arcana.arcane_stone",
+      "icons": [
+        "arcana:arcane_stone",
+        "arcana:arcane_stone_bricks"
+      ],
+      "category": "arcana:artifice",
+      "parents": [
+        "/arcana:artifice_root"
+      ],
+      "meta": [
+        "round_base"
+      ],
+      "x": -1,
+      "y": -2,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.arcane_stone.text"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:arcane_stone"
+        },
+        {
+          "type": "crafting",
+          "content": "arcana:arcane_stone_bricks"
+        }
+      ]
+    }
+  ]
+}

@@ -10,7 +10,8 @@
     "RecipeManagerMixin"
   ],
   "client": [
-    "JsonUnbakedModelAccessor"
+    "JsonUnbakedModelAccessor",
+    "ScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

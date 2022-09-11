@@ -15,6 +15,9 @@ import java.util.List;
 
 public final class AspectRenderer{
 	
+	// public for access by ScreenMixin
+	public static boolean useAspectTooltipColours = false;
+	
 	public static void renderAspectStack(AspectStack stack, MatrixStack matrices,  int x, int y, int z){
 		renderAspectStack(stack, matrices, MinecraftClient.getInstance().textRenderer, x, y, z);
 	}
@@ -58,8 +61,9 @@ public final class AspectRenderer{
 	}
 	
 	public static void renderAspectTooltip(Aspect aspect, MatrixStack matrices, int x, int y){
-		// i would like to give it a custom background colour, but...
+		useAspectTooltipColours = true;
 		MinecraftClient.getInstance().currentScreen.renderTooltip(matrices, tooltips(aspect), x, y);
+		useAspectTooltipColours = false;
 	}
 	
 	public static List<Text> tooltips(Aspect aspect){

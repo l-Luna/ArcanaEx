@@ -6,8 +6,6 @@ accessible method net/minecraft/client/font/TextRenderer getFontStorage (Lnet/mi
 
 accessible field net/minecraft/data/client/ItemModelGenerator writer Ljava/util/function/BiConsumer;
 
-accessible method net/minecraft/item/PickaxeItem <init> (Lnet/minecraft/item/ToolMaterial;IFLnet/minecraft/item/Item$Settings;)V
-accessible method net/minecraft/item/AxeItem <init> (Lnet/minecraft/item/ToolMaterial;FFLnet/minecraft/item/Item$Settings;)V
 accessible method net/minecraft/item/HoeItem <init> (Lnet/minecraft/item/ToolMaterial;IFLnet/minecraft/item/Item$Settings;)V
 
 accessible field net/minecraft/recipe/SmithingRecipe base Lnet/minecraft/recipe/Ingredient;

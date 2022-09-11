@@ -9,6 +9,7 @@ import arcana.items.foci.FireFocusItem;
 import arcana.screens.ArcaneCraftingScreenHandler;
 import arcana.screens.KnowledgeableDropperScreenHandler;
 import arcana.screens.ResearchTableScreenHandler;
+import com.unascribed.lib39.fractal.api.ItemSubGroup;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
@@ -36,16 +37,19 @@ public final class ArcanaRegistry{
 		// tfw "illegal forward reference"
 		public static final ItemGroup ARCANA = FabricItemGroupBuilder.build(
 				arcId("group"),
-				() -> new ItemStack(IRON_WAND_CAP)
+				() -> new ItemStack(ARCANUM)
 		);
+		public static final ItemSubGroup MAIN = ItemSubGroup.create(ARCANA, arcId("main"));
+		public static final ItemSubGroup EQUIPMENT = ItemSubGroup.create(ARCANA, arcId("equipment"));
+		public static final ItemSubGroup CRYSTALS = ItemSubGroup.create(ARCANA, arcId("crystals"));
 	}
 	
-	private static final Settings GROUPED = new Settings().group(Tab.ARCANA);
-	private static final Settings GROUPED_SINGLE = new Settings().group(Tab.ARCANA).maxCount(1);
+	private static final Settings GROUPED = new Settings().group(Tab.MAIN);
+	private static final Settings GROUPED_SINGLE = new Settings().group(Tab.MAIN).maxCount(1);
 	
 	// items...
 	public static final Item SCRIBBLED_NOTES = new ScribbledNotesItem(GROUPED_SINGLE);
-	public static final Item GOGGLES_OF_REVEALING = new GogglesOfRevealingItem(new Settings().group(Tab.ARCANA).maxCount(1));
+	public static final Item GOGGLES_OF_REVEALING = new GogglesOfRevealingItem(new Settings().group(Tab.MAIN).maxCount(1));
 	
 	public static final Item ARCANUM = new ResearchBookItem(GROUPED_SINGLE, arcId("arcanum"));
 	public static final Item CRIMSON_RITES = new ResearchBookItem(GROUPED_SINGLE, arcId("crimson_rites"));
@@ -57,15 +61,15 @@ public final class ArcanaRegistry{
 	public static final Item TOME_OF_SHARING = new TomeOfSharingItem(GROUPED_SINGLE);
 	
 	public static final Item ARCANIUM_INGOT = new Item(GROUPED);
-	public static final Item ARCANIUM_SWORD = new SwordItem(ArcanaToolMaterials.ARCANIUM, 3, -2.4f, new Settings().group(Tab.ARCANA));
-	public static final Item ARCANIUM_SHOVEL = new ShovelItem(ArcanaToolMaterials.ARCANIUM, 1.5f, -3, new Settings().group(Tab.ARCANA));
-	public static final Item ARCANIUM_PICKAXE = new PickaxeItem(ArcanaToolMaterials.ARCANIUM, 1, -2.8f, new Settings().group(Tab.ARCANA));
-	public static final Item ARCANIUM_AXE = new AxeItem(ArcanaToolMaterials.ARCANIUM, 5.5f, -3, new Settings().group(Tab.ARCANA));
-	public static final Item ARCANIUM_HOE = new HoeItem(ArcanaToolMaterials.ARCANIUM, -2, -1, new Settings().group(Tab.ARCANA));
-	public static final Item ARCANIUM_HELMET = new ArmorItem(ArcanaArmourMaterials.ARCANIUM, EquipmentSlot.HEAD, new Settings().group(Tab.ARCANA));
-	public static final Item ARCANIUM_CHESTPLATE = new ArmorItem(ArcanaArmourMaterials.ARCANIUM, EquipmentSlot.CHEST, new Settings().group(Tab.ARCANA));
-	public static final Item ARCANIUM_LEGGINGS = new ArmorItem(ArcanaArmourMaterials.ARCANIUM, EquipmentSlot.LEGS, new Settings().group(Tab.ARCANA));
-	public static final Item ARCANIUM_BOOTS = new ArmorItem(ArcanaArmourMaterials.ARCANIUM, EquipmentSlot.FEET, new Settings().group(Tab.ARCANA));
+	public static final Item ARCANIUM_SWORD = new SwordItem(ArcanaToolMaterials.ARCANIUM, 3, -2.4f, new Settings().group(Tab.EQUIPMENT));
+	public static final Item ARCANIUM_SHOVEL = new ShovelItem(ArcanaToolMaterials.ARCANIUM, 1.5f, -3, new Settings().group(Tab.EQUIPMENT));
+	public static final Item ARCANIUM_PICKAXE = new PickaxeItem(ArcanaToolMaterials.ARCANIUM, 1, -2.8f, new Settings().group(Tab.EQUIPMENT));
+	public static final Item ARCANIUM_AXE = new AxeItem(ArcanaToolMaterials.ARCANIUM, 5.5f, -3, new Settings().group(Tab.EQUIPMENT));
+	public static final Item ARCANIUM_HOE = new HoeItem(ArcanaToolMaterials.ARCANIUM, -2, -1, new Settings().group(Tab.EQUIPMENT));
+	public static final Item ARCANIUM_HELMET = new ArmorItem(ArcanaArmourMaterials.ARCANIUM, EquipmentSlot.HEAD, new Settings().group(Tab.EQUIPMENT));
+	public static final Item ARCANIUM_CHESTPLATE = new ArmorItem(ArcanaArmourMaterials.ARCANIUM, EquipmentSlot.CHEST, new Settings().group(Tab.EQUIPMENT));
+	public static final Item ARCANIUM_LEGGINGS = new ArmorItem(ArcanaArmourMaterials.ARCANIUM, EquipmentSlot.LEGS, new Settings().group(Tab.EQUIPMENT));
+	public static final Item ARCANIUM_BOOTS = new ArmorItem(ArcanaArmourMaterials.ARCANIUM, EquipmentSlot.FEET, new Settings().group(Tab.EQUIPMENT));
 	
 	public static final Item ALCHEMICAL_IRON = new Item(GROUPED);
 	public static final Item ALCHEMICAL_GOLD = new Item(GROUPED);
@@ -172,8 +176,8 @@ public final class ArcanaRegistry{
 		register("prismatic_light_focus", PRISMATIC_LIGHT_FOCUS);
 		register("fire_focus", FIRE_FOCUS);
 		
-		for(Aspect primal : Aspects.primals){ // TODO: give all aspects crystals?
-			CrystalItem crystalItem = new CrystalItem(GROUPED, primal);
+		for(Aspect primal : Aspects.getOrderedAspects()){
+			CrystalItem crystalItem = new CrystalItem(new Settings().group(Tab.CRYSTALS), primal);
 			register("crystals/" + primal.id().getPath(), crystalItem);
 			Aspects.crystals.put(primal, crystalItem);
 		}

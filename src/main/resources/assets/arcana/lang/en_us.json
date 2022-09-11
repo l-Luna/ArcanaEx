@@ -1,5 +1,9 @@
 {
   "itemGroup.arcana.group": "Arcana",
+  "itemGroup.arcana.main": "Main",
+  "itemGroup.arcana.equipment": "Equipment",
+  "itemGroup.arcana.crystals": "Crystals",
+
   "category.arcana": "Arcana",
 
   "_comment": "Tags",

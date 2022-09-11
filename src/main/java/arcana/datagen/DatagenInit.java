@@ -7,5 +7,6 @@ public final class DatagenInit implements DataGeneratorEntrypoint{
 	
 	public void onInitializeDataGenerator(FabricDataGenerator gen){
 		gen.addProvider(new ArcanaModelProvider(gen));
+		gen.addProvider(new AspectsProvider(gen));
 	}
 }

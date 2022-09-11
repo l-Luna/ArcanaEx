@@ -1,0 +1,107 @@
+{
+  "arcana:crystals/air": [
+    "arcana:air"
+  ],
+  "arcana:crystals/armour": [
+    "arcana:armour"
+  ],
+  "arcana:crystals/aura": [
+    "arcana:aura"
+  ],
+  "arcana:crystals/crystal": [
+    "arcana:crystal"
+  ],
+  "arcana:crystals/earth": [
+    "arcana:earth"
+  ],
+  "arcana:crystals/energy": [
+    "arcana:energy"
+  ],
+  "arcana:crystals/entropy": [
+    "arcana:entropy"
+  ],
+  "arcana:crystals/envy": [
+    "arcana:envy"
+  ],
+  "arcana:crystals/exchange": [
+    "arcana:exchange"
+  ],
+  "arcana:crystals/fabric": [
+    "arcana:fabric"
+  ],
+  "arcana:crystals/fire": [
+    "arcana:fire"
+  ],
+  "arcana:crystals/flesh": [
+    "arcana:flesh"
+  ],
+  "arcana:crystals/flight": [
+    "arcana:flight"
+  ],
+  "arcana:crystals/greed": [
+    "arcana:greed"
+  ],
+  "arcana:crystals/ice": [
+    "arcana:ice"
+  ],
+  "arcana:crystals/journey": [
+    "arcana:journey"
+  ],
+  "arcana:crystals/life": [
+    "arcana:life"
+  ],
+  "arcana:crystals/light": [
+    "arcana:light"
+  ],
+  "arcana:crystals/machine": [
+    "arcana:machine"
+  ],
+  "arcana:crystals/magic": [
+    "arcana:magic"
+  ],
+  "arcana:crystals/metal": [
+    "arcana:metal"
+  ],
+  "arcana:crystals/mind": [
+    "arcana:mind"
+  ],
+  "arcana:crystals/mining": [
+    "arcana:mining"
+  ],
+  "arcana:crystals/movement": [
+    "arcana:movement"
+  ],
+  "arcana:crystals/order": [
+    "arcana:order"
+  ],
+  "arcana:crystals/plant": [
+    "arcana:plant"
+  ],
+  "arcana:crystals/senses": [
+    "arcana:senses"
+  ],
+  "arcana:crystals/slime": [
+    "arcana:slime"
+  ],
+  "arcana:crystals/sloth": [
+    "arcana:sloth"
+  ],
+  "arcana:crystals/taint": [
+    "arcana:taint"
+  ],
+  "arcana:crystals/tool": [
+    "arcana:tool"
+  ],
+  "arcana:crystals/undead": [
+    "arcana:undead"
+  ],
+  "arcana:crystals/void": [
+    "arcana:void"
+  ],
+  "arcana:crystals/water": [
+    "arcana:water"
+  ],
+  "arcana:crystals/weapon": [
+    "arcana:weapon"
+  ]
+}

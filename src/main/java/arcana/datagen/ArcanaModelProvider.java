@@ -47,4 +47,8 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 				if(!noAutoGen.contains(block.asItem()))
 					itemGen.writer.accept(ModelIds.getItemModelId(block.asItem()), new SimpleModelSupplier(ModelIds.getBlockModelId(block)));
 	}
+	
+	public String getName(){
+		return "Arcana Blockstates and Models";
+	}
 }

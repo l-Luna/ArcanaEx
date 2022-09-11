@@ -14,6 +14,10 @@ public class CrystalItem extends Item{
 		this.aspect = aspect;
 	}
 	
+	public Aspect getAspect(){
+		return aspect;
+	}
+	
 	public Text getName(ItemStack stack){
 		return getName();
 	}

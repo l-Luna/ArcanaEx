@@ -1,6 +1,7 @@
 package arcana.aspects;
 
 import arcana.Arcana;
+import arcana.blocks.CrystalClusterBlock;
 import arcana.items.CrystalItem;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
@@ -14,6 +15,7 @@ public final class Aspects{
 	
 	public static final BiMap<Identifier, Aspect> aspects = HashBiMap.create();
 	public static final Map<Aspect, CrystalItem> crystals = new HashMap<>();
+	public static final Map<Aspect, CrystalClusterBlock> clusters = new HashMap<>();
 	static final List<Aspect> orderedAspects = new ArrayList<>();
 	
 	public static final Aspect

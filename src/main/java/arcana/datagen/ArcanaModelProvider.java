@@ -1,6 +1,8 @@
 package arcana.datagen;
 
 import arcana.ArcanaRegistry;
+import arcana.aspects.Aspects;
+import arcana.blocks.CrystalClusterBlock;
 import arcana.blocks.ResearchTableBlock;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
@@ -28,6 +30,18 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		blockGen.registerSimpleCubeAll(ArcanaRegistry.ARCANIUM_BLOCK);
 		blockGen.registerSimpleCubeAll(ArcanaRegistry.ARCANE_STONE);
 		blockGen.registerSimpleCubeAll(ArcanaRegistry.ARCANE_STONE_BRICKS);
+		
+		for(CrystalClusterBlock value : Aspects.clusters.values()){
+			blockGen.blockStateCollector.accept(VariantsBlockStateSupplier
+					.create(value, BlockStateVariant.create())
+					.coordinate(blockGen.createUpDefaultFacingVariantMap())
+					.coordinate(BlockStateVariantMap.create(CrystalClusterBlock.size).register(size -> {
+						String suffix = size == 3 ? "" : "_" + (size + 1);
+						return BlockStateVariant.create()
+								.put(VariantSettings.MODEL, blockGen.createSubModel(value, suffix, Models.CROSS, TextureMap::cross));
+					}))
+			);
+		}
 	}
 	
 	public void generateItemModels(ItemModelGenerator itemGen){
@@ -36,6 +50,11 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		noAutoGen.add(ArcanaRegistry.TOME_OF_SHARING);
 		
 		itemGen.register(ArcanaRegistry.NITOR.asItem(), Models.GENERATED);
+		
+		for(CrystalClusterBlock value : Aspects.clusters.values()){
+			noAutoGen.add(value.asItem());
+			itemGen.register(value.asItem(), Models.GENERATED);
+		}
 		
 		for(Item item : ArcanaRegistry.items)
 			if(!noAutoGen.contains(item) && !(item instanceof BlockItem))

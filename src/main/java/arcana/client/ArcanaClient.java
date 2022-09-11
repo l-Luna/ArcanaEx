@@ -68,6 +68,8 @@ public final class ArcanaClient implements ClientModInitializer{
 		
 		BlockEntityRendererRegistry.register(ArcanaRegistry.CRUCIBLE_BE, context -> new CrucibleBlockEntityRenderer());
 		BlockRenderLayerMap.INSTANCE.putBlock(ArcanaRegistry.RESEARCH_TABLE, RenderLayer.getCutout());
+		for(var cluster : Aspects.clusters.values())
+			BlockRenderLayerMap.INSTANCE.putBlock(cluster, RenderLayer.getCutout());
 		
 		EntrySectionRenderer.setup();
 		RequirementRenderer.setup();

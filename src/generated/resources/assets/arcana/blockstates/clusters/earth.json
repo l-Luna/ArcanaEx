@@ -1,0 +1,108 @@
+{
+  "variants": {
+    "facing=down,size=0": {
+      "model": "arcana:block/clusters/earth_1",
+      "x": 180
+    },
+    "facing=down,size=1": {
+      "model": "arcana:block/clusters/earth_2",
+      "x": 180
+    },
+    "facing=down,size=2": {
+      "model": "arcana:block/clusters/earth_3",
+      "x": 180
+    },
+    "facing=down,size=3": {
+      "model": "arcana:block/clusters/earth",
+      "x": 180
+    },
+    "facing=east,size=0": {
+      "model": "arcana:block/clusters/earth_1",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,size=1": {
+      "model": "arcana:block/clusters/earth_2",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,size=2": {
+      "model": "arcana:block/clusters/earth_3",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,size=3": {
+      "model": "arcana:block/clusters/earth",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north,size=0": {
+      "model": "arcana:block/clusters/earth_1",
+      "x": 90
+    },
+    "facing=north,size=1": {
+      "model": "arcana:block/clusters/earth_2",
+      "x": 90
+    },
+    "facing=north,size=2": {
+      "model": "arcana:block/clusters/earth_3",
+      "x": 90
+    },
+    "facing=north,size=3": {
+      "model": "arcana:block/clusters/earth",
+      "x": 90
+    },
+    "facing=south,size=0": {
+      "model": "arcana:block/clusters/earth_1",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,size=1": {
+      "model": "arcana:block/clusters/earth_2",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,size=2": {
+      "model": "arcana:block/clusters/earth_3",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,size=3": {
+      "model": "arcana:block/clusters/earth",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up,size=0": {
+      "model": "arcana:block/clusters/earth_1"
+    },
+    "facing=up,size=1": {
+      "model": "arcana:block/clusters/earth_2"
+    },
+    "facing=up,size=2": {
+      "model": "arcana:block/clusters/earth_3"
+    },
+    "facing=up,size=3": {
+      "model": "arcana:block/clusters/earth"
+    },
+    "facing=west,size=0": {
+      "model": "arcana:block/clusters/earth_1",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,size=1": {
+      "model": "arcana:block/clusters/earth_2",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,size=2": {
+      "model": "arcana:block/clusters/earth_3",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,size=3": {
+      "model": "arcana:block/clusters/earth",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

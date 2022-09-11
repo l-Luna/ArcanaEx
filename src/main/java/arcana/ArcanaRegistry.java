@@ -178,10 +178,10 @@ public final class ArcanaRegistry{
 		register("prismatic_light_focus", PRISMATIC_LIGHT_FOCUS);
 		register("fire_focus", FIRE_FOCUS);
 		
-		for(Aspect primal : Aspects.getOrderedAspects()){
-			CrystalItem crystalItem = new CrystalItem(new Settings().group(Tab.CRYSTALS), primal);
-			register("crystals/" + primal.id().getPath(), crystalItem);
-			Aspects.crystals.put(primal, crystalItem);
+		for(Aspect aspect : Aspects.getOrderedAspects()){
+			CrystalItem crystalItem = new CrystalItem(new Settings().group(Tab.CRYSTALS), aspect);
+			register("crystals/" + aspect.id().getPath(), crystalItem);
+			Aspects.crystals.put(aspect, crystalItem);
 		}
 		
 		// blocks
@@ -196,6 +196,12 @@ public final class ArcanaRegistry{
 		register("arcanium_block", ARCANIUM_BLOCK);
 		register("arcane_stone", ARCANE_STONE);
 		register("arcane_stone_bricks", ARCANE_STONE_BRICKS);
+		
+		for(Aspect primal : Aspects.primals){
+			CrystalClusterBlock clusterBlock = new CrystalClusterBlock(of(Material.GLASS).nonOpaque().noCollision().ticksRandomly(), primal);
+			register("clusters/" + primal.id().getPath(), clusterBlock);
+			Aspects.clusters.put(primal, clusterBlock);
+		}
 		
 		// screen handlers
 		register("arcane_crafting", ARCANE_CRAFTING_SCREEN_HANDLER);

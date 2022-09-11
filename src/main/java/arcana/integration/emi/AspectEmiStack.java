@@ -4,6 +4,7 @@ import arcana.aspects.Aspect;
 import arcana.aspects.AspectStack;
 import arcana.aspects.Aspects;
 import arcana.client.AspectRenderer;
+import arcana.client.PinkMarkerComponent;
 import com.google.gson.JsonObject;
 import dev.emi.emi.EmiPort;
 import dev.emi.emi.EmiStackSerializer;
@@ -80,6 +81,7 @@ public class AspectEmiStack extends EmiStack{
 		if(MinecraftClient.getInstance().options.advancedItemTooltips)
 			tooltips.add(TooltipComponent.of(EmiPort.ordered(EmiPort.literal(stack.type().id().toString()).formatted(Formatting.DARK_GRAY))));
 		tooltips.add(TooltipComponent.of(EmiPort.ordered(EmiPort.literal(EmiUtil.getModName(stack.type().id().getNamespace()), Formatting.BLUE, Formatting.ITALIC))));
+		tooltips.add(new PinkMarkerComponent());
 		return tooltips;
 	}
 	

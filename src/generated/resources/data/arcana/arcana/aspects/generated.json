@@ -1,4 +1,22 @@
 {
+  "arcana:clusters/air": [
+    "4*arcana:air"
+  ],
+  "arcana:clusters/earth": [
+    "4*arcana:earth"
+  ],
+  "arcana:clusters/entropy": [
+    "4*arcana:entropy"
+  ],
+  "arcana:clusters/fire": [
+    "4*arcana:fire"
+  ],
+  "arcana:clusters/order": [
+    "4*arcana:order"
+  ],
+  "arcana:clusters/water": [
+    "4*arcana:water"
+  ],
   "arcana:crystals/air": [
     "arcana:air"
   ],

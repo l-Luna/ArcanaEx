@@ -4,6 +4,7 @@ import arcana.aspects.Aspect;
 import arcana.aspects.AspectMap;
 import arcana.aspects.AspectStack;
 import arcana.aspects.Aspects;
+import arcana.blocks.CrystalClusterBlock;
 import arcana.items.CrystalItem;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -11,6 +12,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.DataWriter;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.util.registry.Registry;
 
 import java.io.IOException;
@@ -51,14 +53,21 @@ public class AspectsProvider implements DataProvider{
 	public void generateAspects(){
 		for(CrystalItem crystal : Aspects.crystals.values())
 			assign(crystal, crystal.getAspect());
+		
+		for(CrystalClusterBlock cluster : Aspects.clusters.values())
+			assign(cluster, cluster.getAspect(), 4);
 	}
 	
-	public final void assign(Item item, AspectMap aspects){
-		this.aspects.put(item, aspects);
+	public final void assign(ItemConvertible item, AspectMap aspects){
+		this.aspects.put(item.asItem(), aspects);
 	}
 	
-	public final void assign(Item item, Aspect aspect){
+	public final void assign(ItemConvertible item, Aspect aspect){
 		assign(item, AspectMap.fromAspectStack(new AspectStack(aspect, 1)));
+	}
+	
+	public final void assign(ItemConvertible item, Aspect aspect, int amount){
+		assign(item, AspectMap.fromAspectStack(new AspectStack(aspect, amount)));
 	}
 	
 	public String getName(){

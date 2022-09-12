@@ -27,7 +27,8 @@ import static arcana.Arcana.arcId;
 
 public final class ArcanaEmiPlugin implements EmiPlugin{
 	
-	public static final EmiRecipeCategory ITEMS_BY_ASPECTS = new EmiRecipeCategory(arcId("aspects"), new AspectEmiStack(Aspects.LIGHT));
+	public static final EmiRecipeCategory ITEMS_BY_ASPECTS = new EmiRecipeCategory(arcId("items_by_aspects"), new AspectEmiStack(Aspects.ENERGY));
+	public static final EmiRecipeCategory ASPECTS_BY_ITEMS = new EmiRecipeCategory(arcId("aspects_by_items"), new AspectEmiStack(Aspects.LIGHT));
 	public static final EmiRecipeCategory ARCANE_CRAFTING = new EmiRecipeCategory(arcId("arcane_crafting"), ArcanaRegistry.ARCANE_CRAFTING_TABLE.asItem().emi());
 	public static final EmiRecipeCategory ALCHEMY = new EmiRecipeCategory(arcId("alchemy"), ArcanaRegistry.CRUCIBLE.asItem().emi());
 	
@@ -36,6 +37,7 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 		// TODO: cleanup
 		
 		registry.addCategory(ITEMS_BY_ASPECTS);
+		registry.addCategory(ASPECTS_BY_ITEMS);
 		registry.addCategory(ARCANE_CRAFTING);
 		registry.addCategory(ALCHEMY);
 		
@@ -62,6 +64,11 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 										.map(EmiStack::of)
 										.toList(),
 								aspect)));
+		//
+		ItemAspectRegistry.getAllItemAspects().entrySet().stream()
+				.filter(x -> x.getValue().size() > 0)
+				.map(x -> new EmiAspectsByItemsRecipe(x.getKey().emi(), x.getValue().asStacks()))
+				.forEach(registry::addRecipe);
 		
 		registry.addRecipe(new EmiWandRecipe(arcId("wand")));
 		

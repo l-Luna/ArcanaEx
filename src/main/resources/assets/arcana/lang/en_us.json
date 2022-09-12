@@ -15,7 +15,8 @@
   "tag.arcana.aspect_crystals": "Primal Crystals",
 
   // EMI categories
-  "emi.category.arcana.aspects": "Items by Aspects",
+  "emi.category.arcana.items_by_aspects": "Items by Aspects",
+  "emi.category.arcana.aspects_by_items": "Aspects by Items",
   "emi.category.arcana.arcane_crafting": "Arcane Crafting",
   "emi.category.arcana.alchemy": "Alchemy",
 

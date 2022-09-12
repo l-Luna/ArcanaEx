@@ -6,7 +6,6 @@ import dev.emi.emi.EmiUtil;
 import dev.emi.emi.api.recipe.EmiIngredientRecipe;
 import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
-import dev.emi.emi.api.recipe.EmiResolutionRecipe;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
 import net.minecraft.util.Identifier;
@@ -17,17 +16,17 @@ import java.util.List;
 
 import static arcana.Arcana.arcId;
 
-public class EmiAspectsRecipe extends EmiIngredientRecipe{
+public class EmiItemsByAspectsRecipe extends EmiIngredientRecipe{
 	
 	private final List<EmiStack> items;
 	private final AspectEmiStack aspect;
 	
-	public EmiAspectsRecipe(List<EmiStack> items, AspectEmiStack aspect){
+	public EmiItemsByAspectsRecipe(List<EmiStack> items, AspectEmiStack aspect){
 		this.items = items;
 		this.aspect = aspect;
 	}
 	
-	public EmiAspectsRecipe(List<EmiStack> items, Aspect aspect){
+	public EmiItemsByAspectsRecipe(List<EmiStack> items, Aspect aspect){
 		this(items, new AspectEmiStack(new AspectStack(aspect, 1)));
 	}
 	
@@ -40,15 +39,15 @@ public class EmiAspectsRecipe extends EmiIngredientRecipe{
 	}
 	
 	protected EmiRecipe getRecipeContext(EmiStack stack, int offset){
-		return new EmiResolutionRecipe(aspect, stack);
+		return null;
 	}
 	
 	public EmiRecipeCategory getCategory(){
-		return ArcanaEmiPlugin.ASPECTS;
+		return ArcanaEmiPlugin.ITEMS_BY_ASPECTS;
 	}
 	
 	public @Nullable Identifier getId(){
-		return arcId("aspects_of/" + EmiUtil.subId(aspect.getId()));
+		return arcId("items_with/" + EmiUtil.subId(aspect.getId()));
 	}
 	
 	public List<EmiIngredient> getInputs(){

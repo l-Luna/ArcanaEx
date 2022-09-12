@@ -36,7 +36,9 @@ public class NodalGeodes{
 			);
 	}
 	
-	public static final ConfiguredFeature<GeodeFeatureConfig, ?> AIR_GEODE = aspectGeode(
+	public static final NodalGeodeFeature NODAL_GEODE_FEATURE = new NodalGeodeFeature();
+	
+	public static final ConfiguredFeature<NodalGeodeFeatureConfig, ?> AIR_GEODE = aspectGeode(
 			Aspects.AIR,
 			BlockStateProvider.of(Blocks.SMOOTH_QUARTZ),
 			BlockStateProvider.of(Blocks.SMOOTH_SANDSTONE),
@@ -44,7 +46,7 @@ public class NodalGeodes{
 			BlockStateProvider.of(Blocks.GLOWSTONE)
 	);
 	
-	public static final ConfiguredFeature<GeodeFeatureConfig, ?> FIRE_GEODE = aspectGeode(
+	public static final ConfiguredFeature<NodalGeodeFeatureConfig, ?> FIRE_GEODE = aspectGeode(
 			Aspects.FIRE,
 			BlockStateProvider.of(Blocks.BASALT),
 			BlockStateProvider.of(Blocks.BLACKSTONE),
@@ -52,7 +54,7 @@ public class NodalGeodes{
 			BlockStateProvider.of(Blocks.OBSIDIAN)
 	);
 	
-	public static final ConfiguredFeature<GeodeFeatureConfig, ?> WATER_GEODE = aspectGeode(
+	public static final ConfiguredFeature<NodalGeodeFeatureConfig, ?> WATER_GEODE = aspectGeode(
 			Aspects.WATER,
 			BlockStateProvider.of(Blocks.MUD),
 			BlockStateProvider.of(Blocks.PRISMARINE),
@@ -60,7 +62,7 @@ public class NodalGeodes{
 			BlockStateProvider.of(Blocks.BLUE_ICE)
 	);
 	
-	public static final ConfiguredFeature<GeodeFeatureConfig, ?> EARTH_GEODE = aspectGeode(
+	public static final ConfiguredFeature<NodalGeodeFeatureConfig, ?> EARTH_GEODE = aspectGeode(
 			Aspects.EARTH,
 			BlockStateProvider.of(Blocks.TUFF),
 			BlockStateProvider.of(Blocks.BLACKSTONE),
@@ -68,7 +70,7 @@ public class NodalGeodes{
 			BlockStateProvider.of(Blocks.OBSIDIAN)
 	);
 	
-	public static final ConfiguredFeature<GeodeFeatureConfig, ?> ORDER_GEODE = aspectGeode(
+	public static final ConfiguredFeature<NodalGeodeFeatureConfig, ?> ORDER_GEODE = aspectGeode(
 			Aspects.ORDER,
 			BlockStateProvider.of(Blocks.DEEPSLATE_TILES),
 			BlockStateProvider.of(Blocks.POLISHED_DEEPSLATE),
@@ -76,7 +78,7 @@ public class NodalGeodes{
 			BlockStateProvider.of(Blocks.CHISELED_QUARTZ_BLOCK)
 	);
 	
-	public static final ConfiguredFeature<GeodeFeatureConfig, ?> ENTROPY_GEODE = aspectGeode(
+	public static final ConfiguredFeature<NodalGeodeFeatureConfig, ?> ENTROPY_GEODE = aspectGeode(
 			Aspects.ENTROPY,
 			BlockStateProvider.of(Blocks.TERRACOTTA),
 			new NoiseBlockStateProvider(0, new DoublePerlinNoiseSampler.NoiseParameters(1, 2, 3), 1, List.of(
@@ -155,7 +157,7 @@ public class NodalGeodes{
 			)
 	);
 	
-	private static ConfiguredFeature<GeodeFeatureConfig, ?> aspectGeode(
+	private static ConfiguredFeature<NodalGeodeFeatureConfig, ?> aspectGeode(
 			Aspect aspect,
 			BlockStateProvider outer,
 			BlockStateProvider middle,
@@ -163,35 +165,37 @@ public class NodalGeodes{
 			BlockStateProvider innerAlt
 	){
 		return new ConfiguredFeature<>(
-				Feature.GEODE,
-				new GeodeFeatureConfig(
-						new GeodeLayerConfig(
-								BlockStateProvider.of(Blocks.AIR),
-								inner,
-								innerAlt,
-								middle,
-								outer,
-								List.of(
-										Aspects.clusters.get(aspect).getDefaultState().with(CrystalClusterBlock.size, 0),
-										Aspects.clusters.get(aspect).getDefaultState().with(CrystalClusterBlock.size, 1),
-										Aspects.clusters.get(aspect).getDefaultState().with(CrystalClusterBlock.size, 2),
-										Aspects.clusters.get(aspect).getDefaultState().with(CrystalClusterBlock.size, 3)
+				NODAL_GEODE_FEATURE,
+				new NodalGeodeFeatureConfig(
+						new GeodeFeatureConfig(
+								new GeodeLayerConfig(
+										BlockStateProvider.of(Blocks.AIR),
+										inner,
+										innerAlt,
+										middle,
+										outer,
+										List.of(
+												Aspects.clusters.get(aspect).getDefaultState().with(CrystalClusterBlock.size, 0),
+												Aspects.clusters.get(aspect).getDefaultState().with(CrystalClusterBlock.size, 1),
+												Aspects.clusters.get(aspect).getDefaultState().with(CrystalClusterBlock.size, 2),
+												Aspects.clusters.get(aspect).getDefaultState().with(CrystalClusterBlock.size, 3)
+										),
+										BlockTags.FEATURES_CANNOT_REPLACE,
+										BlockTags.GEODE_INVALID_BLOCKS
 								),
-								BlockTags.FEATURES_CANNOT_REPLACE,
-								BlockTags.GEODE_INVALID_BLOCKS
+								new GeodeLayerThicknessConfig(1.7, 2.2, 3.2, 4.2),
+								new GeodeCrackConfig(0.75, 3.0, 2),
+								0.33,
+								0.3,
+								true,
+								UniformIntProvider.create(4, 6),
+								UniformIntProvider.create(3, 4),
+								UniformIntProvider.create(1, 2),
+								-16,
+								16,
+								0.05,
+								1
 						),
-						new GeodeLayerThicknessConfig(1.7, 2.2, 3.2, 4.2),
-						new GeodeCrackConfig(0.75, 3.0, 2),
-						0.33,
-						0.3,
-						true,
-						UniformIntProvider.create(4, 6),
-						UniformIntProvider.create(3, 4),
-						UniformIntProvider.create(1, 2),
-						-16,
-						16,
-						0.05,
-						1
-				));
+						aspect));
 	}
 }

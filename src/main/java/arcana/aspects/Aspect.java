@@ -1,11 +1,14 @@
 package arcana.aspects;
 
+import com.mojang.serialization.Codec;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 public record Aspect(Identifier id, Aspect left, Aspect right) implements Comparable<Aspect>{
 
+	public static final Codec<Aspect> CODEC = Identifier.CODEC.xmap(Aspects::byName, Aspect::id);
+	
 	public Text name(){
 		return Text.translatable("aspect." + id.getNamespace() + "." + id.getPath());
 	}

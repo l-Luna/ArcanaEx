@@ -240,6 +240,7 @@ public final class ArcanaRegistry{
 		register("surface_node", SURFACE_NODE_CONF_FEATURE);
 		register("surface_node", SURFACE_NODE_PLACED_FEATURE);
 		
+		register("nodal_geode", NodalGeodes.NODAL_GEODE_FEATURE);
 		register("air_geode", NodalGeodes.AIR_GEODE);
 		register("air_geode", NodalGeodes.PLACED_AIR_GEODE);
 		register("fire_geode", NodalGeodes.FIRE_GEODE);

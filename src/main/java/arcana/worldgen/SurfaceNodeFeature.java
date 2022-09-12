@@ -53,9 +53,8 @@ public class SurfaceNodeFeature extends Feature<DefaultFeatureConfig>{
 		if(rng.nextInt(100) < nodeChance){
 			AuraWorld aura = AuraWorld.from(world);
 			BlockPos nodePos = pos.up(5);
-			NodeType type = from(rng.nextInt(100) < specialNodeChance ? NodeTypes.specialTypes : NodeTypes.normalTypes, rng);
 			// add the node
-			aura.getNodes().add(new Node(type, aura.getWorld(), new Vec3d(nodePos.getX() + rng.nextDouble(), nodePos.getY() + rng.nextDouble(), nodePos.getZ() + rng.nextDouble())));
+			aura.getNodes().add(new Node(randomType(rng), aura.getWorld(), new Vec3d(nodePos.getX() + rng.nextDouble(), nodePos.getY() + rng.nextDouble(), nodePos.getZ() + rng.nextDouble())));
 			aura.getWorld().syncComponent(AuraWorld.KEY); // TODO: only sync the new node
 			// add some crystal clusters
 			int successes = 0;
@@ -84,6 +83,10 @@ public class SurfaceNodeFeature extends Feature<DefaultFeatureConfig>{
 			}
 		}
 		return false;
+	}
+	
+	public static NodeType randomType(Random rng){
+		return from(rng.nextInt(100) < specialNodeChance ? NodeTypes.specialTypes : NodeTypes.normalTypes, rng);
 	}
 	
 	private static <T> T from(List<T> from, Random rng){

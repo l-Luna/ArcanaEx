@@ -30,7 +30,7 @@ public final class Aspects{
 	public static final Aspect LIGHT = create("light", AIR, FIRE);
 	public static final Aspect CRYSTAL = create("crystal", EARTH, ORDER);
 	public static final Aspect ENERGY = create("energy", FIRE, ORDER);
-	public static final Aspect ICE = create("ice", ENTROPY, FIRE);
+	public static final Aspect ICE = create("ice", WATER, ORDER);
 	public static final Aspect EXCHANGE = create("exchange", ENTROPY, ORDER);
 	public static final Aspect MOVEMENT = create("movement", ENTROPY, AIR);
 	

@@ -16,6 +16,7 @@ import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.recipe.EmiWorldInteractionRecipe;
 import dev.emi.emi.api.recipe.VanillaEmiRecipeCategories;
 import dev.emi.emi.api.stack.EmiStack;
+import dev.emi.emi.api.stack.TagEmiIngredient;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Pair;
@@ -64,9 +65,16 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 										.map(EmiStack::of)
 										.toList(),
 								aspect)));
-		//
+		
+		// add tags first
+		ItemAspectRegistry.getAllTagAspects().entrySet().stream()
+				.map(x -> new EmiAspectsByItemsRecipe(new TagEmiIngredient(x.getKey(), 1), x.getValue().asStacks()))
+				.forEach(registry::addRecipe);
+		
 		ItemAspectRegistry.getAllItemAspects().entrySet().stream()
 				.filter(x -> x.getValue().size() > 0)
+				// skip items that can be grouped under a tag
+				.filter(x -> !ItemAspectRegistry.usesTagAspects(x.getKey()) || ItemAspectRegistry.hasAnyBonusAspects(x.getKey()))
 				.map(x -> new EmiAspectsByItemsRecipe(x.getKey().emi(), x.getValue().asStacks()))
 				.forEach(registry::addRecipe);
 		

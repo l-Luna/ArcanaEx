@@ -75,6 +75,18 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 		return Collections.unmodifiableMap(itemAspects);
 	}
 	
+	public static Map<TagKey<Item>, AspectMap> getAllTagAspects(){
+		return Collections.unmodifiableMap(itemTagAssociations);
+	}
+	
+	public static boolean usesTagAspects(Item item){
+		return itemTagAssociations.keySet().stream().anyMatch(item.getRegistryEntry()::isIn);
+	}
+	
+	public static boolean hasAnyBonusAspects(Item item){
+		return itemTagBonuses.keySet().stream().anyMatch(item.getRegistryEntry()::isIn);
+	}
+	
 	protected void apply(Map<Identifier, JsonElement> prepared, ResourceManager manager, Profiler profiler){
 		logger.info("Loading item aspects");
 		

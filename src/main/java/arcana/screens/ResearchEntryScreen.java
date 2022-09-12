@@ -276,6 +276,8 @@ public class ResearchEntryScreen extends Screen{
 	}
 	
 	public boolean mouseScrolled(double mouseX, double mouseY, double scroll){
+		if(super.mouseScrolled(mouseX, mouseY, scroll))
+			return true;
 		if(scroll > 0 && canTurnLeft()){
 			idx -= 2;
 			updateButtons();
@@ -319,6 +321,10 @@ public class ResearchEntryScreen extends Screen{
 				return EntrySectionRenderer.get(section).onClick(section, sectionIndex(idx + 1), width, height, mouseX, mouseY, true);
 		}
 		return false;
+	}
+	
+	public Entry getEntry(){
+		return entry;
 	}
 	
 	private /* non-static */ class ChangePageButton extends ButtonWidget{

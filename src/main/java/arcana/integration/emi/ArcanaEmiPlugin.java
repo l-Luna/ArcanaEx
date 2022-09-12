@@ -8,6 +8,7 @@ import arcana.integration.emi.AspectEmiStack.AspectEmiStackSerializer;
 import arcana.items.WandItem;
 import arcana.recipes.AlchemyRecipe;
 import arcana.recipes.ShapedArcaneCraftingRecipe;
+import arcana.screens.ResearchEntryScreen;
 import dev.emi.emi.EmiStackSerializer;
 import dev.emi.emi.api.EmiPlugin;
 import dev.emi.emi.api.EmiRegistry;
@@ -83,6 +84,7 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 		registry.addWorkstation(ALCHEMY, ArcanaRegistry.CRUCIBLE.asItem().emi());
 		
 		registry.addRecipeHandler(ArcanaRegistry.ARCANE_CRAFTING_SCREEN_HANDLER, new EmiArcaneCraftingRecipeHandler());
+		registry.addStackProvider(ResearchEntryScreen.class, new ResearchEntryScreenStackProvider());
 		
 		EmiStackSerializer.register(AspectEmiStackSerializer.ID, AspectEmiStack.class, new AspectEmiStackSerializer());
 		

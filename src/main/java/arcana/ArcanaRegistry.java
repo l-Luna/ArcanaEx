@@ -9,6 +9,7 @@ import arcana.items.foci.FireFocusItem;
 import arcana.screens.ArcaneCraftingScreenHandler;
 import arcana.screens.KnowledgeableDropperScreenHandler;
 import arcana.screens.ResearchTableScreenHandler;
+import arcana.worldgen.NodalGeodes;
 import arcana.worldgen.SurfaceNodeFeature;
 import com.unascribed.lib39.fractal.api.ItemSubGroup;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
@@ -216,7 +217,7 @@ public final class ArcanaRegistry{
 		register("arcane_stone_bricks", ARCANE_STONE_BRICKS);
 		
 		for(Aspect primal : Aspects.primals){
-			CrystalClusterBlock clusterBlock = new CrystalClusterBlock(of(Material.GLASS).nonOpaque().noCollision().ticksRandomly(), primal);
+			CrystalClusterBlock clusterBlock = new CrystalClusterBlock(of(Material.GLASS).nonOpaque().noCollision().ticksRandomly().sounds(BlockSoundGroup.AMETHYST_CLUSTER), primal);
 			register("clusters/" + primal.id().getPath(), clusterBlock);
 			Aspects.clusters.put(primal, clusterBlock);
 		}
@@ -238,6 +239,19 @@ public final class ArcanaRegistry{
 		register("surface_node", SURFACE_NODE_FEATURE);
 		register("surface_node", SURFACE_NODE_CONF_FEATURE);
 		register("surface_node", SURFACE_NODE_PLACED_FEATURE);
+		
+		register("air_geode", NodalGeodes.AIR_GEODE);
+		register("air_geode", NodalGeodes.PLACED_AIR_GEODE);
+		register("fire_geode", NodalGeodes.FIRE_GEODE);
+		register("fire_geode", NodalGeodes.PLACED_FIRE_GEODE);
+		register("water_geode", NodalGeodes.WATER_GEODE);
+		register("water_geode", NodalGeodes.PLACED_WATER_GEODE);
+		register("earth_geode", NodalGeodes.EARTH_GEODE);
+		register("earth_geode", NodalGeodes.PLACED_EARTH_GEODE);
+		register("order_geode", NodalGeodes.ORDER_GEODE);
+		register("order_geode", NodalGeodes.PLACED_ORDER_GEODE);
+		register("entropy_geode", NodalGeodes.ENTROPY_GEODE);
+		register("entropy_geode", NodalGeodes.PLACED_ENTROPY_GEODE);
 	}
 	
 	private static void register(String name, Item item){

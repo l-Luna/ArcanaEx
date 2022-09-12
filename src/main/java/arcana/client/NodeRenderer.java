@@ -130,11 +130,11 @@ public final class NodeRenderer{
 		if(node.getAspects().size() == 0 || !node.getAspects().contains(aspect))
 			return;
 		Vec3f offset = Vec3f.POSITIVE_Y.copy();
-		offset.scale(1.2f * lerpView.get(node));
+		offset.scale(1.2f * lerpView.getOrDefault(node, 0f));
 		offset.add(0, 0, -0.01f);
 		offset.rotate(Quaternion.fromEulerXyz(0, 0, (float)((Math.PI * 2) * (node.getAspects().indexOf(aspect) / (float)node.getAspects().size()))));
 		var alpha = (float)(.85 - Math.sqrt(MinecraftClient.getInstance().player.squaredDistanceTo(node.getX(), node.getY(), node.getZ())) / 10);
-		alpha *= lerpView.get(node);
+		alpha *= lerpView.getOrDefault(node, 0f);
 		drawQuad(camera, node, offset, buffer, alpha, .35f, 0, 1, light(node));
 	}
 	
@@ -146,13 +146,13 @@ public final class NodeRenderer{
 		
 		double sqrDist = MinecraftClient.getInstance().player.squaredDistanceTo(node.getX(), node.getY(), node.getZ());
 		var alpha = (float)(1 - Math.sqrt(sqrDist) / 10);
-		alpha *= lerpView.get(node);
+		alpha *= lerpView.getOrDefault(node, 0f);
 		if(alpha < 4 / 255f) // text renderer thinks zero/very low alpha = full alpha but i forgot to say it
 			alpha = 4 / 255f;
 		var intAlpha = (int)(alpha * 255) << 24;
 		
 		Vec3f offset = Vec3f.POSITIVE_Y.copy();
-		offset.scale(1.2f * lerpView.get(node));
+		offset.scale(1.2f * lerpView.getOrDefault(node, 0f));
 		offset.rotate(Quaternion.fromEulerXyz(0, 0, (float)((Math.PI * 2) * (node.getAspects().indexOf(aspect) / (float)node.getAspects().size()))));
 		
 		var stack = RenderSystem.getModelViewStack();

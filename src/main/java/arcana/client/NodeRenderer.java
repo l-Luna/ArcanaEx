@@ -69,7 +69,8 @@ public final class NodeRenderer{
 			RenderSystem.setShaderTexture(0, loadTexture(type));
 			buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);
 			for(Node node : nodes)
-				drawNode(camera, node, buffer, .12f);
+				if(shouldView(node))
+					drawNode(camera, node, buffer, .12f);
 			BufferRenderer.drawWithShader(buffer.end());
 		});
 		
@@ -80,33 +81,45 @@ public final class NodeRenderer{
 				RenderSystem.setShaderTexture(0, loadTexture(type));
 				buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);
 				for(Node node : nodes)
-					drawNode(camera, node, buffer, .85f);
+					if(shouldView(node))
+						drawNode(camera, node, buffer, .85f);
 				BufferRenderer.drawWithShader(buffer.end());
 			});
 			
 			// only render aspects for the one you look at
 			var looking = auraWorld.raycast(player.getEyePos(), 6.5, false, player).orElse(null);
 			for(Node node : allNodes)
-				if(node == looking)
-					lerpView.put(node, MathHelper.lerp(context.tickDelta() / 5f, lerpView.computeIfAbsent(node, __ -> 0f), 1));
+				if(shouldView(node))
+					if(node == looking)
+						lerpView.put(node, MathHelper.lerp(context.tickDelta() / 5f, lerpView.computeIfAbsent(node, __ -> 0f), 1));
+					else
+						lerpView.put(node, MathHelper.lerp(context.tickDelta() / 5f, lerpView.computeIfAbsent(node, __ -> 1f), 0));
 				else
-					lerpView.put(node, MathHelper.lerp(context.tickDelta() / 5f, lerpView.computeIfAbsent(node, __ -> 1f), 0));
+					lerpView.put(node, 0f);
 			
 			Aspects.primals.forEach(primal -> {
 				RenderSystem.setShaderTexture(0, AspectRenderer.texture(primal));
 				buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);
 				for(Node node : allNodes)
-					drawNodeAspect(camera, node, buffer, primal);
+					if(shouldView(node))
+						drawNodeAspect(camera, node, buffer, primal);
 				BufferRenderer.drawWithShader(buffer.end());
 			});
 			
 			for(Node node : allNodes)
-				for(Aspect primal : Aspects.primals)
-					drawNodeAspectCount(camera, node, buffer, primal);
+				if(shouldView(node))
+					for(Aspect primal : Aspects.primals)
+						drawNodeAspectCount(camera, node, buffer, primal);
 		}
 		
 		RenderSystem.depthMask(true);
 		context.lightmapTextureManager().disable();
+	}
+	
+	private static boolean shouldView(Node node){
+		var client = MinecraftClient.getInstance();
+		var maxDist = client.options.getClampedViewDistance() * 14;
+		return maxDist * maxDist >= client.player.squaredDistanceTo(node.getX(), node.getY(), node.getZ());
 	}
 	
 	private static void drawNode(Camera camera, Node node, BufferBuilder buffer, float alpha){

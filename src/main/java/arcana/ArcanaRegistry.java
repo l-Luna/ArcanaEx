@@ -39,7 +39,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static arcana.Arcana.arcId;
-import static net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings.of;
+import static arcana.blocks.ArcanaBlockSettings.BlockLayer.CUTOUT;
+import static arcana.blocks.ArcanaBlockSettings.of;
 
 public final class ArcanaRegistry{
 	
@@ -106,7 +107,7 @@ public final class ArcanaRegistry{
 	// blocks...
 	public static final Block ARCANE_CRAFTING_TABLE = new ArcaneCraftingTableBlock(of(Material.WOOD).nonOpaque());
 	public static final Block CRUCIBLE = new CrucibleBlock(of(Material.METAL).nonOpaque());
-	public static final Block RESEARCH_TABLE = new ResearchTableBlock(of(Material.WOOD).nonOpaque().strength(3));
+	public static final Block RESEARCH_TABLE = new ResearchTableBlock(of(Material.WOOD).renderLayer(CUTOUT).nonOpaque().strength(3));
 	public static final Block KNOWLEDGEABLE_DROPPER = new KnowledgeableDropperBlock(of(Material.STONE).requiresTool().strength(3));
 	
 	public static final Block NITOR = new NitorBlock(of(Material.DECORATION).strength(0).luminance(15));
@@ -217,7 +218,14 @@ public final class ArcanaRegistry{
 		register("arcane_stone_bricks", ARCANE_STONE_BRICKS);
 		
 		for(Aspect primal : Aspects.primals){
-			CrystalClusterBlock clusterBlock = new CrystalClusterBlock(of(Material.GLASS).nonOpaque().noCollision().ticksRandomly().sounds(BlockSoundGroup.AMETHYST_CLUSTER), primal);
+			CrystalClusterBlock clusterBlock = new CrystalClusterBlock(
+					of(Material.GLASS)
+							.renderLayer(CUTOUT)
+							.nonOpaque()
+							.noCollision()
+							.ticksRandomly()
+							.sounds(BlockSoundGroup.AMETHYST_CLUSTER),
+					primal);
 			register("clusters/" + primal.id().getPath(), clusterBlock);
 			Aspects.clusters.put(primal, clusterBlock);
 		}

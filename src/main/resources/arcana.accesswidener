@@ -10,3 +10,5 @@ accessible method net/minecraft/item/HoeItem <init> (Lnet/minecraft/item/ToolMat
 
 accessible field net/minecraft/recipe/SmithingRecipe base Lnet/minecraft/recipe/Ingredient;
 accessible field net/minecraft/recipe/SmithingRecipe addition Lnet/minecraft/recipe/Ingredient;
+
+accessible field net/minecraft/block/AbstractBlock settings Lnet/minecraft/block/AbstractBlock$Settings;

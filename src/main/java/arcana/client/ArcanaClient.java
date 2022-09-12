@@ -6,6 +6,7 @@ import arcana.aspects.Aspect;
 import arcana.aspects.Aspects;
 import arcana.aspects.ItemAspectsTooltipData;
 import arcana.aspects.WandAspectsTooltipData;
+import arcana.blocks.ArcanaBlockSettings;
 import arcana.client.research.EntrySectionRenderer;
 import arcana.client.research.PuzzleRenderer;
 import arcana.client.research.RequirementRenderer;
@@ -24,6 +25,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
+import net.minecraft.block.Block;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
@@ -67,9 +69,18 @@ public final class ArcanaClient implements ClientModInitializer{
 		HandledScreens.register(ArcanaRegistry.KNOWLEDGEABLE_DROPPER_SCREEN_HANDLER, KnowledgeableDropperScreen::new);
 		
 		BlockEntityRendererRegistry.register(ArcanaRegistry.CRUCIBLE_BE, context -> new CrucibleBlockEntityRenderer());
-		BlockRenderLayerMap.INSTANCE.putBlock(ArcanaRegistry.RESEARCH_TABLE, RenderLayer.getCutout());
+		/*BlockRenderLayerMap.INSTANCE.putBlock(ArcanaRegistry.RESEARCH_TABLE, RenderLayer.getCutout());
 		for(var cluster : Aspects.clusters.values())
-			BlockRenderLayerMap.INSTANCE.putBlock(cluster, RenderLayer.getCutout());
+			BlockRenderLayerMap.INSTANCE.putBlock(cluster, RenderLayer.getCutout());*/
+		
+		for(Block block : ArcanaRegistry.blocks)
+			if(block.settings instanceof ArcanaBlockSettings abs)
+				if(abs.getRenderLayer() != null)
+					BlockRenderLayerMap.INSTANCE.putBlock(block, switch(abs.getRenderLayer()){
+						case CUTOUT -> RenderLayer.getCutout();
+						case OPAQUE -> RenderLayer.getSolid();
+						case TRANSLUCENT -> RenderLayer.getTranslucent();
+					});
 		
 		EntrySectionRenderer.setup();
 		RequirementRenderer.setup();

@@ -41,6 +41,8 @@ import java.util.List;
 import static arcana.Arcana.arcId;
 import static arcana.blocks.ArcanaBlockSettings.BlockLayer.CUTOUT;
 import static arcana.blocks.ArcanaBlockSettings.of;
+import static net.minecraft.tag.BlockTags.AXE_MINEABLE;
+import static net.minecraft.tag.BlockTags.PICKAXE_MINEABLE;
 
 public final class ArcanaRegistry{
 	
@@ -105,16 +107,16 @@ public final class ArcanaRegistry{
 	public static final Item PRISMATIC_LIGHT_FOCUS = new FocusItem(GROUPED_SINGLE);
 	
 	// blocks...
-	public static final Block ARCANE_CRAFTING_TABLE = new ArcaneCraftingTableBlock(of(Material.WOOD).nonOpaque());
-	public static final Block CRUCIBLE = new CrucibleBlock(of(Material.METAL).nonOpaque());
-	public static final Block RESEARCH_TABLE = new ResearchTableBlock(of(Material.WOOD).renderLayer(CUTOUT).nonOpaque().strength(3));
-	public static final Block KNOWLEDGEABLE_DROPPER = new KnowledgeableDropperBlock(of(Material.STONE).requiresTool().strength(3));
+	public static final Block ARCANE_CRAFTING_TABLE = new ArcaneCraftingTableBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(3).nonOpaque());
+	public static final Block CRUCIBLE = new CrucibleBlock(of(Material.METAL).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(2).nonOpaque());
+	public static final Block RESEARCH_TABLE = new ResearchTableBlock(of(Material.WOOD).dropsSelf().renderLayer(CUTOUT).usesTool(AXE_MINEABLE).nonOpaque().strength(3));
+	public static final Block KNOWLEDGEABLE_DROPPER = new KnowledgeableDropperBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3));
 	
-	public static final Block NITOR = new NitorBlock(of(Material.DECORATION).strength(0).luminance(15));
+	public static final Block NITOR = new NitorBlock(of(Material.DECORATION).dropsSelf().strength(0).luminance(15));
 	
-	public static final Block ARCANIUM_BLOCK = new Block(of(Material.METAL, MapColor.PINK).requiresTool().strength(5, 6).sounds(BlockSoundGroup.METAL));
-	public static final Block ARCANE_STONE = new Block(of(Material.STONE).requiresTool().strength(3, 7));
-	public static final Block ARCANE_STONE_BRICKS = new Block(of(Material.STONE).requiresTool().strength(3.5f, 7));
+	public static final Block ARCANIUM_BLOCK = new Block(of(Material.METAL, MapColor.PINK).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(5, 6).sounds(BlockSoundGroup.METAL));
+	public static final Block ARCANE_STONE = new Block(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3, 7));
+	public static final Block ARCANE_STONE_BRICKS = new Block(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3.5f, 7));
 	
 	// screen handlers...
 	public static final ScreenHandlerType<ArcaneCraftingScreenHandler> ARCANE_CRAFTING_SCREEN_HANDLER
@@ -221,10 +223,13 @@ public final class ArcanaRegistry{
 			CrystalClusterBlock clusterBlock = new CrystalClusterBlock(
 					of(Material.GLASS)
 							.renderLayer(CUTOUT)
+							.usesTool(PICKAXE_MINEABLE)
 							.nonOpaque()
 							.noCollision()
 							.ticksRandomly()
-							.sounds(BlockSoundGroup.AMETHYST_CLUSTER),
+							.sounds(BlockSoundGroup.AMETHYST_CLUSTER)
+							.strength(1.5f)
+							.luminance(5),
 					primal);
 			register("clusters/" + primal.id().getPath(), clusterBlock);
 			Aspects.clusters.put(primal, clusterBlock);

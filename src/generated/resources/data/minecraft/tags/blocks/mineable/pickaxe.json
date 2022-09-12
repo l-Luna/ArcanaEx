@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "values": [
+    "arcana:crucible",
+    "arcana:knowledgeable_dropper",
+    "arcana:arcanium_block",
+    "arcana:arcane_stone",
+    "arcana:arcane_stone_bricks",
+    "arcana:clusters/air",
+    "arcana:clusters/fire",
+    "arcana:clusters/water",
+    "arcana:clusters/earth",
+    "arcana:clusters/order",
+    "arcana:clusters/entropy"
+  ]
+}

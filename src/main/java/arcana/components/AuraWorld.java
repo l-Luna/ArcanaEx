@@ -10,15 +10,17 @@ import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Position;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.ChunkRegion;
 import net.minecraft.world.RaycastContext;
+import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.World;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -35,6 +37,18 @@ public final class AuraWorld implements Component, CommonTickingComponent, AutoS
 	
 	public AuraWorld(World world){
 		this.world = world;
+	}
+	
+	public static AuraWorld from(World world){
+		return world.getComponent(KEY);
+	}
+	
+	public static AuraWorld from(StructureWorldAccess swa){
+		if(swa instanceof ServerWorld sw)
+			return from((World)sw);
+		else if(swa instanceof ChunkRegion cr)
+			return from((World)cr.toServerWorld());
+		throw new IncompatibleClassChangeError();
 	}
 	
 	public void readFromNbt(NbtCompound tag){
@@ -58,6 +72,10 @@ public final class AuraWorld implements Component, CommonTickingComponent, AutoS
 	
 	public List<Node> getNodes(){
 		return nodes;
+	}
+	
+	public World getWorld(){
+		return world;
 	}
 	
 	public List<Node> getNodesInBounds(Box bounds){

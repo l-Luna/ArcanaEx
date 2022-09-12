@@ -9,6 +9,7 @@ import arcana.items.foci.FireFocusItem;
 import arcana.screens.ArcaneCraftingScreenHandler;
 import arcana.screens.KnowledgeableDropperScreenHandler;
 import arcana.screens.ResearchTableScreenHandler;
+import arcana.worldgen.SurfaceNodeFeature;
 import com.unascribed.lib39.fractal.api.ItemSubGroup;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
@@ -23,7 +24,15 @@ import net.minecraft.item.*;
 import net.minecraft.item.Item.Settings;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryEntry;
+import net.minecraft.world.Heightmap;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
+import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.PlacedFeature;
+import net.minecraft.world.gen.placementmodifier.HeightmapPlacementModifier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -127,6 +136,15 @@ public final class ArcanaRegistry{
 	// enchantments...
 	public static Enchantment WARPING = new WarpingCurseEnchantment(Enchantment.Rarity.VERY_RARE, EquipmentSlot.values());
 	
+	// features...
+	// TODO: move elsewhere? e.g. to each feature's class
+	public static Feature<DefaultFeatureConfig> SURFACE_NODE_FEATURE = new SurfaceNodeFeature();
+	public static ConfiguredFeature<?, ?> SURFACE_NODE_CONF_FEATURE = new ConfiguredFeature<>(SURFACE_NODE_FEATURE, DefaultFeatureConfig.INSTANCE);
+	public static PlacedFeature SURFACE_NODE_PLACED_FEATURE = new PlacedFeature(
+			RegistryEntry.of(SURFACE_NODE_CONF_FEATURE),
+			List.of(HeightmapPlacementModifier.of(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES))
+	);
+	
 	public static final List<Item> items = new ArrayList<>();
 	public static final List<Block> blocks = new ArrayList<>();
 	
@@ -215,6 +233,11 @@ public final class ArcanaRegistry{
 		
 		// enchantments
 		register("warping", WARPING);
+		
+		// features
+		register("surface_node", SURFACE_NODE_FEATURE);
+		register("surface_node", SURFACE_NODE_CONF_FEATURE);
+		register("surface_node", SURFACE_NODE_PLACED_FEATURE);
 	}
 	
 	private static void register(String name, Item item){
@@ -247,6 +270,18 @@ public final class ArcanaRegistry{
 	
 	private static void register(String name, Enchantment enchantment){
 		Registry.register(Registry.ENCHANTMENT, arcId(name), enchantment);
+	}
+	
+	private static void register(String name, Feature<?> feature){
+		Registry.register(Registry.FEATURE, arcId(name), feature);
+	}
+	
+	private static void register(String name, ConfiguredFeature<?, ?> feature){
+		Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, arcId(name), feature);
+	}
+	
+	private static void register(String name, PlacedFeature feature){
+		Registry.register(BuiltinRegistries.PLACED_FEATURE, arcId(name), feature);
 	}
 	
 	private static void registerCapOnly(Cap cap){

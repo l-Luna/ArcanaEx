@@ -10,6 +10,7 @@ import arcana.recipes.WandRecipe;
 import arcana.research.Research;
 import arcana.research.ResearchLoader;
 import arcana.warp.WarpEvents;
+import arcana.worldgen.SurfaceNodeFeature;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.CommonLifecycleEvents;
@@ -32,11 +33,14 @@ public final class Arcana implements ModInitializer{
 		logger.info("Loading Arcana");
 		
 		ArcanaRegistry.setup();
+		
 		WandRecipe.setup();
 		ShapedArcaneCraftingRecipe.setup();
 		AlchemyRecipe.setup();
 		Research.setup();
 		WarpEvents.setup();
+		
+		SurfaceNodeFeature.addToWorldgen();
 		
 		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(aspectRegistry);
 		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(researchLoader);

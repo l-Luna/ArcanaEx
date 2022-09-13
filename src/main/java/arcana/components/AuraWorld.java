@@ -68,6 +68,11 @@ public final class AuraWorld implements Component, CommonTickingComponent, AutoS
 			node.tick();
 	}
 	
+	// TODO: methods for only syncing one node, nodes in a chunk...
+	public void sync(){
+		world.syncComponent(KEY);
+	}
+	
 	// "public" API
 	
 	public List<Node> getNodes(){

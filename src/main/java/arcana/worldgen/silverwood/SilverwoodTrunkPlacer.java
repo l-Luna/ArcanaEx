@@ -1,10 +1,15 @@
 package arcana.worldgen.silverwood;
 
+import arcana.components.AuraWorld;
+import arcana.nodes.Node;
+import arcana.nodes.NodeTypes;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.TestableWorld;
 import net.minecraft.world.gen.feature.TreeFeatureConfig;
 import net.minecraft.world.gen.foliage.FoliagePlacer;
@@ -62,12 +67,11 @@ public class SilverwoodTrunkPlacer extends TrunkPlacer{
 				}
 			
 			// add pure node at half height
-			/*if(rand.nextInt(100) < ArcanaConfig.SILVERWOOD_NODE_CHANCE.get())
-				WorldTickHandler.onTick.add(w -> {
-					NodeType type = NodeType.PURE;
-					AspectHandler aspects = type.genBattery(pos, w, rand);
-					requireNonNull(AuraChunk.getFrom((Chunk)w.getChunk(pos))).addNode(new FoliagePlacer.TreeNode(aspects, type, x, y + height / 2f, z, 0));
-				});*/
+			AuraWorld aura = AuraWorld.from((StructureWorldAccess)world); // either World or ChunkRegion
+			if(rand.nextInt(100) < 20){
+				aura.getNodes().add(new Node(NodeTypes.PURE, aura.getWorld(), new Vec3d(pos.getX(), y + height / 2f, pos.getZ())));
+				aura.sync();
+			}
 			
 			return List.of(new FoliagePlacer.TreeNode(pos.up(height - 4), 1, false));
 		}

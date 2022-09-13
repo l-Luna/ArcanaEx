@@ -17,11 +17,12 @@ public class NodeTypes{
 			BRIGHT = create("bright", 33 * 20, 35),
 			FADING = create("fading", 65 * 20, 13),
 	
-			HUNGRY = create("hungry", 40 * 20, 22),
-			ELDRITCH = create("eldritch", 49 * 20, 18);
+			HUNGRY = create("hungry", 40 * 20, 25),
+			ELDRITCH = create("eldritch", 49 * 20, 18),
+			PURE = create("pure", 48 * 2, 23);
 	
 	public static final List<NodeType> normalTypes = List.of(NORMAL, BRIGHT, FADING);
-	public static final List<NodeType> specialTypes = List.of(HUNGRY, ELDRITCH);
+	public static final List<NodeType> specialTypes = List.of(HUNGRY, ELDRITCH, PURE);
 	
 	private static NodeType create(String id, int rechargeTime, int aspectCap){
 		Identifier identifier = arcId(id);

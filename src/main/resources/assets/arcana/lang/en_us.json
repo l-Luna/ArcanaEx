@@ -12,8 +12,11 @@
   "tag.arcana.leggings": "Leggings",
   "tag.arcana.boots": "Boots",
   "tag.arcana.horse_armours": "Horse Armours",
+
   "tag.arcana.aspect_crystals": "Primal Crystals",
+
   "tag.arcana.silverwood_logs": "Silverwood Logs",
+  "tag.arcana.greatwood_logs": "Greatwood Logs",
 
   // EMI categories
   "emi.category.arcana.items_by_aspects": "Items by Aspects",
@@ -133,6 +136,15 @@
   "block.arcana.silverwood_wood": "Silverwood Wood",
   "block.arcana.stripped_silverwood_log": "Stripped Silverwood Log",
   "block.arcana.stripped_silverwood_wood": "Stripped Silverwood Wood",
+
+  "block.arcana.greatwood_sapling": "Greatwood Sapling",
+  "block.arcana.greatwood_log": "Greatwood Log",
+  "block.arcana.greatwood_leaves": "Greatwood Leaves",
+  "block.arcana.greatwood_planks": "Greatwood Planks",
+
+  "block.arcana.greatwood_wood": "Greatwood Wood",
+  "block.arcana.stripped_greatwood_log": "Stripped Greatwood Log",
+  "block.arcana.stripped_greatwood_wood": "Stripped Greatwood Wood",
 
   "item.arcana.aspect_crystal_cluster": "%s Cluster",
   "block.arcana.clusters.air": "Aer Cluster",

@@ -26,8 +26,10 @@ import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.color.world.BiomeColors;
+import net.minecraft.client.color.world.FoliageColors;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.gui.tooltip.BundleTooltipComponent;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
@@ -37,6 +39,7 @@ import net.minecraft.client.item.TooltipData;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.item.BlockItem;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
@@ -61,6 +64,18 @@ public final class ArcanaClient implements ClientModInitializer{
 		ColorProviderRegistry.BLOCK.register(
 				(state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.getWaterColor(world, pos) : -1,
 				ArcanaRegistry.CRUCIBLE
+		);
+		ColorProviderRegistry.BLOCK.register(
+				(state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.getFoliageColor(world, pos) : FoliageColors.getDefaultColor(),
+				ArcanaRegistry.GREATWOOD_LEAVES
+		);
+		
+		ColorProviderRegistry.ITEM.register(
+				(stack, tintIndex) -> {
+					BlockState state = ((BlockItem)stack.getItem()).getBlock().getDefaultState();
+					return ColorProviderRegistry.BLOCK.get(state.getBlock()).getColor(state, null, null, tintIndex);
+				},
+				ArcanaRegistry.GREATWOOD_LEAVES
 		);
 		ModelPredicateProviderRegistry.register(ArcanaRegistry.TOME_OF_SHARING, arcId("bound"), new TomeOfSharingPredicateProvider());
 		

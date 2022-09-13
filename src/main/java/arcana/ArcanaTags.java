@@ -20,8 +20,10 @@ public final class ArcanaTags{
 	public static final TagKey<Fluid> CRUCIBLE_HEATING_FLUIDS = TagKey.of(Registry.FLUID_KEY, arcId("crucible_heating_fluids"));
 	
 	public static final TagKey<Item> SILVERWOOD_LOGS = TagKey.of(Registry.ITEM_KEY, arcId("silverwood_logs"));
+	public static final TagKey<Item> GREATWOOD_LOGS = TagKey.of(Registry.ITEM_KEY, arcId("greatwood_logs"));
 	
 	public static final TagKey<Biome> SILVERWOOD_SPAWNABLE = TagKey.of(Registry.BIOME_KEY, arcId("silverwood_spawnable"));
+	public static final TagKey<Biome> GREATWOOD_SPAWNABLE = TagKey.of(Registry.BIOME_KEY, arcId("greatwood_spawnable"));
 	
 	public static List<Item> itemsIn(TagKey<Item> tag){
 		return Registry.ITEM.streamTagsAndEntries()

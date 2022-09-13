@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/leaves",
+  "textures": {
+    "all": "arcana:block/greatwood_leaves"
+  }
+}

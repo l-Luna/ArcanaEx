@@ -6,6 +6,10 @@
     "arcana:silverwood_log",
     "arcana:silverwood_wood",
     "arcana:stripped_silverwood_log",
-    "arcana:stripped_silverwood_wood"
+    "arcana:stripped_silverwood_wood",
+    "arcana:greatwood_log",
+    "arcana:greatwood_wood",
+    "arcana:stripped_greatwood_log",
+    "arcana:stripped_greatwood_wood"
   ]
 }

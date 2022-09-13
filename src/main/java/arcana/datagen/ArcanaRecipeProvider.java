@@ -19,5 +19,9 @@ public class ArcanaRecipeProvider extends FabricRecipeProvider{
 		offerPlanksRecipe(exporter, SILVERWOOD_PLANKS, ArcanaTags.SILVERWOOD_LOGS);
 		offerBarkBlockRecipe(exporter, SILVERWOOD_WOOD, SILVERWOOD_LOG);
 		offerBarkBlockRecipe(exporter, STRIPPED_SILVERWOOD_WOOD, STRIPPED_SILVERWOOD_LOG);
+		
+		offerPlanksRecipe(exporter, GREATWOOD_PLANKS, ArcanaTags.GREATWOOD_LOGS);
+		offerBarkBlockRecipe(exporter, GREATWOOD_WOOD, GREATWOOD_LOG);
+		offerBarkBlockRecipe(exporter, STRIPPED_GREATWOOD_WOOD, STRIPPED_GREATWOOD_LOG);
 	}
 }

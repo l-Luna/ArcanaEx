@@ -31,14 +31,20 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		blockGen.registerSimpleCubeAll(ARCANIUM_BLOCK);
 		blockGen.registerSimpleCubeAll(ARCANE_STONE);
 		blockGen.registerSimpleCubeAll(ARCANE_STONE_BRICKS);
-		blockGen.registerSimpleCubeAll(SILVERWOOD_LEAVES);
 		blockGen.registerSimpleCubeAll(SILVERWOOD_PLANKS);
+		blockGen.registerSimpleCubeAll(SILVERWOOD_LEAVES);
+		blockGen.registerSimpleCubeAll(GREATWOOD_PLANKS);
+		blockGen.registerSingleton(GREATWOOD_LEAVES, TexturedModel.LEAVES);
 		
 		blockGen.registerTintableCross(SILVERWOOD_SAPLING, BlockStateModelGenerator.TintType.NOT_TINTED);
 		noAutoGen.add(SILVERWOOD_SAPLING.asItem());
+		blockGen.registerTintableCross(GREATWOOD_SAPLING, BlockStateModelGenerator.TintType.NOT_TINTED);
+		noAutoGen.add(GREATWOOD_SAPLING.asItem());
 		
 		blockGen.registerLog(SILVERWOOD_LOG).log(SILVERWOOD_LOG).wood(SILVERWOOD_WOOD);
 		blockGen.registerLog(STRIPPED_SILVERWOOD_LOG).log(STRIPPED_SILVERWOOD_LOG).wood(STRIPPED_SILVERWOOD_WOOD);
+		blockGen.registerLog(GREATWOOD_LOG).log(GREATWOOD_LOG).wood(GREATWOOD_WOOD);
+		blockGen.registerLog(STRIPPED_GREATWOOD_LOG).log(STRIPPED_GREATWOOD_LOG).wood(STRIPPED_GREATWOOD_WOOD);
 		
 		for(CrystalClusterBlock value : Aspects.clusters.values()){
 			blockGen.blockStateCollector.accept(VariantsBlockStateSupplier

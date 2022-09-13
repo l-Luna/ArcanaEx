@@ -11,6 +11,10 @@ import arcana.screens.KnowledgeableDropperScreenHandler;
 import arcana.screens.ResearchTableScreenHandler;
 import arcana.worldgen.SurfaceNodeFeature;
 import arcana.worldgen.geodes.NodalGeodes;
+import arcana.worldgen.greatwood.GreatwoodFoliagePlacer;
+import arcana.worldgen.greatwood.GreatwoodSaplingGenerator;
+import arcana.worldgen.greatwood.GreatwoodTree;
+import arcana.worldgen.greatwood.GreatwoodTrunkPlacer;
 import arcana.worldgen.silverwood.SilverwoodFoliagePlacer;
 import arcana.worldgen.silverwood.SilverwoodSaplingGenerator;
 import arcana.worldgen.silverwood.SilverwoodTree;
@@ -132,7 +136,7 @@ public final class ArcanaRegistry{
 	public static final Block STRIPPED_SILVERWOOD_LOG = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
 	public static final Block STRIPPED_SILVERWOOD_WOOD = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
 	
-	public static final Block GREATWOOD_SAPLING = new SaplingBlock(new SilverwoodSaplingGenerator(), of(Material.PLANT).dropsSelf().renderLayer(CUTOUT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
+	public static final Block GREATWOOD_SAPLING = new SaplingBlock(new GreatwoodSaplingGenerator(), of(Material.PLANT).dropsSelf().renderLayer(CUTOUT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
 	public static final Block GREATWOOD_LOG = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
 	public static final Block GREATWOOD_LEAVES = new LeavesBlock(of(Material.LEAVES).renderLayer(CUTOUT).strength(.2f).ticksRandomly().sounds(BlockSoundGroup.GRASS).nonOpaque().allowsSpawning(Blocks::canSpawnOnLeaves).suffocates(Blocks::never).blockVision(Blocks::never));
 	public static final Block GREATWOOD_PLANKS = new Block(of(Material.WOOD).dropsSelf().strength(2, 3).sounds(BlockSoundGroup.WOOD));
@@ -316,6 +320,11 @@ public final class ArcanaRegistry{
 		register("silverwood_trunk", SilverwoodTrunkPlacer.TYPE);
 		register("silverwood_tree", SilverwoodTree.SILVERWOOD_TREE);
 		register("silverwood_tree", SilverwoodTree.SCATTERED_SILVERWOOD_TREE);
+		
+		register("greatwood_foliage", GreatwoodFoliagePlacer.TYPE);
+		register("greatwood_trunk", GreatwoodTrunkPlacer.TYPE);
+		register("greatwood_tree", GreatwoodTree.GREATWOOD_TREE);
+		register("greatwood_tree", GreatwoodTree.SCATTERED_GREATWOOD_TREE);
 	}
 	
 	private static void register(String name, Item item){

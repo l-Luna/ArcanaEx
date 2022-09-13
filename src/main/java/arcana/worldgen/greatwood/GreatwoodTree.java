@@ -1,4 +1,4 @@
-package arcana.worldgen.silverwood;
+package arcana.worldgen.greatwood;
 
 import arcana.ArcanaTags;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
@@ -17,28 +17,27 @@ import net.minecraft.world.gen.stateprovider.BlockStateProvider;
 import java.util.List;
 
 import static arcana.Arcana.arcId;
-import static arcana.ArcanaRegistry.SILVERWOOD_LEAVES;
-import static arcana.ArcanaRegistry.SILVERWOOD_LOG;
+import static arcana.ArcanaRegistry.GREATWOOD_LEAVES;
+import static arcana.ArcanaRegistry.GREATWOOD_LOG;
 
-public class SilverwoodTree{
+public class GreatwoodTree{
 	
-	public static final ConfiguredFeature<TreeFeatureConfig, ?> SILVERWOOD_TREE = new ConfiguredFeature<>(
+	public static final ConfiguredFeature<TreeFeatureConfig, ?> GREATWOOD_TREE = new ConfiguredFeature<>(
 			Feature.TREE,
 			new TreeFeatureConfig.Builder(
-					BlockStateProvider.of(SILVERWOOD_LOG),
-					new SilverwoodTrunkPlacer(4, 2, 0),
-					BlockStateProvider.of(SILVERWOOD_LEAVES),
-					new SilverwoodFoliagePlacer(ConstantIntProvider.create(2), ConstantIntProvider.create(0), ConstantIntProvider.create(15)),
+					BlockStateProvider.of(GREATWOOD_LOG),
+					new GreatwoodTrunkPlacer(4, 2, 0),
+					BlockStateProvider.of(GREATWOOD_LEAVES),
+					new GreatwoodFoliagePlacer(ConstantIntProvider.create(2), ConstantIntProvider.create(0), ConstantIntProvider.create(15)),
 					new TwoLayersFeatureSize(1, 0, 1)
 			).ignoreVines().build()
 	);
-	public static final PlacedFeature SCATTERED_SILVERWOOD_TREE = new PlacedFeature(
-			RegistryEntry.of(SILVERWOOD_TREE),
+	public static final PlacedFeature SCATTERED_GREATWOOD_TREE = new PlacedFeature(
+			RegistryEntry.of(GREATWOOD_TREE),
 			List.of(
 					SquarePlacementModifier.of(),
-					PlacedFeatures.createCountExtraModifier(0, 0.1f, 1), // 0.004 chance /chunk
-					PlacedFeatures.createCountExtraModifier(0, 0.2f, 1),
-					PlacedFeatures.createCountExtraModifier(0, 0.2f, 1),
+					PlacedFeatures.createCountExtraModifier(0, 0.1f, 1), // 0.01 chance /chunk
+					PlacedFeatures.createCountExtraModifier(0, 0.1f, 1),
 					VegetationPlacedFeatures.NOT_IN_SURFACE_WATER_MODIFIER,
 					HeightmapPlacementModifier.of(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES)
 			)
@@ -46,9 +45,9 @@ public class SilverwoodTree{
 	
 	public static void addToWorldgen(){
 		BiomeModifications.addFeature(
-				x -> x.hasTag(ArcanaTags.SILVERWOOD_SPAWNABLE),
+				x -> x.hasTag(ArcanaTags.GREATWOOD_SPAWNABLE),
 				GenerationStep.Feature.VEGETAL_DECORATION,
-				RegistryKey.of(Registry.PLACED_FEATURE_KEY, arcId("silverwood_tree"))
+				RegistryKey.of(Registry.PLACED_FEATURE_KEY, arcId("greatwood_tree"))
 		);
 	}
 }

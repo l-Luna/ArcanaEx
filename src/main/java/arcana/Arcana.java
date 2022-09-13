@@ -12,6 +12,7 @@ import arcana.research.ResearchLoader;
 import arcana.warp.WarpEvents;
 import arcana.worldgen.SurfaceNodeFeature;
 import arcana.worldgen.geodes.NodalGeodes;
+import arcana.worldgen.greatwood.GreatwoodTree;
 import arcana.worldgen.silverwood.SilverwoodTree;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
@@ -45,10 +46,13 @@ public final class Arcana implements ModInitializer{
 		SurfaceNodeFeature.addToWorldgen();
 		NodalGeodes.addToWorldgen();
 		SilverwoodTree.addToWorldgen();
+		GreatwoodTree.addToWorldgen();
 		
 		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(aspectRegistry);
 		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(researchLoader);
+		
 		CommonLifecycleEvents.TAGS_LOADED.register((registries, client) -> aspectRegistry.applyAssociations());
+		
 		CommandRegistrationCallback.EVENT.register(NodeCommand::register);
 		CommandRegistrationCallback.EVENT.register(ResearchCommand::register);
 		CommandRegistrationCallback.EVENT.register(WarpCommand::register);

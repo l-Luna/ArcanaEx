@@ -12,6 +12,7 @@ import arcana.screens.ResearchTableScreenHandler;
 import arcana.worldgen.SurfaceNodeFeature;
 import arcana.worldgen.geodes.NodalGeodes;
 import arcana.worldgen.silverwood.SilverwoodFoliagePlacer;
+import arcana.worldgen.silverwood.SilverwoodSaplingGenerator;
 import arcana.worldgen.silverwood.SilverwoodTree;
 import arcana.worldgen.silverwood.SilverwoodTrunkPlacer;
 import com.unascribed.lib39.fractal.api.ItemSubGroup;
@@ -126,7 +127,7 @@ public final class ArcanaRegistry{
 	public static final Block SILVERWOOD_LEAVES = new LeavesBlock(of(Material.LEAVES).renderLayer(CUTOUT).strength(.2f).ticksRandomly().sounds(BlockSoundGroup.GRASS).nonOpaque().allowsSpawning(Blocks::canSpawnOnLeaves).suffocates(Blocks::never).blockVision(Blocks::never));
 	public static final Block SILVERWOOD_PLANKS = new Block(of(Material.WOOD).dropsSelf().strength(2, 3).sounds(BlockSoundGroup.WOOD));
 	// must come after wood & leaves for SilverwoodTree static init
-	public static final Block SILVERWOOD_SAPLING = new SaplingBlock(new SilverwoodTree(), of(Material.PLANT).dropsSelf().renderLayer(CUTOUT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
+	public static final Block SILVERWOOD_SAPLING = new SaplingBlock(new SilverwoodSaplingGenerator(), of(Material.PLANT).dropsSelf().renderLayer(CUTOUT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
 	
 	public static final Block SILVERWOOD_WOOD = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
 	public static final Block STRIPPED_SILVERWOOD_LOG = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
@@ -295,6 +296,7 @@ public final class ArcanaRegistry{
 		register("silverwood_foliage", SilverwoodFoliagePlacer.TYPE);
 		register("silverwood_trunk", SilverwoodTrunkPlacer.TYPE);
 		register("silverwood_tree", SilverwoodTree.SILVERWOOD_TREE);
+		register("silverwood_tree", SilverwoodTree.SCATTERED_SILVERWOOD_TREE);
 	}
 	
 	private static void register(String name, Item item){

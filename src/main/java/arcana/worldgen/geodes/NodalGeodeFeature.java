@@ -32,8 +32,7 @@ public class NodalGeodeFeature extends Feature<NodalGeodeFeatureConfig>{
 			Node toAdd = new Node(randomType(rng), aura.getWorld(), new Vec3d(nodePos.getX() + rng.nextDouble(), nodePos.getY() + rng.nextDouble(), nodePos.getZ() + rng.nextDouble()));
 			// TODO: aspect caps
 			toAdd.getAspects().add(context.getConfig().primaryAspect, 10);
-			aura.getNodes().add(toAdd);
-			aura.getWorld().syncComponent(AuraWorld.KEY); // TODO: only sync the new node
+			aura.addNode(toAdd);
 			return true;
 		}
 		return false;

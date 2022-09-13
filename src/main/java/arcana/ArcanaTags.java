@@ -7,6 +7,7 @@ import net.minecraft.item.Item;
 import net.minecraft.tag.TagKey;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryEntry;
+import net.minecraft.world.biome.Biome;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,8 @@ public final class ArcanaTags{
 	public static final TagKey<Fluid> CRUCIBLE_HEATING_FLUIDS = TagKey.of(Registry.FLUID_KEY, arcId("crucible_heating_fluids"));
 	
 	public static final TagKey<Item> SILVERWOOD_LOGS = TagKey.of(Registry.ITEM_KEY, arcId("silverwood_logs"));
+	
+	public static final TagKey<Biome> SILVERWOOD_SPAWNABLE = TagKey.of(Registry.BIOME_KEY, arcId("silverwood_spawnable"));
 	
 	public static List<Item> itemsIn(TagKey<Item> tag){
 		return Registry.ITEM.streamTagsAndEntries()

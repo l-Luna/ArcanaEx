@@ -54,8 +54,7 @@ public class SurfaceNodeFeature extends Feature<DefaultFeatureConfig>{
 			AuraWorld aura = AuraWorld.from(world);
 			BlockPos nodePos = pos.up(5);
 			// add the node
-			aura.getNodes().add(new Node(randomType(rng), aura.getWorld(), new Vec3d(nodePos.getX() + rng.nextDouble(), nodePos.getY() + rng.nextDouble(), nodePos.getZ() + rng.nextDouble())));
-			aura.getWorld().syncComponent(AuraWorld.KEY); // TODO: only sync the new node
+			aura.addNode(new Node(randomType(rng), aura.getWorld(), new Vec3d(nodePos.getX() + rng.nextDouble(), nodePos.getY() + rng.nextDouble(), nodePos.getZ() + rng.nextDouble())));
 			// add some crystal clusters
 			int successes = 0;
 			for(int i = 0; i < 40 && successes < (rng.nextInt(5) + 6); i++){

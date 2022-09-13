@@ -58,10 +58,7 @@ public final class NodeCommand{
 		World world = context.getSource().getWorld();
 		AuraWorld aura = world.getComponent(AuraWorld.KEY);
 		
-		Node toAdd = new Node(NodeTypes.byName(getIdentifier(context, "type")), world, getVec3(context, "position"));
-		aura.getNodes().add(toAdd);
-		
-		AuraWorld.KEY.sync(world);
+		aura.addNode(new Node(NodeTypes.byName(getIdentifier(context, "type")), world, getVec3(context, "position")));
 		return 1;
 	}
 	

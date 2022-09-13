@@ -35,6 +35,9 @@ public final class AuraWorld implements Component, CommonTickingComponent, AutoS
 	private final List<Node> nodes = new ArrayList<>();
 	private final World world;
 	
+	private boolean iterating = false;
+	private final List<Node> toAdd = new ArrayList<>();
+	
 	public AuraWorld(World world){
 		this.world = world;
 	}
@@ -58,22 +61,35 @@ public final class AuraWorld implements Component, CommonTickingComponent, AutoS
 	
 	public void writeToNbt(NbtCompound tag){
 		NbtList list = new NbtList();
+		iterating = true;
 		for(Node node : nodes)
 			list.add(node.toNbt());
+		iterating = false;
 		tag.put("nodes", list);
 	}
 	
 	public void tick(){
+		iterating = true;
 		for(Node node : getNodes())
 			node.tick();
+		iterating = false;
+		
+		nodes.addAll(toAdd);
+		if(!toAdd.isEmpty() && !world.isClient)
+			sync();
+		toAdd.clear();
 	}
+	
+	// "public" API
 	
 	// TODO: methods for only syncing one node, nodes in a chunk...
 	public void sync(){
 		world.syncComponent(KEY);
 	}
 	
-	// "public" API
+	public void addNode(Node node){
+		toAdd.add(node);
+	}
 	
 	public List<Node> getNodes(){
 		return nodes;

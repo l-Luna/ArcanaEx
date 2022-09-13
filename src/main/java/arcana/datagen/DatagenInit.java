@@ -10,5 +10,6 @@ public final class DatagenInit implements DataGeneratorEntrypoint{
 		gen.addProvider(new AspectsProvider(gen));
 		gen.addProvider(new ArcanaLootTablesProvider(gen));
 		gen.addProvider(new ArcanaBlockTagsProvider(gen));
+		gen.addProvider(new ArcanaRecipeProvider(gen));
 	}
 }

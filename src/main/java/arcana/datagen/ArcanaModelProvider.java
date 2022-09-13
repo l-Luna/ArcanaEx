@@ -1,6 +1,5 @@
 package arcana.datagen;
 
-import arcana.ArcanaRegistry;
 import arcana.aspects.Aspects;
 import arcana.blocks.CrystalClusterBlock;
 import arcana.blocks.ResearchTableBlock;
@@ -15,6 +14,8 @@ import net.minecraft.item.ToolItem;
 import java.util.ArrayList;
 import java.util.List;
 
+import static arcana.ArcanaRegistry.*;
+
 public final class ArcanaModelProvider extends FabricModelProvider{
 	
 	private final List<Item> noAutoGen = new ArrayList<>();
@@ -24,12 +25,20 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 	}
 	
 	public void generateBlockStateModels(BlockStateModelGenerator blockGen){
-		blockGen.registerSimpleState(ArcanaRegistry.ARCANE_CRAFTING_TABLE);
-		blockGen.registerSimpleState(ArcanaRegistry.NITOR);
+		blockGen.registerSimpleState(ARCANE_CRAFTING_TABLE);
+		blockGen.registerSimpleState(NITOR);
 		
-		blockGen.registerSimpleCubeAll(ArcanaRegistry.ARCANIUM_BLOCK);
-		blockGen.registerSimpleCubeAll(ArcanaRegistry.ARCANE_STONE);
-		blockGen.registerSimpleCubeAll(ArcanaRegistry.ARCANE_STONE_BRICKS);
+		blockGen.registerSimpleCubeAll(ARCANIUM_BLOCK);
+		blockGen.registerSimpleCubeAll(ARCANE_STONE);
+		blockGen.registerSimpleCubeAll(ARCANE_STONE_BRICKS);
+		blockGen.registerSimpleCubeAll(SILVERWOOD_LEAVES);
+		blockGen.registerSimpleCubeAll(SILVERWOOD_PLANKS);
+		
+		blockGen.registerTintableCross(SILVERWOOD_SAPLING, BlockStateModelGenerator.TintType.NOT_TINTED);
+		noAutoGen.add(SILVERWOOD_SAPLING.asItem());
+		
+		blockGen.registerLog(SILVERWOOD_LOG).log(SILVERWOOD_LOG).wood(SILVERWOOD_WOOD);
+		blockGen.registerLog(STRIPPED_SILVERWOOD_LOG).log(STRIPPED_SILVERWOOD_LOG).wood(STRIPPED_SILVERWOOD_WOOD);
 		
 		for(CrystalClusterBlock value : Aspects.clusters.values()){
 			blockGen.blockStateCollector.accept(VariantsBlockStateSupplier
@@ -45,25 +54,25 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 	}
 	
 	public void generateItemModels(ItemModelGenerator itemGen){
-		noAutoGen.add(ArcanaRegistry.WAND);
-		noAutoGen.add(ArcanaRegistry.NITOR.asItem());
-		noAutoGen.add(ArcanaRegistry.TOME_OF_SHARING);
+		noAutoGen.add(WAND);
+		noAutoGen.add(NITOR.asItem());
+		noAutoGen.add(TOME_OF_SHARING);
 		
-		itemGen.register(ArcanaRegistry.NITOR.asItem(), Models.GENERATED);
+		itemGen.register(NITOR.asItem(), Models.GENERATED);
 		
 		for(CrystalClusterBlock value : Aspects.clusters.values()){
 			noAutoGen.add(value.asItem());
 			itemGen.register(value.asItem(), Models.GENERATED);
 		}
 		
-		for(Item item : ArcanaRegistry.items)
+		for(Item item : items)
 			if(!noAutoGen.contains(item) && !(item instanceof BlockItem))
 				if(item instanceof ToolItem)
 					itemGen.register(item, Models.HANDHELD);
 				else
 					itemGen.register(item, Models.GENERATED);
 		
-		for(Block block : ArcanaRegistry.blocks)
+		for(Block block : blocks)
 			if(!(block instanceof ResearchTableBlock))
 				if(!noAutoGen.contains(block.asItem()))
 					itemGen.writer.accept(ModelIds.getItemModelId(block.asItem()), new SimpleModelSupplier(ModelIds.getBlockModelId(block)));

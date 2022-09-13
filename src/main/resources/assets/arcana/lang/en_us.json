@@ -13,6 +13,7 @@
   "tag.arcana.boots": "Boots",
   "tag.arcana.horse_armours": "Horse Armours",
   "tag.arcana.aspect_crystals": "Primal Crystals",
+  "tag.arcana.silverwood_logs": "Silverwood Logs",
 
   // EMI categories
   "emi.category.arcana.items_by_aspects": "Items by Aspects",
@@ -123,6 +124,15 @@
   "block.arcana.arcanium_block": "Arcanium Block",
   "block.arcana.arcane_stone": "Arcane Stone",
   "block.arcana.arcane_stone_bricks": "Arcane Stone Bricks",
+
+  "block.arcana.silverwood_sapling": "Silverwood Sapling",
+  "block.arcana.silverwood_log": "Silverwood Log",
+  "block.arcana.silverwood_leaves": "Silverwood Leaves",
+  "block.arcana.silverwood_planks": "Silverwood Planks",
+
+  "block.arcana.silverwood_wood": "Silverwood Wood",
+  "block.arcana.stripped_silverwood_log": "Stripped Silverwood Log",
+  "block.arcana.stripped_silverwood_wood": "Stripped Silverwood Wood",
 
   "item.arcana.aspect_crystal_cluster": "%s Cluster",
   "block.arcana.clusters.air": "Aer Cluster",

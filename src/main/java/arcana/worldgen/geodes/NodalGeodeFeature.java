@@ -1,4 +1,4 @@
-package arcana.worldgen;
+package arcana.worldgen.geodes;
 
 import arcana.components.AuraWorld;
 import arcana.nodes.Node;

@@ -26,7 +26,12 @@ import net.minecraft.predicate.item.EnchantmentPredicate;
 import net.minecraft.predicate.item.ItemPredicate;
 import net.minecraft.tag.ItemTags;
 
+import static arcana.ArcanaRegistry.SILVERWOOD_LEAVES;
+import static arcana.ArcanaRegistry.SILVERWOOD_SAPLING;
+
 public class ArcanaLootTablesProvider extends FabricBlockLootTableProvider{
+	
+	private static final float[] saplingDropChance = { .05f, .0625f, .083333336f, .1f };
 	
 	protected ArcanaLootTablesProvider(FabricDataGenerator dataGenerator){
 		super(dataGenerator);
@@ -42,6 +47,8 @@ public class ArcanaLootTablesProvider extends FabricBlockLootTableProvider{
 						addPottedPlantDrop(block);
 					else
 						addDrop(block);
+		
+		addDrop(SILVERWOOD_LEAVES, leaves -> leavesDrop(leaves, SILVERWOOD_SAPLING, saplingDropChance));
 		
 		Aspects.clusters.forEach((aspect, cluster) -> {
 			var drop = Aspects.crystals.get(aspect);

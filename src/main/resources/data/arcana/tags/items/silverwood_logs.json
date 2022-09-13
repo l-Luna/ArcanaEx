@@ -1,8 +1,5 @@
 {
-  "replace": false,
   "values": [
-    "arcana:arcane_crafting_table",
-    "arcana:research_table",
     "arcana:silverwood_log",
     "arcana:silverwood_wood",
     "arcana:stripped_silverwood_log",

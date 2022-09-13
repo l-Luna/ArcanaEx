@@ -18,6 +18,8 @@ public final class ArcanaTags{
 	public static final TagKey<Block> CRUCIBLE_HEATING_BLOCKS = TagKey.of(Registry.BLOCK_KEY, arcId("crucible_heating_blocks"));
 	public static final TagKey<Fluid> CRUCIBLE_HEATING_FLUIDS = TagKey.of(Registry.FLUID_KEY, arcId("crucible_heating_fluids"));
 	
+	public static final TagKey<Item> SILVERWOOD_LOGS = TagKey.of(Registry.ITEM_KEY, arcId("silverwood_logs"));
+	
 	public static List<Item> itemsIn(TagKey<Item> tag){
 		return Registry.ITEM.streamTagsAndEntries()
 				.filter(x -> x.getFirst().equals(tag))

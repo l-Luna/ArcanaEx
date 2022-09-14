@@ -99,19 +99,53 @@ public final class ArcanaRegistry{
 	public static final Item ALTERED_IRON = new Item(GROUPED);
 	public static final Item ALUMENTUM = new Item(GROUPED);
 	
-	public static final CapItem IRON_WAND_CAP = new CapItem(GROUPED);
-	public static final CapItem COPPER_WAND_CAP = new CapItem(GROUPED);
-	public static final CapItem GOLD_WAND_CAP = new CapItem(GROUPED);
-	public static final Cap MISSING_CAP = new Cap.Impl(arcId("missing"));
-	
-	public static final CoreItem BONE_WAND_CORE = new CoreItem(GROUPED, 1);
-	public static final CoreItem BLAZE_WAND_CORE = new CoreItem(GROUPED);
-	public static final CoreItem ICE_WAND_CORE = new CoreItem(GROUPED);
-	public static final Core STICK_CORE = new Core.Impl(arcId("stick_wand_core"));
-	public static final Core MISSING_CORE = new Core.Impl(arcId("missing"));
-	
 	public static final Item WAND = new WandItem(GROUPED_SINGLE);
 	
+	// caps...
+	public static final CapItem IRON_WAND_CAP = new CapItem(GROUPED);
+	
+	public static final CapItem GOLD_WAND_CAP = new CapItem(GROUPED);
+	public static final CapItem COPPER_WAND_CAP = new CapItem(GROUPED);
+	public static final CapItem LEATHER_WAND_CAP = new CapItem(GROUPED);
+	
+	public static final CapItem THAUMIUM_WAND_CAP = new CapItem(GROUPED);
+	public static final CapItem BAMBOO_WAND_CAP = new CapItem(GROUPED);
+	public static final CapItem QUARTZ_WAND_CAP = new CapItem(GROUPED);
+	public static final CapItem PRISMARINE_WAND_CAP = new CapItem(GROUPED);
+	public static final CapItem AMBER_WAND_CAP = new CapItem(GROUPED);
+	public static final CapItem HONEYCOMB_WAND_CAP = new CapItem(GROUPED);
+	// TODO: chaos elemental cap
+	
+	public static final CapItem NETHERITE_WAND_CAP = new CapItem(GROUPED);
+	public static final CapItem MECHANICAL_WAND_CAP = new CapItem(GROUPED);
+	public static final CapItem VOID_WAND_CAP = new CapItem(GROUPED);
+	public static final CapItem CRIMSON_WAND_CAP = new CapItem(GROUPED);
+	
+	public static final Cap MISSING_CAP = new Cap.Impl(arcId("missing"));
+	
+	// cores...
+	public static final Core STICK_CORE = new Core.Impl(arcId("stick_wand_core"));
+	
+	public static final CoreItem GREATWOOD_WAND_CORE = new CoreItem(GROUPED);
+	public static final CoreItem NETHER_STEM_WAND_CORE = new CoreItem(GROUPED);
+	public static final CoreItem VARNISHED_WOOD_WAND_CORE = new CoreItem(GROUPED);
+	
+	public static final CoreItem SILVERWOOD_WAND_CORE = new CoreItem(GROUPED);
+	public static final CoreItem SUGAR_CANE_WAND_CORE = new CoreItem(GROUPED);
+	public static final CoreItem BLAZE_WAND_CORE = new CoreItem(GROUPED);
+	public static final CoreItem ICE_WAND_CORE = new CoreItem(GROUPED);
+	public static final CoreItem OBSIDIAN_WAND_CORE = new CoreItem(GROUPED);
+	public static final CoreItem ARCANE_STONE_WAND_CORE = new CoreItem(GROUPED);
+	public static final CoreItem BONE_WAND_CORE = new CoreItem(GROUPED);
+	
+	public static final CoreItem ARCANIUM_WAND_CORE = new CoreItem(GROUPED);
+	public static final CoreItem MECHANICAL_WAND_CORE = new CoreItem(GROUPED);
+	public static final CoreItem TAINTED_WAND_CORE = new CoreItem(GROUPED);
+	public static final CoreItem ELDRITCH_WAND_CORE = new CoreItem(GROUPED);
+	
+	public static final Core MISSING_CORE = new Core.Impl(arcId("missing"));
+	
+	// foci...
 	public static final Item FIRE_FOCUS = new FireFocusItem(GROUPED_SINGLE);
 	public static final Item PRISMATIC_LIGHT_FOCUS = new FocusItem(GROUPED_SINGLE);
 	
@@ -211,18 +245,40 @@ public final class ArcanaRegistry{
 		register("alumentum", ALUMENTUM);
 		FuelRegistry.INSTANCE.add(ALUMENTUM, 1600 * 4); // 4x coal = half stack
 		
+		register("wand", WAND);
+		
 		register("iron_wand_cap", IRON_WAND_CAP);
-		register("copper_wand_cap", COPPER_WAND_CAP);
 		register("gold_wand_cap", GOLD_WAND_CAP);
+		register("copper_wand_cap", COPPER_WAND_CAP);
+		register("leather_wand_cap", LEATHER_WAND_CAP);
+		register("thaumium_wand_cap", THAUMIUM_WAND_CAP);
+		register("bamboo_wand_cap", BAMBOO_WAND_CAP);
+		register("quartz_wand_cap", QUARTZ_WAND_CAP);
+		register("prismarine_wand_cap", PRISMARINE_WAND_CAP);
+		register("amber_wand_cap", AMBER_WAND_CAP);
+		register("honeycomb_wand_cap", HONEYCOMB_WAND_CAP);
+		register("netherite_wand_cap", NETHERITE_WAND_CAP);
+		register("mechanical_wand_cap", MECHANICAL_WAND_CAP);
+		register("void_wand_cap", VOID_WAND_CAP);
+		register("crimson_wand_cap", CRIMSON_WAND_CAP);
 		registerCapOnly(MISSING_CAP);
 		
-		register("bone_wand_core", BONE_WAND_CORE);
+		registerCoreOnly(STICK_CORE);
+		register("greatwood_wand_core", GREATWOOD_WAND_CORE);
+		register("nether_stem_wand_core", NETHER_STEM_WAND_CORE);
+		register("varnished_wood_wand_core", VARNISHED_WOOD_WAND_CORE);
+		register("silverwood_wand_core", SILVERWOOD_WAND_CORE);
+		register("sugar_cane_wand_core", SUGAR_CANE_WAND_CORE);
 		register("blaze_wand_core", BLAZE_WAND_CORE);
 		register("ice_wand_core", ICE_WAND_CORE);
-		registerCoreOnly(STICK_CORE);
+		register("obsidian_wand_core", OBSIDIAN_WAND_CORE);
+		register("arcane_stone_wand_core", ARCANE_STONE_WAND_CORE);
+		register("bone_wand_core", BONE_WAND_CORE);
+		register("arcanium_wand_core", ARCANIUM_WAND_CORE);
+		register("mechanical_wand_core", MECHANICAL_WAND_CORE);
+		register("tainted_wand_core", TAINTED_WAND_CORE);
+		register("eldritch_wand_core", ELDRITCH_WAND_CORE);
 		registerCoreOnly(MISSING_CORE);
-		
-		register("wand", WAND);
 		
 		register("prismatic_light_focus", PRISMATIC_LIGHT_FOCUS);
 		register("fire_focus", FIRE_FOCUS);

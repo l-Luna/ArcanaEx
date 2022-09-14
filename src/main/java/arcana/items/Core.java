@@ -1,6 +1,7 @@
 package arcana.items;
 
 import arcana.ArcanaRegistry;
+import arcana.aspects.Aspect;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import net.minecraft.item.Item;
@@ -25,6 +26,10 @@ public interface Core{
 	
 	Identifier id();
 	
+	int capacity();
+	
+	int strength();
+	
 	default String translationKey(){
 		return "wand.core." + id().getNamespace() + "." + id().getPath();
 	}
@@ -33,11 +38,17 @@ public interface Core{
 		return 0;
 	}
 	
-	// TODO: metrics, come balancing
+	default int percentOff(Aspect aspect){
+		return 0;
+	}
+	
+	default int complexity(){
+		return 0;
+	}
 	
 	static Core asCore(Item is){
 		return is instanceof Core core ? core : is == Items.STICK ? ArcanaRegistry.STICK_CORE : null;
 	}
 	
-	record Impl(Identifier id) implements Core{}
+	record Impl(Identifier id, int capacity, int strength) implements Core{}
 }

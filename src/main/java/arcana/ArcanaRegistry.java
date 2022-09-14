@@ -50,6 +50,8 @@ import java.util.List;
 import static arcana.Arcana.arcId;
 import static arcana.blocks.ArcanaBlockSettings.BlockLayer.CUTOUT;
 import static arcana.blocks.ArcanaBlockSettings.of;
+import static arcana.items.CapItem.capProperties;
+import static arcana.items.CoreItem.coreProperties;
 import static net.minecraft.tag.BlockTags.AXE_MINEABLE;
 import static net.minecraft.tag.BlockTags.PICKAXE_MINEABLE;
 
@@ -102,48 +104,48 @@ public final class ArcanaRegistry{
 	public static final Item WAND = new WandItem(GROUPED_SINGLE);
 	
 	// caps...
-	public static final CapItem IRON_WAND_CAP = new CapItem(GROUPED);
+	public static final CapItem IRON_WAND_CAP = new CapItem(GROUPED, capProperties().capacity(5).complexity(3));
 	
-	public static final CapItem GOLD_WAND_CAP = new CapItem(GROUPED);
-	public static final CapItem COPPER_WAND_CAP = new CapItem(GROUPED);
-	public static final CapItem LEATHER_WAND_CAP = new CapItem(GROUPED);
+	public static final CapItem GOLD_WAND_CAP = new CapItem(GROUPED, capProperties().capacity(15).complexity(15));
+	public static final CapItem COPPER_WAND_CAP = new CapItem(GROUPED, capProperties().capacity(10).complexity(12).strBonus(5));
+	public static final CapItem LEATHER_WAND_CAP = new CapItem(GROUPED, capProperties().capacity(10).complexity(12).discountAll(8));
 	
-	public static final CapItem THAUMIUM_WAND_CAP = new CapItem(GROUPED);
-	public static final CapItem BAMBOO_WAND_CAP = new CapItem(GROUPED);
-	public static final CapItem QUARTZ_WAND_CAP = new CapItem(GROUPED);
-	public static final CapItem PRISMARINE_WAND_CAP = new CapItem(GROUPED);
-	public static final CapItem AMBER_WAND_CAP = new CapItem(GROUPED);
-	public static final CapItem HONEYCOMB_WAND_CAP = new CapItem(GROUPED);
+	public static final CapItem THAUMIUM_WAND_CAP = new CapItem(GROUPED, capProperties().capacity(35).complexity(35));
+	public static final CapItem BAMBOO_WAND_CAP = new CapItem(GROUPED, capProperties().capacity(30).complexity(30).discountFor(Aspects.AIR, 12));
+	public static final CapItem QUARTZ_WAND_CAP = new CapItem(GROUPED, capProperties().capacity(30).complexity(30).discountFor(Aspects.FIRE, 12));
+	public static final CapItem PRISMARINE_WAND_CAP = new CapItem(GROUPED, capProperties().capacity(30).complexity(30).discountFor(Aspects.WATER, 12));
+	public static final CapItem AMBER_WAND_CAP = new CapItem(GROUPED, capProperties().capacity(30).complexity(30).discountFor(Aspects.EARTH, 12));
+	public static final CapItem HONEYCOMB_WAND_CAP = new CapItem(GROUPED, capProperties().capacity(30).complexity(30).discountFor(Aspects.ORDER, 12));
 	// TODO: chaos elemental cap
 	
-	public static final CapItem NETHERITE_WAND_CAP = new CapItem(GROUPED);
-	public static final CapItem MECHANICAL_WAND_CAP = new CapItem(GROUPED);
-	public static final CapItem VOID_WAND_CAP = new CapItem(GROUPED);
-	public static final CapItem CRIMSON_WAND_CAP = new CapItem(GROUPED);
+	public static final CapItem NETHERITE_WAND_CAP = new CapItem(GROUPED, capProperties().capacity(65).complexity(75));
+	public static final CapItem MECHANICAL_WAND_CAP = new CapItem(GROUPED, capProperties().capacity(50).complexity(55)/*.mechanical()?*/);
+	public static final CapItem VOID_WAND_CAP = new CapItem(GROUPED, capProperties().capacity(60).complexity(80).warping(1));
+	public static final CapItem CRIMSON_WAND_CAP = new CapItem(GROUPED, capProperties().capacity(80).complexity(70).warping(2));
 	
-	public static final Cap MISSING_CAP = new Cap.Impl(arcId("missing"));
+	public static final Cap MISSING_CAP = new Cap.Impl(arcId("missing"), 0, 0);
 	
 	// cores...
-	public static final Core STICK_CORE = new Core.Impl(arcId("stick_wand_core"));
+	public static final Core STICK_CORE = new Core.Impl(arcId("stick_wand_core"), 25, 3);
 	
 	public static final CoreItem GREATWOOD_WAND_CORE = new CoreItem(GROUPED);
 	public static final CoreItem NETHER_STEM_WAND_CORE = new CoreItem(GROUPED);
-	public static final CoreItem VARNISHED_WOOD_WAND_CORE = new CoreItem(GROUPED);
+	public static final CoreItem VARNISHED_WOOD_WAND_CORE = new CoreItem(GROUPED, coreProperties().discountAll(12));
 	
-	public static final CoreItem SILVERWOOD_WAND_CORE = new CoreItem(GROUPED);
-	public static final CoreItem SUGAR_CANE_WAND_CORE = new CoreItem(GROUPED);
-	public static final CoreItem BLAZE_WAND_CORE = new CoreItem(GROUPED);
-	public static final CoreItem ICE_WAND_CORE = new CoreItem(GROUPED);
-	public static final CoreItem OBSIDIAN_WAND_CORE = new CoreItem(GROUPED);
-	public static final CoreItem ARCANE_STONE_WAND_CORE = new CoreItem(GROUPED);
-	public static final CoreItem BONE_WAND_CORE = new CoreItem(GROUPED);
+	public static final CoreItem SILVERWOOD_WAND_CORE = new CoreItem(GROUPED, coreProperties());
+	public static final CoreItem SUGAR_CANE_WAND_CORE = new CoreItem(GROUPED, coreProperties().discountFor(Aspects.AIR, 16));
+	public static final CoreItem BLAZE_WAND_CORE = new CoreItem(GROUPED, coreProperties().discountFor(Aspects.FIRE, 16));
+	public static final CoreItem ICE_WAND_CORE = new CoreItem(GROUPED, coreProperties().discountFor(Aspects.WATER, 16));
+	public static final CoreItem OBSIDIAN_WAND_CORE = new CoreItem(GROUPED, coreProperties().discountFor(Aspects.EARTH, 16));
+	public static final CoreItem ARCANE_STONE_WAND_CORE = new CoreItem(GROUPED, coreProperties().discountFor(Aspects.ORDER, 16));
+	public static final CoreItem BONE_WAND_CORE = new CoreItem(GROUPED, coreProperties().discountFor(Aspects.ENTROPY, 16));
 	
 	public static final CoreItem ARCANIUM_WAND_CORE = new CoreItem(GROUPED);
 	public static final CoreItem MECHANICAL_WAND_CORE = new CoreItem(GROUPED);
-	public static final CoreItem TAINTED_WAND_CORE = new CoreItem(GROUPED);
-	public static final CoreItem ELDRITCH_WAND_CORE = new CoreItem(GROUPED);
+	public static final CoreItem TAINTED_WAND_CORE = new CoreItem(GROUPED, coreProperties().warping(1));
+	public static final CoreItem ELDRITCH_WAND_CORE = new CoreItem(GROUPED, coreProperties().warping(2));
 	
-	public static final Core MISSING_CORE = new Core.Impl(arcId("missing"));
+	public static final Core MISSING_CORE = new Core.Impl(arcId("missing"), 0, 0);
 	
 	// foci...
 	public static final Item FIRE_FOCUS = new FireFocusItem(GROUPED_SINGLE);

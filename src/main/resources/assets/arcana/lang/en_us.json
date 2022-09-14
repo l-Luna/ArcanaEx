@@ -178,7 +178,10 @@
 
   // Tooltips
   "tooltip.arcana.wand.focus_cost.total": "Cost: %s",
-  "tooltip.arcana.wand.focus.cost.individual": "%sx %s ",
+  "tooltip.arcana.wand.focus_cost.individual": "%sx %s ",
+
+  "tooltip.arcana.wand.discount.all": "%s%% vis discount",
+  "tooltip.arcana.wand.discount.aspect": "%s%% %s discount",
 
   // Enchantments
   "enchantment.arcana.warping": "Warping",
@@ -191,7 +194,7 @@
   "wand.cap.arcana.copper_wand_cap": "Copper Capped",
   "wand.cap.arcana.leather_wand_cap": "Leather Strapped",
   "wand.cap.arcana.thaumium_wand_cap": "Thaumium Capped",
-  "wand.cap.arcana.sugar_cane_wand_cap": "Cane Capped",
+  "wand.cap.arcana.bamboo_wand_cap": "Bamboo Capped",
   "wand.cap.arcana.quartz_wand_cap": "Quartz Topped",
   "wand.cap.arcana.prismarine_wand_cap": "Prismarine Topped",
   "wand.cap.arcana.amber_wand_cap": "Amber Capped",

@@ -1,10 +1,7 @@
 package arcana.items;
 
 import arcana.ArcanaRegistry;
-import arcana.aspects.Aspect;
-import arcana.aspects.AspectMap;
-import arcana.aspects.AspectStack;
-import arcana.aspects.WandAspectsTooltipData;
+import arcana.aspects.*;
 import arcana.client.ArcanaClient;
 import arcana.components.AuraWorld;
 import net.fabricmc.api.EnvType;
@@ -164,13 +161,33 @@ public class WandItem extends Item implements WarpingItem{
 		int warping = warping(stack, player);
 		if(warping != 0)
 			tooltip.add(ArcanaRegistry.WARPING.getName(warping));
+		// if the discount in all primals is the same, say vis discount, otherwise list every aspect
+		int air = percentOff(Aspects.AIR, stack, player);
+		boolean all = true;
+		for(Aspect primal : Aspects.primals)
+			if(percentOff(primal, stack, player) != air){
+				all = false;
+				break;
+			}
+		
+		if(all && air != 0)
+			tooltip.add(Text.translatable("tooltip.arcana.wand.discount.all", air));
+		else
+			for(Aspect primal : Aspects.primals){
+				var v = percentOff(primal, stack, player);
+				if(v != 0)
+					tooltip.add(Text.translatable(
+							"tooltip.arcana.wand.discount.aspect", v,
+							primal.name().formatted(ArcanaClient.colourForPrimal(primal))
+					));
+			}
 	}
 	
 	@Environment(EnvType.CLIENT)
 	public static Text costText(AspectMap map){
 		MutableText costs = Text.literal("");
 		for(AspectStack stack : map.asStacks())
-			costs.append(Text.translatable("tooltip.arcana.wand.focus.cost.individual", stack.amount(), stack.type().name())
+			costs.append(Text.translatable("tooltip.arcana.wand.focus_cost.individual", stack.amount(), stack.type().name())
 					.formatted(ArcanaClient.colourForPrimal(stack.type())));
 		return Text.translatable("tooltip.arcana.wand.focus_cost.total", costs);
 	}
@@ -211,5 +228,9 @@ public class WandItem extends Item implements WarpingItem{
 	
 	public int warping(ItemStack stack, PlayerEntity player){
 		return capFrom(stack).warping() + coreFrom(stack).warping();
+	}
+	
+	public int percentOff(Aspect aspect, ItemStack stack, PlayerEntity player){
+		return capFrom(stack).percentOff(aspect) + coreFrom(stack).percentOff(aspect);
 	}
 }

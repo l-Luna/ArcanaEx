@@ -1,6 +1,7 @@
 package arcana.items;
 
 import arcana.ArcanaRegistry;
+import arcana.aspects.Aspect;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import net.minecraft.util.Identifier;
@@ -23,7 +24,19 @@ public interface Cap{
 	
 	Identifier id();
 	
+	int capacity();
+	
+	int complexity();
+	
 	default int warping(){
+		return 0;
+	}
+	
+	default int percentOff(Aspect aspect){
+		return 0;
+	}
+	
+	default int strength(){
 		return 0;
 	}
 	
@@ -31,7 +44,5 @@ public interface Cap{
 		return "wand.cap." + id().getNamespace() + "." + id().getPath();
 	}
 	
-	// TODO: metrics, come balancing
-	
-	record Impl(Identifier id) implements Cap{}
+	record Impl(Identifier id, int capacity, int complexity) implements Cap{}
 }

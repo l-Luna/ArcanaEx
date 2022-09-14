@@ -375,10 +375,38 @@
   "research.arcana.auromancy_root": "Auromancy",
   "research.arcana.auromancy_root.text": "The study of {i}auromancy{r}, the manipulation of the aura and vis around me, will be documented here.\nThe iron and gold wand caps, and the general wand recipe are included here for completeness.",
 
+  "research.arcana.wand_components": "Caps and Cores",
+  "research.arcana.wand_components.text": "Every wand is constructed from wand caps and a core, which dictate it's properties.{~sep}The core is responsible for storing vis. The more vis a core can store, the more I can use it to perform arcane crafting, and the more powerful the items I craft can be.\nThe cap is responsible for channeling and shaping that vis. They affect the speed in which vis is drawn from nodes, and adds a small amount of vis storage.\nBoth components also affect spellcasting through foci. A wand has a \"complexity\" score, based on the quality of its cap, that determines how complex the effects it produces can be. More powerful foci may require higher complexities, and modifications made to foci may only apply if a certain complexity is met.\nWands also have a \"difficulty\" score, given by their cores, that determines how much \"force\" it can push the vis with. The same focus may provide stronger effects - like more damage or healing - with a higher difficulty wand.\nFinally, some caps and cores may provide additional side effects, like discounts or bonuses, depending on what they're made from. I might want to use different wands for different tasks.",
+
   "research.arcana.copper_wand_caps": "Copper Wand Caps",
   "research.arcana.copper_wand_caps.desc": "The other one",
   "research.arcana.copper_wand_caps.stage.1": "The properties of copper make it quite convenient for electrical work. It's conductivity and alignment with Instrumentum may make it a highly useful material in my artifice.",
-  "research.arcana.copper_wand_caps.stage.2": "Wand caps crafted from copper are slightly worse than gold when it comes to drawing vis from nodes, or focusing them into spells, but come with a useful vis discount in arcane crafting.",
+  "research.arcana.copper_wand_caps.stage.2": "Wand caps crafted from copper are slightly worse than gold when it comes to drawing vis from nodes, or focusing them into spells, but come with a useful bonus to difficulty.",
+  "puzzle.arcana.chemistry.copper_wand_caps": "Conduct vis through copper",
+
+  "research.arcana.leather_wand_caps": "Leather Wand Caps",
+  "research.arcana.leather_wand_caps.desc": "Artisanal Quality",
+  "research.arcana.leather_wand_caps.stage.1": "While metals are an obvious go-to for channelling vis, I should experiment with other, more flexible materials.\nHaving a greater degree of control over the shape and design of the cap might allow me to produce something more efficient.",
+  "research.arcana.leather_wand_caps.stage.2": "Wand caps crafted from leather are slightly worse than gold when it comes to drawing vis form nodes, or focusing them into spells, but do provide a decent bonus to arcane crafting.\nAny wand strapped with leather reduces the amount of vis required to craft by 8%%.",
+  "puzzle.arcana.chemistry.leather_wand_caps": "Conduct vis through leather",
+
+  "research.arcana.greatwood_wand_core": "Greatwood Wand Core",
+  "research.arcana.greatwood_wand_core.desc": "With great power...",
+  "research.arcana.greatwood_wand_core.stage.1": "Making a wand out of a material already attuned to vis is likely to provide a significant boost in its capabilities.",
+  "research.arcana.greatwood_wand_core.stage.2": "The greatwood tree's wood makes for an excellent storage of vis. Wands built with it have a higher maximum capacity and difficulty score than any other material currently available.",
+  "puzzle.arcana.chemistry.greatwood_wand_core": "Store vis in greatwood",
+
+  "research.arcana.nether_stem_wand_core": "Nether Stem Wand Core",
+  "research.arcana.nether_stem_wand_core.desc": "Otherworldly construction",
+  "research.arcana.nether_stem_wand_core.stage.1": "Fungi do not seem to be a traditional wand material by any stretch. Certainly, none of the notes even seemed to consider the possibility.\nBut the huge mushrooms of the nether may provide some unique properties, over everything available in the overworld.",
+  "research.arcana.nether_stem_wand_core.stage.2": "Nether stems are simple enough to craft into capable wand cores, and perform much better than ordinary untreated wood.\nWhile it doesn't perform better than I would expect a magical wood to, it's complex internal structures grant wands constructed from nether stems a bonus to complexity.",
+  "puzzle.arcana.chemistry.nether_stem_wand_core": "Store vis in the stem of nether fungi",
+
+  "research.arcana.varnished_wood_wand_core": "Varnished Wood Wand Core",
+  "research.arcana.varnished_wood_wand_core.desc": "Finely made",
+  "research.arcana.varnished_wood_wand_core.stage.1": "Simply using a stick of mundane wood for a wand core has predictably poor results. Part of this can be attributed to poor material qualities, but I wonder how much of this is caused by lack of effort in its preparation?",
+  "research.arcana.varnished_wood_wand_core.stage.2": "By properly treating the wood before use, and paying additional attention to it's design, the Varnished Wood wand core performs much better than its untreated counterpart.\nWhile it doesn't perform better than I would expect a magical wood to, it does come with a useful discount in arcane crafting. Any varnished wooden wand reduces the amount of vis required to craft by 12%%.",
+  "puzzle.arcana.chemistry.varnished_wood_wand_core": "Design a fine vis battery",
 
   // Alchemy Tab
   "research.arcana.alchemy_root": "Alchemy",

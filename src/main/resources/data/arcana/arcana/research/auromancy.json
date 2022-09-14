@@ -1,0 +1,282 @@
+{
+  "entries": [
+    {
+      "key": "arcana:auromancy_root",
+      "name": "research.arcana.auromancy_root",
+      "icons": [
+        "arcana:research/auromancy_cat_icon"
+      ],
+      "category": "arcana:auromancy",
+      "parents": [
+        "arcana:wandcraft"
+      ],
+      "meta": [
+        "spiky_base",
+        "yellow_base",
+        "root"
+      ],
+      "x": 0,
+      "y": 0,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.auromancy_root.text"
+        },
+        {
+          "type": "crafting",
+          "content": "arcana:iron_wand_cap"
+        },
+        {
+          "type": "crafting",
+          "content": "arcana:gold_wand_cap"
+        },
+        {
+          "type": "image",
+          "content": "arcana:textures/research/wand_crafting_diagram.png"
+        }
+      ]
+    },
+    {
+      "key": "arcana:caps_and_cores",
+      "name": "research.arcana.wand_components",
+      "icons": [
+        "arcana:iron_wand_cap",
+        "minecraft:stick"
+      ],
+      "meta": [
+        "round_base"
+      ],
+      "category": "arcana:auromancy",
+      "parents": [
+        "&arcana:auromancy_root"
+      ],
+      "x": -4,
+      "y": 0,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.wand_components.text"
+        }
+      ]
+    },
+    {
+      "key": "arcana:copper_wand_caps",
+      "name": "research.arcana.copper_wand_caps",
+      "desc": "research.arcana.copper_wand_caps.desc",
+      "icons": [
+        "arcana:copper_wand_cap"
+      ],
+      "category": "arcana:auromancy",
+      "parents": [
+        "arcana:caps_and_cores"
+      ],
+      "x": -2,
+      "y": 2,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.copper_wand_caps.stage.1",
+          "requirements": [
+            "5*minecraft:copper_ingot",
+            "2*arcana::xp",
+            "arcana::puzzle{copper_wand_caps}"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.copper_wand_caps.stage.2"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:copper_wand_cap"
+        }
+      ]
+    },
+    {
+      "key": "arcana:leather_wand_caps",
+      "name": "research.arcana.leather_wand_caps",
+      "desc": "research.arcana.leather_wand_caps.desc",
+      "icons": [
+        "arcana:leather_wand_cap"
+      ],
+      "category": "arcana:auromancy",
+      "parents": [
+        "arcana:caps_and_cores"
+      ],
+      "x": -6,
+      "y": 2,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.leather_wand_caps.stage.1",
+          "requirements": [
+            "3*minecraft:leather",
+            "3*arcana::xp",
+            "arcana::puzzle{leather_wand_caps}"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.leather_wand_caps.stage.2"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:leather_wand_cap"
+        }
+      ]
+    },
+    {
+      "key": "arcana:greatwood_wand_core",
+      "name": "research.arcana.greatwood_wand_core",
+      "desc": "research.arcana.greatwood_wand_core.desc",
+      "icons": [
+        "arcana:greatwood_wand_core"
+      ],
+      "category": "arcana:auromancy",
+      "parents": [
+        "arcana:caps_and_cores"
+      ],
+      "x": -4,
+      "y": -2,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.greatwood_wand_core.stage.1",
+          "requirements": [
+            "4*#arcana:greatwood_logs",
+            "4*arcana::xp",
+            "arcana::puzzle{greatwood_wand_core}"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.greatwood_wand_core.stage.2"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:greatwood_wand_core"
+        }
+      ]
+    },
+    {
+      "key": "arcana:varnished_wood_wand_core",
+      "name": "research.arcana.varnished_wood_wand_core",
+      "desc": "research.arcana.varnished_wood_wand_core.desc",
+      "icons": [
+        "arcana:varnished_wood_wand_core"
+      ],
+      "category": "arcana:auromancy",
+      "parents": [
+        "/arcana:caps_and_cores"
+      ],
+      "x": -6,
+      "y": -2,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.varnished_wood_wand_core.stage.1",
+          "requirements": [
+            "minecraft:slime_ball",
+            "minecraft:string",
+            "4*arcana::xp",
+            "arcana::puzzle{varnished_wood_wand_core}"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.varnished_wood_wand_core.stage.2"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:varnished_wood_wand_core"
+        }
+      ]
+    },
+    {
+      "key": "arcana:nether_stem_wand_core",
+      "name": "research.arcana.nether_stem_wand_core",
+      "desc": "research.arcana.nether_stem_wand_core.desc",
+      "icons": [
+        "arcana:nether_stem_wand_core"
+      ],
+      "category": "arcana:auromancy",
+      "parents": [
+        "/arcana:caps_and_cores"
+      ],
+      "x": -2,
+      "y": -2,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.nether_stem_wand_core.stage.1",
+          "requirements": [
+            "2*#minecraft:crimson_stems",
+            "2*#minecraft:warped_stems",
+            "2*arcana::xp",
+            "arcana::puzzle{nether_stem_wand_core}"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.nether_stem_wand_core.stage.2"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:nether_stem_wand_core"
+        }
+      ]
+    }
+  ],
+  "puzzles": [
+    {
+      "key": "arcana:copper_wand_caps",
+      "type": "chemistry",
+      "desc": "puzzle.arcana.chemistry.copper_wand_caps",
+      "nodes": [
+        "tool",
+        "metal",
+        "aura"
+      ]
+    },
+    {
+      "key": "arcana:leather_wand_caps",
+      "type": "chemistry",
+      "desc": "puzzle.arcana.chemistry.leather_wand_caps",
+      "nodes": [
+        "flesh",
+        "fabric",
+        "aura"
+      ]
+    },
+    {
+      "key": "arcana:greatwood_wand_core",
+      "type": "chemistry",
+      "desc": "puzzle.arcana.chemistry.greatwood_wand_core",
+      "nodes": [
+        "plant",
+        "magic",
+        "aura"
+      ]
+    },
+    {
+      "key": "arcana:nether_stem_wand_core",
+      "type": "chemistry",
+      "desc": "puzzle.arcana.chemistry.nether_stem_wand_core",
+      "nodes": [
+        "fire",
+        "undead",
+        "aura"
+      ]
+    },
+    {
+      "key": "arcana:varnished_wood_wand_core",
+      "type": "chemistry",
+      "desc": "puzzle.arcana.chemistry.varnished_wood_wand_core",
+      "nodes": [
+        "slime",
+        "tool",
+        "aura"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "C": {
+      "tag": "minecraft:crimson_stems"
+    },
+    "W": {
+      "tag": "minecraft:warped_stems"
+    },
+    "b": {
+      "item": "minecraft:blaze_powder"
+    }
+  },
+  "pattern": [
+    "bW",
+    "Cb"
+  ],
+  "aspects": [
+    "20*fire",
+    "10*earth"
+  ],
+  "result": {
+    "item": "arcana:nether_stem_wand_core"
+  }
+}

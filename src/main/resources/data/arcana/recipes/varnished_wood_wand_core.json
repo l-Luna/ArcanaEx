@@ -1,0 +1,29 @@
+{
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "W": {
+      "item": "minecraft:stick"
+    },
+    "S": {
+      "item": "minecraft:slime_ball"
+    },
+    "g": {
+      "item": "minecraft:gold_nugget"
+    },
+    "s": {
+      "item": "minecraft:string"
+    }
+  },
+  "pattern": [
+    " sW",
+    "SWg",
+    "W  "
+  ],
+  "aspects": [
+    "20*order",
+    "12*earth"
+  ],
+  "result": {
+    "item": "arcana:varnished_wood_wand_core"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "W": {
+      "tag": "arcana:greatwood_logs"
+    }
+  },
+  "pattern": [
+    " W",
+    "W "
+  ],
+  "aspects": [
+    "12*order",
+    "12*fire"
+  ],
+  "result": {
+    "item": "arcana:greatwood_wand_core"
+  }
+}

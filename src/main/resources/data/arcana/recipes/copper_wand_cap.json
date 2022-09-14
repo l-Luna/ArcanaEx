@@ -1,0 +1,24 @@
+{
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "X": {
+      "item": "minecraft:copper_ingot"
+    },
+    "L": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "pattern": [
+    "XXX",
+    "XLX"
+  ],
+  "result": {
+    "item": "arcana:copper_wand_cap",
+    "count": 2
+  },
+  "aspects": [
+    "15*fire",
+    "5*water",
+    "5*earth"
+  ]
+}

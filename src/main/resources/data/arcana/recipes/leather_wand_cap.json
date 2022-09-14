@@ -1,0 +1,28 @@
+{
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "X": {
+      "item": "minecraft:leather"
+    },
+    "S": {
+      "item": "minecraft:string"
+    },
+    "L": {
+      "item": "minecraft:slime_ball"
+    }
+  },
+  "pattern": [
+    "XXX",
+    "XLX",
+    "S S"
+  ],
+  "result": {
+    "item": "arcana:leather_wand_cap",
+    "count": 2
+  },
+  "aspects": [
+    "10*order",
+    "5*water",
+    "2*air"
+  ]
+}

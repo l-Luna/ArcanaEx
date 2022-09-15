@@ -132,10 +132,14 @@ public class WandItem extends Item implements WarpingItem{
 				Aspect aspect = aspects.aspectByIndex(world.random.nextInt(aspects.size()));
 				int aspectDrainWait = 8;
 				int aspectDrainAmount = 3 + world.random.nextInt(3);
+				int capacity = capacity(stack);
 				if(world.getTime() % aspectDrainWait == 0){
-					int realDrainAmount = Math.min(aspects.get(aspect), aspectDrainAmount);
+					var capacityLeft = capacity - aspectsFrom(stack).get(aspect);
+					if(capacityLeft < 0)
+						capacityLeft = 0;
+					int realDrainAmount = Math.min(Math.min(aspects.get(aspect), aspectDrainAmount), capacityLeft);
 					aspects.take(aspect, realDrainAmount);
-					updateAspects(stack, map -> map.add(aspect, realDrainAmount));
+					updateAspects(stack, map -> map.addCapped(aspect, realDrainAmount, capacity));
 				}
 			}
 		});
@@ -236,5 +240,9 @@ public class WandItem extends Item implements WarpingItem{
 	
 	public static float costMultiplier(Aspect aspect, ItemStack stack,  PlayerEntity player){
 		return (100 - percentOff(aspect, stack, player)) / 100f;
+	}
+	
+	public static int capacity(ItemStack stack){
+		return capFrom(stack).capacity() + coreFrom(stack).capacity();
 	}
 }

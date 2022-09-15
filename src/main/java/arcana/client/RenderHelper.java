@@ -128,7 +128,9 @@ public class RenderHelper{
 			var matrices2 = RenderSystem.getModelViewStack();
 			matrices2.push();
 			matrices2.scale(itemZoom, itemZoom, 1);
-			MinecraftClient.getInstance().getItemRenderer().renderGuiItemIcon(icon.stack(), x, y);
+			var renderer = MinecraftClient.getInstance().getItemRenderer();
+			renderer.renderGuiItemIcon(icon.stack(), x, y);
+			renderer.renderGuiItemOverlay(MinecraftClient.getInstance().textRenderer, icon.stack(), x, y);
 			matrices2.pop();
 			RenderSystem.applyModelViewMatrix();
 		}

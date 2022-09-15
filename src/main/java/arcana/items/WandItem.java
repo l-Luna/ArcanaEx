@@ -95,7 +95,8 @@ public class WandItem extends Item implements WarpingItem{
 				return ActionResult.SUCCESS;
 			}
 		}else if(focusStack.getItem() instanceof FocusItem fi){
-			AspectMap cost = fi.castCost(wandStack, focusStack, player);
+			AspectMap cost = fi.castCost(wandStack, focusStack, player).copy();
+			cost.multiply(aspect -> costMultiplier(aspect, wandStack, player));
 			if(aspectsFrom(wandStack).contains(cost)){
 				updateAspects(wandStack, aspects -> aspects.take(cost));
 				return fi.castOnBlock(context);
@@ -111,7 +112,8 @@ public class WandItem extends Item implements WarpingItem{
 		ItemStack focusStack = focusFrom(wand);
 		AspectMap stored = aspectsFrom(wand);
 		if(focusStack.getItem() instanceof FocusItem fi){
-			var cost = fi.castCost(wand, focusStack, user);
+			var cost = fi.castCost(wand, focusStack, user).copy();
+			cost.multiply(aspect -> costMultiplier(aspect, stack, user));
 			if(stored.contains(cost)){
 				updateAspects(wand, aspects -> aspects.take(cost));
 				return fi.castOnEntity(wand, focusStack, user, entity, hand);
@@ -160,7 +162,9 @@ public class WandItem extends Item implements WarpingItem{
 		var player = MinecraftClient.getInstance().player;
 		if(focusStack.getItem() instanceof FocusItem fi){
 			tooltip.add(fi.nameForTooltip(focusStack));
-			tooltip.add(costText(fi.castCost(stack, focusStack, player)));
+			var cost = fi.castCost(stack, focusStack, player).copy();
+			cost.multiply(aspect -> costMultiplier(aspect, stack, player));
+			tooltip.add(costText(cost));
 		}
 		int warping = warping(stack, player);
 		if(warping != 0)

@@ -27,7 +27,7 @@ public class FireFocusItem extends FocusItem{
 	}
 	
 	public AspectMap castCost(ItemStack wand, ItemStack focus, PlayerEntity user){
-		return AspectMap.fromAspectStack(new AspectStack(Aspects.FIRE, 4));
+		return AspectMap.fromAspectStack(new AspectStack(Aspects.FIRE, 5));
 	}
 	
 	public ActionResult castOnBlock(ItemUsageContext ctx){

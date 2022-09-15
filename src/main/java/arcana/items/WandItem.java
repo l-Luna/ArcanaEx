@@ -230,7 +230,11 @@ public class WandItem extends Item implements WarpingItem{
 		return capFrom(stack).warping() + coreFrom(stack).warping();
 	}
 	
-	public int percentOff(Aspect aspect, ItemStack stack, PlayerEntity player){
+	public static int percentOff(Aspect aspect, ItemStack stack, PlayerEntity player){
 		return capFrom(stack).percentOff(aspect) + coreFrom(stack).percentOff(aspect);
+	}
+	
+	public static float costMultiplier(Aspect aspect, ItemStack stack,  PlayerEntity player){
+		return (100 - percentOff(aspect, stack, player)) / 100f;
 	}
 }

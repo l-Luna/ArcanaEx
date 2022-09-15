@@ -3,6 +3,7 @@ package arcana.aspects;
 import net.minecraft.nbt.NbtCompound;
 
 import java.util.*;
+import java.util.function.Function;
 
 public record AspectMap(Map<Aspect, Integer> underlying){
 	
@@ -75,6 +76,11 @@ public record AspectMap(Map<Aspect, Integer> underlying){
 	
 	public boolean contains(AspectMap other){
 		return other.asStacks().stream().allMatch(this::contains);
+	}
+	
+	public void multiply(Function<Aspect, Float> multiplier){
+		for(Aspect aspect : aspectSet())
+			set(aspect, (int)(get(aspect) * multiplier.apply(aspect)));
 	}
 	
 	public int indexOf(Aspect aspect){

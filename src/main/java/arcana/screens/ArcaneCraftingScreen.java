@@ -60,6 +60,7 @@ public class ArcaneCraftingScreen extends HandledScreen<ArcaneCraftingScreenHand
 			AspectMap stored = wand.getItem() instanceof WandItem ? WandItem.aspectsFrom(wand) : new AspectMap();
 			for(Aspect aspect : recipe.aspects().aspectSet()){
 				int amount = recipe.aspects().get(aspect);
+				amount *= WandItem.costMultiplier(aspect, wand, client.player);
 				boolean blink = !stored.contains(aspect, amount);
 				matrices.push();
 				matrices.translate(x, y, getZOffset());

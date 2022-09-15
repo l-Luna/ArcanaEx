@@ -86,7 +86,9 @@ public class ArcaneCraftingScreenHandler extends AbstractRecipeScreenHandler<Cra
 				ItemStack wandStack = wandInv.getStack(0);
 				if(wandStack.getItem() instanceof WandItem){
 					AspectMap stored = WandItem.aspectsFrom(wandStack);
-					if(stored.contains(recipe.aspects()) && result.shouldCraftRecipe(world, serverPlayer, recipe))
+					var toTake = recipe.aspects().copy();
+					toTake.multiply(aspect -> WandItem.costMultiplier(aspect, wandStack, player));
+					if(stored.contains(toTake) && result.shouldCraftRecipe(world, serverPlayer, recipe))
 						itemStack.set(recipe.craft(craftInv));
 				}
 			}, () -> manager.getFirstMatch(RecipeType.CRAFTING, craftInv, world).ifPresent(recipe -> {
@@ -214,7 +216,9 @@ public class ArcaneCraftingScreenHandler extends AbstractRecipeScreenHandler<Cra
 				ItemStack wandStack = wand.getStack(0);
 				if(wandStack.getItem() instanceof WandItem){
 					// already checked to see if it contains enough
-					WandItem.updateAspects(wandStack, map -> map.take(recipe.aspects()));
+					var toTake = recipe.aspects().copy();
+					toTake.multiply(aspect -> WandItem.costMultiplier(aspect, wandStack, player));
+					WandItem.updateAspects(wandStack, map -> map.take(toTake));
 				}
 			});
 			// take aspects before taking items

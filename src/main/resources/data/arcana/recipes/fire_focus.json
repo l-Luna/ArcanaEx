@@ -1,0 +1,14 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "arcana:crystals/fire"
+  },
+  "aspects": [
+    "10*fire",
+    "8*energy",
+    "3*magic"
+  ],
+  "result": {
+    "item": "arcana:fire_focus"
+  }
+}

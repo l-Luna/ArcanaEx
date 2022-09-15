@@ -225,6 +225,37 @@
           "content": "arcana:nether_stem_wand_core"
         }
       ]
+    },
+    {
+      "key": "arcana:wand_foci",
+      "name": "research.arcana.wand_foci",
+      "desc": "research.arcana.wand_foci.desc",
+      "icons": [
+        "arcana:fire_focus"
+      ],
+      "category": "arcana:auromancy",
+      "parents": [
+        "arcana:auromancy_root"
+      ],
+      "x": 3,
+      "y": 0,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.wand_foci.stage.1"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:fire_focus",
+          "requirements": [
+            "0*arcana:fire_focus"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.wand_foci.stage.2"
+        }
+      ]
     }
   ],
   "puzzles": [

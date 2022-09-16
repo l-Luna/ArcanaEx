@@ -7,6 +7,7 @@ import arcana.items.FocusItem;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.*;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
@@ -61,7 +62,9 @@ public class FireFocusItem extends FocusItem{
 	}
 	
 	public ActionResult castOnEntity(ItemStack wand, ItemStack focus, PlayerEntity user, LivingEntity target, Hand hand){
-		target.setOnFireFor(5);
+		target.setOnFireFor(6);
+		target.damage(DamageSource.ON_FIRE, 4);
+		target.setAttacker(user);
 		return ActionResult.success(user.world.isClient);
 	}
 }

@@ -6,6 +6,7 @@ import arcana.blocks.*;
 import arcana.enchantments.WarpingCurseEnchantment;
 import arcana.items.*;
 import arcana.items.foci.FireFocusItem;
+import arcana.items.foci.LightFocusItem;
 import arcana.items.foci.PortableHoleFocusItem;
 import arcana.screens.ArcaneCraftingScreenHandler;
 import arcana.screens.KnowledgeableDropperScreenHandler;
@@ -151,6 +152,7 @@ public final class ArcanaRegistry{
 	// foci...
 	public static final Item FIRE_FOCUS = new FireFocusItem(GROUPED_SINGLE);
 	public static final Item PORTABLE_HOLE_FOCUS = new PortableHoleFocusItem(GROUPED_SINGLE);
+	public static final Item LIGHT_FOCUS = new LightFocusItem(GROUPED_SINGLE);
 	public static final Item PRISMATIC_LIGHT_FOCUS = new FocusItem(GROUPED_SINGLE);
 	
 	// blocks...
@@ -182,6 +184,8 @@ public final class ArcanaRegistry{
 	public static final Block GREATWOOD_WOOD = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
 	public static final Block STRIPPED_GREATWOOD_LOG = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
 	public static final Block STRIPPED_GREATWOOD_WOOD = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
+	
+	public static final Block LIGHT_BLOCK = new LightFocusBlock(of(Material.DECORATION).dropsNothing().breakInstantly().ticksRandomly().luminance(state -> 7 + state.get(LightFocusBlock.life)));
 	
 	// screen handlers...
 	public static final ScreenHandlerType<ArcaneCraftingScreenHandler> ARCANE_CRAFTING_SCREEN_HANDLER
@@ -284,9 +288,10 @@ public final class ArcanaRegistry{
 		register("eldritch_wand_core", ELDRITCH_WAND_CORE);
 		registerCoreOnly(MISSING_CORE);
 		
-		register("prismatic_light_focus", PRISMATIC_LIGHT_FOCUS);
-		register("portable_hole_focus", PORTABLE_HOLE_FOCUS);
 		register("fire_focus", FIRE_FOCUS);
+		register("portable_hole_focus", PORTABLE_HOLE_FOCUS);
+		register("light_focus", LIGHT_FOCUS);
+		register("prismatic_light_focus", PRISMATIC_LIGHT_FOCUS);
 		
 		for(Aspect aspect : Aspects.getOrderedAspects()){
 			CrystalItem crystalItem = new CrystalItem(new Settings().group(Tab.CRYSTALS), aspect);
@@ -344,6 +349,8 @@ public final class ArcanaRegistry{
 			register("clusters/" + primal.id().getPath(), clusterBlock);
 			Aspects.clusters.put(primal, clusterBlock);
 		}
+		
+		register("light_block", LIGHT_BLOCK, false);
 		
 		// screen handlers
 		register("arcane_crafting", ARCANE_CRAFTING_SCREEN_HANDLER);

@@ -235,7 +235,8 @@
       ],
       "category": "arcana:auromancy",
       "parents": [
-        "arcana:auromancy_root"
+        "arcana:auromancy_root",
+        "arcana:alchemy_root"
       ],
       "x": 3,
       "y": 0,
@@ -254,6 +255,70 @@
         {
           "type": "text",
           "content": "research.arcana.wand_foci.stage.2"
+        }
+      ]
+    },
+    {
+      "key": "arcana:light_focus",
+      "name": "research.arcana.light_focus",
+      "desc": "research.arcana.light_focus.desc",
+      "icons": [
+        "arcana:light_focus"
+      ],
+      "category": "arcana:auromancy",
+      "parents": [
+        "arcana:wand_foci"
+      ],
+      "x": 5,
+      "y": -2,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.light_focus.stage.1",
+          "requirements": [
+            "4*minecraft:glowstone_dust",
+            "arcana::puzzle{arcana:light_focus}"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.light_focus.stage.2"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:light_focus"
+        }
+      ]
+    },
+    {
+      "key": "arcana:portable_hole_focus",
+      "name": "research.arcana.portable_hole_focus",
+      "desc": "research.arcana.portable_hole_focus.desc",
+      "icons": [
+        "arcana:portable_hole_focus"
+      ],
+      "category": "arcana:auromancy",
+      "parents": [
+        "arcana:wand_foci"
+      ],
+      "x": 5,
+      "y": 2,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.portable_hole_focus.stage.1",
+          "requirements": [
+            "4*minecraft:ender_pearl",
+            "arcana::puzzle{arcana:portable_hole_focus}"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.portable_hole_focus.stage.2"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:portable_hole_focus"
         }
       ]
     }
@@ -307,6 +372,26 @@
         "slime",
         "tool",
         "aura"
+      ]
+    },
+    {
+      "key": "arcana:light_focus",
+      "type": "chemistry",
+      "desc": "puzzle.arcana.chemistry.light_focus",
+      "nodes": [
+        "light",
+        "magic",
+        "ice"
+      ]
+    },
+    {
+      "key": "arcana:portable_hole_focus",
+      "type": "chemistry",
+      "desc": "puzzle.arcana.chemistry.portable_hole_focus",
+      "nodes": [
+        "journey",
+        "magic",
+        "void"
       ]
     }
   ]

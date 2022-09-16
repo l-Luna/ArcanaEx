@@ -1,0 +1,15 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "minecraft:ender_pearl"
+  },
+  "aspects": [
+    "20*journey",
+    "8*movement",
+    "8*void",
+    "3*magic"
+  ],
+  "result": {
+    "item": "arcana:portable_hole_focus"
+  }
+}

@@ -425,6 +425,61 @@
           "content": "arcana:knowledgeable_dropper"
         }
       ]
+    },
+    {
+      "key": "arcana:alchemical_glass",
+      "name": "research.arcana.alchemical_glass",
+      "desc": "research.arcana.alchemical_glass.desc",
+      "icons": [
+        "arcana:hardened_glass",
+        "arcana:luminiferous_glass",
+        "arcana:static_glass"
+      ],
+      "category": "arcana:alchemy",
+      "parents": [
+        "/arcana:hedge_alchemy"
+      ],
+      "x": -3,
+      "y": -1,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.alchemical_glass.stage.1",
+          "requirements": [
+            "arcana::puzzle{arcana:hardened_glass}"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.alchemical_glass.stage.2"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:hardened_glass",
+          "requirements": [
+            "arcana::puzzle{luminiferous_glass}"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.alchemical_glass.stage.3"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:luminiferous_glass",
+          "requirements": [
+            "arcana::puzzle{static_glass}"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.alchemical_glass.stage.4"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:static_glass"
+        }
+      ]
     }
   ],
   "puzzles": [
@@ -534,6 +589,39 @@
         "tool",
         "magic",
         "entropy"
+      ]
+    },
+    {
+      "key": "arcana:hardened_glass",
+      "type": "chemistry",
+      "desc": "puzzle.arcana.chemistry.alchemical_glass.hardened_glass",
+      "nodes": [
+        "crystal",
+        "armour",
+        "mining"
+      ]
+    },
+    {
+      "key": "arcana:luminiferous_glass",
+      "type": "chemistry",
+      "desc": "puzzle.arcana.chemistry.alchemical_glass.luminiferous_glass",
+      "nodes": [
+        "crystal",
+        "light",
+        "ice",
+        "magic",
+        "crystal",
+        "light"
+      ]
+    },
+    {
+      "key": "arcana:static_glass",
+      "type": "chemistry",
+      "desc": "puzzle.arcana.chemistry.alchemical_glass.static_glass",
+      "nodes": [
+        "crystal",
+        "void",
+        "journey"
       ]
     }
   ]

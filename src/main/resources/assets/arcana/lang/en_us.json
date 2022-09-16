@@ -510,10 +510,13 @@
 
   "research.arcana.alchemical_glass": "Alchemical Glass",
   "research.arcana.alchemical_glass.desc": "Advancing my material knowledge",
-  "research.arcana.alchemical_glass.stage.1": "Glass is a wonderful substance. Unreactive, transparent, commonly available... and extremely flimsy. Correcting mistakes while should not require specialist equipment, and I wouldn't put too much trust in ordinary glass as a component in my devices.\nSome upgrades are in order.",
+  "research.arcana.alchemical_glass.stage.1": "Glass is a wonderful substance. Unreactive, transparent, commonly available... and extremely flimsy.\nCorrecting mistakes while should not require specialist equipment, and I wouldn't put too much trust in ordinary glass as a component in my devices.\nSome upgrades are in order.",
   "research.arcana.alchemical_glass.stage.2": "The first fruits of my work come in the form of Hardened Glass. Stronger - resisting explosions and less prone to accidents - yet more resilient - dropping itself in one piece when broken.\nI do have questions about what other properties I can give to glass this way... how about making it even more conductive to light and vis?",
   "research.arcana.alchemical_glass.stage.3": "As-is, glass isn't much more opaque than empty space. No, the interesting part is when you allow it to capture light and vis.\nLuminiferous Glass, while appearing transparent, has a huge amount of photons and lux captured within. On the outside, this manifests as a bright glow, on par with Glowstone. In the future, a material like this will be useful to use as a component in magical devices.\nNow, I wonder if it's possible to make glass conductive to not just energy, but matter. Would it simply fall through the crucible? Is it even a well-formed question?",
-  "research.arcana.alchemical_glass.stage.4": "...apparently, yes, this is fully possible.\nPlanar Glass is usually solid, but becomes like a gas in the presence of a crouching player - allowing their passage (or fall) - before reforming into a solid.\nThis has a couple of potential applications in home decor. Artifice? Perhaps, if I can trigger it mechanically.",
+  "research.arcana.alchemical_glass.stage.4": "...apparently, yes, this is fully possible.\nStatic Glass is usually solid, but becomes like a gas in the presence of a crouching player - allowing their passage (or fall) - before reforming into a solid.\nThis has a couple of potential applications in home decor. Artifice? Perhaps, if I can trigger it mechanically.",
+  "puzzle.arcana.chemistry.alchemical_glass.hardened_glass": "Strengthen glass",
+  "puzzle.arcana.chemistry.alchemical_glass.luminiferous_glass": "Lighten glass",
+  "puzzle.arcana.chemistry.alchemical_glass.static_glass": "Confuse glass",
 
   "research.arcana.aspect_candy": "Aspect Candy",
   "research.arcana.aspect_candy.desc": "Chemist's Cuisine",

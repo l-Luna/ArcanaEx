@@ -1,0 +1,13 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "tag": "c:glass_blocks"
+  },
+  "aspects": [
+    "2*earth",
+    "armour"
+  ],
+  "result": {
+    "item": "arcana:hardened_glass"
+  }
+}

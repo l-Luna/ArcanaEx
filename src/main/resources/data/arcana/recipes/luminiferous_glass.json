@@ -1,0 +1,13 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "tag": "c:glass_blocks"
+  },
+  "aspects": [
+    "4*light",
+    "2*ice"
+  ],
+  "result": {
+    "item": "arcana:luminiferous_glass"
+  }
+}

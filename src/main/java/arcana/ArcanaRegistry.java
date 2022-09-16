@@ -6,6 +6,7 @@ import arcana.blocks.*;
 import arcana.enchantments.WarpingCurseEnchantment;
 import arcana.items.*;
 import arcana.items.foci.FireFocusItem;
+import arcana.items.foci.PortableHoleFocusItem;
 import arcana.screens.ArcaneCraftingScreenHandler;
 import arcana.screens.KnowledgeableDropperScreenHandler;
 import arcana.screens.ResearchTableScreenHandler;
@@ -149,6 +150,7 @@ public final class ArcanaRegistry{
 	
 	// foci...
 	public static final Item FIRE_FOCUS = new FireFocusItem(GROUPED_SINGLE);
+	public static final Item PORTABLE_HOLE_FOCUS = new PortableHoleFocusItem(GROUPED_SINGLE);
 	public static final Item PRISMATIC_LIGHT_FOCUS = new FocusItem(GROUPED_SINGLE);
 	
 	// blocks...
@@ -283,6 +285,7 @@ public final class ArcanaRegistry{
 		registerCoreOnly(MISSING_CORE);
 		
 		register("prismatic_light_focus", PRISMATIC_LIGHT_FOCUS);
+		register("portable_hole_focus", PORTABLE_HOLE_FOCUS);
 		register("fire_focus", FIRE_FOCUS);
 		
 		for(Aspect aspect : Aspects.getOrderedAspects()){

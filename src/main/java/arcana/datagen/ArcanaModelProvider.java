@@ -36,6 +36,9 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		blockGen.registerSimpleCubeAll(SILVERWOOD_LEAVES);
 		blockGen.registerSimpleCubeAll(GREATWOOD_PLANKS);
 		blockGen.registerSingleton(GREATWOOD_LEAVES, TexturedModel.LEAVES);
+		blockGen.registerSimpleCubeAll(HARDENED_GLASS);
+		blockGen.registerSimpleCubeAll(LUMINIFEROUS_GLASS);
+		blockGen.registerSimpleCubeAll(STATIC_GLASS);
 		
 		blockGen.registerTintableCross(SILVERWOOD_SAPLING, BlockStateModelGenerator.TintType.NOT_TINTED);
 		noAutoGen.add(SILVERWOOD_SAPLING.asItem());

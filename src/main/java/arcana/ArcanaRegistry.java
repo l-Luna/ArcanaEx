@@ -51,6 +51,7 @@ import java.util.List;
 
 import static arcana.Arcana.arcId;
 import static arcana.blocks.ArcanaBlockSettings.BlockLayer.CUTOUT;
+import static arcana.blocks.ArcanaBlockSettings.BlockLayer.TRANSLUCENT;
 import static arcana.blocks.ArcanaBlockSettings.of;
 import static arcana.items.CapItem.capProperties;
 import static arcana.items.CoreItem.coreProperties;
@@ -164,6 +165,9 @@ public final class ArcanaRegistry{
 	public static final Block KNOWLEDGEABLE_DROPPER = new KnowledgeableDropperBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3));
 	
 	public static final Block NITOR = new NitorBlock(of(Material.DECORATION).dropsSelf().strength(0).luminance(15));
+	public static final Block HARDENED_GLASS = new GlassBlock(of(Material.GLASS).dropsSelf().usesTool(PICKAXE_MINEABLE).renderLayer(CUTOUT).strength(3, 10).sounds(BlockSoundGroup.GLASS).nonOpaque().allowsSpawning(Blocks::never).solidBlock(Blocks::never).suffocates(Blocks::never).blockVision(Blocks::never));
+	public static final Block LUMINIFEROUS_GLASS = new GlassBlock(of(Material.GLASS).dropsSelf().usesTool(PICKAXE_MINEABLE).renderLayer(TRANSLUCENT).luminance(15).strength(.6f).sounds(BlockSoundGroup.GLASS).nonOpaque().allowsSpawning(Blocks::never).solidBlock(Blocks::never).suffocates(Blocks::never).blockVision(Blocks::never));
+	public static final Block STATIC_GLASS = new StaticGlassBlock(of(Material.GLASS).dropsSelf().usesTool(PICKAXE_MINEABLE).renderLayer(TRANSLUCENT).strength(.6f).sounds(BlockSoundGroup.GLASS).nonOpaque().allowsSpawning(Blocks::never).solidBlock(Blocks::never).suffocates(Blocks::never).blockVision(Blocks::never));
 	
 	public static final Block ARCANIUM_BLOCK = new Block(of(Material.METAL, MapColor.PINK).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(5, 6).sounds(BlockSoundGroup.METAL));
 	public static final Block ARCANE_STONE = new Block(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3, 7));
@@ -311,6 +315,9 @@ public final class ArcanaRegistry{
 		register("knowledgeable_dropper", KNOWLEDGEABLE_DROPPER);
 		
 		register("nitor", NITOR);
+		register("hardened_glass", HARDENED_GLASS);
+		register("luminiferous_glass", LUMINIFEROUS_GLASS);
+		register("static_glass", STATIC_GLASS);
 		
 		register("arcanium_block", ARCANIUM_BLOCK);
 		register("arcane_stone", ARCANE_STONE);

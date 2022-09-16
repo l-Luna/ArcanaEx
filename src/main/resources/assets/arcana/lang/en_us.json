@@ -86,6 +86,9 @@
   "item.arcana.research_notes": "Research Notes",
   "item.arcana.complete_research_notes": "Complete Research Notes",
 
+  "item.arcana.cheaters_arcanum": "Cheater's Arcanum",
+  "item.arcana.cheaters_arcanum.desc": "For the lazy",
+
   "item.arcana.arcanium_ingot": "Arcanium Ingot",
   "item.arcana.arcanium_axe": "Arcanium Axe",
   "item.arcana.arcanium_pickaxe": "Arcanium Pickaxe",

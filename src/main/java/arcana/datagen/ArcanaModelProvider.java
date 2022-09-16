@@ -9,6 +9,7 @@ import net.minecraft.block.Block;
 import net.minecraft.data.client.*;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.item.ToolItem;
 
 import java.util.ArrayList;
@@ -80,7 +81,7 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		
 		for(Block block : blocks)
 			if(!(block instanceof ResearchTableBlock))
-				if(!noAutoGen.contains(block.asItem()))
+				if(!noAutoGen.contains(block.asItem()) && block.asItem() != Items.AIR)
 					itemGen.writer.accept(ModelIds.getItemModelId(block.asItem()), new SimpleModelSupplier(ModelIds.getBlockModelId(block)));
 	}
 	

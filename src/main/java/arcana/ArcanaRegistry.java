@@ -86,6 +86,8 @@ public final class ArcanaRegistry{
 	
 	public static final Item TOME_OF_SHARING = new TomeOfSharingItem(GROUPED_SINGLE);
 	
+	public static final Item CHEATERS_ARCANUM = new CheatersArcanumItem(GROUPED_SINGLE);
+	
 	public static final Item ARCANIUM_INGOT = new Item(GROUPED);
 	public static final Item ARCANIUM_SWORD = new SwordItem(ArcanaToolMaterials.ARCANIUM, 3, -2.4f, new Settings().group(Tab.EQUIPMENT));
 	public static final Item ARCANIUM_SHOVEL = new ShovelItem(ArcanaToolMaterials.ARCANIUM, 1.5f, -3, new Settings().group(Tab.EQUIPMENT));
@@ -234,6 +236,8 @@ public final class ArcanaRegistry{
 		register("complete_research_notes", COMPLETE_RESEARCH_NOTES);
 		
 		register("tome_of_sharing", TOME_OF_SHARING);
+		
+		register("cheaters_arcanum", CHEATERS_ARCANUM);
 		
 		register("arcanium_ingot", ARCANIUM_INGOT);
 		register("arcanium_sword", ARCANIUM_SWORD);

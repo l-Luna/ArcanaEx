@@ -12,6 +12,7 @@ import arcana.screens.ResearchEntryScreen;
 import dev.emi.emi.EmiStackSerializer;
 import dev.emi.emi.api.EmiPlugin;
 import dev.emi.emi.api.EmiRegistry;
+import dev.emi.emi.api.recipe.EmiInfoRecipe;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.recipe.EmiWorldInteractionRecipe;
 import dev.emi.emi.api.recipe.VanillaEmiRecipeCategories;
@@ -19,13 +20,16 @@ import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.stack.TagEmiIngredient;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.Text;
 import net.minecraft.util.Pair;
 
 import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static arcana.Arcana.arcId;
 
+@SuppressWarnings("UnstableApiUsage") // EmiInfoRecipe & .emi()
 public final class ArcanaEmiPlugin implements EmiPlugin{
 	
 	public static final EmiRecipeCategory ITEMS_BY_ASPECTS = new EmiRecipeCategory(arcId("items_by_aspects"), new AspectEmiStack(Aspects.ENERGY));
@@ -93,6 +97,12 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 				.rightInput(basicWand, true)
 				.output(ArcanaRegistry.CRUCIBLE.asItem().emi())
 				.build());
+		
+		registry.addRecipe(new EmiInfoRecipe(
+				List.of(ArcanaRegistry.SCRIBBLED_NOTES.emi(), ArcanaRegistry.ARCANUM.emi()),
+				List.of(Text.translatable("emi.info.arcana.arcanum")),
+				null
+		));
 		
 		registry.addWorkstation(VanillaEmiRecipeCategories.CRAFTING, ArcanaRegistry.ARCANE_CRAFTING_TABLE.asItem().emi());
 		registry.addWorkstation(ARCANE_CRAFTING, ArcanaRegistry.ARCANE_CRAFTING_TABLE.asItem().emi());

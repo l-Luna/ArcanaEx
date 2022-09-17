@@ -8,6 +8,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ItemScatterer;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
@@ -41,6 +43,15 @@ public class PedestalBlock extends WaterloggableBlock implements BlockEntityProv
 			}
 		}
 		return super.onUse(state, world, pos, player, hand, hit);
+	}
+	
+	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved){
+		if(!state.isOf(newState.getBlock())){
+			BlockEntity be = world.getBlockEntity(pos);
+			if(be instanceof PedestalBlockEntity pedestal)
+				ItemScatterer.spawn(world, pos, DefaultedList.copyOf(ItemStack.EMPTY, pedestal.getStack()));
+		}
+		super.onStateReplaced(state, world, pos, newState, moved);
 	}
 	
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context){

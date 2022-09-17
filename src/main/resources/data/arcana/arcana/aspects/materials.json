@@ -254,5 +254,10 @@
     "30*energy",
     "25*light",
     "10*life"
+  ],
+
+  "#arcana:arcane_stones": [
+    "3*earth",
+    "order"
   ]
 }

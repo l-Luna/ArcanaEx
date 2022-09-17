@@ -14,6 +14,7 @@
   "tag.arcana.horse_armours": "Horse Armours",
 
   "tag.arcana.aspect_crystals": "Primal Crystals",
+  "tag.arcana.arcane_stones": "Arcane Stones",
 
   "tag.arcana.silverwood_logs": "Silverwood Logs",
   "tag.arcana.greatwood_logs": "Greatwood Logs",
@@ -368,8 +369,10 @@
   "research.arcana.paving_stones": "Arcane Paving Stones",
   "research.arcana.paving_stones.desc": "Essential infrastructure",
   "research.arcana.paving_stones.stage.1": "My home could do with a fair few magical upgrades. Improving my mobility inside and increasing its protection are among my top priorities.",
-  "research.arcana.paving_stones.stage.2": "Easier to walk along a flat surface than a rough cliff edge, and even moreso to walk along some enchanted floor tiles. The enchantment on the Paving Stones of Travel boost my speed when I walk on top.",
-  "research.arcana.paving_stones.stage.3": "Like a fence, the Paving Stones of Warding will keep out hostile monsters, but also allow me to walk over them unaffected.\nI should keep in mind that any ranged attack can still pass by, and that protecting an area is worthless if monsters can simply spawn inside.",
+  "research.arcana.paving_stones.stage.2": "Easier to walk along a flat surface than a rough cliff edge, and even moreso to walk along some enchanted floor tiles. The enchantment on the Paving Stones of Travel boost my speed and jump height when I walk on top.",
+  "research.arcana.paving_stones.stage.3": "Like a fence, the Paving Stones of Warding will keep out hostile monsters, but also allow me to walk over them unaffected.\nI should keep in mind that any ranged attack can still pass by, and that protecting an area is worthless if monsters can simply spawn inside.\nAdditionally, monsters forced on top of Paving Stones of Warding will fall through them, just as they would any other block.",
+  "puzzle.arcana.chemistry.paving_stones.travel": "Create a walkable surface",
+  "puzzle.arcana.chemistry.paving_stones.warding": "Create a protective enchantment",
 
   "research.arcana.infernal_forge": "Infernal Forge",
   "research.arcana.infernal_forge.stage.1": "My new perspective has enabled me to understand the ramblings of these scribbled notes, but in the time since their creation, much has been lost.{~sep}Several records speak of a hellish device, the \"In---na- F-r---e\", that used the power of a Nether being to perform the thaumaturge's wishes at no cost.\nLike many other entries, much of it has been torn out or burnt, but this is the earliest such page by far; and I believe that enough has been left behind for me to reconstitute its meaning, regardless of how well hidden it has been.",

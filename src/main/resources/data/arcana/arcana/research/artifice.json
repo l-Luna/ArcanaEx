@@ -58,6 +58,77 @@
           "content": "arcana:arcane_stone_bricks"
         }
       ]
+    },
+    {
+      "key": "arcana:paving_stones",
+      "name": "research.arcana.paving_stones",
+      "desc": "research.arcana.paving_stones.desc",
+      "icons": [
+        "arcana:paving_stone_of_warding",
+        "arcana:paving_stone_of_travel"
+      ],
+      "category": "arcana:artifice",
+      "parents": [
+        "arcana:arcane_stone"
+      ],
+      "x": -3,
+      "y": -2,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.paving_stones.stage.1",
+          "requirements": [
+            "arcana::puzzle{paving_stone_of_travel}"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.paving_stones.stage.2"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:paving_stone_of_travel",
+          "requirements": [
+            "arcana::puzzle{paving_stone_of_warding}"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.paving_stones.stage.3"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:paving_stone_of_warding"
+        }
+      ]
+    }
+  ],
+  "puzzles": [
+    {
+      "key": "arcana:paving_stone_of_travel",
+      "type": "chemistry",
+      "desc": "puzzle.arcana.chemistry.paving_stones.travel",
+      "nodes": [
+        "movement",
+        "earth",
+        "journey",
+        "air",
+        "journey",
+        "water"
+      ]
+    },
+    {
+      "key": "arcana:paving_stone_of_warding",
+      "type": "chemistry",
+      "desc": "puzzle.arcana.chemistry.paving_stones.warding",
+      "nodes": [
+        "armour",
+        "earth",
+        "weapon",
+        "order",
+        "senses",
+        "undead"
+      ]
     }
   ]
 }

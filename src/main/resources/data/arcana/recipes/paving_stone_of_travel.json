@@ -1,0 +1,26 @@
+{
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "X": {
+      "tag": "arcana:arcane_stones"
+    },
+    "W": {
+      "item": "arcana:crystals/water"
+    },
+    "A": {
+      "item": "arcana:crystals/air"
+    }
+  },
+  "pattern": [
+    "XAX",
+    "XWX"
+  ],
+  "result": {
+    "item": "arcana:paving_stone_of_travel",
+    "count": 4
+  },
+  "aspects": [
+    "4*water",
+    "4*air"
+  ]
+}

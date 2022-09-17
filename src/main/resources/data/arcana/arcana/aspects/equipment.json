@@ -50,5 +50,16 @@
   "minecraft:shield": [
     "3*armour",
     "3*metal"
+  ],
+
+  "arcana:paving_stone_of_travel": [
+    "3*earth",
+    "air",
+    "water",
+    "order"
+  ],
+  "arcana:paving_stone_of_warding": [
+    "4*earth",
+    "2*order"
   ]
 }

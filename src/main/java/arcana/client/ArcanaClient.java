@@ -83,8 +83,8 @@ public final class ArcanaClient implements ClientModInitializer{
 		HandledScreens.register(ArcanaRegistry.RESEARCH_TABLE_SCREEN_HANDLER, ResearchTableScreen::new);
 		HandledScreens.register(ArcanaRegistry.KNOWLEDGEABLE_DROPPER_SCREEN_HANDLER, KnowledgeableDropperScreen::new);
 		
-		BlockEntityRendererRegistry.register(ArcanaRegistry.CRUCIBLE_BE, context -> new CrucibleBlockEntityRenderer());
-		
+		BlockEntityRendererRegistry.register(ArcanaRegistry.CRUCIBLE_BE, ctx -> new CrucibleBlockEntityRenderer());
+		BlockEntityRendererRegistry.register(ArcanaRegistry.PEDESTAL_BE, PedestalBlockEntityRenderer::new);
 		
 		for(Block block : ArcanaRegistry.blocks)
 			if(block.settings instanceof ArcanaBlockSettings abs)

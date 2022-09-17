@@ -79,7 +79,7 @@ public record AspectMap(Map<Aspect, Integer> underlying){
 	}
 	
 	public void multiply(Function<Aspect, Float> multiplier){
-		for(Aspect aspect : aspectSet())
+		for(Aspect aspect : new HashSet<>(aspectSet()))
 			set(aspect, (int)(get(aspect) * multiplier.apply(aspect)));
 	}
 	

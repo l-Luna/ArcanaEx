@@ -55,6 +55,9 @@ public class Node implements Position{
 			doRecharge();
 		}
 		ticksUntilRecharge--;
+		
+		if(type.ticker() != null)
+			type.ticker().accept(this);
 	}
 	
 	protected void doRecharge(){
@@ -130,6 +133,20 @@ public class Node implements Position{
 	
 	public AspectMap getAspects(){
 		return aspects;
+	}
+	
+	public NbtCompound getOrCreateTag(){
+		if(tag == null)
+			tag = new NbtCompound();
+		return tag;
+	}
+	
+	public NbtCompound getTag(){
+		return tag;
+	}
+	
+	public void setTag(NbtCompound tag){
+		this.tag = tag;
 	}
 	
 	public int hashCode(){

@@ -106,10 +106,23 @@ public final class NodeRenderer{
 				BufferRenderer.drawWithShader(buffer.end());
 			});
 			
+			for(Node node : allNodes){
+				if(shouldView(node)){
+					// can't batch non-primals, so avoid these if we can
+					for(Aspect aspect : node.getAspects().aspectSet())
+						if(!Aspects.primals.contains(aspect)){
+							RenderSystem.setShaderTexture(0, AspectRenderer.texture(aspect));
+							buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);
+							drawNodeAspect(camera, node, buffer, aspect);
+							BufferRenderer.drawWithShader(buffer.end());
+						}
+				}
+			}
+			
 			for(Node node : allNodes)
 				if(shouldView(node))
-					for(Aspect primal : Aspects.primals)
-						drawNodeAspectCount(camera, node, buffer, primal);
+					for(Aspect aspect : node.getAspects().aspectSet())
+						drawNodeAspectCount(camera, node, buffer, aspect);
 		}
 		
 		RenderSystem.depthMask(true);

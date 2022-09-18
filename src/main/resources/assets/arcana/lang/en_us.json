@@ -311,7 +311,7 @@
 
   "research.arcana.greatwood_trees": "Greatwood Trees",
   "research.arcana.greatwood_trees.desc": "Towering power",
-  "research.arcana.greatwood_trees.text": "Greatwood trees are towering, easily taller than any kind of mundane wood that I have come across.\nTheir wood is receptive to vis, especially {aspect:earth} terra and {aspect:water} aqua, which may help explain how minerals and fluids are transported up their vast trunks.\nWhile rarer than other trees, being found sparsely across various habitats, once found, they are hard to miss. A single tree should provide enough wood for anything I could need, and enough saplings to make that certain.\nTheir magical nature will make them quite useful in future work.",
+  "research.arcana.greatwood_trees.text": "Greatwood trees are towering, easily taller than any kind of mundane wood that I have come across.\nTheir wood is receptive to vis, especially {aspect:earth} and {aspect:water}, which may help explain how minerals and fluids are transported up their vast trunks.\nWhile rarer than other trees, being found sparsely across various habitats, once found, they are hard to miss. A single tree should provide enough wood for anything I could need, and enough saplings to make that certain.\nTheir magical nature will make them quite useful in future work.",
 
   "research.arcana.hungry_nodes": "Hungry Nodes",
   "research.arcana.hungry_nodes.desc": "The other side",

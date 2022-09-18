@@ -201,7 +201,7 @@ public class ResearchBookScreen extends Screen{
 				
 				if(entry.icons().size() > 0){
 					Icon icon = entry.icons().get((int)((time / 30) % entry.icons().size()));
-					RenderHelper.renderIcon(matrices, icon, x + 7, y + 7, getZOffset(), zoom);
+					RenderHelper.renderIcon(matrices, icon, x + 7, y + 7, getZOffset(), zoom, entry.getIntMeta("icon_frames"));
 				}
 				
 				// render arrows

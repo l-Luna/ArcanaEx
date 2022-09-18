@@ -30,10 +30,14 @@ public record Entry(
 	}
 	
 	public int warping(){
+		return getIntMeta("warping");
+	}
+	
+	public int getIntMeta(String prefix){
 		for(String s : meta)
-			if(s.startsWith("warping:"))
+			if(s.startsWith(prefix + ":"))
 				try{
-					return Integer.parseInt(s.substring("warping:".length()));
+					return Integer.parseInt(s.substring((prefix + ":").length()));
 				}catch(NumberFormatException ignored){}
 		return 0;
 	}

@@ -110,10 +110,10 @@ public class RenderHelper{
 	}
 	
 	public static void renderIcon(MatrixStack matrices, Icon icon, int x, int y, int zOffset){
-		renderIcon(matrices, icon, x, y, zOffset, 1);
+		renderIcon(matrices, icon, x, y, zOffset, 1, 1);
 	}
 	
-	public static void renderIcon(MatrixStack matrices, Icon icon, int x, int y, int zOffset, float itemZoom){
+	public static void renderIcon(MatrixStack matrices, Icon icon, int x, int y, int zOffset, float itemZoom, int frames){
 		if(icon.texture() != null){
 			var tex = icon.texture();
 			if(!tex.getPath().endsWith(".png"))
@@ -122,8 +122,9 @@ public class RenderHelper{
 				tex = new Identifier(tex.getNamespace(), "textures/" + tex.getPath());
 			RenderSystem.setShader(GameRenderer::getPositionTexShader);
 			RenderSystem.setShaderTexture(0, tex);
-			
-			DrawableHelper.drawTexture(matrices, x, y, zOffset, 0, 0, 16, 16, 16, 16);
+			frames = Math.max(1, frames);
+			int v = (int)((MinecraftClient.getInstance().world.getTime() / 2) % frames) * 16;
+			DrawableHelper.drawTexture(matrices, x, y, zOffset, 0, v, 16, 16, 16, 16 * frames);
 		}else if(icon.stack() != null){
 			var matrices2 = RenderSystem.getModelViewStack();
 			matrices2.push();

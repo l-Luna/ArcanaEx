@@ -495,7 +495,8 @@
       "meta": [
         "hidden",
         "hexagon_base",
-        "purple_base"
+        "purple_base",
+        "icon_frames:13"
       ],
       "x": -6,
       "y": 0,
@@ -520,7 +521,8 @@
       "meta": [
         "hidden",
         "hexagon_base",
-        "purple_base"
+        "purple_base",
+        "icon_frames:10"
       ],
       "x": -6,
       "y": 1,

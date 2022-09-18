@@ -2,6 +2,7 @@ package arcana.components;
 
 import arcana.ArcanaRegistry;
 import arcana.items.WarpingItem;
+import arcana.nodes.NodeTypes;
 import arcana.research.Entry;
 import arcana.research.Parent;
 import arcana.research.Puzzle;
@@ -19,6 +20,7 @@ import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtString;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Box;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
@@ -204,6 +206,7 @@ public final class Researcher implements Component, AutoSyncedComponent{
 	}
 	
 	public static int bonusWarp(PlayerEntity player){
+		// get warping from items
 		int total = 0;
 		for(int i = 0; i < player.getInventory().size(); i++){
 			ItemStack stack = player.getInventory().getStack(i);
@@ -213,6 +216,13 @@ public final class Researcher implements Component, AutoSyncedComponent{
 					total += wi.warping(stack, player);
 			}
 		}
+		// find bonus warp by eldritch nodes
+		Box nodeBox = new Box(player.getPos().add(4, 4, 4), player.getPos().subtract(4, 4, 4));
+		total += AuraWorld.from(player.world)
+				.getNodesInBounds(nodeBox)
+				.stream()
+				.filter(x -> x.getType() == NodeTypes.ELDRITCH)
+				.count();
 		return total;
 	}
 	

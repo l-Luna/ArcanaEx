@@ -43,7 +43,8 @@ public record AspectMap(Map<Aspect, Integer> underlying){
 	}
 	
 	public void addCapped(Aspect aspect, int amount, int cap){
-		set(aspect, Math.min(get(aspect) + amount, cap));
+		// don't reduce the amount we have
+		set(aspect, Math.max(Math.min(get(aspect) + amount, cap), get(aspect)));
 	}
 	
 	public void addCapped(AspectStack stack, int cap){

@@ -290,7 +290,7 @@
   "research.arcana.category.alchemy": "Alchemy",
 
   // Research Entries
-  // Fundamentals Tab
+  // Fundamentals Tab: Root Research
   "research.arcana.root": "Arcana",
   "research.arcana.root.text": "A sudden burst of inspiration, key insights that make clear the meaning of these scribbled notes... the way forward is unclear, but I know that this is the start of something magical.\nI'll write down my research in this book: the Arcanum, with all of the old notes stored inside for reference.",
 
@@ -304,6 +304,28 @@
   "research.arcana.flux.stage.2": "...that was probably a mistake. Everything just {i}feels{i} off here. I would do well not to let it grow much higher, lest it start producing physical effects more serious than a headache and stomachache... ugh, I don't even want to know what warp feels like.",
   "puzzle.arcana.fieldwork.flux_build": "Taste the \"flux\" for yourself",
 
+  // Fundamentals Tab: Info research
+  "research.arcana.silverwood_trees": "Silverwood Trees",
+  "research.arcana.silverwood_trees.desc": "Purity in Practice",
+  "research.arcana.silverwood_trees.text": "Silverwood trees are wide and stubby, noticeable for their bright colouration, high rarity, and incredible magical potential.\nEvery author of these notes could agree on one thing: silverwood trees are the key to many inventions. Their wood is one of the few things capable of resisting {i}purified essentia{r}; every part of the plant is completely immune to, and even repels, taint; and occasionally, their growth can even create a new Pure Node.\nIt should go without saying that growing and studying these trees wherever possible is a high priority.",
+
+  "research.arcana.greatwood_trees": "Greatwood Trees",
+  "research.arcana.greatwood_trees.desc": "Towering power",
+  "research.arcana.greatwood_trees.text": "Greatwood trees are towering, easily taller than any kind of mundane wood that I have come across.\nTheir wood is receptive to vis, especially {aspect:earth} terra and {aspect:water} aqua, which may help explain how minerals and fluids are transported up their vast trunks.\nWhile rarer than other trees, being found sparsely across various habitats, once found, they are hard to miss. A single tree should provide enough wood for anything I could need, and enough saplings to make that certain.\nTheir magical nature will make them quite useful in future work.",
+
+  "research.arcana.hungry_nodes": "Hungry Nodes",
+  "research.arcana.hungry_nodes.desc": "The other side",
+  "research.arcana.hungry_nodes.text": "Nodes come in a variety of forms, some of which pose particular risks to the aspiring thaumaturge; Hungry Nodes are a prime example.{~sep}Rather than generating vis from nothing, as every other kind is happy to do, hungry nodes instead consume their surrounding terrain, holding onto some amount of it's aspects as vis.\nEven without special equipment, this can be clearly seen from the matter being drawn into them, and the accretion disc surrounding them.\nThese nodes pose a very direct, physical risk to anyone who wishes to use them. At the same time, they provide a prime opportunity: to feed them with matter, and create a powerful vis battery to take advantage of.\n...they pose a difficult question too. How {i}do{r} other nodes create vis? Where does it come from? One cannot create energy, only convert it from matter; could other nodes simply be openings to hungry nodes elsewhere?",
+
+  "research.arcana.eldritch_nodes": "Eldritch Nodes",
+  "research.arcana.eldritch_nodes.desc": "Bad Omens",
+  "research.arcana.eldritch_nodes.text": "Nodes come in a variety of forms, some of which pose particular risks to the aspiring thaumaturge; even among these, Eldritch Nodes are unique in their ability to profoundly manipulate your emotions.{~sep}While they are just as transparent to the naked eye as any other node, their presence can be felt by the icy aura that surrounds them, the shiver that runs through, the terror that swells should you make eye contact. These nodes... hate you, somehow, and they make their feelings known.\nI believe they have some impact on what the notes referred to as {c3}warp{r}, too, worsening it within their presence.\nCareful observation shows their true shape: a pulsating eye. What they are looking for, I cannot know.",
+
+  "research.arcana.nodal_geodes": "Nodal Geodes",
+  "research.arcana.nodal_geodes.desc": "Hidden in the depths",
+  "research.arcana.nodal_geodes.text": "When venturing underground for resources, I came across a geode filled with vis crystals, with a node at its centre. Such {i}Nodal Geodes{r} are a valuable source of otherwise-sparse crystals.\nUnlike surface nodes, each geode is attuned to only one kind of primal vis, which permeates through the rock that makes it up, alongside condensing into crystals. The node within will be especially potent in that aspect.\nGiven a method of viewing nodes, finding nodal geodes should not be too difficult, but reaching them might be a chore.",
+
+  // Fundamentals Tab: Progression
   "research.arcana.wandcraft": "Wandcraft",
   "research.arcana.wandcraft.desc": "Equipment from long past",
   "research.arcana.wandcraft.stage.1": "To continue any further, I'll need some way of directly manipulating vis. The tools once used for this were wands, constructed from a wide variety of materials that combine to create powerful magic.\nConstructing a simple wand is as simple as capping off a stick with purpose-build metal wand caps, the same design reusable as I improve my materials and skills.\n{i}Some{r} notes seem to refer to the use of a special glove, directly grabbing the vis with my hands; constructing such a thing seems impossible with what I have available, however.",

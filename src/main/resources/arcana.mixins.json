@@ -6,6 +6,7 @@
   "mixins": [
     "AbstractFurnaceBlockEntityMixin",
     "CookingRecipeSerializerMixin",
+    "InventoryChangedCriterionMixin",
     "ItemStackMixin",
     "RecipeManagerMixin"
   ],

@@ -26,10 +26,10 @@
       "key": "arcana:aspects",
       "name": "research.arcana.aspects",
       "icons": [
-        "arcana:aspects/earth",
         "arcana:aspects/air",
-        "arcana:aspects/water",
         "arcana:aspects/fire",
+        "arcana:aspects/water",
+        "arcana:aspects/earth",
         "arcana:aspects/order",
         "arcana:aspects/entropy"
       ],
@@ -433,6 +433,136 @@
           "content": "research.arcana.research_mastery.stage.2"
         }
       ]
+    },
+    {
+      "key": "arcana:silverwood_trees",
+      "name": "research.arcana.silverwood_trees",
+      "desc": "research.arcana.silverwood_trees.desc",
+      "icons": [
+        "arcana:silverwood_log"
+      ],
+      "category": "arcana:fundamentals",
+      "meta": [
+        "hidden",
+        "hexagon_base",
+        "purple_base"
+      ],
+      "x": -7,
+      "y": 0,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.silverwood_trees.text",
+          "requirements": [
+            "arcana::puzzle{silverwood_trees}"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "arcana:greatwood_trees",
+      "name": "research.arcana.greatwood_trees",
+      "desc": "research.arcana.greatwood_trees.desc",
+      "icons": [
+        "arcana:greatwood_log"
+      ],
+      "category": "arcana:fundamentals",
+      "meta": [
+        "hidden",
+        "hexagon_base",
+        "purple_base"
+      ],
+      "x": -7,
+      "y": 1,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.greatwood_trees.text",
+          "requirements": [
+            "arcana::puzzle{greatwood_trees}"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "arcana:hungry_nodes",
+      "name": "research.arcana.hungry_nodes",
+      "desc": "research.arcana.hungry_nodes.desc",
+      "icons": [
+        "arcana:nodes/hungry"
+      ],
+      "category": "arcana:fundamentals",
+      "meta": [
+        "hidden",
+        "hexagon_base",
+        "purple_base"
+      ],
+      "x": -6,
+      "y": 0,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.hungry_nodes.text",
+          "requirements": [
+            "arcana::puzzle{hungry_nodes}"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "arcana:eldritch_nodes",
+      "name": "research.arcana.eldritch_nodes",
+      "desc": "research.arcana.eldritch_nodes.desc",
+      "icons": [
+        "arcana:nodes/eldritch"
+      ],
+      "category": "arcana:fundamentals",
+      "meta": [
+        "hidden",
+        "hexagon_base",
+        "purple_base"
+      ],
+      "x": -6,
+      "y": 1,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.eldritch_nodes.text",
+          "requirements": [
+            "arcana::puzzle{eldritch_nodes}"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "arcana:nodal_geodes",
+      "name": "research.arcana.nodal_geodes",
+      "desc": "research.arcana.nodal_geodes.desc",
+      "meta": [
+        "hidden",
+        "hexagon_base",
+        "purple_base"
+      ],
+      "icons": [
+        "arcana:clusters/air",
+        "arcana:clusters/fire",
+        "arcana:clusters/water",
+        "arcana:clusters/earth",
+        "arcana:clusters/order",
+        "arcana:clusters/entropy"
+      ],
+      "category": "arcana:fundamentals",
+      "x": -5,
+      "y": 0,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.nodal_geodes.text",
+          "requirements": [
+            "arcana::puzzle{nodal_geodes}"
+          ]
+        }
+      ]
     }
   ],
   "puzzles": [
@@ -485,6 +615,26 @@
         "arcana:greed",
         "arcana:plant"
       ]
+    },
+    {
+      "key": "arcana:greatwood_trees",
+      "type": "fieldwork"
+    },
+    {
+      "key": "arcana:silverwood_trees",
+      "type": "fieldwork"
+    },
+    {
+      "key": "arcana:hungry_nodes",
+      "type": "fieldwork"
+    },
+    {
+      "key": "arcana:eldritch_nodes",
+      "type": "fieldwork"
+    },
+    {
+      "key": "arcana:nodal_geodes",
+      "type": "fieldwork"
     }
   ]
 }

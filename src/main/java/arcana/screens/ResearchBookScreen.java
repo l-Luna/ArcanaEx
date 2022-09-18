@@ -365,14 +365,14 @@ public class ResearchBookScreen extends Screen{
 		// locked entries are always locked
 		if(entry.meta().contains("locked"))
 			return PageStyle.pending;
-		// if the page is at full progress, its complete.
+		// if the page is at full progress, it's complete.
 		Researcher r = Researcher.from(MinecraftClient.getInstance().player);
 		if(r.entryStage(entry) >= entry.sections().size())
 			return PageStyle.complete;
-		// if its progress is greater than zero, then its in progress.
+		// if its progress is greater than zero, then it's in progress.
 		if(r.entryStage(entry) > 0)
 			return PageStyle.inProgress;
-		// if it has no parents *and* the "root" tag, its available to do and in progress.
+		// if it has no parents *and* the "root" tag, it's available to do and in progress.
 		if(entry.meta().contains("root") && entry.parents().size() == 0)
 			return PageStyle.inProgress;
 		// if it does not have the "hidden" tag:
@@ -381,7 +381,7 @@ public class ResearchBookScreen extends Screen{
 			// if all of its parents are complete, it is available to do and in progress.
 			if(parentStyles.stream().allMatch(PageStyle.complete::equals))
 				return PageStyle.inProgress;
-			// if at least one of its parents are in progress, its pending.
+			// if at least one of its parents are in progress, it's pending.
 			if(parentStyles.stream().anyMatch(PageStyle.inProgress::equals))
 				return PageStyle.pending;
 		}

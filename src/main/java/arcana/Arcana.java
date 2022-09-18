@@ -7,6 +7,7 @@ import arcana.commands.WarpCommand;
 import arcana.recipes.AlchemyRecipe;
 import arcana.recipes.ShapedArcaneCraftingRecipe;
 import arcana.recipes.WandRecipe;
+import arcana.research.BuiltinResearch;
 import arcana.research.Research;
 import arcana.research.ResearchLoader;
 import arcana.warp.WarpEvents;
@@ -17,6 +18,7 @@ import arcana.worldgen.silverwood.SilverwoodTree;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.CommonLifecycleEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
@@ -56,6 +58,8 @@ public final class Arcana implements ModInitializer{
 		CommandRegistrationCallback.EVENT.register(NodeCommand::register);
 		CommandRegistrationCallback.EVENT.register(ResearchCommand::register);
 		CommandRegistrationCallback.EVENT.register(WarpCommand::register);
+		
+		ServerTickEvents.END_WORLD_TICK.register(world -> world.getPlayers().forEach(BuiltinResearch::checkTick));
 	}
 	
 	public static Identifier arcId(String s){

@@ -1,5 +1,6 @@
 package arcana.nodes;
 
+import arcana.ArcanaRegistry;
 import arcana.aspects.ItemAspectRegistry;
 import arcana.components.AuraWorld;
 import com.google.common.collect.BiMap;
@@ -9,6 +10,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.FluidBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
@@ -55,7 +57,7 @@ public class NodeTypes{
 	}
 	
 	// TODO: config
-	private static final float hungryCarryFraction = 0.2f;
+	private static final float hungryCarryFraction = 0.4f;
 	
 	private static void tickHungry(Node node){
 		World world = node.getWorld();
@@ -74,7 +76,9 @@ public class NodeTypes{
 					if(!empty(state)){
 						if(Arrays.stream(Direction.values()).anyMatch(dir -> empty(world.getBlockState(cursor.offset(dir))))){
 							// spawn particles
-							
+							float xR = world.getRandom().nextFloat(), yR = world.getRandom().nextFloat(), zR = world.getRandom().nextFloat();
+							if(world.getRandom().nextInt(2) == 0)
+								world.addParticle(new BlockStateParticleEffect(ArcanaRegistry.HUNGRY_NODE_BLOCK, state), cursor.getX() + xR, cursor.getY() + yR, cursor.getZ() + zR, -(x - node.getX() % 1 + xR) / 20f, -(y - node.getY() % 1 + yR) / 20f, -(z - node.getZ() % 1 + zR) / 20f);
 							// TODO: min break time
 							if(!world.isClient){
 								ServerWorld sw = (ServerWorld)world;
@@ -102,7 +106,17 @@ public class NodeTypes{
 				}
 			}
 		}
-		// create disc particles
+		// make disc particles
+		// disc radius = 1/3 * pull radius
+		NbtCompound blocks = node.getTag().getCompound("blocks");
+		if(blocks.getKeys().size() > 0){
+			float discRad = (float)(range * (1 / 3f) + world.getRandom().nextGaussian() / 5f);
+			float xPos = (float)(node.getX());
+			float zPos = (float)(node.getZ() - discRad);
+			// TODO: weighted selection
+			BlockState state = (Registry.BLOCK.get(new Identifier(blocks.getKeys().toArray(new String[0])[world.getRandom().nextInt(blocks.getKeys().size())]))).getDefaultState();
+			world.addParticle(new BlockStateParticleEffect(ArcanaRegistry.HUNGRY_NODE_DISC, state), xPos, node.getY(), zPos, discRad / 6f, 0, discRad / 6f);
+		}
 	}
 	
 	private static boolean empty(BlockState state){

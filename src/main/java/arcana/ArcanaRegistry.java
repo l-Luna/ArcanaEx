@@ -24,6 +24,7 @@ import arcana.worldgen.silverwood.SilverwoodTrunkPlacer;
 import com.unascribed.lib39.fractal.api.ItemSubGroup;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
+import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
 import net.minecraft.block.*;
@@ -32,6 +33,8 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.*;
 import net.minecraft.item.Item.Settings;
+import net.minecraft.particle.BlockStateParticleEffect;
+import net.minecraft.particle.ParticleType;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.registry.BuiltinRegistries;
@@ -230,6 +233,10 @@ public final class ArcanaRegistry{
 			List.of(HeightmapPlacementModifier.of(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES))
 	);
 	
+	// particle types...
+	public static ParticleType<BlockStateParticleEffect> HUNGRY_NODE_DISC = FabricParticleTypes.complex(BlockStateParticleEffect.PARAMETERS_FACTORY);
+	public static ParticleType<BlockStateParticleEffect> HUNGRY_NODE_BLOCK = FabricParticleTypes.complex(BlockStateParticleEffect.PARAMETERS_FACTORY);
+	
 	public static final List<Item> items = new ArrayList<>();
 	public static final List<Block> blocks = new ArrayList<>();
 	
@@ -414,6 +421,10 @@ public final class ArcanaRegistry{
 		register("greatwood_trunk", GreatwoodTrunkPlacer.TYPE);
 		register("greatwood_tree", GreatwoodTree.GREATWOOD_TREE);
 		register("greatwood_tree", GreatwoodTree.SCATTERED_GREATWOOD_TREE);
+		
+		// particle types
+		register("hungry_node_disc", HUNGRY_NODE_DISC);
+		register("hungry_node_block", HUNGRY_NODE_BLOCK);
 	}
 	
 	private static void register(String name, Item item){
@@ -466,6 +477,10 @@ public final class ArcanaRegistry{
 	
 	private static void register(String name, TrunkPlacerType<?> trunkPlacer){
 		Registry.register(Registry.TRUNK_PLACER_TYPE, arcId(name), trunkPlacer);
+	}
+	
+	private static void register(String name, ParticleType<?> particleType){
+		Registry.register(Registry.PARTICLE_TYPE, arcId(name), particleType);
 	}
 	
 	private static void registerCapOnly(Cap cap){

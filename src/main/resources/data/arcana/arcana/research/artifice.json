@@ -101,6 +101,37 @@
           "content": "arcana:paving_stone_of_warding"
         }
       ]
+    },
+    {
+      "key": "arcana:monocle_of_revealing",
+      "name": "research.arcana.monocle_of_revealing",
+      "desc": "research.arcana.monocle_of_revealing.desc",
+      "icons": [
+        "arcana:monocle_of_revealing"
+      ],
+      "category": "arcana:artifice",
+      "parents": [
+        "/arcana:artifice_root"
+      ],
+      "x": -2,
+      "y": 1,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.monocle_of_revealing.stage.1",
+          "requirements": [
+            "arcana::puzzle{monocle_of_revealing}"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.monocle_of_revealing.stage.2"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:monocle_of_revealing"
+        }
+      ]
     }
   ],
   "puzzles": [
@@ -128,6 +159,16 @@
         "order",
         "senses",
         "undead"
+      ]
+    },
+    {
+      "key": "arcana:monocle_of_revealing",
+      "type": "chemistry",
+      "desc": "puzzle.arcana.chemistry.monocle_of_revealing",
+      "nodes": [
+        "crystal",
+        "aura",
+        "tool"
       ]
     }
   ]

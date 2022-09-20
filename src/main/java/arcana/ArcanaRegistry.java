@@ -22,6 +22,7 @@ import arcana.worldgen.silverwood.SilverwoodSaplingGenerator;
 import arcana.worldgen.silverwood.SilverwoodTree;
 import arcana.worldgen.silverwood.SilverwoodTrunkPlacer;
 import com.unascribed.lib39.fractal.api.ItemSubGroup;
+import dev.emi.trinkets.api.TrinketItem;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
@@ -80,6 +81,7 @@ public final class ArcanaRegistry{
 	// items...
 	public static final Item SCRIBBLED_NOTES = new ScribbledNotesItem(GROUPED_SINGLE);
 	public static final Item GOGGLES_OF_REVEALING = new GogglesOfRevealingItem(new Settings().group(Tab.MAIN).maxCount(1));
+	public static final Item MONOCLE_OF_REVEALING = new TrinketItem(GROUPED_SINGLE);
 	
 	public static final Item ARCANUM = new ResearchBookItem(GROUPED_SINGLE, arcId("arcanum"));
 	public static final Item CRIMSON_RITES = new ResearchBookItem(GROUPED_SINGLE, arcId("crimson_rites"));
@@ -244,6 +246,7 @@ public final class ArcanaRegistry{
 		// items + wand components
 		register("scribbled_notes", SCRIBBLED_NOTES);
 		register("goggles_of_revealing", GOGGLES_OF_REVEALING);
+		register("monocle_of_revealing", MONOCLE_OF_REVEALING);
 		
 		register("arcanum", ARCANUM);
 		register("crimson_rites", CRIMSON_RITES);

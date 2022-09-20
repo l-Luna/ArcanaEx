@@ -1,0 +1,30 @@
+{
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "C": {
+      "tag": "arcana:aspect_crystals"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "P": {
+      "item": "minecraft:glass_pane"
+    }
+  },
+  "pattern": [
+    "CGC",
+    "GPG",
+    "CGC"
+  ],
+  "result": {
+    "item": "arcana:monocle_of_revealing"
+  },
+  "aspects": [
+    "20*air",
+    "20*fire",
+    "20*water",
+    "20*earth",
+    "20*order",
+    "20*entropy"
+  ]
+}

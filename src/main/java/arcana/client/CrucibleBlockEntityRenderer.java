@@ -9,7 +9,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.util.math.Quaternion;
 import net.minecraft.util.math.Vec3f;
 
@@ -24,7 +23,7 @@ public class CrucibleBlockEntityRenderer implements BlockEntityRenderer<Crucible
 	                   int light,
 	                   int overlay){
 		var player = MinecraftClient.getInstance().player;
-		boolean hasGoggles = player.getEquippedStack(EquipmentSlot.HEAD).getItem() instanceof GogglesOfRevealingItem;
+		boolean hasGoggles = GogglesOfRevealingItem.hasRevealing(player);
 		
 		if(!hasGoggles)
 			return;

@@ -19,6 +19,9 @@
   "tag.arcana.silverwood_logs": "Silverwood Logs",
   "tag.arcana.greatwood_logs": "Greatwood Logs",
 
+  // if you say so
+  "tag.trinkets.head.face": "Face Equippables",
+
   // EMI
   "emi.category.arcana.items_by_aspects": "Items by Aspects",
   "emi.category.arcana.aspects_by_items": "Aspects by Items",
@@ -75,6 +78,7 @@
   // Items
   "item.arcana.scribbled_notes": "Scribbled Notes",
   "item.arcana.goggles_of_revealing": "Goggles of Revealing",
+  "item.arcana.monocle_of_revealing": "Monocle of Revealing",
 
   "item.arcana.arcanum": "Arcanum",
   "item.arcana.crimson_rites": "Crimson Rites",
@@ -427,7 +431,9 @@
 
   "research.arcana.monocle_of_revealing": "Monocle of Revealing",
   "research.arcana.monocle_of_revealing.desc": "Eye Spy",
-  "research.arcana.monocle_of_revealing.stage.1": "Wearing the Goggles of Revealing is essentially a requirement for doing any kind of magical work - yet doing so prevents me from wearing important protected headwear.",
+  "research.arcana.monocle_of_revealing.stage.1": "Wearing the Goggles of Revealing is essentially a requirement for doing any kind of magical work - yet doing so prevents me from wearing important protected headwear.\nA more lightweight and compatible form would be appreciated.",
+  "research.arcana.monocle_of_revealing.stage.2": "Reducing the goggles to a single lens does suffice for casual use.\nIt takes a bit of squinting, but the Monocles of Revealing are just as capable for alchemy or peering into nodes as the full-sized goggles, but only take up a trinkets slot.\nI do wonder what other improvements could be made to the goggles, though...",
+  "puzzle.arcana.chemistry.monocle_of_revealing": "Create a more efficient vis lens",
 
   // Auromancy Tab
   "research.arcana.auromancy_root": "Auromancy",

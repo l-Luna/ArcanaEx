@@ -12,7 +12,6 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.math.MathHelper;
@@ -39,7 +38,7 @@ public final class NodeRenderer{
 	@SuppressWarnings("resource") // ???
 	public static void renderAll(WorldRenderContext context){
 		var player = MinecraftClient.getInstance().player;
-		boolean hasGoggles = player == null || player.getEquippedStack(EquipmentSlot.HEAD).getItem() instanceof GogglesOfRevealingItem;
+		boolean hasGoggles = GogglesOfRevealingItem.hasRevealing(player);
 		
 		context.lightmapTextureManager().enable();
 		RenderSystem.disableCull();

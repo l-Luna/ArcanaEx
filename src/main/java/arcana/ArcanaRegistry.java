@@ -176,6 +176,7 @@ public final class ArcanaRegistry{
 	public static final Block PAVING_STONE_OF_TRAVEL = new PavingStoneOfTravelBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3, 7));
 	public static final Block PAVING_STONE_OF_WARDING = new PavingStoneOfWardingBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3.5f, 7));
 	public static final Block PEDESTAL = new PedestalBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3).nonOpaque());
+	public static final Block ARCANE_LEVITATOR = new ArcaneLevitatorBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).sounds(BlockSoundGroup.WOOD).strength(2));
 	
 	public static final Block ARCANIUM_BLOCK = new Block(of(Material.METAL, MapColor.PINK).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(5, 6).sounds(BlockSoundGroup.METAL));
 	public static final Block ARCANE_STONE = new Block(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3, 7));
@@ -221,6 +222,9 @@ public final class ArcanaRegistry{
 			.build();
 	public static BlockEntityType<PedestalBlockEntity> PEDESTAL_BE = FabricBlockEntityTypeBuilder
 			.create(PedestalBlockEntity::new, PEDESTAL)
+			.build();
+	public static BlockEntityType<ArcaneLevitatorBlockEntity> ARCANE_LEVITATOR_BE = FabricBlockEntityTypeBuilder
+			.create(ArcaneLevitatorBlockEntity::new, ARCANE_LEVITATOR)
 			.build();
 	
 	// enchantments...
@@ -337,6 +341,7 @@ public final class ArcanaRegistry{
 		register("paving_stone_of_travel", PAVING_STONE_OF_TRAVEL);
 		register("paving_stone_of_warding", PAVING_STONE_OF_WARDING);
 		register("pedestal", PEDESTAL);
+		register("arcane_levitator", ARCANE_LEVITATOR);
 		
 		register("arcanium_block", ARCANIUM_BLOCK);
 		register("arcane_stone", ARCANE_STONE);
@@ -392,6 +397,7 @@ public final class ArcanaRegistry{
 		register("research_table", RESEARCH_TABLE_BE);
 		register("knowledgeable_dropper", KNOWLEDGEABLE_DROPPER_BE);
 		register("pedestal", PEDESTAL_BE);
+		register("arcane_levitator", ARCANE_LEVITATOR_BE);
 		
 		// enchantments
 		register("warping", WARPING);

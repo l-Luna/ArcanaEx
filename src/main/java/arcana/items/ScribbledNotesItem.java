@@ -21,9 +21,10 @@ public class ScribbledNotesItem extends Item{
 		var stack = user.getStackInHand(hand);
 		var ret = new AtomicReference<>(TypedActionResult.pass(stack));
 		world.getComponent(AuraWorld.KEY).raycast(user.getEyePos(), 4.5, false, user).ifPresent(node -> {
-			stack.decrement(1);
-			user.setStackInHand(hand, new ItemStack(ArcanaRegistry.ARCANUM));
-			ret.set(TypedActionResult.consume(stack));
+			var newStack = new ItemStack(ArcanaRegistry.ARCANUM);
+			System.out.println(stack);
+			user.setStackInHand(hand, newStack);
+			ret.set(TypedActionResult.success(newStack));
 		});
 		return ret.get();
 	}

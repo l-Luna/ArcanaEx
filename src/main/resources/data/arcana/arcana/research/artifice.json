@@ -113,7 +113,7 @@
       "parents": [
         "/arcana:artifice_root"
       ],
-      "x": -2,
+      "x": -4,
       "y": 1,
       "sections": [
         {
@@ -130,6 +130,37 @@
         {
           "type": "arcane_crafting",
           "content": "arcana:monocle_of_revealing"
+        }
+      ]
+    },
+    {
+      "key": "arcana:arcane_levitator",
+      "name": "research.arcana.arcane_levitator",
+      "desc": "research.arcana.arcane_levitator.desc",
+      "icons": [
+        "arcana:arcane_levitator"
+      ],
+      "category": "arcana:artifice",
+      "parents": [
+        "arcana:artifice_root"
+      ],
+      "x": -1,
+      "y": 3,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.arcane_levitator.stage.1",
+          "requirements": [
+            "arcana::puzzle{arcane_levitator}"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.arcane_levitator.stage.2"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:arcane_levitator"
         }
       ]
     }
@@ -169,6 +200,16 @@
         "crystal",
         "aura",
         "tool"
+      ]
+    },
+    {
+      "key": "arcana:arcane_levitator",
+      "type": "chemistry",
+      "desc": "puzzle.arcana.chemistry.arcane_levitator",
+      "nodes": [
+        "movement",
+        "journey",
+        "aura"
       ]
     }
   ]

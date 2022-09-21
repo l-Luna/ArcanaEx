@@ -417,6 +417,7 @@
   "research.arcana.arcane_levitator.desc": "Stylish transport",
   "research.arcana.arcane_levitator.stage.1": "My vertical mobility is woefully limited. Scaling cliffs is nearly impossible, and in my own home, the most I can do is tediously lay our long-winded staircases.\nThere must be some magical solution I can use to making moving up and down easier.",
   "research.arcana.arcane_levitator.stage.2": "It isn't flight, but close enough to be useful.\nAny creature or item, including myself, on top of a levitator will be quickly lifted upwards. If I crouch, I'll instead be lowered downwards.\nLevitators can be stacked to increase their vertical range; each provides 10 blocks, up to a total maximum of 50.\nDue to their small power usage, a levitator can draw sufficient power from the surrounding aura. Doing so does cause a minuscule amount of flux to be released; while the aura should be more than able to handle a few, I can turn off ones not in use using a redstone signal.",
+  "puzzle.arcana.chemistry.arcane_levitator": "Generate an air stream with vis",
 
   "research.arcana.levitational_locomotive": "Levitational Locomotive",
   "research.arcana.levitational_locomotive.desc": "Look ma, no tracks!",

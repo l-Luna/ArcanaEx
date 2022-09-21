@@ -1,0 +1,31 @@
+{
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "W": {
+      "item": "arcana:greatwood_planks"
+    },
+    "S": {
+      "item": "arcana:arcane_stone"
+    },
+    "A": {
+      "item": "arcana:arcanium_ingot"
+    },
+    "N": {
+      "item": "arcana:nitor"
+    },
+    "C": {
+      "item": "arcana:crystals/air"
+    }
+  },
+  "pattern": [
+    "ACA",
+    "W W",
+    "SNS"
+  ],
+  "result": {
+    "item": "arcana:arcane_levitator"
+  },
+  "aspects": [
+    "15*air"
+  ]
+}

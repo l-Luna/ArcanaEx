@@ -357,6 +357,16 @@ public class ResearchBookScreen extends Screen{
 		return super.mouseScrolled(mouseX, mouseY, scroll);
 	}
 	
+	public boolean keyPressed(int keyCode, int scanCode, int modifiers){
+		if(super.keyPressed(keyCode, scanCode, modifiers))
+			return true;
+		if(client.options.inventoryKey.matchesKey(keyCode, scanCode)){
+			client.setScreen(null);
+			return true;
+		}
+		return false;
+	}
+	
 	public boolean shouldPause(){
 		return false;
 	}

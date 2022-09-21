@@ -65,18 +65,20 @@ dependencies {
 
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	// TODO: include cardinal components & trinkets
+	// TODO: remove when trinkets is updated
 	modImplementation "dev.emi:emi:${emi_version}"
-	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cardinal_comp_version}"
-	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-world:${cardinal_comp_version}"
-	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinal_comp_version}"
 	modImplementation "com.terraformersmc:modmenu:4.0.6"
-	modImplementation "dev.emi:trinkets:${trinkets_version}"
 
-	modApi include("com.unascribed:lib39-weld:1.2.1")
-	modApi include("com.unascribed:lib39-tunnel:1.2.1")
-	modApi include("com.unascribed:lib39-fractal:1.2.1")
-	modApi include("com.unascribed:lib39-phantom:1.2.1")
+	modImplementation include("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cardinal_comp_version}")
+	modImplementation include("dev.onyxstudios.cardinal-components-api:cardinal-components-world:${cardinal_comp_version}")
+	modImplementation include("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinal_comp_version}")
+
+	modApi include("dev.emi:trinkets:${trinkets_version}")
+
+	modApi include("com.unascribed:lib39-weld:${lib39_version}")
+	modApi include("com.unascribed:lib39-tunnel:${lib39_version}")
+	modApi include("com.unascribed:lib39-fractal:${lib39_version}")
+	modApi include("com.unascribed:lib39-phantom:${lib39_version}")
 
 	modRuntimeOnly ("supercoder79:databreaker:0.2.10") {
 		exclude module : "fabric-loader"

@@ -57,7 +57,7 @@
 		},
 		{
 			"from": [8, 13, 3.5],
-			"to": [8, 17, 7.5],
+			"to": [8.01, 17, 7.5],
 			"rotation": {"angle": -45, "axis": "y", "origin": [8, 16, 8]},
 			"faces": {
 				"north": {"uv": [0, 0, 0, 0], "texture": "#core"},

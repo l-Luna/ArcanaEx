@@ -3,7 +3,7 @@
   "credit": "Made with Blockbench",
   "textures": {
     "0": "arcana:block/crucible",
-    "particle": "arcana:block/crucible"
+    "particle": "arcana:block/crucible_particles"
   },
   "elements": [
     {

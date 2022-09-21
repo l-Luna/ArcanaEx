@@ -69,16 +69,11 @@ dependencies {
 	modImplementation "dev.emi:emi:${emi_version}"
 	modImplementation "com.terraformersmc:modmenu:4.0.6"
 
-	modImplementation include("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cardinal_comp_version}")
-	modImplementation include("dev.onyxstudios.cardinal-components-api:cardinal-components-world:${cardinal_comp_version}")
-	modImplementation include("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinal_comp_version}")
-
+	for(String cc_module : ["base", "world", "entity"])
+		modImplementation include("dev.onyxstudios.cardinal-components-api:cardinal-components-${cc_module}:${cardinal_comp_version}")
+	for(String lib39_module : ["core", "weld", "tunnel", "fractal", "phantom"])
+		modApi include("com.unascribed:lib39-${lib39_module}:${lib39_version}")
 	modApi include("dev.emi:trinkets:${trinkets_version}")
-
-	modApi include("com.unascribed:lib39-weld:${lib39_version}")
-	modApi include("com.unascribed:lib39-tunnel:${lib39_version}")
-	modApi include("com.unascribed:lib39-fractal:${lib39_version}")
-	modApi include("com.unascribed:lib39-phantom:${lib39_version}")
 
 	modRuntimeOnly ("supercoder79:databreaker:0.2.10") {
 		exclude module : "fabric-loader"
@@ -89,7 +84,10 @@ processResources {
 	inputs.property "version", project.version
 
 	filesMatching("fabric.mod.json") {
-		expand "version": project.version
+		expand "version": project.version,
+				"lib39_version": lib39_version,
+				"trinkets_version": trinkets_version,
+				"cc_version": cardinal_comp_version
 	}
 }
 

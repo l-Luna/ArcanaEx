@@ -41,7 +41,16 @@
     "fabricloader": ">=0.14.6",
     "fabric": "*",
     "minecraft": "~1.19",
-    "java": ">=17"
+    "java": ">=17",
+    "lib39-core": ">=${lib39_version}",
+    "lib39-fractal": ">=${lib39_version}",
+    "lib39-phantom": ">=${lib39_version}",
+    "lib39-tunnel": ">=${lib39_version}",
+    "lib39-weld": ">=${lib39_version}",
+    "trinkets": ">=${trinkets_version}",
+    "cardinal-components-base": ">=${cc_version}",
+    "cardinal-components-entity": ">=${cc_version}",
+    "cardinal-components-world": ">=${cc_version}"
   },
   "suggests": {
     "emi": "*"

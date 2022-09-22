@@ -168,6 +168,7 @@ public final class ArcanaRegistry{
 	public static final Block CRUCIBLE = new CrucibleBlock(of(Material.METAL).dropsSelf().requiresTool(PICKAXE_MINEABLE).sounds(BlockSoundGroup.METAL).strength(2).nonOpaque());
 	public static final Block RESEARCH_TABLE = new ResearchTableBlock(of(Material.WOOD).dropsSelf().renderLayer(CUTOUT).usesTool(AXE_MINEABLE).nonOpaque().strength(3));
 	public static final Block KNOWLEDGEABLE_DROPPER = new KnowledgeableDropperBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3));
+	public static final Block INFUSION_PILLAR = new InfusionPillarBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).nonOpaque().strength(4));
 	
 	public static final Block NITOR = new NitorBlock(of(Material.DECORATION).dropsSelf().strength(0).luminance(15));
 	public static final Block HARDENED_GLASS = new GlassBlock(of(Material.GLASS).dropsSelf().usesTool(PICKAXE_MINEABLE).renderLayer(CUTOUT).strength(3, 10).sounds(BlockSoundGroup.GLASS).nonOpaque().allowsSpawning(Blocks::never).solidBlock(Blocks::never).suffocates(Blocks::never).blockVision(Blocks::never));
@@ -225,6 +226,9 @@ public final class ArcanaRegistry{
 			.build();
 	public static BlockEntityType<ArcaneLevitatorBlockEntity> ARCANE_LEVITATOR_BE = FabricBlockEntityTypeBuilder
 			.create(ArcaneLevitatorBlockEntity::new, ARCANE_LEVITATOR)
+			.build();
+	public static BlockEntityType<InfusionPillarBlockEntity> INFUSION_PILLAR_BE = FabricBlockEntityTypeBuilder
+			.create(InfusionPillarBlockEntity::new, INFUSION_PILLAR)
 			.build();
 	
 	// enchantments...
@@ -333,6 +337,7 @@ public final class ArcanaRegistry{
 		register("research_table", RESEARCH_TABLE, false);
 		register("research_table", new ResearchTableItem(GROUPED)); // it's a block item, it doesn't count
 		register("knowledgeable_dropper", KNOWLEDGEABLE_DROPPER);
+		register("infusion_pillar", INFUSION_PILLAR);
 		
 		register("nitor", NITOR);
 		register("hardened_glass", HARDENED_GLASS);
@@ -398,6 +403,7 @@ public final class ArcanaRegistry{
 		register("knowledgeable_dropper", KNOWLEDGEABLE_DROPPER_BE);
 		register("pedestal", PEDESTAL_BE);
 		register("arcane_levitator", ARCANE_LEVITATOR_BE);
+		register("infusion_pillar", INFUSION_PILLAR_BE);
 		
 		// enchantments
 		register("warping", WARPING);

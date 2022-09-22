@@ -42,6 +42,7 @@ import net.minecraft.client.item.TooltipData;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.item.BlockItem;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
@@ -63,6 +64,10 @@ public final class ArcanaClient implements ClientModInitializer{
 		ClientTickEvents.END_CLIENT_TICK.register(SwapFocusScreen::tryOpen);
 		
 		ModelLoadingRegistry.INSTANCE.registerResourceProvider(__ -> new WandModel.Provider());
+		ModelLoadingRegistry.INSTANCE.registerAppender((manager, out) -> {
+			out.accept(new ModelIdentifier(arcId("infusion_pillar_base"), ""));
+			out.accept(new ModelIdentifier(arcId("infusion_pillar_upper"), ""));
+		});
 		
 		ColorProviderRegistry.BLOCK.register(
 				(state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.getWaterColor(world, pos) : -1,
@@ -88,6 +93,7 @@ public final class ArcanaClient implements ClientModInitializer{
 		
 		BlockEntityRendererRegistry.register(ArcanaRegistry.CRUCIBLE_BE, ctx -> new CrucibleBlockEntityRenderer());
 		BlockEntityRendererRegistry.register(ArcanaRegistry.PEDESTAL_BE, PedestalBlockEntityRenderer::new);
+		BlockEntityRendererRegistry.register(ArcanaRegistry.INFUSION_PILLAR_BE, ctx -> new InfusionPillarBlockEntityRenderer());
 		
 		for(Block block : ArcanaRegistry.blocks)
 			if(block.settings instanceof ArcanaBlockSettings abs)

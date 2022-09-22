@@ -66,12 +66,12 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	// TODO: remove when trinkets is updated
-	modImplementation "dev.emi:emi:${emi_version}"
 	modImplementation "com.terraformersmc:modmenu:4.0.6"
+	modImplementation "dev.emi:emi:${emi_version}"
 
 	for(String cc_module : ["base", "world", "entity"])
 		modImplementation include("dev.onyxstudios.cardinal-components-api:cardinal-components-${cc_module}:${cardinal_comp_version}")
-	for(String lib39_module : ["core", "weld", "tunnel", "fractal", "phantom"])
+	for(String lib39_module : ["core", "weld", "tunnel", "fractal", "phantom", "lockpick"])
 		modApi include("com.unascribed:lib39-${lib39_module}:${lib39_version}")
 	modApi include("dev.emi:trinkets:${trinkets_version}")
 

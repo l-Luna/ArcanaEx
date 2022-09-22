@@ -1,0 +1,52 @@
+{
+	"credit": "Made with Blockbench",
+	"texture_size": [128, 128],
+	"textures": {
+		"particle": "arcana:block/infusion_pillar",
+		"0_0": "arcana:block/infusion_pillar"
+	},
+	"elements": [
+		{
+			"name": "BaseMiddle",
+			"from": [3, 4, 3],
+			"to": [13, 5, 13],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0.24972, 18.82326, 0.24972]},
+			"faces": {
+				"north": {"uv": [1.25, 3.25, 2.5, 3.375], "texture": "#0_0"},
+				"east": {"uv": [0, 3.25, 1.25, 3.375], "texture": "#0_0"},
+				"south": {"uv": [3.75, 3.25, 5, 3.375], "texture": "#0_0"},
+				"west": {"uv": [2.5, 3.25, 3.75, 3.375], "texture": "#0_0"},
+				"up": {"uv": [2.5, 3.25, 1.25, 2], "texture": "#0_0"},
+				"down": {"uv": [3.75, 2, 2.5, 3.25], "texture": "#0_0"}
+			}
+		},
+		{
+			"name": "BaseTop",
+			"from": [2, 5, 2],
+			"to": [14, 7, 14],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0.24972, 18.82326, 0.24972]},
+			"faces": {
+				"north": {"uv": [1.5, 4.875, 3, 5.125], "texture": "#0_0"},
+				"east": {"uv": [0, 4.875, 1.5, 5.125], "texture": "#0_0"},
+				"south": {"uv": [4.5, 4.875, 6, 5.125], "texture": "#0_0"},
+				"west": {"uv": [3, 4.875, 4.5, 5.125], "texture": "#0_0"},
+				"up": {"uv": [3, 4.875, 1.5, 3.375], "texture": "#0_0"},
+				"down": {"uv": [4.5, 3.375, 3, 4.875], "texture": "#0_0"}
+			}
+		},
+		{
+			"name": "Base",
+			"from": [2, 0, 2],
+			"to": [14, 4, 14],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0.24972, 18.82326, 0.24972]},
+			"faces": {
+				"north": {"uv": [1.5, 1.5, 3, 2], "texture": "#0_0"},
+				"east": {"uv": [0, 1.5, 1.5, 2], "texture": "#0_0"},
+				"south": {"uv": [4.5, 1.5, 6, 2], "texture": "#0_0"},
+				"west": {"uv": [3, 1.5, 4.5, 2], "texture": "#0_0"},
+				"up": {"uv": [3, 1.5, 1.5, 0], "texture": "#0_0"},
+				"down": {"uv": [4.5, 0, 3, 1.5], "texture": "#0_0"}
+			}
+		}
+	]
+}

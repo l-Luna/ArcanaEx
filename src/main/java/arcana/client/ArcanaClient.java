@@ -94,6 +94,7 @@ public final class ArcanaClient implements ClientModInitializer{
 		BlockEntityRendererRegistry.register(ArcanaRegistry.CRUCIBLE_BE, ctx -> new CrucibleBlockEntityRenderer());
 		BlockEntityRendererRegistry.register(ArcanaRegistry.PEDESTAL_BE, PedestalBlockEntityRenderer::new);
 		BlockEntityRendererRegistry.register(ArcanaRegistry.INFUSION_PILLAR_BE, ctx -> new InfusionPillarBlockEntityRenderer());
+		BlockEntityRendererRegistry.register(ArcanaRegistry.INFUSION_MATRIX_BE, ctx -> new InfusionMatrixBlockEntityRenderer());
 		
 		for(Block block : ArcanaRegistry.blocks)
 			if(block.settings instanceof ArcanaBlockSettings abs)

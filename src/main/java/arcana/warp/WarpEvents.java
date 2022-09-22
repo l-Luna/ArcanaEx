@@ -35,7 +35,7 @@ public final class WarpEvents{
 		for(ServerPlayerEntity player : world.getPlayers()){
 			Researcher researcher = Researcher.from(player);
 			long elapsed = world.getTime() - researcher.getLastWarpEventTime();
-			if((elapsed >= 20 * 60 * 4) || (researcher.wasLastWarpEventPrecursor() && elapsed >= 20 * 10))
+			if((elapsed >= 20 * 60 * 9) || (researcher.wasLastWarpEventPrecursor() && elapsed >= 20 * 13))
 				triggerEligible(player);
 		}
 	}

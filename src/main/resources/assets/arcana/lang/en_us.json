@@ -105,6 +105,8 @@
   "item.arcana.arcanium_leggings": "Arcanium Leggings",
   "item.arcana.arcanium_boots": "Arcanium Boots",
 
+  "item.arcana.boots_of_the_traveller": "Boots of the Traveller",
+
   "item.arcana.alchemical_iron": "Alchemical Iron",
   "item.arcana.alchemical_gold": "Alchemical Gold",
   "item.arcana.alchemical_copper": "Alchemical Copper",
@@ -276,6 +278,14 @@
   "research.book.warping.3": "Forbidden Knowledge: Secret",
   "research.book.warping.4": "Forbidden Knowledge: Dangerous",
   "research.book.warping.5": "Forbidden Knowledge: Taboo",
+
+  "recipe.infusion.instability": "Instability: %s",
+  "recipe.infusion.instability.0": "§2Safe§0",
+  "recipe.infusion.instability.1": "§1Negligible§0",
+  "recipe.infusion.instability.2": "§9Minor§0",
+  "recipe.infusion.instability.3": "§5Moderate§0",
+  "recipe.infusion.instability.4": "§6High§0",
+  "recipe.infusion.instability.5": "§4Dangerous§0",
 
   "research.requirement.arcana.experience": "%sx Experience Levels",
   "research.requirement.arcana.item": "%sx %s",

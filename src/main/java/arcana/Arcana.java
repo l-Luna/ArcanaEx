@@ -5,6 +5,7 @@ import arcana.commands.NodeCommand;
 import arcana.commands.ResearchCommand;
 import arcana.commands.WarpCommand;
 import arcana.recipes.AlchemyRecipe;
+import arcana.recipes.InfusionRecipe;
 import arcana.recipes.ShapedArcaneCraftingRecipe;
 import arcana.recipes.WandRecipe;
 import arcana.research.BuiltinResearch;
@@ -42,6 +43,7 @@ public final class Arcana implements ModInitializer{
 		WandRecipe.setup();
 		ShapedArcaneCraftingRecipe.setup();
 		AlchemyRecipe.setup();
+		InfusionRecipe.setup();
 		Research.setup();
 		WarpEvents.setup();
 		

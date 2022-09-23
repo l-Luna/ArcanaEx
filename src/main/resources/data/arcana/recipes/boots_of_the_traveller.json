@@ -1,0 +1,34 @@
+{
+  "type": "arcana:infusion",
+  "central": {
+    "item": "minecraft:leather_boots"
+  },
+  "ingredients": [
+    {
+      "tag": "minecraft:fishes"
+    },
+    {
+      "item": "minecraft:map"
+    },
+    {
+      "item": "arcana:crystals/air"
+    },
+    {
+      "item": "minecraft:feather"
+    },
+    {
+      "tag": "minecraft:boats"
+    },
+    {
+      "item": "arcana:crystals/air"
+    }
+  ],
+  "aspects": [
+    "30*movement",
+    "20*air",
+    "6*journey"
+  ],
+  "result": {
+    "item": "arcana:boots_of_the_traveller"
+  }
+}

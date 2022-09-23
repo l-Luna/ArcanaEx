@@ -66,6 +66,9 @@ public abstract class EntrySection{
 		factories.put(AlchemyRecipeSection.TYPE, withContentsId(AlchemyRecipeSection::new));
 		deserializers.put(AlchemyRecipeSection.TYPE, nbt -> new AlchemyRecipeSection(new Identifier(nbt.getString("recipe"))));
 		
+		factories.put(InfusionRecipeSection.TYPE, withContentsId(InfusionRecipeSection::new));
+		deserializers.put(InfusionRecipeSection.TYPE, nbt -> new InfusionRecipeSection(new Identifier(nbt.getString("recipe"))));
+		
 		factories.put(WandInteractionSection.TYPE, WandInteractionSection::new);
 		deserializers.put(WandInteractionSection.TYPE, WandInteractionSection::new);
 		

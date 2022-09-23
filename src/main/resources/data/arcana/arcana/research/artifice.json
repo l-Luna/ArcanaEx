@@ -25,6 +25,10 @@
         {
           "type": "arcane_crafting",
           "content": "arcana:goggles_of_revealing"
+        },
+        {
+          "type": "infusion",
+          "content": "arcana:boots_of_the_traveller"
         }
       ]
     },

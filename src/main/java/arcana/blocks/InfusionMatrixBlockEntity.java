@@ -4,6 +4,7 @@ import arcana.ArcanaRegistry;
 import arcana.aspects.AspectMap;
 import arcana.recipes.InfusionInventory;
 import arcana.recipes.InfusionRecipe;
+import arcana.util.StreamUtil;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
@@ -12,14 +13,18 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.recipe.Ingredient;
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class InfusionMatrixBlockEntity extends BlockEntity{
@@ -75,11 +80,7 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 		BlockEntity pedestal = world.getBlockEntity(pos.down(2));
 		if(pedestal instanceof PedestalBlockEntity pbe && !pbe.getStack().isEmpty()){
 			ItemStack centre = pbe.getStack();
-			List<ItemStack> outers = inRange(pos -> {
-				if(world.getBlockEntity(pos) instanceof PedestalBlockEntity p && !p.getStack().isEmpty())
-					return p.getStack();
-				return null;
-			}).toList();
+			List<ItemStack> outers = outerStacks();
 			AspectMap aspects = new AspectMap();
 			
 			InfusionInventory inv = new InfusionInventory(centre, outers, aspects);
@@ -109,6 +110,14 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 		return builder.build();
 	}
 	
+	private @NotNull List<ItemStack> outerStacks(){
+		return inRange(pos -> {
+			if(world.getBlockEntity(pos) instanceof PedestalBlockEntity p && !p.getStack().isEmpty())
+				return p.getStack();
+			return null;
+		}).toList();
+	}
+	
 	public InfusionRecipe getCrafting(){
 		return crafting;
 	}
@@ -135,6 +144,49 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 	public static class ItemPhase implements InfusionPhase{
 		
 		public @NotNull InfusionState tick(InfusionMatrixBlockEntity be, NbtCompound tag){
+			if(tag.contains("cooldown", NbtElement.INT_TYPE) && tag.getInt("cooldown") > 0){
+				tag.putInt("cooldown", tag.getInt("cooldown") - 1);
+				return InfusionState.working;
+			}
+			InfusionRecipe recipe = be.getCrafting();
+			if(recipe != null){
+				List<ItemStack> absorbed = StreamUtil.streamAndApply(
+						tag.getList("absorbed", NbtElement.COMPOUND_TYPE),
+						NbtCompound.class,
+						ItemStack::fromNbt
+				).collect(Collectors.toCollection(ArrayList::new));
+				// similar to recipe matching
+				Ingredient next = null;
+				ingredients:
+				for(Ingredient ingredient : recipe.outerIngredients()){
+					for(int i = 0; i < absorbed.size(); i++)
+						if(ingredient.test(absorbed.get(i))){
+							absorbed.remove(i);
+							continue ingredients;
+						}
+					next = ingredient;
+					break;
+				}
+				if(next != null){
+					var stacks = be
+							.inRange(pos -> be.world.getBlockEntity(pos) instanceof PedestalBlockEntity p ? p : null)
+							.toList();
+					Ingredient finalNext = next;
+					var matching = stacks.stream().filter(x -> finalNext.test(x.getStack())).findFirst();
+					if(matching.isPresent()){
+						var pedestal = matching.get();
+						var list = tag.getList("absorbed", NbtElement.COMPOUND_TYPE);
+						list.add(pedestal.getStack().writeNbt(new NbtCompound()));
+						tag.put("absorbed", list);
+						pedestal.setStack(ItemStack.EMPTY);
+						tag.putInt("cooldown", 40);
+						return InfusionState.working;
+					}else{
+						return InfusionState.stalling;
+					}
+				}else
+					return InfusionState.finished;
+			}
 			return InfusionState.finished;
 		}
 		

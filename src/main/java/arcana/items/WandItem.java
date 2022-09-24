@@ -2,6 +2,7 @@ package arcana.items;
 
 import arcana.ArcanaRegistry;
 import arcana.aspects.*;
+import arcana.blocks.InfusionMatrixBlockEntity;
 import arcana.client.ArcanaClient;
 import arcana.components.AuraWorld;
 import net.fabricmc.api.EnvType;
@@ -94,6 +95,9 @@ public class WandItem extends Item implements WarpingItem{
 					world.addParticle(ParticleTypes.END_ROD, (pos.getX() - .1f) + world.random.nextDouble() * 1.2f, (pos.getY() - .1f) + world.random.nextDouble() * 1.2f, (pos.getZ() - .1f) + world.random.nextDouble() * 1.2f, 0, 0, 0);
 				return ActionResult.SUCCESS;
 			}
+			if(state.getBlock() == ArcanaRegistry.INFUSION_MATRIX)
+				if(world.getBlockEntity(pos) instanceof InfusionMatrixBlockEntity e)
+					e.activate();
 		}else if(focusStack.getItem() instanceof FocusItem fi){
 			AspectMap cost = fi.castCost(wandStack, focusStack, player).copy();
 			cost.multiply(aspect -> costMultiplier(aspect, wandStack, player));

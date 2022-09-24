@@ -35,7 +35,8 @@ public class InfusionMatrixBlockEntityRenderer implements BlockEntityRenderer<In
 		BlockModelRenderer.enableBrightnessCache();
 		matrices.push();
 		var time = entity.getWorld().getTime();
-		matrices.translate(0, Math.sin(Math.toRadians((time + tickDelta) * 2.5)) / 4.5f, 0);
+		var ySpeed = entity.getCrafting() != null ? 9 : 2.5;
+		matrices.translate(0, Math.sin(Math.toRadians((time + tickDelta) * ySpeed)) / 4.5f, 0);
 		matrices.translate(.5, .8, .5);
 		matrices.multiply(Quaternion.fromEulerXyz(0, (float)Math.toRadians(time + tickDelta), (float)Math.toRadians((time + tickDelta) / 4)));
 		matrices.multiply(Quaternion.fromEulerYxz(0, MathHelper.HALF_PI / 2f, MathHelper.HALF_PI / 2f));

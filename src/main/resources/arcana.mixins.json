@@ -12,6 +12,7 @@
   ],
   "client": [
     "JsonUnbakedModelAccessor",
+    "JsonUnbakedModelMixin",
     "ScreenMixin"
   ],
   "injectors": {

@@ -35,7 +35,7 @@ public class InfusionMatrixBlockEntityRenderer implements BlockEntityRenderer<In
 		BlockModelRenderer.enableBrightnessCache();
 		matrices.push();
 		var time = entity.getWorld().getTime();
-		var ySpeed = entity.getCrafting() != null ? 9 : 2.5;
+		var ySpeed = entity.getCurrentRecipe() != null ? 9 : 2.5;
 		matrices.translate(0, Math.sin(Math.toRadians((time + tickDelta) * ySpeed)) / 4.5f, 0);
 		matrices.translate(.5, .8, .5);
 		matrices.multiply(Quaternion.fromEulerXyz(0, (float)Math.toRadians(time + tickDelta), (float)Math.toRadians((time + tickDelta) / 4)));
@@ -52,5 +52,9 @@ public class InfusionMatrixBlockEntityRenderer implements BlockEntityRenderer<In
 		
 		matrices.pop();
 		BlockModelRenderer.disableBrightnessCache();
+		
+		InfusionMatrixBlockEntity.InfusionPhase phase = entity.currentPhase();
+		if(phase != null)
+			phase.render(entity, matrices, vertexConsumers, tickDelta, entity.getStateForPhase(phase));
 	}
 }

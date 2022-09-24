@@ -14,8 +14,10 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
+import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.Random;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -26,6 +28,8 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static arcana.blocks.InfusionMatrixBlockEntity.InfusionState.*;
 
 public class InfusionMatrixBlockEntity extends BlockEntity{
 	
@@ -54,11 +58,12 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 				states = new HashMap<>(phases.size());
 			}
 			if(phases.size() > curPhase){
-				var phase = phases.get(curPhase);
+				var phase = currentPhase();
 				curState = phase.tick(this, states.computeIfAbsent(phase, __ -> new NbtCompound()));
-				if(curState == InfusionState.finished)
+				if(curState == finished){
 					curPhase++;
-				else if(curState == InfusionState.stalling){
+					curState = working;
+				}else if(curState == stalling){
 					// TODO: add instability here
 				}
 			}else{
@@ -84,9 +89,7 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 			AspectMap aspects = new AspectMap();
 			
 			InfusionInventory inv = new InfusionInventory(centre, outers, aspects);
-			world.getRecipeManager().getFirstMatch(InfusionRecipe.TYPE, inv, world).ifPresent(recipe -> {
-				crafting = recipe;
-			});
+			world.getRecipeManager().getFirstMatch(InfusionRecipe.TYPE, inv, world).ifPresent(recipe -> crafting = recipe);
 		}
 	}
 	
@@ -118,8 +121,17 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 		}).toList();
 	}
 	
-	public InfusionRecipe getCrafting(){
+	public InfusionPhase currentPhase(){
+		return curPhase == -1 || curPhase >= phases.size() ? null : phases.get(curPhase);
+	}
+	
+	public InfusionRecipe getCurrentRecipe(){
 		return crafting;
+	}
+	
+	// for InfusionMatrixBlockEntityRenderer
+	public NbtCompound getStateForPhase(InfusionPhase phase){
+		return states != null ? states.getOrDefault(phase, new NbtCompound()) : new NbtCompound();
 	}
 	
 	public interface InfusionPhase{
@@ -128,7 +140,11 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 		InfusionState tick(InfusionMatrixBlockEntity be, NbtCompound tag);
 		
 		@Environment(EnvType.CLIENT)
-		void render(InfusionMatrixBlockEntity be, MatrixStack matrices, VertexConsumerProvider vcp, float tickDelta);
+		void render(InfusionMatrixBlockEntity be,
+		            MatrixStack matrices,
+		            VertexConsumerProvider vcp,
+		            float tickDelta,
+		            NbtCompound tag);
 	}
 	
 	public enum InfusionState{
@@ -144,66 +160,98 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 	public static class ItemPhase implements InfusionPhase{
 		
 		public @NotNull InfusionState tick(InfusionMatrixBlockEntity be, NbtCompound tag){
-			if(tag.contains("cooldown", NbtElement.INT_TYPE) && tag.getInt("cooldown") > 0){
-				tag.putInt("cooldown", tag.getInt("cooldown") - 1);
-				return InfusionState.working;
+			if(!tag.contains("cooldown", NbtElement.INT_TYPE)){ // initial pulling
+				tag.putInt("cooldown", 60);
+				return working;
 			}
-			InfusionRecipe recipe = be.getCrafting();
+			InfusionRecipe recipe = be.getCurrentRecipe();
 			if(recipe != null){
-				List<ItemStack> absorbed = StreamUtil.streamAndApply(
-						tag.getList("absorbed", NbtElement.COMPOUND_TYPE),
-						NbtCompound.class,
-						ItemStack::fromNbt
-				).collect(Collectors.toCollection(ArrayList::new));
-				// similar to recipe matching
-				Ingredient next = null;
-				ingredients:
-				for(Ingredient ingredient : recipe.outerIngredients()){
-					for(int i = 0; i < absorbed.size(); i++)
-						if(ingredient.test(absorbed.get(i))){
-							absorbed.remove(i);
-							continue ingredients;
-						}
-					next = ingredient;
-					break;
-				}
+				Ingredient next = nextIngredient(tag, recipe);
 				if(next != null){
-					var stacks = be
-							.inRange(pos -> be.world.getBlockEntity(pos) instanceof PedestalBlockEntity p ? p : null)
-							.toList();
-					Ingredient finalNext = next;
-					var matching = stacks.stream().filter(x -> finalNext.test(x.getStack())).findFirst();
+					var matching = be
+							.inRange(pos1 -> be.world.getBlockEntity(pos1) instanceof PedestalBlockEntity p ? p : null)
+							.filter(x -> next.test(x.getStack()))
+							.findFirst();
 					if(matching.isPresent()){
 						var pedestal = matching.get();
+						var stack = pedestal.getStack();
+						var pPos = pedestal.getPos();
+						if(be.world.getTime() % 2 == 0){
+							Random rng = be.world.getRandom();
+							var sx = pPos.getX() + rng.nextGaussian() / 8;
+							var sy = pPos.getY() + rng.nextGaussian() / 8;
+							var sz = pPos.getZ() + rng.nextGaussian() / 8;
+							be.world.addParticle(
+									new ItemStackParticleEffect(ArcanaRegistry.INFUSION_ITEM, stack),
+									sx + .5, sy + 1.5, sz + .5,
+									(be.pos.getX() - sx) / 10d,
+									(be.pos.getY() - sy - 2) / 10d,
+									(be.pos.getZ() - sz) / 10d
+							);
+						}
+						if(tag.getInt("cooldown") > 0){
+							tag.putInt("cooldown", tag.getInt("cooldown") - 1);
+							return working;
+						}
 						var list = tag.getList("absorbed", NbtElement.COMPOUND_TYPE);
-						list.add(pedestal.getStack().writeNbt(new NbtCompound()));
+						list.add(stack.writeNbt(new NbtCompound()));
 						tag.put("absorbed", list);
 						pedestal.setStack(ItemStack.EMPTY);
-						tag.putInt("cooldown", 40);
-						return InfusionState.working;
+						tag.putInt("cooldown", 60);
+						return working;
 					}else{
-						return InfusionState.stalling;
+						return stalling;
 					}
 				}else
-					return InfusionState.finished;
+					return finished;
 			}
-			return InfusionState.finished;
+			return finished;
 		}
 		
 		@Environment(EnvType.CLIENT)
-		public void render(InfusionMatrixBlockEntity be, MatrixStack matrices, VertexConsumerProvider vcp, float tickDelta){
+		public void render(InfusionMatrixBlockEntity be,
+		                   MatrixStack matrices,
+		                   VertexConsumerProvider vcp,
+		                   float tickDelta,
+		                   NbtCompound tag){
+			
+		}
 		
+		@Nullable
+		private static Ingredient nextIngredient(NbtCompound tag, InfusionRecipe recipe){
+			List<ItemStack> absorbed = StreamUtil.streamAndApply(
+					tag.getList("absorbed", NbtElement.COMPOUND_TYPE),
+					NbtCompound.class,
+					ItemStack::fromNbt
+			).collect(Collectors.toCollection(ArrayList::new));
+			// similar to recipe matching
+			Ingredient next = null;
+			ingredients:
+			for(Ingredient ingredient : recipe.outerIngredients()){
+				for(int i = 0; i < absorbed.size(); i++)
+					if(ingredient.test(absorbed.get(i))){
+						absorbed.remove(i);
+						continue ingredients;
+					}
+				next = ingredient;
+				break;
+			}
+			return next;
 		}
 	}
 	
 	public static class EssentiaPhase implements InfusionPhase{
 		
 		public @NotNull InfusionState tick(InfusionMatrixBlockEntity be, NbtCompound tag){
-			return InfusionState.finished;
+			return finished;
 		}
 		
 		@Environment(EnvType.CLIENT)
-		public void render(InfusionMatrixBlockEntity be, MatrixStack matrices, VertexConsumerProvider vcp, float tickDelta){
+		public void render(InfusionMatrixBlockEntity be,
+		                   MatrixStack matrices,
+		                   VertexConsumerProvider vcp,
+		                   float tickDelta,
+		                   NbtCompound tag){
 		
 		}
 	}

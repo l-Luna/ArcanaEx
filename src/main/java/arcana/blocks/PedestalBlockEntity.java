@@ -24,6 +24,7 @@ public class PedestalBlockEntity extends BlockEntity{
 	
 	public void setStack(ItemStack stack){
 		this.stack = stack;
+		markDirty();
 	}
 	
 	protected void writeNbt(NbtCompound nbt){
@@ -36,11 +37,11 @@ public class PedestalBlockEntity extends BlockEntity{
 		stack = ItemStack.fromNbt(nbt.getCompound("stack"));
 	}
 	
-	public Packet<ClientPlayPacketListener> toUpdatePacket() {
+	public Packet<ClientPlayPacketListener> toUpdatePacket(){
 		return BlockEntityUpdateS2CPacket.create(this);
 	}
 	
-	public NbtCompound toInitialChunkDataNbt() {
+	public NbtCompound toInitialChunkDataNbt(){
 		return createNbt();
 	}
 }

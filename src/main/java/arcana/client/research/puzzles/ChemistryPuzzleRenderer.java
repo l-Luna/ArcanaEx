@@ -137,7 +137,7 @@ public class ChemistryPuzzleRenderer implements PuzzleRenderer<Chemistry>{
 		});
 		
 		if(selected != null)
-			AspectRenderer.renderAspect(selected, matrices, mouseX, mouseY, 1);
+			AspectRenderer.renderAspect(selected, matrices, mouseX, mouseY, 1000);
 	}
 	
 	public boolean onClick(int button, Chemistry puzzle, NbtCompound notesTag, int screenWidth, int screenHeight, int mouseX, int mouseY){
@@ -332,6 +332,10 @@ public class ChemistryPuzzleRenderer implements PuzzleRenderer<Chemistry>{
 	
 	public void onClose(){
 		selected = combineLeft = combineRight = null;
+	}
+	
+	public boolean drawItemTooltips(){
+		return selected == null;
 	}
 	
 	private static boolean within(int mouseX, int mouseY, int x, int y, int size){

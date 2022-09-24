@@ -36,4 +36,8 @@ public interface PuzzleRenderer<T extends Puzzle>{
 	void renderComplete(MatrixStack matrices, T puzzle, NbtCompound notesTag, int screenWidth, int screenHeight, int mouseX, int mouseY);
 	
 	default void onClose(){}
+	
+	default boolean drawItemTooltips(){
+		return true;
+	}
 }

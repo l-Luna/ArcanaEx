@@ -36,11 +36,16 @@ public class PedestalBlock extends WaterloggableBlock implements BlockEntityProv
 			if(pedestal.getStack().isEmpty() && !held.isEmpty()){
 				pedestal.setStack(held.split(1));
 				return ActionResult.SUCCESS;
-			}else if(!pedestal.getStack().isEmpty() && held.isEmpty()){
-				player.setStackInHand(hand, pedestal.getStack());
-				pedestal.setStack(ItemStack.EMPTY);
-				return ActionResult.SUCCESS;
-			}
+			}else if(!pedestal.getStack().isEmpty())
+				if(held.isEmpty()){
+					player.setStackInHand(hand, pedestal.getStack());
+					pedestal.setStack(ItemStack.EMPTY);
+					return ActionResult.SUCCESS;
+				}else if(ItemStack.canCombine(held, pedestal.getStack()) && held.getCount() < held.getMaxCount()){
+					held.increment(1);
+					pedestal.setStack(ItemStack.EMPTY);
+					return ActionResult.SUCCESS;
+				}
 		}
 		return super.onUse(state, world, pos, player, hand, hit);
 	}

@@ -24,4 +24,10 @@ public class InfusionMatrixBlock extends BlockWithEntity{
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type){
 		return checkType(type, ArcanaRegistry.INFUSION_MATRIX_BE, (_1, _2, _3, be) -> be.tick());
 	}
+	
+	public boolean onSyncedBlockEvent(BlockState state, World world, BlockPos pos, int type, int data){
+		super.onSyncedBlockEvent(state, world, pos, type, data);
+		BlockEntity be = world.getBlockEntity(pos);
+		return be != null && be.onSyncedBlockEvent(type, data);
+	}
 }

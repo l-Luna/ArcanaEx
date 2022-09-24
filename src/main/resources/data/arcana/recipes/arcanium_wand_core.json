@@ -1,0 +1,29 @@
+{
+  "type": "arcana:infusion",
+  "central": {
+    "item": "arcana:silverwood_wand_core"
+  },
+  "ingredients": [
+    {
+      "item": "arcana:arcanium_ingot"
+    },
+    {
+      "item": "arcana:crystals/aura"
+    },
+    {
+      "item": "arcana:arcanium_ingot"
+    },
+    {
+      "item": "arcana:crystals/aura"
+    }
+  ],
+  "aspects": [
+    "80*aura",
+    "40*magic",
+    "40*water"
+  ],
+  "instability": 4,
+  "result": {
+    "item": "arcana:arcanium_wand_core"
+  }
+}

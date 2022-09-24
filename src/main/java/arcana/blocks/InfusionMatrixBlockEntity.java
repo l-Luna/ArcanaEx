@@ -7,6 +7,7 @@ import arcana.recipes.InfusionRecipe;
 import arcana.util.StreamUtil;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -14,8 +15,12 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
+import net.minecraft.network.Packet;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.recipe.Ingredient;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import org.jetbrains.annotations.NotNull;
@@ -43,15 +48,27 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 	private int curPhase = -1;
 	private InfusionState curState = null;
 	
+	// we don't have access to the world or the recipe manager when loading NBT, so we hold it here and deref on first tick
+	private Identifier lastRecipe = null;
+	
 	public InfusionMatrixBlockEntity(BlockPos pos, BlockState state){
 		super(ArcanaRegistry.INFUSION_MATRIX_BE, pos, state);
 	}
 	
 	protected void tick(){
+		assert world != null;
+		if(lastRecipe != null){
+			crafting = (InfusionRecipe)world.getRecipeManager().get(lastRecipe).orElse(null);
+			var state = world.getBlockState(pos);
+			world.updateListeners(pos, state, state, Block.NOTIFY_LISTENERS);
+			lastRecipe = null;
+		}
+		
 		BlockEntity pedestal = world.getBlockEntity(pos.down(2));
 		if(!(pedestal instanceof PedestalBlockEntity pbe) || pbe.getStack().isEmpty())
 			reset();
 		if(crafting != null){
+			markDirty();
 			// setup
 			if(curPhase == -1){
 				curPhase = 0;
@@ -94,6 +111,8 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 	}
 	
 	private void reset(){
+		if(crafting != null)
+			markDirty();
 		curPhase = -1;
 		curState = null;
 		states = null;
@@ -132,6 +151,42 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 	// for InfusionMatrixBlockEntityRenderer
 	public NbtCompound getStateForPhase(InfusionPhase phase){
 		return states != null ? states.getOrDefault(phase, new NbtCompound()) : new NbtCompound();
+	}
+	
+	protected void writeNbt(NbtCompound nbt){
+		super.writeNbt(nbt);
+		if(crafting != null){
+			nbt.putString("currentRecipe", crafting.getId().toString());
+			nbt.putInt("currentPhase", curPhase);
+			
+			NbtCompound phasesTag = new NbtCompound();
+			if(states != null)
+				states.forEach((phase, compound) -> phasesTag.put(String.valueOf(phases.indexOf(phase)), compound));
+			nbt.put("phases", phasesTag);
+		}
+	}
+	
+	public void readNbt(NbtCompound nbt){
+		super.readNbt(nbt);
+		if(nbt.contains("currentRecipe")){
+			lastRecipe = (new Identifier(nbt.getString("currentRecipe")));
+			curPhase = nbt.getInt("currentPhase");
+			
+			NbtCompound phasesTag = nbt.getCompound("phases");
+			states = new HashMap<>(phases.size());
+			for(String key : phasesTag.getKeys())
+				try{
+					states.put(phases.get(Integer.parseInt(key)), phasesTag.getCompound(key));
+				}catch(NumberFormatException ignored){}
+		}
+	}
+	
+	public Packet<ClientPlayPacketListener> toUpdatePacket() {
+		return BlockEntityUpdateS2CPacket.create(this);
+	}
+	
+	public NbtCompound toInitialChunkDataNbt() {
+		return createNbt();
 	}
 	
 	public interface InfusionPhase{

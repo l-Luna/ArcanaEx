@@ -5,6 +5,9 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.Packet;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.util.math.BlockPos;
 
 public class PedestalBlockEntity extends BlockEntity{
@@ -31,5 +34,13 @@ public class PedestalBlockEntity extends BlockEntity{
 	public void readNbt(NbtCompound nbt){
 		super.readNbt(nbt);
 		stack = ItemStack.fromNbt(nbt.getCompound("stack"));
+	}
+	
+	public Packet<ClientPlayPacketListener> toUpdatePacket() {
+		return BlockEntityUpdateS2CPacket.create(this);
+	}
+	
+	public NbtCompound toInitialChunkDataNbt() {
+		return createNbt();
 	}
 }

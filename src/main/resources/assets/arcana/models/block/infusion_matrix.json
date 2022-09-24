@@ -3,7 +3,8 @@
 	"parent": "block/block",
 	"textures": {
 		"0": "arcana:block/arcane_stone_bright",
-		"1": "arcana:block/arcanium_block"
+		"1": "arcana:block/arcanium_block",
+		"particle": "arcana:block/arcane_stone_bright"
 	},
 	"elements": [
 		{

@@ -200,6 +200,7 @@
   "block.arcana.clusters.earth": "Terra Cluster",
   "block.arcana.clusters.order": "Ordo Cluster",
   "block.arcana.clusters.entropy": "Perditio Cluster",
+  "block.arcana.clusters.aura": "Auram Cluster",
 
   // Tooltips
   "tooltip.arcana.wand.focus_cost.total": "Cost: %s",

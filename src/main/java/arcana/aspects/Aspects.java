@@ -62,6 +62,7 @@ public final class Aspects{
 	public static final Aspect AURA = create("aura", MAGIC, AIR);
 	
 	public static final List<Aspect> primals = List.of(AIR, FIRE, WATER, EARTH, ORDER, ENTROPY);
+	public static final List<Aspect> hasCluster = List.of(AIR, FIRE, WATER, EARTH, ORDER, ENTROPY, AURA);
 	
 	public static Aspect byName(Identifier id){
 		return aspects.get(id);

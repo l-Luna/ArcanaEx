@@ -2,6 +2,9 @@
   "arcana:clusters/air": [
     "4*arcana:air"
   ],
+  "arcana:clusters/aura": [
+    "4*arcana:aura"
+  ],
   "arcana:clusters/earth": [
     "4*arcana:earth"
   ],

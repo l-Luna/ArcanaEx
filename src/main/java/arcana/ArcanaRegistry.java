@@ -387,7 +387,7 @@ public final class ArcanaRegistry{
 		StrippableBlockRegistry.register(GREATWOOD_LOG, STRIPPED_GREATWOOD_LOG);
 		StrippableBlockRegistry.register(GREATWOOD_WOOD, STRIPPED_GREATWOOD_WOOD);
 		
-		for(Aspect primal : Aspects.primals){
+		for(Aspect primal : Aspects.hasCluster){
 			CrystalClusterBlock clusterBlock = new CrystalClusterBlock(
 					of(Material.GLASS)
 							.renderLayer(CUTOUT)

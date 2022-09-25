@@ -1,6 +1,7 @@
 package arcana.blocks;
 
 import arcana.aspects.Aspect;
+import arcana.aspects.Aspects;
 import arcana.components.AuraWorld;
 import arcana.nodes.Node;
 import net.minecraft.block.Block;
@@ -84,13 +85,20 @@ public class CrystalClusterBlock extends WaterloggableBlock{
 		// drain our aspect from nodes to grow
 		if(state.get(size) != 3){
 			AuraWorld view = world.getComponent(AuraWorld.KEY);
-			for(Node node : view.getNodesInBounds(new Box(pos.down(4).south(4).west(4), pos.up(4).north(4).east(4))))
-				if(node.getAspects().contains(getAspect())){
-					node.getAspects().take(getAspect(), world.random.nextInt(3) + 2);
-					AuraWorld.KEY.sync(world);
-					world.setBlockState(pos, state.with(size, state.get(size) + 1));
-					break;
+			for(Node node : view.getNodesInBounds(new Box(pos.down(4).south(4).west(4), pos.up(4).north(4).east(4)))){
+				var toDrain = getAspect();
+				if(toDrain == Aspects.AURA)
+					toDrain = Aspects.primals.get(world.random.nextInt(6));
+				if(node.getAspects().contains(toDrain)){
+					int amount = aspect == Aspects.AURA ? world.random.nextInt(6) + 9 : world.random.nextInt(3) + 2;
+					if(node.getAspects().get(toDrain) >= amount){
+						node.getAspects().take(toDrain, amount);
+						AuraWorld.KEY.sync(world);
+						world.setBlockState(pos, state.with(size, state.get(size) + 1));
+						break;
+					}
 				}
+			}
 		}
 	}
 	

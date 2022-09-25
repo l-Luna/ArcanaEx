@@ -7,6 +7,7 @@ import arcana.aspects.ItemAspectRegistry;
 import arcana.integration.emi.AspectEmiStack.AspectEmiStackSerializer;
 import arcana.items.WandItem;
 import arcana.recipes.AlchemyRecipe;
+import arcana.recipes.InfusionRecipe;
 import arcana.recipes.ShapedArcaneCraftingRecipe;
 import arcana.screens.ResearchEntryScreen;
 import dev.emi.emi.EmiStackSerializer;
@@ -34,8 +35,10 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 	
 	public static final EmiRecipeCategory ITEMS_BY_ASPECTS = new EmiRecipeCategory(arcId("items_by_aspects"), new AspectEmiStack(Aspects.ENERGY));
 	public static final EmiRecipeCategory ASPECTS_BY_ITEMS = new EmiRecipeCategory(arcId("aspects_by_items"), new AspectEmiStack(Aspects.LIGHT));
+	
 	public static final EmiRecipeCategory ARCANE_CRAFTING = new EmiRecipeCategory(arcId("arcane_crafting"), ArcanaRegistry.ARCANE_CRAFTING_TABLE.asItem().emi());
 	public static final EmiRecipeCategory ALCHEMY = new EmiRecipeCategory(arcId("alchemy"), ArcanaRegistry.CRUCIBLE.asItem().emi());
+	public static final EmiRecipeCategory INFUSION = new EmiRecipeCategory(arcId("infusion"), ArcanaRegistry.INFUSION_MATRIX.asItem().emi());
 	
 	public void register(EmiRegistry registry){
 		
@@ -43,8 +46,10 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 		
 		registry.addCategory(ITEMS_BY_ASPECTS);
 		registry.addCategory(ASPECTS_BY_ITEMS);
+		
 		registry.addCategory(ARCANE_CRAFTING);
 		registry.addCategory(ALCHEMY);
+		registry.addCategory(INFUSION);
 		
 		for(Aspect value : Aspects.aspects.values())
 			registry.addEmiStack(new AspectEmiStack(value));
@@ -107,6 +112,7 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 		registry.addWorkstation(VanillaEmiRecipeCategories.CRAFTING, ArcanaRegistry.ARCANE_CRAFTING_TABLE.asItem().emi());
 		registry.addWorkstation(ARCANE_CRAFTING, ArcanaRegistry.ARCANE_CRAFTING_TABLE.asItem().emi());
 		registry.addWorkstation(ALCHEMY, ArcanaRegistry.CRUCIBLE.asItem().emi());
+		registry.addWorkstation(INFUSION, ArcanaRegistry.INFUSION_MATRIX.asItem().emi());
 		
 		registry.addRecipeHandler(ArcanaRegistry.ARCANE_CRAFTING_SCREEN_HANDLER, new EmiArcaneCraftingRecipeHandler());
 		registry.addStackProvider(ResearchEntryScreen.class, new ResearchEntryScreenStackProvider());
@@ -114,9 +120,8 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 		EmiStackSerializer.register(AspectEmiStackSerializer.ID, AspectEmiStack.class, new AspectEmiStackSerializer());
 		
 		var manager = registry.getRecipeManager();
-		for(var arcaneCraftingRecipe : manager.listAllOfType(ShapedArcaneCraftingRecipe.TYPE))
-			registry.addRecipe(new EmiArcaneCraftingRecipe(arcaneCraftingRecipe));
-		for(var alchemyRecipe : manager.listAllOfType(AlchemyRecipe.TYPE))
-			registry.addRecipe(new EmiAlchemyRecipe(alchemyRecipe));
+		manager.listAllOfType(ShapedArcaneCraftingRecipe.TYPE).stream().map(EmiArcaneCraftingRecipe::new).forEach(registry::addRecipe);
+		manager.listAllOfType(AlchemyRecipe.TYPE).stream().map(EmiAlchemyRecipe::new).forEach(registry::addRecipe);
+		manager.listAllOfType(InfusionRecipe.TYPE).stream().map(EmiInfusionRecipe::new).forEach(registry::addRecipe);
 	}
 }

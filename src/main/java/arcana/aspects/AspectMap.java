@@ -1,11 +1,12 @@
 package arcana.aspects;
 
 import net.minecraft.nbt.NbtCompound;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.function.Function;
 
-public record AspectMap(Map<Aspect, Integer> underlying){
+public record AspectMap(Map<Aspect, Integer> underlying) implements Iterable<AspectStack>{
 	
 	public AspectMap(){
 		this(new LinkedHashMap<>());
@@ -150,5 +151,10 @@ public record AspectMap(Map<Aspect, Integer> underlying){
 	
 	public AspectMap copy(){
 		return new AspectMap(new LinkedHashMap<>(underlying));
+	}
+	
+	@NotNull
+	public Iterator<AspectStack> iterator(){
+		return asStacks().iterator();
 	}
 }

@@ -1,0 +1,17 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "tag": "arcana:cluster_seeds"
+  },
+  "aspects": [
+    "30*air",
+    "30*fire",
+    "30*water",
+    "30*earth",
+    "30*order",
+    "30*entropy"
+  ],
+  "result": {
+    "item": "arcana:cluster_seeds/aura"
+  }
+}

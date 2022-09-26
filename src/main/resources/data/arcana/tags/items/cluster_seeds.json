@@ -1,0 +1,10 @@
+{
+  "values": [
+    "arcana:cluster_seeds/air",
+    "arcana:cluster_seeds/fire",
+    "arcana:cluster_seeds/water",
+    "arcana:cluster_seeds/earth",
+    "arcana:cluster_seeds/order",
+    "arcana:cluster_seeds/entropy"
+  ]
+}

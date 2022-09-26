@@ -14,6 +14,7 @@
   "tag.arcana.horse_armours": "Horse Armours",
 
   "tag.arcana.aspect_crystals": "Primal Crystals",
+  "tag.arcana.cluster_seeds": "Primal Cluster Seeds",
   "tag.arcana.arcane_stones": "Arcane Stones",
 
   "tag.arcana.silverwood_logs": "Silverwood Logs",
@@ -407,6 +408,12 @@
   "research.arcana.crystal_farmer.stage.1": "Scouting the surface for the occasional node and digging tunnels underground for geodes are not sustainable or renewable sources of vis crystals.\nGiven their importance in even basic magic, I need a way to grow new ones.",
   "research.arcana.crystal_farmer.stage.2": "By creating a sturdy {i}cluster seed{r}, I can grow new crystals.\nSmall clusters grow in the presence of a node with their aspect, draining from it to gain mass. Once fully grown, a cluster will drop at least 2 crystals.\nThe recipe works for all primal aspects, swapping {aspect:air} and the catalyst for the appropriate aspect and crystal.\nI could not get seeds made from non-primal aspects to grow; perhaps due to their absence in the aura.",
   "puzzle.arcana.chemistry.crystal_farmer": "Form a base for a crystal cluster",
+
+  "research.arcana.aura_crystallization": "Aura Crystallization",
+  "research.arcana.aura_crystallization.desc": "Within grasp",
+  "research.arcana.aura_crystallization.stage.1": "My ability to manipulate the aura is limited by the lack of any form of direct influence on it.\nJust like any other concept, the aura has a corresponding aspect, {aspect:aura} Auram. But this one does not appear in any physical substance I know of; while it is a fairly straightforward compound, it refuses to be defined in terms of anything but itself.\nPerhaps it lies too close to the boundary between different systems of aspects, not fully under my own domain...\nBut still, like any other aspect, it can be formed into crystals. If I could force a cluster seed into existence, it would provide me with a sustainable source of this aspect.",
+  "research.arcana.aura_crystallization.stage.2": "While the recipe I've formulated seems perfectly valid, actually performing it would be dangerous; the essentia will begin to boil off as flux before the necessary amount can be reached.\nThat said, if I can perform it just once, I should be able to use its crystals to create further seeds easily.\nAuram Clusters use large amounts of random primals to grow. Growing too many around a single node even runs the risk of damaging it.",
+  "puzzle.arcana.chemistry.aura_crystallization": "Amplify the aura into a single point",
 
   // Artifice Tab
   "research.arcana.artifice_root": "Artifice",

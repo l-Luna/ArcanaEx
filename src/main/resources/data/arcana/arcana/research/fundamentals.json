@@ -584,7 +584,7 @@
         "arcana:nodal_geodes"
       ],
       "x": -4,
-      "y": 1,
+      "y": -1,
       "sections": [
         {
           "type": "text",
@@ -600,6 +600,42 @@
         {
           "type": "alchemy",
           "content": "arcana:clusters/air_cluster_seed"
+        }
+      ]
+    },
+    {
+      "key": "arcana:aura_crystallization",
+      "name": "research.arcana.aura_crystallization",
+      "desc": "research.arcana.aura_crystallization.desc",
+      "icons": [
+        "arcana:cluster_seeds/aura"
+      ],
+      "category": "arcana:fundamentals",
+      "parents": [
+        "arcana:crystal_farmer",
+        "arcana:nodes"
+      ],
+      "x": -2,
+      "y": -3,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.aura_crystallization.stage.1",
+          "requirements": [
+            "arcana::puzzle{aura_crystallization}"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.aura_crystallization.stage.2"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:clusters/aura_cluster_seed_initial"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:clusters/aura_cluster_seed"
         }
       ]
     }
@@ -689,6 +725,22 @@
         "order",
         "entropy",
         "magic"
+      ]
+    },
+    {
+      "key": "arcana:aura_crystallization",
+      "type": "chemistry",
+      "desc": "puzzle.arcana.chemistry.aura_crystallization",
+      "nodes": [
+        "sloth",
+        "aura",
+        "envy",
+        "magic",
+        "greed",
+        "aura",
+        "senses",
+        "mind",
+        "crystal"
       ]
     }
   ]

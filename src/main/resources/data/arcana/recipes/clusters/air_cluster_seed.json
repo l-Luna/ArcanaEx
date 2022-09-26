@@ -1,0 +1,14 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "arcana:crystals/air"
+  },
+  "aspects": [
+    "air",
+    "plant",
+    "exchange"
+  ],
+  "result": {
+    "item": "arcana:cluster_seeds/air"
+  }
+}

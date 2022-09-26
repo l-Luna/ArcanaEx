@@ -1,0 +1,14 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "arcana:crystals/aura"
+  },
+  "aspects": [
+    "aura",
+    "plant",
+    "exchange"
+  ],
+  "result": {
+    "item": "arcana:cluster_seeds/aura"
+  }
+}

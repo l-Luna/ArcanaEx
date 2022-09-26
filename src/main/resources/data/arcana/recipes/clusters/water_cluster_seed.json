@@ -1,0 +1,14 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "arcana:crystals/water"
+  },
+  "aspects": [
+    "water",
+    "plant",
+    "exchange"
+  ],
+  "result": {
+    "item": "arcana:cluster_seeds/water"
+  }
+}

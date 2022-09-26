@@ -1,0 +1,14 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "arcana:crystals/earth"
+  },
+  "aspects": [
+    "earth",
+    "plant",
+    "exchange"
+  ],
+  "result": {
+    "item": "arcana:cluster_seeds/earth"
+  }
+}

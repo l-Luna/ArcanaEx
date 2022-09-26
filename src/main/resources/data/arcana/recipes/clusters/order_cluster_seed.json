@@ -1,0 +1,14 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "arcana:crystals/order"
+  },
+  "aspects": [
+    "order",
+    "plant",
+    "exchange"
+  ],
+  "result": {
+    "item": "arcana:cluster_seeds/order"
+  }
+}

@@ -127,20 +127,24 @@
   ],
 
   "minecraft:wheat_seeds": [
-    "plant",
-    "life"
+    "2*plant",
+    "life",
+    "exchange"
   ],
   "minecraft:pumpkin_seeds": [
-    "plant",
-    "life"
+    "2*plant",
+    "life",
+    "exchange"
   ],
   "minecraft:melon_seeds": [
-    "plant",
-    "life"
+    "2*plant",
+    "life",
+    "exchange"
   ],
   "minecraft:beetroot_seeds": [
-    "plant",
-    "life"
+    "2*plant",
+    "life",
+    "exchange"
   ],
   "minecraft:wheat": [
     "3*plant"

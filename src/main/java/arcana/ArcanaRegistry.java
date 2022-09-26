@@ -399,8 +399,12 @@ public final class ArcanaRegistry{
 							.strength(1.5f)
 							.luminance(5),
 					primal);
-			register("clusters/" + primal.id().getPath(), clusterBlock);
+			var shortName = primal.id().getPath();
+			register("clusters/" + shortName, clusterBlock);
 			Aspects.clusters.put(primal, clusterBlock);
+			
+			ClusterSeedItem seed = new ClusterSeedItem(clusterBlock, GROUPED, primal);
+			register("cluster_seeds/" + shortName, seed);
 		}
 		
 		register("light_block", LIGHT_BLOCK, false);

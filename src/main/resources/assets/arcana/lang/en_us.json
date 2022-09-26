@@ -193,7 +193,7 @@
   "block.arcana.stripped_greatwood_log": "Stripped Greatwood Log",
   "block.arcana.stripped_greatwood_wood": "Stripped Greatwood Wood",
 
-  "item.arcana.aspect_crystal_cluster": "%s Cluster",
+  "item.arcana.cluster_seed": "%s Cluster Seed",
   "block.arcana.clusters.air": "Aer Cluster",
   "block.arcana.clusters.fire": "Ignis Cluster",
   "block.arcana.clusters.water": "Aqua Cluster",

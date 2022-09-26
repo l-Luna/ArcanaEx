@@ -613,10 +613,10 @@
       "category": "arcana:fundamentals",
       "parents": [
         "arcana:crystal_farmer",
-        "arcana:nodes"
+        "/arcana:nodes"
       ],
-      "x": -2,
-      "y": -3,
+      "x": -4,
+      "y": 1,
       "sections": [
         {
           "type": "text",

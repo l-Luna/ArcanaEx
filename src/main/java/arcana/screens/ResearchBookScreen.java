@@ -208,10 +208,12 @@ public class ResearchBookScreen extends Screen{
 				RenderSystem.enableBlend();
 				RenderSystem.setShader(GameRenderer::getPositionTexShader);
 				RenderSystem.setShaderTexture(0, arrowsAndBasesTexture);
-				RenderSystem.setShaderColor(1, 1, 1, 1);
 				for(Parent parent : entry.parents()){
+					RenderSystem.setShaderColor(1, 1, 1, 1);
 					Entry pEntry = Research.getEntry(parent.id());
 					if(pEntry != null && parent.show() && pEntry.category().equals(entry.category()) && style(pEntry) != PageStyle.none){
+						if(!parent.hasArrowhead())
+							RenderSystem.setShaderColor(1, 1, 1, .6f);
 						int xdiff = entry.x() - pEntry.x();
 						int ydiff = entry.y() - pEntry.y();
 						if(xdiff == 0){

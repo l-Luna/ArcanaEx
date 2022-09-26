@@ -45,7 +45,7 @@
       ],
       "category": "arcana:artifice",
       "parents": [
-        "/arcana:artifice_root"
+        "&/arcana:artifice_root"
       ],
       "meta": [
         "round_base"

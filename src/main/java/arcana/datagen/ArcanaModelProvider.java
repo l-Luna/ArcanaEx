@@ -55,6 +55,8 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		blockGen.registerLog(GREATWOOD_LOG).log(GREATWOOD_LOG).wood(GREATWOOD_WOOD);
 		blockGen.registerLog(STRIPPED_GREATWOOD_LOG).log(STRIPPED_GREATWOOD_LOG).wood(STRIPPED_GREATWOOD_WOOD);
 		
+		blockGen.registerCooker(ARCANE_FURNACE, TexturedModel.ORIENTABLE);
+		
 		for(CrystalClusterBlock value : Aspects.clusters.values()){
 			blockGen.blockStateCollector.accept(VariantsBlockStateSupplier
 					.create(value, BlockStateVariant.create())

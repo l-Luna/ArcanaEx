@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "arcana:block/arcane_furnace_front_on",
+    "side": "arcana:block/arcane_furnace_side",
+    "top": "arcana:block/arcane_furnace_top"
+  }
+}

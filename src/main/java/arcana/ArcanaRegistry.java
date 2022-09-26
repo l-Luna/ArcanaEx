@@ -39,6 +39,7 @@ import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.particle.ParticleType;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryEntry;
@@ -53,6 +54,7 @@ import net.minecraft.world.gen.trunk.TrunkPlacerType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.ToIntFunction;
 
 import static arcana.Arcana.arcId;
 import static arcana.blocks.ArcanaBlockSettings.BlockLayer.CUTOUT;
@@ -171,6 +173,7 @@ public final class ArcanaRegistry{
 	public static final Block CRUCIBLE = new CrucibleBlock(of(Material.METAL).dropsSelf().requiresTool(PICKAXE_MINEABLE).sounds(BlockSoundGroup.METAL).strength(2).nonOpaque());
 	public static final Block RESEARCH_TABLE = new ResearchTableBlock(of(Material.WOOD).dropsSelf().renderLayer(CUTOUT).usesTool(AXE_MINEABLE).nonOpaque().strength(3));
 	public static final Block KNOWLEDGEABLE_DROPPER = new KnowledgeableDropperBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3));
+	public static final Block ARCANE_FURNACE = new ArcaneFurnaceBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3).luminance(whenLit(14)));
 	
 	public static final Block INFUSION_PILLAR = new InfusionPillarBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).nonOpaque().strength(4));
 	public static final Block INFUSION_MATRIX = new InfusionMatrixBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).nonOpaque().strength(5));
@@ -348,6 +351,7 @@ public final class ArcanaRegistry{
 		register("research_table", RESEARCH_TABLE, false);
 		register("research_table", new ResearchTableItem(GROUPED)); // it's a block item, it doesn't count
 		register("knowledgeable_dropper", KNOWLEDGEABLE_DROPPER);
+		register("arcane_furnace", ARCANE_FURNACE);
 		
 		register("infusion_pillar", INFUSION_PILLAR);
 		register("infusion_matrix", INFUSION_MATRIX);
@@ -523,5 +527,9 @@ public final class ArcanaRegistry{
 	
 	private static void registerCoreOnly(Core core){
 		Core.cores.put(core.id(), core);
+	}
+	
+	private static ToIntFunction<BlockState> whenLit(int litLevel){
+		return state -> state.get(Properties.LIT) ? litLevel : 0;
 	}
 }

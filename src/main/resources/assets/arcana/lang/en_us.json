@@ -159,6 +159,7 @@
   "block.arcana.crucible": "Crucible",
   "block.arcana.research_table": "Research Table",
   "block.arcana.knowledgeable_dropper": "Knowledgeable Dropper",
+  "block.arcana.arcane_furnace": "Arcane Furnace",
 
   "block.arcana.infusion_pillar": "Infusion Pillar",
   "block.arcana.infusion_matrix": "Infusion Matrix",
@@ -303,6 +304,7 @@
 
   // Other UIs
   "container.arcana.knowledgeable_dropper": "Knowledgeable Dropper",
+  "container.arcana.arcane_furnace": "Arcane Furnace",
 
   // Research Categories
   "research.arcana.category.fundamentals": "Fundamentals",

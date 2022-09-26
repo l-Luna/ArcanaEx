@@ -565,6 +565,43 @@
           ]
         }
       ]
+    },
+    {
+      "key": "arcana:crystal_farmer",
+      "name": "research.arcana.crystal_farmer",
+      "desc": "research.arcana.crystal_farmer.desc",
+      "icons": [
+        "arcana:cluster_seeds/air",
+        "arcana:cluster_seeds/fire",
+        "arcana:cluster_seeds/water",
+        "arcana:cluster_seeds/earth",
+        "arcana:cluster_seeds/order",
+        "arcana:cluster_seeds/entropy"
+      ],
+      "category": "arcana:fundamentals",
+      "parents": [
+        "arcana:aspects",
+        "arcana:nodal_geodes"
+      ],
+      "x": -4,
+      "y": 1,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.crystal_farmer.stage.1",
+          "requirements": [
+            "arcana::puzzle{crystal_farmer}"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.crystal_farmer.stage.2"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:clusters/air_cluster_seed"
+        }
+      ]
     }
   ],
   "puzzles": [
@@ -637,6 +674,22 @@
     {
       "key": "arcana:nodal_geodes",
       "type": "fieldwork"
+    },
+    {
+      "key": "arcana:crystal_farmer",
+      "type": "chemistry",
+      "desc": "puzzle.arcana.chemistry.crystal_farmer",
+      "nodes": [
+        "air",
+        "fire",
+        "aura",
+        "water",
+        "earth",
+        "crystal",
+        "order",
+        "entropy",
+        "magic"
+      ]
     }
   ]
 }

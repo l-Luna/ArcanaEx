@@ -20,7 +20,7 @@
       "y": 0,
       "sections": [
         {
-          "type": "string",
+          "type": "text",
           "content": "research.arcana.crimson.all"
         }
       ]
@@ -44,7 +44,7 @@
       "y": -2,
       "sections": [
         {
-          "type": "string",
+          "type": "text",
           "content": "research.arcana.crimson_initiation.all"
         }
       ]

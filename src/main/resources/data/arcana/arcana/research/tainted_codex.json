@@ -18,19 +18,8 @@
       "y": 1,
       "sections": [
         {
-          "type": "string",
+          "type": "text",
           "content": "research.arcana.tainted.stage.1"
-        },
-        {
-          "type": "alchemy",
-          "content": "arcana:tainted_wand_core"
-        },
-        {
-          "type": "smelting",
-          "content": "arcana:silver_ingot_from_smelting",
-          "requirements": [
-            "0*arcana:silver_ingot"
-          ]
         }
       ]
     }

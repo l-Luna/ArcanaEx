@@ -56,6 +56,10 @@ public class ResearchBookScreen extends Screen{
 		this.book = book;
 		this.parent = parent;
 		categories = book.categories();
+		if(tab >= categories.size())
+			tab = categories.size() - 1;
+		if(tab < 0)
+			tab = 0;
 		texture = new Identifier(book.id().getNamespace(), bookPrefix + book.id().getPath() + bookSuffix);
 	}
 	

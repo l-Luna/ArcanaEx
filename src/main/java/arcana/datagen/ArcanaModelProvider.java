@@ -30,6 +30,7 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		blockGen.registerSimpleState(NITOR);
 		blockGen.registerSimpleState(PEDESTAL);
 		blockGen.registerSimpleState(ARCANE_LEVITATOR);
+		blockGen.registerSimpleState(ALEMBIC);
 		blockGen.registerSimpleState(INFUSION_MATRIX);
 		
 		blockGen.registerSimpleCubeAll(ARCANIUM_BLOCK);
@@ -72,9 +73,13 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 	
 	public void generateItemModels(ItemModelGenerator itemGen){
 		noAutoGen.add(WAND);
+		noAutoGen.add(TOME_OF_SHARING);
 		noAutoGen.add(NITOR.asItem());
 		noAutoGen.add(INFUSION_PILLAR.asItem());
-		noAutoGen.add(TOME_OF_SHARING);
+		noAutoGen.add(ESSENTIA_TUBE.asItem());
+		noAutoGen.add(ESSENTIA_VALVE.asItem());
+		noAutoGen.add(ESSENTIA_WINDOW.asItem());
+		noAutoGen.add(ESSENTIA_PUMP.asItem());
 		
 		itemGen.register(NITOR.asItem(), Models.GENERATED);
 		

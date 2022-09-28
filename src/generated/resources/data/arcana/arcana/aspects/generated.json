@@ -124,5 +124,110 @@
   ],
   "arcana:crystals/weapon": [
     "arcana:weapon"
+  ],
+  "arcana:phials/air": [
+    "8*arcana:air"
+  ],
+  "arcana:phials/armour": [
+    "8*arcana:armour"
+  ],
+  "arcana:phials/aura": [
+    "8*arcana:aura"
+  ],
+  "arcana:phials/crystal": [
+    "8*arcana:crystal"
+  ],
+  "arcana:phials/earth": [
+    "8*arcana:earth"
+  ],
+  "arcana:phials/energy": [
+    "8*arcana:energy"
+  ],
+  "arcana:phials/entropy": [
+    "8*arcana:entropy"
+  ],
+  "arcana:phials/envy": [
+    "8*arcana:envy"
+  ],
+  "arcana:phials/exchange": [
+    "8*arcana:exchange"
+  ],
+  "arcana:phials/fabric": [
+    "8*arcana:fabric"
+  ],
+  "arcana:phials/fire": [
+    "8*arcana:fire"
+  ],
+  "arcana:phials/flesh": [
+    "8*arcana:flesh"
+  ],
+  "arcana:phials/flight": [
+    "8*arcana:flight"
+  ],
+  "arcana:phials/greed": [
+    "8*arcana:greed"
+  ],
+  "arcana:phials/ice": [
+    "8*arcana:ice"
+  ],
+  "arcana:phials/journey": [
+    "8*arcana:journey"
+  ],
+  "arcana:phials/life": [
+    "8*arcana:life"
+  ],
+  "arcana:phials/light": [
+    "8*arcana:light"
+  ],
+  "arcana:phials/machine": [
+    "8*arcana:machine"
+  ],
+  "arcana:phials/magic": [
+    "8*arcana:magic"
+  ],
+  "arcana:phials/metal": [
+    "8*arcana:metal"
+  ],
+  "arcana:phials/mind": [
+    "8*arcana:mind"
+  ],
+  "arcana:phials/mining": [
+    "8*arcana:mining"
+  ],
+  "arcana:phials/movement": [
+    "8*arcana:movement"
+  ],
+  "arcana:phials/order": [
+    "8*arcana:order"
+  ],
+  "arcana:phials/plant": [
+    "8*arcana:plant"
+  ],
+  "arcana:phials/senses": [
+    "8*arcana:senses"
+  ],
+  "arcana:phials/slime": [
+    "8*arcana:slime"
+  ],
+  "arcana:phials/sloth": [
+    "8*arcana:sloth"
+  ],
+  "arcana:phials/taint": [
+    "8*arcana:taint"
+  ],
+  "arcana:phials/tool": [
+    "8*arcana:tool"
+  ],
+  "arcana:phials/undead": [
+    "8*arcana:undead"
+  ],
+  "arcana:phials/void": [
+    "8*arcana:void"
+  ],
+  "arcana:phials/water": [
+    "8*arcana:water"
+  ],
+  "arcana:phials/weapon": [
+    "8*arcana:weapon"
   ]
 }

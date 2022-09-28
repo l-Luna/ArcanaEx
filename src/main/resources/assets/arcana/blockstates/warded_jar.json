@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "connected=false": {
+      "model": "arcana:block/warded_jar"
+    },
+    "connected=true": {
+      "model": "arcana:block/warded_jar_connected"
+    }
+  }
+}

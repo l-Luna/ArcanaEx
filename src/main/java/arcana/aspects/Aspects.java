@@ -4,6 +4,7 @@ import arcana.Arcana;
 import arcana.blocks.CrystalClusterBlock;
 import arcana.items.ClusterSeedItem;
 import arcana.items.CrystalItem;
+import arcana.items.PhialItem;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import net.minecraft.util.Identifier;
@@ -18,6 +19,7 @@ public final class Aspects{
 	public static final Map<Aspect, CrystalItem> crystals = new HashMap<>();
 	public static final Map<Aspect, CrystalClusterBlock> clusters = new HashMap<>();
 	public static final Map<Aspect, ClusterSeedItem> clusterSeeds = new HashMap<>();
+	public static final Map<Aspect, PhialItem> phials = new HashMap<>(); // excluding empty phial
 	static final List<Aspect> orderedAspects = new ArrayList<>();
 	
 	public static final Aspect

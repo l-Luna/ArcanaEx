@@ -6,6 +6,7 @@ import arcana.aspects.AspectStack;
 import arcana.aspects.Aspects;
 import arcana.blocks.CrystalClusterBlock;
 import arcana.items.CrystalItem;
+import arcana.items.PhialItem;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.data.DataGenerator;
@@ -14,6 +15,7 @@ import net.minecraft.data.DataWriter;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.util.registry.Registry;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -54,6 +56,10 @@ public class AspectsProvider implements DataProvider{
 		for(CrystalItem crystal : Aspects.crystals.values())
 			assign(crystal, crystal.getAspect());
 		
+		for(PhialItem phial : Aspects.phials.values())
+			if(phial.getAspect() != null)
+				assign(phial, phial.getAspect(), 8);
+		
 		for(CrystalClusterBlock cluster : Aspects.clusters.values())
 			assign(cluster, cluster.getAspect(), 4);
 	}
@@ -62,11 +68,11 @@ public class AspectsProvider implements DataProvider{
 		this.aspects.put(item.asItem(), aspects);
 	}
 	
-	public final void assign(ItemConvertible item, Aspect aspect){
+	public final void assign(ItemConvertible item, @NotNull Aspect aspect){
 		assign(item, AspectMap.fromAspectStack(new AspectStack(aspect, 1)));
 	}
 	
-	public final void assign(ItemConvertible item, Aspect aspect, int amount){
+	public final void assign(ItemConvertible item, @NotNull Aspect aspect, int amount){
 		assign(item, AspectMap.fromAspectStack(new AspectStack(aspect, amount)));
 	}
 	

@@ -2,6 +2,7 @@ package arcana.aspects;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.nbt.NbtCompound;
 
 public record AspectStack(Aspect type, int amount){
 	
@@ -11,4 +12,15 @@ public record AspectStack(Aspect type, int amount){
 					Codec.INT.fieldOf("amount").forGetter(AspectStack::amount)
 			).apply(i, AspectStack::new)
 	);
+	
+	public NbtCompound toNbt(){
+		NbtCompound nbt = new NbtCompound();
+		nbt.putString("aspect", type.id().toString());
+		nbt.putInt("amount", amount);
+		return nbt;
+	}
+	
+	public static AspectStack fromNbt(NbtCompound nbt){
+		return new AspectStack(Aspects.byName(nbt.getString("aspect")), nbt.getInt("amount"));
+	}
 }

@@ -3,6 +3,7 @@
   "itemGroup.arcana.main": "Main",
   "itemGroup.arcana.equipment": "Equipment",
   "itemGroup.arcana.crystals": "Crystals",
+  "itemGroup.arcana.phials": "Phials",
 
   "category.arcana": "Arcana",
 
@@ -153,13 +154,22 @@
   "item.arcana.prismatic_light_focus": "Wand Focus: Prismatic Light",
 
   "item.arcana.aspect_crystal": "%s Crystal",
+  "item.arcana.phial": "%s Phial",
+  "item.arcana.empty_phial": "Empty Phial",
 
   // Blocks
   "block.arcana.arcane_crafting_table": "Arcane Crafting Table",
   "block.arcana.crucible": "Crucible",
   "block.arcana.research_table": "Research Table",
   "block.arcana.knowledgeable_dropper": "Knowledgeable Dropper",
+
   "block.arcana.arcane_furnace": "Arcane Furnace",
+  "block.arcana.alembic": "Alembic",
+  "block.arcana.essentia_tube": "Essentia Tube",
+  "block.arcana.essentia_window": "Essentia Window",
+  "block.arcana.essentia_pump": "Essentia Pump",
+  "block.arcana.essentia_valve": "Essentia Valve",
+  "block.arcana.warded_jar": "Warded Jar",
 
   "block.arcana.infusion_pillar": "Infusion Pillar",
   "block.arcana.infusion_matrix": "Infusion Matrix",

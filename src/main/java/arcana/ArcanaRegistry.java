@@ -76,6 +76,7 @@ public final class ArcanaRegistry{
 		public static final ItemSubGroup MAIN = ItemSubGroup.create(ARCANA, arcId("main"));
 		public static final ItemSubGroup EQUIPMENT = ItemSubGroup.create(ARCANA, arcId("equipment"));
 		public static final ItemSubGroup CRYSTALS = ItemSubGroup.create(ARCANA, arcId("crystals"));
+		public static final ItemSubGroup PHIALS = ItemSubGroup.create(ARCANA, arcId("phials"));
 	}
 	
 	private static final Settings GROUPED = new Settings().group(Tab.MAIN);
@@ -168,12 +169,22 @@ public final class ArcanaRegistry{
 	public static final Item LIGHT_FOCUS = new LightFocusItem(GROUPED_SINGLE);
 	public static final Item PRISMATIC_LIGHT_FOCUS = new FocusItem(GROUPED_SINGLE);
 	
+	// other...?
+	public static final Item EMPTY_PHIAL = new PhialItem(new Settings().group(Tab.PHIALS), null);
+	
 	// blocks...
 	public static final Block ARCANE_CRAFTING_TABLE = new ArcaneCraftingTableBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).sounds(BlockSoundGroup.WOOD).strength(3).nonOpaque());
 	public static final Block CRUCIBLE = new CrucibleBlock(of(Material.METAL).dropsSelf().requiresTool(PICKAXE_MINEABLE).sounds(BlockSoundGroup.METAL).strength(2).nonOpaque());
 	public static final Block RESEARCH_TABLE = new ResearchTableBlock(of(Material.WOOD).dropsSelf().renderLayer(CUTOUT).usesTool(AXE_MINEABLE).nonOpaque().strength(3));
 	public static final Block KNOWLEDGEABLE_DROPPER = new KnowledgeableDropperBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3));
+	
 	public static final Block ARCANE_FURNACE = new ArcaneFurnaceBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3).luminance(whenLit(14)));
+	public static final Block ALEMBIC = new AlembicBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(3).sounds(BlockSoundGroup.WOOD));
+	public static final Block ESSENTIA_TUBE = new EssentiaTubeBlock(of(Material.METAL).dropsSelf().usesTool(PICKAXE_MINEABLE).strength(1).sounds(BlockSoundGroup.METAL));
+	public static final Block ESSENTIA_VALVE = new EssentiaTubeBlock(of(Material.METAL).dropsSelf().usesTool(PICKAXE_MINEABLE).strength(1).sounds(BlockSoundGroup.METAL));
+	public static final Block ESSENTIA_WINDOW = new EssentiaTubeBlock(of(Material.GLASS).dropsSelf().usesTool(PICKAXE_MINEABLE).strength(.7f).sounds(BlockSoundGroup.GLASS));
+	public static final Block ESSENTIA_PUMP = new EssentiaPumpBlock(of(Material.METAL).dropsSelf().usesTool(PICKAXE_MINEABLE).strength(1.1f).sounds(BlockSoundGroup.METAL));
+	public static final Block WARDED_JAR = new JarBlock(of(Material.GLASS).dropsSelf().renderLayer(TRANSLUCENT).strength(.9f).sounds(BlockSoundGroup.GLASS));
 	
 	public static final Block INFUSION_PILLAR = new InfusionPillarBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).nonOpaque().strength(4));
 	public static final Block INFUSION_MATRIX = new InfusionMatrixBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).nonOpaque().strength(5));
@@ -339,10 +350,17 @@ public final class ArcanaRegistry{
 		register("light_focus", LIGHT_FOCUS);
 		register("prismatic_light_focus", PRISMATIC_LIGHT_FOCUS);
 		
+		register("empty_phial", EMPTY_PHIAL);
+		
 		for(Aspect aspect : Aspects.getOrderedAspects()){
+			var shortName = aspect.id().getPath();
 			CrystalItem crystalItem = new CrystalItem(new Settings().group(Tab.CRYSTALS), aspect);
-			register("crystals/" + aspect.id().getPath(), crystalItem);
+			register("crystals/" + shortName, crystalItem);
 			Aspects.crystals.put(aspect, crystalItem);
+			
+			PhialItem phialItem = new PhialItem(new Settings().group(Tab.PHIALS), aspect);
+			register("phials/" + shortName, phialItem);
+			Aspects.phials.put(aspect, phialItem);
 		}
 		
 		// blocks
@@ -351,7 +369,14 @@ public final class ArcanaRegistry{
 		register("research_table", RESEARCH_TABLE, false);
 		register("research_table", new ResearchTableItem(GROUPED)); // it's a block item, it doesn't count
 		register("knowledgeable_dropper", KNOWLEDGEABLE_DROPPER);
+		
 		register("arcane_furnace", ARCANE_FURNACE);
+		register("alembic", ALEMBIC);
+		register("essentia_tube", ESSENTIA_TUBE);
+		register("essentia_valve", ESSENTIA_VALVE);
+		register("essentia_window", ESSENTIA_WINDOW);
+		register("essentia_pump", ESSENTIA_PUMP);
+		register("warded_jar", WARDED_JAR);
 		
 		register("infusion_pillar", INFUSION_PILLAR);
 		register("infusion_matrix", INFUSION_MATRIX);
@@ -409,6 +434,7 @@ public final class ArcanaRegistry{
 			
 			ClusterSeedItem seed = new ClusterSeedItem(clusterBlock, GROUPED, primal);
 			register("cluster_seeds/" + shortName, seed);
+			Aspects.clusterSeeds.put(primal, seed);
 		}
 		
 		register("light_block", LIGHT_BLOCK, false);

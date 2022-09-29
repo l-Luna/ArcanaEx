@@ -1,7 +1,7 @@
 package arcana.blocks;
 
-import arcana.aspects.AspectSpeck;
-import arcana.aspects.SpeckIo;
+import arcana.aspects.AspectIo;
+import arcana.aspects.AspectStack;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ConnectingBlock;
@@ -11,10 +11,11 @@ import net.minecraft.state.StateManager;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 
-public class EssentiaTubeBlock extends ConnectingBlock implements SpeckIo{
+public class EssentiaTubeBlock extends ConnectingBlock implements AspectIo{
 	
 	public EssentiaTubeBlock(Settings settings){
 		super(.1875f, settings);
@@ -28,7 +29,7 @@ public class EssentiaTubeBlock extends ConnectingBlock implements SpeckIo{
 	}
 	
 	private boolean canConnect(BlockState neighbor){
-		return neighbor.getBlock() instanceof SpeckIo;
+		return neighbor.getBlock() instanceof AspectIo;
 	}
 	
 	public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighbor, WorldAccess world, BlockPos pos, BlockPos neighborPos){
@@ -57,11 +58,11 @@ public class EssentiaTubeBlock extends ConnectingBlock implements SpeckIo{
 		return false;
 	}
 	
-	public boolean accept(AspectSpeck speck){
+	public boolean accept(AspectStack speck, World world, BlockPos pos, Direction from){
 		return false;
 	}
 	
-	public @Nullable AspectSpeck draw(int max){
+	public @Nullable AspectStack draw(int max, World world, BlockPos pos, Direction from){
 		return null;
 	}
 }

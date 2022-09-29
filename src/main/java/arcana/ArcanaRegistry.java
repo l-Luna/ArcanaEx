@@ -184,7 +184,7 @@ public final class ArcanaRegistry{
 	public static final Block ESSENTIA_VALVE = new EssentiaTubeBlock(of(Material.METAL).dropsSelf().usesTool(PICKAXE_MINEABLE).strength(1).sounds(BlockSoundGroup.METAL));
 	public static final Block ESSENTIA_WINDOW = new EssentiaTubeBlock(of(Material.GLASS).dropsSelf().usesTool(PICKAXE_MINEABLE).strength(.7f).sounds(BlockSoundGroup.GLASS));
 	public static final Block ESSENTIA_PUMP = new EssentiaPumpBlock(of(Material.METAL).dropsSelf().usesTool(PICKAXE_MINEABLE).strength(1.1f).sounds(BlockSoundGroup.METAL));
-	public static final Block WARDED_JAR = new JarBlock(of(Material.GLASS).dropsSelf().renderLayer(TRANSLUCENT).strength(.9f).sounds(BlockSoundGroup.GLASS));
+	public static final Block WARDED_JAR = new WardedJarBlock(of(Material.GLASS).dropsSelf().renderLayer(TRANSLUCENT).strength(.9f).sounds(BlockSoundGroup.GLASS));
 	
 	public static final Block INFUSION_PILLAR = new InfusionPillarBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).nonOpaque().strength(4));
 	public static final Block INFUSION_MATRIX = new InfusionMatrixBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).nonOpaque().strength(5));
@@ -251,6 +251,9 @@ public final class ArcanaRegistry{
 			.build();
 	public static BlockEntityType<InfusionMatrixBlockEntity> INFUSION_MATRIX_BE = FabricBlockEntityTypeBuilder
 			.create(InfusionMatrixBlockEntity::new, INFUSION_MATRIX)
+			.build();
+	public static BlockEntityType<WardedJarBlockEntity> WARDED_JAR_BE = FabricBlockEntityTypeBuilder
+			.create(WardedJarBlockEntity::new, WARDED_JAR)
 			.build();
 	
 	// enchantments...
@@ -452,6 +455,7 @@ public final class ArcanaRegistry{
 		register("arcane_levitator", ARCANE_LEVITATOR_BE);
 		register("infusion_pillar", INFUSION_PILLAR_BE);
 		register("infusion_matrix", INFUSION_MATRIX_BE);
+		register("warded_jar", WARDED_JAR_BE);
 		
 		// enchantments
 		register("warping", WARPING);

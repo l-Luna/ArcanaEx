@@ -29,6 +29,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
+import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
@@ -42,6 +43,7 @@ import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.item.TooltipData;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.item.BlockItem;
@@ -68,6 +70,11 @@ public final class ArcanaClient implements ClientModInitializer{
 		ModelLoadingRegistry.INSTANCE.registerAppender((manager, out) -> {
 			out.accept(new ModelIdentifier(arcId("infusion_pillar_base"), ""));
 			out.accept(new ModelIdentifier(arcId("infusion_pillar_upper"), ""));
+		});
+		ClientSpriteRegistryCallback.event(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE).register((atlasTexture, registry) -> {
+			registry.register(WardedJarBlockEntityRenderer.topTexture);
+			registry.register(WardedJarBlockEntityRenderer.sideTexture);
+			registry.register(WardedJarBlockEntityRenderer.bottomTexture);
 		});
 		
 		ColorProviderRegistry.BLOCK.register(
@@ -96,6 +103,7 @@ public final class ArcanaClient implements ClientModInitializer{
 		BlockEntityRendererRegistry.register(ArcanaRegistry.PEDESTAL_BE, PedestalBlockEntityRenderer::new);
 		BlockEntityRendererRegistry.register(ArcanaRegistry.INFUSION_PILLAR_BE, ctx -> new InfusionPillarBlockEntityRenderer());
 		BlockEntityRendererRegistry.register(ArcanaRegistry.INFUSION_MATRIX_BE, ctx -> new InfusionMatrixBlockEntityRenderer());
+		BlockEntityRendererRegistry.register(ArcanaRegistry.WARDED_JAR_BE, ctx -> new WardedJarBlockEntityRenderer());
 		
 		for(Block block : ArcanaRegistry.blocks)
 			if(block.settings instanceof ArcanaBlockSettings abs)

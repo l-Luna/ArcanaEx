@@ -6,7 +6,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-public record Aspect(Identifier id, Aspect left, Aspect right) implements Comparable<Aspect>{
+public record Aspect(Identifier id, Aspect left, Aspect right, int colour) implements Comparable<Aspect>{
 
 	public static final Codec<Aspect> CODEC = Identifier.CODEC.xmap(Aspects::byName, Aspect::id);
 	

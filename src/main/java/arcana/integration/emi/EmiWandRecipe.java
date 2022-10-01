@@ -38,9 +38,9 @@ public final class EmiWandRecipe extends EmiPatternCraftingRecipe{
 						EmiIngredient.of(CORES.stream().map(EmiStack::of).collect(Collectors.toList()))
 				),
 				WandItem.basicWand().emi(),
-				id
+				id,
+				false
 		);
-		// shapeless = false;
 	}
 	
 	public SlotWidget getInputWidget(int slot, int x, int y){

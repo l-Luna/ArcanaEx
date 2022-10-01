@@ -5,6 +5,7 @@ import arcana.aspects.Aspects;
 import arcana.blocks.*;
 import arcana.enchantments.WarpingCurseEnchantment;
 import arcana.items.*;
+import arcana.items.foci.EquivalentExchangeFocusItem;
 import arcana.items.foci.FireFocusItem;
 import arcana.items.foci.LightFocusItem;
 import arcana.items.foci.PortableHoleFocusItem;
@@ -168,6 +169,7 @@ public final class ArcanaRegistry{
 	public static final Item PORTABLE_HOLE_FOCUS = new PortableHoleFocusItem(GROUPED_SINGLE);
 	public static final Item LIGHT_FOCUS = new LightFocusItem(GROUPED_SINGLE);
 	public static final Item PRISMATIC_LIGHT_FOCUS = new FocusItem(GROUPED_SINGLE);
+	public static final Item EQUIVALENT_EXCHANGE_FOCUS = new EquivalentExchangeFocusItem(GROUPED_SINGLE);
 	
 	// other...?
 	public static final Item EMPTY_PHIAL = new PhialItem(new Settings().group(Tab.PHIALS), null);
@@ -352,6 +354,7 @@ public final class ArcanaRegistry{
 		register("portable_hole_focus", PORTABLE_HOLE_FOCUS);
 		register("light_focus", LIGHT_FOCUS);
 		register("prismatic_light_focus", PRISMATIC_LIGHT_FOCUS);
+		register("equivalent_exchange_focus", EQUIVALENT_EXCHANGE_FOCUS);
 		
 		register("empty_phial", EMPTY_PHIAL);
 		

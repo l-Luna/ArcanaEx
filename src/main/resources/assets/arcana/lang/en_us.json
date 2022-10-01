@@ -521,6 +521,42 @@
   "research.arcana.silverwood_wand_core.stage.3": "Alchemy seems to be the answer. With it, I can dissolve away the useless bulk of the wood, increase its strength, and accentuate all of its useful properties.\nWhile this is certainly better than every material I've tried so far, it doesn't nearly live up to the expectations given by the notes. Indeed, they seem to refer to a completely different, multi-step process instead, which may lead to better results.\nSilverwood wands have high capacities and difficulty scores, but no special effects.",
   "puzzle.arcana.chemistry.silverwood_wand_core": "Refine silverwood",
 
+  "research.arcana.sugar_cane_wand_core": "Sugar Cane Wand Core",
+  "research.arcana.sugar_cane_wand_core.desc": "Light and portable",
+  "research.arcana.sugar_cane_wand_core.stage.1": "There remains a wide variety of plants to which I can apply my alchemical technique. Perhaps they might offer some unique benefits.",
+  "research.arcana.sugar_cane_wand_core.stage.2": "Wands made with sugar cane have a special affinity with {aspect:air}, granting a 15%% discount for it in arcane crafting.\nOtherwise, they're somewhat weaker than silverwood cores.",
+  "puzzle.arcana.chemistry.sugar_cane_wand_core": "Channel vis through other plants",
+
+  "research.arcana.blaze_wand_core": "Blaze Wand Core",
+  "research.arcana.blaze_wand_core.desc": "Feel the Heat",
+  "research.arcana.blaze_wand_core.stage.1": "While fungi were a good start, other nether materials may prove useful.\nBlaze rods are already roughly the right shape, and lend themselves to alchemy in other forms.",
+  "research.arcana.blaze_wand_core.stage.2": "Wands made with blaze rods have a special affinity with {aspect:fire}, granting a 15%% discount for it in arcane crafting.\nOtherwise, they're somewhat weaker than silverwood cores.",
+  "puzzle.arcana.chemistry.blaze_wand_core": "Utilize a blaze rod for vis",
+
+  "research.arcana.ice_wand_core": "Ice Wand Core",
+  "research.arcana.ice_wand_core.desc": "Crystal clear",
+  "research.arcana.ice_wand_core.stage.1": "I wonder what the limits of my technique are.\nIf solidity and some kind of conduction are all that's necessary, can translucent ice be used?",
+  "research.arcana.ice_wand_core.stage.2": "Wands made with ice have a special affinity with {aspect:water}, granting a 15%% discount in it for arcane crafting.\nOtherwise, they're somewhat weaker than silverwood cores.\nIt's worth noting that these cores also have an affinity with {aspect:ice}, {aspect:crystal}, and {aspect:light}, but these have no applications in arcane crafting nor spellcasting.\nThe alchemy applied prevents the wand from ever melting, but it doesn't prevent my hand from getting painfully cold.",
+  "puzzle.arcana.chemistry.ice_wand_core": "Shape ice into a wand core",
+
+  "research.arcana.obsidian_wand_core": "Obsidian Wand Core",
+  "research.arcana.obsidian_wand_core.desc": "Solid and dependable",
+  "research.arcana.obsidian_wand_core.stage.1": "Obsidian is a tough material, and in certain circumstances, can naturally carry magic of its own. It should make for a solid wand core.",
+  "research.arcana.obsidian_wand_core.stage.2": "Wands made with crying obsidian have a special affinity with {aspect:earth}, granting a 15%% discount in it for arcane crafting.\nSurprisingly, it's own magical properties only hinder thaumaturgy, leaving it a little weaker than a silverwood core. Further research will be necessary...",
+  "puzzle.arcana.chemistry.obsidian_wand_core": "Shape obsidian into a wand core",
+
+  "research.arcana.arcane_stone_wand_core": "Arcane Stone Wand Core",
+  "research.arcana.arcane_stone_wand_core.desc": "Theory and application",
+  "research.arcana.arcane_stone_wand_core.stage.1": "So far, using materials that already have an arcane touch has lead to my best results. How far does this go? Can a material as simple as arcane stone be used effectively?",
+  "research.arcana.arcane_stone_wand_core.stage.2": "The crystal structure within arcane stone makes it a useful wand core; wands made with it have a special affinity with {aspect:order}, and grant a 15%% discount in it for arcane crafting.\nThey perform worse than silverwood, though, as is to be expected.",
+  "puzzle.arcana.chemistry.arcane_stone_wand_core": "Shape arcane stone into a wand core",
+
+  "research.arcana.bone_wand_core": "Bone Wand Core",
+  "research.arcana.bone_wand_core.desc": "A grim reminder",
+  "research.arcana.bone_wand_core.stage.1": "Living things can never be entirely mundane. Every breath and dream leaves a mark on the body, and sometimes, that is just enough for it to refuse death, for just a moment.\nI have no intention of messing with mortality; but I do wonder if this leftover power can be useful to me in any way.",
+  "research.arcana.bone_wand_core.stage.2": "Wands made from bone have a special affinity with {aspect:entropy}, granting a 15%% discount in it for arcane crafting.\nOtherwise, they're somewhat weaker than silverwood cores.\nThey also serve as a sombering reminder of my own mortality, a topic I prefer not to think about.",
+  "puzzle.arcana.chemistry.bone_wand_core": "Repurpose remains to contain vis",
+
   "research.arcana.wand_foci": "Wand Foci",
   "research.arcana.wand_foci.desc": "Channeling the power within",
   "research.arcana.wand_foci.stage.1": "Wands are excellent, portable batteries of vis, useful for careful crafting of magical devices. But to perform even more powerful magic, dedicated focuses for their primal vis will be required.\nThe notes include a huge variety of designs for these, reflecting their importance in everyday thaumaturgy. Some are barely more than focused primal vis, while others combine and shape them in ways that break the ordinary laws of reality; others still use materials beyond my imagination to perform dangerous feats of insanity.\nFor my first, I will stick to the absolute basics: focusing ignis vis to create fire.",

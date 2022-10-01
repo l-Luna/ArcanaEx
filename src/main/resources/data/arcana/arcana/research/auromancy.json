@@ -269,6 +269,204 @@
       ]
     },
     {
+      "key": "arcana:sugar_cane_wand_core",
+      "name": "research.arcana.sugar_cane_wand_core",
+      "desc": "research.arcana.sugar_cane_wand_core.desc",
+      "icons": [
+        "arcana:sugar_cane_wand_core"
+      ],
+      "category": "arcana:auromancy",
+      "parents": [
+        "arcana:silverwood_wand_core"
+      ],
+      "x": -7,
+      "y": -6,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.sugar_cane_wand_core.stage.1",
+          "requirements": [
+            "24*minecraft:sugar_cane",
+            "4*arcana::xp"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.sugar_cane_wand_core.stage.2"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:sugar_cane_wand_core"
+        }
+      ]
+    },
+    {
+      "key": "arcana:blaze_wand_core",
+      "name": "research.arcana.blaze_wand_core",
+      "desc": "research.arcana.blaze_wand_core.desc",
+      "icons": [
+        "arcana:blaze_wand_core"
+      ],
+      "category": "arcana:auromancy",
+      "parents": [
+        "arcana:silverwood_wand_core"
+      ],
+      "x": -6,
+      "y": -7,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.blaze_wand_core.stage.1",
+          "requirements": [
+            "8*minecraft:blaze_rod",
+            "3*minecraft:blaze_powder",
+            "4*arcana::xp"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.blaze_wand_core.stage.2"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:blaze_wand_core"
+        }
+      ]
+    },
+    {
+      "key": "arcana:ice_wand_core",
+      "name": "research.arcana.ice_wand_core",
+      "desc": "research.arcana.ice_wand_core.desc",
+      "icons": [
+        "arcana:ice_wand_core"
+      ],
+      "category": "arcana:auromancy",
+      "parents": [
+        "arcana:silverwood_wand_core"
+      ],
+      "x": -5,
+      "y": -8,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.ice_wand_core.stage.1",
+          "requirements": [
+            "4*minecraft:ice",
+            "2*minecraft:packed_ice",
+            "minecraft:blue_ice",
+            "4*arcana::xp"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.ice_wand_core.stage.2"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:ice_wand_core"
+        }
+      ]
+    },
+    {
+      "key": "arcana:obsidian_wand_core",
+      "name": "research.arcana.obsidian_wand_core",
+      "desc": "research.arcana.obsidian_wand_core.desc",
+      "icons": [
+        "arcana:obsidian_wand_core"
+      ],
+      "category": "arcana:auromancy",
+      "parents": [
+        "arcana:silverwood_wand_core"
+      ],
+      "x": -3,
+      "y": -8,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.obsidian_wand_core.stage.1",
+          "requirements": [
+            "8*minecraft:obsidian",
+            "3*minecraft:crying_obsidian",
+            "4*arcana::xp"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.obsidian_wand_core.stage.2"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:obsidian_wand_core"
+        }
+      ]
+    },
+    {
+      "key": "arcana:arcane_stone_wand_core",
+      "name": "research.arcana.arcane_stone_wand_core",
+      "desc": "research.arcana.arcane_stone_wand_core.desc",
+      "icons": [
+        "arcana:arcane_stone_wand_core"
+      ],
+      "category": "arcana:auromancy",
+      "parents": [
+        "arcana:silverwood_wand_core"
+      ],
+      "x": -2,
+      "y": -7,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.arcane_stone_wand_core.stage.1",
+          "requirements": [
+            "12*arcana:arcane_stone",
+            "4*arcana:crystals/order",
+            "4*arcana::xp"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.arcane_stone_wand_core.stage.2"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:arcane_stone_wand_core"
+        }
+      ]
+    },
+    {
+      "key": "arcana:bone_wand_core",
+      "name": "research.arcana.bone_wand_core",
+      "desc": "research.arcana.bone_wand_core.desc",
+      "icons": [
+        "arcana:bone_wand_core"
+      ],
+      "category": "arcana:auromancy",
+      "parents": [
+        "arcana:silverwood_wand_core"
+      ],
+      "x": -1,
+      "y": -6,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.bone_wand_core.stage.1",
+          "requirements": [
+            "16*minecraft:bone",
+            "16*minecraft:rotten_flesh",
+            "4*arcana::xp"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.bone_wand_core.stage.2"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:bone_wand_core"
+        }
+      ]
+    },
+    {
       "key": "arcana:wand_foci",
       "name": "research.arcana.wand_foci",
       "desc": "research.arcana.wand_foci.desc",

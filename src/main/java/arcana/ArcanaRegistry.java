@@ -149,12 +149,12 @@ public final class ArcanaRegistry{
 	public static final CoreItem VARNISHED_WOOD_WAND_CORE = new CoreItem(GROUPED, coreProperties().capacity(37).strength(8).discountAll(12));
 	
 	public static final CoreItem SILVERWOOD_WAND_CORE = new CoreItem(GROUPED, coreProperties().capacity(78).strength(20));
-	public static final CoreItem SUGAR_CANE_WAND_CORE = new CoreItem(GROUPED, coreProperties().capacity(65).strength(15).discountFor(Aspects.AIR, 16));
-	public static final CoreItem BLAZE_WAND_CORE = new CoreItem(GROUPED, coreProperties().capacity(65).strength(15).discountFor(Aspects.FIRE, 16));
-	public static final CoreItem ICE_WAND_CORE = new CoreItem(GROUPED, coreProperties().capacity(65).strength(15).discountFor(Aspects.WATER, 16));
-	public static final CoreItem OBSIDIAN_WAND_CORE = new CoreItem(GROUPED, coreProperties().capacity(65).strength(15).discountFor(Aspects.EARTH, 16));
-	public static final CoreItem ARCANE_STONE_WAND_CORE = new CoreItem(GROUPED, coreProperties().capacity(65).strength(15).discountFor(Aspects.ORDER, 16));
-	public static final CoreItem BONE_WAND_CORE = new CoreItem(GROUPED, coreProperties().capacity(65).strength(15).discountFor(Aspects.ENTROPY, 16));
+	public static final CoreItem SUGAR_CANE_WAND_CORE = new CoreItem(GROUPED, coreProperties().capacity(63).strength(15).discountFor(Aspects.AIR, 16));
+	public static final CoreItem BLAZE_WAND_CORE = new CoreItem(GROUPED, coreProperties().capacity(63).strength(15).discountFor(Aspects.FIRE, 16));
+	public static final CoreItem ICE_WAND_CORE = new CoreItem(GROUPED, coreProperties().capacity(63).strength(15).discountFor(Aspects.WATER, 16));
+	public static final CoreItem OBSIDIAN_WAND_CORE = new CoreItem(GROUPED, coreProperties().capacity(63).strength(15).discountFor(Aspects.EARTH, 16));
+	public static final CoreItem ARCANE_STONE_WAND_CORE = new CoreItem(GROUPED, coreProperties().capacity(63).strength(15).discountFor(Aspects.ORDER, 16));
+	public static final CoreItem BONE_WAND_CORE = new CoreItem(GROUPED, coreProperties().capacity(63).strength(15).discountFor(Aspects.ENTROPY, 16));
 	
 	public static final CoreItem ARCANIUM_WAND_CORE = new CoreItem(GROUPED, coreProperties().capacity(130).strength(40));
 	public static final CoreItem MECHANICAL_WAND_CORE = new CoreItem(GROUPED, coreProperties().capacity(100).strength(30));

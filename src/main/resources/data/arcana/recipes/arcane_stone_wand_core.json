@@ -1,0 +1,14 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "tag": "arcana:arcane_stones"
+  },
+  "aspects": [
+    "25*order",
+    "8*crystal",
+    "6*magic"
+  ],
+  "result": {
+    "item": "arcana:arcane_stone_wand_core"
+  }
+}

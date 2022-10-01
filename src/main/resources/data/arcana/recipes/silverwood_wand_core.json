@@ -1,0 +1,14 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "tag": "arcana:silverwood_logs"
+  },
+  "aspects": [
+    "20*order",
+    "12*energy",
+    "8*magic"
+  ],
+  "result": {
+    "item": "arcana:silverwood_wand_core"
+  }
+}

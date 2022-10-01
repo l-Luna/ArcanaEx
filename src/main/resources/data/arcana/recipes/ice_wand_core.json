@@ -1,0 +1,14 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "minecraft:packed_ice"
+  },
+  "aspects": [
+    "25*water",
+    "8*ice",
+    "6*magic"
+  ],
+  "result": {
+    "item": "arcana:ice_wand_core"
+  }
+}

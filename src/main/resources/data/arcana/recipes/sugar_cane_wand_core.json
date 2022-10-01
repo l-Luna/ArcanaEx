@@ -1,0 +1,14 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "minecraft:sugar_cane"
+  },
+  "aspects": [
+    "25*air",
+    "8*exchange",
+    "6*magic"
+  ],
+  "result": {
+    "item": "arcana:sugar_cane_wand_core"
+  }
+}

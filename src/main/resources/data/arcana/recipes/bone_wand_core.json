@@ -1,0 +1,14 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "minecraft:bone"
+  },
+  "aspects": [
+    "25*entropy",
+    "8*undead",
+    "6*magic"
+  ],
+  "result": {
+    "item": "arcana:bone_wand_core"
+  }
+}

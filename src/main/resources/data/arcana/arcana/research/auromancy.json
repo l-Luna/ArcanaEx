@@ -227,6 +227,48 @@
       ]
     },
     {
+      "key": "arcana:silverwood_wand_core",
+      "name": "research.arcana.silverwood_wand_core",
+      "desc": "research.arcana.silverwood_wand_core.desc",
+      "icons": [
+        "arcana:silverwood_wand_core"
+      ],
+      "category": "arcana:auromancy",
+      "parents": [
+        "arcana:greatwood_wand_core",
+        "arcana:varnished_wood_wand_core",
+        "arcana:nether_stem_wand_core"
+      ],
+      "x": -4,
+      "y": -4,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.silverwood_wand_core.stage.1",
+          "requirements": [
+            "12*arcana:silverwood_planks",
+            "4*#arcana:silverwood_logs",
+            "3*arcana:silverwood_sapling"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.silverwood_wand_core.stage.2",
+          "requirements": [
+            "arcana::puzzle{silverwood_wand_core}"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.silverwood_wand_core.stage.3"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:silverwood_wand_core"
+        }
+      ]
+    },
+    {
       "key": "arcana:wand_foci",
       "name": "research.arcana.wand_foci",
       "desc": "research.arcana.wand_foci.desc",
@@ -392,6 +434,19 @@
         "journey",
         "magic",
         "void"
+      ]
+    },
+    {
+      "key": "arcana:silverwood_wand_core",
+      "type": "chemistry",
+      "desc": "puzzle.arcana.chemistry.silverwood_wand_core",
+      "nodes": [
+        "plant",
+        "magic",
+        "light",
+        "tool",
+        "aura",
+        "light"
       ]
     }
   ]

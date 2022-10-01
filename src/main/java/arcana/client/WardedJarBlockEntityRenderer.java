@@ -32,7 +32,7 @@ public class WardedJarBlockEntityRenderer implements BlockEntityRenderer<WardedJ
 			var side = sprites.apply(sideTexture);
 			var bottom = sprites.apply(bottomTexture);
 			
-			VertexConsumer cons = vcs.getBuffer(RenderLayer.getCutout());
+			VertexConsumer cons = vcs.getBuffer(RenderLayer.getSolid());
 			int colour = stack.type().colour() + 0xFF000000;
 			float height = stack.amount() / 100f;
 			

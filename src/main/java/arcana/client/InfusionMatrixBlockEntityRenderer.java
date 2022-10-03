@@ -53,8 +53,8 @@ public class InfusionMatrixBlockEntityRenderer implements BlockEntityRenderer<In
 		matrices.pop();
 		BlockModelRenderer.disableBrightnessCache();
 		
-		InfusionMatrixBlockEntity.InfusionPhase phase = entity.currentPhase();
+		/*InfusionMatrixBlockEntity.InfusionPhase phase = entity.currentPhase();
 		if(phase != null)
-			phase.render(entity, matrices, vertexConsumers, tickDelta, entity.getStateForPhase(phase));
+			phase.render(entity, matrices, vertexConsumers, tickDelta, entity.getStateForPhase(phase));*/
 	}
 }

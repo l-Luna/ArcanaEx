@@ -76,9 +76,7 @@ public class InfusionRecipe implements Recipe<InfusionInventory>{
 			return false;
 		}
 		// check aspects
-		/*if(!inventory.aspects.contains(aspects))
-			return false;*/
-		return true;
+		return inventory.aspects.contains(aspects);
 	}
 	
 	public ItemStack craft(InfusionInventory inventory){

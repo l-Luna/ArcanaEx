@@ -3,6 +3,7 @@ package arcana;
 import arcana.aspects.Aspect;
 import arcana.aspects.Aspects;
 import arcana.blocks.*;
+import arcana.client.particles.AspectParticleEffect;
 import arcana.enchantments.WarpingCurseEnchantment;
 import arcana.items.*;
 import arcana.items.foci.EquivalentExchangeFocusItem;
@@ -274,6 +275,7 @@ public final class ArcanaRegistry{
 	public static ParticleType<BlockStateParticleEffect> HUNGRY_NODE_DISC = FabricParticleTypes.complex(BlockStateParticleEffect.PARAMETERS_FACTORY);
 	public static ParticleType<BlockStateParticleEffect> HUNGRY_NODE_BLOCK = FabricParticleTypes.complex(BlockStateParticleEffect.PARAMETERS_FACTORY);
 	public static ParticleType<ItemStackParticleEffect> INFUSION_ITEM = FabricParticleTypes.complex(ItemStackParticleEffect.PARAMETERS_FACTORY);
+	public static ParticleType<AspectParticleEffect> ESSENTIA_STREAM = FabricParticleTypes.complex(AspectParticleEffect.PARAMETERS_FACTORY);
 	
 	public static final List<Item> items = new ArrayList<>();
 	public static final List<Block> blocks = new ArrayList<>();
@@ -496,6 +498,7 @@ public final class ArcanaRegistry{
 		register("hungry_node_disc", HUNGRY_NODE_DISC);
 		register("hungry_node_block", HUNGRY_NODE_BLOCK);
 		register("infusion_item", INFUSION_ITEM);
+		register("essentia_stream", ESSENTIA_STREAM);
 	}
 	
 	private static void register(String name, Item item){

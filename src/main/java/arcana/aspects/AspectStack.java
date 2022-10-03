@@ -3,8 +3,9 @@ package arcana.aspects;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.nbt.NbtCompound;
+import org.jetbrains.annotations.NotNull;
 
-public record AspectStack(Aspect type, int amount){
+public record AspectStack(@NotNull Aspect type, int amount){
 	
 	public static final Codec<AspectStack> CODEC = RecordCodecBuilder.create(
 			i -> i.group(

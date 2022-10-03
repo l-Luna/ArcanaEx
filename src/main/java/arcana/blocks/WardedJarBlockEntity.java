@@ -52,6 +52,10 @@ public class WardedJarBlockEntity extends BlockEntity implements AspectIo{
 	}
 	
 	public @Nullable AspectStack draw(int max, World world, BlockPos pos, Direction from){
+		return draw(max);
+	}
+	
+	public @Nullable AspectStack draw(int max){
 		if(stored != null && stored.amount() > 0){
 			var actual = Math.min(max, stored.amount());
 			var ret = new AspectStack(stored.type(), actual);

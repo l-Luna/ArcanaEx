@@ -1,17 +1,16 @@
 package arcana.blocks;
 
 import arcana.ArcanaRegistry;
+import arcana.aspects.Aspect;
 import arcana.aspects.AspectMap;
+import arcana.aspects.AspectStack;
+import arcana.client.particles.AspectParticleEffect;
 import arcana.recipes.InfusionInventory;
 import arcana.recipes.InfusionRecipe;
 import arcana.util.StreamUtil;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
@@ -26,10 +25,7 @@ import net.minecraft.util.math.random.Random;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -39,8 +35,8 @@ import static arcana.blocks.InfusionMatrixBlockEntity.InfusionState.*;
 public class InfusionMatrixBlockEntity extends BlockEntity{
 	
 	public static final List<InfusionPhase> phases = List.of(
-			new ItemPhase(),
-			new EssentiaPhase()
+			new EssentiaPhase(),
+			new ItemPhase()
 	);
 	
 	private InfusionRecipe crafting;
@@ -104,6 +100,12 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 			ItemStack centre = pbe.getStack();
 			List<ItemStack> outers = outerStacks();
 			AspectMap aspects = new AspectMap();
+			inRange(world::getBlockEntity)
+					.filter(WardedJarBlockEntity.class::isInstance)
+					.map(WardedJarBlockEntity.class::cast)
+					.map(WardedJarBlockEntity::getStored)
+					.filter(Objects::nonNull)
+					.forEach(aspects::add);
 			
 			InfusionInventory inv = new InfusionInventory(centre, outers, aspects);
 			world.getRecipeManager().getFirstMatch(InfusionRecipe.TYPE, inv, world).ifPresent(recipe -> crafting = recipe);
@@ -194,12 +196,12 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 		@NotNull
 		InfusionState tick(InfusionMatrixBlockEntity be, NbtCompound tag);
 		
-		@Environment(EnvType.CLIENT)
+		/*@Environment(EnvType.CLIENT)
 		void render(InfusionMatrixBlockEntity be,
 		            MatrixStack matrices,
 		            VertexConsumerProvider vcp,
 		            float tickDelta,
-		            NbtCompound tag);
+		            NbtCompound tag);*/
 	}
 	
 	public enum InfusionState{
@@ -263,15 +265,6 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 			return finished;
 		}
 		
-		@Environment(EnvType.CLIENT)
-		public void render(InfusionMatrixBlockEntity be,
-		                   MatrixStack matrices,
-		                   VertexConsumerProvider vcp,
-		                   float tickDelta,
-		                   NbtCompound tag){
-			
-		}
-		
 		@Nullable
 		private static Ingredient nextIngredient(NbtCompound tag, InfusionRecipe recipe){
 			List<ItemStack> absorbed = StreamUtil.streamAndApply(
@@ -298,16 +291,46 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 	public static class EssentiaPhase implements InfusionPhase{
 		
 		public @NotNull InfusionState tick(InfusionMatrixBlockEntity be, NbtCompound tag){
+			if(be.world.getTime() % 2 != 0)
+				return working;
+			InfusionRecipe recipe = be.getCurrentRecipe();
+			if(recipe != null){
+				Aspect next = null;
+				for(AspectStack stack : recipe.aspects())
+					if(tag.getInt(stack.type().id().toString()) < stack.amount()){
+						next = stack.type();
+						break;
+					}
+				if(next == null)
+					return finished; // nothing else to absorb
+				Aspect tmpNext = next;
+				Optional<WardedJarBlockEntity> first = be.inRange(be.world::getBlockEntity)
+						.filter(WardedJarBlockEntity.class::isInstance)
+						.map(WardedJarBlockEntity.class::cast)
+						.filter(x -> x.getStored() != null && x.getStored().type().equals(tmpNext))
+						.findFirst();
+				if(first.isEmpty())
+					return stalling; // we can't find any jars with the aspect we need
+				var jar = first.get();
+				var jarPos = jar.getPos();
+				var xdiff = jarPos.getX() - be.pos.getX();
+				var zdiff = jarPos.getZ() - be.pos.getZ();
+				var xzdiff = Math.sqrt(xdiff * xdiff + zdiff * zdiff);
+				be.world.addParticle(
+						new AspectParticleEffect(ArcanaRegistry.ESSENTIA_STREAM, next),
+						jarPos.getX() + .5, jarPos.getY() + .5, jarPos.getZ() + .5,
+						// EssentiaStreamParticle uses these for x/y rotation
+						Math.PI + Math.atan2(xdiff, zdiff),
+						Math.PI / 2 - Math.atan2(be.pos.getY() - jarPos.getY() - 1, xzdiff),
+						0
+				);
+				if(be.world.getTime() % 4 == 0){
+					jar.draw(1);
+					tag.putInt(next.id().toString(), tag.getInt(next.id().toString()) + 1);
+				}
+				return working;
+			}
 			return finished;
-		}
-		
-		@Environment(EnvType.CLIENT)
-		public void render(InfusionMatrixBlockEntity be,
-		                   MatrixStack matrices,
-		                   VertexConsumerProvider vcp,
-		                   float tickDelta,
-		                   NbtCompound tag){
-		
 		}
 	}
 }

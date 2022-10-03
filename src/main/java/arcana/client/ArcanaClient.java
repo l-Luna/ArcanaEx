@@ -7,6 +7,7 @@ import arcana.aspects.Aspects;
 import arcana.aspects.ItemAspectsTooltipData;
 import arcana.aspects.WandAspectsTooltipData;
 import arcana.blocks.ArcanaBlockSettings;
+import arcana.client.particles.EssentiaStreamParticle;
 import arcana.client.particles.HungryNodeBlockParticle;
 import arcana.client.particles.HungryNodeDiscParticle;
 import arcana.client.particles.InfusionItemParticle;
@@ -128,6 +129,7 @@ public final class ArcanaClient implements ClientModInitializer{
 		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.HUNGRY_NODE_DISC, new HungryNodeDiscParticle.Factory());
 		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.HUNGRY_NODE_BLOCK, new HungryNodeBlockParticle.Factory());
 		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.INFUSION_ITEM, new InfusionItemParticle.Factory());
+		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.ESSENTIA_STREAM, EssentiaStreamParticle.Factory::new);
 	}
 	
 	private static TooltipComponent dataToComponent(TooltipData data){

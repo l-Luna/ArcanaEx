@@ -1,0 +1,27 @@
+{
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "G": {
+      "tag": "c:glass_panes"
+    },
+    "C": {
+      "item": "minecraft:clay_ball"
+    },
+    "Q": {
+      "item": "minecraft:quartz"
+    }
+  },
+  "pattern": [
+    " CQ",
+    "G G",
+    "GGG"
+  ],
+  "aspects": [
+    "4*water",
+    "2*order"
+  ],
+  "result": {
+    "item": "arcana:empty_phial",
+    "count": 4
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "S": {
+      "item": "arcana:arcane_stone"
+    },
+    "A": {
+      "item": "arcana:arcanium_ingot"
+    },
+    "n": {
+      "item": "minecraft:iron_nugget"
+    }
+  },
+  "pattern": [
+    "nAS",
+    "AS ",
+    " S "
+  ],
+  "aspects": [
+    "16*air",
+    "8*earth",
+    "4*order"
+  ],
+  "result": {
+    "item": "arcana:infusion_pillar",
+    "count": 2
+  }
+}

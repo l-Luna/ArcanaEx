@@ -1,0 +1,30 @@
+{
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "S": {
+      "item": "arcana:arcane_stone"
+    },
+    "A": {
+      "item": "arcana:arcanium_block"
+    },
+    "N": {
+      "item": "arcana:nitor"
+    },
+    "C": {
+      "tag": "arcana:aspect_crystals"
+    }
+  },
+  "pattern": [
+    "SCS",
+    " A ",
+    "SNS"
+  ],
+  "aspects": [
+    "32*fire",
+    "16*water",
+    "8*entropy"
+  ],
+  "result": {
+    "item": "arcana:infusion_matrix"
+  }
+}

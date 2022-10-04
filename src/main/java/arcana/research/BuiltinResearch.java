@@ -1,5 +1,6 @@
 package arcana.research;
 
+import arcana.ArcanaRegistry;
 import arcana.ArcanaTags;
 import arcana.components.AuraWorld;
 import arcana.components.Researcher;
@@ -17,6 +18,7 @@ public final class BuiltinResearch{
 	
 	public static final Identifier silverwoodResearch = arcId("silverwood_trees");
 	public static final Identifier greatwoodResearch = arcId("greatwood_trees");
+	public static final Identifier primordialPearlResearch = arcId("primordial_pearl");
 	public static final Identifier hungryNodesResearch = arcId("hungry_nodes");
 	public static final Identifier eldritchNodesResearch = arcId("eldritch_nodes");
 	public static final Identifier nodalGeodesResearch = arcId("nodal_geodes");
@@ -26,6 +28,8 @@ public final class BuiltinResearch{
 			finishInfoEntry(player, silverwoodResearch);
 		if(player.getInventory().contains(ArcanaTags.GREATWOOD_LOGS))
 			finishInfoEntry(player, greatwoodResearch);
+		if(player.getInventory().contains(ArcanaRegistry.PRIMORDIAL_PEARL.getDefaultStack()))
+			finishInfoEntry(player, primordialPearlResearch);
 	}
 	
 	public static void checkTick(PlayerEntity player){

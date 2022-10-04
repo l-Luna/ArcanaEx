@@ -42,6 +42,7 @@ import net.minecraft.particle.ParticleType;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.Rarity;
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryEntry;
@@ -174,6 +175,7 @@ public final class ArcanaRegistry{
 	
 	// other...?
 	public static final Item EMPTY_PHIAL = new PhialItem(new Settings().group(Tab.PHIALS), null);
+	public static final Item PRIMORDIAL_PEARL = new PrimordialPearlItem(new Settings().group(Tab.MAIN).maxCount(1).rarity(Rarity.EPIC));
 	
 	// blocks...
 	public static final Block ARCANE_CRAFTING_TABLE = new ArcaneCraftingTableBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).sounds(BlockSoundGroup.WOOD).strength(3).nonOpaque());
@@ -359,6 +361,7 @@ public final class ArcanaRegistry{
 		register("equivalent_exchange_focus", EQUIVALENT_EXCHANGE_FOCUS);
 		
 		register("empty_phial", EMPTY_PHIAL);
+		register("primordial_pearl", PRIMORDIAL_PEARL);
 		
 		for(Aspect aspect : Aspects.getOrderedAspects()){
 			var shortName = aspect.id().getPath();

@@ -158,6 +158,10 @@
   "item.arcana.phial": "%s Phial",
   "item.arcana.empty_phial": "Empty Phial",
 
+  "item.arcana.primordial_pearl": "Primordial %s",
+  "item.arcana.primordial_pearl.nouns": "Heart,Brain,Mind,Soul,Pearl,Flesh,Blood,Face,Essence,Pearl",
+  "item.arcana.primordial_pearl.desc": "\"existing at or from the beginning of time\"",
+
   // Blocks
   "block.arcana.arcane_crafting_table": "Arcane Crafting Table",
   "block.arcana.crucible": "Crucible",
@@ -358,6 +362,10 @@
   "research.arcana.nodal_geodes": "Nodal Geodes",
   "research.arcana.nodal_geodes.desc": "Hidden in the depths",
   "research.arcana.nodal_geodes.text": "When venturing underground for resources, I came across a geode filled with vis crystals, with a node at its centre. Such {i}Nodal Geodes{r} are a valuable source of otherwise-sparse crystals.\nUnlike surface nodes, each geode is attuned to only one kind of primal vis, which permeates through the rock that makes it up, alongside condensing into crystals. The node within will be especially potent in that aspect.\nGiven a method of viewing nodes, finding nodal geodes should not be too difficult, but reaching them might be a chore.",
+
+  "research.arcana.primordial_pearl": "Primordial Pearl",
+  "research.arcana.primordial_pearl.desc": "A world astray",
+  "research.arcana.primordial_pearl.text": "For the first time I find myself with a puzzle that I do not believe should be solved.{~sep}This object refuses to take a distinct form, and while it is conceptually complex, only contains huge amounts of primal aspects. These aspects do not act like the ordinary primals.\nEvery one of my various theories falls apart every moment this changes form. I would suggest it might be consciously obfuscating itself, but doing so leaves it perfectly simple and easy to understand - for one, fleeting moment, until all clarity is lost once more.\nIt stays constant only in one aspect: the aspects it contains. It... must have existed before compound aspects themselves, if there was such a time? Or perhaps it exists in some other way, one that cannot be expressed as aspects entirely?",
 
   // Fundamentals Tab: Progression
   "research.arcana.wandcraft": "Wandcraft",

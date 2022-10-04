@@ -263,5 +263,13 @@
   "#arcana:arcane_stones": [
     "3*earth",
     "order"
+  ],
+  "arcana:primordial_pearl": [
+    "100*air",
+    "100*fire",
+    "100*water",
+    "100*earth",
+    "100*order",
+    "100*entropy"
   ]
 }

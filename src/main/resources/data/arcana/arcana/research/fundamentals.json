@@ -567,6 +567,32 @@
       ]
     },
     {
+      "key": "arcana:primordial_pearl",
+      "name": "research.arcana.primordial_pearl",
+      "desc": "research.arcana.primordial_pearl.desc",
+      "meta": [
+        "hidden",
+        "hexagon_base",
+        "purple_base",
+        "warping:2"
+      ],
+      "icons": [
+        "arcana:primordial_pearl"
+      ],
+      "category": "arcana:fundamentals",
+      "x": -8,
+      "y": 0,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.primordial_pearl.text",
+          "requirements": [
+            "arcana::puzzle{primordial_pearl}"
+          ]
+        }
+      ]
+    },
+    {
       "key": "arcana:crystal_farmer",
       "name": "research.arcana.crystal_farmer",
       "desc": "research.arcana.crystal_farmer.desc",
@@ -709,6 +735,10 @@
     },
     {
       "key": "arcana:nodal_geodes",
+      "type": "fieldwork"
+    },
+    {
+      "key": "arcana:primordial_pearl",
       "type": "fieldwork"
     },
     {

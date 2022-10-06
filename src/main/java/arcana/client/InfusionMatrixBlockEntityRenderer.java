@@ -34,14 +34,20 @@ public class InfusionMatrixBlockEntityRenderer implements BlockEntityRenderer<In
 		
 		BlockModelRenderer.enableBrightnessCache();
 		matrices.push();
-		var time = entity.getWorld().getTime();
-		var ySpeed = entity.getCurrentRecipe() != null ? 9 : 2.5;
-		matrices.translate(0, Math.sin(Math.toRadians((time + tickDelta) * ySpeed)) / 4.5f, 0);
-		matrices.translate(.5, .8, .5);
-		matrices.multiply(Quaternion.fromEulerXyz(0, (float)Math.toRadians(time + tickDelta), (float)Math.toRadians((time + tickDelta) / 4)));
-		matrices.multiply(Quaternion.fromEulerYxz(0, MathHelper.HALF_PI / 2f, MathHelper.HALF_PI / 2f));
-		matrices.scale(.8f, .8f, .8f);
-		matrices.translate(-.5, -.5, -.5);
+		if(entity.isActivated()){
+			var time = entity.getWorld().getTime();
+			var ySpeed = entity.getCurrentRecipe() != null ? 9 : 2.5;
+			matrices.translate(0, Math.sin(Math.toRadians((time + tickDelta) * ySpeed)) / 4.5f, 0);
+			matrices.translate(.5, .8, .5);
+			matrices.multiply(Quaternion.fromEulerXyz(0, (float)Math.toRadians(time + tickDelta), (float)Math.toRadians((time + tickDelta) / 4)));
+			matrices.multiply(Quaternion.fromEulerYxz(0, MathHelper.HALF_PI / 2f, MathHelper.HALF_PI / 2f));
+			matrices.scale(.8f, .8f, .8f);
+			matrices.translate(-.5, -.5, -.5);
+		}else{
+			matrices.translate(.5, .5, .5);
+			matrices.scale(.8f, .8f, .8f);
+			matrices.translate(-.5, -.5, -.5);
+		}
 		
 		BakedModelManager modelManager = MinecraftClient.getInstance().getBakedModelManager();
 		BlockRenderManager renderManager = MinecraftClient.getInstance().getBlockRenderManager();

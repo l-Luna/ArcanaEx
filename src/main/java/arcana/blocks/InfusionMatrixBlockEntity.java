@@ -21,6 +21,7 @@ import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -38,6 +39,8 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 			new EssentiaPhase(),
 			new ItemPhase()
 	);
+	
+	private boolean activated = false;
 	
 	private InfusionRecipe crafting;
 	private Map<InfusionPhase, NbtCompound> states = null;
@@ -60,9 +63,22 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 			lastRecipe = null;
 		}
 		
-		BlockEntity pedestal = world.getBlockEntity(pos.down(2));
-		if(!(pedestal instanceof PedestalBlockEntity pbe) || pbe.getStack().isEmpty())
+		// check that we're valid and activated
+		if(!activated){
+			if(crafting != null)
+				reset();
+			return;
+		}
+		
+		if(!checkValid()){
+			activated = false;
 			reset();
+		}
+		
+		BlockEntity pedestal = world.getBlockEntity(pos.down(2));
+		if(pedestal instanceof PedestalBlockEntity pbe && pbe.getStack().isEmpty())
+			reset();
+		
 		if(crafting != null){
 			markDirty();
 			// setup
@@ -89,8 +105,27 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 		}
 	}
 	
+	private boolean checkValid(){
+		boolean valid = true;
+		var down = pos.down(2);
+		for(Direction direction : Direction.Type.HORIZONTAL)
+			if(!(world.getBlockEntity(down.offset(direction).offset(direction.rotateYClockwise())) instanceof InfusionPillarBlockEntity))
+				valid = false;
+		
+		BlockEntity pedestal = world.getBlockEntity(down);
+		if(!(pedestal instanceof PedestalBlockEntity))
+			valid = false;
+		return valid;
+	}
+	
 	public void activate(){
-		// TODO: setup infusion pillars...
+		if(!activated){
+			if(checkValid()){
+				// TODO: setup infusion pillars...
+				activated = true;
+			}
+			return;
+		}
 		
 		if(crafting != null)
 			return;
@@ -151,12 +186,18 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 	}
 	
 	// for InfusionMatrixBlockEntityRenderer
-	public NbtCompound getStateForPhase(InfusionPhase phase){
+	/*public NbtCompound getStateForPhase(InfusionPhase phase){
 		return states != null ? states.getOrDefault(phase, new NbtCompound()) : new NbtCompound();
+	}*/
+	
+	public boolean isActivated(){
+		return activated;
 	}
 	
 	protected void writeNbt(NbtCompound nbt){
 		super.writeNbt(nbt);
+		nbt.putBoolean("activated", activated);
+		
 		if(crafting != null){
 			nbt.putString("currentRecipe", crafting.getId().toString());
 			nbt.putInt("currentPhase", curPhase);
@@ -170,6 +211,8 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 	
 	public void readNbt(NbtCompound nbt){
 		super.readNbt(nbt);
+		activated = nbt.getBoolean("activated");
+		
 		if(nbt.contains("currentRecipe")){
 			lastRecipe = (new Identifier(nbt.getString("currentRecipe")));
 			curPhase = nbt.getInt("currentPhase");

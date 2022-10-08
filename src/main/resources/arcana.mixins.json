@@ -6,11 +6,14 @@
   "mixins": [
     "AbstractFurnaceBlockEntityMixin",
     "CookingRecipeSerializerMixin",
+    "EntityMixin",
     "InventoryChangedCriterionMixin",
     "ItemStackMixin",
+    "LivingEntityMixin",
     "RecipeManagerMixin"
   ],
   "client": [
+    "ClientPlayerEntityMixin",
     "JsonUnbakedModelAccessor",
     "ScreenMixin"
   ],

@@ -54,6 +54,7 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -156,9 +157,14 @@ public final class ArcanaClient implements ClientModInitializer{
 	
 	@ReflectivelyUtilized // by Researcher::applySyncPacket
 	public static void preResearchUpdate(){
-		notifyIfComplete = new HashSet<>(BuiltinResearch.infoResearch);
 		var researcher = Researcher.from(MinecraftClient.getInstance().player);
-		notifyIfComplete.removeIf(x -> researcher.isEntryComplete(Research.getEntry(x)));
+		// don't trigger on every world load
+		var root = Research.getEntry(BuiltinResearch.rootResearch);
+		if(root != null && researcher.isEntryComplete(root)){
+			notifyIfComplete = new HashSet<>(BuiltinResearch.infoResearch);
+			notifyIfComplete.removeIf(x -> researcher.isEntryComplete(Research.getEntry(x)));
+		}else
+			notifyIfComplete = Collections.emptySet();
 	}
 	
 	@ReflectivelyUtilized // by Researcher::applySyncPacket

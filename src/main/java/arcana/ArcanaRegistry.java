@@ -112,7 +112,7 @@ public final class ArcanaRegistry{
 	public static final Item ARCANIUM_LEGGINGS = new ArmorItem(ArcanaArmourMaterials.ARCANIUM, EquipmentSlot.LEGS, new Settings().group(Tab.EQUIPMENT));
 	public static final Item ARCANIUM_BOOTS = new ArmorItem(ArcanaArmourMaterials.ARCANIUM, EquipmentSlot.FEET, new Settings().group(Tab.EQUIPMENT));
 	
-	public static final Item BOOTS_OF_THE_TRAVELLER = new ArmorItem(ArcanaArmourMaterials.BOOTS_OF_THE_TRAVELLER, EquipmentSlot.FEET, new Settings().group(Tab.EQUIPMENT));
+	public static final Item BOOTS_OF_THE_TRAVELLER = new BootsOfTheTravellerItem(ArcanaArmourMaterials.BOOTS_OF_THE_TRAVELLER, new Settings().group(Tab.EQUIPMENT));
 	
 	public static final Item ALCHEMICAL_IRON = new Item(GROUPED);
 	public static final Item ALCHEMICAL_GOLD = new Item(GROUPED);

@@ -70,10 +70,10 @@ public final class AuraWorld implements Component, CommonTickingComponent, AutoS
 	
 	public void tick(){
 		iterating = true;
-		if(world instanceof ServerWorld sw && !sw.isClient)
-			for(Node node : getNodes())
-				if(sw.isChunkLoaded(node.asBlockPos()))
-					node.tick();
+		boolean client = world.isClient;
+		for(Node node : getNodes())
+			if(client || (world instanceof ServerWorld sw && sw.isChunkLoaded(node.asBlockPos())))
+				node.tick();
 		iterating = false;
 		
 		nodes.addAll(toAdd);

@@ -78,7 +78,7 @@ public class NodeTypes{
 							// spawn particles
 							float xR = world.getRandom().nextFloat(), yR = world.getRandom().nextFloat(), zR = world.getRandom().nextFloat();
 							if(world.getRandom().nextInt(2) == 0)
-								world.addParticle(new BlockStateParticleEffect(ArcanaRegistry.HUNGRY_NODE_BLOCK, state), cursor.getX() + xR, cursor.getY() + yR, cursor.getZ() + zR, -(x - node.getX() % 1 + xR) / 20f, -(y - node.getY() % 1 + yR) / 20f, -(z - node.getZ() % 1 + zR) / 20f);
+								world.addParticle(new BlockStateParticleEffect(ArcanaRegistry.HUNGRY_NODE_BLOCK, state), cursor.getX() + xR, cursor.getY() + yR, cursor.getZ() + zR, -(x - Math.abs(node.getX() % 1) + xR) / 20f, -(y - Math.abs(node.getY() % 1) + yR) / 20f, -(z - Math.abs(node.getZ() % 1) + zR) / 20f);
 							// TODO: min break time
 							if(!world.isClient){
 								ServerWorld sw = (ServerWorld)world;

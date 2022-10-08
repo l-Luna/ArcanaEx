@@ -49,7 +49,7 @@ public class GogglesOfRevealingItem extends ArmorItem{
 		}
 		
 		public String getName(){
-			return "arcana/goggles";
+			return "arcana:goggles";
 		}
 		
 		public float getToughness(){

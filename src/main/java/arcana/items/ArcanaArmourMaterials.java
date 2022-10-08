@@ -61,7 +61,7 @@ public enum ArcanaArmourMaterials implements ArmorMaterial{
 	}
 	
 	public String getName(){
-		return "arcana/" + name;
+		return "arcana:" + name;
 	}
 	
 	public float getToughness(){

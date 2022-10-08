@@ -15,6 +15,8 @@ public enum ArcanaArmourMaterials implements ArmorMaterial{
 	
 	ARCANIUM("arcanium", 27, new int[]{3, 5, 7, 3}, 30, SoundEvents.ITEM_ARMOR_EQUIP_IRON, () -> Ingredient.ofItems(ArcanaRegistry.ARCANIUM_INGOT)),
 	BOOTS_OF_THE_TRAVELLER("boots_of_the_traveller", 20, new int[]{3,3,3,3}, 20, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, () -> Ingredient.ofItems(Items.LEATHER)),
+	BOOTS_OF_THE_SAILOR("boots_of_the_sailor", 22, new int[]{3,3,3,4}, 18, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, () -> Ingredient.ofItems(Items.LEATHER)),
+	BOOTS_OF_THE_REAPER("boots_of_the_reaper", 22, new int[]{3,3,3,4}, 22, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, () -> Ingredient.ofItems(Items.LEATHER)),
 	;
 	
 	private static final int[] baseDurability = new int[]{13, 15, 16, 11};

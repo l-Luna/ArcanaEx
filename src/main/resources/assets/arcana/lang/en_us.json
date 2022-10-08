@@ -321,6 +321,8 @@
   "container.arcana.knowledgeable_dropper": "Knowledgeable Dropper",
   "container.arcana.arcane_furnace": "Arcane Furnace",
 
+  "message.arcana.research_toast": "Research Unlocked!",
+
   // Research Categories
   "research.arcana.category.fundamentals": "Fundamentals",
   "research.arcana.category.artifice": "Artifice",

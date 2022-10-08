@@ -10,10 +10,14 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Box;
 
+import java.util.List;
+
 import static arcana.Arcana.arcId;
 
 public final class BuiltinResearch{
-
+	
+	public static final Identifier rootResearch = arcId("root");
+	
 	public static final Identifier fluxPuzzle = arcId("flux_build_research");
 	
 	public static final Identifier silverwoodResearch = arcId("silverwood_trees");
@@ -22,6 +26,15 @@ public final class BuiltinResearch{
 	public static final Identifier hungryNodesResearch = arcId("hungry_nodes");
 	public static final Identifier eldritchNodesResearch = arcId("eldritch_nodes");
 	public static final Identifier nodalGeodesResearch = arcId("nodal_geodes");
+	
+	public static final List<Identifier> infoResearch = List.of(
+			silverwoodResearch,
+			greatwoodResearch,
+			primordialPearlResearch,
+			hungryNodesResearch,
+			eldritchNodesResearch,
+			nodalGeodesResearch
+	);
 	
 	public static void checkInventory(PlayerEntity player){
 		if(player.getInventory().contains(ArcanaTags.SILVERWOOD_LOGS))

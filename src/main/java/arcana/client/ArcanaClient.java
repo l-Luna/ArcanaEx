@@ -14,8 +14,10 @@ import arcana.client.particles.InfusionItemParticle;
 import arcana.client.research.EntrySectionRenderer;
 import arcana.client.research.PuzzleRenderer;
 import arcana.client.research.RequirementRenderer;
+import arcana.components.Researcher;
 import arcana.network.PkModifyPins;
 import arcana.network.PkTryAdvance;
+import arcana.research.BuiltinResearch;
 import arcana.research.Entry;
 import arcana.research.Pin;
 import arcana.research.Research;
@@ -51,6 +53,9 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import static arcana.Arcana.arcId;
 
@@ -140,19 +145,34 @@ public final class ArcanaClient implements ClientModInitializer{
 		return TooltipComponentCallback.EVENT.invoker().getComponent(data);
 	}
 	
-	// Reflectively invoked by ResearchBookItem::use
-	@ReflectivelyUtilized
+	@ReflectivelyUtilized // by ResearchBookItem::use
 	public static void openBook(Identifier bookId){
 		var client = MinecraftClient.getInstance();
 		client.execute(() -> client.setScreen(new ResearchBookScreen(Research.getBook(bookId), null)));
 	}
 	
-	// Reflectively invoked by Researcher::applySyncPacket
-	@ReflectivelyUtilized
-	public static void refreshResearchEntryUi(){
+	// TODO ugly
+	private static Set<Identifier> notifyIfComplete;
+	
+	@ReflectivelyUtilized // by Researcher::applySyncPacket
+	public static void preResearchUpdate(){
+		notifyIfComplete = new HashSet<>(BuiltinResearch.infoResearch);
+		var researcher = Researcher.from(MinecraftClient.getInstance().player);
+		notifyIfComplete.removeIf(x -> researcher.isEntryComplete(Research.getEntry(x)));
+	}
+	
+	@ReflectivelyUtilized // by Researcher::applySyncPacket
+	public static void postResearchUpdate(){
 		var client = MinecraftClient.getInstance();
 		if(client.currentScreen instanceof ResearchEntryScreen entryScreen)
 			entryScreen.updateButtons();
+		var researcher = Researcher.from(MinecraftClient.getInstance().player);
+		if(researcher.isEntryComplete(Research.getEntry(BuiltinResearch.rootResearch)))
+			for(Identifier identifier : notifyIfComplete){
+				var entry = Research.getEntry(identifier);
+				if(researcher.isEntryComplete(entry))
+					MinecraftClient.getInstance().getToastManager().add(new ResearchUnlockedToast(entry));
+			}
 	}
 	
 	public static void sendTryAdvance(Entry entry){

@@ -263,16 +263,26 @@ public final class Researcher implements Component, AutoSyncedComponent{
 	}
 	
 	public void applySyncPacket(PacketByteBuf buf){
+		preResearchUpdate(player);
 		AutoSyncedComponent.super.applySyncPacket(buf);
-		if(player.world.isClient)
-			refreshBookUi();
+		postResearchUpdate(player);
 	}
 	
-	private static void refreshBookUi(){
-		try{
-			Class.forName("arcana.client.ArcanaClient").getMethod("refreshResearchEntryUi").invoke(null);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+	private static void preResearchUpdate(PlayerEntity player){
+		if(player.world.isClient)
+			try{
+				Class.forName("arcana.client.ArcanaClient").getMethod("preResearchUpdate").invoke(null);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+	}
+	
+	private static void postResearchUpdate(PlayerEntity player){
+		if(player.world.isClient)
+			try{
+				Class.forName("arcana.client.ArcanaClient").getMethod("postResearchUpdate").invoke(null);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
 	}
 }

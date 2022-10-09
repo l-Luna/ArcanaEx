@@ -25,7 +25,7 @@ public class InfusionRecipe implements Recipe<InfusionInventory>{
 	
 	Identifier id;
 	ItemStack result;
-	List<Ingredient> outerIngredients;
+	List<XIngredient> outerIngredients;
 	Ingredient centralIngredient;
 	AspectMap aspects;
 	int instability;
@@ -48,7 +48,7 @@ public class InfusionRecipe implements Recipe<InfusionInventory>{
 		);
 	}
 	
-	public InfusionRecipe(Identifier id, ItemStack result, List<Ingredient> outerIngredients, Ingredient centralIngredient, AspectMap aspects, int instability){
+	public InfusionRecipe(Identifier id, ItemStack result, List<XIngredient> outerIngredients, Ingredient centralIngredient, AspectMap aspects, int instability){
 		this.id = id;
 		this.result = result;
 		this.outerIngredients = outerIngredients;
@@ -64,7 +64,7 @@ public class InfusionRecipe implements Recipe<InfusionInventory>{
 		// check others
 		List<ItemStack> copy = new ArrayList<>(inventory.outerStacks);
 		ingredient:
-		for(Ingredient ingredient : outerIngredients){
+		for(XIngredient ingredient : outerIngredients){
 			// safe to remove in this loop, since we break immediately
 			for(int i = 0; i < copy.size(); i++){
 				ItemStack stack = copy.get(i);
@@ -98,7 +98,7 @@ public class InfusionRecipe implements Recipe<InfusionInventory>{
 	public DefaultedList<Ingredient> getIngredients(){
 		DefaultedList<Ingredient> ret = DefaultedList.ofSize(outerIngredients.size() + 1);
 		ret.add(centralIngredient);
-		ret.addAll(outerIngredients);
+		ret.addAll(outerIngredients.stream().map(XIngredient::basic).toList());
 		return ret;
 	}
 	
@@ -110,7 +110,7 @@ public class InfusionRecipe implements Recipe<InfusionInventory>{
 		return centralIngredient;
 	}
 	
-	public List<Ingredient> outerIngredients(){
+	public List<XIngredient> outerIngredients(){
 		return outerIngredients;
 	}
 	
@@ -131,9 +131,9 @@ public class InfusionRecipe implements Recipe<InfusionInventory>{
 		public InfusionRecipe read(Identifier id, JsonObject json){
 			ItemStack result = ShapedRecipe.outputFromJson(JsonHelper.getObject(json, "result"));
 			Ingredient central = Ingredient.fromJson(JsonHelper.getObject(json, "central"));
-			List<Ingredient> outers = new ArrayList<>();
+			List<XIngredient> outers = new ArrayList<>();
 			for(JsonElement ingredients : JsonHelper.getArray(json, "ingredients"))
-				outers.add(Ingredient.fromJson(ingredients));
+				outers.add(XIngredient.fromJson(ingredients));
 			var aspects = ItemAspectRegistry.parseAspectStackList(id, JsonHelper.getArray(json, "aspects")).orElseGet(AspectMap::new);
 			int instability = JsonHelper.getInt(json, "instability", 1);
 			return new InfusionRecipe(id, result, outers, central, aspects, instability);
@@ -142,7 +142,7 @@ public class InfusionRecipe implements Recipe<InfusionInventory>{
 		public void write(PacketByteBuf buf, InfusionRecipe recipe){
 			buf.writeItemStack(recipe.result);
 			buf.writeVarInt(recipe.outerIngredients.size());
-			for(Ingredient ingredient : recipe.outerIngredients)
+			for(XIngredient ingredient : recipe.outerIngredients)
 				ingredient.write(buf);
 			recipe.centralIngredient.write(buf);
 			buf.writeNbt(recipe.aspects.toNbt());
@@ -152,9 +152,9 @@ public class InfusionRecipe implements Recipe<InfusionInventory>{
 		public InfusionRecipe read(Identifier id, PacketByteBuf buf){
 			var result = buf.readItemStack();
 			int size = buf.readVarInt();
-			List<Ingredient> outer = new ArrayList<>(size);
+			List<XIngredient> outer = new ArrayList<>(size);
 			for(int i = 0; i < size; i++)
-				outer.add(Ingredient.fromPacket(buf));
+				outer.add(XIngredient.read(buf));
 			return new InfusionRecipe(id, result, outer, Ingredient.fromPacket(buf), AspectMap.fromNbt(buf.readNbt()), buf.readVarInt());
 		}
 	}

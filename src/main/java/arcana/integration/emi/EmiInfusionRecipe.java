@@ -33,7 +33,7 @@ public class EmiInfusionRecipe implements EmiRecipe{
 	
 	public EmiInfusionRecipe(InfusionRecipe recipe){
 		id = recipe.getId();
-		outers = recipe.outerIngredients().stream().map(EmiIngredient::of).toList();
+		outers = recipe.outerIngredients().stream().map(EmiXIngredient::of).toList();
 		central = EmiIngredient.of(recipe.centralIngredient());
 		output = EmiStack.of(recipe.getOutput());
 		aspects = recipe.aspects();

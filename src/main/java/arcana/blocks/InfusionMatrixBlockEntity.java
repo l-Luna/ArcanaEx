@@ -7,6 +7,7 @@ import arcana.aspects.AspectStack;
 import arcana.client.particles.AspectParticleEffect;
 import arcana.recipes.InfusionInventory;
 import arcana.recipes.InfusionRecipe;
+import arcana.recipes.XIngredient;
 import arcana.util.StreamUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -18,7 +19,6 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.particle.ItemStackParticleEffect;
-import net.minecraft.recipe.Ingredient;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -266,7 +266,7 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 			}
 			InfusionRecipe recipe = be.getCurrentRecipe();
 			if(recipe != null){
-				Ingredient next = nextIngredient(tag, recipe);
+				XIngredient next = nextIngredient(tag, recipe);
 				if(next != null){
 					var matching = be
 							.inRange(pos1 -> be.world.getBlockEntity(pos1) instanceof PedestalBlockEntity p ? p : null)
@@ -309,16 +309,16 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 		}
 		
 		@Nullable
-		private static Ingredient nextIngredient(NbtCompound tag, InfusionRecipe recipe){
+		private static XIngredient nextIngredient(NbtCompound tag, InfusionRecipe recipe){
 			List<ItemStack> absorbed = StreamUtil.streamAndApply(
 					tag.getList("absorbed", NbtElement.COMPOUND_TYPE),
 					NbtCompound.class,
 					ItemStack::fromNbt
 			).collect(Collectors.toCollection(ArrayList::new));
 			// similar to recipe matching
-			Ingredient next = null;
+			XIngredient next = null;
 			ingredients:
-			for(Ingredient ingredient : recipe.outerIngredients()){
+			for(XIngredient ingredient : recipe.outerIngredients()){
 				for(int i = 0; i < absorbed.size(); i++)
 					if(ingredient.test(absorbed.get(i))){
 						absorbed.remove(i);

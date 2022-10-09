@@ -1,0 +1,39 @@
+{
+  "type": "arcana:infusion",
+  "central": {
+    "item": "minecraft:leather_boots"
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:netherite_ingot"
+    },
+    {
+      "item": "minecraft:enchanted_book",
+      "matches": "enchanted_with minecraft:soul_speed"
+    },
+    {
+      "item": "arcana:crystals/fire"
+    },
+    {
+      "item": "minecraft:gold_ingot"
+    },
+    {
+      "item": "minecraft:crying_obsidian"
+    },
+    {
+      "tag": "minecraft:soul_fire_base_blocks"
+    },
+    {
+      "item": "arcana:crystals/entropy"
+    }
+  ],
+  "aspects": [
+    "40*fire",
+    "25*undead",
+    "12*journey"
+  ],
+  "instability": 3,
+  "result": {
+    "item": "arcana:boots_of_the_reaper"
+  }
+}

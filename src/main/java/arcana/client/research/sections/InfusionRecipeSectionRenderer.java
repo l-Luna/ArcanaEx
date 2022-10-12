@@ -48,7 +48,7 @@ public class InfusionRecipeSectionRenderer extends AbstractRecipeSectionRenderer
 				}
 			}
 			
-			var text = Text.translatable("recipe.infusion.instability", Text.translatable("recipe.infusion.instability." + ir.instability()));
+			var text = Text.translatable("recipe.infusion.instability.title", Text.translatable("recipe.infusion.instability." + ir.instability()));
 			textRenderer().draw(matrices, text, midX + 8 - textRenderer().getWidth(text.getString()) / 2f, midY + 54, 0);
 			
 			var stacks = ir.aspects().asStacks();

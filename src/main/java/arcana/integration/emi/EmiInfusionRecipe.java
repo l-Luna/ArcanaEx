@@ -80,7 +80,7 @@ public class EmiInfusionRecipe implements EmiRecipe{
 			int offY = (int)(32 * Math.cos(2 * Math.PI * (i / (float)outers.size())));
 			widgets.addSlot(outers.get(i), midX + offX, midY + offY).drawBack(false);
 		}
-		var text = Text.translatable("recipe.infusion.instability", Text.translatable("recipe.infusion.instability." + instability));
+		var text = Text.translatable("recipe.infusion.instability.title", Text.translatable("recipe.infusion.instability." + instability));
 		var textRenderer = MinecraftClient.getInstance().textRenderer;
 		widgets.addText(text.asOrderedText(), (getDisplayWidth() - textRenderer.getWidth(text.getString())) / 2, 110, 0, false);
 		

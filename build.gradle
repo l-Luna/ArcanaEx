@@ -71,7 +71,7 @@ dependencies {
 
 	for(String cc_module : ["base", "world", "entity"])
 		modImplementation include("dev.onyxstudios.cardinal-components-api:cardinal-components-${cc_module}:${cardinal_comp_version}")
-	for(String lib39_module : ["core", "weld", "tunnel", "fractal", "phantom", "lockpick"])
+	for(String lib39_module : ["core", "weld", "tunnel", "fractal", "phantom", "lockpick", "dessicant"])
 		modApi include("com.unascribed:lib39-${lib39_module}:${lib39_version}")
 	modApi include("dev.emi:trinkets:${trinkets_version}")
 

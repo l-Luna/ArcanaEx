@@ -12,7 +12,7 @@ import net.minecraft.util.Identifier;
 
 public class PkModifyPins extends C2SMessage{
 	
-	String entry = "";
+	Identifier entry;
 	boolean add;
 	@MarshalledAs("varint")
 	int stage;
@@ -24,7 +24,7 @@ public class PkModifyPins extends C2SMessage{
 	
 	public PkModifyPins(Pin pin, boolean add){
 		super(Networking.arcCtx);
-		entry = pin.entry().id().toString();
+		entry = pin.entry().id();
 		stage = pin.stage();
 		this.add = add;
 	}
@@ -32,8 +32,8 @@ public class PkModifyPins extends C2SMessage{
 	protected void handle(ServerPlayerEntity player){
 		Researcher researcher = Researcher.from(player);
 		if(add)
-			researcher.addPinned(new Identifier(entry), stage);
+			researcher.addPinned(entry, stage);
 		else
-			researcher.removePinned(new Identifier(entry), stage);
+			researcher.removePinned(entry, stage);
 	}
 }

@@ -1,674 +1,739 @@
 {
-  "itemGroup.arcana.group": "Arcana",
-  "itemGroup.arcana.main": "Main",
-  "itemGroup.arcana.equipment": "Equipment",
-  "itemGroup.arcana.crystals": "Crystals",
-  "itemGroup.arcana.phials": "Phials",
+  "lib39:enable_enhanced_lang": true,
+
+  "itemGroup.arcana": {
+    "group": "Arcana",
+    "main": "Main",
+    "equipment": "Equipment",
+    "crystals": "Crystals",
+    "phials": "Phials"
+  },
 
   "category.arcana": "Arcana",
 
   // Tags
-  "tag.arcana.helmets": "Helmets",
-  "tag.arcana.chestplates": "Chestplates",
-  "tag.arcana.leggings": "Leggings",
-  "tag.arcana.boots": "Boots",
-  "tag.arcana.horse_armours": "Horse Armours",
+  "tag.arcana": {
+    "helmets": "Helmets",
+    "chestplates": "Chestplates",
+    "leggings": "Leggings",
+    "boots": "Boots",
+    "horse_armours": "Horse Armours",
 
-  "tag.arcana.aspect_crystals": "Primal Crystals",
-  "tag.arcana.cluster_seeds": "Primal Cluster Seeds",
-  "tag.arcana.arcane_stones": "Arcane Stones",
+    "aspect_crystals": "Primal Crystals",
+    "cluster_seeds": "Primal Cluster Seeds",
+    "arcane_stones": "Arcane Stones",
 
-  "tag.arcana.silverwood_logs": "Silverwood Logs",
-  "tag.arcana.greatwood_logs": "Greatwood Logs",
+    "silverwood_logs": "Silverwood Logs",
+    "greatwood_logs": "Greatwood Logs"
+  },
 
   // if you say so
   "tag.trinkets.head.face": "Face Equippables",
 
   // EMI
-  "emi.category.arcana.items_by_aspects": "Items by Aspects",
-  "emi.category.arcana.aspects_by_items": "Aspects by Items",
-  "emi.category.arcana.arcane_crafting": "Arcane Crafting",
-  "emi.category.arcana.alchemy": "Alchemy",
-  "emi.category.arcana.infusion": "Infusion",
-
-  "emi.info.arcana.arcanum": "Right click on a node with Scribbled Notes to get an Arcanum and begin Arcana.",
+  "emi": {
+    "category.arcana": {
+      "items_by_aspects": "Items by Aspects",
+      "aspects_by_items": "Aspects by Items",
+      "arcane_crafting": "Arcane Crafting",
+      "alchemy": "Alchemy",
+      "infusion": "Infusion"
+    },
+    "info.arcana.arcanum": "Right click on a node with Scribbled Notes to get an Arcanum and begin Arcana."
+  },
 
   // Keybindings
   "key.arcana.swap_focus": "Swap Focus",
 
   // Aspects
-  "aspect.arcana.air": "Aer",
-  "aspect.arcana.fire": "Ignis",
-  "aspect.arcana.water": "Aqua",
-  "aspect.arcana.earth": "Terra",
-  "aspect.arcana.order": "Ordo",
-  "aspect.arcana.entropy": "Perditio",
+  "aspect.arcana": {
+    "air": "Aer",
+    "fire": "Ignis",
+    "water": "Aqua",
+    "earth": "Terra",
+    "order": "Ordo",
+    "entropy": "Perditio",
 
-  "aspect.arcana.life": "Victus",
-  "aspect.arcana.light": "Lux",
-  "aspect.arcana.crystal": "Crystallo",
-  "aspect.arcana.energy": "Potentia",
-  "aspect.arcana.void": "Tenebris",
-  "aspect.arcana.ice": "Gelum",
-  "aspect.arcana.exchange": "Permutatio",
-  "aspect.arcana.movement": "Motus",
+    "life": "Victus",
+    "light": "Lux",
+    "crystal": "Crystallo",
+    "energy": "Potentia",
+    "void": "Tenebris",
+    "ice": "Gelum",
+    "exchange": "Permutatio",
+    "movement": "Motus",
 
-  "aspect.arcana.plant": "Herba",
-  "aspect.arcana.metal": "Metallum",
-  "aspect.arcana.slime": "Limus",
-  "aspect.arcana.tool": "Instrumentum",
+    "plant": "Herba",
+    "metal": "Metallum",
+    "slime": "Limus",
+    "tool": "Instrumentum",
 
-  "aspect.arcana.flesh": "Corpus",
-  "aspect.arcana.fabric": "Pannus",
-  "aspect.arcana.journey": "Itla",
-  "aspect.arcana.weapon": "Telum",
-  "aspect.arcana.armour": "Tutamen",
-  "aspect.arcana.mining": "Perodio",
+    "flesh": "Corpus",
+    "fabric": "Pannus",
+    "journey": "Itla",
+    "weapon": "Telum",
+    "armour": "Tutamen",
+    "mining": "Perodio",
 
-  "aspect.arcana.machine": "Machina",
-  "aspect.arcana.greed": "Cupidias",
-  "aspect.arcana.envy": "Invidia",
-  "aspect.arcana.sloth": "Oitiosum",
-  "aspect.arcana.mind": "Cognito",
-  "aspect.arcana.senses": "Sensus",
-  "aspect.arcana.undead": "Examinis",
-  "aspect.arcana.flight": "Volatus",
+    "machine": "Machina",
+    "greed": "Cupidias",
+    "envy": "Invidia",
+    "sloth": "Oitiosum",
+    "mind": "Cognito",
+    "senses": "Sensus",
+    "undead": "Examinis",
+    "flight": "Volatus",
 
-  "aspect.arcana.magic": "Praecantatio",
-  "aspect.arcana.taint": "Virimus",
-  "aspect.arcana.aura": "Auram",
+    "magic": "Praecantatio",
+    "taint": "Virimus",
+    "aura": "Auram"
+  },
 
   // Items
-  "item.arcana.scribbled_notes": "Scribbled Notes",
-  "item.arcana.goggles_of_revealing": "Goggles of Revealing",
-  "item.arcana.monocle_of_revealing": "Monocle of Revealing",
+  "item.arcana": {
+    "scribbled_notes": "Scribbled Notes",
+    "goggles_of_revealing": "Goggles of Revealing",
+    "monocle_of_revealing": "Monocle of Revealing",
 
-  "item.arcana.arcanum": "Arcanum",
-  "item.arcana.crimson_rites": "Crimson Rites",
-  "item.arcana.tainted_codex": "Tainted Codex",
-  "item.arcana.tome_of_sharing": "Tome of Sharing",
-  "item.arcana.tome_of_sharing.unbound": "Empty",
-  "item.arcana.tome_of_sharing.bound.greater": "Knows something you don't",
-  "item.arcana.tome_of_sharing.bound.lesser": "Has nothing to teach you",
+    "arcanum": "Arcanum",
+    "crimson_rites": "Crimson Rites",
+    "tainted_codex": "Tainted Codex",
+    "tome_of_sharing": "Tome of Sharing",
+    "tome_of_sharing.unbound": "Empty",
+    "tome_of_sharing.bound.greater": "Knows something you don't",
+    "tome_of_sharing.bound.lesser": "Has nothing to teach you",
 
-  "item.arcana.research_notes": "Research Notes",
-  "item.arcana.complete_research_notes": "Complete Research Notes",
+    "research_notes": "Research Notes",
+    "complete_research_notes": "Complete Research Notes",
 
-  "item.arcana.cheaters_arcanum": "Cheater's Arcanum",
-  "item.arcana.cheaters_arcanum.desc": "For the lazy",
+    "cheaters_arcanum": "Cheater's Arcanum",
+    "cheaters_arcanum.desc": "For the lazy",
 
-  "item.arcana.arcanium_ingot": "Arcanium Ingot",
-  "item.arcana.arcanium_axe": "Arcanium Axe",
-  "item.arcana.arcanium_pickaxe": "Arcanium Pickaxe",
-  "item.arcana.arcanium_sword": "Arcanium Sword",
-  "item.arcana.arcanium_hoe": "Arcanium Hoe",
-  "item.arcana.arcanium_shovel": "Arcanium Shovel",
-  "item.arcana.arcanium_helmet": "Arcanium Mask",
-  "item.arcana.arcanium_chestplate": "Arcanium Chestplate",
-  "item.arcana.arcanium_leggings": "Arcanium Leggings",
-  "item.arcana.arcanium_boots": "Arcanium Boots",
+    "arcanium_ingot": "Arcanium Ingot",
+    "arcanium_axe": "Arcanium Axe",
+    "arcanium_pickaxe": "Arcanium Pickaxe",
+    "arcanium_sword": "Arcanium Sword",
+    "arcanium_hoe": "Arcanium Hoe",
+    "arcanium_shovel": "Arcanium Shovel",
+    "arcanium_helmet": "Arcanium Mask",
+    "arcanium_chestplate": "Arcanium Chestplate",
+    "arcanium_leggings": "Arcanium Leggings",
+    "arcanium_boots": "Arcanium Boots",
 
-  "item.arcana.boots_of_the_traveller": "Boots of the Traveller",
-  "item.arcana.boots_of_the_sailor": "Boots of the Sailor",
-  "item.arcana.boots_of_the_reaper": "Boots of the Reaper",
+    "boots_of_the_traveller": "Boots of the Traveller",
+    "boots_of_the_sailor": "Boots of the Sailor",
+    "boots_of_the_reaper": "Boots of the Reaper",
 
-  "item.arcana.alchemical_iron": "Alchemical Iron",
-  "item.arcana.alchemical_gold": "Alchemical Gold",
-  "item.arcana.alchemical_copper": "Alchemical Copper",
-  "item.arcana.altered_iron": "Altered Iron",
-  "item.arcana.alumentum": "Alumentum",
+    "alchemical_iron": "Alchemical Iron",
+    "alchemical_gold": "Alchemical Gold",
+    "alchemical_copper": "Alchemical Copper",
+    "altered_iron": "Altered Iron",
+    "alumentum": "Alumentum",
 
-  "item.arcana.wand": "%s %s %s",
+    "wand": "{} {} {}",
 
-  "item.arcana.iron_wand_cap": "Iron Wand Cap",
-  "item.arcana.gold_wand_cap": "Gold Wand Cap",
-  "item.arcana.copper_wand_cap": "Copper Wand Cap",
-  "item.arcana.leather_wand_cap": "Leather Wand Cap",
-  "item.arcana.thaumium_wand_cap": "Thaumium Wand Cap",
-  "item.arcana.bamboo_wand_cap": "Bamboo Wand Cap",
-  "item.arcana.quartz_wand_cap": "Quartz Wand Cap",
-  "item.arcana.prismarine_wand_cap": "Prismarine Wand Cap",
-  "item.arcana.amber_wand_cap": "Amber Wand Cap",
-  "item.arcana.honeycomb_wand_cap": "Crystallized Honeycomb Wand Cap",
-  "item.arcana.netherite_wand_cap": "Netherite Wand Cap",
-  "item.arcana.mechanical_wand_cap": "Mechanical Wand Cap",
-  "item.arcana.void_wand_cap": "Void Metal Wand Cap",
-  "item.arcana.crimson_wand_cap": "Crimson Cloth Wand Cap",
+    "iron_wand_cap": "Iron Wand Cap",
+    "gold_wand_cap": "Gold Wand Cap",
+    "copper_wand_cap": "Copper Wand Cap",
+    "leather_wand_cap": "Leather Wand Cap",
+    "thaumium_wand_cap": "Thaumium Wand Cap",
+    "bamboo_wand_cap": "Bamboo Wand Cap",
+    "quartz_wand_cap": "Quartz Wand Cap",
+    "prismarine_wand_cap": "Prismarine Wand Cap",
+    "amber_wand_cap": "Amber Wand Cap",
+    "honeycomb_wand_cap": "Crystallized Honeycomb Wand Cap",
+    "netherite_wand_cap": "Netherite Wand Cap",
+    "mechanical_wand_cap": "Mechanical Wand Cap",
+    "void_wand_cap": "Void Metal Wand Cap",
+    "crimson_wand_cap": "Crimson Cloth Wand Cap",
 
-  "item.arcana.greatwood_wand_core": "Greatwood Wand Core",
-  "item.arcana.nether_stem_wand_core": "Nether Stem Wand Core",
-  "item.arcana.varnished_wood_wand_core": "Varnished Wood Wand Core",
-  "item.arcana.silverwood_wand_core": "Silverwood Wand Core",
-  "item.arcana.sugar_cane_wand_core": "Sugar Cane Wand Core",
-  "item.arcana.blaze_wand_core": "Blaze Wand Core",
-  "item.arcana.ice_wand_core": "Ice Wand Core",
-  "item.arcana.obsidian_wand_core": "Obsidian Wand Core",
-  "item.arcana.arcane_stone_wand_core": "Arcane Stone Wand Core",
-  "item.arcana.bone_wand_core": "Bone Wand Core",
-  "item.arcana.arcanium_wand_core": "Arcanium Wand Core",
-  "item.arcana.mechanical_wand_core": "Mechanical Wand Core",
-  "item.arcana.tainted_wand_core": "Tainted Wand Core",
-  "item.arcana.eldritch_wand_core": "Eldritch Wand Core",
+    "greatwood_wand_core": "Greatwood Wand Core",
+    "nether_stem_wand_core": "Nether Stem Wand Core",
+    "varnished_wood_wand_core": "Varnished Wood Wand Core",
+    "silverwood_wand_core": "Silverwood Wand Core",
+    "sugar_cane_wand_core": "Sugar Cane Wand Core",
+    "blaze_wand_core": "Blaze Wand Core",
+    "ice_wand_core": "Ice Wand Core",
+    "obsidian_wand_core": "Obsidian Wand Core",
+    "arcane_stone_wand_core": "Arcane Stone Wand Core",
+    "bone_wand_core": "Bone Wand Core",
+    "arcanium_wand_core": "Arcanium Wand Core",
+    "mechanical_wand_core": "Mechanical Wand Core",
+    "tainted_wand_core": "Tainted Wand Core",
+    "eldritch_wand_core": "Eldritch Wand Core",
 
-  "item.arcana.fire_focus": "Wand Focus: Flame",
-  "item.arcana.portable_hole_focus": "Wand Focus: Portable Hole",
-  "item.arcana.light_focus": "Wand Focus: Light",
-  "item.arcana.prismatic_light_focus": "Wand Focus: Prismatic Light",
-  "item.arcana.equivalent_exchange_focus": "Wand Focus: Equivalent Exchange",
+    "fire_focus": "Wand Focus: Flame",
+    "portable_hole_focus": "Wand Focus: Portable Hole",
+    "light_focus": "Wand Focus: Light",
+    "prismatic_light_focus": "Wand Focus: Prismatic Light",
+    "equivalent_exchange_focus": "Wand Focus: Equivalent Exchange",
 
-  "item.arcana.aspect_crystal": "%s Crystal",
-  "item.arcana.phial": "%s Phial",
-  "item.arcana.empty_phial": "Empty Phial",
+    "aspect_crystal": "{} Crystal",
+    "phial": "{} Phial",
+    "empty_phial": "Empty Phial",
 
-  "item.arcana.primordial_pearl": "Primordial %s",
-  "item.arcana.primordial_pearl.nouns": "Heart,Brain,Mind,Soul,Pearl,Flesh,Blood,Face,Essence,Pearl",
-  "item.arcana.primordial_pearl.desc": "\"existing at or from the beginning of time\"",
+    "primordial_pearl": "Primordial {}",
+    "primordial_pearl.nouns": "Heart,Brain,Mind,Soul,Pearl,Flesh,Blood,Face,Essence,Pearl",
+    "primordial_pearl.desc": "\"existing at or from the beginning of time\"",
+
+    "cluster_seed": "{} Cluster Seed"
+  },
 
   // Blocks
-  "block.arcana.arcane_crafting_table": "Arcane Crafting Table",
-  "block.arcana.crucible": "Crucible",
-  "block.arcana.research_table": "Research Table",
-  "block.arcana.knowledgeable_dropper": "Knowledgeable Dropper",
+  "block.arcana": {
+    "arcane_crafting_table": "Arcane Crafting Table",
+    "crucible": "Crucible",
+    "research_table": "Research Table",
+    "knowledgeable_dropper": "Knowledgeable Dropper",
 
-  "block.arcana.arcane_furnace": "Arcane Furnace",
-  "block.arcana.alembic": "Alembic",
-  "block.arcana.essentia_tube": "Essentia Tube",
-  "block.arcana.essentia_window": "Essentia Window",
-  "block.arcana.essentia_pump": "Essentia Pump",
-  "block.arcana.essentia_valve": "Essentia Valve",
-  "block.arcana.warded_jar": "Warded Jar",
+    "arcane_furnace": "Arcane Furnace",
+    "alembic": "Alembic",
+    "essentia_tube": "Essentia Tube",
+    "essentia_window": "Essentia Window",
+    "essentia_pump": "Essentia Pump",
+    "essentia_valve": "Essentia Valve",
+    "warded_jar": "Warded Jar",
 
-  "block.arcana.infusion_pillar": "Infusion Pillar",
-  "block.arcana.infusion_matrix": "Infusion Matrix",
+    "infusion_pillar": "Infusion Pillar",
+    "infusion_matrix": "Infusion Matrix",
 
-  "block.arcana.nitor": "Nitor",
-  "block.arcana.hardened_glass": "Hardened Glass",
-  "block.arcana.luminiferous_glass": "Luminiferous Glass",
-  "block.arcana.static_glass": "Static Glass",
-  "block.arcana.paving_stone_of_travel": "Paving Stone of Travel",
-  "block.arcana.paving_stone_of_warding": "Paving Stone of Warding",
-  "block.arcana.pedestal": "Pedestal",
-  "block.arcana.arcane_levitator": "Arcane Levitator",
+    "nitor": "Nitor",
+    "hardened_glass": "Hardened Glass",
+    "luminiferous_glass": "Luminiferous Glass",
+    "static_glass": "Static Glass",
+    "paving_stone_of_travel": "Paving Stone of Travel",
+    "paving_stone_of_warding": "Paving Stone of Warding",
+    "pedestal": "Pedestal",
+    "arcane_levitator": "Arcane Levitator",
 
-  "block.arcana.arcanium_block": "Arcanium Block",
-  "block.arcana.arcane_stone": "Arcane Stone",
-  "block.arcana.arcane_stone_bricks": "Arcane Stone Bricks",
+    "arcanium_block": "Arcanium Block",
+    "arcane_stone": "Arcane Stone",
+    "arcane_stone_bricks": "Arcane Stone Bricks",
 
-  "block.arcana.silverwood_sapling": "Silverwood Sapling",
-  "block.arcana.silverwood_log": "Silverwood Log",
-  "block.arcana.silverwood_leaves": "Silverwood Leaves",
-  "block.arcana.silverwood_planks": "Silverwood Planks",
+    "silverwood_sapling": "Silverwood Sapling",
+    "silverwood_log": "Silverwood Log",
+    "silverwood_leaves": "Silverwood Leaves",
+    "silverwood_planks": "Silverwood Planks",
 
-  "block.arcana.silverwood_wood": "Silverwood Wood",
-  "block.arcana.stripped_silverwood_log": "Stripped Silverwood Log",
-  "block.arcana.stripped_silverwood_wood": "Stripped Silverwood Wood",
+    "silverwood_wood": "Silverwood Wood",
+    "stripped_silverwood_log": "Stripped Silverwood Log",
+    "stripped_silverwood_wood": "Stripped Silverwood Wood",
 
-  "block.arcana.greatwood_sapling": "Greatwood Sapling",
-  "block.arcana.greatwood_log": "Greatwood Log",
-  "block.arcana.greatwood_leaves": "Greatwood Leaves",
-  "block.arcana.greatwood_planks": "Greatwood Planks",
+    "greatwood_sapling": "Greatwood Sapling",
+    "greatwood_log": "Greatwood Log",
+    "greatwood_leaves": "Greatwood Leaves",
+    "greatwood_planks": "Greatwood Planks",
 
-  "block.arcana.greatwood_wood": "Greatwood Wood",
-  "block.arcana.stripped_greatwood_log": "Stripped Greatwood Log",
-  "block.arcana.stripped_greatwood_wood": "Stripped Greatwood Wood",
+    "greatwood_wood": "Greatwood Wood",
+    "stripped_greatwood_log": "Stripped Greatwood Log",
+    "stripped_greatwood_wood": "Stripped Greatwood Wood",
 
-  "item.arcana.cluster_seed": "%s Cluster Seed",
-  "block.arcana.clusters.air": "Aer Cluster",
-  "block.arcana.clusters.fire": "Ignis Cluster",
-  "block.arcana.clusters.water": "Aqua Cluster",
-  "block.arcana.clusters.earth": "Terra Cluster",
-  "block.arcana.clusters.order": "Ordo Cluster",
-  "block.arcana.clusters.entropy": "Perditio Cluster",
-  "block.arcana.clusters.aura": "Auram Cluster",
+    "clusters.air": "Aer Cluster",
+    "clusters.fire": "Ignis Cluster",
+    "clusters.water": "Aqua Cluster",
+    "clusters.earth": "Terra Cluster",
+    "clusters.order": "Ordo Cluster",
+    "clusters.entropy": "Perditio Cluster",
+    "clusters.aura": "Auram Cluster"
+  },
 
   // Tooltips
-  "tooltip.arcana.wand.focus_cost.total": "Cost: %s",
-  "tooltip.arcana.wand.focus_cost.individual": "%sx %s ",
-
-  "tooltip.arcana.wand.discount.all": "%s%% vis discount",
-  "tooltip.arcana.wand.discount.aspect": "%s%% %s discount",
+  "tooltip.arcana": {
+    "wand": {
+      "focus_cost": {
+        "total": "Cost: {}",
+        "individual": "{}x {} "
+      },
+      "discount": {
+        "all": "{}% vis discount",
+        "aspect": "{}% {} discount"
+      }
+    }
+  },
 
   // Enchantments
   "enchantment.arcana.warping": "Warping",
 
   // Wand components
-  "wand.variant.arcana.wand": "Wand",
+  "wand": {
+    "variant.arcana": {
+      "wand": "Wand"
+    },
+    "cap.arcana": {
+      "iron_wand_cap": "Iron Capped",
+      "gold_wand_cap": "Gold Topped",
+      "copper_wand_cap": "Copper Capped",
+      "leather_wand_cap": "Leather Strapped",
+      "thaumium_wand_cap": "Thaumium Capped",
+      "bamboo_wand_cap": "Bamboo Capped",
+      "quartz_wand_cap": "Quartz Topped",
+      "prismarine_wand_cap": "Prismarine Topped",
+      "amber_wand_cap": "Amber Capped",
+      "honeycomb_wand_cap": "Honeycomb Capped",
+      "netherite_wand_cap": "Netherite Forged",
+      "mechanical_wand_cap": "Mechanically Channelled",
+      "void_wand_cap": "Void Topped",
+      "crimson_wand_cap": "Crimson Cloth Strapped",
+      "missing": "(Broken Cap)"
+    },
+    "core.arcana": {
+      "stick_wand_core": "Wooden",
+      "greatwood_wand_core": "Greatwood",
+      "nether_stem_wand_core": "Nether Stem",
+      "varnished_wood_wand_core": "Varnished Wood",
+      "silverwood_wand_core": "Silverwood",
+      "sugar_cane_wand_core": "Sugar Cane",
+      "blaze_wand_core": "Blazing",
+      "ice_wand_core": "Ice",
+      "obsidian_wand_core": "Obsidian",
+      "arcane_stone_wand_core": "Arcane Stone",
+      "bone_wand_core": "Bone",
+      "arcanium_wand_core": "Arcanium",
+      "mechanical_wand_core": "Clockwork",
+      "tainted_wand_core": "Tainted",
+      "eldritch_wand_core": "Eldritch",
+      "missing": "(Broken Core)"
+    }
+  },
 
-  "wand.cap.arcana.iron_wand_cap": "Iron Capped",
-  "wand.cap.arcana.gold_wand_cap": "Gold Topped",
-  "wand.cap.arcana.copper_wand_cap": "Copper Capped",
-  "wand.cap.arcana.leather_wand_cap": "Leather Strapped",
-  "wand.cap.arcana.thaumium_wand_cap": "Thaumium Capped",
-  "wand.cap.arcana.bamboo_wand_cap": "Bamboo Capped",
-  "wand.cap.arcana.quartz_wand_cap": "Quartz Topped",
-  "wand.cap.arcana.prismarine_wand_cap": "Prismarine Topped",
-  "wand.cap.arcana.amber_wand_cap": "Amber Capped",
-  "wand.cap.arcana.honeycomb_wand_cap": "Honeycomb Capped",
-  "wand.cap.arcana.netherite_wand_cap": "Netherite Forged",
-  "wand.cap.arcana.mechanical_wand_cap": "Mechanically Channelled",
-  "wand.cap.arcana.void_wand_cap": "Void Topped",
-  "wand.cap.arcana.crimson_wand_cap": "Crimson Cloth Strapped",
-  "wand.cap.arcana.missing": "(Broken Cap)",
-
-  "wand.core.arcana.stick_wand_core": "Wooden",
-  "wand.core.arcana.greatwood_wand_core": "Greatwood",
-  "wand.core.arcana.nether_stem_wand_core": "Nether Stem",
-  "wand.core.arcana.varnished_wood_wand_core": "Varnished Wood",
-  "wand.core.arcana.silverwood_wand_core": "Silverwood",
-  "wand.core.arcana.sugar_cane_wand_core": "Sugar Cane",
-  "wand.core.arcana.blaze_wand_core": "Blazing",
-  "wand.core.arcana.ice_wand_core": "Ice",
-  "wand.core.arcana.obsidian_wand_core": "Obsidian",
-  "wand.core.arcana.arcane_stone_wand_core": "Arcane Stone",
-  "wand.core.arcana.bone_wand_core": "Bone",
-  "wand.core.arcana.arcanium_wand_core": "Arcanium",
-  "wand.core.arcana.mechanical_wand_core": "Clockwork",
-  "wand.core.arcana.tainted_wand_core": "Tainted",
-  "wand.core.arcana.eldritch_wand_core": "Eldritch",
-  "wand.core.arcana.missing": "(Broken Core)",
-
-  // Command messages
-  "message.arcana.command.research.reset": "Reset research for %s",
-  "message.arcana.command.research.give.entry": "Completed entry \"%s\" for %s",
-  "message.arcana.command.research.give.puzzle": "Completed puzzle %s for %s",
-  "message.arcana.command.research.take.entry": "Reset entry \"%s\" for %s",
-  "message.arcana.command.research.take.puzzle": "Reset puzzle %s for %s",
-
-  "message.arcana.command.warp.show": "%s has %s warp",
-  "message.arcana.command.warp.show.effective": "%s effectively has %s warp",
-  "message.arcana.command.warp.add": "Gave %s %s warp (had %s, now has %s)",
-  "message.arcana.command.warp.set": "Set %s's warp to %s (had %s)",
-  "message.arcana.command.warp.trigger": "Triggered random warp event for %s",
-  "message.arcana.command.warp.trigger.specific": "Triggered warp event %s for %s",
-
-  // Warp effect messages
-  "message.arcana.warp.nausea": "You don't feel so good...",
-  "message.arcana.warp.peek": "What was that?",
-  "message.arcana.warp.pass": "Something passes over you...",
-
+  // Messages
+  "message.arcana": {
+    "command": {
+      "research": {
+        "reset": "Reset research for {}",
+        "give": {
+          "entry": "Completed entry \"{}\" for {}",
+          "puzzle": "Completed puzzle {} for {}"
+        },
+        "take": {
+          "entry": "Reset entry \"{}\" for {}",
+          "puzzle": "Reset puzzle {} for {}"
+        }
+      },
+      "warp": {
+        "show": "{} has {} warp",
+        "show.effective": "{} effectively has {} warp",
+        "add": "Gave {} {} warp (had {}, now has {})",
+        "set": "Set {}'s warp to {} (had {})",
+        "trigger": "Triggered random warp event for {}",
+        "trigger.specific": "Triggered warp event {} for {}"
+      }
+    },
+    "warp": {
+      "nausea": "You don't feel so good...",
+      "peek": "What was that?",
+      "pass": "Something passes over you..."
+    },
+    "research_toast": "Research Unlocked!"
+  },
+  
   // Research UI
-  "research.entry.continue": "Continue",
-  "research.entry.pin": "Ctrl-click to pin",
-  "research.entry.unpin": "Ctrl-click to unpin",
-  "research.entry.get_note.1": "Click to get research note",
-  "research.entry.get_note.2": "Requires scribing tools and paper",
+  "research": {
+    "entry": {
+      "continue": "Continue",
+      "pin": "Ctrl-click to pin",
+      "unpin": "Ctrl-click to unpin",
+      "get_note": [
+        "Click to get research note",
+        "Requires scribing tools and paper"
+      ]
+    },
+    "book": {
+      "category_with_completion": "{} ({}%)",
+      "warping": [
+        "Forbidden Knowledge: Benign",
+        "Forbidden Knowledge: Minor",
+        "Forbidden Knowledge: Secret",
+        "Forbidden Knowledge: Dangerous",
+        "Forbidden Knowledge: Taboo"
+      ]
+    },
+    "requirement.arcana": {
+      "experience": "{}x Experience Levels",
+      "item": "{}x {}",
+      "item.have": "Have: {}",
+      "tag": "Any from {}",
+      "puzzles_completed": "Complete {} puzzles",
+      "puzzles_completed.progress": "{}/{} complete"
+    }
+  },
+  
+  "recipe": {
+    "infusion": {
+      // lib39 can tell them apart by type
+      "instability.title": "Instability: {}",
+      "instability.0": "§2Safe§0",
+      "instability": [
+        "§1Negligible§0",
+        "§9Minor§0",
+        "§5Moderate§0",
+        "§6High§0",
+        "§4Dangerous§0"
+      ]
+    }
+  },
 
-  "research.book.category_with_completion": "%s (%s%%)",
-  "research.book.warping.1": "Forbidden Knowledge: Benign",
-  "research.book.warping.2": "Forbidden Knowledge: Minor",
-  "research.book.warping.3": "Forbidden Knowledge: Secret",
-  "research.book.warping.4": "Forbidden Knowledge: Dangerous",
-  "research.book.warping.5": "Forbidden Knowledge: Taboo",
+  "puzzle.arcana": {
+    "chemistry": "Complete the Chemistry",
+    "fieldwork": "<Specify fieldwork descriptions>",
+    "aspect_chess": "Win the game of Aspect Chess",
 
-  "recipe.infusion.instability": "Instability: %s",
-  "recipe.infusion.instability.0": "§2Safe§0",
-  "recipe.infusion.instability.1": "§1Negligible§0",
-  "recipe.infusion.instability.2": "§9Minor§0",
-  "recipe.infusion.instability.3": "§5Moderate§0",
-  "recipe.infusion.instability.4": "§6High§0",
-  "recipe.infusion.instability.5": "§4Dangerous§0",
-
-  "research.requirement.arcana.experience": "%sx Experience Levels",
-  "research.requirement.arcana.item": "%sx %s",
-  "research.requirement.arcana.item.have": "Have: %s",
-  "research.requirement.arcana.tag": "Any from %s",
-  "research.requirement.arcana.puzzles_completed": "Complete %s puzzles",
-  "research.requirement.arcana.puzzles_completed.progress": "%s/%s complete",
-
-  "puzzle.arcana.chemistry": "Complete the Chemistry",
-  "puzzle.arcana.fieldwork": "<Specify fieldwork descriptions>",
-  "puzzle.arcana.aspect_chess": "Win the game of Aspect Chess",
+    "fieldwork.flux_build": "Taste the \"flux\" for yourself",
+    "chemistry.node_channelling": "Investigate how the aura interacts with metal",
+    "chemistry.node_channelling_2": "Investigate how the aura moves in a variety of substances",
+    "chemistry.auromancy_intro": "Try a new vis conductor",
+    "chemistry.crystal_farmer": "Form a base for a crystal cluster",
+    "chemistry.aura_crystallization": "Amplify the aura into a single point",
+    "chemistry.paving_stones.travel": "Create a walkable surface",
+    "chemistry.paving_stones.warding": "Create a protective enchantment",
+    "chemistry.arcane_levitator": "Generate an air stream with vis",
+    "chemistry.monocle_of_revealing": "Create a more efficient vis lens",
+    "chemistry.copper_wand_caps": "Conduct vis through copper",
+    "chemistry.leather_wand_caps": "Conduct vis through leather",
+    "chemistry.greatwood_wand_core": "Store vis in greatwood",
+    "chemistry.nether_stem_wand_core": "Store vis in the stem of nether fungi",
+    "chemistry.varnished_wood_wand_core": "Design a fine vis battery",
+    "chemistry.silverwood_wand_core": "Refine silverwood",
+    "chemistry.sugar_cane_wand_core": "Channel vis through other plants",
+    "chemistry.blaze_wand_core": "Utilize a blaze rod for vis",
+    "chemistry.ice_wand_core": "Shape ice into a wand core",
+    "chemistry.obsidian_wand_core": "Shape obsidian into a wand core",
+    "chemistry.arcane_stone_wand_core": "Shape arcane stone into a wand core",
+    "chemistry.bone_wand_core": "Repurpose remains to contain vis",
+    "chemistry.light_focus": "Convert vis into light",
+    "chemistry.portable_hole_focus": "Use vis to shorten space",
+    "chemistry.arcanium": "Connect metals and magic",
+    "chemistry.transmutation.copper": "Understand the transmutation of Copper",
+    "chemistry.transmutation.gold": "Understand the transmutation of Gold",
+    "chemistry.transmutation.iron": "Understand the transmutation of Iron",
+    "chemistry.purification.iron": "Study impure ferrous metal",
+    "chemistry.purification.other": "Study impure unreactive metal",
+    "chemistry.alumentum": "Create a high-energy flame",
+    "chemistry.hedge_alchemy": "Manipulate material properties",
+    "chemistry.automated_alchemy": "Teach a machine to want",
+    "chemistry.alchemical_glass.hardened_glass": "Strengthen glass",
+    "chemistry.alchemical_glass.luminiferous_glass": "Lighten glass",
+    "chemistry.alchemical_glass.static_glass": "Confuse glass"
+  },
 
   // Other UIs
-  "container.arcana.knowledgeable_dropper": "Knowledgeable Dropper",
-  "container.arcana.arcane_furnace": "Arcane Furnace",
-
-  "message.arcana.research_toast": "Research Unlocked!",
-
-  // Research Categories
-  "research.arcana.category.fundamentals": "Fundamentals",
-  "research.arcana.category.artifice": "Artifice",
-  "research.arcana.category.auromancy": "Auromancy",
-  "research.arcana.category.alchemy": "Alchemy",
-
-  // Research Entries
-  // Fundamentals Tab: Root Research
-  "research.arcana.root": "Arcana",
-  "research.arcana.root.text": "A sudden burst of inspiration, key insights that make clear the meaning of these scribbled notes... the way forward is unclear, but I know that this is the start of something magical.\nI'll write down my research in this book: the Arcanum, with all of the old notes stored inside for reference.",
-
-  "research.arcana.aspects": "Aspects of Magic",
-  "research.arcana.aspects.desc": "The Building Blocks",
-  "research.arcana.aspects.text": "My new perspective has enabled me to understand the ramblings of these scribbled notes.{~sep}Among them are key insights into the workings of reality.\nAll matter is composed of Aspects, the fundamental building blocks of reality. Aspects come in a number of varieties, about {c3}{$numOfAspects}{r}, each of which corresponds to some concept.\nAll aspects are composed of two simpler aspects, with the exception of the six Primal aspects: {aspect:air}{c6}aer{r} (air), {aspect:earth}{c2}terra{r} (earth), {aspect:water}{c1}aqua{r} (water), {aspect:fire}{c4}ignis{r} (fire), {aspect:order}{c7}ordo{r} (order), and {aspect:entropy}perditio (entropy).\nThe chemical elements are, unintuitively, also fundamental building blocks. Elements and aspects are two \"lenses\" with which to view and modify the world, and different things lend themselves to a different lens.\nThese aspects can also apparently be isolated into solid-like, fluid-like, and gaseous forms. Crystals are solid, and result from overflows of a particular aspect in the aura. The aura, in turn, is made up of the more gaseous vis form, and is almost entirely uniform, except around nodes, which produce a constant supply of primal vis.\nFinally, equipment can supposedly be used to purify it into a fluid state known as essentia. The notes were frustratingly vague on this... the equipment seems both too complex to infer from diagrams, yet so commmonplace that they neglected to explain properly. Their most powerful tools relied on it extensively, seemingly forcing me to reinvent their basic practices myself.",
-
-  "research.arcana.flux": "Flux, Taint, Warp",
-  "research.arcana.flux.desc": "No such thing as free lunch",
-  "research.arcana.flux.stage.1": "My new perspective has enabled me to understand the ramblings of these scribbled notes.{~sep}Among them were various vague warnings of \"flux\", \"taint\", and \"warp\", as consequences for mishandling magic.\nFlux is a kind of pollution of the aura, produced through wasteful alchemy, or inefficient equipment. While nothing arcane is without risks, a buildup of flux can pose serious risks to yourself and the world.\nTaint being one of them. Some sort of corruption, or parasite, or {i}something{i}, that works its way through the world, and twists living beings into horrific monsters when left to its own devices; feeding on the flux created by ambitious or negligent alchemists.\nAnd while I couldn't fully parse the notes on warp... the dark rituals and grim compulsions that surrounded it were certainly enough to provide a bad first impression.\nIf I don't study these risks, how am I supposed to protect myself from them? I should get a look of this \"flux\" myself. A small amount should be perfectly manageable.",
-  "research.arcana.flux.stage.2": "...that was probably a mistake. Everything just {i}feels{i} off here. I would do well not to let it grow much higher, lest it start producing physical effects more serious than a headache and stomachache... ugh, I don't even want to know what warp feels like.",
-  "puzzle.arcana.fieldwork.flux_build": "Taste the \"flux\" for yourself",
-
-  // Fundamentals Tab: Info research
-  "research.arcana.silverwood_trees": "Silverwood Trees",
-  "research.arcana.silverwood_trees.desc": "Purity in Practice",
-  "research.arcana.silverwood_trees.text": "Silverwood trees are wide and stubby, noticeable for their bright colouration, high rarity, and incredible magical potential.\nEvery author of these notes could agree on one thing: silverwood trees are the key to many inventions. Their wood is one of the few things capable of resisting {i}purified essentia{r}; every part of the plant is completely immune to, and even repels, taint; and occasionally, their growth can even create a new Pure Node.\nIt should go without saying that growing and studying these trees wherever possible is a high priority.",
-
-  "research.arcana.greatwood_trees": "Greatwood Trees",
-  "research.arcana.greatwood_trees.desc": "Towering power",
-  "research.arcana.greatwood_trees.text": "Greatwood trees are towering, easily taller than any kind of mundane wood that I have come across.\nTheir wood is receptive to vis, especially {aspect:earth} and {aspect:water}, which may help explain how minerals and fluids are transported up their vast trunks.\nWhile rarer than other trees, being found sparsely across various habitats, once found, they are hard to miss. A single tree should provide enough wood for anything I could need, and enough saplings to make that certain.\nTheir magical nature will make them quite useful in future work.",
-
-  "research.arcana.hungry_nodes": "Hungry Nodes",
-  "research.arcana.hungry_nodes.desc": "The other side",
-  "research.arcana.hungry_nodes.text": "Nodes come in a variety of forms, some of which pose particular risks to the aspiring thaumaturge; Hungry Nodes are a prime example.{~sep}Rather than generating vis from nothing, as every other kind is happy to do, hungry nodes instead consume their surrounding terrain, holding onto some amount of it's aspects as vis.\nEven without special equipment, this can be clearly seen from the matter being drawn into them, and the accretion disc surrounding them.\nThese nodes pose a very direct, physical risk to anyone who wishes to use them. At the same time, they provide a prime opportunity: to feed them with matter, and create a powerful vis battery to take advantage of.\n...they pose a difficult question too. How {i}do{r} other nodes create vis? Where does it come from? One cannot create energy, only convert it from matter; could other nodes simply be openings to hungry nodes elsewhere?",
-
-  "research.arcana.eldritch_nodes": "Eldritch Nodes",
-  "research.arcana.eldritch_nodes.desc": "Bad Omens",
-  "research.arcana.eldritch_nodes.text": "Nodes come in a variety of forms, some of which pose particular risks to the aspiring thaumaturge; even among these, Eldritch Nodes are unique in their ability to profoundly manipulate your emotions.{~sep}While they are just as transparent to the naked eye as any other node, their presence can be felt by the icy aura that surrounds them, the shiver that runs through, the terror that swells should you make eye contact. These nodes... hate you, somehow, and they make their feelings known.\nI believe they have some impact on what the notes referred to as {c3}warp{r}, too, worsening it within their presence.\nCareful observation shows their true shape: a pulsating eye. What they are looking for, I cannot know.",
-
-  "research.arcana.nodal_geodes": "Nodal Geodes",
-  "research.arcana.nodal_geodes.desc": "Hidden in the depths",
-  "research.arcana.nodal_geodes.text": "When venturing underground for resources, I came across a geode filled with vis crystals, with a node at its centre. Such {i}Nodal Geodes{r} are a valuable source of otherwise-sparse crystals.\nUnlike surface nodes, each geode is attuned to only one kind of primal vis, which permeates through the rock that makes it up, alongside condensing into crystals. The node within will be especially potent in that aspect.\nGiven a method of viewing nodes, finding nodal geodes should not be too difficult, but reaching them might be a chore.",
-
-  "research.arcana.primordial_pearl": "Primordial Pearl",
-  "research.arcana.primordial_pearl.desc": "A world astray",
-  "research.arcana.primordial_pearl.text": "For the first time I find myself with a puzzle that I do not believe should be solved.{~sep}This object refuses to take a distinct form, and while it is conceptually complex, only contains huge amounts of primal aspects. These aspects do not act like the ordinary primals.\nEvery one of my various theories falls apart every moment this changes form. I would suggest it might be consciously obfuscating itself, but doing so leaves it perfectly simple and easy to understand - for one, fleeting moment, until all clarity is lost once more.\nIt stays constant only in one aspect: the aspects it contains. It... must have existed before compound aspects themselves, if there was such a time? Or perhaps it exists in some other way, one that cannot be expressed as aspects entirely?",
-
-  // Fundamentals Tab: Progression
-  "research.arcana.wandcraft": "Wandcraft",
-  "research.arcana.wandcraft.desc": "Equipment from long past",
-  "research.arcana.wandcraft.stage.1": "To continue any further, I'll need some way of directly manipulating vis. The tools once used for this were wands, constructed from a wide variety of materials that combine to create powerful magic.\nConstructing a simple wand is as simple as capping off a stick with purpose-build metal wand caps, the same design reusable as I improve my materials and skills.\n{i}Some{r} notes seem to refer to the use of a special glove, directly grabbing the vis with my hands; constructing such a thing seems impossible with what I have available, however.",
-  "research.arcana.wandcraft.stage.2": "Now, I have a real way to control magic. Soon, I'll be tapping on walls and whispering spells to open hidden gateways...\nBut first, I'll need to charge my wand with energy, by draining a node of it's power.",
-
-  "research.arcana.nodes": "Nodes",
-  "research.arcana.nodes.desc": "Wells of Power",
-  "research.arcana.nodes.text": "At the start of my journey, I was given a glimpse of knowledge from a source of magic. These sources - or nodes, as I have come to know them - seem to be scattered across the world, constantly {i}creating{r} new energy. Something I believed to be impossible.{~sep}Nodes aren't quite uniform. Different nodes are attuned to different aspects, only producing those, and holding onto larger amounts of them.\nSome nodes are brighter than others, producing vis more rapidly and holding onto more.\nI can drain their vis into a wand by holding right-click. As long as I don't completely drain them, their aspects will simply replenish over time.\nFully emptying one can damage it, lowering it's aspect caps - or worse, paling it - so I should be careful.{~sep}A few of them seem to act... strangely. Sucking in terrain, corrupting nearby crystals, emitting a depressing aura... I would do well to study these properly.",
-
-  "research.arcana.arcane_crafting": "Arcane Crafting",
-  "research.arcana.arcane_crafting.desc": "Tools of the Trade",
-  "research.arcana.arcane_crafting.stage.1": "The regular crafting table, while immensely useful, is simply not capable of handling vis in the way I require.\nIt should only require some slight tweaks - a touch of my wand's magic - to bring it up to par.",
-  "research.arcana.arcane_crafting.stage.2": "An Arcane Crafting Table is capable of everything it's ordinary variant is capable of, but can additionally craft magical items that require vis, supplied by my wand.\nOne such critical item is the Goggles of Revealing, which makes visible the vis around me.\nWhen the goggles are worn, nodes become brighter and visible through terrain, and I can see the aspects contained within them.\nOf course, further investigation into arcane devices is in order. I'll store this in the {c3}Artifice{r} tab of the Arcanum, accessible by selecting the goggles icon on the left.",
-
-  "research.arcana.research": "Research",
-  "research.arcana.research.desc": "Knowledge is power",
-  "research.arcana.research.stage.1": "I can't go off the notes of long-dead magicians forever. I'll need a proper environment for my work; for testing theories, constructing theorems, and cross-referencing clues. I need a Research Table.",
-  "research.arcana.research.stage.2": "Now I have a proper space to do my work.\nMany insights and items will require me to sit down at a research table and complete a {i}research puzzle{i}. The exact puzzle will depend on what I'm trying to learn about. By clicking on the puzzle requirement with paper and Scribing Tools on me, I can get a Research Note to place inside the table and start working on.{~sep}The basic puzzle, {i}Chemistry{i}, requires me to connect a set of aspects on a hexagonal grid.\nEach note starts with a somewhat-random amount of each primal aspect. I can combine two aspects (if there exists a compound of them) by placing them at the bottom of the sidebar, and pressing '+'. I can also place aspects on the grid by left clicking; both use up the amount on that note. Compound aspects connect to their components (and vice versa, components to their compounds).\nOnce all pre-placed aspects are connected, the puzzle is solved. If I make a mistake, I can right click on the grid to remove an aspect; it is not returned to the note, though, so if I'm too wasteful, I may need to restart with a new note.\nI should give this a go now.",
-  "research.arcana.research.stage.3": "This puzzle isn't too hard, though I can picture more complex items requiring more effort, with more complex aspects.\nI should keep in mind that the {c3}Aspects of Magic{r} page displays all aspect combinations, in case I get stuck.",
-
-  "research.arcana.node_channelling": "Node Channelling",
-  "research.arcana.node_channelling.stage.1": "While there are theoretically infinite nodes out there, I would prefer not to damage the ones nearby. To keep nodes bright and powerful, I will need to work on my node tapping technique.",
-  "research.arcana.node_channelling.stage.2": "Observing the way vis flows through different materials has allowed me to enhance the way I drain nodes.\nDraining a node will now always leave it with 1 vis in each aspect, preferring to drain another, unless all aspects only have 1 vis. The chance of an aspect cap decreasing when drained fully is lower.\nAs a nice side-effect, draining vis now occurs much faster.",
-  "puzzle.arcana.chemistry.node_channelling": "Investigate how the aura interacts with metal",
-
-  "research.arcana.node_channelling_2": "Greater Node Channelling",
-  "research.arcana.node_channelling_2.stage.1": "I'm sure I can do better than that.\nWith my better wands and increased knowledge, I should be able to control nodes to a far greater degree than... this.",
-  "research.arcana.node_channelling_2.stage.2": "Now, I can pull vis from nodes even faster, approaching the speed at which vis diffuses in air. Additionally, draining a node completely of a single aspect no longer has a chance of paling it. Fully draining multiple, however, still might.\nI do wonder if I could increase the rate of recharge by submerging the node... or if I can alter it to become more powerful in some other way...\nThis will require further investigation.",
-  "puzzle.arcana.chemistry.node_channelling_2": "Investigate how the aura moves in a variety of substances",
-
-  "research.arcana.auromancy": "Auromancy",
-  "research.arcana.auromancy.desc": "The gateway of miracles",
-  "research.arcana.auromancy.stage.1": "This wood-and-iron wand isn't always going to cut it. Really, it's a terrible, glorified vis battery, with few ways to put it's magic to good use. Surely I can build something better?",
-  "research.arcana.auromancy.stage.2": "Gold is certainly an improvement over iron, but it doesn't take a genius to know that. Even ordinary enchanting prefers it over everything.\nI believe some dedicated study towards wands and vis manipulation is in order. I'll store this in the {c3}Auromancy{r} tab of the Arcanum, accessible by selecting the wand icon on the left.",
-  "puzzle.arcana.chemistry.auromancy_intro": "Try a new vis conductor",
-
-  "research.arcana.alchemy": "Alchemy",
-  "research.arcana.alchemy.desc": "Fission and Fusion",
-  "research.arcana.alchemy.stage.1": "Like the mundane elements, I will benefit by learning to separate and combine aspects, and the simplest method available to me to do so is plain old heat.\nOf course, magic must be used to catalyze this breakdown, and no mundane material could possibly handle the heat required - but a flick of my wand should upgrade a regular cauldron to do just that.",
-  "research.arcana.alchemy.stage.2": "A Crucible can be used to melt down items into their constituent aspects. When filled with water and placed over a heat source (like fire, lava, or magma), anything thrown inside will be dissolved, and their aspects added to the water-essentia solution.\nActually purifying this essentia into a usable form is far beyond me, and will require dedicated equipment, but that's not to say it's useless in its current form; a variety of alchemical recipes can be performed with it.\nIf I throw a catalyst for an alchemy recipe I know into a crucible (and it contains all the required aspects), instead of being broken down, it'll absorb those aspects and be transformed into something new.\nOne basic application of this is Nitor: a stable and bright flame, created from coal and light.\nI can empty a crucible by sneak-right-clicking on it, releasing all of its currently stored aspects. If it has no aspects (only water), I can also empty it with a bucket.\nI should note that, since blocks and other entities know no alchemy, items they drop will {i}always{i} be broken down; also, that my Goggles of Revealing allow me to see the aspects stored inside.\nI believe some dedicated study of alchemy is in order. I'll store this in the {c3}Alchemy{r} tab of the Arcanum, accessible by selecting the crucible icon on the left.",
-
-  "research.arcana.research_expertise": "Research Expertise",
-  "research.arcana.research_expertise.desc": "Improving my improvements",
-  "research.arcana.research_expertise.stage.1": "Performing more research will teach me more about the research process itself.\nWith a little practical experience, I should be able to simplify the process, and offset the increasing difficulty of these puzzles.",
-  "research.arcana.research_expertise.stage.2": "I'm getting better at this.{~sep}Holding shift while hovering over an aspect in the research table will now show it's components. Additionally, removing an aspect from the chemistry grid has a 25%% chance of returning it to the note.",
-
-  "research.arcana.research_mastery": "Research Mastery",
-  "research.arcana.research_mastery.desc": "You can never know all the facts.",
-  "research.arcana.research_mastery.stage.1": "There's always more to learn, yet more exciting opportunities to chase after - and my slow, inefficient research is holding me back.",
-  "research.arcana.research_mastery.stage.2": "No matter how hard I work, how long I try, how much focus and effort I put in - my work is never finished.{~sep}Removing an aspect from the chemistry grid now has a 50%% chance of returning it to the note. Notes also start out with more aspects.",
-
-  "research.arcana.tome_of_sharing": "Tome of Sharing",
-  "research.arcana.tome_of_sharing.desc": "Sharing is caring",
-  "research.arcana.tome_of_sharing.stage.1": "So far, it has been highly convenient to have my knowledge bound to my mind, persisting after death and across any copies of this book. This is less true when trying to share my work with friends.\nI {i}would{r} simply write down the solutions to every puzzle I know; sadly, I've forgotten most of them, and others (like fieldwork) I might not be able to describe on paper easily. Besides, a magical solution seems more fun to implement",
-  "research.arcana.tome_of_sharing.stage.2": "Enchanting another copy of the Arcanum to copy knowledge from my mind in a highly readable format was surprisingly simple. Perhaps I should be worried about that.\nWhen a Tome of Sharing is used by any player when crouched, they will have their research progress added. When another player uses it normally, all puzzles stored in the book are completed for them.\nThe tome does not automatically complete research entries, and will not skip item or XP requirements; only puzzles.",
-
-  "research.arcana.crystal_farmer": "Crystal Farmer",
-  "research.arcana.crystal_farmer.desc": "Renewably sourced magic",
-  "research.arcana.crystal_farmer.stage.1": "Scouting the surface for the occasional node and digging tunnels underground for geodes are not sustainable or renewable sources of vis crystals.\nGiven their importance in even basic magic, I need a way to grow new ones.",
-  "research.arcana.crystal_farmer.stage.2": "By creating a sturdy {i}cluster seed{r}, I can grow new crystals.\nSmall clusters grow in the presence of a node with their aspect, draining from it to gain mass. Once fully grown, a cluster will drop at least 2 crystals.\nThe recipe works for all primal aspects, swapping {aspect:air} and the catalyst for the appropriate aspect and crystal.\nI could not get seeds made from non-primal aspects to grow; perhaps due to their absence in the aura.",
-  "puzzle.arcana.chemistry.crystal_farmer": "Form a base for a crystal cluster",
-
-  "research.arcana.aura_crystallization": "Aura Crystallization",
-  "research.arcana.aura_crystallization.desc": "Within grasp",
-  "research.arcana.aura_crystallization.stage.1": "My ability to manipulate the aura is limited by the lack of any form of direct influence on it.\nJust like any other concept, the aura has a corresponding aspect, {aspect:aura} Auram. But this one does not appear in any physical substance I know of; while it is a fairly straightforward compound, it refuses to be defined in terms of anything but itself.\nPerhaps it lies too close to the boundary between different systems of aspects, not fully under my own domain...\nBut still, like any other aspect, it can be formed into crystals. If I could force a cluster seed into existence, it would provide me with a sustainable source of this aspect.",
-  "research.arcana.aura_crystallization.stage.2": "While the recipe I've formulated seems perfectly valid, actually performing it would be dangerous; the essentia will begin to boil off as flux before the necessary amount can be reached.\nThat said, if I can perform it just once, I should be able to use its crystals to create further seeds easily.\nAuram Clusters use large amounts of random primals to grow. Growing too many around a single node even runs the risk of damaging it.",
-  "puzzle.arcana.chemistry.aura_crystallization": "Amplify the aura into a single point",
-
-  // Artifice Tab
-  "research.arcana.artifice_root": "Artifice",
-  "research.arcana.artifice_root.text": "The study of {i}artifice{r}, the construction of magical devices through arcane crafting, will be documented here.\nThe Goggles of Revealing recipe from {c3}Fundamentals{r} is included here for completeness.",
-
-  "research.arcana.arcane_stone": "Arcane Stone",
-  "research.arcana.arcane_stone.text": "Arcane Stone is a fairly simple application of arcane crafting. It looks nice, it's stronger than ordinary stone, and may be useful in further crafting.\nArcane Stone Bricks can be created through crafting or stonecutting.",
-
-  "research.arcana.paving_stones": "Arcane Paving Stones",
-  "research.arcana.paving_stones.desc": "Essential infrastructure",
-  "research.arcana.paving_stones.stage.1": "My home could do with a fair few magical upgrades. Improving my mobility inside and increasing its protection are among my top priorities.",
-  "research.arcana.paving_stones.stage.2": "Easier to walk along a flat surface than a rough cliff edge, and even moreso to walk along some enchanted floor tiles. The enchantment on the Paving Stones of Travel boost my speed and jump height when I walk on top.",
-  "research.arcana.paving_stones.stage.3": "Like a fence, the Paving Stones of Warding will keep out hostile monsters, but also allow me to walk over them unaffected.\nI should keep in mind that any ranged attack can still pass by, and that protecting an area is worthless if monsters can simply spawn inside.\nAdditionally, monsters forced on top of Paving Stones of Warding will fall through them, just as they would any other block.",
-  "puzzle.arcana.chemistry.paving_stones.travel": "Create a walkable surface",
-  "puzzle.arcana.chemistry.paving_stones.warding": "Create a protective enchantment",
-
-  "research.arcana.infernal_forge": "Infernal Forge",
-  "research.arcana.infernal_forge.stage.1": "My new perspective has enabled me to understand the ramblings of these scribbled notes, but in the time since their creation, much has been lost.{~sep}Several records speak of a hellish device, the \"In---na- F-r---e\", that used the power of a Nether being to perform the thaumaturge's wishes at no cost.\nLike many other entries, much of it has been torn out or burnt, but this is the earliest such page by far; and I believe that enough has been left behind for me to reconstitute its meaning, regardless of how well hidden it has been.",
-  "research.arcana.infernal_forge.stage.2": "These components, like many others sourced from the Nether, are not entirely mundane nor dead, instead holding a link to... something.\nPerhaps I could put that {i}something{r} to good use.",
-  "research.arcana.infernal_forge.stage.3": "This structure is designed to pull forth and capture those lost souls, but these won't work without pay. They want a sacrifice for their work, whatever it is they do, but what would satisfy them?",
-
-  "research.arcana.arcane_lamp": "Arcane Lamp",
-
-  "research.arcana.lamp_of_growth": "Lamp of Growth",
-
-  "research.arcana.lamp_of_fertility": "Lamp of Fertility",
-
-  "research.arcana.arcane_levitator": "Arcane Levitator",
-  "research.arcana.arcane_levitator.desc": "Stylish transport",
-  "research.arcana.arcane_levitator.stage.1": "My vertical mobility is woefully limited. Scaling cliffs is nearly impossible, and in my own home, the most I can do is tediously lay our long-winded staircases.\nThere must be some magical solution I can use to making moving up and down easier.",
-  "research.arcana.arcane_levitator.stage.2": "It isn't flight, but close enough to be useful.\nAny creature or item, including myself, on top of a levitator will be quickly lifted upwards. If I crouch, I'll instead be lowered downwards.\nLevitators can be stacked to increase their vertical range; each provides 10 blocks, up to a total maximum of 50.\nDue to their small power usage, a levitator can draw sufficient power from the surrounding aura. Doing so does cause a minuscule amount of flux to be released; while the aura should be more than able to handle a few, I can turn off ones not in use using a redstone signal.",
-  "puzzle.arcana.chemistry.arcane_levitator": "Generate an air stream with vis",
-
-  "research.arcana.levitational_locomotive": "Levitational Locomotive",
-  "research.arcana.levitational_locomotive.desc": "Look ma, no tracks!",
-  "research.arcana.levitational_locomotive.stage.1": "Ordinary carts and engines, while impressive in their own right, have a hefty infrastructure requirement. Miles and miles of tracks, with complex switching systems at every intersection or turn.\nNow that I can levitate objects, I wonder if I can remove the need for such things.",
-  "research.arcana.levitational_locomotive.stage.2.1": "Replacing the wheels and tracks of a cart with tiltable levitators and ground signals may arguably make it no longer qualify as a cart. But it works better than they ever did.\nA Levitational Locomotive is made up of a Suspension Engine at the front, with a line of Levitational Minecarts attached behind it. A locomotive starts stationary, and moves in a straight line, turning or stopping based on floor-placed signals. If the locomotive reaches a diagonal line of blocks (that rails could be placed on) or stairs, it will move up; otherwise, it will stop on hitting a wall.",
-  "research.arcana.levitational_locomotive.stage.2.2": "The Start/Stop signal causes the locomotive to start or stop when its engine passes over it, depending on whether the signal has redstone power (start) or not (stop).\nThe left-, right-, and random-turn signals will make a locomotive turn left, right, or in a random free direction. Turn signals can be disabled by redstone.\nThe check signal will emit a redstone pulse when an engine moves over it.\nThe wait signal will stop the locomotive when any *cart* containing items is placed on top, to be drained by a hopper below.",
-
-  "research.arcana.mystic_mist": "Mystic Mist",
-  "research.arcana.mystic_mist.desc": "Climate control",
-  "research.arcana.mystic_mist.stage.1": "Rarely, if ever, is the weather in my favour. My crops are always lacking in water, and fires are free to rage across forests from innocent-looking lava pools, while the rain annoys me when I choose to travel far away.\nShould I find myself in need of it, the nearest region with snowfall may be a day's trek away - and let's not even mention the difficulty of getting lightning when you do want it.\nIf only I could control the weather myself...",
-  "research.arcana.mystic_mist.stage.2": "Changing how the global climate functions is well outside of my reach - at least, for now.\nBut something more useful may be achievable: making miniature climates, say, the size of a room. Tiny clouds, exactly where I need them.\nI'll need to take some readings of how altitude conditions in order to figure out the requirements for cloud formation first, though.",
-  "research.arcana.mystic_mist.stage.3": "The Mystic Mist is a device capable of creating miniature climates as needed. When powered by a Levitator below it, and filled with a material, it can create one of the following effects:\n - Creating clouds above crops to speed up their growth, above fires on flammable materials to put them out, and over empty crucibles to fill them, using water.\n - Creating thunderclouds above itself that can produce lightning, using water and redstone.\n - Creating blizzard clouds above itself that produce snowfall, using water and snow.\n - Creating a hot, dry environment around itself, suitable for the growth of Nether Wart.",
-
-  "research.arcana.monocle_of_revealing": "Monocle of Revealing",
-  "research.arcana.monocle_of_revealing.desc": "Eye Spy",
-  "research.arcana.monocle_of_revealing.stage.1": "Wearing the Goggles of Revealing is essentially a requirement for doing any kind of magical work - yet doing so prevents me from wearing important protected headwear.\nA more lightweight and compatible form would be appreciated.",
-  "research.arcana.monocle_of_revealing.stage.2": "Reducing the goggles to a single lens does suffice for casual use.\nIt takes a bit of squinting, but the Monocles of Revealing are just as capable for alchemy or peering into nodes as the full-sized goggles, but only take up a trinkets slot.\nI do wonder what other improvements could be made to the goggles, though...",
-  "puzzle.arcana.chemistry.monocle_of_revealing": "Create a more efficient vis lens",
-
-  // Auromancy Tab
-  "research.arcana.auromancy_root": "Auromancy",
-  "research.arcana.auromancy_root.text": "The study of {i}auromancy{r}, the manipulation of the aura and vis around me, will be documented here.\nThe iron and gold wand caps, and the general wand recipe are included here for completeness.",
-
-  "research.arcana.wand_components": "Caps and Cores",
-  "research.arcana.wand_components.text": "Every wand is constructed from wand caps and a core, which dictate it's properties.{~sep}The core is responsible for storing vis. The more vis a core can store, the more I can use it to perform arcane crafting, and the more powerful the items I craft can be.\nThe cap is responsible for channeling and shaping that vis. They affect the speed in which vis is drawn from nodes, and adds a small amount of vis storage.\nBoth components also affect spellcasting through foci. A wand has a \"complexity\" score, based on the quality of its cap, that determines how complex the effects it produces can be. More powerful foci may require higher complexities, and modifications made to foci may only apply if a certain complexity is met.\nWands also have a \"difficulty\" score, given by their cores, that determines how much \"force\" it can push the vis with. The same focus may provide stronger effects - like more damage or healing - with a higher difficulty wand.\nFinally, some caps and cores may provide additional side effects, like discounts or bonuses, depending on what they're made from. I might want to use different wands for different tasks.",
-
-  "research.arcana.copper_wand_caps": "Copper Wand Caps",
-  "research.arcana.copper_wand_caps.desc": "The other one",
-  "research.arcana.copper_wand_caps.stage.1": "The properties of copper make it quite convenient for electrical work. It's conductivity and alignment with Instrumentum may make it a highly useful material in my artifice.",
-  "research.arcana.copper_wand_caps.stage.2": "Wand caps crafted from copper are slightly worse than gold when it comes to drawing vis from nodes, or focusing them into spells, but come with a useful bonus to difficulty.",
-  "puzzle.arcana.chemistry.copper_wand_caps": "Conduct vis through copper",
-
-  "research.arcana.leather_wand_caps": "Leather Wand Caps",
-  "research.arcana.leather_wand_caps.desc": "Artisanal Quality",
-  "research.arcana.leather_wand_caps.stage.1": "While metals are an obvious go-to for channelling vis, I should experiment with other, more flexible materials.\nHaving a greater degree of control over the shape and design of the cap might allow me to produce something more efficient.",
-  "research.arcana.leather_wand_caps.stage.2": "Wand caps crafted from leather are slightly worse than gold when it comes to drawing vis form nodes, or focusing them into spells, but do provide a decent bonus to arcane crafting.\nAny wand strapped with leather reduces the amount of vis required to craft by 8%%.",
-  "puzzle.arcana.chemistry.leather_wand_caps": "Conduct vis through leather",
-
-  "research.arcana.greatwood_wand_core": "Greatwood Wand Core",
-  "research.arcana.greatwood_wand_core.desc": "With great power...",
-  "research.arcana.greatwood_wand_core.stage.1": "Making a wand out of a material already attuned to vis is likely to provide a significant boost in its capabilities.",
-  "research.arcana.greatwood_wand_core.stage.2": "The greatwood tree's wood makes for an excellent storage of vis. Wands built with it have a higher maximum capacity and difficulty score than any other material currently available.",
-  "puzzle.arcana.chemistry.greatwood_wand_core": "Store vis in greatwood",
-
-  "research.arcana.nether_stem_wand_core": "Nether Stem Wand Core",
-  "research.arcana.nether_stem_wand_core.desc": "Otherworldly construction",
-  "research.arcana.nether_stem_wand_core.stage.1": "Fungi do not seem to be a traditional wand material by any stretch. Certainly, none of the notes even seemed to consider the possibility.\nBut the huge mushrooms of the nether may provide some unique properties, different to everything available in the overworld.",
-  "research.arcana.nether_stem_wand_core.stage.2": "Nether stems are simple enough to craft into capable wand cores, and perform much better than ordinary untreated wood.\nWhile it doesn't perform better than I would expect a magical wood to, it's complex internal structures grant wands constructed from nether stems a bonus to complexity.",
-  "puzzle.arcana.chemistry.nether_stem_wand_core": "Store vis in the stem of nether fungi",
-
-  "research.arcana.varnished_wood_wand_core": "Varnished Wood Wand Core",
-  "research.arcana.varnished_wood_wand_core.desc": "Finely made",
-  "research.arcana.varnished_wood_wand_core.stage.1": "Simply using a stick of mundane wood for a wand core has predictably poor results. Part of this can be attributed to poor material qualities, but I wonder how much of this is caused by lack of effort in its preparation?",
-  "research.arcana.varnished_wood_wand_core.stage.2": "By properly treating the wood before use, and paying additional attention to it's design, the Varnished Wood wand core performs much better than its untreated counterpart.\nWhile it doesn't perform better than I would expect a magical wood to, it does come with a useful discount in arcane crafting. Any varnished wooden wand reduces the amount of vis required to craft by 12%%.",
-  "puzzle.arcana.chemistry.varnished_wood_wand_core": "Design a fine vis battery",
-
-  "research.arcana.silverwood_wand_core": "Silverwood Wand Core",
-  "research.arcana.silverwood_wand_core.desc": "Pure Power",
-  "research.arcana.silverwood_wand_core.stage.1": "The use of greatwood as a wand core has been a great success, but it is by no means the end-all. Surely silverwood, known for its special relationship with nodes and the aura, will be able to outdo it.\nFor many of the notes' authors, silverwood was considered the peak of wand design, with many leaving their studies there.\nUnfortunately, silverwood is both highly delicate, and highly sensitive to changes in the surrounding aura. Transforming it into a high-capacity wand core will not be a trivial task.",
-  "research.arcana.silverwood_wand_core.stage.2": "Analyzing these samples has taught me a couple of things:\n - Silverwood rods are flimsy, too fragile to channel the intense vis I need.\n - Very little of the wood has any special properties to begin with, only within some internal transport network.\nPerhaps the trees have diverged over the years, or I'm missing some crucial information on how they are put together, but regardless, I'll need to try something different to build this.",
-  "research.arcana.silverwood_wand_core.stage.3": "Alchemy seems to be the answer. With it, I can dissolve away the useless bulk of the wood, increase its strength, and accentuate all of its useful properties.\nWhile this is certainly better than every material I've tried so far, it doesn't nearly live up to the expectations given by the notes. Indeed, they seem to refer to a completely different, multi-step process instead, which may lead to better results.\nSilverwood wands have high capacities and difficulty scores, but no special effects.",
-  "puzzle.arcana.chemistry.silverwood_wand_core": "Refine silverwood",
-
-  "research.arcana.sugar_cane_wand_core": "Sugar Cane Wand Core",
-  "research.arcana.sugar_cane_wand_core.desc": "Light and portable",
-  "research.arcana.sugar_cane_wand_core.stage.1": "There remains a wide variety of plants to which I can apply my alchemical technique. Perhaps they might offer some unique benefits.",
-  "research.arcana.sugar_cane_wand_core.stage.2": "Wands made with sugar cane have a special affinity with {aspect:air}, granting a 15%% discount for it in arcane crafting.\nOtherwise, they're somewhat weaker than silverwood cores.",
-  "puzzle.arcana.chemistry.sugar_cane_wand_core": "Channel vis through other plants",
-
-  "research.arcana.blaze_wand_core": "Blaze Wand Core",
-  "research.arcana.blaze_wand_core.desc": "Feel the Heat",
-  "research.arcana.blaze_wand_core.stage.1": "While fungi were a good start, other nether materials may prove useful.\nBlaze rods are already roughly the right shape, and lend themselves to alchemy in other forms.",
-  "research.arcana.blaze_wand_core.stage.2": "Wands made with blaze rods have a special affinity with {aspect:fire}, granting a 15%% discount for it in arcane crafting.\nOtherwise, they're somewhat weaker than silverwood cores.",
-  "puzzle.arcana.chemistry.blaze_wand_core": "Utilize a blaze rod for vis",
-
-  "research.arcana.ice_wand_core": "Ice Wand Core",
-  "research.arcana.ice_wand_core.desc": "Crystal clear",
-  "research.arcana.ice_wand_core.stage.1": "I wonder what the limits of my technique are.\nIf solidity and some kind of conduction are all that's necessary, can translucent ice be used?",
-  "research.arcana.ice_wand_core.stage.2": "Wands made with ice have a special affinity with {aspect:water}, granting a 15%% discount in it for arcane crafting.\nOtherwise, they're somewhat weaker than silverwood cores.\nIt's worth noting that these cores also have an affinity with {aspect:ice}, {aspect:crystal}, and {aspect:light}, but these have no applications in arcane crafting nor spellcasting.\nThe alchemy applied prevents the wand from ever melting, but it doesn't prevent my hand from getting painfully cold.",
-  "puzzle.arcana.chemistry.ice_wand_core": "Shape ice into a wand core",
-
-  "research.arcana.obsidian_wand_core": "Obsidian Wand Core",
-  "research.arcana.obsidian_wand_core.desc": "Solid and dependable",
-  "research.arcana.obsidian_wand_core.stage.1": "Obsidian is a tough material, and in certain circumstances, can naturally carry magic of its own. It should make for a solid wand core.",
-  "research.arcana.obsidian_wand_core.stage.2": "Wands made with crying obsidian have a special affinity with {aspect:earth}, granting a 15%% discount in it for arcane crafting.\nSurprisingly, it's own magical properties only hinder thaumaturgy, leaving it a little weaker than a silverwood core. Further research will be necessary...",
-  "puzzle.arcana.chemistry.obsidian_wand_core": "Shape obsidian into a wand core",
-
-  "research.arcana.arcane_stone_wand_core": "Arcane Stone Wand Core",
-  "research.arcana.arcane_stone_wand_core.desc": "Theory and application",
-  "research.arcana.arcane_stone_wand_core.stage.1": "So far, using materials that already have an arcane touch has lead to my best results. How far does this go? Can a material as simple as arcane stone be used effectively?",
-  "research.arcana.arcane_stone_wand_core.stage.2": "The crystal structure within arcane stone makes it a useful wand core; wands made with it have a special affinity with {aspect:order}, and grant a 15%% discount in it for arcane crafting.\nThey perform worse than silverwood, though, as is to be expected.",
-  "puzzle.arcana.chemistry.arcane_stone_wand_core": "Shape arcane stone into a wand core",
-
-  "research.arcana.bone_wand_core": "Bone Wand Core",
-  "research.arcana.bone_wand_core.desc": "A grim reminder",
-  "research.arcana.bone_wand_core.stage.1": "Living things can never be entirely mundane. Every breath and dream leaves a mark on the body, and sometimes, that is just enough for it to refuse death, for just a moment.\nI have no intention of messing with mortality; but I do wonder if this leftover power can be useful to me in any way.",
-  "research.arcana.bone_wand_core.stage.2": "Wands made from bone have a special affinity with {aspect:entropy}, granting a 15%% discount in it for arcane crafting.\nOtherwise, they're somewhat weaker than silverwood cores.\nThey also serve as a sombering reminder of my own mortality, a topic I prefer not to think about.",
-  "puzzle.arcana.chemistry.bone_wand_core": "Repurpose remains to contain vis",
-
-  "research.arcana.wand_foci": "Wand Foci",
-  "research.arcana.wand_foci.desc": "Channeling the power within",
-  "research.arcana.wand_foci.stage.1": "Wands are excellent, portable batteries of vis, useful for careful crafting of magical devices. But to perform even more powerful magic, dedicated focuses for their primal vis will be required.\nThe notes include a huge variety of designs for these, reflecting their importance in everyday thaumaturgy. Some are barely more than focused primal vis, while others combine and shape them in ways that break the ordinary laws of reality; others still use materials beyond my imagination to perform dangerous feats of insanity.\nFor my first, I will stick to the absolute basics: focusing ignis vis to create fire.",
-  "research.arcana.wand_foci.stage.2": "When a wand has a wand focus equipped, right-clicking will attempt to cast the focus. The fire focus will simply set blocks and living creatures on fire.\nI can equip a focus by holding a wand and pressing a key - usually {c3}G{r} - to open the focus switcher. Clicking or hovering over a focus in the outer ring will equip it, while clicking on the middle equipped focus will remove it.\nAs outlined in {c3}Caps and Cores{r}, foci may require a wand of a certain complexity, and their power may depend on the wand's difficulty. This focus can be cast with any basic wand, and the length of time creatures stay on fire for depends on the wand's difficulty.\nCasting using a focus takes some vis from the wand. This amount is affected by discounts in the same way as arcane crafting; the original amount is displayed in the focus tooltip, while the discounted amount is displayed in the wand's (when equipped).",
-
-  "research.arcana.light_focus": "Wand Focus: Light",
-  "research.arcana.light_focus.desc": "Let there be light",
-  "research.arcana.light_focus.stage.1": "One of the most tedious things of my journey, by far, has been carrying around enough torches and light sources for everywhere I go; wasting my inventory space and ending exploration or mining sessions prematurely.\nIdeally, I could simply point at a spot with my wand, mention a spell, and have a light source spring forth. Like a real magician.",
-  "research.arcana.light_focus.stage.2": "This focus creates light sources using stored aer and ignis, fused to make lux.\nThese light sources are temporary, losing brightness over time until they fade away entirely, making them sadly unsuitable for anything permanent. Perhaps some invisible nitor could suit that role? But they don't require any space or special considerations on-the-go, so I consider this a success.\nInitially, a light source is as bright as glowstone - brighter than a torch - and dims until it is unable to repel monsters, before vanishing, and can also be broken by hand. They can be placed underwater without issue.",
-  "puzzle.arcana.chemistry.light_focus": "Convert vis into light",
-
-  "research.arcana.portable_hole_focus": "Wand Focus: Portable Hole",
-  "research.arcana.portable_hole_focus.desc": "Knock knock",
-  "research.arcana.portable_hole_focus.stage.1": "The ender pearl and chorus fruit have a curious ability to warp space.\nThese naturally occurring materials do it in a raw, unfocused form; with some careful manipulation, and the added power of the wand's vis, something much safer and more powerful should be possible.",
-  "research.arcana.portable_hole_focus.stage.2": "I don't really understand how this works.\nI went into this expecting to create a teleportation focus, but rather than moving me through space, this focus changes the space around me. When I use it against a surface, the focus temporarily phases it out, along with everything behind it, allowing me to pass through walls and into caves.\nThe focus creates 3x3 tunnels that can reach up to 16 blocks in length, but end when they reach a full square of air. They can be oriented in any direction, including vertically.\nAny block can be phased out, including containers, and blocks that support other blocks. Such systems remain fully stable; for all intents and purposes, those blocks still exist, except for entities to look and pass through. Space is warped, but matter is untouched.\nI would do well to research the structure of space in more detail. Some other time.",
-  "puzzle.arcana.chemistry.portable_hole_focus": "Use vis to shorten space",
-
-  // Alchemy Tab
-  "research.arcana.alchemy_root": "Alchemy",
-  "research.arcana.alchemy_root.text": "The study of {i}alchemy{r}, the conversion of items into essentia and utilization thereof, will be documented here.\nThe Nitor recipe from {c3}Fundamentals{r} is included here for completeness.",
-
-  "research.arcana.magical_metallurgy": "Magical Metallurgy",
-  "research.arcana.magical_metallurgy.desc": "Where metals meet magic",
-  "research.arcana.magical_metallurgy.stage.1": "Mundane materials just aren't cutting it anymore.\nTools break too quickly, armour doesn't protect well enough, and these materials simply aren't as conductive to the arcane crafts as I would like. Even enchantment is a nuisance.\nThe notes often reference a material named {u}Thaumium{r}, created by alchemically imbuing a metal with magic itself. I don't know what their metallurgy was like - it seems that the set of ores available to me differ to what they had - but the principle seems sound.",
-  "research.arcana.magical_metallurgy.stage.2": "This isn't thaumium. At least, not like they described. It's similar in strength and conductivity, but blindingly bright, and seems to be giving off it's infused magic over time... maybe I overshot somewhat.\nEither way, it's stronger than most materials I have in plentiful supply, and more conductive to vis than any.\nEntire blocks can be transmuted, at a slight discount. All the usual tool and armour recipes work.",
-  "puzzle.arcana.chemistry.arcanium": "Connect metals and magic",
-
-  "research.arcana.transmutation": "Transmutation",
-  "research.arcana.transmutation.desc": "Connecting the dots",
-  "research.arcana.transmutation.stage.1": "One popular trope is that of an alchemist attempting to create the valuable from the dull - lead to gold. They knew neither chemistry nor magic; I know both.\nI believe I can use my newfound knowledge to do better at the transmutation of metals.",
-  "research.arcana.transmutation.stage.2": "Converting iron into copper is not my most impressive achievement - though the alchemy behind this recipe {wavy}does{r} prompt more research into it's properties. No, gold is my target. Though copper may make a useful stepping stone...",
-  "research.arcana.transmutation.stage.3": "Yes! Where thousands of fictional alchemists have failed, I have succeeded in transforming iron into gold.\nI do wonder if the process is reversible, though... or could be performed in bulk.",
-  "research.arcana.transmutation.stage.4": "The transmutations form a loop: iron into copper, copper into gold, and gold into iron. Could be useful given a particular shortage of iron.. perhaps if I was into mundane science.\nWhat's also interesting is that each of these recipes can be applied in block form, at a slight discount.",
-  "puzzle.arcana.chemistry.transmutation.copper": "Understand the transmutation of Copper",
-  "puzzle.arcana.chemistry.transmutation.gold": "Understand the transmutation of Gold",
-  "puzzle.arcana.chemistry.transmutation.iron": "Understand the transmutation of Iron",
-
-  "research.arcana.purification": "Purification",
-  "research.arcana.purification.stage.1": "Simply baking ores and letting the metal melt out is an immensely inefficient process. Crushing the ores might be less so, but would still leave me waiting twice as long to process them. I have a better idea.\nWith alchemy, it should be possibly to wash away the stone and all other impurities, and leave behind a pure structure of metal to be melted into ingots all at once.\n...I just need to figure out how.",
-  "research.arcana.purification.stage.2": "This is certainly one way of doing it.\nThe aspects added reinforce the metal's structure, with the extra metallum acting as a substitute for the impurities. This does mean that some metal is required as input, and some of the input is still wasted, but I could not find a better way around it.\nNow, to apply this to other metals. With luck, there should be no nasty surprises awaiting me.",
-  "research.arcana.purification.stage.3": "Copper and gold can be purified and cast in exactly the same manner as iron; their disparate properties seem to have had no effect on the process.\nAdditionally, the process can be applied in bulk to raw metal blocks, at a slight discount.",
-  "puzzle.arcana.chemistry.purification.iron": "Study impure ferrous metal",
-  "puzzle.arcana.chemistry.purification.other": "Study impure unreactive metal",
-
-  "research.arcana.transmutation_shortcut": "Transmutation Shortcut",
-  "research.arcana.transmutation_shortcut.text": "Extending my transmutation knowledge to purified metal turned out to be surprisingly trivial.\nAll transmutation recipes work on alchemical metal for the cost of a single ingot.",
-
-  "research.arcana.metallurgy_shortcut": "Metallurgy Shortcut",
-  "research.arcana.metallurgy_shortcut.text": "Extending my metallurgy knowledge to purified metal turned out to be surprisingly trivial.\nAlchemical iron can be converted to Altered Iron for the cost of a single arcanium ingot. Altered iron can then be smelted to produce two arcanium ingots at once.",
-
-  "research.arcana.alumentum": "Mystical Fuel",
-  "research.arcana.alumentum.stage.1": "Nitor was a start, but its stability makes it useless as a fuel, barely warm enough to heat a crucible; I'd be better off using a campfire than trying to make that work.\nNo, what I need is something far more energetic and excitable, only stable enough to transport to a blast furnace; perhaps it could even double as a weapon...",
-  "research.arcana.alumentum.stage.2": "And Alumentum is the solution. Like nitor, it is a never-ending flame, but this one can only barely keep itself together.\nAs a fuel, it should last about {c3}4x{r} as good as coal.\nIf I throw it, it will violently explode upon hitting a surface. I should take great care handling this... or not, depending on where I find myself.",
-  "puzzle.arcana.chemistry.alumentum": "Create a high-energy flame",
-
-  "research.arcana.hedge_alchemy": "Hedge Alchemy",
-  "research.arcana.hedge_alchemy.desc": "Material science",
-  "research.arcana.hedge_alchemy.stage.1": "There are a great few items that are incredibly tedious to obtain, in constant short supply when I need them most. Perhaps I can use alchemy to create them?\nMy first step will be to examine some samples, and find similar structures that can - fingers crossed - be converted into eachother.",
-  "research.arcana.hedge_alchemy.stage.2": "From my observation, {i}Gunpowder{r} is closely alchemically related to {i}Blaze Powder{r}; {i}Redstone{r} and {i}Glowstone{r} have similar structures; and {i}Quartz{r} has an odd (but promising) resemblance to {i}Diamond{r}. The Lava was a dud.\nI believe I can alchemy to emulate more mundane reactions: tanning {i}Rotten Flesh{r} into {i}Leather{r}, freezing {i}Snow{r} into {i}Ice{r}, drying {i}Leaves{r} into {i}Dead Bushes{r}, and binding {i}String{r} into {i}Cobwebs{r}.\nSome experimental verification is needed.",
-  "research.arcana.hedge_alchemy.stage.3": "Most of these conversions are viable alchemy recipes. Quartz-to-diamond was a dud too, simply turning into flint in any practical setting, and converting snow into ice proved far less efficient than expected.\nCould this be due to my equipment, or my technique? Perhaps, but in any case, the remainder remain useful.",
-  "puzzle.arcana.chemistry.hedge_alchemy": "Manipulate material properties",
-
-  "research.arcana.automated_alchemy": "Automated Alchemy",
-  "research.arcana.automated_alchemy.desc": "On demand",
-  "research.arcana.automated_alchemy.stage.1": "There's nothing particularly remarkable about alchemy.{~sep}Sure, it takes a bit of know-how to figure out which reactions are possible, and gently guide the liquid concepts in the pot to approach that. But really, what's stopping me from simply... teaching a dropper how to do it?",
-  "research.arcana.automated_alchemy.stage.2": "Prototype after prototype wasted. Something odd is afoot here. Even getting a machine to perform identical actions to myself does not cause the proper reactions. Almost like some {i}intent{r} is necessary.",
-  "research.arcana.automated_alchemy.stage.3": "Now, a thinking machine. That would do it.",
-  "research.arcana.automated_alchemy.stage.4": "Giving a Dropper a basic level of \"understanding\" is a perfectly safe and simple method of automating alchemy.\nThe Knowledgeable Dropper can be given a Tome of Sharing within it's extra tenth slot. Items it drops will be eligible for any alchemy recipes stored within the research bound to the book. When an alchemy recipe is performed automatically, the result will be thrown from the crucible in a random, free horizontal direction (or just randomly if none are free).\nAnother minor feature is that these droppers have slightly less variation in how they drop items.\nIt turns out that Tomes of Sharing do remember research entries, but simply choose not to show them to players. The thought of my equipment colluding to snoop on my mind is unsettling... but what can a book really do?",
-  "puzzle.arcana.chemistry.automated_alchemy": "Teach a machine to want",
-
-  "research.arcana.alchemical_glass": "Alchemical Glass",
-  "research.arcana.alchemical_glass.desc": "Advancing my material knowledge",
-  "research.arcana.alchemical_glass.stage.1": "Glass is a wonderful substance. Unreactive, transparent, commonly available... and extremely flimsy.\nCorrecting mistakes while should not require specialist equipment, and I wouldn't put too much trust in ordinary glass as a component in my devices.\nSome upgrades are in order.",
-  "research.arcana.alchemical_glass.stage.2": "The first fruits of my work come in the form of Hardened Glass. Stronger - resisting explosions and less prone to accidents - yet more resilient - dropping itself in one piece when broken.\nI do have questions about what other properties I can give to glass this way... how about making it even more conductive to light and vis?",
-  "research.arcana.alchemical_glass.stage.3": "As-is, glass isn't much more opaque than empty space. No, the interesting part is when you allow it to capture light and vis.\nLuminiferous Glass, while appearing transparent, has a huge amount of photons and lux captured within. On the outside, this manifests as a bright glow, on par with Glowstone. In the future, a material like this will be useful to use as a component in magical devices.\nNow, I wonder if it's possible to make glass conductive to not just energy, but matter. Would it simply fall through the crucible? Is it even a well-formed question?",
-  "research.arcana.alchemical_glass.stage.4": "...apparently, yes, this is fully possible.\nStatic Glass is usually solid, but becomes like a gas in the presence of a crouching player - allowing their passage (or fall) - before reforming into a solid.\nThis has a couple of potential applications in home decor. Artifice? Perhaps, if I can trigger it mechanically.",
-  "puzzle.arcana.chemistry.alchemical_glass.hardened_glass": "Strengthen glass",
-  "puzzle.arcana.chemistry.alchemical_glass.luminiferous_glass": "Lighten glass",
-  "puzzle.arcana.chemistry.alchemical_glass.static_glass": "Confuse glass",
-
-  "research.arcana.aspect_candy": "Aspect Candy",
-  "research.arcana.aspect_candy.desc": "Chemist's Cuisine",
-
-  "research.arcana.essentia_distillation": "Essentia Distillation",
-  "research.arcana.essentia_distillation.desc": "Specks of Universe",
-
-  "research.arcana.essentia_pipes": "Essentia Tubes, Valves, and Pumps",
-  "research.arcana.essentia_pipes.desc": "From A to B",
-
-  "research.arcana.alchemical_boiler": "Alchemical Boiler",
-  "research.arcana.alchemical_boiler.desc": "Fan the flames",
-
-  "research.arcana.essentia_centrifuge": "Essentia Centrifuge",
-
-  "research.arcana.essentia_crystalizer": "Essentia Crystalizer"
-
-  // Infusion Tab
-
-  // Eldritch Tab
-
-  // Crimson Rites
+  "container.arcana": {
+    "knowledgeable_dropper": "Knowledgeable Dropper",
+    "arcane_furnace": "Arcane Furnace"
+  },
+
+  "research.arcana": {
+    // Research Categories
+    "category": {
+      "fundamentals": "Fundamentals",
+      "artifice": "Artifice",
+      "auromancy": "Auromancy",
+      "alchemy": "Alchemy"
+    },
+
+    // Research Entries
+    // Fundamentals Tab: Root Research
+    "root": "Arcana",
+    "root.text": "A sudden burst of inspiration, key insights that make clear the meaning of these scribbled notes... the way forward is unclear, but I know that this is the start of something magical.\nI'll write down my research in this book: the Arcanum, with all of the old notes stored inside for reference.",
+
+    "aspects": "Aspects of Magic",
+    "aspects.desc": "The Building Blocks",
+    "aspects.text": "My new perspective has enabled me to understand the ramblings of these scribbled notes.{~sep}Among them are key insights into the workings of reality.\nAll matter is composed of Aspects, the fundamental building blocks of reality. Aspects come in a number of varieties, about {c3}{$numOfAspects}{r}, each of which corresponds to some concept.\nAll aspects are composed of two simpler aspects, with the exception of the six Primal aspects: {aspect:air}{c6}aer{r} (air), {aspect:earth}{c2}terra{r} (earth), {aspect:water}{c1}aqua{r} (water), {aspect:fire}{c4}ignis{r} (fire), {aspect:order}{c7}ordo{r} (order), and {aspect:entropy}perditio (entropy).\nThe chemical elements are, unintuitively, also fundamental building blocks. Elements and aspects are two \"lenses\" with which to view and modify the world, and different things lend themselves to a different lens.\nThese aspects can also apparently be isolated into solid-like, fluid-like, and gaseous forms. Crystals are solid, and result from overflows of a particular aspect in the aura. The aura, in turn, is made up of the more gaseous vis form, and is almost entirely uniform, except around nodes, which produce a constant supply of primal vis.\nFinally, equipment can supposedly be used to purify it into a fluid state known as essentia. The notes were frustratingly vague on this... the equipment seems both too complex to infer from diagrams, yet so commmonplace that they neglected to explain properly. Their most powerful tools relied on it extensively, seemingly forcing me to reinvent their basic practices myself.",
+
+    "flux": "Flux, Taint, Warp",
+    "flux.desc": "No such thing as free lunch",
+    "flux.stage.1": "My new perspective has enabled me to understand the ramblings of these scribbled notes.{~sep}Among them were various vague warnings of \"flux\", \"taint\", and \"warp\", as consequences for mishandling magic.\nFlux is a kind of pollution of the aura, produced through wasteful alchemy, or inefficient equipment. While nothing arcane is without risks, a buildup of flux can pose serious risks to yourself and the world.\nTaint being one of them. Some sort of corruption, or parasite, or {i}something{i}, that works its way through the world, and twists living beings into horrific monsters when left to its own devices; feeding on the flux created by ambitious or negligent alchemists.\nAnd while I couldn't fully parse the notes on warp... the dark rituals and grim compulsions that surrounded it were certainly enough to provide a bad first impression.\nIf I don't study these risks, how am I supposed to protect myself from them? I should get a look of this \"flux\" myself. A small amount should be perfectly manageable.",
+    "flux.stage.2": "...that was probably a mistake. Everything just {i}feels{i} off here. I would do well not to let it grow much higher, lest it start producing physical effects more serious than a headache and stomachache... ugh, I don't even want to know what warp feels like.",
+
+    // Fundamentals Tab: Info research
+    "silverwood_trees": "Silverwood Trees",
+    "silverwood_trees.desc": "Purity in Practice",
+    "silverwood_trees.text": "Silverwood trees are wide and stubby, noticeable for their bright colouration, high rarity, and incredible magical potential.\nEvery author of these notes could agree on one thing: silverwood trees are the key to many inventions. Their wood is one of the few things capable of resisting {i}purified essentia{r}; every part of the plant is completely immune to, and even repels, taint; and occasionally, their growth can even create a new Pure Node.\nIt should go without saying that growing and studying these trees wherever possible is a high priority.",
+
+    "greatwood_trees": "Greatwood Trees",
+    "greatwood_trees.desc": "Towering power",
+    "greatwood_trees.text": "Greatwood trees are towering, easily taller than any kind of mundane wood that I have come across.\nTheir wood is receptive to vis, especially {aspect:earth} and {aspect:water}, which may help explain how minerals and fluids are transported up their vast trunks.\nWhile rarer than other trees, being found sparsely across various habitats, once found, they are hard to miss. A single tree should provide enough wood for anything I could need, and enough saplings to make that certain.\nTheir magical nature will make them quite useful in future work.",
+
+    "hungry_nodes": "Hungry Nodes",
+    "hungry_nodes.desc": "The other side",
+    "hungry_nodes.text": "Nodes come in a variety of forms, some of which pose particular risks to the aspiring thaumaturge; Hungry Nodes are a prime example.{~sep}Rather than generating vis from nothing, as every other kind is happy to do, hungry nodes instead consume their surrounding terrain, holding onto some amount of it's aspects as vis.\nEven without special equipment, this can be clearly seen from the matter being drawn into them, and the accretion disc surrounding them.\nThese nodes pose a very direct, physical risk to anyone who wishes to use them. At the same time, they provide a prime opportunity: to feed them with matter, and create a powerful vis battery to take advantage of.\n...they pose a difficult question too. How {i}do{r} other nodes create vis? Where does it come from? One cannot create energy, only convert it from matter; could other nodes simply be openings to hungry nodes elsewhere?",
+
+    "eldritch_nodes": "Eldritch Nodes",
+    "eldritch_nodes.desc": "Bad Omens",
+    "eldritch_nodes.text": "Nodes come in a variety of forms, some of which pose particular risks to the aspiring thaumaturge; even among these, Eldritch Nodes are unique in their ability to profoundly manipulate your emotions.{~sep}While they are just as transparent to the naked eye as any other node, their presence can be felt by the icy aura that surrounds them, the shiver that runs through, the terror that swells should you make eye contact. These nodes... hate you, somehow, and they make their feelings known.\nI believe they have some impact on what the notes referred to as {c3}warp{r}, too, worsening it within their presence.\nCareful observation shows their true shape: a pulsating eye. What they are looking for, I cannot know.",
+
+    "nodal_geodes": "Nodal Geodes",
+    "nodal_geodes.desc": "Hidden in the depths",
+    "nodal_geodes.text": "When venturing underground for resources, I came across a geode filled with vis crystals, with a node at its centre. Such {i}Nodal Geodes{r} are a valuable source of otherwise-sparse crystals.\nUnlike surface nodes, each geode is attuned to only one kind of primal vis, which permeates through the rock that makes it up, alongside condensing into crystals. The node within will be especially potent in that aspect.\nGiven a method of viewing nodes, finding nodal geodes should not be too difficult, but reaching them might be a chore.",
+
+    "primordial_pearl": "Primordial Pearl",
+    "primordial_pearl.desc": "A world astray",
+    "primordial_pearl.text": "For the first time I find myself with a puzzle that I do not believe should be solved.{~sep}This object refuses to take a distinct form, and while it is conceptually complex, only contains huge amounts of primal aspects. These aspects do not act like the ordinary primals.\nEvery one of my various theories falls apart every moment this changes form. I would suggest it might be consciously obfuscating itself, but doing so leaves it perfectly simple and easy to understand - for one, fleeting moment, until all clarity is lost once more.\nIt stays constant only in one aspect: the aspects it contains. It... must have existed before compound aspects themselves, if there was such a time? Or perhaps it exists in some other way, one that cannot be expressed as aspects entirely?",
+
+    // Fundamentals Tab: Progression
+    "wandcraft": "Wandcraft",
+    "wandcraft.desc": "Equipment from long past",
+    "wandcraft.stage.1": "To continue any further, I'll need some way of directly manipulating vis. The tools once used for this were wands, constructed from a wide variety of materials that combine to create powerful magic.\nConstructing a simple wand is as simple as capping off a stick with purpose-build metal wand caps, the same design reusable as I improve my materials and skills.\n{i}Some{r} notes seem to refer to the use of a special glove, directly grabbing the vis with my hands; constructing such a thing seems impossible with what I have available, however.",
+    "wandcraft.stage.2": "Now, I have a real way to control magic. Soon, I'll be tapping on walls and whispering spells to open hidden gateways...\nBut first, I'll need to charge my wand with energy, by draining a node of it's power.",
+
+    "nodes": "Nodes",
+    "nodes.desc": "Wells of Power",
+    "nodes.text": "At the start of my journey, I was given a glimpse of knowledge from a source of magic. These sources - or nodes, as I have come to know them - seem to be scattered across the world, constantly {i}creating{r} new energy. Something I believed to be impossible.{~sep}Nodes aren't quite uniform. Different nodes are attuned to different aspects, only producing those, and holding onto larger amounts of them.\nSome nodes are brighter than others, producing vis more rapidly and holding onto more.\nI can drain their vis into a wand by holding right-click. As long as I don't completely drain them, their aspects will simply replenish over time.\nFully emptying one can damage it, lowering it's aspect caps - or worse, paling it - so I should be careful.{~sep}A few of them seem to act... strangely. Sucking in terrain, corrupting nearby crystals, emitting a depressing aura... I would do well to study these properly.",
+
+    "arcane_crafting": "Arcane Crafting",
+    "arcane_crafting.desc": "Tools of the Trade",
+    "arcane_crafting.stage.1": "The regular crafting table, while immensely useful, is simply not capable of handling vis in the way I require.\nIt should only require some slight tweaks - a touch of my wand's magic - to bring it up to par.",
+    "arcane_crafting.stage.2": "An Arcane Crafting Table is capable of everything it's ordinary variant is capable of, but can additionally craft magical items that require vis, supplied by my wand.\nOne such critical item is the Goggles of Revealing, which makes visible the vis around me.\nWhen the goggles are worn, nodes become brighter and visible through terrain, and I can see the aspects contained within them.\nOf course, further investigation into arcane devices is in order. I'll store this in the {c3}Artifice{r} tab of the Arcanum, accessible by selecting the goggles icon on the left.",
+
+    "research": "Research",
+    "research.desc": "Knowledge is power",
+    "research.stage.1": "I can't go off the notes of long-dead magicians forever. I'll need a proper environment for my work; for testing theories, constructing theorems, and cross-referencing clues. I need a Research Table.",
+    "research.stage.2": "Now I have a proper space to do my work.\nMany insights and items will require me to sit down at a research table and complete a {i}research puzzle{i}. The exact puzzle will depend on what I'm trying to learn about. By clicking on the puzzle requirement with paper and Scribing Tools on me, I can get a Research Note to place inside the table and start working on.{~sep}The basic puzzle, {i}Chemistry{i}, requires me to connect a set of aspects on a hexagonal grid.\nEach note starts with a somewhat-random amount of each primal aspect. I can combine two aspects (if there exists a compound of them) by placing them at the bottom of the sidebar, and pressing '+'. I can also place aspects on the grid by left clicking; both use up the amount on that note. Compound aspects connect to their components (and vice versa, components to their compounds).\nOnce all pre-placed aspects are connected, the puzzle is solved. If I make a mistake, I can right click on the grid to remove an aspect; it is not returned to the note, though, so if I'm too wasteful, I may need to restart with a new note.\nI should give this a go now.",
+    "research.stage.3": "This puzzle isn't too hard, though I can picture more complex items requiring more effort, with more complex aspects.\nI should keep in mind that the {c3}Aspects of Magic{r} page displays all aspect combinations, in case I get stuck.",
+
+    "node_channelling": "Node Channelling",
+    "node_channelling.stage.1": "While there are theoretically infinite nodes out there, I would prefer not to damage the ones nearby. To keep nodes bright and powerful, I will need to work on my node tapping technique.",
+    "node_channelling.stage.2": "Observing the way vis flows through different materials has allowed me to enhance the way I drain nodes.\nDraining a node will now always leave it with 1 vis in each aspect, preferring to drain another, unless all aspects only have 1 vis. The chance of an aspect cap decreasing when drained fully is lower.\nAs a nice side-effect, draining vis now occurs much faster.",
+
+    "node_channelling_2": "Greater Node Channelling",
+    "node_channelling_2.stage.1": "I'm sure I can do better than that.\nWith my better wands and increased knowledge, I should be able to control nodes to a far greater degree than... this.",
+    "node_channelling_2.stage.2": "Now, I can pull vis from nodes even faster, approaching the speed at which vis diffuses in air. Additionally, draining a node completely of a single aspect no longer has a chance of paling it. Fully draining multiple, however, still might.\nI do wonder if I could increase the rate of recharge by submerging the node... or if I can alter it to become more powerful in some other way...\nThis will require further investigation.",
+
+    "auromancy": "Auromancy",
+    "auromancy.desc": "The gateway of miracles",
+    "auromancy.stage.1": "This wood-and-iron wand isn't always going to cut it. Really, it's a terrible, glorified vis battery, with few ways to put it's magic to good use. Surely I can build something better?",
+    "auromancy.stage.2": "Gold is certainly an improvement over iron, but it doesn't take a genius to know that. Even ordinary enchanting prefers it over everything.\nI believe some dedicated study towards wands and vis manipulation is in order. I'll store this in the {c3}Auromancy{r} tab of the Arcanum, accessible by selecting the wand icon on the left.",
+
+    "alchemy": "Alchemy",
+    "alchemy.desc": "Fission and Fusion",
+    "alchemy.stage.1": "Like the mundane elements, I will benefit by learning to separate and combine aspects, and the simplest method available to me to do so is plain old heat.\nOf course, magic must be used to catalyze this breakdown, and no mundane material could possibly handle the heat required - but a flick of my wand should upgrade a regular cauldron to do just that.",
+    "alchemy.stage.2": "A Crucible can be used to melt down items into their constituent aspects. When filled with water and placed over a heat source (like fire, lava, or magma), anything thrown inside will be dissolved, and their aspects added to the water-essentia solution.\nActually purifying this essentia into a usable form is far beyond me, and will require dedicated equipment, but that's not to say it's useless in its current form; a variety of alchemical recipes can be performed with it.\nIf I throw a catalyst for an alchemy recipe I know into a crucible (and it contains all the required aspects), instead of being broken down, it'll absorb those aspects and be transformed into something new.\nOne basic application of this is Nitor: a stable and bright flame, created from coal and light.\nI can empty a crucible by sneak-right-clicking on it, releasing all of its currently stored aspects. If it has no aspects (only water), I can also empty it with a bucket.\nI should note that, since blocks and other entities know no alchemy, items they drop will {i}always{i} be broken down; also, that my Goggles of Revealing allow me to see the aspects stored inside.\nI believe some dedicated study of alchemy is in order. I'll store this in the {c3}Alchemy{r} tab of the Arcanum, accessible by selecting the crucible icon on the left.",
+
+    "research_expertise": "Research Expertise",
+    "research_expertise.desc": "Improving my improvements",
+    "research_expertise.stage.1": "Performing more research will teach me more about the research process itself.\nWith a little practical experience, I should be able to simplify the process, and offset the increasing difficulty of these puzzles.",
+    "research_expertise.stage.2": "I'm getting better at this.{~sep}Holding shift while hovering over an aspect in the research table will now show it's components. Additionally, removing an aspect from the chemistry grid has a 25% chance of returning it to the note.",
+
+    "research_mastery": "Research Mastery",
+    "research_mastery.desc": "You can never know all the facts.",
+    "research_mastery.stage.1": "There's always more to learn, yet more exciting opportunities to chase after - and my slow, inefficient research is holding me back.",
+    "research_mastery.stage.2": "No matter how hard I work, how long I try, how much focus and effort I put in - my work is never finished.{~sep}Removing an aspect from the chemistry grid now has a 50% chance of returning it to the note. Notes also start out with more aspects.",
+
+    "tome_of_sharing": "Tome of Sharing",
+    "tome_of_sharing.desc": "Sharing is caring",
+    "tome_of_sharing.stage.1": "So far, it has been highly convenient to have my knowledge bound to my mind, persisting after death and across any copies of this book. This is less true when trying to share my work with friends.\nI {i}would{r} simply write down the solutions to every puzzle I know; sadly, I've forgotten most of them, and others (like fieldwork) I might not be able to describe on paper easily. Besides, a magical solution seems more fun to implement",
+    "tome_of_sharing.stage.2": "Enchanting another copy of the Arcanum to copy knowledge from my mind in a highly readable format was surprisingly simple. Perhaps I should be worried about that.\nWhen a Tome of Sharing is used by any player when crouched, they will have their research progress added. When another player uses it normally, all puzzles stored in the book are completed for them.\nThe tome does not automatically complete research entries, and will not skip item or XP requirements; only puzzles.",
+
+    "crystal_farmer": "Crystal Farmer",
+    "crystal_farmer.desc": "Renewably sourced magic",
+    "crystal_farmer.stage.1": "Scouting the surface for the occasional node and digging tunnels underground for geodes are not sustainable or renewable sources of vis crystals.\nGiven their importance in even basic magic, I need a way to grow new ones.",
+    "crystal_farmer.stage.2": "By creating a sturdy {i}cluster seed{r}, I can grow new crystals.\nSmall clusters grow in the presence of a node with their aspect, draining from it to gain mass. Once fully grown, a cluster will drop at least 2 crystals.\nThe recipe works for all primal aspects, swapping {aspect:air} and the catalyst for the appropriate aspect and crystal.\nI could not get seeds made from non-primal aspects to grow; perhaps due to their absence in the aura.",
+
+    "aura_crystallization": "Aura Crystallization",
+    "aura_crystallization.desc": "Within grasp",
+    "aura_crystallization.stage.1": "My ability to manipulate the aura is limited by the lack of any form of direct influence on it.\nJust like any other concept, the aura has a corresponding aspect, {aspect:aura} Auram. But this one does not appear in any physical substance I know of; while it is a fairly straightforward compound, it refuses to be defined in terms of anything but itself.\nPerhaps it lies too close to the boundary between different systems of aspects, not fully under my own domain...\nBut still, like any other aspect, it can be formed into crystals. If I could force a cluster seed into existence, it would provide me with a sustainable source of this aspect.",
+    "aura_crystallization.stage.2": "While the recipe I've formulated seems perfectly valid, actually performing it would be dangerous; the essentia will begin to boil off as flux before the necessary amount can be reached.\nThat said, if I can perform it just once, I should be able to use its crystals to create further seeds easily.\nAuram Clusters use large amounts of random primals to grow. Growing too many around a single node even runs the risk of damaging it.",
+
+    // Artifice Tab
+    "artifice_root": "Artifice",
+    "artifice_root.text": "The study of {i}artifice{r}, the construction of magical devices through arcane crafting, will be documented here.\nThe Goggles of Revealing recipe from {c3}Fundamentals{r} is included here for completeness.",
+
+    "arcane_stone": "Arcane Stone",
+    "arcane_stone.text": "Arcane Stone is a fairly simple application of arcane crafting. It looks nice, it's stronger than ordinary stone, and may be useful in further crafting.\nArcane Stone Bricks can be created through crafting or stonecutting.",
+
+    "paving_stones": "Arcane Paving Stones",
+    "paving_stones.desc": "Essential infrastructure",
+    "paving_stones.stage.1": "My home could do with a fair few magical upgrades. Improving my mobility inside and increasing its protection are among my top priorities.",
+    "paving_stones.stage.2": "Easier to walk along a flat surface than a rough cliff edge, and even moreso to walk along some enchanted floor tiles. The enchantment on the Paving Stones of Travel boost my speed and jump height when I walk on top.",
+    "paving_stones.stage.3": "Like a fence, the Paving Stones of Warding will keep out hostile monsters, but also allow me to walk over them unaffected.\nI should keep in mind that any ranged attack can still pass by, and that protecting an area is worthless if monsters can simply spawn inside.\nAdditionally, monsters forced on top of Paving Stones of Warding will fall through them, just as they would any other block.",
+
+    "infernal_forge": "Infernal Forge",
+    "infernal_forge.stage.1": "My new perspective has enabled me to understand the ramblings of these scribbled notes, but in the time since their creation, much has been lost.{~sep}Several records speak of a hellish device, the \"In---na- F-r---e\", that used the power of a Nether being to perform the thaumaturge's wishes at no cost.\nLike many other entries, much of it has been torn out or burnt, but this is the earliest such page by far; and I believe that enough has been left behind for me to reconstitute its meaning, regardless of how well hidden it has been.",
+    "infernal_forge.stage.2": "These components, like many others sourced from the Nether, are not entirely mundane nor dead, instead holding a link to... something.\nPerhaps I could put that {i}something{r} to good use.",
+    "infernal_forge.stage.3": "This structure is designed to pull forth and capture those lost souls, but these won't work without pay. They want a sacrifice for their work, whatever it is they do, but what would satisfy them?",
+
+    "arcane_lamp": "Arcane Lamp",
+
+    "lamp_of_growth": "Lamp of Growth",
+
+    "lamp_of_fertility": "Lamp of Fertility",
+
+    "arcane_levitator": "Arcane Levitator",
+    "arcane_levitator.desc": "Stylish transport",
+    "arcane_levitator.stage.1": "My vertical mobility is woefully limited. Scaling cliffs is nearly impossible, and in my own home, the most I can do is tediously lay our long-winded staircases.\nThere must be some magical solution I can use to making moving up and down easier.",
+    "arcane_levitator.stage.2": "It isn't flight, but close enough to be useful.\nAny creature or item, including myself, on top of a levitator will be quickly lifted upwards. If I crouch, I'll instead be lowered downwards.\nLevitators can be stacked to increase their vertical range; each provides 10 blocks, up to a total maximum of 50.\nDue to their small power usage, a levitator can draw sufficient power from the surrounding aura. Doing so does cause a minuscule amount of flux to be released; while the aura should be more than able to handle a few, I can turn off ones not in use using a redstone signal.",
+
+    "levitational_locomotive": "Levitational Locomotive",
+    "levitational_locomotive.desc": "Look ma, no tracks!",
+    "levitational_locomotive.stage.1": "Ordinary carts and engines, while impressive in their own right, have a hefty infrastructure requirement. Miles and miles of tracks, with complex switching systems at every intersection or turn.\nNow that I can levitate objects, I wonder if I can remove the need for such things.",
+    "levitational_locomotive.stage.2.1": "Replacing the wheels and tracks of a cart with tiltable levitators and ground signals may arguably make it no longer qualify as a cart. But it works better than they ever did.\nA Levitational Locomotive is made up of a Suspension Engine at the front, with a line of Levitational Minecarts attached behind it. A locomotive starts stationary, and moves in a straight line, turning or stopping based on floor-placed signals. If the locomotive reaches a diagonal line of blocks (that rails could be placed on) or stairs, it will move up; otherwise, it will stop on hitting a wall.",
+    "levitational_locomotive.stage.2.2": "The Start/Stop signal causes the locomotive to start or stop when its engine passes over it, depending on whether the signal has redstone power (start) or not (stop).\nThe left-, right-, and random-turn signals will make a locomotive turn left, right, or in a random free direction. Turn signals can be disabled by redstone.\nThe check signal will emit a redstone pulse when an engine moves over it.\nThe wait signal will stop the locomotive when any *cart* containing items is placed on top, to be drained by a hopper below.",
+
+    "mystic_mist": "Mystic Mist",
+    "mystic_mist.desc": "Climate control",
+    "mystic_mist.stage.1": "Rarely, if ever, is the weather in my favour. My crops are always lacking in water, and fires are free to rage across forests from innocent-looking lava pools, while the rain annoys me when I choose to travel far away.\nShould I find myself in need of it, the nearest region with snowfall may be a day's trek away - and let's not even mention the difficulty of getting lightning when you do want it.\nIf only I could control the weather myself...",
+    "mystic_mist.stage.2": "Changing how the global climate functions is well outside of my reach - at least, for now.\nBut something more useful may be achievable: making miniature climates, say, the size of a room. Tiny clouds, exactly where I need them.\nI'll need to take some readings of how altitude conditions in order to figure out the requirements for cloud formation first, though.",
+    "mystic_mist.stage.3": "The Mystic Mist is a device capable of creating miniature climates as needed. When powered by a Levitator below it, and filled with a material, it can create one of the following effects:\n - Creating clouds above crops to speed up their growth, above fires on flammable materials to put them out, and over empty crucibles to fill them, using water.\n - Creating thunderclouds above itself that can produce lightning, using water and redstone.\n - Creating blizzard clouds above itself that produce snowfall, using water and snow.\n - Creating a hot, dry environment around itself, suitable for the growth of Nether Wart.",
+
+    "monocle_of_revealing": "Monocle of Revealing",
+    "monocle_of_revealing.desc": "Eye Spy",
+    "monocle_of_revealing.stage.1": "Wearing the Goggles of Revealing is essentially a requirement for doing any kind of magical work - yet doing so prevents me from wearing important protected headwear.\nA more lightweight and compatible form would be appreciated.",
+    "monocle_of_revealing.stage.2": "Reducing the goggles to a single lens does suffice for casual use.\nIt takes a bit of squinting, but the Monocles of Revealing are just as capable for alchemy or peering into nodes as the full-sized goggles, but only take up a trinkets slot.\nI do wonder what other improvements could be made to the goggles, though...",
+
+    // Auromancy Tab
+    "auromancy_root": "Auromancy",
+    "auromancy_root.text": "The study of {i}auromancy{r}, the manipulation of the aura and vis around me, will be documented here.\nThe iron and gold wand caps, and the general wand recipe are included here for completeness.",
+
+    "wand_components": "Caps and Cores",
+    "wand_components.text": "Every wand is constructed from wand caps and a core, which dictate it's properties.{~sep}The core is responsible for storing vis. The more vis a core can store, the more I can use it to perform arcane crafting, and the more powerful the items I craft can be.\nThe cap is responsible for channeling and shaping that vis. They affect the speed in which vis is drawn from nodes, and adds a small amount of vis storage.\nBoth components also affect spellcasting through foci. A wand has a \"complexity\" score, based on the quality of its cap, that determines how complex the effects it produces can be. More powerful foci may require higher complexities, and modifications made to foci may only apply if a certain complexity is met.\nWands also have a \"difficulty\" score, given by their cores, that determines how much \"force\" it can push the vis with. The same focus may provide stronger effects - like more damage or healing - with a higher difficulty wand.\nFinally, some caps and cores may provide additional side effects, like discounts or bonuses, depending on what they're made from. I might want to use different wands for different tasks.",
+
+    "copper_wand_caps": "Copper Wand Caps",
+    "copper_wand_caps.desc": "The other one",
+    "copper_wand_caps.stage.1": "The properties of copper make it quite convenient for electrical work. It's conductivity and alignment with Instrumentum may make it a highly useful material in my artifice.",
+    "copper_wand_caps.stage.2": "Wand caps crafted from copper are slightly worse than gold when it comes to drawing vis from nodes, or focusing them into spells, but come with a useful bonus to difficulty.",
+
+    "leather_wand_caps": "Leather Wand Caps",
+    "leather_wand_caps.desc": "Artisanal Quality",
+    "leather_wand_caps.stage.1": "While metals are an obvious go-to for channelling vis, I should experiment with other, more flexible materials.\nHaving a greater degree of control over the shape and design of the cap might allow me to produce something more efficient.",
+    "leather_wand_caps.stage.2": "Wand caps crafted from leather are slightly worse than gold when it comes to drawing vis form nodes, or focusing them into spells, but do provide a decent bonus to arcane crafting.\nAny wand strapped with leather reduces the amount of vis required to craft by 8%.",
+
+    "greatwood_wand_core": "Greatwood Wand Core",
+    "greatwood_wand_core.desc": "With great power...",
+    "greatwood_wand_core.stage.1": "Making a wand out of a material already attuned to vis is likely to provide a significant boost in its capabilities.",
+    "greatwood_wand_core.stage.2": "The greatwood tree's wood makes for an excellent storage of vis. Wands built with it have a higher maximum capacity and difficulty score than any other material currently available.",
+
+    "nether_stem_wand_core": "Nether Stem Wand Core",
+    "nether_stem_wand_core.desc": "Otherworldly construction",
+    "nether_stem_wand_core.stage.1": "Fungi do not seem to be a traditional wand material by any stretch. Certainly, none of the notes even seemed to consider the possibility.\nBut the huge mushrooms of the nether may provide some unique properties, different to everything available in the overworld.",
+    "nether_stem_wand_core.stage.2": "Nether stems are simple enough to craft into capable wand cores, and perform much better than ordinary untreated wood.\nWhile it doesn't perform better than I would expect a magical wood to, it's complex internal structures grant wands constructed from nether stems a bonus to complexity.",
+
+    "varnished_wood_wand_core": "Varnished Wood Wand Core",
+    "varnished_wood_wand_core.desc": "Finely made",
+    "varnished_wood_wand_core.stage.1": "Simply using a stick of mundane wood for a wand core has predictably poor results. Part of this can be attributed to poor material qualities, but I wonder how much of this is caused by lack of effort in its preparation?",
+    "varnished_wood_wand_core.stage.2": "By properly treating the wood before use, and paying additional attention to it's design, the Varnished Wood wand core performs much better than its untreated counterpart.\nWhile it doesn't perform better than I would expect a magical wood to, it does come with a useful discount in arcane crafting. Any varnished wooden wand reduces the amount of vis required to craft by 12%.",
+
+    "silverwood_wand_core": "Silverwood Wand Core",
+    "silverwood_wand_core.desc": "Pure Power",
+    "silverwood_wand_core.stage.1": "The use of greatwood as a wand core has been a great success, but it is by no means the end-all. Surely silverwood, known for its special relationship with nodes and the aura, will be able to outdo it.\nFor many of the notes' authors, silverwood was considered the peak of wand design, with many leaving their studies there.\nUnfortunately, silverwood is both highly delicate, and highly sensitive to changes in the surrounding aura. Transforming it into a high-capacity wand core will not be a trivial task.",
+    "silverwood_wand_core.stage.2": "Analyzing these samples has taught me a couple of things:\n - Silverwood rods are flimsy, too fragile to channel the intense vis I need.\n - Very little of the wood has any special properties to begin with, only within some internal transport network.\nPerhaps the trees have diverged over the years, or I'm missing some crucial information on how they are put together, but regardless, I'll need to try something different to build this.",
+    "silverwood_wand_core.stage.3": "Alchemy seems to be the answer. With it, I can dissolve away the useless bulk of the wood, increase its strength, and accentuate all of its useful properties.\nWhile this is certainly better than every material I've tried so far, it doesn't nearly live up to the expectations given by the notes. Indeed, they seem to refer to a completely different, multi-step process instead, which may lead to better results.\nSilverwood wands have high capacities and difficulty scores, but no special effects.",
+
+    "sugar_cane_wand_core": "Sugar Cane Wand Core",
+    "sugar_cane_wand_core.desc": "Light and portable",
+    "sugar_cane_wand_core.stage.1": "There remains a wide variety of plants to which I can apply my alchemical technique. Perhaps they might offer some unique benefits.",
+    "sugar_cane_wand_core.stage.2": "Wands made with sugar cane have a special affinity with {aspect:air}, granting a 15% discount for it in arcane crafting.\nOtherwise, they're somewhat weaker than silverwood cores.",
+
+    "blaze_wand_core": "Blaze Wand Core",
+    "blaze_wand_core.desc": "Feel the Heat",
+    "blaze_wand_core.stage.1": "While fungi were a good start, other nether materials may prove useful.\nBlaze rods are already roughly the right shape, and lend themselves to alchemy in other forms.",
+    "blaze_wand_core.stage.2": "Wands made with blaze rods have a special affinity with {aspect:fire}, granting a 15% discount for it in arcane crafting.\nOtherwise, they're somewhat weaker than silverwood cores.",
+
+    "ice_wand_core": "Ice Wand Core",
+    "ice_wand_core.desc": "Crystal clear",
+    "ice_wand_core.stage.1": "I wonder what the limits of my technique are.\nIf solidity and some kind of conduction are all that's necessary, can translucent ice be used?",
+    "ice_wand_core.stage.2": "Wands made with ice have a special affinity with {aspect:water}, granting a 15% discount in it for arcane crafting.\nOtherwise, they're somewhat weaker than silverwood cores.\nIt's worth noting that these cores also have an affinity with {aspect:ice}, {aspect:crystal}, and {aspect:light}, but these have no applications in arcane crafting nor spellcasting.\nThe alchemy applied prevents the wand from ever melting, but it doesn't prevent my hand from getting painfully cold.",
+
+    "obsidian_wand_core": "Obsidian Wand Core",
+    "obsidian_wand_core.desc": "Solid and dependable",
+    "obsidian_wand_core.stage.1": "Obsidian is a tough material, and in certain circumstances, can naturally carry magic of its own. It should make for a solid wand core.",
+    "obsidian_wand_core.stage.2": "Wands made with crying obsidian have a special affinity with {aspect:earth}, granting a 15% discount in it for arcane crafting.\nSurprisingly, it's own magical properties only hinder thaumaturgy, leaving it a little weaker than a silverwood core. Further research will be necessary...",
+
+    "arcane_stone_wand_core": "Arcane Stone Wand Core",
+    "arcane_stone_wand_core.desc": "Theory and application",
+    "arcane_stone_wand_core.stage.1": "So far, using materials that already have an arcane touch has lead to my best results. How far does this go? Can a material as simple as arcane stone be used effectively?",
+    "arcane_stone_wand_core.stage.2": "The crystal structure within arcane stone makes it a useful wand core; wands made with it have a special affinity with {aspect:order}, and grant a 15% discount in it for arcane crafting.\nThey perform worse than silverwood, though, as is to be expected.",
+
+    "bone_wand_core": "Bone Wand Core",
+    "bone_wand_core.desc": "A grim reminder",
+    "bone_wand_core.stage.1": "Living things can never be entirely mundane. Every breath and dream leaves a mark on the body, and sometimes, that is just enough for it to refuse death, for just a moment.\nI have no intention of messing with mortality; but I do wonder if this leftover power can be useful to me in any way.",
+    "bone_wand_core.stage.2": "Wands made from bone have a special affinity with {aspect:entropy}, granting a 15% discount in it for arcane crafting.\nOtherwise, they're somewhat weaker than silverwood cores.\nThey also serve as a sombering reminder of my own mortality, a topic I prefer not to think about.",
+
+    "wand_foci": "Wand Foci",
+    "wand_foci.desc": "Channeling the power within",
+    "wand_foci.stage.1": "Wands are excellent, portable batteries of vis, useful for careful crafting of magical devices. But to perform even more powerful magic, dedicated focuses for their primal vis will be required.\nThe notes include a huge variety of designs for these, reflecting their importance in everyday thaumaturgy. Some are barely more than focused primal vis, while others combine and shape them in ways that break the ordinary laws of reality; others still use materials beyond my imagination to perform dangerous feats of insanity.\nFor my first, I will stick to the absolute basics: focusing ignis vis to create fire.",
+    "wand_foci.stage.2": "When a wand has a wand focus equipped, right-clicking will attempt to cast the focus. The fire focus will simply set blocks and living creatures on fire.\nI can equip a focus by holding a wand and pressing a key - usually {c3}G{r} - to open the focus switcher. Clicking or hovering over a focus in the outer ring will equip it, while clicking on the middle equipped focus will remove it.\nAs outlined in {c3}Caps and Cores{r}, foci may require a wand of a certain complexity, and their power may depend on the wand's difficulty. This focus can be cast with any basic wand, and the length of time creatures stay on fire for depends on the wand's difficulty.\nCasting using a focus takes some vis from the wand. This amount is affected by discounts in the same way as arcane crafting; the original amount is displayed in the focus tooltip, while the discounted amount is displayed in the wand's (when equipped).",
+
+    "light_focus": "Wand Focus: Light",
+    "light_focus.desc": "Let there be light",
+    "light_focus.stage.1": "One of the most tedious things of my journey, by far, has been carrying around enough torches and light sources for everywhere I go; wasting my inventory space and ending exploration or mining sessions prematurely.\nIdeally, I could simply point at a spot with my wand, mention a spell, and have a light source spring forth. Like a real magician.",
+    "light_focus.stage.2": "This focus creates light sources using stored aer and ignis, fused to make lux.\nThese light sources are temporary, losing brightness over time until they fade away entirely, making them sadly unsuitable for anything permanent. Perhaps some invisible nitor could suit that role? But they don't require any space or special considerations on-the-go, so I consider this a success.\nInitially, a light source is as bright as glowstone - brighter than a torch - and dims until it is unable to repel monsters, before vanishing, and can also be broken by hand. They can be placed underwater without issue.",
+
+    "portable_hole_focus": "Wand Focus: Portable Hole",
+    "portable_hole_focus.desc": "Knock knock",
+    "portable_hole_focus.stage.1": "The ender pearl and chorus fruit have a curious ability to warp space.\nThese naturally occurring materials do it in a raw, unfocused form; with some careful manipulation, and the added power of the wand's vis, something much safer and more powerful should be possible.",
+    "portable_hole_focus.stage.2": "I don't really understand how this works.\nI went into this expecting to create a teleportation focus, but rather than moving me through space, this focus changes the space around me. When I use it against a surface, the focus temporarily phases it out, along with everything behind it, allowing me to pass through walls and into caves.\nThe focus creates 3x3 tunnels that can reach up to 16 blocks in length, but end when they reach a full square of air. They can be oriented in any direction, including vertically.\nAny block can be phased out, including containers, and blocks that support other blocks. Such systems remain fully stable; for all intents and purposes, those blocks still exist, except for entities to look and pass through. Space is warped, but matter is untouched.\nI would do well to research the structure of space in more detail. Some other time.",
+
+    // Alchemy Tab
+    "alchemy_root": "Alchemy",
+    "alchemy_root.text": "The study of {i}alchemy{r}, the conversion of items into essentia and utilization thereof, will be documented here.\nThe Nitor recipe from {c3}Fundamentals{r} is included here for completeness.",
+
+    "magical_metallurgy": "Magical Metallurgy",
+    "magical_metallurgy.desc": "Where metals meet magic",
+    "magical_metallurgy.stage.1": "Mundane materials just aren't cutting it anymore.\nTools break too quickly, armour doesn't protect well enough, and these materials simply aren't as conductive to the arcane crafts as I would like. Even enchantment is a nuisance.\nThe notes often reference a material named {u}Thaumium{r}, created by alchemically imbuing a metal with magic itself. I don't know what their metallurgy was like - it seems that the set of ores available to me differ to what they had - but the principle seems sound.",
+    "magical_metallurgy.stage.2": "This isn't thaumium. At least, not like they described. It's similar in strength and conductivity, but blindingly bright, and seems to be giving off it's infused magic over time... maybe I overshot somewhat.\nEither way, it's stronger than most materials I have in plentiful supply, and more conductive to vis than any.\nEntire blocks can be transmuted, at a slight discount. All the usual tool and armour recipes work.",
+
+    "transmutation": "Transmutation",
+    "transmutation.desc": "Connecting the dots",
+    "transmutation.stage.1": "One popular trope is that of an alchemist attempting to create the valuable from the dull - lead to gold. They knew neither chemistry nor magic; I know both.\nI believe I can use my newfound knowledge to do better at the transmutation of metals.",
+    "transmutation.stage.2": "Converting iron into copper is not my most impressive achievement - though the alchemy behind this recipe {wavy}does{r} prompt more research into it's properties. No, gold is my target. Though copper may make a useful stepping stone...",
+    "transmutation.stage.3": "Yes! Where thousands of fictional alchemists have failed, I have succeeded in transforming iron into gold.\nI do wonder if the process is reversible, though... or could be performed in bulk.",
+    "transmutation.stage.4": "The transmutations form a loop: iron into copper, copper into gold, and gold into iron. Could be useful given a particular shortage of iron.. perhaps if I was into mundane science.\nWhat's also interesting is that each of these recipes can be applied in block form, at a slight discount.",
+
+    "purification": "Purification",
+    "purification.stage.1": "Simply baking ores and letting the metal melt out is an immensely inefficient process. Crushing the ores might be less so, but would still leave me waiting twice as long to process them. I have a better idea.\nWith alchemy, it should be possibly to wash away the stone and all other impurities, and leave behind a pure structure of metal to be melted into ingots all at once.\n...I just need to figure out how.",
+    "purification.stage.2": "This is certainly one way of doing it.\nThe aspects added reinforce the metal's structure, with the extra metallum acting as a substitute for the impurities. This does mean that some metal is required as input, and some of the input is still wasted, but I could not find a better way around it.\nNow, to apply this to other metals. With luck, there should be no nasty surprises awaiting me.",
+    "purification.stage.3": "Copper and gold can be purified and cast in exactly the same manner as iron; their disparate properties seem to have had no effect on the process.\nAdditionally, the process can be applied in bulk to raw metal blocks, at a slight discount.",
+
+    "transmutation_shortcut": "Transmutation Shortcut",
+    "transmutation_shortcut.text": "Extending my transmutation knowledge to purified metal turned out to be surprisingly trivial.\nAll transmutation recipes work on alchemical metal for the cost of a single ingot.",
+
+    "metallurgy_shortcut": "Metallurgy Shortcut",
+    "metallurgy_shortcut.text": "Extending my metallurgy knowledge to purified metal turned out to be surprisingly trivial.\nAlchemical iron can be converted to Altered Iron for the cost of a single arcanium ingot. Altered iron can then be smelted to produce two arcanium ingots at once.",
+
+    "alumentum": "Mystical Fuel",
+    "alumentum.stage.1": "Nitor was a start, but its stability makes it useless as a fuel, barely warm enough to heat a crucible; I'd be better off using a campfire than trying to make that work.\nNo, what I need is something far more energetic and excitable, only stable enough to transport to a blast furnace; perhaps it could even double as a weapon...",
+    "alumentum.stage.2": "And Alumentum is the solution. Like nitor, it is a never-ending flame, but this one can only barely keep itself together.\nAs a fuel, it should last about {c3}4x{r} as good as coal.\nIf I throw it, it will violently explode upon hitting a surface. I should take great care handling this... or not, depending on where I find myself.",
+
+    "hedge_alchemy": "Hedge Alchemy",
+    "hedge_alchemy.desc": "Material science",
+    "hedge_alchemy.stage.1": "There are a great few items that are incredibly tedious to obtain, in constant short supply when I need them most. Perhaps I can use alchemy to create them?\nMy first step will be to examine some samples, and find similar structures that can - fingers crossed - be converted into eachother.",
+    "hedge_alchemy.stage.2": "From my observation, {i}Gunpowder{r} is closely alchemically related to {i}Blaze Powder{r}; {i}Redstone{r} and {i}Glowstone{r} have similar structures; and {i}Quartz{r} has an odd (but promising) resemblance to {i}Diamond{r}. The Lava was a dud.\nI believe I can alchemy to emulate more mundane reactions: tanning {i}Rotten Flesh{r} into {i}Leather{r}, freezing {i}Snow{r} into {i}Ice{r}, drying {i}Leaves{r} into {i}Dead Bushes{r}, and binding {i}String{r} into {i}Cobwebs{r}.\nSome experimental verification is needed.",
+    "hedge_alchemy.stage.3": "Most of these conversions are viable alchemy recipes. Quartz-to-diamond was a dud too, simply turning into flint in any practical setting, and converting snow into ice proved far less efficient than expected.\nCould this be due to my equipment, or my technique? Perhaps, but in any case, the remainder remain useful.",
+
+    "automated_alchemy": "Automated Alchemy",
+    "automated_alchemy.desc": "On demand",
+    "automated_alchemy.stage.1": "There's nothing particularly remarkable about alchemy.{~sep}Sure, it takes a bit of know-how to figure out which reactions are possible, and gently guide the liquid concepts in the pot to approach that. But really, what's stopping me from simply... teaching a dropper how to do it?",
+    "automated_alchemy.stage.2": "Prototype after prototype wasted. Something odd is afoot here. Even getting a machine to perform identical actions to myself does not cause the proper reactions. Almost like some {i}intent{r} is necessary.",
+    "automated_alchemy.stage.3": "Now, a thinking machine. That would do it.",
+    "automated_alchemy.stage.4": "Giving a Dropper a basic level of \"understanding\" is a perfectly safe and simple method of automating alchemy.\nThe Knowledgeable Dropper can be given a Tome of Sharing within it's extra tenth slot. Items it drops will be eligible for any alchemy recipes stored within the research bound to the book. When an alchemy recipe is performed automatically, the result will be thrown from the crucible in a random, free horizontal direction (or just randomly if none are free).\nAnother minor feature is that these droppers have slightly less variation in how they drop items.\nIt turns out that Tomes of Sharing do remember research entries, but simply choose not to show them to players. The thought of my equipment colluding to snoop on my mind is unsettling... but what can a book really do?",
+
+    "alchemical_glass": "Alchemical Glass",
+    "alchemical_glass.desc": "Advancing my material knowledge",
+    "alchemical_glass.stage.1": "Glass is a wonderful substance. Unreactive, transparent, commonly available... and extremely flimsy.\nCorrecting mistakes while should not require specialist equipment, and I wouldn't put too much trust in ordinary glass as a component in my devices.\nSome upgrades are in order.",
+    "alchemical_glass.stage.2": "The first fruits of my work come in the form of Hardened Glass. Stronger - resisting explosions and less prone to accidents - yet more resilient - dropping itself in one piece when broken.\nI do have questions about what other properties I can give to glass this way... how about making it even more conductive to light and vis?",
+    "alchemical_glass.stage.3": "As-is, glass isn't much more opaque than empty space. No, the interesting part is when you allow it to capture light and vis.\nLuminiferous Glass, while appearing transparent, has a huge amount of photons and lux captured within. On the outside, this manifests as a bright glow, on par with Glowstone. In the future, a material like this will be useful to use as a component in magical devices.\nNow, I wonder if it's possible to make glass conductive to not just energy, but matter. Would it simply fall through the crucible? Is it even a well-formed question?",
+    "alchemical_glass.stage.4": "...apparently, yes, this is fully possible.\nStatic Glass is usually solid, but becomes like a gas in the presence of a crouching player - allowing their passage (or fall) - before reforming into a solid.\nThis has a couple of potential applications in home decor. Artifice? Perhaps, if I can trigger it mechanically.",
+
+    "aspect_candy": "Aspect Candy",
+    "aspect_candy.desc": "Chemist's Cuisine",
+
+    "essentia_distillation": "Essentia Distillation",
+    "essentia_distillation.desc": "Specks of Universe",
+
+    "essentia_pipes": "Essentia Tubes, Valves, and Pumps",
+    "essentia_pipes.desc": "From A to B",
+
+    "alchemical_boiler": "Alchemical Boiler",
+    "alchemical_boiler.desc": "Fan the flames",
+
+    "essentia_centrifuge": "Essentia Centrifuge",
+
+    "essentia_crystalizer": "Essentia Crystalizer"
+
+    // Infusion Tab
+
+    // Eldritch Tab
+
+    // Crimson Rites
+  }
 }

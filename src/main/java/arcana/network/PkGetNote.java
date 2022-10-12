@@ -13,7 +13,7 @@ import net.minecraft.util.Identifier;
 
 public class PkGetNote extends C2SMessage{
 	
-	String puzzleId;
+	Identifier puzzleId;
 	
 	@ReflectivelyUtilized
 	public PkGetNote(NetworkContext ctx){
@@ -22,15 +22,15 @@ public class PkGetNote extends C2SMessage{
 	
 	public PkGetNote(Identifier puzzleId){
 		super(Networking.arcCtx);
-		this.puzzleId = puzzleId.toString();
+		this.puzzleId = puzzleId;
 	}
 	
 	protected void handle(ServerPlayerEntity player){
 		// TODO: check for scribing tools and paper
-		Puzzle puzzle = Research.getPuzzle(new Identifier(puzzleId));
+		Puzzle puzzle = Research.getPuzzle(puzzleId);
 		ItemStack noteStack = new ItemStack(ArcanaRegistry.RESEARCH_NOTES);
 		var tag = noteStack.getOrCreateNbt();
-		tag.putString("puzzle_id", puzzleId);
+		tag.putString("puzzle_id", puzzleId.toString());
 		tag.put("puzzle_data", puzzle.getInitialNoteTag());
 		player.giveItemStack(noteStack);
 	}

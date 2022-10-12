@@ -10,10 +10,11 @@ import com.unascribed.lib39.tunnel.api.C2SMessage;
 import com.unascribed.lib39.tunnel.api.NetworkContext;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.util.Identifier;
 
 public class PkChemistryCombineAspects extends C2SMessage{
 	
-	String left, right;
+	Identifier left, right;
 	
 	@ReflectivelyUtilized
 	public PkChemistryCombineAspects(NetworkContext ctx){
@@ -22,8 +23,8 @@ public class PkChemistryCombineAspects extends C2SMessage{
 	
 	public PkChemistryCombineAspects(Aspect left, Aspect right){
 		super(Networking.arcCtx);
-		this.left = left.id().toString();
-		this.right = right.id().toString();
+		this.left = left.id();
+		this.right = right.id();
 	}
 	
 	protected void handle(ServerPlayerEntity player){

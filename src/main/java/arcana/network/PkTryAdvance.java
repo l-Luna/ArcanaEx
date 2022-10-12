@@ -12,24 +12,23 @@ import net.minecraft.util.Identifier;
 
 public class PkTryAdvance extends C2SMessage{
 	
-	// identifier marshaller please
-	String entryId = "";
+	Identifier entryId;
 	
 	@ReflectivelyUtilized
 	public PkTryAdvance(NetworkContext ctx){
 		super(ctx);
 	}
 	
-	public PkTryAdvance(String entryId){
+	public PkTryAdvance(Identifier entryId){
 		super(Networking.arcCtx);
 		this.entryId = entryId;
 	}
 	
 	public PkTryAdvance(Entry entry){
-		this(entry.id().toString());
+		this(entry.id());
 	}
 	
 	protected void handle(ServerPlayerEntity player){
-		Researcher.from(player).tryAdvance(Research.getEntry(new Identifier(entryId)));
+		Researcher.from(player).tryAdvance(Research.getEntry(entryId));
 	}
 }

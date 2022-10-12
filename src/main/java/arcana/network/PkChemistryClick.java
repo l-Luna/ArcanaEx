@@ -17,13 +17,12 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
-import org.jetbrains.annotations.Nullable;
 
 public class PkChemistryClick extends C2SMessage{
 	
 	String hexId = "";
 	
-	@Optional @Nullable // these mean the same thing, but ~semantic~
+	@Optional
 	String toSet = null;
 	
 	@ReflectivelyUtilized

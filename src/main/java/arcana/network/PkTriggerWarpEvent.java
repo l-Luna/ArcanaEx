@@ -14,7 +14,7 @@ import net.minecraft.util.Identifier;
 
 public class PkTriggerWarpEvent extends S2CMessage{
 	
-	String eventId;
+	Identifier eventId;
 	boolean hadPrecursor;
 	
 	@ReflectivelyUtilized
@@ -24,12 +24,12 @@ public class PkTriggerWarpEvent extends S2CMessage{
 	
 	public PkTriggerWarpEvent(WarpEvent eventId, boolean hadPrecursor){
 		super(Networking.arcCtx);
-		this.eventId = eventId.id().toString();
+		this.eventId = eventId.id();
 		this.hadPrecursor = hadPrecursor;
 	}
 	
 	@Environment(EnvType.CLIENT)
 	protected void handle(MinecraftClient client, ClientPlayerEntity player){
-		WarpEvents.events.get(new Identifier(eventId)).performOnClient(player, hadPrecursor);
+		WarpEvents.events.get(eventId).performOnClient(player, hadPrecursor);
 	}
 }

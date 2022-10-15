@@ -360,7 +360,6 @@
   
   "recipe": {
     "infusion": {
-      // lib39 can tell them apart by type
       "instability.title": "Instability: {}",
       "instability.0": "§2Safe§0",
       "instability": [

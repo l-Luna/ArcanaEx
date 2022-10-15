@@ -5,6 +5,7 @@ import arcana.aspects.Aspects;
 import arcana.blocks.*;
 import arcana.client.particles.AspectParticleEffect;
 import arcana.enchantments.WarpingCurseEnchantment;
+import arcana.entities.ThrownAlumentumEntity;
 import arcana.items.*;
 import arcana.items.foci.EquivalentExchangeFocusItem;
 import arcana.items.foci.FireFocusItem;
@@ -27,13 +28,16 @@ import com.unascribed.lib39.fractal.api.ItemSubGroup;
 import dev.emi.trinkets.api.TrinketItem;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.SpawnGroup;
 import net.minecraft.item.*;
 import net.minecraft.item.Item.Settings;
 import net.minecraft.particle.BlockStateParticleEffect;
@@ -120,7 +124,7 @@ public final class ArcanaRegistry{
 	public static final Item ALCHEMICAL_GOLD = new Item(GROUPED);
 	public static final Item ALCHEMICAL_COPPER = new Item(GROUPED);
 	public static final Item ALTERED_IRON = new Item(GROUPED);
-	public static final Item ALUMENTUM = new Item(GROUPED);
+	public static final Item ALUMENTUM = new AlumentumItem(GROUPED);
 	
 	public static final Item WAND = new WandItem(GROUPED_SINGLE);
 	
@@ -280,6 +284,11 @@ public final class ArcanaRegistry{
 	public static ParticleType<BlockStateParticleEffect> HUNGRY_NODE_BLOCK = FabricParticleTypes.complex(BlockStateParticleEffect.PARAMETERS_FACTORY);
 	public static ParticleType<ItemStackParticleEffect> INFUSION_ITEM = FabricParticleTypes.complex(ItemStackParticleEffect.PARAMETERS_FACTORY);
 	public static ParticleType<AspectParticleEffect> ESSENTIA_STREAM = FabricParticleTypes.complex(AspectParticleEffect.PARAMETERS_FACTORY);
+	
+	// entities...
+	public static final EntityType<ThrownAlumentumEntity> THROWN_ALUMENTUM = FabricEntityTypeBuilder
+			.<ThrownAlumentumEntity>create(SpawnGroup.MISC, ThrownAlumentumEntity::new)
+			.build();
 	
 	public static final List<Item> items = new ArrayList<>();
 	public static final List<Block> blocks = new ArrayList<>();
@@ -506,6 +515,9 @@ public final class ArcanaRegistry{
 		register("hungry_node_block", HUNGRY_NODE_BLOCK);
 		register("infusion_item", INFUSION_ITEM);
 		register("essentia_stream", ESSENTIA_STREAM);
+		
+		// entity types
+		register("thrown_alumentum", THROWN_ALUMENTUM);
 	}
 	
 	private static void register(String name, Item item){
@@ -562,6 +574,10 @@ public final class ArcanaRegistry{
 	
 	private static void register(String name, ParticleType<?> particleType){
 		Registry.register(Registry.PARTICLE_TYPE, arcId(name), particleType);
+	}
+	
+	private static void register(String name, EntityType<?> entityType){
+		Registry.register(Registry.ENTITY_TYPE, arcId(name), entityType);
 	}
 	
 	private static void registerCapOnly(Cap cap){

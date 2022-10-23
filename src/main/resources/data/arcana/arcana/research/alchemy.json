@@ -70,7 +70,7 @@
           "content": "arcana:equipment/arcanium_chestplate"
         },
         {
-          "type": "crafting",
+          "type": "arcane_crafting",
           "content": "arcana:equipment/arcanium_ring"
         }
       ]

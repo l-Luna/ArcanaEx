@@ -17,16 +17,19 @@ import java.util.UUID;
 
 import static net.minecraft.entity.attribute.EntityAttributeModifier.Operation.ADDITION;
 
-public class ArcaniumRingItem extends TrinketItem{
+public class RingItem extends TrinketItem{
 	
 	// 1 base defense
-	private static Multimap<EntityAttribute, EntityAttributeModifier> modifiers;
 	private static final UUID defenseUuid = UUID.fromString("c5804818-530d-11ed-bdc3-0242ac120002");
 	private static final UUID projectingUuid = UUID.fromString("6c2b1412-530f-11ed-bdc3-0242ac120002");
 	
-	public ArcaniumRingItem(Settings settings){
+	private static final Multimap<EntityAttribute, EntityAttributeModifier> modifiers = ImmutableMultimap.of(EntityAttributes.GENERIC_ARMOR, new EntityAttributeModifier(defenseUuid, "Ring modifier", 1, ADDITION));
+	
+	private final int maxProjecting;
+	
+	public RingItem(Settings settings, int maxProjecting){
 		super(settings);
-		modifiers = ImmutableMultimap.of(EntityAttributes.GENERIC_ARMOR, new EntityAttributeModifier(defenseUuid, "Ring modifier", 1, ADDITION));
+		this.maxProjecting = maxProjecting;
 	}
 	
 	public Multimap<EntityAttribute, EntityAttributeModifier> getModifiers(ItemStack stack, SlotReference slot, LivingEntity entity, UUID uuid){
@@ -34,9 +37,8 @@ public class ArcaniumRingItem extends TrinketItem{
 		builder.putAll(super.getModifiers(stack, slot, entity, uuid));
 		builder.putAll(modifiers);
 		int projectingLevel = EnchantmentHelper.getLevel(ArcanaRegistry.PROJECTING, stack);
-		if(projectingLevel > 0){
-			builder.put(ReachEntityAttributes.REACH, new EntityAttributeModifier(projectingUuid, "Projecting modifier", projectingLevel, ADDITION));
-		}
+		if(projectingLevel > 0)
+			builder.put(ReachEntityAttributes.REACH, new EntityAttributeModifier(projectingUuid, "Projecting modifier", Math.min(projectingLevel, maxProjecting), ADDITION));
 		return builder.build();
 	}
 }

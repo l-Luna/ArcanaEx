@@ -2,7 +2,7 @@
   "type": "arcana:arcane_crafting",
   "key": {
     "X": {
-      "item": "arcana:arcanium_ingot"
+      "item": "minecraft:copper_ingot"
     }
   },
   "pattern": [
@@ -11,9 +11,9 @@
     " X "
   ],
   "aspects": [
-    "12*water"
+    "12*order"
   ],
   "result": {
-    "item": "arcana:arcanium_ring"
+    "item": "arcana:copper_ring"
   }
 }

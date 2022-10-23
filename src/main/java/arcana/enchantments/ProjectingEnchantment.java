@@ -1,6 +1,6 @@
 package arcana.enchantments;
 
-import arcana.items.ArcaniumRingItem;
+import arcana.items.RingItem;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.EquipmentSlot;
@@ -25,7 +25,7 @@ public class ProjectingEnchantment extends Enchantment{
 	}
 	
 	public boolean isAcceptableItem(ItemStack stack){
-		return stack.getItem() instanceof ArcaniumRingItem;
+		return stack.getItem() instanceof RingItem;
 	}
 	
 	public int getMaxLevel(){

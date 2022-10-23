@@ -1,0 +1,26 @@
+{
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "X": {
+      "item": "arcana:copper_ring"
+    },
+    "O": {
+      "item": "arcana:crystals/order"
+    },
+    "E": {
+      "item": "arcana:crystals/entropy"
+    }
+  },
+  "pattern": [
+    " O ",
+    "OXE",
+    "   "
+  ],
+  "aspects": [
+    "32*order",
+    "32*entropy"
+  ],
+  "result": {
+    "item": "arcana:adorned_ring"
+  }
+}

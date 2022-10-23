@@ -18,6 +18,7 @@
     "leggings": "Leggings",
     "boots": "Boots",
     "horse_armours": "Horse Armours",
+    "rings": "Arcana Rings",
 
     "aspect_crystals": "Primal Crystals",
     "cluster_seeds": "Primal Cluster Seeds",
@@ -122,7 +123,10 @@
     "arcanium_chestplate": "Arcanium Chestplate",
     "arcanium_leggings": "Arcanium Leggings",
     "arcanium_boots": "Arcanium Boots",
+
     "arcanium_ring": "Arcanium Ring",
+    "copper_ring": "Copper Ring",
+    "adorned_ring": "Adorned Ring",
 
     "boots_of_the_traveller": "Boots of the Traveller",
     "boots_of_the_sailor": "Boots of the Sailor",

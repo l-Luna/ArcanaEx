@@ -15,6 +15,9 @@
     "3*armour",
     "2*journey"
   ],
+  "+#arcana:rings": [
+    "armour"
+  ],
 
   "+#c:swords": [
     "5*weapon"

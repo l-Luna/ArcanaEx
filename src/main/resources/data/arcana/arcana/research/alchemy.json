@@ -68,6 +68,10 @@
         {
           "type": "crafting",
           "content": "arcana:equipment/arcanium_chestplate"
+        },
+        {
+          "type": "crafting",
+          "content": "arcana:equipment/arcanium_ring"
         }
       ]
     },

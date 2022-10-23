@@ -4,6 +4,7 @@ import arcana.aspects.Aspect;
 import arcana.aspects.Aspects;
 import arcana.blocks.*;
 import arcana.client.particles.AspectParticleEffect;
+import arcana.enchantments.ProjectingEnchantment;
 import arcana.enchantments.WarpingCurseEnchantment;
 import arcana.entities.ThrownAlumentumEntity;
 import arcana.items.*;
@@ -115,6 +116,7 @@ public final class ArcanaRegistry{
 	public static final Item ARCANIUM_CHESTPLATE = new ArmorItem(ArcanaArmourMaterials.ARCANIUM, EquipmentSlot.CHEST, new Settings().group(Tab.EQUIPMENT));
 	public static final Item ARCANIUM_LEGGINGS = new ArmorItem(ArcanaArmourMaterials.ARCANIUM, EquipmentSlot.LEGS, new Settings().group(Tab.EQUIPMENT));
 	public static final Item ARCANIUM_BOOTS = new ArmorItem(ArcanaArmourMaterials.ARCANIUM, EquipmentSlot.FEET, new Settings().group(Tab.EQUIPMENT));
+	public static final Item ARCANIUM_RING = new ArcaniumRingItem(new Settings().group(Tab.EQUIPMENT));
 	
 	public static final Item BOOTS_OF_THE_TRAVELLER = new BootsOfTheTravellerItem(ArcanaArmourMaterials.BOOTS_OF_THE_TRAVELLER, new Settings().group(Tab.EQUIPMENT));
 	public static final Item BOOTS_OF_THE_SAILOR = new BootsOfTheTravellerItem(ArcanaArmourMaterials.BOOTS_OF_THE_SAILOR, new Settings().group(Tab.EQUIPMENT));
@@ -269,6 +271,7 @@ public final class ArcanaRegistry{
 	
 	// enchantments...
 	public static Enchantment WARPING = new WarpingCurseEnchantment(Enchantment.Rarity.VERY_RARE, EquipmentSlot.values());
+	public static Enchantment PROJECTING = new ProjectingEnchantment();
 	
 	// features...
 	// TODO: move elsewhere? e.g. to each feature's class
@@ -320,6 +323,7 @@ public final class ArcanaRegistry{
 		register("arcanium_chestplate", ARCANIUM_CHESTPLATE);
 		register("arcanium_leggings", ARCANIUM_LEGGINGS);
 		register("arcanium_boots", ARCANIUM_BOOTS);
+		register("arcanium_ring", ARCANIUM_RING);
 		
 		register("boots_of_the_traveller", BOOTS_OF_THE_TRAVELLER);
 		register("boots_of_the_sailor", BOOTS_OF_THE_SAILOR);
@@ -480,6 +484,7 @@ public final class ArcanaRegistry{
 		
 		// enchantments
 		register("warping", WARPING);
+		register("projecting", PROJECTING);
 		
 		// features
 		register("surface_node", SURFACE_NODE_FEATURE);

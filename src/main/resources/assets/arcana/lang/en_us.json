@@ -28,7 +28,10 @@
   },
 
   // if you say so
-  "tag.trinkets.head.face": "Face Equippables",
+  "tag.trinkets": {
+    "head.face": "Face Equippables",
+    "hand.ring": "Ring Equippables"
+  },
 
   // EMI
   "emi": {
@@ -119,6 +122,7 @@
     "arcanium_chestplate": "Arcanium Chestplate",
     "arcanium_leggings": "Arcanium Leggings",
     "arcanium_boots": "Arcanium Boots",
+    "arcanium_ring": "Arcanium Ring",
 
     "boots_of_the_traveller": "Boots of the Traveller",
     "boots_of_the_sailor": "Boots of the Sailor",
@@ -252,7 +256,10 @@
   },
 
   // Enchantments
-  "enchantment.arcana.warping": "Warping",
+  "enchantment.arcana": {
+    "warping": "Warping",
+    "projecting": "Projecting"
+  },
 
   // Wand components
   "wand": {

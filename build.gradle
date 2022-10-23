@@ -38,6 +38,12 @@ repositories {
 		name = "maven.gegy.dev"
 		url = "https://maven.gegy.dev"
 	}
+    maven {
+        url "https://maven.jamieswhiteshirt.com/libs-release"
+        content {
+            includeGroup "com.jamieswhiteshirt"
+        }
+    }
 }
 
 loom {
@@ -74,6 +80,7 @@ dependencies {
 	for(String lib39_module : ["core", "weld", "tunnel", "fractal", "phantom", "lockpick", "dessicant"])
 		modApi include("com.unascribed:lib39-${lib39_module}:${lib39_version}")
 	modApi include("dev.emi:trinkets:${trinkets_version}")
+    modImplementation include("com.jamieswhiteshirt:reach-entity-attributes:${reach_attr_version}")
 
 	modRuntimeOnly ("supercoder79:databreaker:0.2.10") {
 		exclude module : "fabric-loader"

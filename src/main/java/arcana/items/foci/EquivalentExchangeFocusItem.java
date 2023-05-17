@@ -20,7 +20,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -57,11 +56,10 @@ public class EquivalentExchangeFocusItem extends FocusItem{
 		Hand otherHand = hand == Hand.MAIN_HAND ? Hand.OFF_HAND : Hand.MAIN_HAND;
 		ItemStack otherStack = player.getStackInHand(otherHand);
 		if(!otherStack.isEmpty() && otherStack.getItem() instanceof BlockItem bi){
-			Block block = bi.getBlock();
-			// TODO: respect placement state
-			BlockState toPlace = block.getDefaultState();
-			
-			Direction face = ctx.getSide();
+			// swap out the stack with `otherStack`
+			BlockState toPlace = bi.getPlacementState(new ItemPlacementContext(player, hand, otherStack, ctx.getHitResult()));
+			if(toPlace == null || !toPlace.canPlaceAt(world, pos))
+				toPlace = bi.getBlock().getDefaultState();
 			
 			if(toPlace.canPlaceAt(world, pos)){
 				BlockState old = world.getBlockState(pos);

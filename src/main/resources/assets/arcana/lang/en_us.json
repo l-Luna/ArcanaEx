@@ -412,6 +412,7 @@
     "chemistry.bone_wand_core": "Repurpose remains to contain vis",
     "chemistry.light_focus": "Convert vis into light",
     "chemistry.portable_hole_focus": "Use vis to shorten space",
+    "chemistry.equivalent_exchange_focus": "Swap matter with vis",
     "chemistry.arcanium": "Connect metals and magic",
     "chemistry.transmutation.copper": "Understand the transmutation of Copper",
     "chemistry.transmutation.gold": "Understand the transmutation of Gold",
@@ -672,6 +673,11 @@
     "portable_hole_focus.desc": "Knock knock",
     "portable_hole_focus.stage.1": "The ender pearl and chorus fruit have a curious ability to warp space.\nThese naturally occurring materials do it in a raw, unfocused form; with some careful manipulation, and the added power of the wand's vis, something much safer and more powerful should be possible.",
     "portable_hole_focus.stage.2": "I don't really understand how this works.\nI went into this expecting to create a teleportation focus, but rather than moving me through space, this focus changes the space around me. When I use it against a surface, the focus temporarily phases it out, along with everything behind it, allowing me to pass through walls and into caves.\nThe focus creates 3x3 tunnels that can reach up to 16 blocks in length, but end when they reach a full square of air. They can be oriented in any direction, including vertically.\nAny block can be phased out, including containers, and blocks that support other blocks. Such systems remain fully stable; for all intents and purposes, those blocks still exist, except for entities to look and pass through. Space is warped, but matter is untouched.\nI would do well to research the structure of space in more detail. Some other time.",
+
+    "equivalent_exchange_focus": "Wand Focus: Equivalent Exchange",
+    "equivalent_exchange_focus.desc": "Not to be confused with the law of the same name",
+    "equivalent_exchange_focus.stage.1": "When parts of the world are phased out, although I can move through that space, new blocks can't be put in their place.\nWhile it makes sense, it {i}would{r} be convenient to be able to quickly replace blocks in the world. For, y'know, building.",
+    "equivalent_exchange_focus.stage.2": "This new focus simply instantly breaks the block I look at, replacing it with whichever block is in my off-hand.\nDerived from diamond, the focus can destroy any block breakable by diamond; the casting cost scales with the mining level of the block I try to replace, up to {c3}3x{r} for anything requiring diamond.",
 
     // Alchemy Tab
     "alchemy_root": "Alchemy",

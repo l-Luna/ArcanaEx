@@ -561,6 +561,41 @@
           "content": "arcana:portable_hole_focus"
         }
       ]
+    },
+    {
+      "key": "arcana:equivalent_exchange_focus",
+      "name": "research.arcana.equivalent_exchange_focus",
+      "desc": "research.arcana.equivalent_exchange_focus.desc",
+      "icons": [
+        "arcana:equivalent_exchange_focus"
+      ],
+      "category": "arcana:auromancy",
+      "parents": [
+        "arcana:portable_hole_focus"
+      ],
+      "x": 6,
+      "y": 3,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.equivalent_exchange_focus.stage.1",
+          "requirements": [
+            "minecraft:diamond_pickaxe",
+            "minecraft:diamond_axe",
+            "minecraft:diamond_shovel",
+            "minecraft:diamond_hoe",
+            "arcana::puzzle{arcana:equivalent_exchange_focus}"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.equivalent_exchange_focus.stage.2"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:equivalent_exchange_focus"
+        }
+      ]
     }
   ],
   "puzzles": [
@@ -632,6 +667,16 @@
         "journey",
         "magic",
         "void"
+      ]
+    },
+    {
+      "key": "arcana:equivalent_exchange_focus",
+      "type": "chemistry",
+      "desc": "puzzle.arcana.chemistry.equivalent_exchange_focus",
+      "nodes": [
+        "mining",
+        "magic",
+        "order"
       ]
     },
     {

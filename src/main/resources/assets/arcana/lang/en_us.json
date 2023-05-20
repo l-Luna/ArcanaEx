@@ -523,12 +523,12 @@
     "research_expertise": "Research Expertise",
     "research_expertise.desc": "Improving my improvements",
     "research_expertise.stage.1": "Performing more research will teach me more about the research process itself.\nWith a little practical experience, I should be able to simplify the process, and offset the increasing difficulty of these puzzles.",
-    "research_expertise.stage.2": "I'm getting better at this.{~sep}Holding shift while hovering over an aspect in the research table will now show it's components. Additionally, removing an aspect from the chemistry grid has a 25% chance of returning it to the note.",
+    "research_expertise.stage.2": "I'm getting better at this.{~sep}Holding shift while hovering over an aspect in the research table will now show it's components. Additionally, removing an aspect from the chemistry grid has a {c3}25%{r} chance of returning it to the note.",
 
     "research_mastery": "Research Mastery",
     "research_mastery.desc": "You can never know all the facts.",
     "research_mastery.stage.1": "There's always more to learn, yet more exciting opportunities to chase after - and my slow, inefficient research is holding me back.",
-    "research_mastery.stage.2": "No matter how hard I work, how long I try, how much focus and effort I put in - my work is never finished.{~sep}Removing an aspect from the chemistry grid now has a 50% chance of returning it to the note. Notes also start out with more aspects.",
+    "research_mastery.stage.2": "No matter how hard I work, how long I try, how much focus and effort I put in - my work is never finished.{~sep}Removing an aspect from the chemistry grid now has a {c3}50%{r} chance of returning it to the note. Notes also start out with more aspects.",
 
     "tome_of_sharing": "Tome of Sharing",
     "tome_of_sharing.desc": "Sharing is caring",
@@ -557,6 +557,22 @@
     "paving_stones.stage.1": "My home could do with a fair few magical upgrades. Improving my mobility inside and increasing its protection are among my top priorities.",
     "paving_stones.stage.2": "Easier to walk along a flat surface than a rough cliff edge, and even moreso to walk along some enchanted floor tiles. The enchantment on the Paving Stones of Travel boost my speed and jump height when I walk on top.",
     "paving_stones.stage.3": "Like a fence, the Paving Stones of Warding will keep out hostile monsters, but also allow me to walk over them unaffected.\nI should keep in mind that any ranged attack can still pass by, and that protecting an area is worthless if monsters can simply spawn inside.\nAdditionally, monsters forced on top of Paving Stones of Warding will fall through them, just as they would any other block.",
+
+    // trying something new...
+    "mundane_jewelry": {
+      "title": "Mundane Jewelry",
+      "desc": "Fast fashion",
+      "text": "Not everything I create with arcane means needs to be arcane itself. Sometimes, magic can be nothing more than a means to an end.\nI've designed a few pieces of nice-looking jewelry. Their construction uses magic to take a couple of shortcuts - the proper techniques would take hours of my time."
+    },
+
+    "adorned_ring": {
+      "title": "Adorned Ring",
+      "desc": "On sale! Everything must go!",
+      "stages": [
+        "It's clear to me that paying attention to the quality of my equipments' construction can improve its quality noticeably.\nI wonder if this applies to other things I happen to be carrying... can I improve the efficiency of my crafting simply by wearing new clothes?",
+        "Not in the sense I was expecting. Rather than reducing efficiency loss coming from the equipment itself, I can create equipment that improves the efficiency of other parts of the process.\nThis pretty adorned ring, for example, provides a {c3}5%{r} vis discount on all crafting and casting through clever refraction of vis away from my hands.\nIt's a little underwhelming, but it's a start."
+      ]
+    },
 
     "infernal_forge": "Infernal Forge",
     "infernal_forge.stage.1": "My new perspective has enabled me to understand the ramblings of these scribbled notes, but in the time since their creation, much has been lost.{~sep}Several records speak of a hellish device, the \"In---na- F-r---e\", that used the power of a Nether being to perform the thaumaturge's wishes at no cost.\nLike many other entries, much of it has been torn out or burnt, but this is the earliest such page by far; and I believe that enough has been left behind for me to reconstitute its meaning, regardless of how well hidden it has been.",
@@ -606,7 +622,7 @@
     "leather_wand_caps": "Leather Wand Caps",
     "leather_wand_caps.desc": "Artisanal Quality",
     "leather_wand_caps.stage.1": "While metals are an obvious go-to for channelling vis, I should experiment with other, more flexible materials.\nHaving a greater degree of control over the shape and design of the cap might allow me to produce something more efficient.",
-    "leather_wand_caps.stage.2": "Wand caps crafted from leather are slightly worse than gold when it comes to drawing vis form nodes, or focusing them into spells, but do provide a decent bonus to arcane crafting.\nAny wand strapped with leather reduces the amount of vis required to craft by 8%.",
+    "leather_wand_caps.stage.2": "Wand caps crafted from leather are slightly worse than gold when it comes to drawing vis form nodes, or focusing them into spells, but do provide a decent bonus to arcane crafting.\nAny wand strapped with leather reduces the amount of vis required to craft by {c3}8%{r}.",
 
     "greatwood_wand_core": "Greatwood Wand Core",
     "greatwood_wand_core.desc": "With great power...",
@@ -621,7 +637,7 @@
     "varnished_wood_wand_core": "Varnished Wood Wand Core",
     "varnished_wood_wand_core.desc": "Finely made",
     "varnished_wood_wand_core.stage.1": "Simply using a stick of mundane wood for a wand core has predictably poor results. Part of this can be attributed to poor material qualities, but I wonder how much of this is caused by lack of effort in its preparation?",
-    "varnished_wood_wand_core.stage.2": "By properly treating the wood before use, and paying additional attention to it's design, the Varnished Wood wand core performs much better than its untreated counterpart.\nWhile it doesn't perform better than I would expect a magical wood to, it does come with a useful discount in arcane crafting. Any varnished wooden wand reduces the amount of vis required to craft by 12%.",
+    "varnished_wood_wand_core.stage.2": "By properly treating the wood before use, and paying additional attention to it's design, the Varnished Wood wand core performs much better than its untreated counterpart.\nWhile it doesn't perform better than I would expect a magical wood to, it does come with a useful discount in arcane crafting. Any varnished wooden wand reduces the amount of vis required to craft by {c3}12%{r}.",
 
     "silverwood_wand_core": "Silverwood Wand Core",
     "silverwood_wand_core.desc": "Pure Power",
@@ -632,32 +648,32 @@
     "sugar_cane_wand_core": "Sugar Cane Wand Core",
     "sugar_cane_wand_core.desc": "Light and portable",
     "sugar_cane_wand_core.stage.1": "There remains a wide variety of plants to which I can apply my alchemical technique. Perhaps they might offer some unique benefits.",
-    "sugar_cane_wand_core.stage.2": "Wands made with sugar cane have a special affinity with {aspect:air}, granting a 15% discount for it in arcane crafting.\nOtherwise, they're somewhat weaker than silverwood cores.",
+    "sugar_cane_wand_core.stage.2": "Wands made with sugar cane have a special affinity with {aspect:air}, granting a {c3}15%{r} discount for it in arcane crafting.\nOtherwise, they're somewhat weaker than silverwood cores.",
 
     "blaze_wand_core": "Blaze Wand Core",
     "blaze_wand_core.desc": "Feel the Heat",
     "blaze_wand_core.stage.1": "While fungi were a good start, other nether materials may prove useful.\nBlaze rods are already roughly the right shape, and lend themselves to alchemy in other forms.",
-    "blaze_wand_core.stage.2": "Wands made with blaze rods have a special affinity with {aspect:fire}, granting a 15% discount for it in arcane crafting.\nOtherwise, they're somewhat weaker than silverwood cores.",
+    "blaze_wand_core.stage.2": "Wands made with blaze rods have a special affinity with {aspect:fire}, granting a {c3}15%{r} discount for it in arcane crafting.\nOtherwise, they're somewhat weaker than silverwood cores.",
 
     "ice_wand_core": "Ice Wand Core",
     "ice_wand_core.desc": "Crystal clear",
     "ice_wand_core.stage.1": "I wonder what the limits of my technique are.\nIf solidity and some kind of conduction are all that's necessary, can translucent ice be used?",
-    "ice_wand_core.stage.2": "Wands made with ice have a special affinity with {aspect:water}, granting a 15% discount in it for arcane crafting.\nOtherwise, they're somewhat weaker than silverwood cores.\nIt's worth noting that these cores also have an affinity with {aspect:ice}, {aspect:crystal}, and {aspect:light}, but these have no applications in arcane crafting nor spellcasting.\nThe alchemy applied prevents the wand from ever melting, but it doesn't prevent my hand from getting painfully cold.",
+    "ice_wand_core.stage.2": "Wands made with ice have a special affinity with {aspect:water}, granting a {c3}15%{r} discount in it for arcane crafting.\nOtherwise, they're somewhat weaker than silverwood cores.\nIt's worth noting that these cores also have an affinity with {aspect:ice}, {aspect:crystal}, and {aspect:light}, but these have no applications in arcane crafting nor spellcasting.\nThe alchemy applied prevents the wand from ever melting, but it doesn't prevent my hand from getting painfully cold.",
 
     "obsidian_wand_core": "Obsidian Wand Core",
     "obsidian_wand_core.desc": "Solid and dependable",
     "obsidian_wand_core.stage.1": "Obsidian is a tough material, and in certain circumstances, can naturally carry magic of its own. It should make for a solid wand core.",
-    "obsidian_wand_core.stage.2": "Wands made with crying obsidian have a special affinity with {aspect:earth}, granting a 15% discount in it for arcane crafting.\nSurprisingly, it's own magical properties only hinder thaumaturgy, leaving it a little weaker than a silverwood core. Further research will be necessary...",
+    "obsidian_wand_core.stage.2": "Wands made with crying obsidian have a special affinity with {aspect:earth}, granting a {c3}15%{r} discount in it for arcane crafting.\nSurprisingly, it's own magical properties only hinder thaumaturgy, leaving it a little weaker than a silverwood core. Further research will be necessary...",
 
     "arcane_stone_wand_core": "Arcane Stone Wand Core",
     "arcane_stone_wand_core.desc": "Theory and application",
     "arcane_stone_wand_core.stage.1": "So far, using materials that already have an arcane touch has lead to my best results. How far does this go? Can a material as simple as arcane stone be used effectively?",
-    "arcane_stone_wand_core.stage.2": "The crystal structure within arcane stone makes it a useful wand core; wands made with it have a special affinity with {aspect:order}, and grant a 15% discount in it for arcane crafting.\nThey perform worse than silverwood, though, as is to be expected.",
+    "arcane_stone_wand_core.stage.2": "The crystal structure within arcane stone makes it a useful wand core; wands made with it have a special affinity with {aspect:order}, and grant a {c3}15%{r} discount in it for arcane crafting.\nThey perform worse than silverwood, though, as is to be expected.",
 
     "bone_wand_core": "Bone Wand Core",
     "bone_wand_core.desc": "A grim reminder",
     "bone_wand_core.stage.1": "Living things can never be entirely mundane. Every breath and dream leaves a mark on the body, and sometimes, that is just enough for it to refuse death, for just a moment.\nI have no intention of messing with mortality; but I do wonder if this leftover power can be useful to me in any way.",
-    "bone_wand_core.stage.2": "Wands made from bone have a special affinity with {aspect:entropy}, granting a 15% discount in it for arcane crafting.\nOtherwise, they're somewhat weaker than silverwood cores.\nThey also serve as a sombering reminder of my own mortality, a topic I prefer not to think about.",
+    "bone_wand_core.stage.2": "Wands made from bone have a special affinity with {aspect:entropy}, granting a {c3}15%{r} discount in it for arcane crafting.\nOtherwise, they're somewhat weaker than silverwood cores.\nThey also serve as a sombering reminder of my own mortality, a topic I prefer not to think about.",
 
     "wand_foci": "Wand Foci",
     "wand_foci.desc": "Channeling the power within",

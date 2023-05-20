@@ -111,6 +111,68 @@
       ]
     },
     {
+      "key": "arcana:mundane_jewelry",
+      "name": "research.arcana.mundane_jewelry.title",
+      "desc": "research.arcana.mundane_jewelry.desc",
+      "icons": [
+        "arcana:copper_ring"
+      ],
+      "category": "arcana:artifice",
+      "parents": [
+        "&/arcana:artifice_root"
+      ],
+      "meta": [
+        "round_base"
+      ],
+      "x": 1,
+      "y": -2,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.mundane_jewelry.text"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:equipment/copper_ring"
+        }
+      ]
+    },
+    {
+      "key": "arcana:adorned_ring",
+      "name": "research.arcana.adorned_ring.title",
+      "desc": "research.arcana.adorned_ring.desc",
+      "icons": [
+        "arcana:adorned_ring"
+      ],
+      "category": "arcana:artifice",
+      "parents": [
+        "arcana:mundane_jewelry",
+        "arcana:varnished_wood_wand_core",
+        "arcana:leather_wand_caps"
+      ],
+      "x": 2,
+      "y": -3,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.adorned_ring.stages.1",
+          "requirements": [
+            "6*#arcana:aspect_crystals",
+            "2*arcana:arcane_crafting_table",
+            "12*arcana::xp"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.adorned_ring.stages.2"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:equipment/adorned_ring"
+        }
+      ]
+    },
+    {
       "key": "arcana:monocle_of_revealing",
       "name": "research.arcana.monocle_of_revealing",
       "desc": "research.arcana.monocle_of_revealing.desc",

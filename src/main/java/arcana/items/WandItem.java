@@ -5,6 +5,8 @@ import arcana.aspects.*;
 import arcana.blocks.InfusionMatrixBlockEntity;
 import arcana.client.ArcanaClient;
 import arcana.components.AuraWorld;
+import dev.emi.trinkets.api.SlotReference;
+import dev.emi.trinkets.api.TrinketsApi;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
@@ -26,6 +28,7 @@ import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Pair;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
@@ -246,8 +249,23 @@ public class WandItem extends Item implements WarpingItem{
 		return capFrom(stack).percentOff(aspect) + coreFrom(stack).percentOff(aspect);
 	}
 	
+	public static int percentOffFromEquipment(Aspect aspect, PlayerEntity player){
+		int ret = 0;
+		
+		for(ItemStack stack : player.getArmorItems())
+			if(stack.getItem() instanceof VisDiscountingItem vdi)
+				ret += vdi.percentOff(stack, aspect, player);
+		
+		var tcomp = TrinketsApi.getTrinketComponent(player);
+		if(tcomp.isPresent())
+			for(Pair<SlotReference, ItemStack> pair : tcomp.get().getAllEquipped())
+				if(pair.getRight().getItem() instanceof VisDiscountingItem vdi)
+					ret += vdi.percentOff(pair.getRight(), aspect, player);
+		return ret;
+	}
+	
 	public static float costMultiplier(Aspect aspect, ItemStack stack,  PlayerEntity player){
-		return (100 - percentOff(aspect, stack, player)) / 100f;
+		return (100 - (percentOff(aspect, stack, player) + percentOffFromEquipment(aspect, player))) / 100f;
 	}
 	
 	public static int capacity(ItemStack stack){

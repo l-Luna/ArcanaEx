@@ -117,9 +117,9 @@ public final class ArcanaRegistry{
 	public static final Item ARCANIUM_LEGGINGS = new ArmorItem(ArcanaArmourMaterials.ARCANIUM, EquipmentSlot.LEGS, new Settings().group(Tab.EQUIPMENT));
 	public static final Item ARCANIUM_BOOTS = new ArmorItem(ArcanaArmourMaterials.ARCANIUM, EquipmentSlot.FEET, new Settings().group(Tab.EQUIPMENT));
 	
-	public static final Item ARCANIUM_RING = new RingItem(new Settings().group(Tab.EQUIPMENT), 3);
-	public static final Item COPPER_RING = new RingItem(new Settings().group(Tab.EQUIPMENT), 2);
-	public static final Item ADORNED_RING = new RingItem(new Settings().group(Tab.EQUIPMENT), 1);
+	public static final Item ARCANIUM_RING = new RingItem(new Settings().group(Tab.EQUIPMENT), 3, 0);
+	public static final Item COPPER_RING = new RingItem(new Settings().group(Tab.EQUIPMENT), 2, 0);
+	public static final Item ADORNED_RING = new RingItem(new Settings().group(Tab.EQUIPMENT), 1, 5);
 	
 	public static final Item BOOTS_OF_THE_TRAVELLER = new BootsOfTheTravellerItem(ArcanaArmourMaterials.BOOTS_OF_THE_TRAVELLER, new Settings().group(Tab.EQUIPMENT));
 	public static final Item BOOTS_OF_THE_SAILOR = new BootsOfTheTravellerItem(ArcanaArmourMaterials.BOOTS_OF_THE_SAILOR, new Settings().group(Tab.EQUIPMENT));

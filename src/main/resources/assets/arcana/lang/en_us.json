@@ -600,7 +600,7 @@
     "mystic_mist.desc": "Climate control",
     "mystic_mist.stage.1": "Rarely, if ever, is the weather in my favour. My crops are always lacking in water, and fires are free to rage across forests from innocent-looking lava pools, while the rain annoys me when I choose to travel far away.\nShould I find myself in need of it, the nearest region with snowfall may be a day's trek away - and let's not even mention the difficulty of getting lightning when you do want it.\nIf only I could control the weather myself...",
     "mystic_mist.stage.2": "Changing how the global climate functions is well outside of my reach - at least, for now.\nBut something more useful may be achievable: making miniature climates, say, the size of a room. Tiny clouds, exactly where I need them.\nI'll need to take some readings of how altitude conditions in order to figure out the requirements for cloud formation first, though.",
-    "mystic_mist.stage.3": "The Mystic Mist is a device capable of creating miniature climates as needed. When powered by a Levitator below it, and filled with a material, it can create one of the following effects:\n - Creating clouds above crops to speed up their growth, above fires on flammable materials to put them out, and over empty crucibles to fill them, using water.\n - Creating thunderclouds above itself that can produce lightning, using water and redstone.\n - Creating blizzard clouds above itself that produce snowfall, using water and snow.\n - Creating a hot, dry environment around itself, suitable for the growth of Nether Wart.",
+    "mystic_mist.stage.3": "The Mystic Mist is a device capable of creating miniature climates as needed. When powered by a Levitator below it, and filled with a material, it can create one of the following effects:\n - Creating clouds above crops to speed up their growth, above fires on flammable materials to put them out, and over empty crucibles to fill them, using water.\n - Creating thunderclouds above itself that can produce lightning, using water and redstone.\n - Creating blizzard clouds above itself that produce snowfall, using water and snow.\n - Creating a hot, dry environment around itself, suitable for the growth of Nether Wart, using lava.",
 
     "monocle_of_revealing": "Monocle of Revealing",
     "monocle_of_revealing.desc": "Eye Spy",
@@ -749,8 +749,15 @@
     "aspect_candy": "Aspect Candy",
     "aspect_candy.desc": "Chemist's Cuisine",
 
-    "essentia_distillation": "Essentia Distillation",
-    "essentia_distillation.desc": "Specks of Universe",
+    "essentia_distillation": {
+      "title": "Essentia Distillation",
+      "desc": "Specks of Universe",
+      "stages": [
+        "I believe it is now time to tackle the challenge of essentia: concentrating vis into a potent, liquid form.{~sep}The exact techniques used by the thaumaturges of the past vary significantly, and ",
+        "",
+        ""
+      ]
+    },
 
     "essentia_pipes": "Essentia Tubes, Valves, and Pumps",
     "essentia_pipes.desc": "From A to B",

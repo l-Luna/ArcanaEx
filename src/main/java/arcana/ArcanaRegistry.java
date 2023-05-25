@@ -213,6 +213,7 @@ public final class ArcanaRegistry{
 	public static final Block PAVING_STONE_OF_WARDING = new PavingStoneOfWardingBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3.5f, 7));
 	public static final Block PEDESTAL = new PedestalBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3).nonOpaque());
 	public static final Block ARCANE_LEVITATOR = new ArcaneLevitatorBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).sounds(BlockSoundGroup.WOOD).strength(2));
+	public static final Block MYSTIC_MIST = new MysticMistBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).sounds(BlockSoundGroup.WOOD).strength(2.5f));
 	
 	public static final Block ARCANIUM_BLOCK = new Block(of(Material.METAL, MapColor.PINK).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(5, 6).sounds(BlockSoundGroup.METAL));
 	public static final Block ARCANE_STONE = new Block(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3, 7));
@@ -270,6 +271,9 @@ public final class ArcanaRegistry{
 			.build();
 	public static BlockEntityType<WardedJarBlockEntity> WARDED_JAR_BE = FabricBlockEntityTypeBuilder
 			.create(WardedJarBlockEntity::new, WARDED_JAR)
+			.build();
+	public static BlockEntityType<MysticMistBlockEntity> MYSTIC_MIST_BE = FabricBlockEntityTypeBuilder
+			.create(MysticMistBlockEntity::new, MYSTIC_MIST)
 			.build();
 	
 	// enchantments...
@@ -423,6 +427,7 @@ public final class ArcanaRegistry{
 		register("paving_stone_of_warding", PAVING_STONE_OF_WARDING);
 		register("pedestal", PEDESTAL);
 		register("arcane_levitator", ARCANE_LEVITATOR);
+		register("mystic_mist", MYSTIC_MIST);
 		
 		register("arcanium_block", ARCANIUM_BLOCK);
 		register("arcane_stone", ARCANE_STONE);
@@ -487,6 +492,7 @@ public final class ArcanaRegistry{
 		register("infusion_pillar", INFUSION_PILLAR_BE);
 		register("infusion_matrix", INFUSION_MATRIX_BE);
 		register("warded_jar", WARDED_JAR_BE);
+		register("mystic_mist", MYSTIC_MIST_BE);
 		
 		// enchantments
 		register("warping", WARPING);

@@ -17,9 +17,6 @@ import net.minecraft.util.math.random.LocalRandom;
 
 public class MysticMistBlockEntityRenderer implements BlockEntityRenderer<MysticMistBlockEntity>{
 	
-//	private static final Identifier CLOUDS = new Identifier("textures/environment/clouds.png");
-//	private static final Identifier WHITE = new Identifier("textures/misc/white.png");
-	
 	// could pass it as a parameter but eh, too lazy
 	private static Sprite whiteSprite = null;
 	

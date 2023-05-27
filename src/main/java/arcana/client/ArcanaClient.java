@@ -59,6 +59,8 @@ import static arcana.Arcana.arcId;
 
 public final class ArcanaClient implements ClientModInitializer{
 	
+	public static final Identifier miscWhite = arcId("misc/white");
+	
 	public void onInitializeClient(){
 		TooltipComponentCallback.EVENT.register(data ->
 				data instanceof ItemAspectsTooltipData itd
@@ -76,6 +78,8 @@ public final class ArcanaClient implements ClientModInitializer{
 			out.accept(new ModelIdentifier(arcId("infusion_pillar_upper"), ""));
 		});
 		ClientSpriteRegistryCallback.event(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE).register((atlasTexture, registry) -> {
+			registry.register(miscWhite);
+			
 			registry.register(WardedJarBlockEntityRenderer.topTexture);
 			registry.register(WardedJarBlockEntityRenderer.sideTexture);
 			registry.register(WardedJarBlockEntityRenderer.bottomTexture);

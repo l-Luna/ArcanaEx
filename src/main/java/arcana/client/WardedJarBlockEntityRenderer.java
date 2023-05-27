@@ -47,10 +47,10 @@ public class WardedJarBlockEntityRenderer implements BlockEntityRenderer<WardedJ
 			vertex(cons, matrices, colour, 0, 1, 0, top.getMinU(), top.getMinV(), light);
 			
 			// bottom
-			vertex(cons, matrices, colour, 0, 0, 1, bottom.getMinU(), bottom.getMaxV(), light);
-			vertex(cons, matrices, colour, 1, 0, 1, bottom.getMaxU(), bottom.getMaxV(), light);
-			vertex(cons, matrices, colour, 1, 0, 0, bottom.getMaxU(), bottom.getMinV(), light);
 			vertex(cons, matrices, colour, 0, 0, 0, bottom.getMinU(), bottom.getMinV(), light);
+			vertex(cons, matrices, colour, 1, 0, 0, bottom.getMaxU(), bottom.getMinV(), light);
+			vertex(cons, matrices, colour, 1, 0, 1, bottom.getMaxU(), bottom.getMaxV(), light);
+			vertex(cons, matrices, colour, 0, 0, 1, bottom.getMinU(), bottom.getMaxV(), light);
 			
 			var sideMinV = side.getMaxV() - height * (side.getMaxV() - side.getMinV());
 			
@@ -72,7 +72,7 @@ public class WardedJarBlockEntityRenderer implements BlockEntityRenderer<WardedJ
 			vertex(cons, matrices, colour, 0, 1, 0, side.getMinU(), sideMinV, light);
 			vertex(cons, matrices, colour, 1, 1, 0, side.getMaxU(), sideMinV, light);
 			
-			// north (+Z) face
+			// south (+Z) face
 			vertex(cons, matrices, colour, 0, 0, 1, side.getMinU(), side.getMaxV(), light);
 			vertex(cons, matrices, colour, 1, 0, 1, side.getMaxU(), side.getMaxV(), light);
 			vertex(cons, matrices, colour, 1, 1, 1, side.getMaxU(), sideMinV, light);

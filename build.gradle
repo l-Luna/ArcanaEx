@@ -73,7 +73,7 @@ dependencies {
 
 	// TODO: remove when trinkets is updated
 	modImplementation "com.terraformersmc:modmenu:4.0.6"
-	modImplementation "dev.emi:emi:${emi_version}"
+	modImplementation "dev.emi:emi-fabric:${emi_version}"
 
 	for(String cc_module : ["base", "world", "entity"])
 		modImplementation include("dev.onyxstudios.cardinal-components-api:cardinal-components-${cc_module}:${cardinal_comp_version}")

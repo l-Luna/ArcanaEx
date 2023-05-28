@@ -44,7 +44,7 @@ public class EmiArcaneCraftingRecipe implements EmiRecipe{
 	protected final AspectMap aspects;
 	
 	public EmiArcaneCraftingRecipe(ShapedArcaneCraftingRecipe recipe){
-		this(recipe.getId(), padIngredients(recipe), recipe.getOutput().emi(), recipe.aspects());
+		this(recipe.getId(), padIngredients(recipe), EmiStack.of(recipe.getOutput()), recipe.aspects());
 	}
 	
 	public EmiArcaneCraftingRecipe(Identifier id, List<EmiIngredient> input, EmiStack output, AspectMap aspects){

@@ -4,13 +4,11 @@ import arcana.ArcanaRegistry;
 import arcana.aspects.Aspect;
 import arcana.aspects.Aspects;
 import arcana.aspects.ItemAspectRegistry;
-import arcana.integration.emi.AspectEmiStack.AspectEmiStackSerializer;
 import arcana.items.WandItem;
 import arcana.recipes.AlchemyRecipe;
 import arcana.recipes.InfusionRecipe;
 import arcana.recipes.ShapedArcaneCraftingRecipe;
 import arcana.screens.ResearchEntryScreen;
-import dev.emi.emi.EmiStackSerializer;
 import dev.emi.emi.api.EmiPlugin;
 import dev.emi.emi.api.EmiRegistry;
 import dev.emi.emi.api.recipe.EmiInfoRecipe;
@@ -30,15 +28,15 @@ import java.util.stream.Collectors;
 
 import static arcana.Arcana.arcId;
 
-@SuppressWarnings("UnstableApiUsage") // EmiInfoRecipe & .emi()
+@SuppressWarnings("UnstableApiUsage") // TagEmiIngredient
 public final class ArcanaEmiPlugin implements EmiPlugin{
 	
 	public static final EmiRecipeCategory ITEMS_BY_ASPECTS = new EmiRecipeCategory(arcId("items_by_aspects"), new AspectEmiStack(Aspects.ENERGY));
 	public static final EmiRecipeCategory ASPECTS_BY_ITEMS = new EmiRecipeCategory(arcId("aspects_by_items"), new AspectEmiStack(Aspects.LIGHT));
 	
-	public static final EmiRecipeCategory ARCANE_CRAFTING = new EmiRecipeCategory(arcId("arcane_crafting"), ArcanaRegistry.ARCANE_CRAFTING_TABLE.asItem().emi());
-	public static final EmiRecipeCategory ALCHEMY = new EmiRecipeCategory(arcId("alchemy"), ArcanaRegistry.CRUCIBLE.asItem().emi());
-	public static final EmiRecipeCategory INFUSION = new EmiRecipeCategory(arcId("infusion"), ArcanaRegistry.INFUSION_MATRIX.asItem().emi());
+	public static final EmiRecipeCategory ARCANE_CRAFTING = new EmiRecipeCategory(arcId("arcane_crafting"), EmiStack.of(ArcanaRegistry.ARCANE_CRAFTING_TABLE.asItem()));
+	public static final EmiRecipeCategory ALCHEMY = new EmiRecipeCategory(arcId("alchemy"), EmiStack.of(ArcanaRegistry.CRUCIBLE.asItem()));
+	public static final EmiRecipeCategory INFUSION = new EmiRecipeCategory(arcId("infusion"), EmiStack.of(ArcanaRegistry.INFUSION_MATRIX.asItem()));
 	
 	public void register(EmiRegistry registry){
 		
@@ -84,40 +82,40 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 				.filter(x -> x.getValue().size() > 0)
 				// skip items that can be grouped under a tag
 				.filter(x -> !ItemAspectRegistry.usesTagAspects(x.getKey()) || ItemAspectRegistry.hasAnyBonusAspects(x.getKey()))
-				.map(x -> new EmiAspectsByItemsRecipe(x.getKey().emi(), x.getValue().asStacks()))
+				.map(x -> new EmiAspectsByItemsRecipe(EmiStack.of(x.getKey()), x.getValue().asStacks()))
 				.forEach(registry::addRecipe);
 		
 		registry.addRecipe(new EmiWandRecipe(arcId("wand")));
 		
-		EmiStack basicWand = WandItem.basicWand().emi();
+		EmiStack basicWand = EmiStack.of(WandItem.basicWand());
 		registry.addRecipe(EmiWorldInteractionRecipe.builder()
 				.id(arcId("world_convert_arcane_crafting_table"))
-				.leftInput(Blocks.CRAFTING_TABLE.asItem().emi())
+				.leftInput(EmiStack.of(Blocks.CRAFTING_TABLE.asItem()))
 				.rightInput(basicWand, true)
-				.output(ArcanaRegistry.ARCANE_CRAFTING_TABLE.asItem().emi())
+				.output(EmiStack.of(ArcanaRegistry.ARCANE_CRAFTING_TABLE.asItem()))
 				.build());
 		registry.addRecipe(EmiWorldInteractionRecipe.builder()
 				.id(arcId("world_convert_crucible"))
-				.leftInput(Blocks.CAULDRON.asItem().emi())
+				.leftInput(EmiStack.of(Blocks.CAULDRON.asItem()))
 				.rightInput(basicWand, true)
-				.output(ArcanaRegistry.CRUCIBLE.asItem().emi())
+				.output(EmiStack.of(ArcanaRegistry.CRUCIBLE.asItem()))
 				.build());
 		
 		registry.addRecipe(new EmiInfoRecipe(
-				List.of(ArcanaRegistry.SCRIBBLED_NOTES.emi(), ArcanaRegistry.ARCANUM.emi()),
+				List.of(EmiStack.of(ArcanaRegistry.SCRIBBLED_NOTES), EmiStack.of(ArcanaRegistry.ARCANUM)),
 				List.of(Text.translatable("emi.info.arcana.arcanum")),
 				null
 		));
 		
-		registry.addWorkstation(VanillaEmiRecipeCategories.CRAFTING, ArcanaRegistry.ARCANE_CRAFTING_TABLE.asItem().emi());
-		registry.addWorkstation(ARCANE_CRAFTING, ArcanaRegistry.ARCANE_CRAFTING_TABLE.asItem().emi());
-		registry.addWorkstation(ALCHEMY, ArcanaRegistry.CRUCIBLE.asItem().emi());
-		registry.addWorkstation(INFUSION, ArcanaRegistry.INFUSION_MATRIX.asItem().emi());
+		registry.addWorkstation(VanillaEmiRecipeCategories.CRAFTING, EmiStack.of(ArcanaRegistry.ARCANE_CRAFTING_TABLE.asItem()));
+		registry.addWorkstation(ARCANE_CRAFTING, EmiStack.of(ArcanaRegistry.ARCANE_CRAFTING_TABLE.asItem()));
+		registry.addWorkstation(ALCHEMY, EmiStack.of(ArcanaRegistry.CRUCIBLE.asItem()));
+		registry.addWorkstation(INFUSION, EmiStack.of(ArcanaRegistry.INFUSION_MATRIX.asItem()));
 		
 		registry.addRecipeHandler(ArcanaRegistry.ARCANE_CRAFTING_SCREEN_HANDLER, new EmiArcaneCraftingRecipeHandler());
 		registry.addStackProvider(ResearchEntryScreen.class, new ResearchEntryScreenStackProvider());
 		
-		EmiStackSerializer.register(AspectEmiStackSerializer.ID, AspectEmiStack.class, new AspectEmiStackSerializer());
+		registry.addIngredientSerializer(AspectEmiStack.class, new AspectEmiStack.AspectEmiStackSerializer());
 		
 		var manager = registry.getRecipeManager();
 		manager.listAllOfType(ShapedArcaneCraftingRecipe.TYPE).stream().map(EmiArcaneCraftingRecipe::new).forEach(registry::addRecipe);

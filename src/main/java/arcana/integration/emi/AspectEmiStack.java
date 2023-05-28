@@ -5,12 +5,13 @@ import arcana.aspects.AspectStack;
 import arcana.aspects.Aspects;
 import arcana.client.AspectRenderer;
 import arcana.client.PinkMarkerComponent;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import dev.emi.emi.EmiPort;
-import dev.emi.emi.EmiStackSerializer;
 import dev.emi.emi.EmiUtil;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
+import dev.emi.emi.api.stack.serializer.EmiIngredientSerializer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
 import net.minecraft.client.util.math.MatrixStack;
@@ -23,16 +24,12 @@ import net.minecraft.util.Identifier;
 import java.util.ArrayList;
 import java.util.List;
 
-import static arcana.Arcana.arcId;
-
 public class AspectEmiStack extends EmiStack{
 	
 	private AspectStack stack;
-	private final AspectEntry entry;
 	
 	public AspectEmiStack(AspectStack stack){
 		this.stack = stack;
-		entry = new AspectEntry(stack.type());
 	}
 	
 	public AspectEmiStack(Aspect aspect, int amount){
@@ -61,10 +58,6 @@ public class AspectEmiStack extends EmiStack{
 	
 	public Object getKey(){
 		return stack.type();
-	}
-	
-	public Entry<?> getEntry(){
-		return entry;
 	}
 	
 	public Identifier getId(){
@@ -98,37 +91,21 @@ public class AspectEmiStack extends EmiStack{
 		return stack.amount();
 	}
 	
-	public static class AspectEntry extends Entry<Aspect>{
+	public static class AspectEmiStackSerializer implements EmiIngredientSerializer<AspectEmiStack>{
 		
-		public AspectEntry(Aspect value){
-			super(value);
-		}
-		
-		public Class<? extends Aspect> getType(){
-			return Aspect.class;
-		}
-		
-		public boolean equals(Object obj){
-			return obj instanceof AspectEntry e && e.getValue().equals(getValue());
-		}
-	}
-	
-	public static class AspectEmiStackSerializer implements EmiStackSerializer<AspectEmiStack>{
-		
-		public static final Identifier ID = arcId("aspect");
-		
-		public Identifier getId(){
-			return ID;
-		}
-		
-		public JsonObject toJson(AspectEmiStack stack){
+		public JsonObject serialize(AspectEmiStack stack){
 			JsonObject obj = new JsonObject();
 			obj.addProperty("id", stack.stack.type().id().toString());
 			obj.addProperty("amount", stack.stack.amount());
 			return obj;
 		}
 		
-		public EmiIngredient toStack(JsonObject object){
+		public String getType(){
+			return "arcana:aspect";
+		}
+		
+		public EmiIngredient deserialize(JsonElement elem){
+			JsonObject object = elem.getAsJsonObject();
 			Identifier id = new Identifier(object.get("id").getAsString());
 			int amount = object.get("amount").getAsInt();
 			return new AspectEmiStack(Aspects.byName(id), amount);

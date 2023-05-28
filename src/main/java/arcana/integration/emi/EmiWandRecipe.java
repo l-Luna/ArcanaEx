@@ -37,7 +37,7 @@ public final class EmiWandRecipe extends EmiPatternCraftingRecipe{
 						EmiIngredient.of(CAPS.stream().map(EmiStack::of).collect(Collectors.toList())),
 						EmiIngredient.of(CORES.stream().map(EmiStack::of).collect(Collectors.toList()))
 				),
-				WandItem.basicWand().emi(),
+				EmiStack.of(WandItem.basicWand()),
 				id,
 				false
 		);
@@ -46,14 +46,14 @@ public final class EmiWandRecipe extends EmiPatternCraftingRecipe{
 	public SlotWidget getInputWidget(int slot, int x, int y){
 		if(slot == 0 || slot == 8){
 			return new GeneratedSlotWidget(
-					rng -> getCap(rng).emi(),
+					rng -> EmiStack.of(getCap(rng)),
 					unique,
 					x, y);
 		}else if(slot == 4){
 			return new GeneratedSlotWidget(
 					rng -> {
 						getCap(rng); // sync up the ingredient and output cores
-						return getCore(rng).emi();
+						return EmiStack.of(getCore(rng));
 					},
 					unique,
 					x, y);
@@ -63,7 +63,7 @@ public final class EmiWandRecipe extends EmiPatternCraftingRecipe{
 	
 	public SlotWidget getOutputWidget(int x, int y){
 		return new GeneratedSlotWidget(
-				rng -> WandItem.withCapAndCore(getCapAsCap(rng), getCoreAsCore(rng)).emi(),
+				rng -> EmiStack.of(WandItem.withCapAndCore(getCapAsCap(rng), getCoreAsCore(rng))),
 				unique,
 				x, y);
 	}

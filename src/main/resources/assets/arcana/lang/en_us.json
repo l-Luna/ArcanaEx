@@ -25,7 +25,10 @@
     "arcane_stones": "Arcane Stones",
 
     "silverwood_logs": "Silverwood Logs",
-    "greatwood_logs": "Greatwood Logs"
+    "greatwood_logs": "Greatwood Logs",
+
+    "crucible_heating_blocks": "Crucible Heating Blocks",
+    "crucible_heating_fluids": "Crucible Heating Fluids"
   },
 
   // if you say so

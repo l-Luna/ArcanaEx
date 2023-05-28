@@ -28,7 +28,7 @@ public class EmiAlchemyRecipe implements EmiRecipe{
 	protected final AspectMap aspects;
 	
 	public EmiAlchemyRecipe(AlchemyRecipe recipe){
-		this(recipe.getId(), EmiIngredient.of(recipe.getIngredients().get(0)), recipe.getOutput().emi(), recipe.getAspects());
+		this(recipe.getId(), EmiIngredient.of(recipe.getIngredients().get(0)), EmiStack.of(recipe.getOutput()), recipe.getAspects());
 	}
 	
 	public EmiAlchemyRecipe(Identifier id, EmiIngredient input, EmiStack output, AspectMap aspects){

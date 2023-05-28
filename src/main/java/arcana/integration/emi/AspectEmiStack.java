@@ -5,13 +5,10 @@ import arcana.aspects.AspectStack;
 import arcana.aspects.Aspects;
 import arcana.client.AspectRenderer;
 import arcana.client.PinkMarkerComponent;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import dev.emi.emi.EmiPort;
 import dev.emi.emi.EmiUtil;
-import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
-import dev.emi.emi.api.stack.serializer.EmiIngredientSerializer;
+import dev.emi.emi.api.stack.serializer.EmiStackSerializer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
 import net.minecraft.client.util.math.MatrixStack;
@@ -91,7 +88,7 @@ public class AspectEmiStack extends EmiStack{
 		return stack.amount();
 	}
 	
-	public static class AspectEmiStackSerializer implements EmiIngredientSerializer<AspectEmiStack>{
+	/*public static class AspectEmiStackSerializer implements EmiIngredientSerializer<AspectEmiStack>{
 		
 		public JsonObject serialize(AspectEmiStack stack){
 			JsonObject obj = new JsonObject();
@@ -109,6 +106,17 @@ public class AspectEmiStack extends EmiStack{
 			Identifier id = new Identifier(object.get("id").getAsString());
 			int amount = object.get("amount").getAsInt();
 			return new AspectEmiStack(Aspects.byName(id), amount);
+		}
+	}*/
+	
+	public static class AspectEmiStackSerializer implements EmiStackSerializer<AspectEmiStack>{
+		
+		public EmiStack create(Identifier id, NbtCompound nbt, long amount){
+			return new AspectEmiStack(Aspects.byName(id), (int)amount);
+		}
+		
+		public String getType(){
+			return "arcana_aspect";
 		}
 	}
 }

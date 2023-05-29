@@ -10,12 +10,16 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.ColorHelper;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.noise.PerlinNoiseSampler;
 import net.minecraft.util.math.random.LocalRandom;
 
 public class MysticMistBlockEntityRenderer implements BlockEntityRenderer<MysticMistBlockEntity>{
+	
+	public static final Identifier RAIN = new Identifier("environment/rain");
+	public static final Identifier SNOW = new Identifier("environment/snow");
 	
 	// could pass it as a parameter but eh, too lazy
 	private static Sprite whiteSprite = null;
@@ -32,20 +36,57 @@ public class MysticMistBlockEntityRenderer implements BlockEntityRenderer<Mystic
 		LocalRandom rng = new LocalRandom(entity.hashCode());
 		PerlinNoiseSampler p = new PerlinNoiseSampler(rng);
 		
-		whiteSprite = MinecraftClient.getInstance().getSpriteAtlas(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE).apply(ArcanaClient.miscWhite);
+		var atlas = MinecraftClient.getInstance().getSpriteAtlas(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE);
+		whiteSprite = atlas.apply(ArcanaClient.miscWhite);
 		VertexConsumer vc = vcp.getBuffer(RenderLayer.getTranslucent());
 		
 		final int lim = 32;
 		for(int x = 0; x < lim; x++)
 			for(int z = 0; z < lim; z++){
-				if(p.sample((x + diff) * .3, 0, (z + diff) * .3) >= 0.18){
+				if(p.sample((x + diff) * .3, 0, (z + diff) * .3) >= 0.13){
 					float opacity = 1;
 					if(x == 0 || z == 0)
 						opacity = offset;
 					else if(x == lim - 1 || z == lim - 1)
 						opacity = 1 - offset;
 					
-					colCuboid(vc, matrices, ((int)(opacity * 255) << 24) + 0x00FFFFFF, x + offset, 1.2f, z + offset, 1, 0.35f, 1, light);
+					// clouds
+					colCuboid(vc, matrices, ((int)(opacity * 255) << 24) + 0x00EEEEFE, x + offset, 1.2f, z + offset, 1, 0.35f, 1, light);
+				}
+			}
+		
+		VertexConsumer rainbuf = vcp.getBuffer(RenderLayer.getCutout());
+		Sprite rainSprite = atlas.apply(SNOW);
+		
+		for(int x = 0; x < lim; x++)
+			for(int z = 0; z < lim; z++){
+				if(p.sample((x + diff) * .3, 0, (z + diff) * .3) >= 0.13){
+					// and rain
+					var mat = matrices.peek().getPositionMatrix();
+					rainbuf.vertex(mat, x + offset, 1.2f, z + offset)
+							.color(0xFFFFFFFF)
+							.texture(rainSprite.getMinU(), rainSprite.getMinV())
+							.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
+							.normal(1, 0, 0)
+							.next();
+					rainbuf.vertex(mat, (x + 1) + offset, 1.2f, (z + 1) + offset)
+							.color(0xFFFFFFFF)
+							.texture(rainSprite.getMinU(), rainSprite.getMaxV())
+							.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
+							.normal(1, 0, 0)
+							.next();
+					rainbuf.vertex(mat, (x + 1) + offset, 1.2f - 6, (z + 1) + offset)
+							.color(0xFFFFFFFF)
+							.texture(rainSprite.getMaxU(), rainSprite.getMaxV())
+							.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
+							.normal(1, 0, 0)
+							.next();
+					rainbuf.vertex(mat, x + offset, 1.2f - 6, z + offset)
+							.color(0xFFFFFFFF)
+							.texture(rainSprite.getMaxU(), rainSprite.getMinV())
+							.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
+							.normal(1, 0, 0)
+							.next();
 				}
 			}
 	}

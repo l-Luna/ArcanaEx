@@ -83,6 +83,9 @@ public final class ArcanaClient implements ClientModInitializer{
 			registry.register(WardedJarBlockEntityRenderer.topTexture);
 			registry.register(WardedJarBlockEntityRenderer.sideTexture);
 			registry.register(WardedJarBlockEntityRenderer.bottomTexture);
+			
+			registry.register(MysticMistBlockEntityRenderer.RAIN);
+			registry.register(MysticMistBlockEntityRenderer.SNOW);
 		});
 		
 		ColorProviderRegistry.BLOCK.register(

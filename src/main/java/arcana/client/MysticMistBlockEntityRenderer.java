@@ -57,87 +57,98 @@ public class MysticMistBlockEntityRenderer implements BlockEntityRenderer<Mystic
 			}
 		
 		VertexConsumer rainbuf = vcp.getBuffer(RenderLayer.getCutout());
-		Sprite rainSprite = atlas.apply(RAIN);
+		Sprite rainSprite = atlas.apply(SNOW);
 		
-		float minU = rainSprite.getMinU();
-		float maxU = MathHelper.lerp(1, rainSprite.getMinU(), rainSprite.getMaxU());
-		float minV = rainSprite.getMinV();
-		float maxV = MathHelper.lerp(1, rainSprite.getMinV(), rainSprite.getMaxV());
+		float texMinU = rainSprite.getMinU();
+		float texMaxU = MathHelper.lerp(1, rainSprite.getMinU(), rainSprite.getMaxU());
+		float texMinV = rainSprite.getMinV();
+		float texMaxV = MathHelper.lerp(1, rainSprite.getMinV(), rainSprite.getMaxV());
 		
 		final float sqrt2 = MathHelper.SQUARE_ROOT_OF_TWO;
+		final float fallrate = 256;
 		
 		for(int x = 0; x < lim; x++)
 			for(int z = 0; z < lim; z++){
 				if(p.sample((x + diff) * .3, 0, (z + diff) * .3) >= 0.13){
-					for(int d = 0; d < 2; d++){
-						matrices.push();
-						matrices.translate(x + offset, 1.2f, z + offset);
-						matrices.translate(1, 0, 0);
-						if(d == 1)
-							matrices.translate(0, 0, 1);
-						matrices.scale(4 * sqrt2, 4 * sqrt2, 4 * sqrt2);
-						matrices.multiply(Quaternion.fromEulerXyz(0, MathHelper.HALF_PI / 2f, 0));
-						matrices.multiply(Quaternion.fromEulerXyz(0, 0, 3 * MathHelper.HALF_PI));
-						
-						if(d == 1)
-							matrices.multiply(Quaternion.fromEulerXyz(MathHelper.HALF_PI, 0, 0));
-						
-						// and rain
-						var mat = matrices.peek().getPositionMatrix();
-						
-						// forward
-						rainbuf.vertex(mat, 1, 0, 0)
-								.color(0xFFFFFFFF)
-								.texture(minU, maxV)
-								.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
-								.normal(1, 0, 0)
-								.next();
-						rainbuf.vertex(mat, 1, -1 / 4f, 0)
-								.color(0xFFFFFFFF)
-								.texture(maxU, maxV)
-								.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
-								.normal(1, 0, 0)
-								.next();
-						rainbuf.vertex(mat, 0, -1 / 4f, 0)
-								.color(0xFFFFFFFF)
-								.texture(maxU, minV)
-								.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
-								.normal(1, 0, 0)
-								.next();
-						rainbuf.vertex(mat, 0, 0, 0)
-								.color(0xFFFFFFFF)
-								.texture(minU, minV)
-								.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
-								.normal(1, 0, 0)
-								.next();
-						
-						// and back
-						rainbuf.vertex(mat, 0, 0, 0)
-								.color(0xFFFFFFFF)
-								.texture(minU, minV)
-								.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
-								.normal(1, 0, 0)
-								.next();
-						rainbuf.vertex(mat, 0, -1 / 4f, 0)
-								.color(0xFFFFFFFF)
-								.texture(maxU, minV)
-								.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
-								.normal(1, 0, 0)
-								.next();
-						rainbuf.vertex(mat, 1, -1 / 4f, 0)
-								.color(0xFFFFFFFF)
-								.texture(maxU, maxV)
-								.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
-								.normal(1, 0, 0)
-								.next();
-						rainbuf.vertex(mat, 1, 0, 0)
-								.color(0xFFFFFFFF)
-								.texture(minU, maxV)
-								.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
-								.normal(1, 0, 0)
-								.next();
-						
-						matrices.pop();
+					// need two parts to animate it on an atlas
+					for(int part = 0; part < 2; part++){
+						float lOffset = (float)(((time / fallrate) % 1) + Math.abs(p.sample((x + diff), 0, (z + diff)))) % 1;
+						var itv = MathHelper.lerp(1 - lOffset, texMinV, texMaxV);
+						float startY = (part == 0) ? 0 : lOffset,
+						      endY   = (part == 0) ? lOffset : 1;
+						float minV = (part == 0) ? itv : texMinV,
+						      maxV = (part == 0) ? texMaxV : itv;
+						// X-shape
+						for(int direction = 0; direction < 2; direction++){
+							matrices.push();
+							matrices.translate(x + offset, 1.2f, z + offset);
+							matrices.translate(1, 0, 0);
+							if(direction == 1)
+								matrices.translate(0, 0, 1);
+							matrices.scale(4 * sqrt2, 4 * sqrt2, 4 * sqrt2);
+							matrices.multiply(Quaternion.fromEulerXyz(0, MathHelper.HALF_PI / 2f, 0));
+							matrices.multiply(Quaternion.fromEulerXyz(0, 0, 3 * MathHelper.HALF_PI));
+							
+							if(direction == 1)
+								matrices.multiply(Quaternion.fromEulerXyz(MathHelper.HALF_PI, 0, 0));
+							
+							// and rain
+							var mat = matrices.peek().getPositionMatrix();
+							
+							// forward
+							rainbuf.vertex(mat, endY, 0, 0)
+									.color(0xFFFFFFFF)
+									.texture(texMinU, maxV)
+									.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
+									.normal(1, 0, 0)
+									.next();
+							rainbuf.vertex(mat, endY, -1 / 4f, 0)
+									.color(0xFFFFFFFF)
+									.texture(texMaxU, maxV)
+									.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
+									.normal(1, 0, 0)
+									.next();
+							rainbuf.vertex(mat, startY, -1 / 4f, 0)
+									.color(0xFFFFFFFF)
+									.texture(texMaxU, minV)
+									.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
+									.normal(1, 0, 0)
+									.next();
+							rainbuf.vertex(mat, startY, 0, 0)
+									.color(0xFFFFFFFF)
+									.texture(texMinU, minV)
+									.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
+									.normal(1, 0, 0)
+									.next();
+							
+							// and back
+							rainbuf.vertex(mat, startY, 0, 0)
+									.color(0xFFFFFFFF)
+									.texture(texMinU, minV)
+									.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
+									.normal(1, 0, 0)
+									.next();
+							rainbuf.vertex(mat, startY, -1 / 4f, 0)
+									.color(0xFFFFFFFF)
+									.texture(texMaxU, minV)
+									.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
+									.normal(1, 0, 0)
+									.next();
+							rainbuf.vertex(mat, endY, -1 / 4f, 0)
+									.color(0xFFFFFFFF)
+									.texture(texMaxU, maxV)
+									.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
+									.normal(1, 0, 0)
+									.next();
+							rainbuf.vertex(mat, endY, 0, 0)
+									.color(0xFFFFFFFF)
+									.texture(texMinU, maxV)
+									.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
+									.normal(1, 0, 0)
+									.next();
+							
+							matrices.pop();
+						}
 					}
 				}
 			}

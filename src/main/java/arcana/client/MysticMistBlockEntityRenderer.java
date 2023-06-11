@@ -13,6 +13,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.ColorHelper;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Quaternion;
 import net.minecraft.util.math.noise.PerlinNoiseSampler;
 import net.minecraft.util.math.random.LocalRandom;
 
@@ -56,37 +57,88 @@ public class MysticMistBlockEntityRenderer implements BlockEntityRenderer<Mystic
 			}
 		
 		VertexConsumer rainbuf = vcp.getBuffer(RenderLayer.getCutout());
-		Sprite rainSprite = atlas.apply(SNOW);
+		Sprite rainSprite = atlas.apply(RAIN);
+		
+		float minU = rainSprite.getMinU();
+		float maxU = MathHelper.lerp(1, rainSprite.getMinU(), rainSprite.getMaxU());
+		float minV = rainSprite.getMinV();
+		float maxV = MathHelper.lerp(1, rainSprite.getMinV(), rainSprite.getMaxV());
+		
+		final float sqrt2 = MathHelper.SQUARE_ROOT_OF_TWO;
 		
 		for(int x = 0; x < lim; x++)
 			for(int z = 0; z < lim; z++){
 				if(p.sample((x + diff) * .3, 0, (z + diff) * .3) >= 0.13){
-					// and rain
-					var mat = matrices.peek().getPositionMatrix();
-					rainbuf.vertex(mat, x + offset, 1.2f, z + offset)
-							.color(0xFFFFFFFF)
-							.texture(rainSprite.getMinU(), rainSprite.getMinV())
-							.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
-							.normal(1, 0, 0)
-							.next();
-					rainbuf.vertex(mat, (x + 1) + offset, 1.2f, (z + 1) + offset)
-							.color(0xFFFFFFFF)
-							.texture(rainSprite.getMinU(), rainSprite.getMaxV())
-							.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
-							.normal(1, 0, 0)
-							.next();
-					rainbuf.vertex(mat, (x + 1) + offset, 1.2f - 6, (z + 1) + offset)
-							.color(0xFFFFFFFF)
-							.texture(rainSprite.getMaxU(), rainSprite.getMaxV())
-							.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
-							.normal(1, 0, 0)
-							.next();
-					rainbuf.vertex(mat, x + offset, 1.2f - 6, z + offset)
-							.color(0xFFFFFFFF)
-							.texture(rainSprite.getMaxU(), rainSprite.getMinV())
-							.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
-							.normal(1, 0, 0)
-							.next();
+					for(int d = 0; d < 2; d++){
+						matrices.push();
+						matrices.translate(x + offset, 1.2f, z + offset);
+						matrices.translate(1, 0, 0);
+						if(d == 1)
+							matrices.translate(0, 0, 1);
+						matrices.scale(4 * sqrt2, 4 * sqrt2, 4 * sqrt2);
+						matrices.multiply(Quaternion.fromEulerXyz(0, MathHelper.HALF_PI / 2f, 0));
+						matrices.multiply(Quaternion.fromEulerXyz(0, 0, 3 * MathHelper.HALF_PI));
+						
+						if(d == 1)
+							matrices.multiply(Quaternion.fromEulerXyz(MathHelper.HALF_PI, 0, 0));
+						
+						// and rain
+						var mat = matrices.peek().getPositionMatrix();
+						
+						// forward
+						rainbuf.vertex(mat, 1, 0, 0)
+								.color(0xFFFFFFFF)
+								.texture(minU, maxV)
+								.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
+								.normal(1, 0, 0)
+								.next();
+						rainbuf.vertex(mat, 1, -1 / 4f, 0)
+								.color(0xFFFFFFFF)
+								.texture(maxU, maxV)
+								.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
+								.normal(1, 0, 0)
+								.next();
+						rainbuf.vertex(mat, 0, -1 / 4f, 0)
+								.color(0xFFFFFFFF)
+								.texture(maxU, minV)
+								.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
+								.normal(1, 0, 0)
+								.next();
+						rainbuf.vertex(mat, 0, 0, 0)
+								.color(0xFFFFFFFF)
+								.texture(minU, minV)
+								.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
+								.normal(1, 0, 0)
+								.next();
+						
+						// and back
+						rainbuf.vertex(mat, 0, 0, 0)
+								.color(0xFFFFFFFF)
+								.texture(minU, minV)
+								.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
+								.normal(1, 0, 0)
+								.next();
+						rainbuf.vertex(mat, 0, -1 / 4f, 0)
+								.color(0xFFFFFFFF)
+								.texture(maxU, minV)
+								.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
+								.normal(1, 0, 0)
+								.next();
+						rainbuf.vertex(mat, 1, -1 / 4f, 0)
+								.color(0xFFFFFFFF)
+								.texture(maxU, maxV)
+								.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
+								.normal(1, 0, 0)
+								.next();
+						rainbuf.vertex(mat, 1, 0, 0)
+								.color(0xFFFFFFFF)
+								.texture(minU, maxV)
+								.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
+								.normal(1, 0, 0)
+								.next();
+						
+						matrices.pop();
+					}
 				}
 			}
 	}
@@ -148,5 +200,9 @@ public class MysticMistBlockEntityRenderer implements BlockEntityRenderer<Mystic
 		colVertex(cons, ms, colour, 0, 1, 1, light, 0, 0, 1);
 		
 		ms.pop();
+	}
+	
+	public boolean rendersOutsideBoundingBox(MysticMistBlockEntity blockEntity){
+		return true;
 	}
 }

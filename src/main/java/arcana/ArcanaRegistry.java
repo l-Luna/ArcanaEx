@@ -214,6 +214,7 @@ public final class ArcanaRegistry{
 	public static final Block PEDESTAL = new PedestalBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3).nonOpaque());
 	public static final Block ARCANE_LEVITATOR = new ArcaneLevitatorBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).sounds(BlockSoundGroup.WOOD).strength(2));
 	public static final Block MYSTIC_MIST = new MysticMistBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).sounds(BlockSoundGroup.WOOD).strength(2.5f));
+	public static final Block WARDED_CAMPFIRE = new WardedCampfireBlock(of(Material.WOOD).dropsSelf().renderLayer(CUTOUT).strength(2).sounds(BlockSoundGroup.WOOD).luminance(whenLit(15)).nonOpaque());
 	
 	public static final Block ARCANIUM_BLOCK = new Block(of(Material.METAL, MapColor.PINK).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(5, 6).sounds(BlockSoundGroup.METAL));
 	public static final Block ARCANE_STONE = new Block(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3, 7));
@@ -274,6 +275,9 @@ public final class ArcanaRegistry{
 			.build();
 	public static BlockEntityType<MysticMistBlockEntity> MYSTIC_MIST_BE = FabricBlockEntityTypeBuilder
 			.create(MysticMistBlockEntity::new, MYSTIC_MIST)
+			.build();
+	public static BlockEntityType<WardedCampfireBlockEntity> WARDED_CAMPFIRE_BE = FabricBlockEntityTypeBuilder
+			.create(WardedCampfireBlockEntity::new, WARDED_CAMPFIRE)
 			.build();
 	
 	// enchantments...
@@ -428,6 +432,7 @@ public final class ArcanaRegistry{
 		register("pedestal", PEDESTAL);
 		register("arcane_levitator", ARCANE_LEVITATOR);
 		register("mystic_mist", MYSTIC_MIST);
+		register("warded_campfire", WARDED_CAMPFIRE);
 		
 		register("arcanium_block", ARCANIUM_BLOCK);
 		register("arcane_stone", ARCANE_STONE);
@@ -493,6 +498,7 @@ public final class ArcanaRegistry{
 		register("infusion_matrix", INFUSION_MATRIX_BE);
 		register("warded_jar", WARDED_JAR_BE);
 		register("mystic_mist", MYSTIC_MIST_BE);
+		register("warded_campfire", WARDED_CAMPFIRE_BE);
 		
 		// enchantments
 		register("warping", WARPING);

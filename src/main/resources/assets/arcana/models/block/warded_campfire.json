@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/template_campfire",
+  "textures": {
+    "fire": "arcana:block/warded_campfire_fire",
+    "lit_log": "arcana:block/warded_campfire_log_lit",
+    "particle": "arcana:block/warded_campfire_log",
+    "log": "arcana:block/warded_campfire_log"
+  }
+}

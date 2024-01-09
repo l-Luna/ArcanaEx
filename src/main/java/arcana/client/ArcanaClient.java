@@ -7,6 +7,7 @@ import arcana.aspects.Aspects;
 import arcana.aspects.ItemAspectsTooltipData;
 import arcana.aspects.WandAspectsTooltipData;
 import arcana.blocks.ArcanaBlockSettings;
+import arcana.blocks.WardedCampfireBlockEntity;
 import arcana.client.particles.EssentiaStreamParticle;
 import arcana.client.particles.HungryNodeBlockParticle;
 import arcana.client.particles.HungryNodeDiscParticle;
@@ -43,6 +44,8 @@ import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.item.TooltipData;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.block.entity.BlockEntityRenderer;
+import net.minecraft.client.render.block.entity.CampfireBlockEntityRenderer;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.ModelIdentifier;
@@ -116,6 +119,9 @@ public final class ArcanaClient implements ClientModInitializer{
 		BlockEntityRendererRegistry.register(ArcanaRegistry.INFUSION_MATRIX_BE, ctx -> new InfusionMatrixBlockEntityRenderer());
 		BlockEntityRendererRegistry.register(ArcanaRegistry.WARDED_JAR_BE, ctx -> new WardedJarBlockEntityRenderer());
 		BlockEntityRendererRegistry.register(ArcanaRegistry.MYSTIC_MIST_BE, ctx -> new MysticMistBlockEntityRenderer());
+		// ohhhh but the variance! the variance! it's so bad!
+		BlockEntityRendererRegistry.register(ArcanaRegistry.WARDED_CAMPFIRE_BE, ctx ->
+				(BlockEntityRenderer<WardedCampfireBlockEntity>)(BlockEntityRenderer<?>)new CampfireBlockEntityRenderer(ctx));
 		
 		EntityRendererRegistry.register(ArcanaRegistry.THROWN_ALUMENTUM, ThrownAlumentumEntityRenderer::new);
 		

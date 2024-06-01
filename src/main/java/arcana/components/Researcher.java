@@ -22,13 +22,11 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Box;
 
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.stream.Collectors;
 
 import static arcana.Arcana.arcId;
 
-@ParametersAreNonnullByDefault
 public final class Researcher implements Component, AutoSyncedComponent{
 	
 	public static final ComponentKey<Researcher> KEY = ComponentRegistryV3.INSTANCE.getOrCreate(arcId("researcher"), Researcher.class);

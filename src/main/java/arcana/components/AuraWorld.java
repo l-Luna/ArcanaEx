@@ -20,14 +20,12 @@ import net.minecraft.world.RaycastContext;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.World;
 
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static arcana.Arcana.arcId;
 
-@ParametersAreNonnullByDefault
 public final class AuraWorld implements Component, CommonTickingComponent, AutoSyncedComponent{
 	
 	public static final ComponentKey<AuraWorld> KEY = ComponentRegistryV3.INSTANCE.getOrCreate(arcId("aura_world"), AuraWorld.class);

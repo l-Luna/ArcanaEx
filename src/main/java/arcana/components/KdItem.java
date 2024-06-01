@@ -9,12 +9,9 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.ParametersAreNonnullByDefault;
-
 import static arcana.Arcana.arcId;
 
 // tracks the Knowledgeable Dropper that dropped this ItemEntity
-@ParametersAreNonnullByDefault
 public class KdItem implements Component, AutoSyncedComponent{
 	
 	public static ComponentKey<KdItem> KEY = ComponentRegistryV3.INSTANCE.getOrCreate(arcId("kd_item"), KdItem.class);

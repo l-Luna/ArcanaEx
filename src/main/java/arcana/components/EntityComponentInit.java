@@ -5,9 +5,6 @@ import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
 import dev.onyxstudios.cca.api.v3.entity.RespawnCopyStrategy;
 import net.minecraft.entity.ItemEntity;
 
-import javax.annotation.ParametersAreNonnullByDefault;
-
-@ParametersAreNonnullByDefault
 public final class EntityComponentInit implements EntityComponentInitializer{
 	
 	public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry){

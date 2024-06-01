@@ -76,11 +76,23 @@ dependencies {
 	modImplementation "dev.emi:emi-fabric:${emi_version}"
 
 	for(String cc_module : ["base", "world", "entity"])
-		modImplementation include("dev.onyxstudios.cardinal-components-api:cardinal-components-${cc_module}:${cardinal_comp_version}")
+		modImplementation include("dev.onyxstudios.cardinal-components-api:cardinal-components-${cc_module}:${cardinal_comp_version}") {
+			exclude(group: "net.fabricmc.fabric-api")
+			exclude(group: "net.fabricmc", module: "fabric-loader")
+		}
 	for(String lib39_module : ["core", "weld", "tunnel", "fractal", "phantom", "lockpick", "dessicant"])
-		modApi include("com.unascribed:lib39-${lib39_module}:${lib39_version}")
-	modApi include("dev.emi:trinkets:${trinkets_version}")
-    modImplementation include("com.jamieswhiteshirt:reach-entity-attributes:${reach_attr_version}")
+		modApi include("com.unascribed:lib39-${lib39_module}:${lib39_version}"){
+			exclude(group: "net.fabricmc.fabric-api")
+			exclude(group: "net.fabricmc", module: "fabric-loader")
+		}
+	modApi include("dev.emi:trinkets:${trinkets_version}"){
+		exclude(group: "net.fabricmc.fabric-api")
+		exclude(group: "net.fabricmc", module: "fabric-loader")
+	}
+    modImplementation include("com.jamieswhiteshirt:reach-entity-attributes:${reach_attr_version}"){
+		exclude(group: "net.fabricmc.fabric-api")
+		exclude(group: "net.fabricmc", module: "fabric-loader")
+	}
 
 	modRuntimeOnly ("supercoder79:databreaker:0.2.10") {
 		exclude module : "fabric-loader"

@@ -1,7 +1,7 @@
 package arcana.recipes;
 
 import arcana.aspects.AspectMap;
-import arcana.blocks.CrucibleBlockEntity;
+import arcana.blocks.be.CrucibleBlockEntity;
 import arcana.research.Parent;
 import arcana.research.Research;
 import net.minecraft.inventory.SimpleInventory;

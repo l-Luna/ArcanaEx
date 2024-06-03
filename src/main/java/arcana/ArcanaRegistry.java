@@ -280,6 +280,12 @@ public final class ArcanaRegistry{
 	public static BlockEntityType<WardedCampfireBlockEntity> WARDED_CAMPFIRE_BE = FabricBlockEntityTypeBuilder
 			.create(WardedCampfireBlockEntity::new, WARDED_CAMPFIRE)
 			.build();
+	public static BlockEntityType<EssentiaTubeBlockEntity> ESSENTIA_TUBE_BE = FabricBlockEntityTypeBuilder
+			.create(EssentiaTubeBlockEntity::new, ESSENTIA_TUBE, ESSENTIA_WINDOW, ESSENTIA_VALVE)
+			.build();
+	public static BlockEntityType<EssentiaPumpBlockEntity> ESSENTIA_PUMP_BE = FabricBlockEntityTypeBuilder
+			.create(EssentiaPumpBlockEntity::new, ESSENTIA_PUMP)
+			.build();
 	
 	// enchantments...
 	public static Enchantment WARPING = new WarpingCurseEnchantment(Enchantment.Rarity.VERY_RARE, EquipmentSlot.values());
@@ -500,6 +506,8 @@ public final class ArcanaRegistry{
 		register("warded_jar", WARDED_JAR_BE);
 		register("mystic_mist", MYSTIC_MIST_BE);
 		register("warded_campfire", WARDED_CAMPFIRE_BE);
+		register("essentia_tube", ESSENTIA_TUBE_BE);
+		register("essentia_pump", ESSENTIA_PUMP_BE);
 		
 		// enchantments
 		register("warping", WARPING);

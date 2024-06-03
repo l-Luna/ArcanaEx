@@ -1,6 +1,7 @@
 package arcana.blocks;
 
 import arcana.ArcanaRegistry;
+import arcana.blocks.be.CrucibleBlockEntity;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
@@ -31,7 +32,7 @@ import org.jetbrains.annotations.Nullable;
 @SuppressWarnings("deprecation")
 public class CrucibleBlock extends BlockWithEntity{
 	
-	protected static final VoxelShape INSIDE = createCuboidShape(2, 4, 2, 14, 15, 14);
+	public static final VoxelShape INSIDE = createCuboidShape(2, 4, 2, 14, 15, 14);
 	protected static final VoxelShape SHAPE = VoxelShapes.combineAndSimplify(
 			createCuboidShape(0, 0, 0, 16, 15, 16),
 			VoxelShapes.union(

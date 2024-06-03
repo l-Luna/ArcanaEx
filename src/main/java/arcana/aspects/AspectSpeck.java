@@ -10,8 +10,6 @@ public final class AspectSpeck{
 	public Direction direction;
 	public float progress; // position along tube
 	
-	public boolean stuck = false;
-	
 	public AspectSpeck(AspectStack payload, float speed, Direction direction, float progress){
 		this.payload = payload;
 		this.speed = speed;

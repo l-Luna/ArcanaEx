@@ -1,41 +1,41 @@
 {
   "multipart": [
 
-    {   "when": { "north": true, "facing": "north" },
+    {   "when": { "north": true, "facing": "south" },
       "apply": { "model": "arcana:block/tubes/essentia_pump_target_side" }
     },
-    {   "when": { "east": true, "facing": "east" },
+    {   "when": { "east": true, "facing": "west" },
       "apply": { "model": "arcana:block/tubes/essentia_pump_target_side", "y": 90, "uvlock": true }
     },
-    {   "when": { "south": true, "facing": "south" },
+    {   "when": { "south": true, "facing": "north" },
       "apply": { "model": "arcana:block/tubes/essentia_pump_target_side", "y": 180, "uvlock": true }
     },
-    {   "when": { "west": true, "facing": "west" },
+    {   "when": { "west": true, "facing": "east" },
       "apply": { "model": "arcana:block/tubes/essentia_pump_target_side", "y": 270, "uvlock": true }
     },
-    {   "when": { "up": true, "facing": "up" },
+    {   "when": { "up": true, "facing": "down" },
       "apply": { "model": "arcana:block/tubes/essentia_pump_target_side", "x": 270, "uvlock": true }
     },
-    {   "when": { "down": true, "facing": "down" },
+    {   "when": { "down": true, "facing": "up" },
       "apply": { "model": "arcana:block/tubes/essentia_pump_target_side", "x": 90, "uvlock": true }
     },
 
-    {   "when": { "north": true, "facing": "east|south|west|up|down" },
+    {   "when": { "north": true, "facing": "north|east|west|up|down" },
       "apply": { "model": "arcana:block/tubes/essentia_pump_side" }
     },
-    {   "when": { "east": true, "facing": "north|south|west|up|down" },
+    {   "when": { "east": true, "facing": "north|east|south|up|down" },
       "apply": { "model": "arcana:block/tubes/essentia_pump_side", "y": 90, "uvlock": true }
     },
-    {   "when": { "south": true, "facing": "north|east|west|up|down" },
+    {   "when": { "south": true, "facing": "east|south|west|up|down" },
       "apply": { "model": "arcana:block/tubes/essentia_pump_side", "y": 180, "uvlock": true }
     },
-    {   "when": { "west": true, "facing": "north|east|south|up|down" },
+    {   "when": { "west": true, "facing": "north|south|west|up|down" },
       "apply": { "model": "arcana:block/tubes/essentia_pump_side", "y": 270, "uvlock": true }
     },
-    {   "when": { "up": true, "facing": "north|east|south|west|down" },
+    {   "when": { "up": true, "facing": "north|east|south|west|up" },
       "apply": { "model": "arcana:block/tubes/essentia_pump_side", "x": 270, "uvlock": true }
     },
-    {   "when": { "down": true, "facing": "north|south|east|west|up" },
+    {   "when": { "down": true, "facing": "north|south|east|west|down" },
       "apply": { "model": "arcana:block/tubes/essentia_pump_side", "x": 90, "uvlock": true }
     },
 

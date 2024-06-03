@@ -1,10 +1,15 @@
 package arcana.blocks;
 
+import arcana.ArcanaRegistry;
 import arcana.aspects.AspectIo;
-import arcana.aspects.AspectStack;
+import arcana.blocks.be.EssentiaTubeBlockEntity;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ConnectingBlock;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
@@ -15,7 +20,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 
-public class EssentiaTubeBlock extends ConnectingBlock implements AspectIo{
+public class EssentiaTubeBlock extends ConnectingBlock implements BlockEntityProvider{
 	
 	public EssentiaTubeBlock(Settings settings){
 		super(.1875f, settings);
@@ -29,7 +34,11 @@ public class EssentiaTubeBlock extends ConnectingBlock implements AspectIo{
 	}
 	
 	private boolean canConnect(BlockState neighbor){
-		return neighbor.getBlock() instanceof AspectIo;
+		return connectsTo(neighbor.getBlock());
+	}
+	
+	public static boolean connectsTo(Block block){
+		return block instanceof AspectIo || block instanceof EssentiaTubeBlock;
 	}
 	
 	public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighbor, WorldAccess world, BlockPos pos, BlockPos neighborPos){
@@ -58,11 +67,14 @@ public class EssentiaTubeBlock extends ConnectingBlock implements AspectIo{
 		return false;
 	}
 	
-	public boolean accept(AspectStack speck, World world, BlockPos pos, Direction from){
-		return false;
+	@Nullable
+	public BlockEntity createBlockEntity(BlockPos pos, BlockState state){
+		return new EssentiaTubeBlockEntity(pos, state);
 	}
 	
-	public @Nullable AspectStack draw(int max, World world, BlockPos pos, Direction from){
-		return null;
+	@Nullable
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World _world, BlockState _state, BlockEntityType<T> type){
+		BlockEntityTicker<EssentiaTubeBlockEntity> ticker = type == ArcanaRegistry.ESSENTIA_TUBE_BE ? EssentiaTubeBlockEntity::tick : null;
+		return (BlockEntityTicker<T>)ticker;
 	}
 }

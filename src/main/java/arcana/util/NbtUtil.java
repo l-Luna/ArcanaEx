@@ -2,9 +2,12 @@ package arcana.util;
 
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.util.Identifier;
 
 import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class NbtUtil{
 	
@@ -24,5 +27,9 @@ public class NbtUtil{
 			// ...
 		}
 		return compound;
+	}
+	
+	public static Collector<NbtElement, ?, NbtList> toNbtList(){
+		return Collectors.toCollection(NbtList::new);
 	}
 }

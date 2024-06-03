@@ -1,11 +1,11 @@
-package arcana.blocks;
+package arcana.blocks.be;
 
 import arcana.ArcanaRegistry;
 import arcana.ArcanaTags;
 import arcana.aspects.AspectMap;
 import arcana.aspects.AspectStack;
 import arcana.aspects.ItemAspectRegistry;
-import arcana.blocks.be.KnowledgeableDropperBlockEntity;
+import arcana.blocks.CrucibleBlock;
 import arcana.components.KdItem;
 import arcana.components.Researcher;
 import arcana.items.TomeOfSharingItem;

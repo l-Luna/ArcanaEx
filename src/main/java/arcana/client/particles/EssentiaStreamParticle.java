@@ -1,7 +1,7 @@
 package arcana.client.particles;
 
 import arcana.aspects.Aspect;
-import arcana.blocks.InfusionMatrixBlockEntity;
+import arcana.blocks.be.InfusionMatrixBlockEntity;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.math.BlockPos;

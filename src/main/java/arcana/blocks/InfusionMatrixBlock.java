@@ -1,6 +1,7 @@
 package arcana.blocks;
 
 import arcana.ArcanaRegistry;
+import arcana.blocks.be.InfusionMatrixBlockEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;

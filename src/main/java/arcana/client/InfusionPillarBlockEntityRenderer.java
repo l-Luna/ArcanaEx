@@ -2,7 +2,7 @@ package arcana.client;
 
 import arcana.ArcanaRegistry;
 import arcana.blocks.InfusionPillarBlock;
-import arcana.blocks.InfusionPillarBlockEntity;
+import arcana.blocks.be.InfusionPillarBlockEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.TexturedRenderLayers;

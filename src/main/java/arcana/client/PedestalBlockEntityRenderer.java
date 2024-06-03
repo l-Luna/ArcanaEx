@@ -1,6 +1,6 @@
 package arcana.client;
 
-import arcana.blocks.PedestalBlockEntity;
+import arcana.blocks.be.PedestalBlockEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;

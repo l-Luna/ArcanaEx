@@ -3,6 +3,7 @@ package arcana;
 import arcana.aspects.Aspect;
 import arcana.aspects.Aspects;
 import arcana.blocks.*;
+import arcana.blocks.be.*;
 import arcana.client.particles.AspectParticleEffect;
 import arcana.enchantments.ProjectingEnchantment;
 import arcana.enchantments.WarpingCurseEnchantment;

@@ -1,5 +1,6 @@
 package arcana.blocks;
 
+import arcana.blocks.be.InfusionPillarBlockEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;

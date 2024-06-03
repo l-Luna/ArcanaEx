@@ -1,5 +1,6 @@
 package arcana.blocks;
 
+import arcana.blocks.be.KnowledgeableDropperBlockEntity;
 import arcana.components.KdItem;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;

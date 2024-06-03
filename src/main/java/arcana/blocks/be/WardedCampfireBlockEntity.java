@@ -1,4 +1,4 @@
-package arcana.blocks;
+package arcana.blocks.be;
 
 import arcana.ArcanaRegistry;
 import arcana.mixin.BlockEntityAccessor;

@@ -1,4 +1,4 @@
-package arcana.blocks;
+package arcana.blocks.be;
 
 import arcana.ArcanaRegistry;
 import arcana.aspects.Aspect;
@@ -31,7 +31,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static arcana.blocks.InfusionMatrixBlockEntity.InfusionState.*;
+import static arcana.blocks.be.InfusionMatrixBlockEntity.InfusionState.*;
 
 public class InfusionMatrixBlockEntity extends BlockEntity{
 	
@@ -54,7 +54,7 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 		super(ArcanaRegistry.INFUSION_MATRIX_BE, pos, state);
 	}
 	
-	protected void tick(){
+	public void tick(){
 		assert world != null;
 		if(lastRecipe != null){
 			crafting = (InfusionRecipe)world.getRecipeManager().get(lastRecipe).orElse(null);

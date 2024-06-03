@@ -1,7 +1,7 @@
 package arcana.client;
 
 import arcana.aspects.AspectStack;
-import arcana.blocks.WardedJarBlockEntity;
+import arcana.blocks.be.WardedJarBlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;

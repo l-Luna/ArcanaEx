@@ -7,7 +7,7 @@ import arcana.aspects.Aspects;
 import arcana.aspects.ItemAspectsTooltipData;
 import arcana.aspects.WandAspectsTooltipData;
 import arcana.blocks.ArcanaBlockSettings;
-import arcana.blocks.WardedCampfireBlockEntity;
+import arcana.blocks.be.WardedCampfireBlockEntity;
 import arcana.client.particles.EssentiaStreamParticle;
 import arcana.client.particles.HungryNodeBlockParticle;
 import arcana.client.particles.HungryNodeDiscParticle;

@@ -1,6 +1,7 @@
 package arcana.blocks;
 
 import arcana.ArcanaRegistry;
+import arcana.blocks.be.MysticMistBlockEntity;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;

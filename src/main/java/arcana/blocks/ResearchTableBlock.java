@@ -1,5 +1,6 @@
 package arcana.blocks;
 
+import arcana.blocks.be.ResearchTableBlockEntity;
 import arcana.screens.ResearchTableScreenHandler;
 import com.unascribed.lib39.weld.api.BigBlock;
 import net.minecraft.block.Block;

@@ -1,5 +1,6 @@
 package arcana.blocks;
 
+import arcana.blocks.be.PedestalBlockEntity;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;

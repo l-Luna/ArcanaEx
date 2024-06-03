@@ -1,7 +1,7 @@
 package arcana.client;
 
 import arcana.ArcanaRegistry;
-import arcana.blocks.InfusionMatrixBlockEntity;
+import arcana.blocks.be.InfusionMatrixBlockEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.TexturedRenderLayers;

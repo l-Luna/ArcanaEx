@@ -2,7 +2,7 @@ package arcana.items;
 
 import arcana.ArcanaRegistry;
 import arcana.aspects.*;
-import arcana.blocks.InfusionMatrixBlockEntity;
+import arcana.blocks.be.InfusionMatrixBlockEntity;
 import arcana.client.ArcanaClient;
 import arcana.components.AuraWorld;
 import dev.emi.trinkets.api.SlotReference;

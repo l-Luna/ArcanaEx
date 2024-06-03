@@ -2,7 +2,7 @@ package arcana.screens;
 
 import arcana.ArcanaRegistry;
 import arcana.blocks.ResearchTableBlock;
-import arcana.blocks.ResearchTableBlockEntity;
+import arcana.blocks.be.ResearchTableBlockEntity;
 import arcana.items.ResearchNotesItem;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;

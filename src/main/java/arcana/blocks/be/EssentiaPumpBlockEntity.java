@@ -30,6 +30,8 @@ public class EssentiaPumpBlockEntity extends EssentiaTubeBlockEntity{
 	
 	public static void tick(World world, BlockPos pos, BlockState state, EssentiaPumpBlockEntity pump){
 		EssentiaTubeBlockEntity.tick(world, pos, state, pump);
+		if(world.isReceivingRedstonePower(pos))
+			return;
 		pump.timer--;
 		if(pump.timer <= 0){
 			pump.timer = 15;

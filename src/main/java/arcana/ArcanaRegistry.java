@@ -133,6 +133,10 @@ public final class ArcanaRegistry{
 	public static final Item ALTERED_IRON = new Item(GROUPED);
 	public static final Item ALUMENTUM = new AlumentumItem(GROUPED);
 	
+	public static final Item SHATTERED_HUSK = new Item(GROUPED);
+	public static final Item SYNTHETIC_SCAFFOLDING = new Item(GROUPED);
+	public static final Item FORMLESS_FOAM = new Item(GROUPED);
+	
 	public static final Item WAND = new WandItem(GROUPED_SINGLE);
 	
 	// caps...
@@ -290,6 +294,12 @@ public final class ArcanaRegistry{
 	public static BlockEntityType<EssentiaValveBlockEntity> ESSENTIA_VALVE_BE = FabricBlockEntityTypeBuilder
 			.create(EssentiaValveBlockEntity::new, ESSENTIA_VALVE)
 			.build();
+	public static BlockEntityType<ArcaneFurnaceBlockEntity> ARCANE_FURNACE_BE = FabricBlockEntityTypeBuilder
+			.create(ArcaneFurnaceBlockEntity::new, ARCANE_FURNACE)
+			.build();
+	public static BlockEntityType<AlembicBlockEntity> ALEMBIC_BE = FabricBlockEntityTypeBuilder
+			.create(AlembicBlockEntity::new, ALEMBIC)
+			.build();
 	
 	// enchantments...
 	public static Enchantment WARPING = new WarpingCurseEnchantment(Enchantment.Rarity.VERY_RARE, EquipmentSlot.values());
@@ -360,6 +370,10 @@ public final class ArcanaRegistry{
 		register("altered_iron", ALTERED_IRON);
 		register("alumentum", ALUMENTUM);
 		FuelRegistry.INSTANCE.add(ALUMENTUM, 1600 * 4); // 4x coal = half stack
+		
+		register("shattered_husk", SHATTERED_HUSK);
+		register("synthetic_scaffolding", SYNTHETIC_SCAFFOLDING);
+		register("formless_foam", FORMLESS_FOAM);
 		
 		register("wand", WAND);
 		
@@ -513,6 +527,8 @@ public final class ArcanaRegistry{
 		register("essentia_tube", ESSENTIA_TUBE_BE);
 		register("essentia_pump", ESSENTIA_PUMP_BE);
 		register("essentia_valve", ESSENTIA_VALVE_BE);
+		register("arcane_furnace", ARCANE_FURNACE_BE);
+		register("alembic", ALEMBIC_BE);
 		
 		// enchantments
 		register("warping", WARPING);

@@ -6,9 +6,6 @@ import arcana.aspects.AspectStack;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.Packet;
-import net.minecraft.network.listener.ClientPlayPacketListener;
-import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
@@ -16,15 +13,13 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-public class WardedJarBlockEntity extends BlockEntity implements AspectIo{
-	
-	private static final int capacity = 100;
+public class AlembicBlockEntity extends BlockEntity implements AspectIo{
 	
 	@Nullable
 	private AspectStack stored;
 	
-	public WardedJarBlockEntity(BlockPos pos, BlockState state){
-		super(ArcanaRegistry.WARDED_JAR_BE, pos, state);
+	public AlembicBlockEntity(BlockPos pos, BlockState state){
+		super(ArcanaRegistry.ALEMBIC_BE, pos, state);
 	}
 	
 	public void readNbt(NbtCompound nbt){
@@ -39,13 +34,9 @@ public class WardedJarBlockEntity extends BlockEntity implements AspectIo{
 			nbt.put("stored", stored.toNbt());
 	}
 	
+	// we do not accept returns thank you
 	public AspectStack accept(AspectStack stack, World world, BlockPos pos, Direction from){
-		var result = AspectStack.mergeWithCapacity(stored, stack, capacity);
-		if(!result.getLeft().equals(stored)){
-			markDirty();
-			stored = result.getLeft();
-		}
-		return result.getRight();
+		return stack;
 	}
 	
 	public @Nullable AspectStack draw(int max, World world, BlockPos pos, Direction from){
@@ -59,18 +50,5 @@ public class WardedJarBlockEntity extends BlockEntity implements AspectIo{
 			stored = result.getLeft();
 		}
 		return result.getRight();
-	}
-	
-	public Packet<ClientPlayPacketListener> toUpdatePacket(){
-		return BlockEntityUpdateS2CPacket.create(this);
-	}
-	
-	public NbtCompound toInitialChunkDataNbt(){
-		return createNbt();
-	}
-	
-	@Nullable
-	public AspectStack getStored(){
-		return stored;
 	}
 }

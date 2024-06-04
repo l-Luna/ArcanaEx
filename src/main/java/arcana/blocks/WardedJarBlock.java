@@ -45,18 +45,12 @@ public class WardedJarBlock extends BlockWithEntity implements AspectIo{
 			return state;
 	}
 	
-	public boolean accept(AspectStack speck, World world, BlockPos pos, Direction from){
-		BlockEntity be = world.getBlockEntity(pos);
-		if(be instanceof WardedJarBlockEntity self)
-			return self.accept(speck, world, pos, from);
-		return false;
+	public AspectStack accept(AspectStack speck, World world, BlockPos pos, Direction from){
+		return world.getBlockEntity(pos) instanceof WardedJarBlockEntity self ? self.accept(speck, world, pos, from) : null;
 	}
 	
 	public @Nullable AspectStack draw(int max, World world, BlockPos pos, Direction from){
-		BlockEntity be = world.getBlockEntity(pos);
-		if(be instanceof WardedJarBlockEntity self)
-			return self.draw(max, world, pos, from);
-		return null;
+		return world.getBlockEntity(pos) instanceof WardedJarBlockEntity self ? self.draw(max, world, pos, from) : null;
 	}
 	
 	public BlockEntity createBlockEntity(BlockPos pos, BlockState state){

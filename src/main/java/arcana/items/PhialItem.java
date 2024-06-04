@@ -44,7 +44,8 @@ public class PhialItem extends Item{
 					return ActionResult.SUCCESS;
 				}
 			}else{
-				if(io.accept(new AspectStack(aspect, 8), world, pos, null)){
+				AspectStack residual = io.accept(new AspectStack(aspect, 8), world, pos, null);
+				if(residual == null || residual.amount() < 8){
 					if(!user.isCreative())
 						item.decrement(1);
 					return ActionResult.SUCCESS;

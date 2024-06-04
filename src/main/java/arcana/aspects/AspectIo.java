@@ -7,7 +7,9 @@ import org.jetbrains.annotations.Nullable;
 
 public interface AspectIo{
 	
-	boolean accept(AspectStack stack, World world, BlockPos pos, Direction from);
+	// returns the residual, if any
+	@Nullable
+	AspectStack accept(AspectStack stack, World world, BlockPos pos, Direction from);
 	
 	@Nullable
 	AspectStack draw(int max, World world, BlockPos pos, Direction from);

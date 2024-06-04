@@ -3,7 +3,9 @@ package arcana.blocks.tubes;
 import arcana.ArcanaRegistry;
 import arcana.aspects.AspectIo;
 import arcana.aspects.AspectSpeck;
+import arcana.aspects.AspectStack;
 import arcana.util.NbtUtil;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -47,30 +49,38 @@ public class EssentiaTubeBlockEntity extends BlockEntity{
 				if(world.getBlockEntity(there) instanceof EssentiaTubeBlockEntity otherTube && otherTube.enabled()){
 					otherTube.insert(speck);
 					specks.remove(speck);
-				}else if(world.getBlockState(there).getBlock() instanceof AspectIo aio
-						&& aio.accept(speck.payload, world, there, dir.getOpposite())){
-					specks.remove(speck);
 				}else{
-					// hit a wall, try to recover
-					if(dir.getAxis().isHorizontal()){
-						// horizontally-moving specks will prefer to move randomly left or right, then backwards
-						Direction first = world.random.nextBoolean() ? dir.rotateYCounterclockwise() : dir.rotateYClockwise(),
-							second = first.getOpposite();
-						if(EssentiaTubeBlock.connectsTo(world.getBlockState(pos.offset(first)).getBlock()))
-							speck.direction = first;
-						else if(EssentiaTubeBlock.connectsTo(world.getBlockState(pos.offset(second)).getBlock()))
-							speck.direction = second;
+					Block block = world.getBlockState(there).getBlock();
+					AspectStack residual = block instanceof AspectIo aio
+							? aio.accept(speck.payload, world, there, dir.getOpposite())
+							: null;
+					if(block instanceof AspectIo){
+						if(residual == null || residual.amount() == 0)
+							specks.remove(speck);
 						else
-							speck.direction = dir.getOpposite();
-					}else vertical: {
-						// it'll randomly pick a possible direction
-						for(Direction hd : Direction.shuffle(world.random))
-							if(EssentiaTubeBlock.connectsTo(world.getBlockState(pos.offset(hd)).getBlock())){
-								speck.direction = hd;
-								break vertical;
+							speck.payload = residual;
+					}else{
+						// hit a wall, try to recover
+						if(dir.getAxis().isHorizontal()){
+							// horizontally-moving specks will prefer to move randomly left or right, then backwards
+							Direction first = world.random.nextBoolean() ? dir.rotateYCounterclockwise() : dir.rotateYClockwise(),
+									second = first.getOpposite();
+							if(EssentiaTubeBlock.connectsTo(world.getBlockState(pos.offset(first)).getBlock()))
+								speck.direction = first;
+							else if(EssentiaTubeBlock.connectsTo(world.getBlockState(pos.offset(second)).getBlock()))
+								speck.direction = second;
+							else
+								speck.direction = dir.getOpposite();
+						}else vertical: {
+								// it'll randomly pick a possible direction
+								for(Direction hd : Direction.shuffle(world.random))
+									if(EssentiaTubeBlock.connectsTo(world.getBlockState(pos.offset(hd)).getBlock())){
+										speck.direction = hd;
+										break vertical;
+									}
+								// or it'll turn back in doubt
+								speck.direction = dir.getOpposite();
 							}
-						// or it'll turn back in doubt
-						speck.direction = dir.getOpposite();
 					}
 				}
 			}

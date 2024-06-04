@@ -1,10 +1,9 @@
-package arcana.blocks.be;
+package arcana.blocks.tubes;
 
 import arcana.ArcanaRegistry;
 import arcana.aspects.AspectIo;
 import arcana.aspects.AspectSpeck;
 import arcana.aspects.AspectStack;
-import arcana.blocks.EssentiaPumpBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.inventory.SimpleInventory;
@@ -16,7 +15,7 @@ import net.minecraft.world.World;
 
 public class EssentiaPumpBlockEntity extends EssentiaTubeBlockEntity{
 	
-	private int timer = 15;
+	public int timer = 15;
 	// essentia crystal filter
 	public SimpleInventory inventory = new SimpleInventory(1);
 	

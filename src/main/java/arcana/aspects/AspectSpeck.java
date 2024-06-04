@@ -6,7 +6,7 @@ import net.minecraft.util.math.Direction;
 public final class AspectSpeck{
 
 	public AspectStack payload;
-	public float speed; // blocks/sec
+	public float speed; // blocks/tick
 	public Direction direction;
 	public float progress; // position along tube
 	

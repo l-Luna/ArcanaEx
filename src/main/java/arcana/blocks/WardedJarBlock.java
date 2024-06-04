@@ -3,6 +3,7 @@ package arcana.blocks;
 import arcana.aspects.AspectIo;
 import arcana.aspects.AspectStack;
 import arcana.blocks.be.WardedJarBlockEntity;
+import arcana.blocks.tubes.EssentiaTubeBlock;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.state.StateManager;

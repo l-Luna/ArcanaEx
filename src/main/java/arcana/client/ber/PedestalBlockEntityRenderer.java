@@ -1,4 +1,4 @@
-package arcana.client;
+package arcana.client.ber;
 
 import arcana.blocks.be.PedestalBlockEntity;
 import net.minecraft.client.render.VertexConsumerProvider;

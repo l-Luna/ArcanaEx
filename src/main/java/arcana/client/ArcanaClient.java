@@ -8,6 +8,7 @@ import arcana.aspects.ItemAspectsTooltipData;
 import arcana.aspects.WandAspectsTooltipData;
 import arcana.blocks.ArcanaBlockSettings;
 import arcana.blocks.be.WardedCampfireBlockEntity;
+import arcana.client.ber.*;
 import arcana.client.particles.EssentiaStreamParticle;
 import arcana.client.particles.HungryNodeBlockParticle;
 import arcana.client.particles.HungryNodeDiscParticle;
@@ -89,6 +90,8 @@ public final class ArcanaClient implements ClientModInitializer{
 			
 			registry.register(MysticMistBlockEntityRenderer.RAIN);
 			registry.register(MysticMistBlockEntityRenderer.SNOW);
+			
+			registry.register(EssentiaValveBlockEntityRenderer.GEAR_TEX);
 		});
 		
 		ColorProviderRegistry.BLOCK.register(
@@ -119,6 +122,7 @@ public final class ArcanaClient implements ClientModInitializer{
 		BlockEntityRendererRegistry.register(ArcanaRegistry.INFUSION_MATRIX_BE, ctx -> new InfusionMatrixBlockEntityRenderer());
 		BlockEntityRendererRegistry.register(ArcanaRegistry.WARDED_JAR_BE, ctx -> new WardedJarBlockEntityRenderer());
 		BlockEntityRendererRegistry.register(ArcanaRegistry.MYSTIC_MIST_BE, ctx -> new MysticMistBlockEntityRenderer());
+		BlockEntityRendererRegistry.register(ArcanaRegistry.ESSENTIA_VALVE_BE, ctx -> new EssentiaValveBlockEntityRenderer());
 		// ohhhh but the variance! the variance! it's so bad!
 		BlockEntityRendererRegistry.register(ArcanaRegistry.WARDED_CAMPFIRE_BE, ctx ->
 				(BlockEntityRenderer<WardedCampfireBlockEntity>)(BlockEntityRenderer<?>)new CampfireBlockEntityRenderer(ctx));

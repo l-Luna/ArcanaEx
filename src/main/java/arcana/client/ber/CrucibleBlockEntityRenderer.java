@@ -1,8 +1,9 @@
-package arcana.client;
+package arcana.client.ber;
 
 import arcana.aspects.AspectMap;
 import arcana.aspects.AspectStack;
 import arcana.blocks.be.CrucibleBlockEntity;
+import arcana.client.AspectRenderer;
 import arcana.items.GogglesOfRevealingItem;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;

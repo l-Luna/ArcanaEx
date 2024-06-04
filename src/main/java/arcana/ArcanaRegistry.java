@@ -4,6 +4,7 @@ import arcana.aspects.Aspect;
 import arcana.aspects.Aspects;
 import arcana.blocks.*;
 import arcana.blocks.be.*;
+import arcana.blocks.tubes.*;
 import arcana.client.particles.AspectParticleEffect;
 import arcana.enchantments.ProjectingEnchantment;
 import arcana.enchantments.WarpingCurseEnchantment;
@@ -198,7 +199,7 @@ public final class ArcanaRegistry{
 	public static final Block ARCANE_FURNACE = new ArcaneFurnaceBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3).luminance(whenLit(14)));
 	public static final Block ALEMBIC = new AlembicBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(3).sounds(BlockSoundGroup.WOOD));
 	public static final Block ESSENTIA_TUBE = new EssentiaTubeBlock(of(Material.METAL).dropsSelf().usesTool(PICKAXE_MINEABLE).strength(1).sounds(BlockSoundGroup.METAL));
-	public static final Block ESSENTIA_VALVE = new EssentiaTubeBlock(of(Material.METAL).dropsSelf().usesTool(PICKAXE_MINEABLE).strength(1).sounds(BlockSoundGroup.METAL));
+	public static final Block ESSENTIA_VALVE = new EssentiaValveBlock(of(Material.METAL).dropsSelf().usesTool(PICKAXE_MINEABLE).strength(1).sounds(BlockSoundGroup.METAL));
 	public static final Block ESSENTIA_WINDOW = new EssentiaTubeBlock(of(Material.GLASS).dropsSelf().usesTool(PICKAXE_MINEABLE).strength(.7f).sounds(BlockSoundGroup.GLASS));
 	public static final Block ESSENTIA_PUMP = new EssentiaPumpBlock(of(Material.METAL).dropsSelf().usesTool(PICKAXE_MINEABLE).strength(1.1f).sounds(BlockSoundGroup.METAL));
 	public static final Block WARDED_JAR = new WardedJarBlock(of(Material.GLASS).dropsSelf().renderLayer(TRANSLUCENT).strength(.9f).sounds(BlockSoundGroup.GLASS));
@@ -281,10 +282,13 @@ public final class ArcanaRegistry{
 			.create(WardedCampfireBlockEntity::new, WARDED_CAMPFIRE)
 			.build();
 	public static BlockEntityType<EssentiaTubeBlockEntity> ESSENTIA_TUBE_BE = FabricBlockEntityTypeBuilder
-			.create(EssentiaTubeBlockEntity::new, ESSENTIA_TUBE, ESSENTIA_WINDOW, ESSENTIA_VALVE)
+			.create(EssentiaTubeBlockEntity::new, ESSENTIA_TUBE, ESSENTIA_WINDOW)
 			.build();
 	public static BlockEntityType<EssentiaPumpBlockEntity> ESSENTIA_PUMP_BE = FabricBlockEntityTypeBuilder
 			.create(EssentiaPumpBlockEntity::new, ESSENTIA_PUMP)
+			.build();
+	public static BlockEntityType<EssentiaValveBlockEntity> ESSENTIA_VALVE_BE = FabricBlockEntityTypeBuilder
+			.create(EssentiaValveBlockEntity::new, ESSENTIA_VALVE)
 			.build();
 	
 	// enchantments...
@@ -508,6 +512,7 @@ public final class ArcanaRegistry{
 		register("warded_campfire", WARDED_CAMPFIRE_BE);
 		register("essentia_tube", ESSENTIA_TUBE_BE);
 		register("essentia_pump", ESSENTIA_PUMP_BE);
+		register("essentia_valve", ESSENTIA_VALVE_BE);
 		
 		// enchantments
 		register("warping", WARPING);

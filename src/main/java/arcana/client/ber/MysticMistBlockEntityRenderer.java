@@ -1,6 +1,7 @@
-package arcana.client;
+package arcana.client.ber;
 
 import arcana.blocks.be.MysticMistBlockEntity;
+import arcana.client.ArcanaClient;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.LightmapTextureManager;
 import net.minecraft.client.render.RenderLayer;

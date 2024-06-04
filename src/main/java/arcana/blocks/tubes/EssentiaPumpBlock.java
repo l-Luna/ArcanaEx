@@ -1,7 +1,6 @@
-package arcana.blocks;
+package arcana.blocks.tubes;
 
 import arcana.ArcanaRegistry;
-import arcana.blocks.be.EssentiaPumpBlockEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;

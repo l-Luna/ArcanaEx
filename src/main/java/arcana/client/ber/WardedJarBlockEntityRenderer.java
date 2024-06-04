@@ -1,4 +1,4 @@
-package arcana.client;
+package arcana.client.ber;
 
 import arcana.aspects.AspectStack;
 import arcana.blocks.be.WardedJarBlockEntity;

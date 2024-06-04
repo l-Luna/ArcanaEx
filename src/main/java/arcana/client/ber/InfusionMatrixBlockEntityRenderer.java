@@ -1,4 +1,4 @@
-package arcana.client;
+package arcana.client.ber;
 
 import arcana.ArcanaRegistry;
 import arcana.blocks.be.InfusionMatrixBlockEntity;

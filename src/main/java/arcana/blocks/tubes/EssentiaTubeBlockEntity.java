@@ -1,9 +1,8 @@
-package arcana.blocks.be;
+package arcana.blocks.tubes;
 
 import arcana.ArcanaRegistry;
 import arcana.aspects.AspectIo;
 import arcana.aspects.AspectSpeck;
-import arcana.blocks.EssentiaTubeBlock;
 import arcana.util.NbtUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -35,6 +34,8 @@ public class EssentiaTubeBlockEntity extends BlockEntity{
 	
 	public static void tick(World world, BlockPos pos, BlockState state, EssentiaTubeBlockEntity tube){
 		List<AspectSpeck> specks = tube.specks;
+		if(!specks.isEmpty())
+			tube.markDirty();
 		for(int i = specks.size() - 1; i >= 0; i--){ // reverse loop to allow removal
 			AspectSpeck speck = specks.get(i);
 			Direction dir = speck.direction;
@@ -43,7 +44,7 @@ public class EssentiaTubeBlockEntity extends BlockEntity{
 				speck.progress %= 1;
 				BlockPos there = pos.offset(dir);
 				// try insert there,
-				if(world.getBlockEntity(there) instanceof EssentiaTubeBlockEntity otherTube){
+				if(world.getBlockEntity(there) instanceof EssentiaTubeBlockEntity otherTube && otherTube.enabled()){
 					otherTube.insert(speck);
 					specks.remove(speck);
 				}else if(world.getBlockState(there).getBlock() instanceof AspectIo aio
@@ -78,11 +79,16 @@ public class EssentiaTubeBlockEntity extends BlockEntity{
 	
 	public void insert(AspectSpeck speck){
 		specks.add(speck);
+		markDirty();
 		// specks obey gravity, but only once
 		if(speck.direction != Direction.UP
 				&& speck.direction != Direction.DOWN
 				&& EssentiaTubeBlock.connectsTo(world.getBlockState(pos.down()).getBlock()))
 			speck.direction = Direction.DOWN;
+	}
+	
+	public boolean enabled(){
+		return true;
 	}
 	
 	protected void writeNbt(NbtCompound nbt){

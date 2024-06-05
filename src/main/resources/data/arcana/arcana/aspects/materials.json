@@ -169,7 +169,8 @@
     "4*life"
   ],
   "minecraft:sugar": [
-    "senses"
+    "senses",
+    "air"
   ],
   "minecraft:nether_wart": [
     "plant",

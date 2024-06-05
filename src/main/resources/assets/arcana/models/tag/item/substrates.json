@@ -1,0 +1,7 @@
+{
+  "parent": "emi:item/half_item",
+  "textures": {
+    "first": "arcana:item/synthetic_scaffolding",
+    "second": "arcana:item/formless_foam"
+  }
+}

@@ -15,10 +15,11 @@ import net.minecraft.util.math.BlockPos;
 
 public class KnowledgeableDropperBlockEntity extends DispenserBlockEntity{
 	
-	private final Inventory tomeSlot = new SimpleInventory(1);
+	private final SimpleInventory tomeSlot = new SimpleInventory(1);
 	
 	public KnowledgeableDropperBlockEntity(BlockPos pos, BlockState state){
 		super(ArcanaRegistry.KNOWLEDGEABLE_DROPPER_BE, pos, state);
+		tomeSlot.addListener(sender -> markDirty());
 	}
 	
 	protected Text getContainerName(){
@@ -27,14 +28,12 @@ public class KnowledgeableDropperBlockEntity extends DispenserBlockEntity{
 	
 	protected void writeNbt(NbtCompound nbt){
 		super.writeNbt(nbt);
-		NbtCompound tomeNbt = new NbtCompound();
-		nbt.put("tome", tomeSlot.getStack(0).writeNbt(tomeNbt));
+		nbt.put("tome", tomeSlot.getStack(0).writeNbt(new NbtCompound()));
 	}
 	
 	public void readNbt(NbtCompound nbt){
 		super.readNbt(nbt);
-		if(nbt.contains("tome"))
-			tomeSlot.setStack(0, ItemStack.fromNbt(nbt.getCompound("tome")));
+		tomeSlot.setStack(0, ItemStack.fromNbt(nbt.getCompound("tome")));
 	}
 	
 	protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory){

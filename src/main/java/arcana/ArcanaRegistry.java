@@ -15,6 +15,7 @@ import arcana.items.foci.FireFocusItem;
 import arcana.items.foci.LightFocusItem;
 import arcana.items.foci.PortableHoleFocusItem;
 import arcana.screens.ArcaneCraftingScreenHandler;
+import arcana.screens.ArcaneFurnaceScreenHandler;
 import arcana.screens.KnowledgeableDropperScreenHandler;
 import arcana.screens.ResearchTableScreenHandler;
 import arcana.worldgen.SurfaceNodeFeature;
@@ -253,6 +254,8 @@ public final class ArcanaRegistry{
 			= new ScreenHandlerType<>(ResearchTableScreenHandler::new);
 	public static final ScreenHandlerType<KnowledgeableDropperScreenHandler> KNOWLEDGEABLE_DROPPER_SCREEN_HANDLER
 			= new ScreenHandlerType<>(KnowledgeableDropperScreenHandler::new);
+	public static final ScreenHandlerType<ArcaneFurnaceScreenHandler> ARCANE_FURNACE_SCREEN_HANDLER
+			= new ScreenHandlerType<>(ArcaneFurnaceScreenHandler::new);
 	
 	// block entities...
 	public static BlockEntityType<CrucibleBlockEntity> CRUCIBLE_BE = FabricBlockEntityTypeBuilder
@@ -512,6 +515,7 @@ public final class ArcanaRegistry{
 		register("arcane_crafting", ARCANE_CRAFTING_SCREEN_HANDLER);
 		register("research_table", RESEARCH_TABLE_SCREEN_HANDLER);
 		register("knowledgeable_dropper", KNOWLEDGEABLE_DROPPER_SCREEN_HANDLER);
+		register("arcane_furnace", ARCANE_FURNACE_SCREEN_HANDLER);
 		
 		// block entities
 		register("crucible", CRUCIBLE_BE);

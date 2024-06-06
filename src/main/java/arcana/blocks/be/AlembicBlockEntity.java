@@ -6,6 +6,10 @@ import arcana.aspects.AspectStack;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.Packet;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
@@ -15,8 +19,10 @@ import java.util.Objects;
 
 public class AlembicBlockEntity extends BlockEntity implements AspectIo{
 	
+	public static final int capacity = 100;
+	
 	@Nullable
-	private AspectStack stored;
+	public AspectStack stored;
 	
 	public AlembicBlockEntity(BlockPos pos, BlockState state){
 		super(ArcanaRegistry.ALEMBIC_BE, pos, state);
@@ -50,5 +56,19 @@ public class AlembicBlockEntity extends BlockEntity implements AspectIo{
 			stored = result.getLeft();
 		}
 		return result.getRight();
+	}
+	
+	public void markDirty(){
+		super.markDirty();
+		if(world instanceof ServerWorld sw)
+			sw.getChunkManager().markForUpdate(pos);
+	}
+	
+	public Packet<ClientPlayPacketListener> toUpdatePacket(){
+		return BlockEntityUpdateS2CPacket.create(this);
+	}
+	
+	public NbtCompound toInitialChunkDataNbt(){
+		return createNbt();
 	}
 }

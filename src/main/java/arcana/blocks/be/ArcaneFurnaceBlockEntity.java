@@ -1,11 +1,14 @@
 package arcana.blocks.be;
 
 import arcana.ArcanaRegistry;
+import arcana.aspects.Aspect;
 import arcana.aspects.AspectMap;
+import arcana.aspects.AspectStack;
 import arcana.aspects.ItemAspectRegistry;
 import arcana.blocks.ArcaneFurnaceBlock;
 import arcana.screens.ArcaneFurnaceScreenHandler;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -13,19 +16,30 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.Packet;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class ArcaneFurnaceBlockEntity extends BlockEntity implements NamedScreenHandlerFactory{
 	
 	private static final Text title = Text.translatable("container.crafting");
 	
 	public static final int capacity = 100;
+	public static final int maxAlembics = 4;
 	
 	public SimpleInventory material = new SimpleInventory(1),
 			fuel = new SimpleInventory(1),
@@ -116,10 +130,11 @@ public class ArcaneFurnaceBlockEntity extends BlockEntity implements NamedScreen
 		ItemStack material = furnace.material.getStack(0);
 		ItemStack husks = furnace.husks.getStack(0);
 		AspectMap mAspects = ItemAspectRegistry.get(material);
+		AspectMap fAspects = furnace.aspects;
 		boolean canActivate = !material.isEmpty()
 				&& !mAspects.isEmpty()
 				&& husks.getCount() < husks.getMaxCount()
-				&& mAspects.total() + furnace.aspects.total() <= capacity;
+				&& mAspects.total() + fAspects.total() <= capacity;
 		if(!canActivate)
 			furnace.progress = 0;
 		else{
@@ -133,7 +148,7 @@ public class ArcaneFurnaceBlockEntity extends BlockEntity implements NamedScreen
 				else
 					husks.increment(1);
 				furnace.progress = 0;
-				furnace.aspects.add(mAspects);
+				fAspects.add(mAspects);
 			}
 			// if we have burn time and substrate, increase progress
 			if(furnace.burnTime > 0 && furnace.substrateAmount > 0){
@@ -146,7 +161,8 @@ public class ArcaneFurnaceBlockEntity extends BlockEntity implements NamedScreen
 			}
 		}
 		// got burn time? no problem
-		if(furnace.burnTime > 0)
+		boolean wasBurning = furnace.burnTime > 0;
+		if(wasBurning)
 			furnace.burnTime--;
 		// try to use new fuel...
 		if(furnace.burnTime <= 0 && canActivate){
@@ -156,6 +172,12 @@ public class ArcaneFurnaceBlockEntity extends BlockEntity implements NamedScreen
 				fuel.decrement(1);
 			}else if(furnace.progress > 0)
 				furnace.progress--;
+		}
+		boolean isBurning = furnace.burnTime > 0;
+		// look the part!
+		if(wasBurning != isBurning){
+			state = state.with(ArcaneFurnaceBlock.on, isBurning);
+			world.setBlockState(pos, state, Block.NOTIFY_ALL);
 		}
 		// substrates are similar; it's depleted with progress and not with time though
 		if(furnace.substrateAmount <= 0 && canActivate){
@@ -169,7 +191,44 @@ public class ArcaneFurnaceBlockEntity extends BlockEntity implements NamedScreen
 				furnace.progress--;
 		}
 		
+		// and while we're here, *we'll* handle alembics ourselves
+		if(!fAspects.isEmpty()){
+			// when giving out a new aspect, prefer to give the largest aspect that hasn't been seen
+			List<Aspect> preferred = fAspects.asStacks()
+					.stream().sorted(Comparator.comparingInt(AspectStack::amount).reversed())
+					.map(AspectStack::type)
+					.collect(Collectors.toCollection(ArrayList::new));
+			for(int i = 0; i < maxAlembics; i++){
+				BlockEntity there = world.getBlockEntity(pos.up(i + 1));
+				if(there instanceof AlembicBlockEntity alembic){
+					// if it already has a stack, just try to add to it from what we have
+					if(alembic.stored != null){
+						Aspect type = alembic.stored.type();
+						preferred.remove(type);
+						if(fAspects.contains(type) && alembic.stored.amount() < AlembicBlockEntity.capacity){
+							fAspects.take(type, 1);
+							alembic.stored = new AspectStack(type, alembic.stored.amount() + 1);
+							alembic.markDirty();
+						}
+					}else{
+						Aspect toGive;
+						if(!preferred.isEmpty())
+							toGive = preferred.remove(0);
+						else if(!fAspects.isEmpty())
+							toGive = Objects.requireNonNull(fAspects.aspectByIndex(0));
+						else break; // we have no more aspects to even give out
+						
+						// we definitely have this aspect in non-zero capacity, don't worry
+						fAspects.take(toGive, 1);
+						alembic.stored = new AspectStack(toGive, 1);
+						alembic.markDirty();
+					}
+				}else break; // gap in the line of alembics
+			}
+		}
+		
 		// basically everything changes the thing's state
+		// TODO: don't do this, maybe use setters?
 		furnace.markDirty();
 	}
 	
@@ -180,5 +239,19 @@ public class ArcaneFurnaceBlockEntity extends BlockEntity implements NamedScreen
 	@Nullable
 	public ScreenHandler createMenu(int syncId, PlayerInventory pInv, PlayerEntity player){
 		return new ArcaneFurnaceScreenHandler(syncId, pInv, material, fuel, substrate, husks, propertyDelegate);
+	}
+	
+	public void markDirty(){
+		super.markDirty();
+		if(world instanceof ServerWorld sw)
+			sw.getChunkManager().markForUpdate(pos);
+	}
+	
+	public Packet<ClientPlayPacketListener> toUpdatePacket(){
+		return BlockEntityUpdateS2CPacket.create(this);
+	}
+	
+	public NbtCompound toInitialChunkDataNbt(){
+		return createNbt();
 	}
 }

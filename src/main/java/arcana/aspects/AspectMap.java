@@ -85,6 +85,13 @@ public record AspectMap(Map<Aspect, Integer> underlying) implements Iterable<Asp
 			set(aspect, (int)(get(aspect) * multiplier.apply(aspect)));
 	}
 	
+	public int total(){
+		int sum = 0;
+		for(int u : underlying.values())
+			sum += u;
+		return sum;
+	}
+	
 	public int indexOf(Aspect aspect){
 		int i = 0;
 		for(Aspect asp : aspectSet()){

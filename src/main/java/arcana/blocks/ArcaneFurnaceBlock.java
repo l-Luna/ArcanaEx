@@ -1,9 +1,13 @@
 package arcana.blocks;
 
+import arcana.ArcanaRegistry;
 import arcana.blocks.be.ArcaneFurnaceBlockEntity;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.stat.Stats;
 import net.minecraft.state.StateManager;
@@ -18,7 +22,12 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ArcaneFurnaceBlock extends BlockWithEntity{
+	
+	public static final Map<Item, SubstrateData> substrateTimes = new HashMap<>();
 	
 	public static final DirectionProperty facing = HorizontalFacingBlock.FACING;
 	public static final BooleanProperty on = Properties.LIT;
@@ -42,6 +51,11 @@ public class ArcaneFurnaceBlock extends BlockWithEntity{
 		return new ArcaneFurnaceBlockEntity(pos, state);
 	}
 	
+	@Nullable
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World _world, BlockState _state, BlockEntityType<T> type){
+		return checkType(type, ArcanaRegistry.ARCANE_FURNACE_BE, ArcaneFurnaceBlockEntity::tick);
+	}
+	
 	public BlockRenderType getRenderType(BlockState state){
 		return BlockRenderType.MODEL;
 	}
@@ -57,4 +71,6 @@ public class ArcaneFurnaceBlock extends BlockWithEntity{
 			return ActionResult.CONSUME;
 		}
 	}
+	
+	public record SubstrateData(int amount, int colour){}
 }

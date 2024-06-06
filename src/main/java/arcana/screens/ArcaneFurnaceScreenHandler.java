@@ -8,19 +8,26 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.screen.ArrayPropertyDelegate;
+import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 
 public class ArcaneFurnaceScreenHandler extends ScreenHandler{
 	
+	// "main" material inventory
 	private final Inventory inventory;
+	// [burn time, max burn time, substrate amount, max substrate amount, substrate colour, progress, max progress, aspect total]
+	private final PropertyDelegate propertyDelegate;
 	
 	public ArcaneFurnaceScreenHandler(int syncId, PlayerInventory pInv){
-		this(syncId, pInv, new SimpleInventory(1), new SimpleInventory(1), new SimpleInventory(1), new SimpleInventory(1));
+		this(syncId, pInv, new SimpleInventory(1), new SimpleInventory(1), new SimpleInventory(1), new SimpleInventory(1), new ArrayPropertyDelegate(8));
 	}
 	
-	public ArcaneFurnaceScreenHandler(int syncId, PlayerInventory pInv, Inventory material, Inventory fuel, Inventory substrate, Inventory husks){
+	public ArcaneFurnaceScreenHandler(int syncId, PlayerInventory pInv, Inventory material, Inventory fuel, Inventory substrate, Inventory husks, PropertyDelegate propertyDelegate){
 		super(ArcanaRegistry.ARCANE_FURNACE_SCREEN_HANDLER, syncId);
+		
+		this.propertyDelegate = propertyDelegate;
 		
 		inventory = material;
 		inventory.onOpen(pInv.player);
@@ -56,6 +63,40 @@ public class ArcaneFurnaceScreenHandler extends ScreenHandler{
 		
 		for(int idx = 0; idx < 9; idx++)
 			addSlot(new Slot(pInv, idx, 8 + idx * 18, 139));
+		
+		addProperties(propertyDelegate);
+	}
+	
+	public int getBurnTime(){
+		return propertyDelegate.get(0);
+	}
+	
+	public int getMaxBurnTime(){
+		return propertyDelegate.get(1);
+	}
+	
+	public int getSubstrateAmount(){
+		return propertyDelegate.get(2);
+	}
+	
+	public int getMaxSubstrateAmount(){
+		return propertyDelegate.get(3);
+	}
+	
+	public int getSubstrateColour(){
+		return propertyDelegate.get(4);
+	}
+	
+	public int getProgres(){
+		return propertyDelegate.get(5);
+	}
+	
+	public int getMaxProgress(){
+		return propertyDelegate.get(6);
+	}
+	
+	public int getAspectTotal(){
+		return propertyDelegate.get(7);
 	}
 	
 	public ItemStack transferSlot(PlayerEntity player, int index){

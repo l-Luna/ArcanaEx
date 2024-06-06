@@ -377,6 +377,8 @@ public final class ArcanaRegistry{
 		register("shattered_husk", SHATTERED_HUSK);
 		register("synthetic_scaffolding", SYNTHETIC_SCAFFOLDING);
 		register("formless_foam", FORMLESS_FOAM);
+		ArcaneFurnaceBlock.substrateTimes.put(SYNTHETIC_SCAFFOLDING, new ArcaneFurnaceBlock.SubstrateData(15, 0x43FC48));
+		ArcaneFurnaceBlock.substrateTimes.put(FORMLESS_FOAM, new ArcaneFurnaceBlock.SubstrateData(40, 0x2FD8C2));
 		
 		register("wand", WAND);
 		
@@ -431,6 +433,9 @@ public final class ArcanaRegistry{
 			PhialItem phialItem = new PhialItem(new Settings().group(Tab.PHIALS), aspect);
 			register("phials/" + shortName, phialItem);
 			Aspects.phials.put(aspect, phialItem);
+			
+			if(Aspects.primals.contains(aspect))
+				ArcaneFurnaceBlock.substrateTimes.put(crystalItem, new ArcaneFurnaceBlock.SubstrateData(5, aspect.colour()));
 		}
 		
 		// blocks

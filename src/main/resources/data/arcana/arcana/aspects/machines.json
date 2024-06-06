@@ -76,5 +76,29 @@
     "15*fire",
     "8*magic",
     "4*energy"
+  ],
+  "arcana:alembic": [
+    "34*metal",
+    "8*plant",
+    "8*fire",
+    "4*magic",
+    "4*energy"
+  ],
+
+  "arcana:essentia_tube": [
+    "metal",
+    "water"
+  ],
+  "arcana:essentia_valve": [
+    "metal",
+    "tool"
+  ],
+  "arcana:essentia_window": [
+    "metal",
+    "light"
+  ],
+  "arcana:essentia_pump": [
+    "metal",
+    "movement"
   ]
 }

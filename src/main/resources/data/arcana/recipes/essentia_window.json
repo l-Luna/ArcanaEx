@@ -1,0 +1,27 @@
+{
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "I": {
+      "tag": "c:iron_ingots"
+    },
+    "G": {
+      "item": "arcana:luminiferous_glass"
+    },
+    "C": {
+      "tag": "c:gold_ingots"
+    }
+  },
+  "pattern": [
+    "IGI",
+    " C "
+  ],
+  "result": {
+    "item": "arcana:essentia_window",
+    "count": 8
+  },
+  "aspects": [
+    "4*water",
+    "4*order",
+    "4*air"
+  ]
+}

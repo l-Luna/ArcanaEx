@@ -80,5 +80,22 @@
   "arcana:crucible": [
     "28*metal",
     "magic"
+  ],
+
+  "arcana:synthetic_scaffolding": [
+    "air",
+    "fire",
+    "water",
+    "earth",
+    "order",
+    "entropy"
+  ],
+  "arcana:formless_foam": [
+    "2*air",
+    "2*fire",
+    "2*water",
+    "2*earth",
+    "2*order",
+    "2*entropy"
   ]
 }

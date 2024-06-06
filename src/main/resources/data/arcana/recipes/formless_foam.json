@@ -1,0 +1,16 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "minecraft:potion",
+    "matches": "has_potion_type minecraft:water"
+  },
+  "aspects": [
+    "3*arcana:slime",
+    "3*arcana:crystal",
+    "8*arcana:air"
+  ],
+  "result": {
+    "item": "arcana:formless_foam",
+    "count": 2
+  }
+}

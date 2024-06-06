@@ -37,7 +37,7 @@ public class AlchemyRecipe implements Recipe<AlchemyInventory>, AspectRecipe{
 		);
 	}
 	
-	public AlchemyRecipe(Identifier id, Ingredient ingredient, AspectMap aspects, ItemStack output){
+	public AlchemyRecipe(Identifier id, XIngredient ingredient, AspectMap aspects, ItemStack output){
 		this.id = id;
 		this.ingredient = ingredient;
 		this.aspects = aspects;
@@ -47,7 +47,7 @@ public class AlchemyRecipe implements Recipe<AlchemyInventory>, AspectRecipe{
 	private final Identifier id;
 	// TODO: research requirement
 	
-	private final Ingredient ingredient;
+	private final XIngredient ingredient;
 	private final AspectMap aspects;
 	
 	private final ItemStack output;
@@ -65,7 +65,8 @@ public class AlchemyRecipe implements Recipe<AlchemyInventory>, AspectRecipe{
 	}
 	
 	public DefaultedList<Ingredient> getIngredients(){
-		return DefaultedList.copyOf(ingredient, ingredient);
+		Ingredient basic = ingredient.basic();
+		return DefaultedList.copyOf(basic, basic);
 	}
 	
 	public ItemStack getOutput(){
@@ -95,10 +96,7 @@ public class AlchemyRecipe implements Recipe<AlchemyInventory>, AspectRecipe{
 	public static class Serializer implements RecipeSerializer<AlchemyRecipe>{
 		
 		public AlchemyRecipe read(Identifier id, JsonObject json){
-			Ingredient ingredient = Ingredient.fromJson(
-					JsonHelper.hasArray(json, "ingredient")
-					? JsonHelper.getArray(json, "ingredient")
-					: JsonHelper.getObject(json, "ingredient"));
+			XIngredient ingredient = XIngredient.fromJson(JsonHelper.getObject(json, "ingredient"));
 			var aspects = ItemAspectRegistry.parseAspectStackList(id, JsonHelper.getArray(json, "aspects")).orElseGet(AspectMap::new);
 			ItemStack output = ShapedRecipe.outputFromJson(JsonHelper.getObject(json, "result"));
 			return new AlchemyRecipe(id, ingredient, aspects, output);
@@ -111,7 +109,7 @@ public class AlchemyRecipe implements Recipe<AlchemyInventory>, AspectRecipe{
 		}
 		
 		public AlchemyRecipe read(Identifier id, PacketByteBuf buf){
-			return new AlchemyRecipe(id, Ingredient.fromPacket(buf), AspectMap.fromNbt(buf.readNbt()), buf.readItemStack());
+			return new AlchemyRecipe(id, XIngredient.read(buf), AspectMap.fromNbt(buf.readNbt()), buf.readItemStack());
 		}
 	}
 }

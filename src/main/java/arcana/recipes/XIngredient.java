@@ -12,6 +12,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionUtil;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.ShapedRecipe;
 import net.minecraft.tag.TagKey;
@@ -22,6 +24,7 @@ import net.minecraft.util.registry.RegistryEntry;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
@@ -31,7 +34,8 @@ public class XIngredient implements Predicate<ItemStack>{
 	public static final Map<String, Function<String, StackMatcher>> matchers = Map.of(
 			"any", __ -> new AnyMatcher(),
 			"max_durability", __ -> new MaxDurabilityMatcher(),
-			"enchanted_with", EnchantedWithMatcher::new
+			"enchanted_with", EnchantedWithMatcher::new,
+			"has_potion_type", PotionTypeMatcher::new
 	);
 	
 	// one of
@@ -196,6 +200,23 @@ public class XIngredient implements Predicate<ItemStack>{
 				EnchantedBookItem.addEnchantment(stack, new EnchantmentLevelEntry(enchantment, 1));
 			else
 				stack.addEnchantment(enchantment, 1);
+		}
+	}
+	
+	public static final class PotionTypeMatcher implements StackMatcher{
+		
+		private final Potion potion;
+		
+		public PotionTypeMatcher(String potionId){
+			potion = Potion.byId(potionId);
+		}
+		
+		public Stream<ItemStack> applyMatching(Stream<ItemStack> in){
+			return in.map(x -> PotionUtil.setPotion(x, potion));
+		}
+		
+		public boolean test(ItemStack stack){
+			return Objects.equals(PotionUtil.getPotion(stack), potion);
 		}
 	}
 }

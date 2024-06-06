@@ -7,13 +7,18 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 
 import java.util.List;
 
+import static arcana.Arcana.arcId;
+
 public class PuzzlesCompletedRequirementRenderer implements RequirementRenderer<PuzzlesCompletedRequirement>{
 	
+	public static final Identifier COMPLETE_RESEARCH_NOTE_TEX = arcId("textures/gui/research/complete_research_notes.png");
+	
 	public void render(MatrixStack matrices, int x, int y, PuzzlesCompletedRequirement requirement, int time, float delta){
-		RenderSystem.setShaderTexture(0, PuzzleRequirementRenderer.RESEARCH_NOTE_TEX);
+		RenderSystem.setShaderTexture(0, COMPLETE_RESEARCH_NOTE_TEX);
 		DrawableHelper.drawTexture(matrices, x, y, 101, 0, 0, 16, 16, 16, 16);
 	}
 	

@@ -68,5 +68,13 @@
     "2*senses",
     "greed",
     "machine"
+  ],
+
+  "arcana:arcane_furnace": [
+    "38*earth",
+    "15*entropy",
+    "15*fire",
+    "8*magic",
+    "4*energy"
   ]
 }

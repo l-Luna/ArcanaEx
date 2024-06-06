@@ -16,6 +16,7 @@ import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -70,6 +71,19 @@ public class ArcaneFurnaceBlock extends BlockWithEntity{
 			}
 			return ActionResult.CONSUME;
 		}
+	}
+	
+	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved){
+		if(!state.isOf(newState.getBlock()))
+			if(world.getBlockEntity(pos) instanceof ArcaneFurnaceBlockEntity be){
+				ItemScatterer.spawn(world, pos, be.material);
+				ItemScatterer.spawn(world, pos, be.fuel);
+				ItemScatterer.spawn(world, pos, be.substrate);
+				ItemScatterer.spawn(world, pos, be.husks);
+				// TODO: add flux based on stored essentia
+			}
+		
+		super.onStateReplaced(state, world, pos, newState, moved);
 	}
 	
 	public record SubstrateData(int amount, int colour){}

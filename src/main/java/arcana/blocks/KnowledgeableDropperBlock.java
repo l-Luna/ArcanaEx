@@ -13,6 +13,7 @@ import net.minecraft.entity.ItemEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldEvents;
@@ -60,6 +61,14 @@ public class KnowledgeableDropperBlock extends DispenserBlock{
 	
 	public BlockEntity createBlockEntity(BlockPos pos, BlockState state){
 		return new KnowledgeableDropperBlockEntity(pos, state);
+	}
+	
+	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved){
+		if(!state.isOf(newState.getBlock()))
+			if(world.getBlockEntity(pos) instanceof KnowledgeableDropperBlockEntity be)
+				ItemScatterer.spawn(world, pos, be.getTomeSlot());
+		
+		super.onStateReplaced(state, world, pos, newState, moved);
 	}
 	
 	public static class Behaviour extends ItemDispenserBehavior{

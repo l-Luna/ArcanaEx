@@ -22,6 +22,7 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -102,6 +103,15 @@ public class ResearchTableBlock extends BigBlock implements Waterloggable, Block
 			player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
 			return ActionResult.CONSUME;
 		}
+	}
+	
+	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved){
+		if(!state.isOf(newState.getBlock()))
+			if(world.getBlockEntity(pos) instanceof ResearchTableBlockEntity be){
+				ItemScatterer.spawn(world, pos, be.inventory);
+			}
+		
+		super.onStateReplaced(state, world, pos, newState, moved);
 	}
 	
 	@Nullable

@@ -402,6 +402,7 @@
     "aspect_chess": "Win the game of Aspect Chess",
 
     "fieldwork.flux_build": "Taste the \"flux\" for yourself",
+    "fieldwork.essentia_pathfinder": "Build and test a pathfinder device",
     "chemistry.node_channelling": "Investigate how the aura interacts with metal",
     "chemistry.node_channelling_2": "Investigate how the aura moves in a variety of substances",
     "chemistry.auromancy_intro": "Try a new vis conductor",
@@ -437,7 +438,8 @@
     "chemistry.automated_alchemy": "Teach a machine to want",
     "chemistry.alchemical_glass.hardened_glass": "Strengthen glass",
     "chemistry.alchemical_glass.luminiferous_glass": "Lighten glass",
-    "chemistry.alchemical_glass.static_glass": "Confuse glass"
+    "chemistry.alchemical_glass.static_glass": "Confuse glass",
+    "chemistry.essentia_distillation": "Force essentia from matter"
   },
 
   // Other UIs
@@ -766,14 +768,19 @@
       "title": "Essentia Distillation",
       "desc": "Specks of Universe",
       "stages": [
-        "I believe it is now time to tackle the challenge of essentia: concentrating vis into a potent, liquid form.{~sep}The exact techniques used by the thaumaturges of the past vary significantly, and ",
-        "",
-        ""
+        "I believe it is now time to tackle the challenge of essentia: concentrating vis into a potent, liquid form.{~sep}What little the past authors had detailed varies wildly, and I believe I am on my own to reinvent the process. Alchemy is a good starting position - it involves essentia in some form or other - but is much too crude, too unrefined.\nAlchemy relies heavily on the use of water to distribute heat, provide a medium for aspects to flow, and mix them evenly. Invaluable there, but that mixing and contamination precludes its use here; perhaps my newly discovered materials can make up for it with even more heat?\nI have a couple of theories already; not much more to do than put them to the test.",
+        "That... was a catastrophic failure. The essentia began to form, but refused to properly separate from the object, no matter how hot or intense it became - finally vaporizing into flux, and the few leftovers crystalizing.{~sep}Surely it's fixable? Maybe another object could be used to draw out the essentia, as is done in alchemy?",
+        "As it turns out, I need to do precisely the opposite: provide some \"filler\" to {i}force{r} the essentia {i}out{r} of the item.\nThe final design I have landed on is superficially similar to the scraps left behind. An {i}Arcane Furnace{r} melts items down into an indeterminate slurry, while {i}Alembics{r} stacked above it further distil the slurry into essentia.\nThe furnace requires both fuel for heat, and a substrate to push out essentia. Items with a very small amount of aspects will burn quicker, and denser objects will settle at about 2 seconds each.\nThe fuel can be anything that burns in an ordinary furnace, and lasts just as long; the substrate is used up as aspects are purified, and can limit melting rate. Once any item is burned, it leaves behind a {i}Shattered Husk{r} that must be eventually removed to avoid clogging up the machine.\nFor now, the only substrate I have available are primal crystals, which can account for {c3}5{r} essentia each; finding more efficient substrates is a priority.\nAlembics placed above a furnace will draw out slurry from its internal buffer and convert it into essentia. Each alembic can store up to {c3}100{r} of any single aspect."
       ]
     },
-
-    "essentia_pipes": "Essentia Tubes, Valves, and Pumps",
-    "essentia_pipes.desc": "From A to B",
+    "essentia_transport": {
+      "title": "Essentia Transport",
+      "desc": "PPE Included",
+      "stages": [
+        "Handling essentia requires special preparation and equipment; no ordinary bucket or bottle will do, let alone leaving it out in the open.{~sep}For manual transfer, I can use {i}Phials{r}. These small enchanted bottles store exactly {c3}8{r} of any aspect, and can be filled or emptied into blocks simply by right clicking.\nTo store essentia in larger quantities, I can use {i}Warded Jars{r}. These blocks store up to {c3}100{r} of any single aspect, and visually show their aspect and fullness. When broken, they drop themselves and hold onto their contained essentia.",
+        "Of course, I would prefer to automate transportation wherever possible. Dispensers are capable of using phials just fine, but dedicated blocks are much more effective.\n{i}Essentia Tubes{r} transport essentia that has been pushed into them. In tubes, essentia takes the form of tiny {i}specks{r}, which move along at their own speed and direction, weakly obey gravity, and otherwise only change directions when they hit a wall. I should experiment with them to get familiar with their behaviour.\nTubes don't take essentia out of blocks like jars and alembics on their own, however; I'll need to use {i}Aspect Pumps{r}, a variation of tubes that pulls out essentia from the indicated direction. Pumps can be disabled using a redstone signal, and given an essentia phial to filter them to just one aspect.\nFor more control over their movement, I can also use {i}Aspect Valves{r} to open and close routes; an {i}Aspect Redirect{r} to force all specks entering to travel in one direction; or an {i}Aspect Router{r} to split specks across all other directions, randomly. Valves can be toggled by hand or redstone.\nFinally, to get a rough look at essentia flow, I can use {i}Essentia Windows{r}; these flash the colour of incoming essentia for a short period. A glowing window emits a comparator signal."
+      ]
+    },
 
     "alchemical_boiler": "Alchemical Boiler",
     "alchemical_boiler.desc": "Fan the flames",

@@ -484,6 +484,114 @@
           "content": "arcana:static_glass"
         }
       ]
+    },
+    {
+      "key": "arcana:essentia_distillation",
+      "name": "research.arcana.essentia_distillation.title",
+      "desc": "research.arcana.essentia_distillation.desc",
+      "icons": [
+        "arcana:arcane_furnace",
+        "arcana:alembic"
+      ],
+      "category": "arcana:alchemy",
+      "parents": [
+        "/arcana:alchemical_glass",
+        "arcana:alumentum",
+        "/arcana:magical_metallurgy"
+      ],
+      "x": 5,
+      "y": -2,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.essentia_distillation.stages.1",
+          "requirements": [
+            "arcana::puzzle{essentia_pathfinder}"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.essentia_distillation.stages.2",
+          "requirements": [
+            "arcana::puzzle{essentia_distillation}"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.essentia_distillation.stages.3"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:arcane_furnace"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:alembic"
+        }
+      ]
+    },
+    {
+      "key": "arcana:essentia_transport",
+      "name": "research.arcana.essentia_transport.title",
+      "desc": "research.arcana.essentia_transport.desc",
+      "icons": [
+        "arcana:empty_phial",
+        "arcana:essentia_tube",
+        "arcana:essentia_pump",
+        "arcana:essentia_valve",
+        "arcana:warded_jar",
+        "arcana:essentia_router",
+        "arcana:essentia_redirect",
+        "arcana:essentia_window"
+      ],
+      "category": "arcana:alchemy",
+      "parents": [
+        "&arcana:essentia_distillation"
+      ],
+      "x": 5,
+      "y": -4,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.essentia_transport.stages.1"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:empty_phial"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:warded_jar"
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.essentia_transport.stages.2"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:essentia_tube"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:essentia_pump"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:essentia_valve"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:essentia_redirect"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:essentia_router"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:essentia_window"
+        }
+      ]
     }
   ],
   "puzzles": [
@@ -626,6 +734,24 @@
         "crystal",
         "void",
         "journey"
+      ]
+    },
+    {
+      "key": "arcana:essentia_pathfinder",
+      "type": "fieldwork",
+      "desc": "puzzle.arcana.fieldwork.essentia_pathfinder"
+    },
+    {
+      "key": "arcana:essentia_distillation",
+      "type": "chemistry",
+      "desc": "puzzle.arcana.chemistry.essentia_distillation",
+      "nodes": [
+        "magic",
+        "taint",
+        "energy",
+        "magic",
+        "greed",
+        "armour"
       ]
     }
   ]

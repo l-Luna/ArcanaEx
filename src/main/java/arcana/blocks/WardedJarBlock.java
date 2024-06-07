@@ -4,10 +4,17 @@ import arcana.aspects.AspectIo;
 import arcana.aspects.AspectStack;
 import arcana.blocks.be.WardedJarBlockEntity;
 import arcana.blocks.tubes.EssentiaTubeBlock;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.client.item.TooltipContext;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
@@ -15,6 +22,8 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class WardedJarBlock extends BlockWithEntity implements AspectIo{
 	
@@ -59,5 +68,15 @@ public class WardedJarBlock extends BlockWithEntity implements AspectIo{
 	
 	public BlockRenderType getRenderType(BlockState state){
 		return BlockRenderType.MODEL;
+	}
+	
+	@Environment(EnvType.CLIENT)
+	public void appendTooltip(ItemStack stack, @Nullable BlockView world, List<Text> tooltip, TooltipContext options){
+		super.appendTooltip(stack, world, tooltip, options);
+		NbtCompound nbt = BlockItem.getBlockEntityNbt(stack);
+		if(nbt != null && nbt.contains("stored")){
+			AspectStack stored = AspectStack.fromNbt(nbt.getCompound("stored"));
+			tooltip.add(Text.translatable("tooltip.arcana.wand.focus_cost.individual", stored.amount(), stored.type().name()));
+		}
 	}
 }

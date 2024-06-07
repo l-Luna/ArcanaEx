@@ -167,7 +167,7 @@ public class ResearchEntryScreen extends Screen{
 		List<Pin> collect = entry.getAllPins(client.world).filter(p -> researcher.entryStage(p.entry()) >= p.stage()).toList();
 		for(int i = 0, size = collect.size(); i < size; i++){
 			Pin pin = collect.get(i);
-			PinButton e = new PinButton((width / 2) + pageWidth + 21, (height - bgHeight) / 2 + i * (size > 7 ? 21 : 22) - (size > 7 ? 15 : 0), pin);
+			PinButton e = new PinButton((width / 2) + pageWidth + 21, (height - bgHeight) / 2 + i * (size > 7 ? 21 : 22) - (size > 7 ? 3 : 0), pin);
 			pins.add(e);
 			addDrawableChild(e);
 		}

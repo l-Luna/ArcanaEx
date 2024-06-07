@@ -20,9 +20,8 @@ public class AlembicBlockEntityRenderer implements BlockEntityRenderer<AlembicBl
 	                   int light,
 	                   int overlay){
 		var player = MinecraftClient.getInstance().player;
-		boolean hasGoggles = GogglesOfRevealingItem.hasRevealing(player);
 		
-		if(!hasGoggles || entity.stored == null)
+		if(!GogglesOfRevealingItem.hasRevealing(player) || entity.stored == null)
 			return;
 		
 		matrices.push();

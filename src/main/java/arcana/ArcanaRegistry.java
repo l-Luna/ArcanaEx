@@ -9,6 +9,7 @@ import arcana.client.particles.AspectParticleEffect;
 import arcana.enchantments.ProjectingEnchantment;
 import arcana.enchantments.WarpingCurseEnchantment;
 import arcana.entities.ThrownAlumentumEntity;
+import arcana.fluids.TaintGooFluid;
 import arcana.items.*;
 import arcana.items.foci.EquivalentExchangeFocusItem;
 import arcana.items.foci.FireFocusItem;
@@ -31,6 +32,7 @@ import arcana.worldgen.silverwood.SilverwoodTrunkPlacer;
 import com.unascribed.lib39.fractal.api.ItemSubGroup;
 import dev.emi.trinkets.api.TrinketItem;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
@@ -42,6 +44,8 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.SpawnGroup;
+import net.minecraft.fluid.FlowableFluid;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.item.*;
 import net.minecraft.item.Item.Settings;
 import net.minecraft.particle.BlockStateParticleEffect;
@@ -93,6 +97,10 @@ public final class ArcanaRegistry{
 	private static final Settings GROUPED = new Settings().group(Tab.MAIN);
 	private static final Settings GROUPED_SINGLE = new Settings().group(Tab.MAIN).maxCount(1);
 	
+	// fluids...
+	public static final FlowableFluid STILL_TAINT_GOO = new TaintGooFluid.Still();
+	public static final FlowableFluid FLOWING_TAINT_GOO = new TaintGooFluid.Flowing();
+	
 	// items...
 	public static final Item SCRIBBLED_NOTES = new ScribbledNotesItem(GROUPED_SINGLE);
 	public static final Item GOGGLES_OF_REVEALING = new GogglesOfRevealingItem(new Settings().group(Tab.MAIN).maxCount(1));
@@ -108,6 +116,8 @@ public final class ArcanaRegistry{
 	public static final Item TOME_OF_SHARING = new TomeOfSharingItem(GROUPED_SINGLE);
 	
 	public static final Item CHEATERS_ARCANUM = new CheatersArcanumItem(GROUPED_SINGLE);
+	
+	public static final Item TAINT_GOO_BUCKET = new BucketItem(STILL_TAINT_GOO, new Settings().group(Tab.MAIN).maxCount(1).recipeRemainder(Items.BUCKET));
 	
 	public static final Item ARCANIUM_INGOT = new Item(GROUPED);
 	public static final Item ARCANIUM_SWORD = new SwordItem(ArcanaToolMaterials.ARCANIUM, 3, -2.4f, new Settings().group(Tab.EQUIPMENT));
@@ -248,6 +258,7 @@ public final class ArcanaRegistry{
 	public static final Block STRIPPED_GREATWOOD_WOOD = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
 	
 	public static final Block LIGHT_BLOCK = new LightFocusBlock(of(Material.DECORATION).dropsNothing().breakInstantly().ticksRandomly().luminance(state -> 7 + state.get(LightFocusBlock.life)));
+	public static final Block TAINT_GOO = new FluidBlock(STILL_TAINT_GOO, FabricBlockSettings.copy(Blocks.WATER));
 	
 	// screen handlers...
 	public static final ScreenHandlerType<ArcaneCraftingScreenHandler> ARCANE_CRAFTING_SCREEN_HANDLER
@@ -340,6 +351,10 @@ public final class ArcanaRegistry{
 	public static final List<Block> blocks = new ArrayList<>();
 	
 	public static void setup(){
+		// fluids
+		register("taint_goo", STILL_TAINT_GOO);
+		register("flowing_taint_goo", FLOWING_TAINT_GOO);
+		
 		// items + wand components
 		register("scribbled_notes", SCRIBBLED_NOTES);
 		register("goggles_of_revealing", GOGGLES_OF_REVEALING);
@@ -355,6 +370,8 @@ public final class ArcanaRegistry{
 		register("tome_of_sharing", TOME_OF_SHARING);
 		
 		register("cheaters_arcanum", CHEATERS_ARCANUM);
+		
+		register("taint_goo_bucket", TAINT_GOO_BUCKET);
 		
 		register("arcanium_ingot", ARCANIUM_INGOT);
 		register("arcanium_sword", ARCANIUM_SWORD);
@@ -525,6 +542,7 @@ public final class ArcanaRegistry{
 		}
 		
 		register("light_block", LIGHT_BLOCK, false);
+		register("taint_goo", TAINT_GOO, false);
 		
 		// screen handlers
 		register("arcane_crafting", ARCANE_CRAFTING_SCREEN_HANDLER);
@@ -612,6 +630,10 @@ public final class ArcanaRegistry{
 		blocks.add(block);
 		if(andItem)
 			register(name, new BlockItem(block, GROUPED));
+	}
+	
+	private static void register(String name, Fluid fluid){
+		Registry.register(Registry.FLUID, arcId(name), fluid);
 	}
 	
 	private static void register(String name, ScreenHandlerType<?> type){

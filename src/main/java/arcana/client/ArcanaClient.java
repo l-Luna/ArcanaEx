@@ -30,6 +30,8 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
+import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
+import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler;
 import net.fabricmc.fabric.api.client.rendering.v1.*;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.minecraft.block.Block;
@@ -92,6 +94,9 @@ public final class ArcanaClient implements ClientModInitializer{
 			registry.register(MysticMistBlockEntityRenderer.SNOW);
 			
 			registry.register(EssentiaValveBlockEntityRenderer.GEAR_TEX);
+			
+			registry.register(arcId("fluid/taint_goo"));
+			registry.register(arcId("fluid/taint_goo_flowing"));
 		});
 		
 		ColorProviderRegistry.BLOCK.register(
@@ -128,6 +133,16 @@ public final class ArcanaClient implements ClientModInitializer{
 		// ohhhh but the variance! the variance! it's so bad!
 		BlockEntityRendererRegistry.register(ArcanaRegistry.WARDED_CAMPFIRE_BE, ctx ->
 				(BlockEntityRenderer<WardedCampfireBlockEntity>)(BlockEntityRenderer<?>)new CampfireBlockEntityRenderer(ctx));
+		
+		FluidRenderHandlerRegistry.INSTANCE.register(
+				ArcanaRegistry.STILL_TAINT_GOO,
+				ArcanaRegistry.FLOWING_TAINT_GOO,
+				new SimpleFluidRenderHandler(
+						arcId("fluid/taint_goo"),
+						arcId("fluid/taint_goo_flowing")
+				)
+		);
+		BlockRenderLayerMap.INSTANCE.putFluids(RenderLayer.getTranslucent(), ArcanaRegistry.STILL_TAINT_GOO, ArcanaRegistry.FLOWING_TAINT_GOO);
 		
 		EntityRendererRegistry.register(ArcanaRegistry.THROWN_ALUMENTUM, ThrownAlumentumEntityRenderer::new);
 		

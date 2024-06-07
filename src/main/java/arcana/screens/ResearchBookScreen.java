@@ -290,6 +290,7 @@ public class ResearchBookScreen extends Screen{
 	private void renderFrame(MatrixStack matrices){
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 		RenderSystem.setShaderTexture(0, texture);
+		RenderSystem.setShaderColor(1, 1, 1, 1);
 		RenderSystem.enableBlend();
 		int fWidth = frameWidth(), fHeight = frameHeight();
 		int x = (width - fWidth) / 2, y = (height - fHeight) / 2;

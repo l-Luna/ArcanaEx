@@ -207,6 +207,8 @@ public final class ArcanaRegistry{
 	public static final Block ESSENTIA_VALVE = new EssentiaValveBlock(of(Material.METAL).dropsSelf().usesTool(PICKAXE_MINEABLE).strength(1).sounds(BlockSoundGroup.METAL));
 	public static final Block ESSENTIA_WINDOW = new EssentiaTubeBlock(of(Material.GLASS).dropsSelf().usesTool(PICKAXE_MINEABLE).strength(.7f).sounds(BlockSoundGroup.GLASS));
 	public static final Block ESSENTIA_PUMP = new EssentiaPumpBlock(of(Material.METAL).dropsSelf().usesTool(PICKAXE_MINEABLE).strength(1.1f).sounds(BlockSoundGroup.METAL));
+	public static final Block ESSENTIA_REDIRECT = new EssentiaRedirectBlock(of(Material.METAL).dropsSelf().usesTool(PICKAXE_MINEABLE).strength(1).sounds(BlockSoundGroup.METAL));
+	public static final Block ESSENTIA_ROUTER = new EssentiaRouterBlock(of(Material.METAL).dropsSelf().usesTool(PICKAXE_MINEABLE).strength(1.2f).sounds(BlockSoundGroup.METAL));
 	public static final Block WARDED_JAR = new WardedJarBlock(of(Material.GLASS).dropsSelf().renderLayer(TRANSLUCENT).strength(.9f).sounds(BlockSoundGroup.GLASS));
 	
 	public static final Block INFUSION_PILLAR = new InfusionPillarBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).nonOpaque().strength(4));
@@ -296,6 +298,12 @@ public final class ArcanaRegistry{
 			.build();
 	public static BlockEntityType<EssentiaValveBlockEntity> ESSENTIA_VALVE_BE = FabricBlockEntityTypeBuilder
 			.create(EssentiaValveBlockEntity::new, ESSENTIA_VALVE)
+			.build();
+	public static BlockEntityType<EssentiaRedirectBlockEntity> ESSENTIA_REDIRECT_BE = FabricBlockEntityTypeBuilder
+			.create(EssentiaRedirectBlockEntity::new, ESSENTIA_REDIRECT)
+			.build();
+	public static BlockEntityType<EssentiaRouterBlockEntity> ESSENTIA_ROUTER_BE = FabricBlockEntityTypeBuilder
+			.create(EssentiaRouterBlockEntity::new, ESSENTIA_ROUTER)
 			.build();
 	public static BlockEntityType<ArcaneFurnaceBlockEntity> ARCANE_FURNACE_BE = FabricBlockEntityTypeBuilder
 			.create(ArcaneFurnaceBlockEntity::new, ARCANE_FURNACE)
@@ -451,6 +459,8 @@ public final class ArcanaRegistry{
 		register("essentia_valve", ESSENTIA_VALVE);
 		register("essentia_window", ESSENTIA_WINDOW);
 		register("essentia_pump", ESSENTIA_PUMP);
+		register("essentia_redirect", ESSENTIA_REDIRECT);
+		register("essentia_router", ESSENTIA_ROUTER);
 		register("warded_jar", WARDED_JAR);
 		
 		register("infusion_pillar", INFUSION_PILLAR);
@@ -536,6 +546,8 @@ public final class ArcanaRegistry{
 		register("essentia_tube", ESSENTIA_TUBE_BE);
 		register("essentia_pump", ESSENTIA_PUMP_BE);
 		register("essentia_valve", ESSENTIA_VALVE_BE);
+		register("essentia_redirect", ESSENTIA_REDIRECT_BE);
+		register("essentia_router", ESSENTIA_ROUTER_BE);
 		register("arcane_furnace", ARCANE_FURNACE_BE);
 		register("alembic", ALEMBIC_BE);
 		

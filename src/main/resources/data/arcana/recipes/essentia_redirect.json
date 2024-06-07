@@ -1,0 +1,27 @@
+{
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "I": {
+      "tag": "c:iron_ingots"
+    },
+    "G": {
+      "item": "arcana:luminiferous_glass"
+    },
+    "P": {
+      "item": "minecraft:prismarine_shard"
+    }
+  },
+  "pattern": [
+    "P P",
+    "IGI",
+    "P P"
+  ],
+  "result": {
+    "item": "arcana:essentia_redirect",
+    "count": 8
+  },
+  "aspects": [
+    "6*water",
+    "6*order"
+  ]
+}

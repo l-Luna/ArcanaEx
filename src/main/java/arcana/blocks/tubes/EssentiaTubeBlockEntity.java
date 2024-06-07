@@ -35,6 +35,10 @@ public class EssentiaTubeBlockEntity extends BlockEntity{
 	}
 	
 	public static void tick(World world, BlockPos pos, BlockState state, EssentiaTubeBlockEntity tube){
+		// simply do not process anything, let the server update us wrt. jars and stuff instead
+		if(world.isClient)
+			return;
+		
 		List<AspectSpeck> specks = tube.specks;
 		if(!specks.isEmpty())
 			tube.markDirty();

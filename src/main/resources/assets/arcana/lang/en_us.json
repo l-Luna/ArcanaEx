@@ -209,6 +209,8 @@
     "essentia_window": "Essentia Window",
     "essentia_pump": "Essentia Pump",
     "essentia_valve": "Essentia Valve",
+    "essentia_redirect": "Essentia Redirect",
+    "essentia_router": "Essentia Router",
     "warded_jar": "Warded Jar",
 
     "infusion_pillar": "Infusion Pillar",

@@ -73,7 +73,9 @@ public class EssentiaTubeBlock extends ConnectingBlock implements BlockEntityPro
 	
 	@Nullable
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World _world, BlockState _state, BlockEntityType<T> type){
-		BlockEntityTicker<EssentiaTubeBlockEntity> ticker = type == ArcanaRegistry.ESSENTIA_TUBE_BE ? EssentiaTubeBlockEntity::tick : null;
+		BlockEntityTicker<EssentiaTubeBlockEntity> ticker =
+				(type == ArcanaRegistry.ESSENTIA_TUBE_BE || type == ArcanaRegistry.ESSENTIA_ROUTER_BE || type == ArcanaRegistry.ESSENTIA_REDIRECT_BE)
+				? EssentiaTubeBlockEntity::tick : null;
 		return (BlockEntityTicker<T>)ticker;
 	}
 }

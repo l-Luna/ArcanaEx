@@ -1,0 +1,31 @@
+{
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "I": {
+      "tag": "c:copper_ingots"
+    },
+    "G": {
+      "item": "arcana:static_glass"
+    },
+    "C": {
+      "item": "minecraft:comparator"
+    },
+    "R": {
+      "item": "minecraft:repeater"
+    }
+  },
+  "pattern": [
+    " C ",
+    "IGI",
+    " R "
+  ],
+  "result": {
+    "item": "arcana:essentia_router",
+    "count": 8
+  },
+  "aspects": [
+    "6*water",
+    "6*order",
+    "2*entropy"
+  ]
+}

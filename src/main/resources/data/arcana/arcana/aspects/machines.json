@@ -100,5 +100,13 @@
   "arcana:essentia_pump": [
     "metal",
     "movement"
+  ],
+  "arcana:essentia_redirect": [
+    "metal",
+    "journey"
+  ],
+  "arcana:essentia_router": [
+    "metal",
+    "energy"
   ]
 }

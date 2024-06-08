@@ -26,6 +26,8 @@ public final class ArcanaTags{
 	public static final TagKey<Biome> SILVERWOOD_SPAWNABLE = TagKey.of(Registry.BIOME_KEY, arcId("silverwood_spawnable"));
 	public static final TagKey<Biome> GREATWOOD_SPAWNABLE = TagKey.of(Registry.BIOME_KEY, arcId("greatwood_spawnable"));
 	
+	public static final TagKey<Fluid> TAINT_GOO = TagKey.of(Registry.FLUID_KEY, arcId("taint_goo"));
+	
 	public static List<Item> itemsIn(TagKey<Item> tag){
 		return Registry.ITEM.streamTagsAndEntries()
 				.filter(x -> x.getFirst().equals(tag))

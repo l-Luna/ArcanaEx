@@ -30,7 +30,9 @@
     "substrates": "Essentia Distillation Substrates",
 
     "crucible_heating_blocks": "Crucible Heating Blocks",
-    "crucible_heating_fluids": "Crucible Heating Fluids"
+    "crucible_heating_fluids": "Crucible Heating Fluids",
+
+    "taint_goo": "Taint Goo"
   },
 
   // if you say so
@@ -257,7 +259,9 @@
     "clusters.earth": "Terra Cluster",
     "clusters.order": "Ordo Cluster",
     "clusters.entropy": "Perditio Cluster",
-    "clusters.aura": "Auram Cluster"
+    "clusters.aura": "Auram Cluster",
+
+    "taint_goo": "Taint Goo"
   },
 
   // Tooltips
@@ -278,6 +282,11 @@
   "enchantment.arcana": {
     "warping": "Warping",
     "projecting": "Projecting"
+  },
+
+  // Status Effects
+  "effect.arcana": {
+    "tainted": "Tainted"
   },
 
   // Wand components

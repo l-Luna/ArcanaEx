@@ -1,6 +1,7 @@
 package arcana.mixin;
 
 import arcana.ArcanaRegistry;
+import arcana.ArcanaTags;
 import arcana.items.BootsOfTheTravellerItem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
@@ -17,6 +18,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Map;
@@ -59,5 +61,16 @@ public abstract class LivingEntityMixin{
 		return getEquippedStack(EquipmentSlot.FEET).getItem() == ArcanaRegistry.BOOTS_OF_THE_SAILOR
 				&& !entity.isSneaky()
 				&& !entity.world.getFluidState(entity.getBlockPos().up()).isIn(FluidTags.WATER);
+	}
+	
+	// when interacting with Taint Goo, gain the Tainted status effect
+	
+	@Inject(method = "tick", at = @At("TAIL"))
+	private void tick(CallbackInfo ci){
+		LivingEntity self = (LivingEntity)(Object)this;
+		boolean inTaintGoo = self.updateMovementInFluid(ArcanaTags.TAINT_GOO, 0.001f);
+		if(inTaintGoo)
+			if(self.world.getTime() % 80 == 0 || !self.hasStatusEffect(ArcanaRegistry.TAINTED))
+				self.addStatusEffect(new StatusEffectInstance(ArcanaRegistry.TAINTED, 5 * 20));
 	}
 }

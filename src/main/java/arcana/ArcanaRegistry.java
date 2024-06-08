@@ -6,6 +6,7 @@ import arcana.blocks.*;
 import arcana.blocks.be.*;
 import arcana.blocks.tubes.*;
 import arcana.client.particles.AspectParticleEffect;
+import arcana.effects.TaintedStatusEffect;
 import arcana.enchantments.ProjectingEnchantment;
 import arcana.enchantments.WarpingCurseEnchantment;
 import arcana.entities.ThrownAlumentumEntity;
@@ -44,6 +45,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.SpawnGroup;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.fluid.FlowableFluid;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.*;
@@ -347,6 +349,9 @@ public final class ArcanaRegistry{
 			.<ThrownAlumentumEntity>create(SpawnGroup.MISC, ThrownAlumentumEntity::new)
 			.build();
 	
+	// status effects...
+	public static final StatusEffect TAINTED = new TaintedStatusEffect();
+	
 	public static final List<Item> items = new ArrayList<>();
 	public static final List<Block> blocks = new ArrayList<>();
 	
@@ -610,6 +615,9 @@ public final class ArcanaRegistry{
 		
 		// entity types
 		register("thrown_alumentum", THROWN_ALUMENTUM);
+		
+		// status effects
+		register("tainted", TAINTED);
 	}
 	
 	private static void register(String name, Item item){
@@ -674,6 +682,10 @@ public final class ArcanaRegistry{
 	
 	private static void register(String name, EntityType<?> entityType){
 		Registry.register(Registry.ENTITY_TYPE, arcId(name), entityType);
+	}
+	
+	private static void register(String name, StatusEffect effect){
+		Registry.register(Registry.STATUS_EFFECT, arcId(name), effect);
 	}
 	
 	private static void registerCapOnly(Cap cap){

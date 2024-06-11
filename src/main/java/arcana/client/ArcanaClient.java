@@ -9,6 +9,7 @@ import arcana.aspects.WandAspectsTooltipData;
 import arcana.blocks.ArcanaBlockSettings;
 import arcana.blocks.be.WardedCampfireBlockEntity;
 import arcana.client.ber.*;
+import arcana.client.entity.SuspensionEngineRenderer;
 import arcana.client.particles.EssentiaStreamParticle;
 import arcana.client.particles.HungryNodeBlockParticle;
 import arcana.client.particles.HungryNodeDiscParticle;
@@ -146,6 +147,7 @@ public final class ArcanaClient implements ClientModInitializer{
 		BlockRenderLayerMap.INSTANCE.putFluids(RenderLayer.getTranslucent(), ArcanaRegistry.STILL_TAINT_GOO, ArcanaRegistry.FLOWING_TAINT_GOO);
 		
 		EntityRendererRegistry.register(ArcanaRegistry.THROWN_ALUMENTUM, ThrownAlumentumEntityRenderer::new);
+		EntityRendererRegistry.register(ArcanaRegistry.SUSPENSION_ENGINE, SuspensionEngineRenderer::new);
 		
 		for(Block block : ArcanaRegistry.blocks)
 			if(block.settings instanceof ArcanaBlockSettings abs)

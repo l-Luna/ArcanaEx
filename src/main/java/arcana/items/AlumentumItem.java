@@ -19,7 +19,7 @@ public class AlumentumItem extends Item{
 		if(user != null){
 			if(!user.getAbilities().creativeMode)
 				user.getStackInHand(hand).decrement(1);
-			ThrownAlumentumEntity entity = new ThrownAlumentumEntity(world);
+			ThrownAlumentumEntity entity = ThrownAlumentumEntity.create(world);
 			entity.updatePosition(user.getX(), user.getEyeY(), user.getZ());
 			
 			float f = -MathHelper.sin(user.headYaw * .017453292f) * MathHelper.cos(user.getPitch() * 0.017453292F);

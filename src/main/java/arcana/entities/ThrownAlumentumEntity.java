@@ -21,8 +21,8 @@ public class ThrownAlumentumEntity extends Entity{
 		super(type, world);
 	}
 	
-	public ThrownAlumentumEntity(World world){
-		this(ArcanaRegistry.THROWN_ALUMENTUM, world);
+	public static ThrownAlumentumEntity create(World w){
+		return new ThrownAlumentumEntity(ArcanaRegistry.THROWN_ALUMENTUM, w);
 	}
 	
 	public void tick(){

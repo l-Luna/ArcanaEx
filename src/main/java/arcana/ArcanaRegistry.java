@@ -9,6 +9,7 @@ import arcana.client.particles.AspectParticleEffect;
 import arcana.effects.TaintedStatusEffect;
 import arcana.enchantments.ProjectingEnchantment;
 import arcana.enchantments.WarpingCurseEnchantment;
+import arcana.entities.SuspensionEngineEntity;
 import arcana.entities.ThrownAlumentumEntity;
 import arcana.fluids.TaintGooFluid;
 import arcana.items.*;
@@ -350,7 +351,10 @@ public final class ArcanaRegistry{
 	
 	// entities...
 	public static final EntityType<ThrownAlumentumEntity> THROWN_ALUMENTUM = FabricEntityTypeBuilder
-			.<ThrownAlumentumEntity>create(SpawnGroup.MISC, ThrownAlumentumEntity::new)
+			.create(SpawnGroup.MISC, ThrownAlumentumEntity::new)
+			.build();
+	public static final EntityType<SuspensionEngineEntity> SUSPENSION_ENGINE = FabricEntityTypeBuilder
+			.create(SpawnGroup.MISC, SuspensionEngineEntity::new)
 			.build();
 	
 	// status effects...
@@ -623,6 +627,7 @@ public final class ArcanaRegistry{
 		
 		// entity types
 		register("thrown_alumentum", THROWN_ALUMENTUM);
+		register("suspension_engine", SUSPENSION_ENGINE);
 		
 		// status effects
 		register("tainted", TAINTED);

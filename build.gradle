@@ -44,6 +44,10 @@ repositories {
             includeGroup "com.jamieswhiteshirt"
         }
     }
+	maven {
+		name = 'GeckoLib'
+		url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+	}
 }
 
 loom {
@@ -74,6 +78,7 @@ dependencies {
 	// TODO: remove when trinkets is updated
 	modImplementation "com.terraformersmc:modmenu:4.0.6"
 	modImplementation "dev.emi:emi-fabric:${emi_version}"
+	modImplementation 'software.bernie.geckolib:geckolib-fabric-1.19:3.1.40'
 
 	for(String cc_module : ["base", "world", "entity"])
 		modImplementation include("dev.onyxstudios.cardinal-components-api:cardinal-components-${cc_module}:${cardinal_comp_version}") {

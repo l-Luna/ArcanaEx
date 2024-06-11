@@ -112,10 +112,13 @@ public class MysticMistBlockEntity extends BlockEntity implements AspectIo{
 				// TODO: fill crucibles... implement on crucible end using AoE
 			}
 			case 1 /* fire */ -> {
-				mist.randomSearch((__, b) -> b.isOf(Blocks.NETHER_WART), 3, (cPos, cState) -> {
+				mist.randomSearch((__, b) -> b.isOf(Blocks.NETHER_WART), 1, (cPos, cState) -> {
 					if(cState.getBlock() instanceof NetherWartBlock){
-						world.setBlockState(cPos, cState.with(NetherWartBlock.AGE, cState.get(NetherWartBlock.AGE) + 1), Block.NOTIFY_LISTENERS);
-						world.syncWorldEvent(WorldEvents.BONE_MEAL_USED, cPos, 0);
+						int value = cState.get(NetherWartBlock.AGE) + 1;
+						if(value < 3){
+							world.setBlockState(cPos, cState.with(NetherWartBlock.AGE, value), Block.NOTIFY_LISTENERS);
+							world.syncWorldEvent(WorldEvents.BONE_MEAL_USED, cPos, 0);
+						}
 					}
 				});
 				// TODO: fire infiniburn

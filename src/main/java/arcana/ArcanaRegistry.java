@@ -16,10 +16,7 @@ import arcana.items.foci.EquivalentExchangeFocusItem;
 import arcana.items.foci.FireFocusItem;
 import arcana.items.foci.LightFocusItem;
 import arcana.items.foci.PortableHoleFocusItem;
-import arcana.screens.ArcaneCraftingScreenHandler;
-import arcana.screens.ArcaneFurnaceScreenHandler;
-import arcana.screens.KnowledgeableDropperScreenHandler;
-import arcana.screens.ResearchTableScreenHandler;
+import arcana.screens.*;
 import arcana.worldgen.SurfaceNodeFeature;
 import arcana.worldgen.geodes.NodalGeodes;
 import arcana.worldgen.greatwood.GreatwoodFoliagePlacer;
@@ -222,6 +219,7 @@ public final class ArcanaRegistry{
 	public static final Block ESSENTIA_REDIRECT = new EssentiaRedirectBlock(of(Material.METAL).dropsSelf().usesTool(PICKAXE_MINEABLE).strength(1).sounds(BlockSoundGroup.METAL));
 	public static final Block ESSENTIA_ROUTER = new EssentiaRouterBlock(of(Material.METAL).dropsSelf().usesTool(PICKAXE_MINEABLE).strength(1.2f).sounds(BlockSoundGroup.METAL));
 	public static final Block WARDED_JAR = new WardedJarBlock(of(Material.GLASS).dropsSelf().renderLayer(TRANSLUCENT).strength(.9f).sounds(BlockSoundGroup.GLASS));
+	public static final Block DISTILLERY_PATHFINDER = new DistilleryPathfinderBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(1.5f));
 	
 	public static final Block INFUSION_PILLAR = new InfusionPillarBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).nonOpaque().strength(4));
 	public static final Block INFUSION_MATRIX = new InfusionMatrixBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).nonOpaque().strength(5));
@@ -271,6 +269,8 @@ public final class ArcanaRegistry{
 			= new ScreenHandlerType<>(KnowledgeableDropperScreenHandler::new);
 	public static final ScreenHandlerType<ArcaneFurnaceScreenHandler> ARCANE_FURNACE_SCREEN_HANDLER
 			= new ScreenHandlerType<>(ArcaneFurnaceScreenHandler::new);
+	public static final ScreenHandlerType<DistilleryPathfinderScreenHandler> DISTILLERY_PATHFINDER_SCREEN_HANDLER
+			= new ScreenHandlerType<>(DistilleryPathfinderScreenHandler::new);
 	
 	// block entities...
 	public static BlockEntityType<CrucibleBlockEntity> CRUCIBLE_BE = FabricBlockEntityTypeBuilder
@@ -323,6 +323,9 @@ public final class ArcanaRegistry{
 			.build();
 	public static BlockEntityType<AlembicBlockEntity> ALEMBIC_BE = FabricBlockEntityTypeBuilder
 			.create(AlembicBlockEntity::new, ALEMBIC)
+			.build();
+	public static BlockEntityType<DistilleryPathfinderBlockEntity> DISTILLERY_PATHFINDER_BE = FabricBlockEntityTypeBuilder
+			.create(DistilleryPathfinderBlockEntity::new, DISTILLERY_PATHFINDER)
 			.build();
 	
 	// enchantments...
@@ -484,6 +487,7 @@ public final class ArcanaRegistry{
 		register("essentia_redirect", ESSENTIA_REDIRECT);
 		register("essentia_router", ESSENTIA_ROUTER);
 		register("warded_jar", WARDED_JAR);
+		register("distillery_pathfinder", DISTILLERY_PATHFINDER);
 		
 		register("infusion_pillar", INFUSION_PILLAR);
 		register("infusion_matrix", INFUSION_MATRIX);
@@ -554,6 +558,7 @@ public final class ArcanaRegistry{
 		register("research_table", RESEARCH_TABLE_SCREEN_HANDLER);
 		register("knowledgeable_dropper", KNOWLEDGEABLE_DROPPER_SCREEN_HANDLER);
 		register("arcane_furnace", ARCANE_FURNACE_SCREEN_HANDLER);
+		register("distillery_pathfinder", DISTILLERY_PATHFINDER_SCREEN_HANDLER);
 		
 		// block entities
 		register("crucible", CRUCIBLE_BE);
@@ -573,6 +578,7 @@ public final class ArcanaRegistry{
 		register("essentia_router", ESSENTIA_ROUTER_BE);
 		register("arcane_furnace", ARCANE_FURNACE_BE);
 		register("alembic", ALEMBIC_BE);
+		register("distillery_pathfinder", DISTILLERY_PATHFINDER_BE);
 		
 		// enchantments
 		register("warping", WARPING);

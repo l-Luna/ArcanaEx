@@ -216,6 +216,7 @@
     "essentia_redirect": "Essentia Redirect",
     "essentia_router": "Essentia Router",
     "warded_jar": "Warded Jar",
+    "distillery_pathfinder": "Distillery Pathfinder",
 
     "infusion_pillar": "Infusion Pillar",
     "infusion_matrix": "Infusion Matrix",
@@ -413,7 +414,7 @@
     "aspect_chess": "Win the game of Aspect Chess",
 
     "fieldwork.flux_build": "Taste the \"flux\" for yourself",
-    "fieldwork.essentia_pathfinder": "Build and test a pathfinder device",
+    "fieldwork.distillery_pathfinder": "Build and test a pathfinder device",
     "chemistry.node_channelling": "Investigate how the aura interacts with metal",
     "chemistry.node_channelling_2": "Investigate how the aura moves in a variety of substances",
     "chemistry.auromancy_intro": "Try a new vis conductor",

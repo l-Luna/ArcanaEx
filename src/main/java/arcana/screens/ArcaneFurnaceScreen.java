@@ -45,8 +45,8 @@ public class ArcaneFurnaceScreen extends HandledScreen<ArcaneFurnaceScreenHandle
 		}
 		RenderSystem.setShaderColor(1, 1, 1, 1);
 		
-		if(handler.getProgres() > 0 && handler.getMaxProgress() > 0){
-			int pixels = (int)Math.ceil(20 * handler.getProgres() / (double)handler.getMaxProgress());
+		if(handler.getProgress() > 0 && handler.getMaxProgress() > 0){
+			int pixels = (int)Math.ceil(20 * handler.getProgress() / (double)handler.getMaxProgress());
 			drawTexture(matrices, x + 79, y + 30, 215, 0, pixels, 13);
 		}
 		

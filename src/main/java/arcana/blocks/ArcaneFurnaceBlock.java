@@ -68,13 +68,11 @@ public class ArcaneFurnaceBlock extends BlockWithEntity{
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit){
 		if(world.isClient)
 			return ActionResult.SUCCESS;
-		else{
-			if(world.getBlockEntity(pos) instanceof ArcaneFurnaceBlockEntity furnace){
-				player.openHandledScreen(furnace);
-				player.incrementStat(Stats.INTERACT_WITH_FURNACE);
-			}
-			return ActionResult.CONSUME;
+		if(world.getBlockEntity(pos) instanceof ArcaneFurnaceBlockEntity furnace){
+			player.openHandledScreen(furnace);
+			player.incrementStat(Stats.INTERACT_WITH_FURNACE);
 		}
+		return ActionResult.CONSUME;
 	}
 	
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved){

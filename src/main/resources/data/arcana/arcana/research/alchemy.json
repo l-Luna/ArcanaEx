@@ -506,7 +506,7 @@
           "type": "text",
           "content": "research.arcana.essentia_distillation.stages.1",
           "requirements": [
-            "arcana::puzzle{essentia_pathfinder}"
+            "arcana::puzzle{distillery_pathfinder}"
           ]
         },
         {
@@ -737,9 +737,9 @@
       ]
     },
     {
-      "key": "arcana:essentia_pathfinder",
+      "key": "arcana:distillery_pathfinder",
       "type": "fieldwork",
-      "desc": "puzzle.arcana.fieldwork.essentia_pathfinder"
+      "desc": "puzzle.arcana.fieldwork.distillery_pathfinder"
     },
     {
       "key": "arcana:essentia_distillation",

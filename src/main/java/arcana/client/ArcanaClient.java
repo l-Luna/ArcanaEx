@@ -121,6 +121,7 @@ public final class ArcanaClient implements ClientModInitializer{
 		HandledScreens.register(ArcanaRegistry.RESEARCH_TABLE_SCREEN_HANDLER, ResearchTableScreen::new);
 		HandledScreens.register(ArcanaRegistry.KNOWLEDGEABLE_DROPPER_SCREEN_HANDLER, KnowledgeableDropperScreen::new);
 		HandledScreens.register(ArcanaRegistry.ARCANE_FURNACE_SCREEN_HANDLER, ArcaneFurnaceScreen::new);
+		HandledScreens.register(ArcanaRegistry.DISTILLERY_PATHFINDER_SCREEN_HANDLER, DistilleryPathfinderScreen::new);
 		
 		BlockEntityRendererRegistry.register(ArcanaRegistry.CRUCIBLE_BE, ctx -> new CrucibleBlockEntityRenderer());
 		BlockEntityRendererRegistry.register(ArcanaRegistry.PEDESTAL_BE, PedestalBlockEntityRenderer::new);

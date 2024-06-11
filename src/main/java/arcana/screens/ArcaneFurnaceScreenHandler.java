@@ -87,7 +87,7 @@ public class ArcaneFurnaceScreenHandler extends ScreenHandler{
 		return propertyDelegate.get(4);
 	}
 	
-	public int getProgres(){
+	public int getProgress(){
 		return propertyDelegate.get(5);
 	}
 	

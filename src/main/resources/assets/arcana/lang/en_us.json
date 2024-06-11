@@ -415,6 +415,8 @@
 
     "fieldwork.flux_build": "Taste the \"flux\" for yourself",
     "fieldwork.distillery_pathfinder": "Build and test a pathfinder device",
+    "fieldwork.highest_reach": "Climb to the highest reaches",
+    "fieldwork.lowest_depths": "Delve to the lowest depths",
     "chemistry.node_channelling": "Investigate how the aura interacts with metal",
     "chemistry.node_channelling_2": "Investigate how the aura moves in a variety of substances",
     "chemistry.auromancy_intro": "Try a new vis conductor",
@@ -423,6 +425,7 @@
     "chemistry.paving_stones.travel": "Create a walkable surface",
     "chemistry.paving_stones.warding": "Create a protective enchantment",
     "chemistry.arcane_levitator": "Generate an air stream with vis",
+    "chemistry.mystic_mist": "Generate condensation with essentia",
     "chemistry.monocle_of_revealing": "Create a more efficient vis lens",
     "chemistry.copper_wand_caps": "Conduct vis through copper",
     "chemistry.leather_wand_caps": "Conduct vis through leather",
@@ -625,9 +628,9 @@
 
     "mystic_mist": "Mystic Mist",
     "mystic_mist.desc": "Climate control",
-    "mystic_mist.stage.1": "Rarely, if ever, is the weather in my favour. My crops are always lacking in water, and fires are free to rage across forests from innocent-looking lava pools, while the rain annoys me when I choose to travel far away.\nShould I find myself in need of it, the nearest region with snowfall may be a day's trek away - and let's not even mention the difficulty of getting lightning when you do want it.\nIf only I could control the weather myself...",
-    "mystic_mist.stage.2": "Changing how the global climate functions is well outside of my reach - at least, for now.\nBut something more useful may be achievable: making miniature climates, say, the size of a room. Tiny clouds, exactly where I need them.\nI'll need to take some readings of how altitude conditions in order to figure out the requirements for cloud formation first, though.",
-    "mystic_mist.stage.3": "The Mystic Mist is a device capable of creating miniature climates as needed. When powered by a Levitator below it, and filled with a material, it can create one of the following effects:\n - Creating clouds above crops to speed up their growth, above fires on flammable materials to put them out, and over empty crucibles to fill them, using water.\n - Creating thunderclouds above itself that can produce lightning, using water and redstone.\n - Creating blizzard clouds above itself that produce snowfall, using water and snow.\n - Creating a hot, dry environment around itself, suitable for the growth of Nether Wart, using lava.",
+    "mystic_mist.stage.1": "Rarely, if ever, is the weather in my favour. My crops are always lacking in water, and fires are free to rage across forests from innocent-looking lava pools, while the rain annoys me when I choose to travel far away.\nShould I find myself in need of it, the nearest region with snowfall may be a day's trek away - and let's not even mention the difficulty of getting lightning when you do want it.\nIf only I could control the weather myself... I'll need to take some readings of how altitude affects physical conditions, to better my understanding of how weather functions.",
+    "mystic_mist.stage.2": "Changing how the global climate functions is well outside of my reach - at least, for now.\nBut something more useful may be achievable: making miniature climates, say, the size of a room. Tiny clouds, exactly where I need them, precisely manipulating the conditions to perfection for myself and my crops.",
+    "mystic_mist.stage.3": "The Mystic Mist is a device capable of creating miniature climates as needed. When powered by essentia of the requisite type, it can create one of the following effects:\n - Creating clouds above crops to speed up their growth, above fires on flammable materials to put them out, and over empty crucibles to fill them, using {aspect:water} Aqua.\n - Creating thunderclouds above itself that can produce lightning, using {aspect:energy} Potentia.\n - Creating blizzard clouds above itself that produce snowfall, using {aspect:ice} Gelum.\n - Creating a hot, dry environment around itself, suitable for the growth of Nether Wart and proliferation of fire (should I need it), using {aspect:fire} Ignis.",
 
     "monocle_of_revealing": "Monocle of Revealing",
     "monocle_of_revealing.desc": "Eye Spy",

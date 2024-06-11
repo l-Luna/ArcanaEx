@@ -214,8 +214,8 @@
       "parents": [
         "arcana:artifice_root"
       ],
-      "x": -1,
-      "y": 3,
+      "x": 0,
+      "y": 2,
       "sections": [
         {
           "type": "text",
@@ -231,6 +231,44 @@
         {
           "type": "arcane_crafting",
           "content": "arcana:arcane_levitator"
+        }
+      ]
+    },
+    {
+      "key": "arcana:mystic_mist",
+      "name": "research.arcana.mystic_mist",
+      "desc": "research.arcana.mystic_mist.desc",
+      "icons": [
+        "arcana:mystic_mist"
+      ],
+      "category": "arcana:artifice",
+      "parents": [
+        "/arcana:arcane_levitator"
+      ],
+      "x": 2,
+      "y": 4,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.mystic_mist.stage.1",
+          "requirements": [
+            "arcana::puzzle{highest_reach}", "arcana::puzzle{lowest_depths}", "8*arcana::xp"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.mystic_mist.stage.2",
+          "requirements": [
+            "arcana::puzzle{mystic_mist}"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.mystic_mist.stage.3"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:mystic_mist"
         }
       ]
     }
@@ -280,6 +318,29 @@
         "movement",
         "journey",
         "aura"
+      ]
+    },
+    {
+      "key": "arcana:highest_reach",
+      "type": "fieldwork",
+      "desc": "puzzle.arcana.fieldwork.highest_reach"
+    },
+    {
+      "key": "arcana:lowest_depths",
+      "type": "fieldwork",
+      "desc": "puzzle.arcana.fieldwork.lowest_depths"
+    },
+    {
+      "key": "arcana:mystic_mist",
+      "type": "chemistry",
+      "desc": "puzzle.arcana.chemistry.mystic_mist",
+      "nodes": [
+        "machine",
+        "magic",
+        "ice",
+        "sloth",
+        "fire",
+        "crystal"
       ]
     }
   ]

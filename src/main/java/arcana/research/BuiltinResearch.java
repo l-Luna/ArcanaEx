@@ -19,6 +19,8 @@ public final class BuiltinResearch{
 	public static final Identifier rootResearch = arcId("root");
 	
 	public static final Identifier fluxPuzzle = arcId("flux_build_research");
+	public static final Identifier highestReachPuzzle = arcId("highest_reach");
+	public static final Identifier lowestDepthsPuzzle = arcId("lowest_depths");
 	
 	public static final Identifier silverwoodResearch = arcId("silverwood_trees");
 	public static final Identifier greatwoodResearch = arcId("greatwood_trees");
@@ -55,6 +57,16 @@ public final class BuiltinResearch{
 				finishInfoEntry(player, hungryNodesResearch);
 			if(node.getTag() != null && node.getTag().getBoolean("in_geode"))
 				finishInfoEntry(player, nodalGeodesResearch);
+		}
+		
+		Researcher researcher = Researcher.from(player);
+		if(player.getPos().y < player.world.getBottomY() + 20){
+			researcher.completePuzzle(Research.getPuzzle(lowestDepthsPuzzle));
+			researcher.doSync();
+		}
+		if(player.getPos().y > player.world.getTopY() - 30){
+			researcher.completePuzzle(Research.getPuzzle(highestReachPuzzle));
+			researcher.doSync();
 		}
 	}
 	

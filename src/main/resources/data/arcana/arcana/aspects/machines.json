@@ -108,5 +108,21 @@
   "arcana:essentia_router": [
     "metal",
     "energy"
+  ],
+
+  "arcana:arcane_levitator": [
+    "10*movement",
+    "6*earth",
+    "4*energy",
+    "4*magic",
+    "3*plant"
+  ],
+  "arcana:mystic_mist": [
+    "16*metal",
+    "16*air",
+    "12*magic",
+    "7*water",
+    "2*ice",
+    "light"
   ]
 }

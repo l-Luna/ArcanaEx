@@ -1,7 +1,11 @@
 package arcana.client.ber;
 
+import arcana.aspects.AspectStack;
+import arcana.aspects.Aspects;
 import arcana.blocks.be.MysticMistBlockEntity;
 import arcana.client.ArcanaClient;
+import arcana.client.AspectRenderer;
+import arcana.items.GogglesOfRevealingItem;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
@@ -13,6 +17,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.ColorHelper;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Quaternion;
+import net.minecraft.util.math.Vec3f;
 import net.minecraft.util.math.noise.PerlinNoiseSampler;
 import net.minecraft.util.math.random.LocalRandom;
 
@@ -30,10 +35,61 @@ public class MysticMistBlockEntityRenderer implements BlockEntityRenderer<Mystic
 	                   VertexConsumerProvider vcp,
 	                   int light,
 	                   int overlay){
-		final int lim = 32;
+		AspectStack stack = entity.stored;
+		if(stack == null)
+			return;
+		
+		// 101% chance this should not be copy-pasted everywhere
+		var player = MinecraftClient.getInstance().player;
+		if(!GogglesOfRevealingItem.hasRevealing(player))
+			return;
+		matrices.push();
+		
+		matrices.translate(0.5, 1.8, 0.5);
+		matrices.multiply(Quaternion.fromEulerXyzDegrees(new Vec3f(0, -MinecraftClient.getInstance().cameraEntity.getYaw(), 0)));
+		matrices.translate(0.5, 0, 0);
+		
+		var pos = entity.getPos();
+		double sqrDist = player.squaredDistanceTo(pos.getX() + .5, pos.getY() + .5, pos.getZ() + .5);
+		if(sqrDist > 8 * 8){
+			matrices.pop();
+			return;
+		}
+		var alpha = (float)(1 - Math.sqrt(sqrDist) / 10);
+		var intAlpha = (int)(Math.max(0, alpha * 255)) << 24;
+		
+		var scale = 24f;
+		matrices.translate((16 / scale - 1) / 2f, 0, 0);
+		matrices.scale(1 / scale, 1 / scale, -1 / scale);
+		matrices.multiply(Quaternion.fromEulerXyz(0, 0, (float)Math.PI));
+		RenderSystem.enableDepthTest();
+		RenderSystem.enableBlend();
+		RenderSystem.defaultBlendFunc();
+		AspectRenderer.renderAspect(stack.type(), matrices, 0, 0, 0, 1, 1, 1, alpha);
+		AspectRenderer.renderAspectStackOverlay(stack.amount(), matrices, MinecraftClient.getInstance().textRenderer, 0, 0, 0, 0xFFFFFF | intAlpha);
+		
+		matrices.pop();
+		// end
+		
+		// heat effect
+		if(stack.type().equals(Aspects.FIRE)){
+			// TODO
+			return;
+		}
+		// aurora effect
+		if(stack.type().equals(Aspects.AURA)){
+			// TODO
+			return;
+		}
+		
+		// water, energy, ice
+		boolean isRain = stack.type().equals(Aspects.WATER);
+		boolean isThunder = stack.type().equals(Aspects.ENERGY);
+		
+		final int lim = MysticMistBlockEntity.radius * 2;
 		
 		matrices.push();
-		matrices.translate(-lim/2f, 4.5, -lim/2f);
+		matrices.translate(-lim/2f, entity.vspace - 1.5, -lim/2f);
 		
 		double time = entity.getWorld().getTime() + tickDelta;
 		var diff = -(long)(time / 64);
@@ -48,6 +104,8 @@ public class MysticMistBlockEntityRenderer implements BlockEntityRenderer<Mystic
 		RenderSystem.enableDepthTest();
 		RenderSystem.setShader(GameRenderer::getPositionColorTexLightmapShader);
 		RenderSystem.setShaderColor(1, 1, 1, 1);
+		if(isThunder)
+			RenderSystem.setShaderColor(0.8f, 0.8f, 0.8f, 1);
 		RenderSystem.setShaderTexture(0, SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE);
 		BufferBuilder vc = Tessellator.getInstance().getBuffer();
 		vc.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL);
@@ -66,15 +124,16 @@ public class MysticMistBlockEntityRenderer implements BlockEntityRenderer<Mystic
 				}
 			}
 		
-		Sprite rainSprite = atlas.apply(SNOW);
+		RenderSystem.setShaderColor(1, 1, 1, 1);
+		Sprite fallSprite = atlas.apply(isRain || isThunder ? RAIN : SNOW);
 		
-		float texMinU = rainSprite.getMinU();
-		float texMaxU = MathHelper.lerp(1, rainSprite.getMinU(), rainSprite.getMaxU());
-		float texMinV = rainSprite.getMinV();
-		float texMaxV = MathHelper.lerp(1, rainSprite.getMinV(), rainSprite.getMaxV());
+		float texMinU = fallSprite.getMinU();
+		float texMaxU = MathHelper.lerp(1, fallSprite.getMinU(), fallSprite.getMaxU());
+		float texMinV = fallSprite.getMinV();
+		float texMaxV = MathHelper.lerp(1, fallSprite.getMinV(), fallSprite.getMaxV());
 		
 		final float sqrt2 = MathHelper.SQUARE_ROOT_OF_TWO;
-		final float fallrate = 256;
+		final float fallrate = isRain ? 32 : isThunder ? 16 : 256;
 		
 		for(int x = 0; x < lim; x++)
 			for(int z = 0; z < lim; z++){

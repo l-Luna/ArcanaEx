@@ -2,11 +2,9 @@ package arcana.client.ber;
 
 import arcana.blocks.be.MysticMistBlockEntity;
 import arcana.client.ArcanaClient;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.LightmapTextureManager;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.*;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.SpriteAtlasTexture;
@@ -32,6 +30,11 @@ public class MysticMistBlockEntityRenderer implements BlockEntityRenderer<Mystic
 	                   VertexConsumerProvider vcp,
 	                   int light,
 	                   int overlay){
+		final int lim = 32;
+		
+		matrices.push();
+		matrices.translate(-lim/2f, 4.5, -lim/2f);
+		
 		double time = entity.getWorld().getTime() + tickDelta;
 		var diff = -(long)(time / 64);
 		float offset = (float)((time / 64) % 1);
@@ -40,9 +43,15 @@ public class MysticMistBlockEntityRenderer implements BlockEntityRenderer<Mystic
 		
 		var atlas = MinecraftClient.getInstance().getSpriteAtlas(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE);
 		whiteSprite = atlas.apply(ArcanaClient.miscWhite);
-		VertexConsumer vc = vcp.getBuffer(RenderLayer.getTranslucent());
+		RenderSystem.enableBlend();
+		RenderSystem.defaultBlendFunc();
+		RenderSystem.enableDepthTest();
+		RenderSystem.setShader(GameRenderer::getPositionColorTexLightmapShader);
+		RenderSystem.setShaderColor(1, 1, 1, 1);
+		RenderSystem.setShaderTexture(0, SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE);
+		BufferBuilder vc = Tessellator.getInstance().getBuffer();
+		vc.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL);
 		
-		final int lim = 32;
 		for(int x = 0; x < lim; x++)
 			for(int z = 0; z < lim; z++){
 				if(p.sample((x + diff) * .3, 0, (z + diff) * .3) >= 0.13){
@@ -57,7 +66,6 @@ public class MysticMistBlockEntityRenderer implements BlockEntityRenderer<Mystic
 				}
 			}
 		
-		VertexConsumer rainbuf = vcp.getBuffer(RenderLayer.getCutout());
 		Sprite rainSprite = atlas.apply(SNOW);
 		
 		float texMinU = rainSprite.getMinU();
@@ -97,25 +105,25 @@ public class MysticMistBlockEntityRenderer implements BlockEntityRenderer<Mystic
 							var mat = matrices.peek().getPositionMatrix();
 							
 							// forward
-							rainbuf.vertex(mat, endY, 0, 0)
+							vc.vertex(mat, endY, 0, 0)
 									.color(0xFFFFFFFF)
 									.texture(texMinU, maxV)
 									.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
 									.normal(1, 0, 0)
 									.next();
-							rainbuf.vertex(mat, endY, -1 / 4f, 0)
+							vc.vertex(mat, endY, -1 / 4f, 0)
 									.color(0xFFFFFFFF)
 									.texture(texMaxU, maxV)
 									.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
 									.normal(1, 0, 0)
 									.next();
-							rainbuf.vertex(mat, startY, -1 / 4f, 0)
+							vc.vertex(mat, startY, -1 / 4f, 0)
 									.color(0xFFFFFFFF)
 									.texture(texMaxU, minV)
 									.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
 									.normal(1, 0, 0)
 									.next();
-							rainbuf.vertex(mat, startY, 0, 0)
+							vc.vertex(mat, startY, 0, 0)
 									.color(0xFFFFFFFF)
 									.texture(texMinU, minV)
 									.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
@@ -123,25 +131,25 @@ public class MysticMistBlockEntityRenderer implements BlockEntityRenderer<Mystic
 									.next();
 							
 							// and back
-							rainbuf.vertex(mat, startY, 0, 0)
+							vc.vertex(mat, startY, 0, 0)
 									.color(0xFFFFFFFF)
 									.texture(texMinU, minV)
 									.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
 									.normal(1, 0, 0)
 									.next();
-							rainbuf.vertex(mat, startY, -1 / 4f, 0)
+							vc.vertex(mat, startY, -1 / 4f, 0)
 									.color(0xFFFFFFFF)
 									.texture(texMaxU, minV)
 									.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
 									.normal(1, 0, 0)
 									.next();
-							rainbuf.vertex(mat, endY, -1 / 4f, 0)
+							vc.vertex(mat, endY, -1 / 4f, 0)
 									.color(0xFFFFFFFF)
 									.texture(texMaxU, maxV)
 									.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
 									.normal(1, 0, 0)
 									.next();
-							rainbuf.vertex(mat, endY, 0, 0)
+							vc.vertex(mat, endY, 0, 0)
 									.color(0xFFFFFFFF)
 									.texture(texMinU, maxV)
 									.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
@@ -153,6 +161,9 @@ public class MysticMistBlockEntityRenderer implements BlockEntityRenderer<Mystic
 					}
 				}
 			}
+		matrices.pop();
+		BufferRenderer.drawWithShader(vc.end());
+		RenderSystem.disableBlend();
 	}
 	
 	private void colVertex(VertexConsumer cons, MatrixStack ms, int colour, float x, float y, float z, int light, int nX, int nY, int nZ){

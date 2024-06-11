@@ -7,6 +7,8 @@ import arcana.aspects.AspectStack;
 import arcana.aspects.Aspects;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LightningEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.Packet;
 import net.minecraft.network.listener.ClientPlayPacketListener;
@@ -15,12 +17,16 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldEvents;
+import net.minecraft.world.poi.PointOfInterestStorage;
+import net.minecraft.world.poi.PointOfInterestTypes;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.BiPredicate;
 
@@ -115,7 +121,30 @@ public class MysticMistBlockEntity extends BlockEntity implements AspectIo{
 				// TODO: fire infiniburn
 			}
 			case 2 /* energy */ -> {
-				// TODO: energy lightning effects
+				// TODO: static electricity around lightning rods?
+				// TODO: also extinguish fire
+				// roughly once every 5 seconds, with a minimum of half a second delay
+				if(world.getTime() % 10 == 0 && rng.nextInt(9) == 0){
+					mist.randomSearch(
+							(there, b) -> world.getBlockState(there.up()).isAir() && !b.isAir(),
+							1,
+							(there, __) -> {
+								// prefer to hit lightning rods
+								Optional<BlockPos> rod = ((ServerWorld)world).getPointOfInterestStorage().getNearestPosition(
+										ty -> ty.matchesKey(PointOfInterestTypes.LIGHTNING_ROD),
+										posx -> world.getBlockState(posx.up()).isAir(),
+										there,
+										16,
+										PointOfInterestStorage.OccupationStatus.ANY
+								);
+								if(rod.isPresent())
+									there = rod.get();
+								
+								LightningEntity lightningEntity = EntityType.LIGHTNING_BOLT.create(world);
+								lightningEntity.refreshPositionAfterTeleport(Vec3d.ofBottomCenter(there.up()));
+								world.spawnEntity(lightningEntity);
+							});
+				}
 			}
 			case 3 /* ice */ ->
 					mist.randomSearch(

@@ -31,7 +31,7 @@ public class PkGetNote extends C2SMessage{
 		ItemStack noteStack = new ItemStack(ArcanaRegistry.RESEARCH_NOTES);
 		var tag = noteStack.getOrCreateNbt();
 		tag.putString("puzzle_id", puzzleId.toString());
-		tag.put("puzzle_data", puzzle.getInitialNoteTag());
+		tag.put("puzzle_data", puzzle.getInitialNoteTag(player));
 		player.giveItemStack(noteStack);
 	}
 }

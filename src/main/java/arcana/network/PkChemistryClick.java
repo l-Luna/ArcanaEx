@@ -51,10 +51,12 @@ public class PkChemistryClick extends C2SMessage{
 				Aspect toPlace = toSet == null ? null : Aspects.byName(toSet);
 				Aspect toReplace = grid.contains(hexId) ? Aspects.byName(grid.getString(hexId)) : null;
 				boolean hasExpertise = Researcher.from(player).isEntryComplete(Research.getEntry(BuiltinResearch.researchExpertiseResearch));
+				boolean hasMastery = Researcher.from(player).isEntryComplete(Research.getEntry(BuiltinResearch.researchMasteryResearch));
+				float returnChance = hasMastery ? 0.5f : hasExpertise ? 0.25f : 0;
 				
 				if(toPlace == null){
 					grid.remove(hexId);
-					if(toReplace != null && hasExpertise && player.world.random.nextInt(4) == 0){
+					if(toReplace != null && hasExpertise && player.world.random.nextFloat() < returnChance){
 						stored.add(toReplace, 1);
 						puzzleData.put("stored_aspects", stored.toNbt());
 					}
@@ -62,7 +64,7 @@ public class PkChemistryClick extends C2SMessage{
 					stored.take(toPlace, 1);
 					puzzleData.put("stored_aspects", stored.toNbt());
 					grid.putString(hexId, toSet);
-					if(toReplace != null && hasExpertise && player.world.random.nextInt(4) == 0){
+					if(toReplace != null && hasExpertise && player.world.random.nextFloat() < returnChance){
 						stored.add(toReplace, 1);
 						puzzleData.put("stored_aspects", stored.toNbt());
 					}

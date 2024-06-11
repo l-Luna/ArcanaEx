@@ -6,6 +6,7 @@ import arcana.research.puzzles.Fieldwork;
 import arcana.util.NbtUtil;
 import com.google.gson.JsonObject;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 
@@ -80,7 +81,7 @@ public abstract class Puzzle{
 		return NbtUtil.from(Map.of("type", type(), "data", data(), "id", id().toString(), "desc", desc()));
 	}
 	
-	public NbtCompound getInitialNoteTag(){
+	public NbtCompound getInitialNoteTag(ServerPlayerEntity player){
 		return new NbtCompound();
 	}
 }

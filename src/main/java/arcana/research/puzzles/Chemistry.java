@@ -3,7 +3,10 @@ package arcana.research.puzzles;
 import arcana.aspects.Aspect;
 import arcana.aspects.AspectMap;
 import arcana.aspects.Aspects;
+import arcana.components.Researcher;
+import arcana.research.BuiltinResearch;
 import arcana.research.Puzzle;
+import arcana.research.Research;
 import arcana.util.StreamUtil;
 import com.google.common.graph.EndpointPair;
 import com.google.common.graph.GraphBuilder;
@@ -15,6 +18,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtString;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 
@@ -53,12 +57,14 @@ public class Chemistry extends Puzzle{
 		flux = JsonHelper.getInt(obj, "flux", 0);
 	}
 	
-	public NbtCompound getInitialNoteTag(){
+	public NbtCompound getInitialNoteTag(ServerPlayerEntity player){
+		boolean hasMastery = Researcher.from(player).isEntryComplete(Research.getEntry(BuiltinResearch.researchMasteryResearch));
+		
 		NbtCompound tag = new NbtCompound();
 		AspectMap aspects = new AspectMap();
 		Random rng = new Random();
 		for(Aspect primal : Aspects.primals)
-			aspects.add(primal, rng.nextInt(9, 17));
+			aspects.add(primal, hasMastery ? rng.nextInt(11, 19) : rng.nextInt(9, 17));
 		tag.put("stored_aspects", aspects.toNbt());
 		return tag;
 	}

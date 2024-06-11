@@ -71,6 +71,11 @@
     "mind",
     "senses"
   ],
+  "arcana:scribing_tools": [
+    "light",
+    "void",
+    "senses"
+  ],
   "arcana:arcanum": [
     "7*mind",
     "6*senses",

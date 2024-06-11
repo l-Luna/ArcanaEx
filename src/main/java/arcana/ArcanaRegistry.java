@@ -102,6 +102,7 @@ public final class ArcanaRegistry{
 	
 	// items...
 	public static final Item SCRIBBLED_NOTES = new ScribbledNotesItem(GROUPED_SINGLE);
+	public static final Item SCRIBING_TOOLS = new Item(new Settings().group(Tab.MAIN).maxDamage(200));
 	public static final Item GOGGLES_OF_REVEALING = new GogglesOfRevealingItem(new Settings().group(Tab.MAIN).maxCount(1));
 	public static final Item MONOCLE_OF_REVEALING = new TrinketItem(GROUPED_SINGLE);
 	
@@ -365,6 +366,7 @@ public final class ArcanaRegistry{
 		
 		// items + wand components
 		register("scribbled_notes", SCRIBBLED_NOTES);
+		register("scribing_tools", SCRIBING_TOOLS);
 		register("goggles_of_revealing", GOGGLES_OF_REVEALING);
 		register("monocle_of_revealing", MONOCLE_OF_REVEALING);
 		

@@ -13,8 +13,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.slot.Slot;
+import net.minecraft.util.Pair;
 
 public class ResearchTableScreenHandler extends ScreenHandler{
+	
+	private final Inventory inventory;
 	
 	public ResearchTableScreenHandler(int syncId, PlayerInventory playerInv){
 		this(syncId, playerInv, ScreenHandlerContext.EMPTY);
@@ -33,19 +36,26 @@ public class ResearchTableScreenHandler extends ScreenHandler{
 			for(int j = 0; j < 3; j++)
 				addSlot(new Slot(inv, j + i * 3, 59 + j * 18, 181 + i * 18));
 		
-		Inventory entityInv = ctx.get((world, pos) -> {
+		Pair<SimpleInventory, SimpleInventory> tableInv = ctx.get((world, pos) -> {
 			BlockState state = world.getBlockState(pos);
 			if(!state.get(ResearchTableBlock.left))
 				pos = pos.offset(state.get(ResearchTableBlock.facing));
-			return ((ResearchTableBlockEntity)world.getBlockEntity(pos)).inventory;
-		}).orElse(new SimpleInventory(2));
+			ResearchTableBlockEntity entity = (ResearchTableBlockEntity)world.getBlockEntity(pos);
+			return new Pair<>(entity.scribingTools, entity.note);
+		}).orElse(new Pair<>(new SimpleInventory(1), new SimpleInventory(1)));
 		
-		addSlot(new Slot(entityInv, 0, 74, 10));
-		addSlot(new Slot(entityInv, 1, 92, 10){
+		addSlot(new Slot(tableInv.getLeft(), 0, 74, 10){
+			public boolean canInsert(ItemStack stack){
+				return stack.getItem() == ArcanaRegistry.SCRIBING_TOOLS;
+			}
+		});
+		addSlot(new Slot(tableInv.getRight(), 0, 92, 10){
 			public boolean canInsert(ItemStack stack){
 				return stack.getItem() instanceof ResearchNotesItem;
 			}
 		});
+		
+		inventory = tableInv.getLeft();
 	}
 	
 	public ItemStack transferSlot(PlayerEntity player, int index){
@@ -75,6 +85,6 @@ public class ResearchTableScreenHandler extends ScreenHandler{
 	}
 	
 	public boolean canUse(PlayerEntity player){
-		return true;
+		return inventory.canPlayerUse(player);
 	}
 }

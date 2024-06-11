@@ -54,6 +54,10 @@
     "5*metal",
     "3*life"
   ],
+  "arcana:taint_goo_bucket": [
+    "8*taint",
+    "5*metal"
+  ],
   "minecraft:turtle_egg": [
     "3*life",
     "water"
@@ -66,6 +70,17 @@
     "fabric",
     "mind",
     "senses"
+  ],
+  "arcana:arcanum": [
+    "7*mind",
+    "6*senses",
+    "3*magic"
+  ],
+  "arcana:tome_of_sharing": [
+    "6*mind",
+    "6*senses",
+    "5*magic",
+    "3*journey"
   ],
   "arcana:research_table": [
     "10*mind",

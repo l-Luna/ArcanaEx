@@ -1,11 +1,13 @@
 package arcana.client.research.requirements;
 
 import arcana.client.research.RequirementRenderer;
+import arcana.network.PkGetNote;
 import arcana.research.Puzzle;
 import arcana.research.Research;
 import arcana.research.puzzles.Fieldwork;
 import arcana.research.requirements.PuzzleRequirement;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.math.MatrixStack;
@@ -35,7 +37,7 @@ public class PuzzleRequirementRenderer implements RequirementRenderer<PuzzleRequ
 		List<MutableText> ret = tooltipForPuzzle(puzzle);
 		if(!(puzzle instanceof Fieldwork)){
 			ret.add(Text.translatable("research.entry.get_note.1").formatted(Formatting.AQUA));
-			Formatting color = canGetNote() ? Formatting.GRAY : Formatting.RED;
+			Formatting color = PkGetNote.canGetNote(MinecraftClient.getInstance().player) ? Formatting.GRAY : Formatting.RED;
 			ret.add(Text.translatable("research.entry.get_note.2").formatted(color));
 		}
 		return ret;
@@ -50,9 +52,5 @@ public class PuzzleRequirementRenderer implements RequirementRenderer<PuzzleRequ
 			ret.add(Text.translatable("puzzle." + t.getNamespace() + "." + t.getPath().replace("/", ".")));
 		}
 		return ret;
-	}
-	
-	private static boolean canGetNote(){
-		return true; // TODO: check for scribing tools & paper
 	}
 }

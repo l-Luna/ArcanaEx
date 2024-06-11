@@ -40,7 +40,7 @@ public class PuzzleRequirement extends Requirement{
 	
 	public boolean onClick(Entry entry, PlayerEntity player){
 		Puzzle puzzle = Research.getPuzzle(puzzleId);
-		if(!(puzzle instanceof Fieldwork)){
+		if(!(puzzle instanceof Fieldwork) && PkGetNote.canGetNote(player)){
 			new PkGetNote(puzzleId).sendToServer();
 			return true;
 		}

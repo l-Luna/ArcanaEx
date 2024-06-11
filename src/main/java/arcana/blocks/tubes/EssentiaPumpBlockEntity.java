@@ -37,7 +37,7 @@ public class EssentiaPumpBlockEntity extends EssentiaTubeBlockEntity{
 			// IN ADDITION! we also want to create specks of our own
 			Direction towards = state.get(EssentiaPumpBlock.facing);
 			Direction from = towards.getOpposite();
-			if(world.getBlockState(pos.offset(from)).getBlock() instanceof AspectIo aio){
+			if(pump.specks.size() < 3 && world.getBlockState(pos.offset(from)).getBlock() instanceof AspectIo aio){
 				AspectStack drawn = aio.draw(5, world, pos.offset(from), towards);
 				if(drawn != null){
 					AspectSpeck speck = new AspectSpeck(drawn, .5f, towards, 0);

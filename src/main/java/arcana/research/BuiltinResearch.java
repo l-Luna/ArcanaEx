@@ -29,6 +29,8 @@ public final class BuiltinResearch{
 	public static final Identifier eldritchNodesResearch = arcId("eldritch_nodes");
 	public static final Identifier nodalGeodesResearch = arcId("nodal_geodes");
 	
+	public static final Identifier researchExpertiseResearch = arcId("research_expertise");
+	
 	public static final List<Identifier> infoResearch = List.of(
 			silverwoodResearch,
 			greatwoodResearch,

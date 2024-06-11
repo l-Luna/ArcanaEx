@@ -3,6 +3,7 @@ accessWidener v1 named
 accessible field net/minecraft/client/render/model/BasicBakedModel itemPropertyOverrides Lnet/minecraft/client/render/model/json/ModelOverrideList;
 mutable field net/minecraft/client/render/model/BasicBakedModel itemPropertyOverrides Lnet/minecraft/client/render/model/json/ModelOverrideList;
 accessible method net/minecraft/client/font/TextRenderer getFontStorage (Lnet/minecraft/util/Identifier;)Lnet/minecraft/client/font/FontStorage;
+accessible method net/minecraft/client/gui/screen/Screen renderTooltipFromComponents (Lnet/minecraft/client/util/math/MatrixStack;Ljava/util/List;II)V
 
 accessible field net/minecraft/data/client/ItemModelGenerator writer Ljava/util/function/BiConsumer;
 

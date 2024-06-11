@@ -2,15 +2,21 @@ package arcana.client;
 
 import arcana.aspects.Aspect;
 import arcana.aspects.AspectStack;
+import arcana.components.Researcher;
+import arcana.research.BuiltinResearch;
+import arcana.research.Research;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.tooltip.TooltipComponent;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class AspectRenderer{
@@ -62,13 +68,28 @@ public final class AspectRenderer{
 	
 	public static void renderAspectTooltip(Aspect aspect, MatrixStack matrices, int x, int y){
 		useAspectTooltipColours = true;
-		MinecraftClient.getInstance().currentScreen.renderTooltip(matrices, tooltips(aspect), x, y);
+		MinecraftClient.getInstance().currentScreen.renderTooltipFromComponents(matrices, tooltips(aspect), x, y);
 		useAspectTooltipColours = false;
 	}
 	
-	public static List<Text> tooltips(Aspect aspect){
+	public static List<TooltipComponent> tooltips(Aspect aspect){
+		List<TooltipComponent> ret = new ArrayList<>();
+		ret.add(fromText(aspect.name()));
+		
 		if(MinecraftClient.getInstance().options.advancedItemTooltips)
-			return List.of(aspect.name(), Text.literal(aspect.id().toString()).formatted(Formatting.DARK_GRAY));
-		else return List.of(aspect.name());
+			ret.add(fromText(Text.literal(aspect.id().toString()).formatted(Formatting.DARK_GRAY)));
+		
+		Researcher researcher = Researcher.from(MinecraftClient.getInstance().player);
+		if(researcher.isEntryComplete(Research.getEntry(BuiltinResearch.researchExpertiseResearch))
+				&& Screen.hasShiftDown()
+				&& aspect.left() != null && aspect.right() != null){
+			ret.add(new ItemAspectsTooltipComponent(List.of(new AspectStack(aspect.left(), 1), new AspectStack(aspect.right(), 1)), null));
+		}
+		
+		return ret;
+	}
+	
+	private static TooltipComponent fromText(Text t){
+		return TooltipComponent.of(t.asOrderedText());
 	}
 }

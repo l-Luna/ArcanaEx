@@ -6,6 +6,8 @@ import arcana.ReflectivelyUtilized;
 import arcana.aspects.Aspect;
 import arcana.aspects.AspectMap;
 import arcana.aspects.Aspects;
+import arcana.components.Researcher;
+import arcana.research.BuiltinResearch;
 import arcana.research.Research;
 import arcana.research.puzzles.Chemistry;
 import arcana.screens.ResearchTableScreenHandler;
@@ -47,13 +49,23 @@ public class PkChemistryClick extends C2SMessage{
 				AspectMap stored = AspectMap.fromNbt(puzzleData.getCompound("stored_aspects"));
 				NbtCompound grid = puzzleData.getCompound("grid_aspects");
 				Aspect toPlace = toSet == null ? null : Aspects.byName(toSet);
+				Aspect toReplace = grid.contains(hexId) ? Aspects.byName(grid.getString(hexId)) : null;
+				boolean hasExpertise = Researcher.from(player).isEntryComplete(Research.getEntry(BuiltinResearch.researchExpertiseResearch));
 				
-				if(toPlace == null)
+				if(toPlace == null){
 					grid.remove(hexId);
-				else if(stored.contains(toPlace)){
+					if(toReplace != null && hasExpertise && player.world.random.nextInt(4) == 0){
+						stored.add(toReplace, 1);
+						puzzleData.put("stored_aspects", stored.toNbt());
+					}
+				}else if(stored.contains(toPlace)){
 					stored.take(toPlace, 1);
 					puzzleData.put("stored_aspects", stored.toNbt());
 					grid.putString(hexId, toSet);
+					if(toReplace != null && hasExpertise && player.world.random.nextInt(4) == 0){
+						stored.add(toReplace, 1);
+						puzzleData.put("stored_aspects", stored.toNbt());
+					}
 				}
 				puzzleData.put("grid_aspects", grid); // need to explicitly set in case it didn't exist
 				if(((Chemistry)Research.getPuzzle(new Identifier(nbt.getString("puzzle_id")))).validate(puzzleData)){

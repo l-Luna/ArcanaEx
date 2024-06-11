@@ -28,7 +28,7 @@ public class MysticMistBlockEntity extends BlockEntity implements AspectIo{
 	
 	public static final int
 			capacity = 6,
-			baseAspectTime = 30,
+			baseAspectTime = 40,
 			radius = 16;
 	public static final List<Aspect> weatherAspects = List.of(
 			Aspects.WATER,
@@ -99,7 +99,7 @@ public class MysticMistBlockEntity extends BlockEntity implements AspectIo{
 					}
 				});
 				// TODO: keep track of MM AoE so that farmland and fire can both treat it like rain
-				mist.randomSearch((__, b) -> b.isIn(BlockTags.FIRE), 6, (fPos, fState) ->
+				mist.randomSearch((__, b) -> b.isIn(BlockTags.FIRE), 24, (fPos, fState) ->
 						world.removeBlock(fPos, false));
 				mist.randomSearch((__, b) -> b.getBlock() instanceof FarmlandBlock, 24, (fPos, fState) ->
 						world.setBlockState(fPos, fState.with(FarmlandBlock.MOISTURE, 7), Block.NOTIFY_LISTENERS));

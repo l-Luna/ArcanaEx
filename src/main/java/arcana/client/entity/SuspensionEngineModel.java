@@ -1,6 +1,6 @@
 package arcana.client.entity;
 
-import arcana.entities.SuspensionEngineEntity;
+import arcana.entities.locomotive.SuspensionEngineEntity;
 import net.minecraft.util.Identifier;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 

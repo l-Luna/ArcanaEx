@@ -1,4 +1,4 @@
-package arcana.entities;
+package arcana.entities.locomotive;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -22,6 +22,10 @@ public class SuspensionEngineEntity extends Entity implements IAnimatable{
 	
 	public SuspensionEngineEntity(EntityType<?> type, World world){
 		super(type, world);
+	}
+	
+	public void tick(){
+		super.tick();
 	}
 	
 	protected void initDataTracker(){}

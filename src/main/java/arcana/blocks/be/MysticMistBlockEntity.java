@@ -126,7 +126,7 @@ public class MysticMistBlockEntity extends BlockEntity implements AspectIo{
 			case 2 /* energy */ -> {
 				// TODO: static electricity around lightning rods?
 				// TODO: also extinguish fire
-				// roughly once every 5 seconds, with a minimum of half a second delay
+				// roughly continuous every 5 seconds, with a minimum of half a second delay
 				if(world.getTime() % 10 == 0 && rng.nextInt(9) == 0){
 					mist.randomSearch(
 							(there, b) -> world.getBlockState(there.up()).isAir() && !b.isAir(),

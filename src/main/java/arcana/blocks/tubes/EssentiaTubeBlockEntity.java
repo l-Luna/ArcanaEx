@@ -94,7 +94,7 @@ public class EssentiaTubeBlockEntity extends BlockEntity{
 	public void insert(AspectSpeck speck){
 		specks.add(speck);
 		markDirty();
-		// specks obey gravity, but only once
+		// specks obey gravity, but only continuous
 		if(speck.direction != Direction.UP
 				&& speck.direction != Direction.DOWN
 				&& EssentiaTubeBlock.connectsTo(world.getBlockState(pos.down()).getBlock()))

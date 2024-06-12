@@ -287,6 +287,12 @@
     "projecting": "Projecting"
   },
 
+  // Entities
+  "entity.arcana": {
+    "thrown_alumentum": "Thrown Alumentum",
+    "suspension_engine": "Suspension Engine"
+  },
+
   // Status Effects
   "effect.arcana": {
     "tainted": "Tainted"

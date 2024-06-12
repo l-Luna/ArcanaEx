@@ -40,6 +40,7 @@ import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.SpawnGroup;
@@ -355,6 +356,7 @@ public final class ArcanaRegistry{
 			.build();
 	public static final EntityType<SuspensionEngineEntity> SUSPENSION_ENGINE = FabricEntityTypeBuilder
 			.create(SpawnGroup.MISC, SuspensionEngineEntity::new)
+			.dimensions(EntityDimensions.fixed(2, 1))
 			.build();
 	
 	// status effects...

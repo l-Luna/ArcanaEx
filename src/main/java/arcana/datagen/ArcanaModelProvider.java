@@ -80,6 +80,9 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		noAutoGen.add(ESSENTIA_VALVE.asItem());
 		noAutoGen.add(ESSENTIA_WINDOW.asItem());
 		noAutoGen.add(ESSENTIA_PUMP.asItem());
+		noAutoGen.add(ESSENTIA_ROUTER.asItem());
+		noAutoGen.add(ESSENTIA_REDIRECT.asItem());
+		noAutoGen.add(WARDED_CAMPFIRE.asItem());
 		
 		itemGen.register(NITOR.asItem(), Models.GENERATED);
 		

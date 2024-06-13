@@ -274,6 +274,15 @@
     "100*entropy"
   ],
 
+  // fix weird feedback loop
+  "arcana:arcanium": [
+    "3*magic",
+    "metal"
+  ],
+  "arcana:arcanium_block": [
+    "27*magic",
+    "9*metal"
+  ],
   "arcana:silverleaf": [
     "plant",
     "aura",

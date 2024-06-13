@@ -1,5 +1,7 @@
 package arcana.entities.locomotive;
 
+import arcana.blocks.SymbolBlock;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MovementType;
@@ -51,19 +53,36 @@ public class SuspensionEngineEntity extends Entity implements IAnimatable{
 		// accelerate towards the right direction
 		Vec3d targetVelocity = new Vec3d(getDirection().getUnitVector()).multiply(0.4);
 		
-		// speed up slowly, stop against blocks
-		boolean empty = world.isSpaceEmpty(this, getBoundingBox().offset(new BlockPos(getDirection().getVector())));
-		setVelocity(empty ? getVelocity().lerp(targetVelocity, 0.02) : getVelocity().lerp(Vec3d.ZERO, 0.3));
+		// stop against blocks
+		boolean cont = world.isSpaceEmpty(this, getBoundingBox().offset(new BlockPos(getDirection().getVector())));
+		
+		// process symbols - they might ask us to stop
+		BlockPos pos = getBlockPos();
+		BlockState stateHere = world.getBlockState(pos);
+		if(stateHere.getBlock() instanceof SymbolBlock sb && !world.isReceivingRedstonePower(pos))
+			cont &= sb.getSymbol().action().consider(world, this, stateHere, pos);
+		
+		if(cont){
+			// accelerate slowly in the direction of travel, decelerate quickly in other directions
+			// for(comp c) if t_c != 0 lerp(0.02) else lerp(0.5) ???
+			setVelocity(getVelocity().lerp(targetVelocity, 0.5));
+		}else{
+			// slow down quickly
+			setVelocity(getVelocity().lerp(Vec3d.ZERO, 0.4));
+		}
 	}
 	
 	public boolean collidesWith(Entity other) {
 		return BoatEntity.canCollide(this, other);
 	}
 	
-	public boolean isPushable() {
+	/*public boolean isPushable() {
+		return true;
+	}*/
+	
+	public boolean canHit(){
 		return true;
 	}
-	
 	
 	// attributes
 	

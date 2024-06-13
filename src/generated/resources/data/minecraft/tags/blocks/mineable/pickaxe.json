@@ -28,6 +28,19 @@
     "arcana:clusters/earth",
     "arcana:clusters/order",
     "arcana:clusters/entropy",
-    "arcana:clusters/aura"
+    "arcana:clusters/aura",
+    "arcana:locomotive_symbols/blank",
+    "arcana:locomotive_symbols/follow_me",
+    "arcana:locomotive_symbols/turn_left",
+    "arcana:locomotive_symbols/turn_right",
+    "arcana:locomotive_symbols/split",
+    "arcana:locomotive_symbols/hold",
+    "arcana:locomotive_symbols/fuel",
+    "arcana:locomotive_symbols/load",
+    "arcana:locomotive_symbols/unload",
+    "arcana:locomotive_symbols/drift",
+    "arcana:locomotive_symbols/synchronize",
+    "arcana:locomotive_symbols/grab",
+    "arcana:locomotive_symbols/eject"
   ]
 }

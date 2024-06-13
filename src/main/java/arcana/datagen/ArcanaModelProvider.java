@@ -2,7 +2,8 @@ package arcana.datagen;
 
 import arcana.aspects.Aspects;
 import arcana.blocks.CrystalClusterBlock;
-import arcana.blocks.ResearchTableBlock;
+import arcana.blocks.SymbolBlock;
+import arcana.entities.locomotive.Symbol;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.block.Block;
@@ -14,10 +15,14 @@ import net.minecraft.item.ToolItem;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import static arcana.Arcana.arcId;
 import static arcana.ArcanaRegistry.*;
 
 public final class ArcanaModelProvider extends FabricModelProvider{
+	
+	private static final Model symbolModel = new Model(Optional.of(arcId("block/locomotive_symbols/parent")), Optional.empty(), TextureKey.TEXTURE);
 	
 	private final List<Item> noAutoGen = new ArrayList<>();
 	
@@ -69,6 +74,11 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 					}))
 			);
 		}
+		
+		for(SymbolBlock block : Symbol.blocks){
+			blockGen.registerNorthDefaultHorizontalRotation(block);
+			symbolModel.upload(block, TextureMap.texture(block), blockGen.modelCollector);
+		}
 	}
 	
 	public void generateItemModels(ItemModelGenerator itemGen){
@@ -83,6 +93,7 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		noAutoGen.add(ESSENTIA_ROUTER.asItem());
 		noAutoGen.add(ESSENTIA_REDIRECT.asItem());
 		noAutoGen.add(WARDED_CAMPFIRE.asItem());
+		noAutoGen.add(RESEARCH_TABLE.asItem());
 		
 		itemGen.register(NITOR.asItem(), Models.GENERATED);
 		
@@ -90,18 +101,21 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 			noAutoGen.add(value.asItem());
 			itemGen.register(value.asItem(), Models.GENERATED);
 		}
+		for(Block value : Symbol.blocks){
+			noAutoGen.add(value.asItem());
+			Models.GENERATED.upload(ModelIds.getItemModelId(value.asItem()), TextureMap.layer0(value), itemGen.writer);
+		}
 		
 		for(Item item : items)
-			if(!noAutoGen.contains(item) && !(item instanceof BlockItem))
+			if(!(noAutoGen.contains(item) || item instanceof BlockItem))
 				if(item instanceof ToolItem)
 					itemGen.register(item, Models.HANDHELD);
 				else
 					itemGen.register(item, Models.GENERATED);
 		
 		for(Block block : blocks)
-			if(!(block instanceof ResearchTableBlock))
-				if(!noAutoGen.contains(block.asItem()) && block.asItem() != Items.AIR)
-					itemGen.writer.accept(ModelIds.getItemModelId(block.asItem()), new SimpleModelSupplier(ModelIds.getBlockModelId(block)));
+			if(!noAutoGen.contains(block.asItem()) && block.asItem() != Items.AIR)
+				itemGen.writer.accept(ModelIds.getItemModelId(block.asItem()), new SimpleModelSupplier(ModelIds.getBlockModelId(block)));
 	}
 	
 	public String getName(){

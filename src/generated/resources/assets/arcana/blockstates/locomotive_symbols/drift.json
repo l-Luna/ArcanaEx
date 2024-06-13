@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "arcana:block/locomotive_symbols/drift",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "arcana:block/locomotive_symbols/drift"
+    },
+    "facing=south": {
+      "model": "arcana:block/locomotive_symbols/drift",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "arcana:block/locomotive_symbols/drift",
+      "y": 270
+    }
+  }
+}

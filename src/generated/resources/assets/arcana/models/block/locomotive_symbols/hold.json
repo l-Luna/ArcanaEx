@@ -1,0 +1,6 @@
+{
+  "parent": "arcana:block/locomotive_symbols/parent",
+  "textures": {
+    "texture": "arcana:block/locomotive_symbols/hold"
+  }
+}

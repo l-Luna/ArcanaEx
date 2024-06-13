@@ -6,7 +6,8 @@
     "main": "Main",
     "equipment": "Equipment",
     "crystals": "Crystals",
-    "phials": "Phials"
+    "phials": "Phials",
+    "locomotives": "Locomotives"
   },
 
   "category.arcana": "Arcana",
@@ -99,6 +100,27 @@
     "magic": "Praecantatio",
     "taint": "Virimus",
     "aura": "Auram"
+  },
+
+  // Locomotive Symbols
+  "arcana.symbol": {
+    "blank": "Blank",
+
+    "hold": "Hold",
+    "fuel": "Fuel",
+    "load": "Load",
+    "unload": "Unload",
+
+    "follow_me": "Follow Me",
+    "turn_left": "Turn Left",
+    "turn_right": "Turn Right",
+    "split": "Split",
+
+    "drift": "Drift",
+    "synchronize": "Synchronize",
+
+    "grab": "Grab",
+    "eject": "Eject"
   },
 
   // Items
@@ -263,6 +285,8 @@
     "clusters.order": "Ordo Cluster",
     "clusters.entropy": "Perditio Cluster",
     "clusters.aura": "Auram Cluster",
+
+    "symbol": "Symbol: {}",
 
     "taint_goo": "Taint Goo"
   },

@@ -11,6 +11,7 @@ import arcana.enchantments.ProjectingEnchantment;
 import arcana.enchantments.WarpingCurseEnchantment;
 import arcana.entities.ThrownAlumentumEntity;
 import arcana.entities.locomotive.SuspensionEngineEntity;
+import arcana.entities.locomotive.Symbol;
 import arcana.fluids.TaintGooFluid;
 import arcana.items.*;
 import arcana.items.foci.EquivalentExchangeFocusItem;
@@ -93,6 +94,7 @@ public final class ArcanaRegistry{
 		public static final ItemSubGroup EQUIPMENT = ItemSubGroup.create(ARCANA, arcId("equipment"));
 		public static final ItemSubGroup CRYSTALS = ItemSubGroup.create(ARCANA, arcId("crystals"));
 		public static final ItemSubGroup PHIALS = ItemSubGroup.create(ARCANA, arcId("phials"));
+		public static final ItemSubGroup LOCOMOTIVES = ItemSubGroup.create(ARCANA, arcId("locomotives"));
 	}
 	
 	private static final Settings GROUPED = new Settings().group(Tab.MAIN);
@@ -356,7 +358,7 @@ public final class ArcanaRegistry{
 			.build();
 	public static final EntityType<SuspensionEngineEntity> SUSPENSION_ENGINE = FabricEntityTypeBuilder
 			.create(SpawnGroup.MISC, SuspensionEngineEntity::new)
-			.dimensions(EntityDimensions.fixed(2, 1))
+			.dimensions(EntityDimensions.fixed(1.8f, 1))
 			.build();
 	
 	// status effects...
@@ -556,6 +558,22 @@ public final class ArcanaRegistry{
 			ClusterSeedItem seed = new ClusterSeedItem(clusterBlock, GROUPED, primal);
 			register("cluster_seeds/" + shortName, seed);
 			Aspects.clusterSeeds.put(primal, seed);
+		}
+		
+		for(Symbol symbol : Symbol.all){
+			SymbolBlock symbolBlock = new SymbolBlock(
+					of(Material.METAL)
+							.usesTool(PICKAXE_MINEABLE)
+							.nonOpaque()
+							.noCollision()
+							.strength(1),
+					symbol
+			);
+			
+			register("locomotive_symbols/" + symbol.name(), symbolBlock, false);
+			Symbol.blocks.add(symbolBlock);
+			
+			register("locomotive_symbols/" + symbol.name(), new SymbolBlock.AsItem(symbolBlock, new Settings().group(Tab.LOCOMOTIVES)));
 		}
 		
 		register("light_block", LIGHT_BLOCK, false);

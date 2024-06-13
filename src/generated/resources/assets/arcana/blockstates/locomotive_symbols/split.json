@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "arcana:block/locomotive_symbols/split",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "arcana:block/locomotive_symbols/split"
+    },
+    "facing=south": {
+      "model": "arcana:block/locomotive_symbols/split",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "arcana:block/locomotive_symbols/split",
+      "y": 270
+    }
+  }
+}

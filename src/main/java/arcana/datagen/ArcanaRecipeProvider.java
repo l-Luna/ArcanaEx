@@ -36,7 +36,8 @@ public class ArcanaRecipeProvider extends FabricRecipeProvider{
 		offerTrapdoorRecipe(GREATWOOD_TRAPDOOR, GREATWOOD_PLANKS, exporter);
 		offerSignRecipe(GREATWOOD_SIGN, GREATWOOD_PLANKS, exporter);
 		
-		offerReversibleCompactingRecipes(exporter, VOID_METAL_INGOT, VOID_METAL_BLOCK);
+		offerReversibleCompactingRecipesWithReverseRecipeGroup(exporter, VOID_METAL_INGOT, VOID_METAL_BLOCK, "void_metal_ingot_from_void_metal_block", "void_metal_ingot");
+		offerReversibleCompactingRecipesWithCompactingRecipeGroup(exporter, VOID_METAL_NUGGET, VOID_METAL_INGOT, "void_metal_ingot_from_nuggets", "void_metal_ingot");
 		offerReversibleCompactingRecipes(exporter, SILVERLEAF_AMALGAMATE, SILVERLEAF_AMALGAMATE_BLOCK);
 		
 		offerSmithingRecipe(exporter, ARCANIUM_SWORD, VOID_METAL_SWORD, VOID_METAL_INGOT);

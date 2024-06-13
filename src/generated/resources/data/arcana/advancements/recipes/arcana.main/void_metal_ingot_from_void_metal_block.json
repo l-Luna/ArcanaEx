@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:void_metal_ingot"
+        "recipe": "minecraft:void_metal_ingot_from_void_metal_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:void_metal_ingot"
+      "minecraft:void_metal_ingot_from_void_metal_block"
     ]
   }
 }

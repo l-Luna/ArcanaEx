@@ -2,11 +2,11 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "arcana:void_metal_block"
+      "item": "arcana:void_metal_ingot"
     }
   ],
   "result": {
     "count": 9,
-    "item": "arcana:void_metal_ingot"
+    "item": "arcana:void_metal_nugget"
   }
 }

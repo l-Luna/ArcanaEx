@@ -302,5 +302,9 @@
     "3*metal",
     "3*taint",
     "2*void"
+  ],
+  "arcana:void_metal_nugget": [
+    "metal",
+    "void"
   ]
 }

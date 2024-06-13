@@ -269,6 +269,11 @@
     "stripped_silverwood_log": "Stripped Silverwood Log",
     "stripped_silverwood_wood": "Stripped Silverwood Wood",
 
+    "silverwood_door": "Silverwood Door",
+    "silverwood_trapdoor": "Silverwood Trapdoor",
+    "silverwood_sign": "Silverwood Sign",
+    "silverwood_wall_sign": "Silverwood Sign",
+
     "greatwood_sapling": "Greatwood Sapling",
     "greatwood_log": "Greatwood Log",
     "greatwood_leaves": "Greatwood Leaves",
@@ -277,6 +282,11 @@
     "greatwood_wood": "Greatwood Wood",
     "stripped_greatwood_log": "Stripped Greatwood Log",
     "stripped_greatwood_wood": "Stripped Greatwood Wood",
+
+    "greatwood_door": "Greatwood Door",
+    "greatwood_trapdoor": "Greatwood Trapdoor",
+    "greatwood_sign": "Greatwood Sign",
+    "greatwood_wall_sign": "Greatwood Sign",
 
     "clusters.air": "Aer Cluster",
     "clusters.fire": "Ignis Cluster",

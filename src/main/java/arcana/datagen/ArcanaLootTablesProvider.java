@@ -50,6 +50,9 @@ public class ArcanaLootTablesProvider extends FabricBlockLootTableProvider{
 		addDrop(SILVERWOOD_LEAVES, leaves -> leavesDrop(leaves, SILVERWOOD_SAPLING, saplingDropChance));
 		addDrop(GREATWOOD_LEAVES, leaves -> leavesDrop(leaves, GREATWOOD_SAPLING, saplingDropChance));
 		
+		addDrop(SILVERWOOD_DOOR, BlockLootTableGenerator::doorDrops);
+		addDrop(GREATWOOD_DOOR, BlockLootTableGenerator::doorDrops);
+		
 		Aspects.clusters.forEach((aspect, cluster) -> {
 			var drop = Aspects.crystals.get(aspect);
 			addDrop(cluster,

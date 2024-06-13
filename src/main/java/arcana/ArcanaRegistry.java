@@ -35,6 +35,7 @@ import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
+import net.fabricmc.fabric.api.object.builder.v1.sign.SignTypeRegistry;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
@@ -57,6 +58,7 @@ import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Rarity;
+import net.minecraft.util.SignType;
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryEntry;
@@ -70,7 +72,9 @@ import net.minecraft.world.gen.placementmodifier.HeightmapPlacementModifier;
 import net.minecraft.world.gen.trunk.TrunkPlacerType;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.function.ToIntFunction;
 
 import static arcana.Arcana.arcId;
@@ -253,6 +257,12 @@ public final class ArcanaRegistry{
 	public static final Block STRIPPED_SILVERWOOD_LOG = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
 	public static final Block STRIPPED_SILVERWOOD_WOOD = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
 	
+	public static final SignType SILVERWOOD_SIGN_TY = SignTypeRegistry.registerSignType(arcId("silverwood"));
+	public static final Block SILVERWOOD_DOOR = new DoorBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).renderLayer(CUTOUT).strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque());
+	public static final Block SILVERWOOD_TRAPDOOR = new TrapdoorBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).renderLayer(CUTOUT).dropsSelf().strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque().allowsSpawning(Blocks::never));
+	public static final Block SILVERWOOD_SIGN = new SignBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).renderLayer(CUTOUT).strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque(), SILVERWOOD_SIGN_TY);
+	public static final Block SILVERWOOD_WALL_SIGN = new WallSignBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).renderLayer(CUTOUT).dropsLike(SILVERWOOD_SIGN).strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque(), SILVERWOOD_SIGN_TY);
+	
 	public static final Block GREATWOOD_SAPLING = new SaplingBlock(new GreatwoodSaplingGenerator(), of(Material.PLANT).dropsSelf().renderLayer(CUTOUT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
 	public static final Block GREATWOOD_LOG = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
 	public static final Block GREATWOOD_LEAVES = new LeavesBlock(of(Material.LEAVES).renderLayer(CUTOUT).strength(.2f).ticksRandomly().sounds(BlockSoundGroup.GRASS).nonOpaque().allowsSpawning(Blocks::canSpawnOnLeaves).suffocates(Blocks::never).blockVision(Blocks::never));
@@ -261,6 +271,12 @@ public final class ArcanaRegistry{
 	public static final Block GREATWOOD_WOOD = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
 	public static final Block STRIPPED_GREATWOOD_LOG = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
 	public static final Block STRIPPED_GREATWOOD_WOOD = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
+	
+	public static final SignType GREATWOOD_SIGN_TY = SignTypeRegistry.registerSignType(arcId("greatwood"));
+	public static final Block GREATWOOD_DOOR = new DoorBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).renderLayer(CUTOUT).strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque());
+	public static final Block GREATWOOD_TRAPDOOR = new TrapdoorBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).renderLayer(CUTOUT).dropsSelf().strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque().allowsSpawning(Blocks::never));
+	public static final Block GREATWOOD_SIGN = new SignBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).renderLayer(CUTOUT).strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque(), GREATWOOD_SIGN_TY);
+	public static final Block GREATWOOD_WALL_SIGN = new WallSignBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).renderLayer(CUTOUT).dropsLike(GREATWOOD_SIGN).strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque(), GREATWOOD_SIGN_TY);
 	
 	public static final Block LIGHT_BLOCK = new LightFocusBlock(of(Material.DECORATION).dropsNothing().breakInstantly().ticksRandomly().luminance(state -> 7 + state.get(LightFocusBlock.life)));
 	public static final Block TAINT_GOO = new FluidBlock(STILL_TAINT_GOO, FabricBlockSettings.copy(Blocks.WATER));
@@ -528,6 +544,12 @@ public final class ArcanaRegistry{
 		StrippableBlockRegistry.register(SILVERWOOD_LOG, STRIPPED_SILVERWOOD_LOG);
 		StrippableBlockRegistry.register(SILVERWOOD_WOOD, STRIPPED_SILVERWOOD_WOOD);
 		
+		register("silverwood_door", SILVERWOOD_DOOR);
+		register("silverwood_trapdoor", SILVERWOOD_TRAPDOOR);
+		register("silverwood_sign", SILVERWOOD_SIGN, false);
+		register("silverwood_wall_sign", SILVERWOOD_WALL_SIGN, false);
+		register("silverwood_sign", new SignItem(new Settings().group(Tab.MAIN).maxCount(16), SILVERWOOD_SIGN, SILVERWOOD_WALL_SIGN));
+		
 		register("greatwood_sapling", GREATWOOD_SAPLING);
 		register("greatwood_log", GREATWOOD_LOG);
 		register("greatwood_leaves", GREATWOOD_LEAVES);
@@ -538,6 +560,16 @@ public final class ArcanaRegistry{
 		register("stripped_greatwood_wood", STRIPPED_GREATWOOD_WOOD);
 		StrippableBlockRegistry.register(GREATWOOD_LOG, STRIPPED_GREATWOOD_LOG);
 		StrippableBlockRegistry.register(GREATWOOD_WOOD, STRIPPED_GREATWOOD_WOOD);
+		
+		register("greatwood_door", GREATWOOD_DOOR);
+		register("greatwood_trapdoor", GREATWOOD_TRAPDOOR);
+		register("greatwood_sign", GREATWOOD_SIGN, false);
+		register("greatwood_wall_sign", GREATWOOD_WALL_SIGN, false);
+		register("greatwood_sign", new SignItem(new Settings().group(Tab.MAIN).maxCount(16), GREATWOOD_SIGN, GREATWOOD_WALL_SIGN));
+		
+		// HACKFIX, since fabric halfassed this API
+		BlockEntityType.SIGN.blocks = new HashSet<>(BlockEntityType.SIGN.blocks);
+		BlockEntityType.SIGN.blocks.addAll(Set.of(SILVERWOOD_SIGN, SILVERWOOD_WALL_SIGN, GREATWOOD_SIGN, GREATWOOD_WALL_SIGN));
 		
 		for(Aspect primal : Aspects.hasCluster){
 			CrystalClusterBlock clusterBlock = new CrystalClusterBlock(

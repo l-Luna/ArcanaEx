@@ -12,6 +12,7 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.item.ToolItem;
+import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +61,17 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		blockGen.registerLog(STRIPPED_SILVERWOOD_LOG).log(STRIPPED_SILVERWOOD_LOG).wood(STRIPPED_SILVERWOOD_WOOD);
 		blockGen.registerLog(GREATWOOD_LOG).log(GREATWOOD_LOG).wood(GREATWOOD_WOOD);
 		blockGen.registerLog(STRIPPED_GREATWOOD_LOG).log(STRIPPED_GREATWOOD_LOG).wood(STRIPPED_GREATWOOD_WOOD);
+		
+		blockGen.registerDoor(SILVERWOOD_DOOR);
+		noAutoGen.add(SILVERWOOD_DOOR.asItem());
+		blockGen.registerTrapdoor(SILVERWOOD_TRAPDOOR);
+		noAutoGen.add(SILVERWOOD_TRAPDOOR.asItem());
+		registerSign(SILVERWOOD_SIGN, SILVERWOOD_WALL_SIGN, SILVERWOOD_PLANKS, blockGen);
+		blockGen.registerDoor(GREATWOOD_DOOR);
+		noAutoGen.add(GREATWOOD_DOOR.asItem());
+		blockGen.registerTrapdoor(GREATWOOD_TRAPDOOR);
+		noAutoGen.add(GREATWOOD_TRAPDOOR.asItem());
+		registerSign(GREATWOOD_SIGN, GREATWOOD_WALL_SIGN, GREATWOOD_PLANKS, blockGen);
 		
 		blockGen.registerCooker(ARCANE_FURNACE, TexturedModel.ORIENTABLE);
 		
@@ -120,5 +132,13 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 	
 	public String getName(){
 		return "Arcana Blockstates and Models";
+	}
+	
+	public void registerSign(Block signBlock, Block wallSignBlock, Block particles, BlockStateModelGenerator blockGen){
+		Identifier particleModel = Models.PARTICLE.upload(signBlock, TextureMap.particle(particles), blockGen.modelCollector);
+		blockGen.blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(signBlock, particleModel));
+		blockGen.blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(wallSignBlock, particleModel));
+		blockGen.registerItemModel(signBlock.asItem());
+		noAutoGen.add(signBlock.asItem());
 	}
 }

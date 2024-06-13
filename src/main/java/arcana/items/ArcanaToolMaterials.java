@@ -8,7 +8,9 @@ import net.minecraft.recipe.Ingredient;
 import java.util.function.Supplier;
 
 public enum ArcanaToolMaterials implements ToolMaterial{
-	ARCANIUM(MiningLevels.IRON, 855, 7, 2.5f, 25, () -> Ingredient.ofItems(ArcanaRegistry.ARCANIUM_INGOT))
+	ARCANIUM(MiningLevels.IRON, 855, 7, 2.5f, 25, () -> Ingredient.ofItems(ArcanaRegistry.ARCANIUM_INGOT)),
+	VOID_METAL(MiningLevels.DIAMOND, 612, 9, 3.5f, 6, () -> Ingredient.ofItems(ArcanaRegistry.VOID_METAL_INGOT)),
+	SILVERLEAF(MiningLevels.DIAMOND, 1100, 7, 2.5f, 27, () -> Ingredient.ofItems(ArcanaRegistry.SILVERLEAF_AMALGAMATE))
 	;
 	
 	private final int miningLevel;

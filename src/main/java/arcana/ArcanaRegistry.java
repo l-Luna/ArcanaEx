@@ -138,6 +138,31 @@ public final class ArcanaRegistry{
 	public static final Item ARCANIUM_LEGGINGS = new ArmorItem(ArcanaArmourMaterials.ARCANIUM, EquipmentSlot.LEGS, new Settings().group(Tab.EQUIPMENT));
 	public static final Item ARCANIUM_BOOTS = new ArmorItem(ArcanaArmourMaterials.ARCANIUM, EquipmentSlot.FEET, new Settings().group(Tab.EQUIPMENT));
 	
+	public static final Item VOID_METAL_INGOT = new Item(GROUPED);
+	public static final Item VOID_METAL_NUGGET = new Item(GROUPED);
+	public static final Item VOID_SEED = new Item(GROUPED);
+	public static final Item VOID_METAL_SWORD = new SwordItem(ArcanaToolMaterials.VOID_METAL, 3, -2.4f, new Settings().group(Tab.EQUIPMENT));
+	public static final Item VOID_METAL_SHOVEL = new ShovelItem(ArcanaToolMaterials.VOID_METAL, 1.5f, -3, new Settings().group(Tab.EQUIPMENT));
+	public static final Item VOID_METAL_PICKAXE = new PickaxeItem(ArcanaToolMaterials.VOID_METAL, 1, -2.8f, new Settings().group(Tab.EQUIPMENT));
+	public static final Item VOID_METAL_AXE = new AxeItem(ArcanaToolMaterials.VOID_METAL, 5.5f, -3, new Settings().group(Tab.EQUIPMENT));
+	public static final Item VOID_METAL_HOE = new HoeItem(ArcanaToolMaterials.VOID_METAL, -2, -1, new Settings().group(Tab.EQUIPMENT));
+	public static final Item VOID_METAL_HELMET = new ArmorItem(ArcanaArmourMaterials.VOID_METAL, EquipmentSlot.HEAD, new Settings().group(Tab.EQUIPMENT));
+	public static final Item VOID_METAL_CHESTPLATE = new ArmorItem(ArcanaArmourMaterials.VOID_METAL, EquipmentSlot.CHEST, new Settings().group(Tab.EQUIPMENT));
+	public static final Item VOID_METAL_LEGGINGS = new ArmorItem(ArcanaArmourMaterials.VOID_METAL, EquipmentSlot.LEGS, new Settings().group(Tab.EQUIPMENT));
+	public static final Item VOID_METAL_BOOTS = new ArmorItem(ArcanaArmourMaterials.VOID_METAL, EquipmentSlot.FEET, new Settings().group(Tab.EQUIPMENT));
+	
+	public static final Item SILVERLEAF = new Item(GROUPED);
+	public static final Item SILVERLEAF_AMALGAMATE = new Item(GROUPED);
+	public static final Item SILVERLEAF_SWORD = new SwordItem(ArcanaToolMaterials.SILVERLEAF, 3, -2.4f, new Settings().group(Tab.EQUIPMENT));
+	public static final Item SILVERLEAF_SHOVEL = new ShovelItem(ArcanaToolMaterials.SILVERLEAF, 1.5f, -3, new Settings().group(Tab.EQUIPMENT));
+	public static final Item SILVERLEAF_PICKAXE = new PickaxeItem(ArcanaToolMaterials.SILVERLEAF, 1, -2.8f, new Settings().group(Tab.EQUIPMENT));
+	public static final Item SILVERLEAF_AXE = new AxeItem(ArcanaToolMaterials.SILVERLEAF, 5.5f, -3, new Settings().group(Tab.EQUIPMENT));
+	public static final Item SILVERLEAF_HOE = new HoeItem(ArcanaToolMaterials.SILVERLEAF, -2, -1, new Settings().group(Tab.EQUIPMENT));
+	public static final Item SILVERLEAF_HELMET = new ArmorItem(ArcanaArmourMaterials.SILVERLEAF, EquipmentSlot.HEAD, new Settings().group(Tab.EQUIPMENT));
+	public static final Item SILVERLEAF_CHESTPLATE = new ArmorItem(ArcanaArmourMaterials.SILVERLEAF, EquipmentSlot.CHEST, new Settings().group(Tab.EQUIPMENT));
+	public static final Item SILVERLEAF_LEGGINGS = new ArmorItem(ArcanaArmourMaterials.SILVERLEAF, EquipmentSlot.LEGS, new Settings().group(Tab.EQUIPMENT));
+	public static final Item SILVERLEAF_BOOTS = new ArmorItem(ArcanaArmourMaterials.SILVERLEAF, EquipmentSlot.FEET, new Settings().group(Tab.EQUIPMENT));
+	
 	public static final Item ARCANIUM_RING = new RingItem(new Settings().group(Tab.EQUIPMENT).maxCount(1), 3, 0);
 	public static final Item COPPER_RING = new RingItem(new Settings().group(Tab.EQUIPMENT).maxCount(1), 2, 0);
 	public static final Item ADORNED_RING = new RingItem(new Settings().group(Tab.EQUIPMENT).maxCount(1), 1, 5);
@@ -245,6 +270,8 @@ public final class ArcanaRegistry{
 	public static final Block WARDED_CAMPFIRE = new WardedCampfireBlock(of(Material.WOOD).dropsSelf().renderLayer(CUTOUT).strength(2).sounds(BlockSoundGroup.WOOD).luminance(whenLit(15)).nonOpaque());
 	
 	public static final Block ARCANIUM_BLOCK = new Block(of(Material.METAL, MapColor.PINK).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(5, 6).sounds(BlockSoundGroup.METAL));
+	public static final Block VOID_METAL_BLOCK = new Block(of(Material.METAL, MapColor.PURPLE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(5, 6).sounds(BlockSoundGroup.METAL));
+	public static final Block SILVERLEAF_AMALGAMATE_BLOCK = new Block(of(Material.METAL, MapColor.WHITE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(5, 6).sounds(BlockSoundGroup.METAL));
 	public static final Block ARCANE_STONE = new Block(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3, 7));
 	public static final Block ARCANE_STONE_BRICKS = new Block(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3.5f, 7));
 	
@@ -418,6 +445,31 @@ public final class ArcanaRegistry{
 		register("arcanium_leggings", ARCANIUM_LEGGINGS);
 		register("arcanium_boots", ARCANIUM_BOOTS);
 		
+		register("void_metal_ingot", VOID_METAL_INGOT);
+		register("void_metal_nugget", VOID_METAL_NUGGET);
+		register("void_seed", VOID_SEED);
+		register("void_metal_sword", VOID_METAL_SWORD);
+		register("void_metal_shovel", VOID_METAL_SHOVEL);
+		register("void_metal_pickaxe", VOID_METAL_PICKAXE);
+		register("void_metal_axe", VOID_METAL_AXE);
+		register("void_metal_hoe", VOID_METAL_HOE);
+		register("void_metal_helmet", VOID_METAL_HELMET);
+		register("void_metal_chestplate", VOID_METAL_CHESTPLATE);
+		register("void_metal_leggings", VOID_METAL_LEGGINGS);
+		register("void_metal_boots", VOID_METAL_BOOTS);
+		
+		register("silverleaf", SILVERLEAF);
+		register("silverleaf_amalgamate", SILVERLEAF_AMALGAMATE);
+		register("silverleaf_sword", SILVERLEAF_SWORD);
+		register("silverleaf_shovel", SILVERLEAF_SHOVEL);
+		register("silverleaf_pickaxe", SILVERLEAF_PICKAXE);
+		register("silverleaf_axe", SILVERLEAF_AXE);
+		register("silverleaf_hoe", SILVERLEAF_HOE);
+		register("silverleaf_helmet", SILVERLEAF_HELMET);
+		register("silverleaf_chestplate", SILVERLEAF_CHESTPLATE);
+		register("silverleaf_leggings", SILVERLEAF_LEGGINGS);
+		register("silverleaf_boots", SILVERLEAF_BOOTS);
+		
 		register("arcanium_ring", ARCANIUM_RING);
 		register("copper_ring", COPPER_RING);
 		register("adorned_ring", ADORNED_RING);
@@ -530,6 +582,8 @@ public final class ArcanaRegistry{
 		register("warded_campfire", WARDED_CAMPFIRE);
 		
 		register("arcanium_block", ARCANIUM_BLOCK);
+		register("void_metal_block", VOID_METAL_BLOCK);
+		register("silverleaf_amalgamate_block", SILVERLEAF_AMALGAMATE_BLOCK);
 		register("arcane_stone", ARCANE_STONE);
 		register("arcane_stone_bricks", ARCANE_STONE_BRICKS);
 		

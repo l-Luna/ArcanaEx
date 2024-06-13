@@ -272,5 +272,26 @@
     "100*earth",
     "100*order",
     "100*entropy"
+  ],
+
+  "arcana:silverleaf": [
+    "plant",
+    "aura",
+    "metal"
+  ],
+  "arcana:silverleaf_amalgamate": [
+    "3*metal",
+    "3*aura",
+    "2*water"
+  ],
+  "arcana:void_seed": [
+    "plant",
+    "taint",
+    "metal"
+  ],
+  "arcana:void_metal_ingot": [
+    "3*metal",
+    "3*taint",
+    "2*void"
   ]
 }

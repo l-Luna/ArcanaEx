@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "addition": {
+    "item": "arcana:silverleaf_amalgamate"
+  },
+  "base": {
+    "item": "arcana:arcanium_sword"
+  },
+  "result": {
+    "item": "arcana:silverleaf_sword"
+  }
+}

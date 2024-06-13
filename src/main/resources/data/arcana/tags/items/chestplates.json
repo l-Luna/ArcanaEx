@@ -6,6 +6,8 @@
     "minecraft:golden_chestplate",
     "minecraft:diamond_chestplate",
     "minecraft:netherite_chestplate",
-    "arcana:arcanium_chestplate"
+    "arcana:arcanium_chestplate",
+    "arcana:void_metal_chestplate",
+    "arcana:silverleaf_chestplate"
   ]
 }

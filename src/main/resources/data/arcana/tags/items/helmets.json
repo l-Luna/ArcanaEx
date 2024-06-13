@@ -7,6 +7,8 @@
     "minecraft:diamond_helmet",
     "minecraft:netherite_helmet",
     "minecraft:turtle_helmet",
-    "arcana:arcanium_helmet"
+    "arcana:arcanium_helmet",
+    "arcana:void_metal_helmet",
+    "arcana:silverleaf_helmet"
   ]
 }

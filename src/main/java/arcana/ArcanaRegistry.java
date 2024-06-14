@@ -267,6 +267,7 @@ public final class ArcanaRegistry{
 	public static final Block PAVING_STONE_OF_WARDING = new PavingStoneOfWardingBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3.5f, 7));
 	public static final Block PEDESTAL = new PedestalBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3).nonOpaque());
 	public static final Block ARCANE_LEVITATOR = new ArcaneLevitatorBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).sounds(BlockSoundGroup.WOOD).strength(2));
+	public static final Block CRYSTALLIZATION_PRESS = new CrystallizationPressBlock(of(Material.METAL).dropsSelf().requiresTool(PICKAXE_MINEABLE).sounds(BlockSoundGroup.ANCIENT_DEBRIS).strength(4));
 	public static final Block MYSTIC_MIST = new MysticMistBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).sounds(BlockSoundGroup.METAL).strength(2.5f).nonOpaque());
 	public static final Block WARDED_CAMPFIRE = new WardedCampfireBlock(of(Material.WOOD).dropsSelf().renderLayer(CUTOUT).strength(2).sounds(BlockSoundGroup.WOOD).luminance(whenLit(15)).nonOpaque());
 	
@@ -310,75 +311,34 @@ public final class ArcanaRegistry{
 	public static final Block TAINT_GOO = new FluidBlock(STILL_TAINT_GOO, FabricBlockSettings.copy(Blocks.WATER));
 	
 	// screen handlers...
-	public static final ScreenHandlerType<ArcaneCraftingScreenHandler> ARCANE_CRAFTING_SCREEN_HANDLER
-			= new ScreenHandlerType<>(ArcaneCraftingScreenHandler::new);
-	public static final ScreenHandlerType<ResearchTableScreenHandler> RESEARCH_TABLE_SCREEN_HANDLER
-			= new ScreenHandlerType<>(ResearchTableScreenHandler::new);
-	public static final ScreenHandlerType<KnowledgeableDropperScreenHandler> KNOWLEDGEABLE_DROPPER_SCREEN_HANDLER
-			= new ScreenHandlerType<>(KnowledgeableDropperScreenHandler::new);
-	public static final ScreenHandlerType<ArcaneFurnaceScreenHandler> ARCANE_FURNACE_SCREEN_HANDLER
-			= new ScreenHandlerType<>(ArcaneFurnaceScreenHandler::new);
-	public static final ScreenHandlerType<DistilleryPathfinderScreenHandler> DISTILLERY_PATHFINDER_SCREEN_HANDLER
-			= new ScreenHandlerType<>(DistilleryPathfinderScreenHandler::new);
+	public static final ScreenHandlerType<ArcaneCraftingScreenHandler> ARCANE_CRAFTING_SCREEN_HANDLER = new ScreenHandlerType<>(ArcaneCraftingScreenHandler::new);
+	public static final ScreenHandlerType<ResearchTableScreenHandler> RESEARCH_TABLE_SCREEN_HANDLER = new ScreenHandlerType<>(ResearchTableScreenHandler::new);
+	public static final ScreenHandlerType<KnowledgeableDropperScreenHandler> KNOWLEDGEABLE_DROPPER_SCREEN_HANDLER = new ScreenHandlerType<>(KnowledgeableDropperScreenHandler::new);
+	public static final ScreenHandlerType<ArcaneFurnaceScreenHandler> ARCANE_FURNACE_SCREEN_HANDLER = new ScreenHandlerType<>(ArcaneFurnaceScreenHandler::new);
+	public static final ScreenHandlerType<DistilleryPathfinderScreenHandler> DISTILLERY_PATHFINDER_SCREEN_HANDLER = new ScreenHandlerType<>(DistilleryPathfinderScreenHandler::new);
+	public static final ScreenHandlerType<CrystallizationPressScreenHandler> CRYSTALLIZATION_PRESS_SCREEN_HANDLER = new ScreenHandlerType<>(CrystallizationPressScreenHandler::new);
 	
 	// block entities...
-	public static BlockEntityType<CrucibleBlockEntity> CRUCIBLE_BE = FabricBlockEntityTypeBuilder
-			.create(CrucibleBlockEntity::new, CRUCIBLE)
-			.build();
-	public static BlockEntityType<ResearchTableBlockEntity> RESEARCH_TABLE_BE = FabricBlockEntityTypeBuilder
-			.create(ResearchTableBlockEntity::new, RESEARCH_TABLE)
-			.build();
-	public static BlockEntityType<KnowledgeableDropperBlockEntity> KNOWLEDGEABLE_DROPPER_BE = FabricBlockEntityTypeBuilder
-			.create(KnowledgeableDropperBlockEntity::new, KNOWLEDGEABLE_DROPPER)
-			.build();
-	public static BlockEntityType<PedestalBlockEntity> PEDESTAL_BE = FabricBlockEntityTypeBuilder
-			.create(PedestalBlockEntity::new, PEDESTAL)
-			.build();
-	public static BlockEntityType<ArcaneLevitatorBlockEntity> ARCANE_LEVITATOR_BE = FabricBlockEntityTypeBuilder
-			.create(ArcaneLevitatorBlockEntity::new, ARCANE_LEVITATOR)
-			.build();
-	public static BlockEntityType<InfusionPillarBlockEntity> INFUSION_PILLAR_BE = FabricBlockEntityTypeBuilder
-			.create(InfusionPillarBlockEntity::new, INFUSION_PILLAR)
-			.build();
-	public static BlockEntityType<InfusionMatrixBlockEntity> INFUSION_MATRIX_BE = FabricBlockEntityTypeBuilder
-			.create(InfusionMatrixBlockEntity::new, INFUSION_MATRIX)
-			.build();
-	public static BlockEntityType<WardedJarBlockEntity> WARDED_JAR_BE = FabricBlockEntityTypeBuilder
-			.create((pos, state) -> new WardedJarBlockEntity(pos, state, false), WARDED_JAR)
-			.build();
-	public static BlockEntityType<WardedJarBlockEntity> VOID_JAR_BE = FabricBlockEntityTypeBuilder
-			.create((pos, state) -> new WardedJarBlockEntity(pos, state, true), VOID_JAR)
-			.build();
-	public static BlockEntityType<MysticMistBlockEntity> MYSTIC_MIST_BE = FabricBlockEntityTypeBuilder
-			.create(MysticMistBlockEntity::new, MYSTIC_MIST)
-			.build();
-	public static BlockEntityType<WardedCampfireBlockEntity> WARDED_CAMPFIRE_BE = FabricBlockEntityTypeBuilder
-			.create(WardedCampfireBlockEntity::new, WARDED_CAMPFIRE)
-			.build();
-	public static BlockEntityType<EssentiaTubeBlockEntity> ESSENTIA_TUBE_BE = FabricBlockEntityTypeBuilder
-			.create(EssentiaTubeBlockEntity::new, ESSENTIA_TUBE, ESSENTIA_WINDOW)
-			.build();
-	public static BlockEntityType<EssentiaPumpBlockEntity> ESSENTIA_PUMP_BE = FabricBlockEntityTypeBuilder
-			.create(EssentiaPumpBlockEntity::new, ESSENTIA_PUMP)
-			.build();
-	public static BlockEntityType<EssentiaValveBlockEntity> ESSENTIA_VALVE_BE = FabricBlockEntityTypeBuilder
-			.create(EssentiaValveBlockEntity::new, ESSENTIA_VALVE)
-			.build();
-	public static BlockEntityType<EssentiaRedirectBlockEntity> ESSENTIA_REDIRECT_BE = FabricBlockEntityTypeBuilder
-			.create(EssentiaRedirectBlockEntity::new, ESSENTIA_REDIRECT)
-			.build();
-	public static BlockEntityType<EssentiaRouterBlockEntity> ESSENTIA_ROUTER_BE = FabricBlockEntityTypeBuilder
-			.create(EssentiaRouterBlockEntity::new, ESSENTIA_ROUTER)
-			.build();
-	public static BlockEntityType<ArcaneFurnaceBlockEntity> ARCANE_FURNACE_BE = FabricBlockEntityTypeBuilder
-			.create(ArcaneFurnaceBlockEntity::new, ARCANE_FURNACE)
-			.build();
-	public static BlockEntityType<AlembicBlockEntity> ALEMBIC_BE = FabricBlockEntityTypeBuilder
-			.create(AlembicBlockEntity::new, ALEMBIC)
-			.build();
-	public static BlockEntityType<DistilleryPathfinderBlockEntity> DISTILLERY_PATHFINDER_BE = FabricBlockEntityTypeBuilder
-			.create(DistilleryPathfinderBlockEntity::new, DISTILLERY_PATHFINDER)
-			.build();
+	public static BlockEntityType<CrucibleBlockEntity> CRUCIBLE_BE = FabricBlockEntityTypeBuilder.create(CrucibleBlockEntity::new, CRUCIBLE).build();
+	public static BlockEntityType<ResearchTableBlockEntity> RESEARCH_TABLE_BE = FabricBlockEntityTypeBuilder.create(ResearchTableBlockEntity::new, RESEARCH_TABLE).build();
+	public static BlockEntityType<KnowledgeableDropperBlockEntity> KNOWLEDGEABLE_DROPPER_BE = FabricBlockEntityTypeBuilder.create(KnowledgeableDropperBlockEntity::new, KNOWLEDGEABLE_DROPPER).build();
+	public static BlockEntityType<PedestalBlockEntity> PEDESTAL_BE = FabricBlockEntityTypeBuilder.create(PedestalBlockEntity::new, PEDESTAL).build();
+	public static BlockEntityType<ArcaneLevitatorBlockEntity> ARCANE_LEVITATOR_BE = FabricBlockEntityTypeBuilder.create(ArcaneLevitatorBlockEntity::new, ARCANE_LEVITATOR).build();
+	public static BlockEntityType<InfusionPillarBlockEntity> INFUSION_PILLAR_BE = FabricBlockEntityTypeBuilder.create(InfusionPillarBlockEntity::new, INFUSION_PILLAR).build();
+	public static BlockEntityType<InfusionMatrixBlockEntity> INFUSION_MATRIX_BE = FabricBlockEntityTypeBuilder.create(InfusionMatrixBlockEntity::new, INFUSION_MATRIX).build();
+	public static BlockEntityType<WardedJarBlockEntity> WARDED_JAR_BE = FabricBlockEntityTypeBuilder.create((pos, state) -> new WardedJarBlockEntity(pos, state, false), WARDED_JAR).build();
+	public static BlockEntityType<WardedJarBlockEntity> VOID_JAR_BE = FabricBlockEntityTypeBuilder.create((pos, state) -> new WardedJarBlockEntity(pos, state, true), VOID_JAR).build();
+	public static BlockEntityType<CrystallizationPressBlockEntity> CRYSTALLIZATION_PRESS_BE = FabricBlockEntityTypeBuilder.create(CrystallizationPressBlockEntity::new, CRYSTALLIZATION_PRESS).build();
+	public static BlockEntityType<MysticMistBlockEntity> MYSTIC_MIST_BE = FabricBlockEntityTypeBuilder.create(MysticMistBlockEntity::new, MYSTIC_MIST).build();
+	public static BlockEntityType<WardedCampfireBlockEntity> WARDED_CAMPFIRE_BE = FabricBlockEntityTypeBuilder.create(WardedCampfireBlockEntity::new, WARDED_CAMPFIRE).build();
+	public static BlockEntityType<EssentiaTubeBlockEntity> ESSENTIA_TUBE_BE = FabricBlockEntityTypeBuilder.create(EssentiaTubeBlockEntity::new, ESSENTIA_TUBE, ESSENTIA_WINDOW).build();
+	public static BlockEntityType<EssentiaPumpBlockEntity> ESSENTIA_PUMP_BE = FabricBlockEntityTypeBuilder.create(EssentiaPumpBlockEntity::new, ESSENTIA_PUMP).build();
+	public static BlockEntityType<EssentiaValveBlockEntity> ESSENTIA_VALVE_BE = FabricBlockEntityTypeBuilder.create(EssentiaValveBlockEntity::new, ESSENTIA_VALVE).build();
+	public static BlockEntityType<EssentiaRedirectBlockEntity> ESSENTIA_REDIRECT_BE = FabricBlockEntityTypeBuilder.create(EssentiaRedirectBlockEntity::new, ESSENTIA_REDIRECT).build();
+	public static BlockEntityType<EssentiaRouterBlockEntity> ESSENTIA_ROUTER_BE = FabricBlockEntityTypeBuilder.create(EssentiaRouterBlockEntity::new, ESSENTIA_ROUTER).build();
+	public static BlockEntityType<ArcaneFurnaceBlockEntity> ARCANE_FURNACE_BE = FabricBlockEntityTypeBuilder.create(ArcaneFurnaceBlockEntity::new, ARCANE_FURNACE).build();
+	public static BlockEntityType<AlembicBlockEntity> ALEMBIC_BE = FabricBlockEntityTypeBuilder.create(AlembicBlockEntity::new, ALEMBIC).build();
+	public static BlockEntityType<DistilleryPathfinderBlockEntity> DISTILLERY_PATHFINDER_BE = FabricBlockEntityTypeBuilder.create(DistilleryPathfinderBlockEntity::new, DISTILLERY_PATHFINDER).build();
 	
 	// enchantments...
 	public static Enchantment WARPING = new WarpingCurseEnchantment(Enchantment.Rarity.VERY_RARE, EquipmentSlot.values());
@@ -583,6 +543,7 @@ public final class ArcanaRegistry{
 		register("paving_stone_of_warding", PAVING_STONE_OF_WARDING);
 		register("pedestal", PEDESTAL);
 		register("arcane_levitator", ARCANE_LEVITATOR);
+		register("crystallization_press", CRYSTALLIZATION_PRESS);
 		register("mystic_mist", MYSTIC_MIST);
 		register("warded_campfire", WARDED_CAMPFIRE);
 		
@@ -687,6 +648,7 @@ public final class ArcanaRegistry{
 		register("infusion_matrix", INFUSION_MATRIX_BE);
 		register("warded_jar", WARDED_JAR_BE);
 		register("void_jar", VOID_JAR_BE);
+		register("crystallization_press", CRYSTALLIZATION_PRESS_BE);
 		register("mystic_mist", MYSTIC_MIST_BE);
 		register("warded_campfire", WARDED_CAMPFIRE_BE);
 		register("essentia_tube", ESSENTIA_TUBE_BE);

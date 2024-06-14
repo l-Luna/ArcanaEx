@@ -1,0 +1,11 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "arcana:block/crystallization_press",
+      "y": 90
+    },
+    "axis=z": {
+      "model": "arcana:block/crystallization_press"
+    }
+  }
+}

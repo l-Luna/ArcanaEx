@@ -32,6 +32,7 @@ public class AlembicBlockEntity extends BlockEntity implements AspectIo{
 		super.readNbt(nbt);
 		if(nbt.contains("stored"))
 			stored = AspectStack.fromNbt(nbt.getCompound("stored"));
+		else stored = null;
 	}
 	
 	protected void writeNbt(NbtCompound nbt){

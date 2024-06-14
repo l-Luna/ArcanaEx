@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "bonus_rolls": 0,
+      "conditions": [],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "arcana:void_jar",
+          "functions": [
+            {
+              "function": "minecraft:copy_nbt",
+              "ops": [
+                {
+                  "op": "replace",
+                  "source": "stored",
+                  "target": "BlockEntityTag.stored"
+                }
+              ],
+              "source": "block_entity"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -252,7 +252,8 @@ public final class ArcanaRegistry{
 	public static final Block ESSENTIA_PUMP = new EssentiaPumpBlock(of(Material.METAL).dropsSelf().usesTool(PICKAXE_MINEABLE).strength(1.1f).sounds(BlockSoundGroup.METAL));
 	public static final Block ESSENTIA_REDIRECT = new EssentiaRedirectBlock(of(Material.METAL).dropsSelf().usesTool(PICKAXE_MINEABLE).strength(1).sounds(BlockSoundGroup.METAL));
 	public static final Block ESSENTIA_ROUTER = new EssentiaRouterBlock(of(Material.METAL).dropsSelf().usesTool(PICKAXE_MINEABLE).strength(1.2f).sounds(BlockSoundGroup.METAL));
-	public static final Block WARDED_JAR = new WardedJarBlock(of(Material.GLASS).renderLayer(TRANSLUCENT).strength(.9f).sounds(BlockSoundGroup.GLASS));
+	public static final Block WARDED_JAR = new WardedJarBlock(of(Material.GLASS).renderLayer(TRANSLUCENT).strength(.9f).sounds(BlockSoundGroup.GLASS), false);
+	public static final Block VOID_JAR = new WardedJarBlock(of(Material.GLASS).renderLayer(TRANSLUCENT).strength(.9f).sounds(BlockSoundGroup.GLASS), true);
 	public static final Block DISTILLERY_PATHFINDER = new DistilleryPathfinderBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(1.5f));
 	
 	public static final Block INFUSION_PILLAR = new InfusionPillarBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).nonOpaque().strength(4));
@@ -343,7 +344,10 @@ public final class ArcanaRegistry{
 			.create(InfusionMatrixBlockEntity::new, INFUSION_MATRIX)
 			.build();
 	public static BlockEntityType<WardedJarBlockEntity> WARDED_JAR_BE = FabricBlockEntityTypeBuilder
-			.create(WardedJarBlockEntity::new, WARDED_JAR)
+			.create((pos, state) -> new WardedJarBlockEntity(pos, state, false), WARDED_JAR)
+			.build();
+	public static BlockEntityType<WardedJarBlockEntity> VOID_JAR_BE = FabricBlockEntityTypeBuilder
+			.create((pos, state) -> new WardedJarBlockEntity(pos, state, true), VOID_JAR)
 			.build();
 	public static BlockEntityType<MysticMistBlockEntity> MYSTIC_MIST_BE = FabricBlockEntityTypeBuilder
 			.create(MysticMistBlockEntity::new, MYSTIC_MIST)
@@ -565,6 +569,7 @@ public final class ArcanaRegistry{
 		register("essentia_redirect", ESSENTIA_REDIRECT);
 		register("essentia_router", ESSENTIA_ROUTER);
 		register("warded_jar", WARDED_JAR);
+		register("void_jar", VOID_JAR);
 		register("distillery_pathfinder", DISTILLERY_PATHFINDER);
 		
 		register("infusion_pillar", INFUSION_PILLAR);
@@ -681,6 +686,7 @@ public final class ArcanaRegistry{
 		register("infusion_pillar", INFUSION_PILLAR_BE);
 		register("infusion_matrix", INFUSION_MATRIX_BE);
 		register("warded_jar", WARDED_JAR_BE);
+		register("void_jar", VOID_JAR_BE);
 		register("mystic_mist", MYSTIC_MIST_BE);
 		register("warded_campfire", WARDED_CAMPFIRE_BE);
 		register("essentia_tube", ESSENTIA_TUBE_BE);

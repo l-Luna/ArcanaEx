@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "connected=false": {
+      "model": "arcana:block/void_jar"
+    },
+    "connected=true": {
+      "model": "arcana:block/void_jar_connected"
+    }
+  }
+}

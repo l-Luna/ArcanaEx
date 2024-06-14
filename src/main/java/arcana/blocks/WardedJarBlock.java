@@ -30,8 +30,11 @@ public class WardedJarBlock extends BlockWithEntity implements AspectIo{
 	public static final BooleanProperty connected = BooleanProperty.of("connected");
 	public static final VoxelShape shape = createCuboidShape(3, 0, 3, 13, 14, 13);
 	
-	public WardedJarBlock(Settings settings){
+	private final boolean isVoidJar;
+	
+	public WardedJarBlock(Settings settings, boolean isVoidJar){
 		super(settings);
+		this.isVoidJar = isVoidJar;
 		setDefaultState(getStateManager().getDefaultState().with(connected, false));
 	}
 	
@@ -63,7 +66,7 @@ public class WardedJarBlock extends BlockWithEntity implements AspectIo{
 	}
 	
 	public BlockEntity createBlockEntity(BlockPos pos, BlockState state){
-		return new WardedJarBlockEntity(pos, state);
+		return new WardedJarBlockEntity(pos, state, isVoidJar);
 	}
 	
 	public BlockRenderType getRenderType(BlockState state){

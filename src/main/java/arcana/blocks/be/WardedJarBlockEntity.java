@@ -21,17 +21,21 @@ public class WardedJarBlockEntity extends BlockEntity implements AspectIo{
 	
 	private static final int capacity = 100;
 	
+	private final boolean isVoidJar;
+	
 	@Nullable
 	private AspectStack stored;
 	
-	public WardedJarBlockEntity(BlockPos pos, BlockState state){
-		super(ArcanaRegistry.WARDED_JAR_BE, pos, state);
+	public WardedJarBlockEntity(BlockPos pos, BlockState state, boolean isVoidJar){
+		super(isVoidJar ? ArcanaRegistry.VOID_JAR_BE : ArcanaRegistry.WARDED_JAR_BE, pos, state);
+		this.isVoidJar = isVoidJar;
 	}
 	
 	public void readNbt(NbtCompound nbt){
 		super.readNbt(nbt);
 		if(nbt.contains("stored"))
 			stored = AspectStack.fromNbt(nbt.getCompound("stored"));
+		else stored = null;
 	}
 	
 	protected void writeNbt(NbtCompound nbt){
@@ -45,6 +49,10 @@ public class WardedJarBlockEntity extends BlockEntity implements AspectIo{
 		if(!result.getLeft().equals(stored)){
 			stored = result.getLeft();
 			markDirty();
+		}
+		if(isVoidJar){
+			// TODO: produce flux
+			return null;
 		}
 		return result.getRight();
 	}

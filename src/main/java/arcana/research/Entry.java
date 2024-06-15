@@ -105,4 +105,8 @@ public record Entry(
 	public int hashCode(){
 		return id().hashCode();
 	}
+	
+	public String toString(){
+		return id.toString();
+	}
 }

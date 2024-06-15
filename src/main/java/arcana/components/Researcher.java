@@ -75,7 +75,8 @@ public final class Researcher implements Component, AutoSyncedComponent{
 	}
 	
 	public boolean isEntryComplete(Entry entry){
-		return entryStage(entry) == entry.sections().size();
+		// >= to handle entries being removed later
+		return entryStage(entry) >= entry.sections().size();
 	}
 	
 	public int getCompletedPuzzleCount(){

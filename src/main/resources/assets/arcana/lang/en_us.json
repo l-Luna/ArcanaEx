@@ -23,6 +23,8 @@
 
     "aspect_crystals": "Primal Crystals",
     "cluster_seeds": "Primal Cluster Seeds",
+    "primal_clusters": "Primal Clusters",
+    "secondary_phials": "Secondary Phials",
     "arcane_stones": "Arcane Stones",
 
     "silverwood_logs": "Silverwood Logs",
@@ -525,7 +527,8 @@
     "chemistry.alchemical_glass.hardened_glass": "Strengthen glass",
     "chemistry.alchemical_glass.luminiferous_glass": "Lighten glass",
     "chemistry.alchemical_glass.static_glass": "Confuse glass",
-    "chemistry.essentia_distillation": "Force essentia from matter"
+    "chemistry.essentia_distillation": "Force essentia from matter",
+    "chemistry.crystal_curator": "Supersize essentia crystals"
   },
 
   // Other UIs
@@ -859,6 +862,7 @@
         "As it turns out, I need to do precisely the opposite: provide some \"filler\" to {i}force{r} the essentia {i}out{r} of the item.\nThe final design I have landed on is superficially similar to the scraps left behind. An {i}Arcane Furnace{r} melts items down into an indeterminate slurry, while {i}Alembics{r} stacked above it further distil the slurry into essentia.\nThe furnace requires both fuel for heat, and a substrate to push out essentia. Items with a very small amount of aspects will burn quicker, and denser objects will settle at about 2 seconds each.\nThe fuel can be anything that burns in an ordinary furnace, and lasts just as long; the substrate is used up as aspects are purified, and can limit melting rate. Once any item is burned, it leaves behind a {i}Shattered Husk{r} that must be eventually removed to avoid clogging up the machine.\nFor now, the only substrate I have available are primal crystals, which can account for {c3}5{r} essentia each; finding more efficient substrates is a priority.\nAlembics placed above a furnace will draw out slurry from its internal buffer and convert it into essentia. Each alembic can store up to {c3}100{r} of any single aspect."
       ]
     },
+
     "essentia_transport": {
       "title": "Essentia Transport",
       "desc": "PPE Included",
@@ -873,7 +877,15 @@
 
     "essentia_centrifuge": "Essentia Centrifuge",
 
-    "essentia_crystalizer": "Essentia Crystalizer"
+    "crystal_curator": {
+      "title": "Crystal Curator",
+      "desc": "Growing my collection",
+      "stages": [
+        "It seems strange that essentia should come in every aspect imaginable, while the crystals I find around the world would restrict themselves to the primals.\nAre the compound aspects simply not stable enough to crystallize? Or does their absence from the aura preclude their {i}natural{r} formation only?\nSimply knowing would be a significant achievement. And as a bonus, if I can figure out how to crystallize essentia myself, having easy control over compound aspects is sure to open up many new applications. Crystal formation is a tricky thing worth studying.",
+        "A really, {i}really{r} tricky thing.\nGemstones and aspect crystals form through different pathways: the former using extreme heat and pressure, the latter an overflow in the aura. Manipulating the aura is a no-go, at least for now, but compacting essentia in a controlled burst seems to do the trick for tiny crystals.\nNow to make them grow to a usable size.",
+        "Essentia distillation turns solid matter into essentia, through much effort. You'd think the reverse should be simpler, but clearly not.\nA Crystallization Press is a specially-designed block capable of forcing essentia into a solid form. It requires quartz crystals as a \"seed\", with each providing for {c3}12{r} new aspect crystals, as well as the essentia to crystallize. Each crystal requires {c3}2{r} points of essentia: this is a wasteful process, which should be totally unsurprising given the methodology."
+      ]
+    }
 
     // Infusion Tab
 

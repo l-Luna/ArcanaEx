@@ -592,6 +592,54 @@
           "content": "arcana:essentia_window"
         }
       ]
+    },
+    {
+      "key": "arcana:crystal_curator",
+      "name": "research.arcana.crystal_curator.title",
+      "desc": "research.arcana.crystal_curator.desc",
+      "icons": [
+        "arcana:crystals/life",
+        "arcana:crystals/light",
+        "arcana:crystals/crystal",
+        "arcana:crystals/energy",
+        "arcana:crystals/exchange",
+        "arcana:crystals/movement"
+      ],
+      "category": "arcana:alchemy",
+      "parents": [
+        "arcana:essentia_distillation"
+      ],
+      "x": 7,
+      "y": -2,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.crystal_curator.stages.1",
+          "requirements": [
+            "#minecraft:diamond_ores",
+            "2*#minecraft:lapis_ores",
+            "3*#c:quartz_ores",
+            "4*#arcana:primal_clusters",
+            "5*#arcana:secondary_phials",
+            "6*minecraft:tnt"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.crystal_curator.stages.2",
+          "requirements": [
+            "arcana::puzzle{crystal_curator}"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.crystal_curator.stages.3"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:crystallization_press"
+        }
+      ]
     }
   ],
   "puzzles": [
@@ -752,6 +800,19 @@
         "magic",
         "greed",
         "armour"
+      ]
+    },
+    {
+      "key": "arcana:crystal_curator",
+      "type": "chemistry",
+      "desc": "puzzle.arcana.chemistry.crystal_curator",
+      "nodes": [
+        "crystal",
+        "magic",
+        "crystal",
+        "aura",
+        "crystal",
+        "sloth"
       ]
     }
   ]

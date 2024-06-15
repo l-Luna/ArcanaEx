@@ -1,0 +1,25 @@
+{
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "W": {
+      "item": "arcana:silverwood_planks"
+    },
+    "A": {
+      "item": "arcana:arcanium_block"
+    },
+    "N": {
+      "item": "minecraft:anvil"
+    }
+  },
+  "pattern": [
+    " N ",
+    "W W",
+    "WAW"
+  ],
+  "result": {
+    "item": "arcana:crystallization_press"
+  },
+  "aspects": [
+    "45*earth"
+  ]
+}

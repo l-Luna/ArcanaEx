@@ -1,0 +1,29 @@
+{
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "G": {
+      "tag": "c:glass_blocks"
+    },
+    "C": {
+      "item": "minecraft:clay_ball"
+    },
+    "Q": {
+      "item": "minecraft:quartz"
+    },
+    "V": {
+      "item": "arcana:crystals/void"
+    }
+  },
+  "pattern": [
+    " CQ",
+    "GVG",
+    "GGG"
+  ],
+  "aspects": [
+    "4*water",
+    "2*order"
+  ],
+  "result": {
+    "item": "arcana:void_jar"
+  }
+}

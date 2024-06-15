@@ -12,12 +12,15 @@
     },
     "R": {
       "item": "minecraft:repeater"
+    },
+    "K": {
+      "item": "arcana:crystals/exchange"
     }
   },
   "pattern": [
     " C ",
     "IGI",
-    " R "
+    " RK"
   ],
   "result": {
     "item": "arcana:essentia_router",

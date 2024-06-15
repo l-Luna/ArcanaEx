@@ -528,7 +528,8 @@
     "chemistry.alchemical_glass.luminiferous_glass": "Lighten glass",
     "chemistry.alchemical_glass.static_glass": "Confuse glass",
     "chemistry.essentia_distillation": "Force essentia from matter",
-    "chemistry.crystal_curator": "Supersize essentia crystals"
+    "chemistry.crystal_curator": "Supersize essentia crystals",
+    "chemistry.essentia_logistics": "Just get things where I want"
   },
 
   // Other UIs
@@ -868,14 +869,9 @@
       "desc": "PPE Included",
       "stages": [
         "Handling essentia requires special preparation and equipment; no ordinary bucket or bottle will do, let alone leaving it out in the open.{~sep}For manual transfer, I can use {i}Phials{r}. These small enchanted bottles store exactly {c3}8{r} of any aspect, and can be filled or emptied into blocks simply by right clicking.\nTo store essentia in larger quantities, I can use {i}Warded Jars{r}. These blocks store up to {c3}100{r} of any single aspect, and visually show their aspect and fullness. When broken, they drop themselves and hold onto their contained essentia.",
-        "Of course, I would prefer to automate transportation wherever possible. Dispensers are capable of using phials just fine, but dedicated blocks are much more effective.\n{i}Essentia Tubes{r} transport essentia that has been pushed into them. In tubes, essentia takes the form of tiny {i}specks{r}, which move along at their own speed and direction, weakly obey gravity, and otherwise only change directions when they hit a wall. I should experiment with them to get familiar with their behaviour.\nTubes don't take essentia out of blocks like jars and alembics on their own, however; I'll need to use {i}Aspect Pumps{r}, a variation of tubes that pulls out essentia from the indicated direction. Pumps can be disabled using a redstone signal, and given an essentia phial to filter them to just one aspect.\nFor more control over their movement, I can also use {i}Aspect Valves{r} to open and close routes; an {i}Aspect Redirect{r} to force all specks entering to travel in one direction; or an {i}Aspect Router{r} to split specks across all other directions, randomly. Valves can be toggled by hand or redstone.\nFinally, to get a rough look at essentia flow, I can use {i}Essentia Windows{r}; these flash the colour of incoming essentia for a short period. A glowing window emits a comparator signal."
+        "Of course, I would prefer to automate transportation wherever possible. Dispensers are capable of using phials just fine, but dedicated blocks are much more effective.\n{i}Essentia Tubes{r} transport essentia that has been pushed into them. In tubes, essentia takes the form of tiny {i}specks{r}, which move along at their own speed and direction, weakly obey gravity, and otherwise only change directions when they hit a wall. I should experiment with them to get familiar with their behaviour.\nTubes don't take essentia out of blocks like jars and alembics on their own, however; I'll need to use {i}Aspect Pumps{r}, a variation of tubes that pulls out essentia from the indicated direction. Pumps can be disabled using a redstone signal, and given an essentia phial to filter them to just one aspect.\nFor more control over their movement, I can also use {i}Aspect Valves{r} to open and close routes, which can be toggled by hand or redstone. Finally, to get a rough look at essentia flow, I can use {i}Essentia Windows{r}; these flash the colour of incoming essentia for a short period. A glowing window emits a comparator signal."
       ]
     },
-
-    "alchemical_boiler": "Alchemical Boiler",
-    "alchemical_boiler.desc": "Fan the flames",
-
-    "essentia_centrifuge": "Essentia Centrifuge",
 
     "crystal_curator": {
       "title": "Crystal Curator",
@@ -885,12 +881,15 @@
         "A really, {i}really{r} tricky thing.\nGemstones and aspect crystals form through different pathways: the former using extreme heat and pressure, the latter an overflow in the aura. Manipulating the aura is a no-go, at least for now, but compacting essentia in a controlled burst seems to do the trick for tiny crystals.\nNow to make them grow to a usable size.",
         "Essentia distillation turns solid matter into essentia, through much effort. You'd think the reverse should be simpler, but clearly not.\nA Crystallization Press is a specially-designed block capable of forcing essentia into a solid form. It requires quartz crystals as a \"seed\", with each providing for {c3}12{r} new aspect crystals, as well as the essentia to crystallize. Each crystal requires {c3}2{r} points of essentia: this is a wasteful process, which should be totally unsurprising given the methodology."
       ]
+    },
+
+    "essentia_logistics": {
+      "title": "Essentia Logistics",
+      "desc": "It's not like I'm in a hurry or anything",
+      "stages": [
+        "Setting up essentia networks can be tedious. Just incredibly tedious. I just want to move the fundamental concepts of reality from point A to point B, why the issue? And why must it clog up so easily?",
+        "As a nice convenience, an {i}Aspect Redirect{r} forces all specks entering to travel in one direction; and an {i}Aspect Router{r} splits specks across all other connected directions, randomly. These let me skip or compact some otherwise-complicated setups... but these {i}are{r} fairly expensive.\nAdditionally, I can create specially-configured {i}Void Jars{r} that continue to accept essentia when full, venting excess essentia into the aura; by which I mean as flux. It's certainly easier than carefully managing my essentia production, but it's not something I should overuse."
+      ]
     }
-
-    // Infusion Tab
-
-    // Eldritch Tab
-
-    // Crimson Rites
   }
 }

@@ -9,12 +9,15 @@
     },
     "P": {
       "item": "minecraft:prismarine_shard"
+    },
+    "C": {
+      "item": "arcana:crystals/movement"
     }
   },
   "pattern": [
     "P P",
     "IGI",
-    "P P"
+    "C P"
   ],
   "result": {
     "item": "arcana:essentia_redirect",

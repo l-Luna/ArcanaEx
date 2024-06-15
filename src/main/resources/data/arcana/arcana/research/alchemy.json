@@ -590,10 +590,13 @@
       "icons": [
         "arcana:crystals/life",
         "arcana:crystals/light",
+        "arcana:crystallization_press",
         "arcana:crystals/crystal",
         "arcana:crystals/energy",
+        "arcana:crystallization_press",
         "arcana:crystals/exchange",
-        "arcana:crystals/movement"
+        "arcana:crystals/movement",
+        "arcana:crystallization_press"
       ],
       "category": "arcana:alchemy",
       "parents": [

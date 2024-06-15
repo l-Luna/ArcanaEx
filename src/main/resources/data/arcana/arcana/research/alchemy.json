@@ -315,10 +315,10 @@
       ],
       "category": "arcana:alchemy",
       "parents": [
-        "arcana:alchemy_root"
+        "/arcana:alchemy_root"
       ],
-      "x": 0,
-      "y": -3,
+      "x": -2,
+      "y": -2,
       "sections": [
         {
           "type": "text",
@@ -441,10 +441,10 @@
       ],
       "category": "arcana:alchemy",
       "parents": [
-        "/arcana:hedge_alchemy"
+        "arcana:hedge_alchemy"
       ],
-      "x": -3,
-      "y": -1,
+      "x": 0,
+      "y": -4,
       "sections": [
         {
           "type": "text",
@@ -548,7 +548,7 @@
       "parents": [
         "&arcana:essentia_distillation"
       ],
-      "x": 5,
+      "x": 6,
       "y": -4,
       "sections": [
         {

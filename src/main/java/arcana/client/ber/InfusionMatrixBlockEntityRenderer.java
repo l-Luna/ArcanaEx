@@ -41,25 +41,24 @@ public class InfusionMatrixBlockEntityRenderer implements BlockEntityRenderer<In
 			matrices.translate(.5, .8, .5);
 			matrices.multiply(Quaternion.fromEulerXyz(0, (float)Math.toRadians(time + tickDelta), (float)Math.toRadians((time + tickDelta) / 4)));
 			matrices.multiply(Quaternion.fromEulerYxz(0, MathHelper.HALF_PI / 2f, MathHelper.HALF_PI / 2f));
-			matrices.scale(.8f, .8f, .8f);
-			matrices.translate(-.5, -.5, -.5);
-		}else{
+		}else
 			matrices.translate(.5, .5, .5);
-			matrices.scale(.8f, .8f, .8f);
-			matrices.translate(-.5, -.5, -.5);
-		}
+		matrices.scale(.8f, .8f, .8f);
+		matrices.translate(-.5, -.5, -.5);
 		
 		BakedModelManager modelManager = MinecraftClient.getInstance().getBakedModelManager();
 		BlockRenderManager renderManager = MinecraftClient.getInstance().getBlockRenderManager();
 		
-		BakedModel model = modelManager.getModel(new ModelIdentifier(arcId("infusion_matrix"), ""));
+		InfusionMatrixBlockEntity.InfusionPhase phase = entity.currentPhase();
+		
+		BakedModel model = modelManager.getModel(new ModelIdentifier(phase != null ? arcId("infusion_matrix_active") : arcId("infusion_matrix"), ""));
 		VertexConsumer buffer = vertexConsumers.getBuffer(TexturedRenderLayers.getEntitySolid());
 		renderManager.getModelRenderer().render(entity.getWorld(), model, state, entity.getPos(), matrices, buffer, false, Random.create(), state.getRenderingSeed(entity.getPos()), overlay);
 		
 		matrices.pop();
 		BlockModelRenderer.disableBrightnessCache();
 		
-		/*InfusionMatrixBlockEntity.InfusionPhase phase = entity.currentPhase();
+		/*
 		if(phase != null)
 			phase.render(entity, matrices, vertexConsumers, tickDelta, entity.getStateForPhase(phase));*/
 	}

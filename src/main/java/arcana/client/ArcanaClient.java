@@ -80,9 +80,10 @@ public final class ArcanaClient implements ClientModInitializer{
 		ClientTickEvents.END_CLIENT_TICK.register(SwapFocusScreen::tryOpen);
 		
 		ModelLoadingRegistry.INSTANCE.registerResourceProvider(__ -> new WandModel.Provider());
-		ModelLoadingRegistry.INSTANCE.registerAppender((manager, out) -> {
+		ModelLoadingRegistry.INSTANCE.registerModelProvider((manager, out) -> {
 			out.accept(new ModelIdentifier(arcId("infusion_pillar_base"), ""));
 			out.accept(new ModelIdentifier(arcId("infusion_pillar_upper"), ""));
+			out.accept(new ModelIdentifier(arcId("infusion_matrix_active"), ""));
 		});
 		ClientSpriteRegistryCallback.event(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE).register((atlasTexture, registry) -> {
 			registry.register(miscWhite);

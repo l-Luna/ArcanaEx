@@ -1,0 +1,6 @@
+{
+	"parent": "arcana:block/infusion_matrix",
+	"textures": {
+		"2": "arcana:block/runic_matrix_activated"
+	}
+}

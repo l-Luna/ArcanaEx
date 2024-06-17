@@ -6,6 +6,7 @@ import arcana.aspects.AspectMap;
 import arcana.aspects.AspectStack;
 import arcana.aspects.ItemAspectRegistry;
 import arcana.blocks.CrucibleBlock;
+import arcana.components.AuraChunk;
 import arcana.components.KdItem;
 import arcana.components.Researcher;
 import arcana.items.TomeOfSharingItem;
@@ -122,8 +123,11 @@ public class CrucibleBlockEntity extends BlockEntity{
 	}
 	
 	public void setEmpty(){
+		int aspectTotal = aspects.total();
+		if(aspectTotal > 0)
+			// TODO(balance): adjust the numbers here
+			AuraChunk.at(world, pos).incrementFlux(aspectTotal / 2f);
 		aspects.clear();
-		// TODO: flux...
 	}
 	
 	public boolean isBoiling(){

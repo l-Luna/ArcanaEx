@@ -7,6 +7,8 @@ import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistryV3;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import dev.onyxstudios.cca.api.v3.component.tick.CommonTickingComponent;
+import it.unimi.dsi.fastutil.longs.Long2FloatMap;
+import it.unimi.dsi.fastutil.longs.Long2FloatOpenHashMap;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
@@ -72,6 +74,35 @@ public final class AuraWorld implements Component, CommonTickingComponent, AutoS
 		if(!nodesToAdd.isEmpty() && !world.isClient)
 			sync();
 		nodesToAdd.clear();
+		
+		// so, the general vibe of flux spreading is that:
+		// - if a chunk has "significantly" more flux than its neighbors, they should pick up some fraction of the difference
+		// - a completely unpolluted chunk requires a much larger difference to become polluted, and picks up significantly more initially
+		// - flux spreading should be tick order independent
+		// that means we cannot mutate the aura chunks as we iterate, and instead want a difference buffer applied after all computation
+		Long2FloatMap diff = new Long2FloatOpenHashMap(chunks.size());
+		for(ChunkPos pos : chunks.keySet()){
+			var mHere = getChunk(pos);
+			if(mHere.isPresent()){
+				AuraChunk here = mHere.get();
+				if(here.getFlux() > 10 && world.random.nextInt(5) == 0){
+					ChunkPos towards = world.random.nextBoolean()
+							? new ChunkPos(pos.x + (world.random.nextBoolean() ? 1 : -1), pos.z)
+							: new ChunkPos(pos.x, pos.z + (world.random.nextBoolean() ? 1 : -1));
+					float fluxThere = getChunk(towards).map(AuraChunk::getFlux).orElse(0f);
+					// if we pass the arbitrary threshold...
+					if((fluxThere > 0 && here.getFlux() > fluxThere + 10) || (here.getFlux() > 20)){
+						// pass along 1/10 of the difference, floored to the nearest 0.01
+						float passRaw = (here.getFlux() - fluxThere) / 10;
+						float pass = (int)(passRaw * 100) / 100f;
+						diff.put(pos.toLong(), diff.get(pos.toLong()) - pass);
+						diff.put(towards.toLong(), diff.get(towards.toLong()) + pass);
+					}
+				}
+			}
+		}
+		for(long l : diff.keySet())
+			getOrCreateChunk(new ChunkPos(l)).incrementFlux(diff.get(l));
 	}
 	
 	// "public" API

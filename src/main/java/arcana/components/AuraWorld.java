@@ -1,6 +1,7 @@
 package arcana.components;
 
 import arcana.nodes.Node;
+import arcana.util.NbtUtil;
 import dev.onyxstudios.cca.api.v3.component.Component;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistryV3;
@@ -9,20 +10,15 @@ import dev.onyxstudios.cca.api.v3.component.tick.CommonTickingComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
-import net.minecraft.nbt.NbtList;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Position;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.*;
 import net.minecraft.world.ChunkRegion;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static arcana.Arcana.arcId;
 
@@ -30,11 +26,11 @@ public final class AuraWorld implements Component, CommonTickingComponent, AutoS
 	
 	public static final ComponentKey<AuraWorld> KEY = ComponentRegistryV3.INSTANCE.getOrCreate(arcId("aura_world"), AuraWorld.class);
 	
-	private final List<Node> nodes = new ArrayList<>();
 	private final World world;
+	private final List<Node> nodes = new ArrayList<>();
+	private final Map<ChunkPos, AuraChunk> chunks = new HashMap<>();
 	
-	private boolean iterating = false;
-	private final List<Node> toAdd = new ArrayList<>();
+	private final List<Node> nodesToAdd = new ArrayList<>();
 	
 	public AuraWorld(World world){
 		this.world = world;
@@ -55,29 +51,27 @@ public final class AuraWorld implements Component, CommonTickingComponent, AutoS
 	public void readFromNbt(NbtCompound tag){
 		nodes.clear();
 		tag.getList("nodes", NbtElement.COMPOUND_TYPE).forEach(x -> nodes.add(Node.fromNbt((NbtCompound)x, world)));
+		for(NbtElement cNbt : tag.getList("chunks", NbtElement.COMPOUND_TYPE)){
+			AuraChunk y = AuraChunk.fromNbt((NbtCompound)cNbt);
+			chunks.put(y.pos, y);
+		}
 	}
 	
 	public void writeToNbt(NbtCompound tag){
-		NbtList list = new NbtList();
-		iterating = true;
-		for(Node node : nodes)
-			list.add(node.toNbt());
-		iterating = false;
-		tag.put("nodes", list);
+		tag.put("nodes", nodes.stream().map(Node::toNbt).collect(NbtUtil.toNbtList()));
+		tag.put("chunks", chunks.values().stream().map(AuraChunk::toNbt).collect(NbtUtil.toNbtList()));
 	}
 	
 	public void tick(){
-		iterating = true;
 		boolean client = world.isClient;
 		for(Node node : getNodes())
 			if(client || (world instanceof ServerWorld sw && sw.isChunkLoaded(node.asBlockPos())))
 				node.tick();
-		iterating = false;
 		
-		nodes.addAll(toAdd);
-		if(!toAdd.isEmpty() && !world.isClient)
+		nodes.addAll(nodesToAdd);
+		if(!nodesToAdd.isEmpty() && !world.isClient)
 			sync();
-		toAdd.clear();
+		nodesToAdd.clear();
 	}
 	
 	// "public" API
@@ -87,16 +81,18 @@ public final class AuraWorld implements Component, CommonTickingComponent, AutoS
 		world.syncComponent(KEY);
 	}
 	
+	public World getWorld(){
+		return world;
+	}
+	
+	// nodes
+	
 	public void addNode(Node node){
-		toAdd.add(node);
+		nodesToAdd.add(node);
 	}
 	
 	public List<Node> getNodes(){
 		return nodes;
-	}
-	
-	public World getWorld(){
-		return world;
 	}
 	
 	public List<Node> getNodesInBounds(Box bounds){
@@ -111,11 +107,11 @@ public final class AuraWorld implements Component, CommonTickingComponent, AutoS
 		return ret;
 	}
 	
-	public Optional<Node> raycast(Position from, double length, boolean ignoreBlocks, Entity viewer){
-		return raycast(getNodes(), from, length, ignoreBlocks, viewer);
+	public Optional<Node> raycastNodes(Position from, double length, boolean ignoreBlocks, Entity viewer){
+		return raycastNodes(getNodes(), from, length, ignoreBlocks, viewer);
 	}
 	
-	public static Optional<Node> raycast(List<Node> nodes, Position fromPos, double length, boolean ignoreBlocks, Entity viewer){
+	public static Optional<Node> raycastNodes(List<Node> nodes, Position fromPos, double length, boolean ignoreBlocks, Entity viewer){
 		Vec3d from = new Vec3d(fromPos.getX(), fromPos.getY(), fromPos.getZ());
 		Vec3d to = from.add(viewer.getRotationVector().multiply(length));
 		BlockHitResult bhr = null;
@@ -138,5 +134,23 @@ public final class AuraWorld implements Component, CommonTickingComponent, AutoS
 			if(bhr.getPos().distanceTo(from) < curDist)
 				return Optional.empty(); // blocked by a block
 		return Optional.ofNullable(ret);
+	}
+	
+	// aura chunks
+	
+	public Optional<AuraChunk> getChunk(ChunkPos pos){
+		return Optional.ofNullable(chunks.get(pos));
+	}
+	
+	public Optional<AuraChunk> getChunk(BlockPos pos){
+		return getChunk(new ChunkPos(pos));
+	}
+	
+	public AuraChunk getOrCreateChunk(ChunkPos pos){
+		return chunks.computeIfAbsent(pos, AuraChunk::new);
+	}
+	
+	public AuraChunk getOrCreateChunk(BlockPos pos){
+		return getOrCreateChunk(new ChunkPos(pos));
 	}
 }

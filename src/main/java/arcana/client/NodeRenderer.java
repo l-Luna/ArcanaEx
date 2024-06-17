@@ -86,7 +86,7 @@ public final class NodeRenderer{
 			});
 			
 			// only render aspects for the one you look at
-			var looking = auraWorld.raycast(player.getEyePos(), 6.5, false, player).orElse(null);
+			var looking = auraWorld.raycastNodes(player.getEyePos(), 6.5, false, player).orElse(null);
 			for(Node node : allNodes)
 				if(shouldView(node))
 					if(node == looking)

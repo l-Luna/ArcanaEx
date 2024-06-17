@@ -135,7 +135,7 @@ public class WandItem extends Item implements WarpingItem{
 	
 	public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks){
 		// TODO: use reach-entity-attributes to check player's true range
-		world.getComponent(AuraWorld.KEY).raycast(user.getEyePos(), 4.5, false, user).ifPresent(node -> {
+		world.getComponent(AuraWorld.KEY).raycastNodes(user.getEyePos(), 4.5, false, user).ifPresent(node -> {
 			AspectMap aspects = node.getAspects();
 			if(!aspects.aspectSet().isEmpty()){
 				Aspect aspect = aspects.aspectByIndex(world.random.nextInt(aspects.size()));

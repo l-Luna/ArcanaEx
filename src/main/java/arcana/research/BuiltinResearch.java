@@ -2,6 +2,7 @@ package arcana.research;
 
 import arcana.ArcanaRegistry;
 import arcana.ArcanaTags;
+import arcana.components.AuraChunk;
 import arcana.components.AuraWorld;
 import arcana.components.Researcher;
 import arcana.nodes.Node;
@@ -17,6 +18,8 @@ import static arcana.Arcana.arcId;
 public final class BuiltinResearch{
 	
 	public static final Identifier rootResearch = arcId("root");
+	
+	public static final Identifier fluxResearch = arcId("flux");
 	
 	public static final Identifier fluxPuzzle = arcId("flux_build_research");
 	public static final Identifier highestReachPuzzle = arcId("highest_reach");
@@ -38,7 +41,8 @@ public final class BuiltinResearch{
 			primordialPearlResearch,
 			hungryNodesResearch,
 			eldritchNodesResearch,
-			nodalGeodesResearch
+			nodalGeodesResearch,
+			fluxResearch
 	);
 	
 	public static void checkInventory(PlayerEntity player){
@@ -69,6 +73,10 @@ public final class BuiltinResearch{
 		}
 		if(player.getPos().y > player.world.getTopY() - 30){
 			researcher.completePuzzle(Research.getPuzzle(highestReachPuzzle));
+			researcher.doSync();
+		}
+		if(AuraChunk.at(player.world, player.getBlockPos()).getFlux() > 40){
+			researcher.completePuzzle(Research.getPuzzle(fluxPuzzle));
 			researcher.doSync();
 		}
 	}

@@ -230,14 +230,17 @@ public final class Researcher implements Component, AutoSyncedComponent{
 		lastWarpEventTime = tag.getLong("last_warp_event_time");
 		wasPrecursor = tag.getBoolean("was_precursor");
 		
+		stages.clear();
 		NbtCompound entries = tag.getCompound("stages");
 		for(String key : entries.getKeys())
 			stages.put(new Identifier(key), entries.getInt(key));
 		
+		pinned.clear();
 		NbtCompound pins = tag.getCompound("pins");
 		for(String key : pins.getKeys())
 			pinned.put(new Identifier(key), Arrays.stream(pins.getIntArray(key)).boxed().collect(Collectors.toCollection(ArrayList::new)));
 		
+		completedPuzzles.clear();
 		NbtList puzzles = tag.getList("puzzles", NbtElement.STRING_TYPE);
 		for(NbtElement puzzle : puzzles)
 			completedPuzzles.add(new Identifier(puzzle.asString()));

@@ -2,11 +2,11 @@ package arcana.worldgen;
 
 import arcana.aspects.Aspect;
 import arcana.aspects.Aspects;
+import arcana.aura.Node;
+import arcana.aura.NodeType;
+import arcana.aura.NodeTypes;
 import arcana.blocks.CrystalClusterBlock;
 import arcana.components.AuraWorld;
-import arcana.nodes.Node;
-import arcana.nodes.NodeType;
-import arcana.nodes.NodeTypes;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.minecraft.block.Block;

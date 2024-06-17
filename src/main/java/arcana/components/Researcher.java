@@ -1,8 +1,8 @@
 package arcana.components;
 
 import arcana.ArcanaRegistry;
+import arcana.aura.NodeTypes;
 import arcana.items.WarpingItem;
-import arcana.nodes.NodeTypes;
 import arcana.research.Entry;
 import arcana.research.Parent;
 import arcana.research.Puzzle;

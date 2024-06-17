@@ -2,11 +2,11 @@ package arcana.client;
 
 import arcana.aspects.Aspect;
 import arcana.aspects.Aspects;
+import arcana.aura.Node;
+import arcana.aura.NodeType;
+import arcana.aura.NodeTypes;
 import arcana.components.AuraWorld;
 import arcana.items.GogglesOfRevealingItem;
-import arcana.nodes.Node;
-import arcana.nodes.NodeType;
-import arcana.nodes.NodeTypes;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;

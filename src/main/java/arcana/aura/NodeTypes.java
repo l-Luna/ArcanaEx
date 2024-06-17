@@ -1,4 +1,4 @@
-package arcana.nodes;
+package arcana.aura;
 
 import arcana.ArcanaRegistry;
 import arcana.aspects.ItemAspectRegistry;

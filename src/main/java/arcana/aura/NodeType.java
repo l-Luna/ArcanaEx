@@ -1,4 +1,4 @@
-package arcana.nodes;
+package arcana.aura;
 
 import net.minecraft.util.Identifier;
 

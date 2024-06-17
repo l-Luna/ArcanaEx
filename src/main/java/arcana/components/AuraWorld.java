@@ -1,6 +1,6 @@
 package arcana.components;
 
-import arcana.nodes.Node;
+import arcana.aura.Node;
 import arcana.util.NbtUtil;
 import dev.onyxstudios.cca.api.v3.component.Component;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;

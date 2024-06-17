@@ -1,4 +1,4 @@
-package arcana.nodes;
+package arcana.aura;
 
 import arcana.aspects.AspectMap;
 import arcana.aspects.Aspects;

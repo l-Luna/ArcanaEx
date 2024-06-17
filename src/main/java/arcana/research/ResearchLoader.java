@@ -69,13 +69,13 @@ public final class ResearchLoader extends JsonDataLoader implements Identifiable
 	private static void applyBooks(Identifier file, JsonArray books){
 		for(JsonElement bookElement : books){
 			if(!bookElement.isJsonObject())
-				logger.warn("Non-object found in \"books\" array in research file \"" + file + "\", ignoring");
+				logger.warn("Non-object found in \"books\" array in research file \"{}\", ignoring", file);
 			else{
 				JsonObject bookObj = bookElement.getAsJsonObject();
 				// expecting key, prefix
 				Identifier key = new Identifier(bookObj.get("key").getAsString());
 				Research.books.put(key, new Book(key, new ArrayList<>()));
-				logger.info("Loaded book " + key);
+				logger.info("Loaded book {}", key);
 			}
 		}
 	}
@@ -83,7 +83,7 @@ public final class ResearchLoader extends JsonDataLoader implements Identifiable
 	private static void applyCategories(Identifier file, JsonArray categories){
 		for(JsonElement categoryElement : categories){
 			if(!categoryElement.isJsonObject())
-				logger.warn("Non-object found in \"categories\" array in research file \"" + file + "\", ignoring");
+				logger.warn("Non-object found in \"categories\" array in research file \"{}\", ignoring", file);
 			else{
 				JsonObject categoryObj = categoryElement.getAsJsonObject();
 				// expecting key, in, icon, bg, optionally bgs
@@ -118,7 +118,7 @@ public final class ResearchLoader extends JsonDataLoader implements Identifiable
 	private static void applyEntries(Identifier file, JsonArray entries){
 		for(JsonElement entryElement : entries){
 			if(!entryElement.isJsonObject())
-				logger.warn("Non-object found in \"entries\" array in research file \"" + file + "\", ignoring");
+				logger.warn("Non-object found in \"entries\" array in research file \"{}\", ignoring", file);
 			else{
 				JsonObject entry = entryElement.getAsJsonObject();
 				
@@ -159,7 +159,7 @@ public final class ResearchLoader extends JsonDataLoader implements Identifiable
 	private static void applyPuzzles(Identifier file, JsonArray puzzles){
 		for(JsonElement puzzleElement : puzzles){
 			if(!puzzleElement.isJsonObject())
-				logger.warn("Non-object found in \"puzzles\" array in research file \"" + file + "\", ignoring");
+				logger.warn("Non-object found in \"puzzles\" array in research file \"{}\", ignoring", file);
 			else{
 				Puzzle puzzle = Puzzle.makePuzzle(puzzleElement.getAsJsonObject());
 				Research.puzzles.put(puzzle.id(), puzzle);
@@ -183,14 +183,14 @@ public final class ResearchLoader extends JsonDataLoader implements Identifiable
 								if(requirement != null)
 									es.addRequirement(requirement);
 						}else
-							logger.warn("Non-array named \"requirements\" found in " + file);
+							logger.warn("Non-array named \"requirements\" found in {}", file);
 					ret.add(es);
 				}else if(!EntrySection.exists(typeId))
-					logger.warn("Invalid EntrySection type \"" + type + "\" referenced in " + file);
+					logger.warn("Invalid EntrySection type \"{}\" referenced in {}", type, file);
 				else
-					logger.warn("Invalid EntrySection content for type \"" + type + "\" used in file " + file);
+					logger.warn("Invalid EntrySection content for type \"{}\" used in file {}", type, file);
 			}else
-				logger.warn("Non-object found in sections array in " + file);
+				logger.warn("Non-object found in sections array in {}", file);
 		return ret;
 	}
 	
@@ -204,7 +204,7 @@ public final class ResearchLoader extends JsonDataLoader implements Identifiable
 				if(desc.contains("*")){
 					String[] parts = desc.split("\\*");
 					if(parts.length != 2)
-						logger.warn("Multiple \"*\"s found in requirement in " + file);
+						logger.warn("Multiple \"*\"s found in requirement in {}", file);
 					desc = parts[parts.length - 1];
 					amount = Integer.parseInt(parts[0]);
 				}
@@ -220,14 +220,14 @@ public final class ResearchLoader extends JsonDataLoader implements Identifiable
 				if(desc.contains("::")){
 					String[] parts = desc.split("::");
 					if(parts.length != 2)
-						logger.warn("Multiple \"::\"s found in requirement in " + file);
+						logger.warn("Multiple \"::\"s found in requirement in {}", file);
 					Identifier type = new Identifier(parts[0], parts[1]);
 					Requirement add = Requirement.makeRequirement(type, params);
 					if(add != null){
 						add.amount = amount;
 						ret.add(add);
 					}else
-						logger.warn("Invalid requirement type " + type + " found in file " + file);
+						logger.warn("Invalid requirement type {} found in file {}", type, file);
 					// if this begins with a hash
 				}else if(desc.startsWith("#")){
 					// it's a tag
@@ -257,7 +257,7 @@ public final class ResearchLoader extends JsonDataLoader implements Identifiable
 	private static Icon iconFromJson(JsonElement json, Identifier file){
 		// TODO: item stacks with NBT...
 		if(!json.isJsonPrimitive()){
-			logger.error("A research icon in file \"" + file + "\" is not a string, but may be required");
+			logger.error("A research icon in file \"{}\" is not a string, but may be required", file);
 			return new Icon(null, null);
 		}
 		Identifier asId = new Identifier(json.getAsString());

@@ -1,6 +1,7 @@
 package arcana.aura;
 
 import arcana.util.NbtUtil;
+import com.mojang.logging.LogUtils;
 import dev.onyxstudios.cca.api.v3.component.Component;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistryV3;
@@ -18,6 +19,7 @@ import net.minecraft.world.ChunkRegion;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.World;
+import org.slf4j.Logger;
 
 import java.util.*;
 
@@ -25,11 +27,14 @@ import static arcana.Arcana.arcId;
 
 public final class AuraWorld implements Component, CommonTickingComponent, AutoSyncedComponent{
 	
+	private static final Logger logger = LogUtils.getLogger();
+	
 	public static final ComponentKey<AuraWorld> KEY = ComponentRegistryV3.INSTANCE.getOrCreate(arcId("aura_world"), AuraWorld.class);
 	
 	private final World world;
 	private final List<Node> nodes = new ArrayList<>();
 	private final Map<ChunkPos, AuraChunk> chunks = new HashMap<>();
+	private final Map<FluxOrigin, Float> fluxStats = new EnumMap<>(FluxOrigin.class);
 	
 	private final List<Node> nodesToAdd = new ArrayList<>();
 	
@@ -52,15 +57,31 @@ public final class AuraWorld implements Component, CommonTickingComponent, AutoS
 	public void readFromNbt(NbtCompound tag){
 		nodes.clear();
 		tag.getList("nodes", NbtElement.COMPOUND_TYPE).forEach(x -> nodes.add(Node.fromNbt((NbtCompound)x, world)));
+		
+		chunks.clear();
 		for(NbtElement cNbt : tag.getList("chunks", NbtElement.COMPOUND_TYPE)){
-			AuraChunk y = AuraChunk.fromNbt((NbtCompound)cNbt);
+			AuraChunk y = AuraChunk.fromNbt((NbtCompound)cNbt, this);
 			chunks.put(y.pos, y);
 		}
+		
+		fluxStats.clear();
+		NbtCompound fluxStatsNbt = tag.getCompound("fluxStats");
+		for(String key : fluxStatsNbt.getKeys())
+			try{
+				fluxStats.put(FluxOrigin.valueOf(key), fluxStatsNbt.getFloat(key));
+			}catch(IllegalArgumentException ignored){
+				logger.error("Invalid flux origin with name \"{}\", ignoring.", key);
+			}
 	}
 	
 	public void writeToNbt(NbtCompound tag){
 		tag.put("nodes", nodes.stream().map(Node::toNbt).collect(NbtUtil.toNbtList()));
 		tag.put("chunks", chunks.values().stream().map(AuraChunk::toNbt).collect(NbtUtil.toNbtList()));
+		
+		NbtCompound fluxStatsNbt = new NbtCompound();
+		for(Map.Entry<FluxOrigin, Float> entry : fluxStats.entrySet())
+			fluxStatsNbt.putFloat(entry.getKey().name(), entry.getValue());
+		tag.put("fluxStats", fluxStatsNbt);
 	}
 	
 	public void tick(){
@@ -101,7 +122,7 @@ public final class AuraWorld implements Component, CommonTickingComponent, AutoS
 			}
 		}
 		for(long l : diff.keySet())
-			getOrCreateChunk(new ChunkPos(l)).incrementFlux(diff.get(l));
+			getOrCreateChunk(new ChunkPos(l)).incrementFlux(diff.get(l), null);
 		
 		// clean up chunks with no flux
 		for(ChunkPos pos : chunks.keySet()./* allow mutation */toArray(ChunkPos[]::new))
@@ -182,10 +203,18 @@ public final class AuraWorld implements Component, CommonTickingComponent, AutoS
 	}
 	
 	public AuraChunk getOrCreateChunk(ChunkPos pos){
-		return chunks.computeIfAbsent(pos, AuraChunk::new);
+		return chunks.computeIfAbsent(pos, x -> new AuraChunk(x, this));
 	}
 	
 	public AuraChunk getOrCreateChunk(BlockPos pos){
 		return getOrCreateChunk(new ChunkPos(pos));
+	}
+	
+	public Map<FluxOrigin, Float> getFluxStats(){
+		return fluxStats;
+	}
+	
+	public void addFluxStat(FluxOrigin origin, float amount){
+		fluxStats.merge(origin, amount, Float::sum);
 	}
 }

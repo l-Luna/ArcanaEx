@@ -74,6 +74,9 @@ public abstract class EntrySection{
 		
 		factories.put(AspectCombosSection.TYPE, __ -> new AspectCombosSection());
 		deserializers.put(AspectCombosSection.TYPE, __ -> new AspectCombosSection());
+		
+		factories.put(FluxStatsSection.TYPE, __ -> new FluxStatsSection());
+		deserializers.put(FluxStatsSection.TYPE, __ -> new FluxStatsSection());
 	}
 	
 	private static <T> Function<JsonObject, T> withContentsStr(Function<String, T> builder){

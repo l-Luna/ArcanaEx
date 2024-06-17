@@ -125,7 +125,7 @@ public class NodeTypes{
 			return;
 		
 		BlockPos pos = new BlockPos(node);
-		AuraWorld.from(world).getChunk(pos).ifPresent(aura -> aura.incrementFlux(-5));
+		AuraWorld.from(world).getChunk(pos).ifPresent(aura -> aura.incrementFlux(-5, null));
 	}
 	
 	private static boolean empty(BlockState state){

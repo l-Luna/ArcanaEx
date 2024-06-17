@@ -57,7 +57,7 @@ public class SurfaceNodeFeature extends Feature<DefaultFeatureConfig>{
 			NodeType type = randomType(rng);
 			aura.addNode(new Node(type, aura.getWorld(), new Vec3d(nodePos.getX() + rng.nextDouble(), nodePos.getY() + rng.nextDouble(), nodePos.getZ() + rng.nextDouble())));
 			if(type == NodeTypes.TAINTED)
-				aura.getOrCreateChunk(nodePos).incrementFlux(rng.nextBetween(7, 12));
+				aura.getOrCreateChunk(nodePos).incrementFlux(rng.nextBetween(7, 12), null);
 			// add some crystal clusters
 			int successes = 0;
 			for(int i = 0; i < 40 && successes < (rng.nextInt(5) + 6); i++){

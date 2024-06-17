@@ -38,6 +38,7 @@ public interface EntrySectionRenderer<T extends EntrySection>{
 		renderers.put(InfusionRecipeSection.TYPE, new InfusionRecipeSectionRenderer());
 		renderers.put(WandInteractionSection.TYPE, new WandInteractionSectionRenderer());
 		renderers.put(AspectCombosSection.TYPE, new AspectCombosSectionRenderer());
+		renderers.put(FluxStatsSection.TYPE, new FluxStatsSectionRenderer());
 	}
 	
 	@SuppressWarnings("unchecked")

@@ -38,7 +38,7 @@ public class NodalGeodeFeature extends Feature<NodalGeodeFeatureConfig>{
 			toAdd.getAspects().add(context.getConfig().primaryAspect, 10);
 			aura.addNode(toAdd);
 			if(type == NodeTypes.TAINTED)
-				aura.getOrCreateChunk(nodePos).incrementFlux(rng.nextBetween(7, 12));
+				aura.getOrCreateChunk(nodePos).incrementFlux(rng.nextBetween(7, 12), null);
 			return true;
 		}
 		return false;

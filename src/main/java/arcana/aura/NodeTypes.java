@@ -2,7 +2,6 @@ package arcana.aura;
 
 import arcana.ArcanaRegistry;
 import arcana.aspects.ItemAspectRegistry;
-import arcana.components.AuraWorld;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import net.minecraft.block.Block;

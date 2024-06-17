@@ -5,7 +5,7 @@ import arcana.aspects.Aspects;
 import arcana.aura.Node;
 import arcana.aura.NodeType;
 import arcana.aura.NodeTypes;
-import arcana.components.AuraWorld;
+import arcana.aura.AuraWorld;
 import arcana.items.GogglesOfRevealingItem;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;

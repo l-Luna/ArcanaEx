@@ -2,7 +2,7 @@ package arcana.commands;
 
 import arcana.aura.Node;
 import arcana.aura.NodeTypes;
-import arcana.components.AuraWorld;
+import arcana.aura.AuraWorld;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.SuggestionProvider;

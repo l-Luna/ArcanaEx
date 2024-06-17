@@ -6,7 +6,7 @@ import arcana.aspects.AspectMap;
 import arcana.aspects.AspectStack;
 import arcana.aspects.ItemAspectRegistry;
 import arcana.blocks.CrucibleBlock;
-import arcana.components.AuraChunk;
+import arcana.aura.AuraChunk;
 import arcana.components.KdItem;
 import arcana.components.Researcher;
 import arcana.items.TomeOfSharingItem;

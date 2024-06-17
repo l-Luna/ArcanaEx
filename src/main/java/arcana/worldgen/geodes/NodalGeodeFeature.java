@@ -1,7 +1,7 @@
 package arcana.worldgen.geodes;
 
 import arcana.aura.Node;
-import arcana.components.AuraWorld;
+import arcana.aura.AuraWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.gen.feature.ConfiguredFeature;

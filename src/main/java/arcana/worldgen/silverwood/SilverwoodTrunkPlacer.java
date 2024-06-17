@@ -2,7 +2,7 @@ package arcana.worldgen.silverwood;
 
 import arcana.aura.Node;
 import arcana.aura.NodeTypes;
-import arcana.components.AuraWorld;
+import arcana.aura.AuraWorld;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.block.BlockState;

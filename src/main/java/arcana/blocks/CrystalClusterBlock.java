@@ -3,7 +3,7 @@ package arcana.blocks;
 import arcana.aspects.Aspect;
 import arcana.aspects.Aspects;
 import arcana.aura.Node;
-import arcana.components.AuraWorld;
+import arcana.aura.AuraWorld;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;

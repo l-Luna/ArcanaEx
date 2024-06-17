@@ -1,7 +1,7 @@
 package arcana.items;
 
 import arcana.ArcanaRegistry;
-import arcana.components.AuraWorld;
+import arcana.aura.AuraWorld;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

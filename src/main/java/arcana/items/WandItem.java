@@ -4,7 +4,7 @@ import arcana.ArcanaRegistry;
 import arcana.aspects.*;
 import arcana.blocks.be.InfusionMatrixBlockEntity;
 import arcana.client.ArcanaClient;
-import arcana.components.AuraWorld;
+import arcana.aura.AuraWorld;
 import dev.emi.trinkets.api.SlotReference;
 import dev.emi.trinkets.api.TrinketsApi;
 import net.fabricmc.api.EnvType;

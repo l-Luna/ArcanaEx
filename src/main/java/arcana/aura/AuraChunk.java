@@ -1,4 +1,4 @@
-package arcana.components;
+package arcana.aura;
 
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;

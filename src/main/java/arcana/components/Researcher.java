@@ -1,6 +1,7 @@
 package arcana.components;
 
 import arcana.ArcanaRegistry;
+import arcana.aura.AuraWorld;
 import arcana.aura.NodeTypes;
 import arcana.items.WarpingItem;
 import arcana.research.Entry;

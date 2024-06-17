@@ -1,5 +1,6 @@
 package arcana.components;
 
+import arcana.aura.AuraWorld;
 import dev.onyxstudios.cca.api.v3.world.WorldComponentFactoryRegistry;
 import dev.onyxstudios.cca.api.v3.world.WorldComponentInitializer;
 import org.jetbrains.annotations.NotNull;

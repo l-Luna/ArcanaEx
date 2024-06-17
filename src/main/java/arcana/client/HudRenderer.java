@@ -1,8 +1,8 @@
 package arcana.client;
 
 import arcana.ArcanaRegistry;
-import arcana.components.AuraChunk;
-import arcana.components.AuraWorld;
+import arcana.aura.AuraChunk;
+import arcana.aura.AuraWorld;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;

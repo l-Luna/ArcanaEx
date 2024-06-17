@@ -126,6 +126,7 @@ public final class ArcanaRegistry{
 	public static final Item CHEATERS_ARCANUM = new CheatersArcanumItem(GROUPED_SINGLE);
 	
 	public static final Item TAINT_GOO_BUCKET = new BucketItem(STILL_TAINT_GOO, new Settings().group(Tab.MAIN).maxCount(1).recipeRemainder(Items.BUCKET));
+	public static final Item FLUX_METER = new Item(GROUPED_SINGLE);
 	
 	public static final Item ARCANIUM_INGOT = new Item(GROUPED);
 	public static final Item ARCANIUM_SWORD = new SwordItem(ArcanaToolMaterials.ARCANIUM, 3, -2.4f, new Settings().group(Tab.EQUIPMENT));
@@ -397,6 +398,7 @@ public final class ArcanaRegistry{
 		register("cheaters_arcanum", CHEATERS_ARCANUM);
 		
 		register("taint_goo_bucket", TAINT_GOO_BUCKET);
+		register("flux_meter", FLUX_METER);
 		
 		register("arcanium_ingot", ARCANIUM_INGOT);
 		register("arcanium_sword", ARCANIUM_SWORD);

@@ -78,6 +78,7 @@ public final class ArcanaClient implements ClientModInitializer{
 		
 		WorldRenderEvents.LAST.register(NodeRenderer::renderAll);
 		ClientTickEvents.END_CLIENT_TICK.register(SwapFocusScreen::tryOpen);
+		HudRenderCallback.EVENT.register(HudRenderer::renderHud);
 		
 		ModelLoadingRegistry.INSTANCE.registerResourceProvider(__ -> new WandModel.Provider());
 		ModelLoadingRegistry.INSTANCE.registerModelProvider((manager, out) -> {

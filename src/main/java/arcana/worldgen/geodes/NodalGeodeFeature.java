@@ -1,7 +1,9 @@
 package arcana.worldgen.geodes;
 
-import arcana.aura.Node;
 import arcana.aura.AuraWorld;
+import arcana.aura.Node;
+import arcana.aura.NodeType;
+import arcana.aura.NodeTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
@@ -29,11 +31,14 @@ public class NodalGeodeFeature extends Feature<NodalGeodeFeatureConfig>{
 			AuraWorld aura = AuraWorld.from(context.getWorld());
 			int i = geodeConfig.maxGenOffset;
 			BlockPos nodePos = pos.add(i / 3, i / 3, i / 3);
-			Node toAdd = new Node(randomType(rng), aura.getWorld(), new Vec3d(nodePos.getX() + rng.nextDouble(), nodePos.getY() + rng.nextDouble(), nodePos.getZ() + rng.nextDouble()));
+			NodeType type = randomType(rng);
+			Node toAdd = new Node(type, aura.getWorld(), new Vec3d(nodePos.getX() + rng.nextDouble(), nodePos.getY() + rng.nextDouble(), nodePos.getZ() + rng.nextDouble()));
 			toAdd.getOrCreateTag().putBoolean("in_geode", true);
 			// TODO: aspect caps
 			toAdd.getAspects().add(context.getConfig().primaryAspect, 10);
 			aura.addNode(toAdd);
+			if(type == NodeTypes.TAINTED)
+				aura.getOrCreateChunk(nodePos).incrementFlux(rng.nextBetween(7, 12));
 			return true;
 		}
 		return false;

@@ -102,6 +102,11 @@ public final class AuraWorld implements Component, CommonTickingComponent, AutoS
 		}
 		for(long l : diff.keySet())
 			getOrCreateChunk(new ChunkPos(l)).incrementFlux(diff.get(l));
+		
+		// clean up chunks with no flux
+		for(ChunkPos pos : chunks.keySet()./* allow mutation */toArray(ChunkPos[]::new))
+			if(chunks.containsKey(pos) && chunks.get(pos).getFlux() <= 0)
+				chunks.remove(pos);
 	}
 	
 	// "public" API

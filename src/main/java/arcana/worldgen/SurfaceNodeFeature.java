@@ -2,11 +2,11 @@ package arcana.worldgen;
 
 import arcana.aspects.Aspect;
 import arcana.aspects.Aspects;
+import arcana.aura.AuraWorld;
 import arcana.aura.Node;
 import arcana.aura.NodeType;
 import arcana.aura.NodeTypes;
 import arcana.blocks.CrystalClusterBlock;
-import arcana.aura.AuraWorld;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.minecraft.block.Block;
@@ -54,7 +54,10 @@ public class SurfaceNodeFeature extends Feature<DefaultFeatureConfig>{
 			AuraWorld aura = AuraWorld.from(world);
 			BlockPos nodePos = pos.up(5);
 			// add the node
-			aura.addNode(new Node(randomType(rng), aura.getWorld(), new Vec3d(nodePos.getX() + rng.nextDouble(), nodePos.getY() + rng.nextDouble(), nodePos.getZ() + rng.nextDouble())));
+			NodeType type = randomType(rng);
+			aura.addNode(new Node(type, aura.getWorld(), new Vec3d(nodePos.getX() + rng.nextDouble(), nodePos.getY() + rng.nextDouble(), nodePos.getZ() + rng.nextDouble())));
+			if(type == NodeTypes.TAINTED)
+				aura.getOrCreateChunk(nodePos).incrementFlux(rng.nextBetween(7, 12));
 			// add some crystal clusters
 			int successes = 0;
 			for(int i = 0; i < 40 && successes < (rng.nextInt(5) + 6); i++){

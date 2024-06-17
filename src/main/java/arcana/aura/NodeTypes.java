@@ -35,10 +35,11 @@ public class NodeTypes{
 	
 			HUNGRY = create("hungry", 40 * 20, 25, NodeTypes::tickHungry),
 			ELDRITCH = create("eldritch", 49 * 20, 18),
-			PURE = create("pure", 48 * 2, 23);
+			PURE = create("pure", 48 * 2, 23, NodeTypes::tickPure),
+			TAINTED = create("tainted", 60 * 20, 12);
 	
 	public static final List<NodeType> normalTypes = List.of(NORMAL, BRIGHT, FADING);
-	public static final List<NodeType> specialTypes = List.of(HUNGRY, ELDRITCH, PURE);
+	public static final List<NodeType> specialTypes = List.of(HUNGRY, ELDRITCH, PURE, TAINTED);
 	
 	private static NodeType create(String id, int rechargeTime, int aspectCap){
 		return create(id, rechargeTime, aspectCap, null);
@@ -116,6 +117,15 @@ public class NodeTypes{
 			BlockState state = (Registry.BLOCK.get(new Identifier(blocks.getKeys().toArray(new String[0])[world.getRandom().nextInt(blocks.getKeys().size())]))).getDefaultState();
 			world.addParticle(new BlockStateParticleEffect(ArcanaRegistry.HUNGRY_NODE_DISC, state), xPos, node.getY(), zPos, discRad / 6f, 0, discRad / 6f);
 		}
+	}
+	
+	private static void tickPure(Node node){
+		World world = node.getWorld();
+		if(world.random.nextInt(30) != 0)
+			return;
+		
+		BlockPos pos = new BlockPos(node);
+		AuraWorld.from(world).getChunk(pos).ifPresent(aura -> aura.incrementFlux(-5));
 	}
 	
 	private static boolean empty(BlockState state){

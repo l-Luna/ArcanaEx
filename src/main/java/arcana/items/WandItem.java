@@ -2,9 +2,9 @@ package arcana.items;
 
 import arcana.ArcanaRegistry;
 import arcana.aspects.*;
+import arcana.aura.AuraWorld;
 import arcana.blocks.be.InfusionMatrixBlockEntity;
 import arcana.client.ArcanaClient;
-import arcana.aura.AuraWorld;
 import dev.emi.trinkets.api.SlotReference;
 import dev.emi.trinkets.api.TrinketsApi;
 import net.fabricmc.api.EnvType;
@@ -135,7 +135,10 @@ public class WandItem extends Item implements WarpingItem{
 	
 	public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks){
 		// TODO: use reach-entity-attributes to check player's true range
-		world.getComponent(AuraWorld.KEY).raycastNodes(user.getEyePos(), 4.5, false, user).ifPresent(node -> {
+		if(world.isClient)
+			return;
+		AuraWorld aura = AuraWorld.from(world);
+		aura.raycastNodes(user.getEyePos(), 4.5, false, user).ifPresent(node -> {
 			AspectMap aspects = node.getAspects();
 			if(!aspects.aspectSet().isEmpty()){
 				Aspect aspect = aspects.aspectByIndex(world.random.nextInt(aspects.size()));
@@ -149,6 +152,7 @@ public class WandItem extends Item implements WarpingItem{
 					int realDrainAmount = Math.min(Math.min(aspects.get(aspect), aspectDrainAmount), capacityLeft);
 					aspects.take(aspect, realDrainAmount);
 					updateAspects(stack, map -> map.addCapped(aspect, realDrainAmount, capacity));
+					aura.sync();
 				}
 			}
 		});

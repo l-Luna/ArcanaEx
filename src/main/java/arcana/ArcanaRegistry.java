@@ -40,6 +40,7 @@ import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
 import net.minecraft.block.*;
+import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EntityDimensions;
@@ -234,6 +235,10 @@ public final class ArcanaRegistry{
 	public static final Item LIGHT_FOCUS = new LightFocusItem(GROUPED_SINGLE);
 	public static final Item PRISMATIC_LIGHT_FOCUS = new FocusItem(GROUPED_SINGLE);
 	public static final Item EQUIVALENT_EXCHANGE_FOCUS = new EquivalentExchangeFocusItem(GROUPED_SINGLE);
+	
+	// banner patterns...
+	public static final BannerPattern ELDRITCH_BANNER_PATTERN_SHAPE = new BannerPattern("arcana_eldritch");
+	public static final Item ELDRITCH_BANNER_PATTERN = new BannerPatternItem(ArcanaTags.ELDRITCH_BANNER_PATTERNS, new Item.Settings().maxCount(1).group(Tab.MAIN).rarity(Rarity.UNCOMMON));
 	
 	// other...?
 	public static final Item EMPTY_PHIAL = new PhialItem(new Settings().group(Tab.PHIALS), null);
@@ -497,6 +502,9 @@ public final class ArcanaRegistry{
 		register("light_focus", LIGHT_FOCUS);
 		register("prismatic_light_focus", PRISMATIC_LIGHT_FOCUS);
 		register("equivalent_exchange_focus", EQUIVALENT_EXCHANGE_FOCUS);
+		
+		register("eldritch", ELDRITCH_BANNER_PATTERN_SHAPE);
+		register("eldritch_banner_pattern", ELDRITCH_BANNER_PATTERN);
 		
 		register("empty_phial", EMPTY_PHIAL);
 		register("primordial_pearl", PRIMORDIAL_PEARL);
@@ -775,6 +783,10 @@ public final class ArcanaRegistry{
 	
 	private static void register(String name, StatusEffect effect){
 		Registry.register(Registry.STATUS_EFFECT, arcId(name), effect);
+	}
+	
+	private static void register(String name, BannerPattern effect){
+		Registry.register(Registry.BANNER_PATTERN, arcId(name), effect);
 	}
 	
 	private static void registerCapOnly(Cap cap){

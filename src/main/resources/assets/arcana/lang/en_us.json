@@ -248,6 +248,9 @@
     "prismatic_light_focus": "Wand Focus: Prismatic Light",
     "equivalent_exchange_focus": "Wand Focus: Equivalent Exchange",
 
+    "eldritch_banner_pattern": "Banner Pattern",
+    "eldritch_banner_pattern.desc": "Eldritch",
+
     "aspect_crystal": "{} Crystal",
     "phial": "{} Phial",
     "empty_phial": "Empty Phial",
@@ -338,6 +341,27 @@
     "symbol": "Symbol: {}",
 
     "taint_goo": "Taint Goo"
+  },
+
+  "block.minecraft.banner.arcana": {
+    "eldritch": {
+      "black": "Black Eldritch Sigil",
+      "red": "Red Eldritch Sigil",
+      "green": "Green Eldritch Sigil",
+      "brown": "Brown Eldritch Sigil",
+      "blue": "Blue Eldritch Sigil",
+      "purple": "Purple Eldritch Sigil",
+      "cyan": "Cyan Eldritch Sigil",
+      "light_gray": "Light Gray Eldritch Sigil",
+      "gray": "Gray Eldritch Sigil",
+      "pink": "Pink Eldritch Sigil",
+      "lime": "Lime Eldritch Sigil",
+      "yellow": "Yellow Eldritch Sigil",
+      "light_blue": "Light Blue Eldritch Sigil",
+      "magenta": "Magenta Base Eldritch Sigil",
+      "orange": "Orange Base Eldritch Sigil",
+      "white": "White Base Eldritch Sigil"
+    }
   },
 
   // Tooltips

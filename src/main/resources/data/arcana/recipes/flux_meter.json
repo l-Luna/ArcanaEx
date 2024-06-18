@@ -1,0 +1,28 @@
+{
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "A": {
+      "item": "arcana:arcanium_ingot"
+    },
+    "C": {
+      "item": "minecraft:compass"
+    },
+    "Y": {
+      "tag": "arcana:aspect_crystals"
+    },
+    "L": {
+      "item": "arcana:luminiferous_glass"
+    }
+  },
+  "pattern": [
+    "L L",
+    "ACA",
+    " Y "
+  ],
+  "result": {
+    "item": "arcana:flux_meter"
+  },
+  "aspects": [
+    "35*order"
+  ]
+}

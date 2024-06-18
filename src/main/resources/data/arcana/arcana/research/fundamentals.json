@@ -667,6 +667,38 @@
           "content": "arcana:clusters/aura_cluster_seed"
         }
       ]
+    },
+    {
+      "key": "arcana:flux_meter",
+      "name": "research.arcana.flux_meter.title",
+      "icons": [
+        "arcana:flux_meter"
+      ],
+      "category": "arcana:fundamentals",
+      "parents": [
+        "arcana:flux",
+        "arcana:magical_metallurgy",
+        "arcana:alchemical_glass"
+      ],
+      "x": 5,
+      "y": 0,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.flux_meter.stages.1",
+          "requirements": [
+            "arcana::puzzle{flux_meter}"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.flux_meter.stages.2"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:flux_meter"
+        }
+      ]
     }
   ],
   "puzzles": [
@@ -774,6 +806,17 @@
         "senses",
         "mind",
         "crystal"
+      ]
+    },
+    {
+      "key": "arcana:flux_meter",
+      "type": "chemistry",
+      "desc": "puzzle.arcana.chemistry.flux_meter",
+      "size": 3,
+      "nodes": [
+        "taint",
+        "tool",
+        "senses"
       ]
     }
   ]

@@ -11,7 +11,8 @@
     "InventoryChangedCriterionMixin",
     "ItemStackMixin",
     "LivingEntityMixin",
-    "RecipeManagerMixin"
+    "RecipeManagerMixin",
+    "StructureTemplateMixin"
   ],
   "client": [
     "ClientPlayerEntityMixin",

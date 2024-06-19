@@ -64,5 +64,11 @@
   "arcana:paving_stone_of_warding": [
     "4*earth",
     "2*order"
+  ],
+
+  "arcana:broken_amulet": [
+    "4*metal",
+    "3*senses",
+    "taint"
   ]
 }

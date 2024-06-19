@@ -243,6 +243,9 @@ public final class ArcanaRegistry{
 	// other...?
 	public static final Item EMPTY_PHIAL = new PhialItem(new Settings().group(Tab.PHIALS), null);
 	public static final Item PRIMORDIAL_PEARL = new PrimordialPearlItem(new Settings().group(Tab.MAIN).maxCount(1).rarity(Rarity.EPIC));
+	public static final Item BROKEN_AMULET = new TrinketItem(GROUPED_SINGLE);
+	public static final Item CHALLENGERS_AMULET = new TrinketItem(GROUPED_SINGLE);
+	public static final Item VICTORS_MEDALLION = new TrinketItem(GROUPED_SINGLE);
 	
 	// blocks...
 	public static final Block ARCANE_CRAFTING_TABLE = new ArcaneCraftingTableBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).sounds(BlockSoundGroup.WOOD).strength(3).nonOpaque());
@@ -508,6 +511,9 @@ public final class ArcanaRegistry{
 		
 		register("empty_phial", EMPTY_PHIAL);
 		register("primordial_pearl", PRIMORDIAL_PEARL);
+		register("broken_amulet", BROKEN_AMULET);
+		register("challengers_amulet", CHALLENGERS_AMULET);
+		register("victors_medallion", VICTORS_MEDALLION);
 		
 		for(Aspect aspect : Aspects.getOrderedAspects()){
 			var shortName = aspect.id().getPath();

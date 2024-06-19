@@ -42,7 +42,8 @@
   // if you say so
   "tag.trinkets": {
     "head.face": "Face Equippables",
-    "hand.ring": "Ring Equippables"
+    "hand.ring": "Ring Equippables",
+    "chest.necklace": "Necklace Equippables"
   },
 
   // EMI
@@ -258,6 +259,10 @@
     "primordial_pearl": "Primordial {}",
     "primordial_pearl.nouns": "Heart,Brain,Mind,Soul,Pearl,Flesh,Blood,Face,Essence,Pearl",
     "primordial_pearl.desc": "\"existing at or from the beginning of time\"",
+
+    "broken_amulet": "Broken Amulet",
+    "challengers_amulet": "Amulet of the Challenger",
+    "victors_medallion": "Medallion of the Victor",
 
     "cluster_seed": "{} Cluster Seed"
   },

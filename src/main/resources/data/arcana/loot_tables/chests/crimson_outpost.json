@@ -194,7 +194,7 @@
     },
 
     // rare pool (50%):
-    // banner pattern: eldritch, praecantatio crystal, virimus crystal, enchanted book: projecting I + warping I
+    // banner pattern: eldritch, praecantatio crystal, virimus crystal, enchanted book: projecting I + warping I, broken amulet
     {
       "rolls": {
         "type": "minecraft:uniform",
@@ -228,6 +228,10 @@
               }
             }
           ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "arcana:broken_amulet"
         }
       ]
     }

@@ -1,8 +1,10 @@
 package arcana.enchantments;
 
+import arcana.items.RingItem;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.item.ItemStack;
 
 public class WarpingCurseEnchantment extends Enchantment{
 	
@@ -28,5 +30,9 @@ public class WarpingCurseEnchantment extends Enchantment{
 	
 	public boolean isCursed(){
 		return true;
+	}
+	
+	public boolean isAcceptableItem(ItemStack stack){
+		return super.isAcceptableItem(stack) || stack.getItem() instanceof RingItem;
 	}
 }

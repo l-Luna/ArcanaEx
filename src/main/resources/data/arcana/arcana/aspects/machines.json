@@ -45,6 +45,27 @@
     "6*light",
     "3*senses"
   ],
+  "minecraft:chipped_anvil": [
+    "82*metal"
+  ],
+  "minecraft:damaged_anvil": [
+    "41*metal"
+  ],
+  "minecraft:bell": [
+    "31*metal",
+    "19*greed",
+    "13*senses",
+    "12*light",
+    "machine",
+    "envy"
+  ],
+
+  "#c:shulker_boxes": [
+    "27*ice",
+    "12*plant",
+    "3*void",
+    "magic"
+  ],
 
   "minecraft:minecart": [
     "18*metal",

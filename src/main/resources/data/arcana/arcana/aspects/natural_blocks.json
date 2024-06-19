@@ -42,6 +42,11 @@
     "3*earth",
     "tool"
   ],
+  "minecraft:farmland": [
+    "3*earth",
+    "2*mining",
+    "life"
+  ],
   "minecraft:mud": [
     "2*earth",
     "2*water"
@@ -118,6 +123,22 @@
     "fire",
     "plant"
   ],
+  "minecraft:crimson_roots": [
+    "plant",
+    "fire"
+  ],
+  "minecraft:warped_roots": [
+    "plant",
+    "flesh"
+  ],
+  "minecraft:nether_sprouts": [
+    "plant"
+  ],
+  "minecraft:shroomlight": [
+    "4*light",
+    "plant",
+    "fire"
+  ],
   "#minecraft:soul_fire_base_blocks": [
     "earth",
     "undead"
@@ -190,10 +211,50 @@
     "plant",
     "light"
   ],
+  "minecraft:spore_blossom": [
+    "7*plant",
+    "2*slime",
+    "life"
+  ],
+  "minecraft:moss_block": [
+    "2*plant",
+    "earth",
+    "slime"
+  ],
+  "minecraft:moss_carpet": [
+    "plant"
+  ],
+  "minecraft:hanging_roots": [
+    "plant",
+    "earth"
+  ],
+  "minecraft:big_dripleaf": [
+    "3*plant",
+    "movement"
+  ],
+  "minecraft:small_dripleaf": [
+    "plant",
+    "movement"
+  ],
+  "minecraft:grass": [
+    "plant"
+  ],
   "minecraft:tall_grass": [
     "plant"
   ],
+  "minecraft:seagrass": [
+    "plant",
+    "water"
+  ],
+  "minecraft:sea_pickle": [
+    "plant",
+    "water",
+    "life"
+  ],
   "minecraft:fern": [
+    "plant"
+  ],
+  "minecraft:large_fern": [
     "plant"
   ],
   "minecraft:cactus": [
@@ -212,6 +273,10 @@
     "2*water",
     "plant",
     "life"
+  ],
+  "minecraft:bamboo": [
+    "plant",
+    "order"
   ],
   "minecraft:wither_rose": [
     "plant",
@@ -239,13 +304,42 @@
     "2*senses"
   ],
   "minecraft:sculk": [
+    "life",
+    "void",
     "taint"
   ],
   "minecraft:sculk_vein": [
+    "life",
+    "void",
     "taint"
   ],
   "minecraft:sculk_catalyst": [
     "12*life",
     "8*taint"
+  ],
+  "minecraft:sculk_shrieker": [
+    "8*life",
+    // TODO: anger
+    "7*weapon",
+    "4*taint"
+  ],
+
+  "minecraft:ochre_froglight": [
+    "4*light",
+    "undead",
+    "flesh",
+    "greed"
+  ],
+  "minecraft:verdant_froglight": [
+    "4*light",
+    "undead",
+    "flesh",
+    "armour"
+  ],
+  "minecraft:pearlescent_froglight": [
+    "4*light",
+    "undead",
+    "flesh",
+    "envy"
   ]
 }

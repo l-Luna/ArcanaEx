@@ -1,0 +1,198 @@
+{
+  // vanilla crops & fruit
+  "minecraft:wheat_seeds": [
+    "2*plant",
+    "life",
+    "exchange"
+  ],
+  "minecraft:pumpkin_seeds": [
+    "2*plant",
+    "life",
+    "exchange"
+  ],
+  "minecraft:melon_seeds": [
+    "2*plant",
+    "life",
+    "exchange"
+  ],
+  "minecraft:beetroot_seeds": [
+    "2*plant",
+    "life",
+    "exchange"
+  ],
+  "minecraft:wheat": [
+    "3*plant"
+  ],
+  "minecraft:pumpkin": [
+    "9*plant"
+  ],
+  "minecraft:carved_pumpkin": [
+    "6*plant",
+    "senses",
+    "mind"
+  ],
+  "minecraft:melon_slice": [
+    "plant",
+    "water"
+  ],
+  "minecraft:cocoa_beans": [
+    "3*senses",
+    "plant"
+  ],
+  "minecraft:nether_wart": [
+    "plant",
+    "fire",
+    "magic"
+  ],
+  "minecraft:beetroot": [
+    "2*plant",
+    "fire"
+  ],
+  "minecraft:beetroot_soup": [
+    "13*plant",
+    "3*fire",
+    "3*water"
+  ],
+  "minecraft:potato": [
+    "3*plant",
+    "tool"
+  ],
+  "minecraft:poisonous_potato": [
+    "4*plant",
+    "taint",
+    "undead"
+  ],
+  "minecraft:carrot": [
+    "3*plant",
+    "order"
+  ],
+  "minecraft:golden_carrot": [
+    "9*life",
+    "4*greed"
+  ],
+
+  // apples and berries
+  "minecraft:apple": [
+    "plant",
+    "senses",
+    "life"
+  ],
+  "minecraft:golden_apple": [
+    "14*life",
+    "8*greed"
+  ],
+  "minecraft:enchanted_golden_apple": [
+    "26*life",
+    "18*greed"
+  ],
+  "minecraft:sweet_berries": [
+    "4*senses",
+    "2*plant"
+  ],
+  "minecraft:glow_berries": [
+    "3*senses",
+    "3*light",
+    "2*plant"
+  ],
+
+  // mushrooms
+  "minecraft:red_mushroom": [
+    "plant",
+    "void"
+  ],
+  "minecraft:brown_mushroom": [
+    "plant",
+    "void"
+  ],
+  "minecraft:mushroom_stem": [
+    "plant"
+  ],
+  "minecraft:red_mushroom_block": [
+    "plant"
+  ],
+  "minecraft:brown_mushroom_block": [
+    "plant"
+  ],
+  "minecraft:warped_fungus": [
+    "2*plant",
+    "armour",
+    "flesh"
+  ],
+  "minecraft:crimson_fungus": [
+    "2*plant",
+    "weapon",
+    "fire"
+  ],
+
+  // baked goods
+  "minecraft:bread": [
+    "3*plant",
+    "3*life",
+    "2*tool"
+  ],
+  "minecraft:cake": [
+    "13*life",
+    "8*plant",
+    "7*senses",
+    "2*air"
+  ],
+  "minecraft:cookie": [
+    "plant",
+    "senses"
+  ],
+
+  // honey
+  "minecraft:honeycomb": [
+    "3*life",
+    "slime"
+  ],
+  "minecraft:honey_block": [
+    "8*slime",
+    "4*life"
+  ],
+  "minecraft:sugar": [
+    "senses",
+    "air"
+  ],
+
+  // meat
+  "minecraft:porkchop": [
+    "3*flesh",
+    "slime"
+  ],
+  "minecraft:chicken": [
+    "3*flesh",
+    "flight"
+  ],
+  "minecraft:rabbit": [
+    "3*flesh",
+    "movement"
+  ],
+  "minecraft:mutton": [
+    "3*flesh",
+    "plant"
+  ],
+  "minecraft:beef": [
+    "3*flesh",
+    "armour"
+  ],
+  "minecraft:cod": [
+    "2*flesh",
+    "water"
+  ],
+  "minecraft:salmon": [
+    "2*flesh",
+    "water",
+    "senses"
+  ],
+  "minecraft:tropical_fish": [
+    "2*flesh",
+    "water",
+    "journey"
+  ],
+  "minecraft:pufferfish": [
+    "4*flesh",
+    "weapon",
+    "armour"
+  ]
+}

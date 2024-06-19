@@ -126,64 +126,9 @@
     "4*mind"
   ],
 
-  "minecraft:wheat_seeds": [
-    "2*plant",
-    "life",
-    "exchange"
-  ],
-  "minecraft:pumpkin_seeds": [
-    "2*plant",
-    "life",
-    "exchange"
-  ],
-  "minecraft:melon_seeds": [
-    "2*plant",
-    "life",
-    "exchange"
-  ],
-  "minecraft:beetroot_seeds": [
-    "2*plant",
-    "life",
-    "exchange"
-  ],
-  "minecraft:wheat": [
-    "3*plant"
-  ],
-  "minecraft:pumpkin": [
-    "9*plant"
-  ],
-  "minecraft:carved_pumpkin": [
-    "6*plant",
-    "senses",
-    "mind"
-  ],
-  "minecraft:melon_slice": [
-    "plant"
-  ],
-  "minecraft:honeycomb": [
-    "3*life",
-    "slime"
-  ],
-  "minecraft:honey_block": [
-    "8*slime",
-    "4*life"
-  ],
-  "minecraft:sugar": [
-    "senses",
-    "air"
-  ],
-  "minecraft:nether_wart": [
-    "plant",
-    "fire",
-    "magic"
-  ],
   "minecraft:red_nether_bricks": [
     "4*fire",
     "3*earth"
-  ],
-  "minecraft:cocoa_beans": [
-    "3*senses",
-    "plant"
   ],
 
   "minecraft:slime_ball": [
@@ -218,6 +163,11 @@
   "minecraft:spider_eye": [
     "3*flesh",
     "senses"
+  ],
+  "minecraft:shulker_shell": [
+    "9*ice",
+    "3*magic",
+    "journey"
   ],
 
   "minecraft:leather": [

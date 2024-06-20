@@ -63,6 +63,10 @@ loom {
 	}
 }
 
+runClient {
+	args "-Dgeckolib.disable_examples=true"
+}
+
 sourceSets.main.resources {
 	srcDir 'src/generated/resources'
 }

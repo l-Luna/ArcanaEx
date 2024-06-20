@@ -10,6 +10,7 @@ import arcana.effects.TaintedStatusEffect;
 import arcana.enchantments.ProjectingEnchantment;
 import arcana.enchantments.WarpingCurseEnchantment;
 import arcana.entities.ThrownAlumentumEntity;
+import arcana.entities.crimson.CrimsonArcherEntity;
 import arcana.entities.locomotive.SuspensionEngineEntity;
 import arcana.entities.locomotive.Symbol;
 import arcana.fluids.TaintGooFluid;
@@ -43,10 +44,7 @@ import net.minecraft.block.*;
 import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.entity.EntityDimensions;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.SpawnGroup;
+import net.minecraft.entity.*;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.fluid.FlowableFluid;
 import net.minecraft.fluid.Fluid;
@@ -372,10 +370,23 @@ public final class ArcanaRegistry{
 	public static final EntityType<ThrownAlumentumEntity> THROWN_ALUMENTUM = FabricEntityTypeBuilder
 			.create(SpawnGroup.MISC, ThrownAlumentumEntity::new)
 			.build();
+	
 	public static final EntityType<SuspensionEngineEntity> SUSPENSION_ENGINE = FabricEntityTypeBuilder
 			.create(SpawnGroup.MISC, SuspensionEngineEntity::new)
 			.dimensions(EntityDimensions.fixed(1.8f, 1))
 			.build();
+	
+	public static final EntityType<CrimsonArcherEntity> CRIMSON_ARCHER = FabricEntityTypeBuilder
+			.createLiving()
+			.entityFactory(CrimsonArcherEntity::new)
+			.spawnGroup(SpawnGroup.MONSTER)
+			.defaultAttributes(CrimsonArcherEntity::createArcherAttributes)
+			.dimensions(EntityDimensions.fixed(1, 1.8f))
+			.build();
+	
+	// entity groups... don't need registering
+	@SuppressWarnings("InstantiationOfUtilityClass") // no, it's just an identity token
+	public static final EntityGroup CRIMSON_GROUP = new EntityGroup();
 	
 	// status effects...
 	public static final StatusEffect TAINTED = new TaintedStatusEffect();
@@ -718,6 +729,7 @@ public final class ArcanaRegistry{
 		// entity types
 		register("thrown_alumentum", THROWN_ALUMENTUM);
 		register("suspension_engine", SUSPENSION_ENGINE);
+		register("crimson_archer", CRIMSON_ARCHER);
 		
 		// status effects
 		register("tainted", TAINTED);

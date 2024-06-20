@@ -9,6 +9,7 @@ import arcana.aspects.WandAspectsTooltipData;
 import arcana.blocks.ArcanaBlockSettings;
 import arcana.blocks.be.WardedCampfireBlockEntity;
 import arcana.client.ber.*;
+import arcana.client.entity.CrimsonArcherRenderer;
 import arcana.client.entity.SuspensionEngineRenderer;
 import arcana.client.particles.EssentiaStreamParticle;
 import arcana.client.particles.HungryNodeBlockParticle;
@@ -152,6 +153,7 @@ public final class ArcanaClient implements ClientModInitializer{
 		
 		EntityRendererRegistry.register(ArcanaRegistry.THROWN_ALUMENTUM, ThrownAlumentumEntityRenderer::new);
 		EntityRendererRegistry.register(ArcanaRegistry.SUSPENSION_ENGINE, SuspensionEngineRenderer::new);
+		EntityRendererRegistry.register(ArcanaRegistry.CRIMSON_ARCHER, CrimsonArcherRenderer::new);
 		
 		for(Block block : ArcanaRegistry.blocks)
 			if(block.settings instanceof ArcanaBlockSettings abs)

@@ -1,0 +1,176 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.ModelCrimsonArcher",
+				"texture_width": 128,
+				"texture_height": 128,
+				"visible_bounds_width": 3,
+				"visible_bounds_height": 3.5,
+				"visible_bounds_offset": [0, 1.25, 0]
+			},
+			"bones": [
+				{
+					"name": "torso",
+					"pivot": [0, 24, 0],
+					"cubes": [
+						{"origin": [-4, 12, -2], "size": [8, 12, 4], "uv": [16, 16]}
+					]
+				},
+				{
+					"name": "ChestArmor",
+					"parent": "torso",
+					"pivot": [0, 24, 0],
+					"cubes": [
+						{"origin": [-4.5, 16.4, -2.4], "size": [9, 8, 5], "uv": [59, 27]}
+					]
+				},
+				{
+					"name": "head",
+					"pivot": [0, 24, 0],
+					"cubes": [
+						{"origin": [-4, 24, -4], "size": [8, 8, 8], "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "HoodMain",
+					"parent": "head",
+					"pivot": [0, 24, 0],
+					"rotation": [5, 0, 0],
+					"cubes": [
+						{"origin": [-4.5, 23.5, -3.7], "size": [9, 9, 8], "uv": [64, 0]}
+					]
+				},
+				{
+					"name": "HoodBack",
+					"parent": "head",
+					"pivot": [0, 24, 0],
+					"rotation": [-8, 0, 0],
+					"cubes": [
+						{"origin": [-4, 25.5, 2.3], "size": [8, 7, 2], "uv": [76, 17]}
+					]
+				},
+				{
+					"name": "belt",
+					"pivot": [0, 24, 0],
+					"cubes": [
+						{"origin": [0.5, 12.4, -2.8], "size": [3, 2, 1], "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "cloth",
+					"parent": "belt",
+					"pivot": [-1, 12.5, 0],
+					"rotation": [0, 0, -30],
+					"cubes": [
+						{"origin": [-6, 10, -2.5], "size": [8, 3, 5], "uv": [0, 32]}
+					]
+				},
+				{
+					"name": "cape",
+					"pivot": [0, 24, 2],
+					"rotation": [5, 0, 0],
+					"cubes": [
+						{"origin": [-3.5, 10, 2], "size": [7, 14, 1], "uv": [0, 50]}
+					]
+				},
+				{
+					"name": "right_leg",
+					"pivot": [-1.9, 12, 0],
+					"cubes": [
+						{"origin": [-3.9, 0, -2], "size": [4, 12, 4], "uv": [0, 16]}
+					]
+				},
+				{
+					"name": "RightKneePad",
+					"parent": "right_leg",
+					"pivot": [-1.9, 12, 0],
+					"cubes": [
+						{"origin": [-3.4, 5.5, -2.5], "size": [3, 3, 1], "uv": [0, 4]}
+					]
+				},
+				{
+					"name": "RightBoot",
+					"parent": "right_leg",
+					"pivot": [-1.9, 12, 0],
+					"cubes": [
+						{"origin": [-4.4, 0, -2.5], "size": [5, 5, 5], "uv": [0, 40]}
+					]
+				},
+				{
+					"name": "left_leg",
+					"pivot": [1.9, 12, 0],
+					"mirror": true,
+					"cubes": [
+						{"origin": [-0.1, 0, -2], "size": [4, 12, 4], "uv": [0, 16]}
+					]
+				},
+				{
+					"name": "LEftBoot",
+					"parent": "left_leg",
+					"pivot": [1.9, 12, 0],
+					"cubes": [
+						{"origin": [-0.6, 0, -2.5], "size": [5, 5, 5], "uv": [0, 40]}
+					]
+				},
+				{
+					"name": "RightKneePad_1",
+					"parent": "left_leg",
+					"pivot": [1.9, 12, 0],
+					"cubes": [
+						{"origin": [0.4, 5.5, -2.5], "size": [3, 3, 1], "uv": [0, 4]}
+					]
+				},
+				{
+					"name": "left_arm",
+					"pivot": [5, 22, 0],
+					"cubes": [
+						{"origin": [4, 12, -2], "size": [4, 12, 4], "uv": [32, 48]}
+					]
+				},
+				{
+					"name": "LeftElbowPad",
+					"parent": "left_arm",
+					"pivot": [5, 22, 0],
+					"mirror": true,
+					"cubes": [
+						{"origin": [7.5, 17.5, -2.5], "size": [1, 4, 5], "uv": [59, 47]}
+					]
+				},
+				{
+					"name": "LeftShoulderPad",
+					"parent": "left_arm",
+					"pivot": [5, 22, 0],
+					"mirror": true,
+					"cubes": [
+						{"origin": [3.5, 22.5, -2.5], "size": [5, 2, 5], "uv": [59, 40]}
+					]
+				},
+				{
+					"name": "right_arm",
+					"pivot": [-5, 22, 0],
+					"cubes": [
+						{"origin": [-8, 12, -2], "size": [4, 12, 4], "uv": [40, 16]}
+					]
+				},
+				{
+					"name": "RightShoulderPad",
+					"parent": "right_arm",
+					"pivot": [-5, 22, 0],
+					"cubes": [
+						{"origin": [-8.5, 22.5, -2.5], "size": [5, 2, 5], "uv": [59, 40]}
+					]
+				},
+				{
+					"name": "RightElbowPad",
+					"parent": "right_arm",
+					"pivot": [-5, 22, 0],
+					"cubes": [
+						{"origin": [-8.5, 17.5, -2.5], "size": [1, 4, 5], "uv": [59, 47]}
+					]
+				}
+			]
+		}
+	]
+}

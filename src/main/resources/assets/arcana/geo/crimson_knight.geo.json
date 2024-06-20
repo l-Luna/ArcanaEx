@@ -1,0 +1,214 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.ModelCrimsonKnight",
+				"texture_width": 128,
+				"texture_height": 128,
+				"visible_bounds_width": 3,
+				"visible_bounds_height": 3.5,
+				"visible_bounds_offset": [0, 1.25, 0]
+			},
+			"bones": [
+				{
+					"name": "torso",
+					"pivot": [0, 24, 0],
+					"cubes": [
+						{"origin": [-4, 12, -2], "size": [8, 12, 4], "uv": [16, 16]}
+					]
+				},
+				{
+					"name": "UpperChestplate",
+					"parent": "torso",
+					"pivot": [0, 24, 0],
+					"cubes": [
+						{"origin": [-4.5, 16.5, -2.5], "size": [9, 7, 5], "uv": [0, 32]}
+					]
+				},
+				{
+					"name": "ChestplateTopLeft",
+					"parent": "torso",
+					"pivot": [0, 24, 0],
+					"cubes": [
+						{"origin": [1.5, 23.2, -2], "size": [2, 1, 4], "uv": [24, 0]}
+					]
+				},
+				{
+					"name": "BeltBuckle",
+					"parent": "torso",
+					"pivot": [0, 24, 0],
+					"cubes": [
+						{"origin": [-1.5, 11, -2.7], "size": [3, 3, 1], "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "ChestplateTopRight",
+					"parent": "torso",
+					"pivot": [0, 24, 0],
+					"cubes": [
+						{"origin": [-3.5, 23.2, -2], "size": [2, 1, 4], "uv": [24, 0]}
+					]
+				},
+				{
+					"name": "Belt",
+					"parent": "torso",
+					"pivot": [0, 24, 0],
+					"cubes": [
+						{"origin": [-4.5, 12, -2.5], "size": [9, 1, 5], "uv": [56, 18]}
+					]
+				},
+				{
+					"name": "left_leg",
+					"pivot": [1.9, 12, 0],
+					"cubes": [
+						{"origin": [-0.1, 0, -2], "size": [4, 12, 4], "uv": [16, 48]}
+					]
+				},
+				{
+					"name": "LeftBoot",
+					"parent": "left_leg",
+					"pivot": [1.9, 12, 0],
+					"mirror": true,
+					"cubes": [
+						{"origin": [0.4, 0, -2.9], "size": [3, 2, 1], "uv": [56, 0]}
+					]
+				},
+				{
+					"name": "LeftBootTop",
+					"parent": "left_leg",
+					"pivot": [1.9, 12, 0],
+					"mirror": true,
+					"cubes": [
+						{"origin": [0.4, 3.8, -2.4], "size": [3, 3, 1], "uv": [12, 16]}
+					]
+				},
+				{
+					"name": "LeftFaulds",
+					"parent": "left_leg",
+					"pivot": [1.9, 12, 0],
+					"rotation": [0, 0, -13],
+					"mirror": true,
+					"cubes": [
+						{"origin": [1, 5.8, -2.5], "size": [3, 6, 5], "uv": [28, 32]}
+					]
+				},
+				{
+					"name": "right_leg",
+					"pivot": [-1.9, 12, 0],
+					"cubes": [
+						{"origin": [-3.9, 0, -2], "size": [4, 12, 4], "uv": [0, 16]}
+					]
+				},
+				{
+					"name": "RightFaulds",
+					"parent": "right_leg",
+					"pivot": [-1.9, 12, 0],
+					"rotation": [0, 0, 13],
+					"cubes": [
+						{"origin": [-4, 5.8, -2.5], "size": [3, 6, 5], "uv": [28, 32]}
+					]
+				},
+				{
+					"name": "RightBoot",
+					"parent": "right_leg",
+					"pivot": [-1.9, 12, 0],
+					"cubes": [
+						{"origin": [-3.4, 0, -2.9], "size": [3, 2, 1], "uv": [56, 0]}
+					]
+				},
+				{
+					"name": "RightBootTop",
+					"parent": "right_leg",
+					"pivot": [-1.9, 12, 0],
+					"cubes": [
+						{"origin": [-3.4, 3.8, -2.4], "size": [3, 3, 1], "uv": [12, 16]}
+					]
+				},
+				{
+					"name": "left_arm",
+					"pivot": [5, 22, 0],
+					"rotation": [0, 2.61, 0],
+					"cubes": [
+						{"origin": [4, 12, -2], "size": [4, 12, 4], "uv": [32, 48]}
+					]
+				},
+				{
+					"name": "LeftShoulderPlate",
+					"parent": "left_arm",
+					"pivot": [5, 22, 0],
+					"rotation": [0, 0, 13],
+					"mirror": true,
+					"cubes": [
+						{"origin": [3.5, 22, -2.5], "size": [6, 3, 5], "uv": [0, 65]}
+					]
+				},
+				{
+					"name": "LeftGauntlet",
+					"parent": "left_arm",
+					"pivot": [5, 22, 0],
+					"mirror": true,
+					"cubes": [
+						{"origin": [7.5, 12.5, -1.5], "size": [1, 4, 3], "uv": [0, 49]}
+					]
+				},
+				{
+					"name": "LeftArmPiece",
+					"parent": "left_arm",
+					"pivot": [5, 22, 0],
+					"mirror": true,
+					"cubes": [
+						{"origin": [6.5, 17, -2.5], "size": [2, 4, 5], "uv": [0, 56]}
+					]
+				},
+				{
+					"name": "right_arm",
+					"pivot": [-5, 22, 0],
+					"cubes": [
+						{"origin": [-8, 12, -2], "size": [4, 12, 4], "uv": [40, 16]}
+					]
+				},
+				{
+					"name": "RightArmPiece",
+					"parent": "right_arm",
+					"pivot": [-5, 22, 0],
+					"cubes": [
+						{"origin": [-8.5, 17, -2.5], "size": [2, 4, 5], "uv": [0, 56]}
+					]
+				},
+				{
+					"name": "RightShoulderPlate",
+					"parent": "right_arm",
+					"pivot": [-5, 22, 0],
+					"rotation": [0, 0, -13],
+					"cubes": [
+						{"origin": [-9.5, 22, -2.5], "size": [6, 3, 5], "uv": [0, 65]}
+					]
+				},
+				{
+					"name": "RightGauntlet",
+					"parent": "right_arm",
+					"pivot": [-5, 22, 0],
+					"cubes": [
+						{"origin": [-8.5, 12.5, -1.5], "size": [1, 4, 3], "uv": [0, 49]}
+					]
+				},
+				{
+					"name": "head",
+					"pivot": [0, 24, 0],
+					"cubes": [
+						{"origin": [-4, 24, -4], "size": [8, 8, 8], "uv": [32, 0]}
+					]
+				},
+				{
+					"name": "Helm",
+					"parent": "head",
+					"pivot": [0, 24, 0],
+					"cubes": [
+						{"origin": [-4.5, 23.5, -4.5], "size": [9, 9, 9], "uv": [64, 0]}
+					]
+				}
+			]
+		}
+	]
+}

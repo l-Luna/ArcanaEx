@@ -392,7 +392,14 @@
   // Entities
   "entity.arcana": {
     "thrown_alumentum": "Thrown Alumentum",
-    "suspension_engine": "Suspension Engine"
+    "suspension_engine": "Levitational Locomotive",
+
+    "crimson_knight": "Crimson Knight",
+    "crimson_archer": "Crimson Archer",
+    "crimson_protector": "Crimson Protector",
+    "crimson_missionary": "Crimson Missionary",
+    "crimson_jester": "Crimson Jester",
+    "crimson_heavy_knight": "Heavy Crimson Knight"
   },
 
   // Status Effects

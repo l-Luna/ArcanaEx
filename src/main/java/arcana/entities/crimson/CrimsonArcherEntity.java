@@ -1,18 +1,16 @@
 package arcana.entities.crimson;
 
-import arcana.ArcanaRegistry;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.RangedAttackMob;
-import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.goal.BowAttackGoal;
+import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.item.RangedWeaponItem;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.random.Random;
@@ -20,19 +18,8 @@ import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.IAnimationTickable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class CrimsonArcherEntity extends HostileEntity implements RangedAttackMob, IAnimatable, IAnimationTickable{
-	
-	protected static final AnimationBuilder idleAnim = new AnimationBuilder().addAnimation("idle");
-	private final AnimationFactory animFactory = GeckoLibUtil.createFactory(this);
+public class CrimsonArcherEntity extends CrimsonEntity implements RangedAttackMob{
 	
 	private final BowAttackGoal<CrimsonArcherEntity> bowAttackGoal = new BowAttackGoal<>(this, 1, 30, 15);
 	private final MeleeAttackGoal meleeAttackGoal = new MeleeAttackGoal(this, 1.3, false){
@@ -53,15 +40,6 @@ public class CrimsonArcherEntity extends HostileEntity implements RangedAttackMo
 	}
 	
 	// setup
-	
-	protected void initGoals(){
-		super.initGoals();
-		goalSelector.add(5, new WanderAroundFarGoal(this, 1));
-		goalSelector.add(6, new LookAtEntityGoal(this, PlayerEntity.class, 8));
-		goalSelector.add(6, new LookAroundGoal(this));
-		targetSelector.add(1, new RevengeGoal(this));
-		targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
-	}
 	
 	protected void initEquipment(Random random, LocalDifficulty localDifficulty){
 		super.initEquipment(random, localDifficulty);
@@ -93,23 +71,7 @@ public class CrimsonArcherEntity extends HostileEntity implements RangedAttackMo
 	// attributes
 	
 	public static DefaultAttributeContainer.Builder createArcherAttributes(){
-		return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.30);
-	}
-	
-	public EntityGroup getGroup(){
-		return ArcanaRegistry.CRIMSON_GROUP;
-	}
-	
-	public boolean canUseRangedWeapon(RangedWeaponItem weapon){
-		return weapon == Items.BOW;
-	}
-	
-	protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions){
-		return 1.74f;
-	}
-	
-	public double getHeightOffset(){
-		return -0.6;
+		return CrimsonEntity.createCrimsonAttributes().add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.30);
 	}
 	
 	// behaviour
@@ -130,10 +92,6 @@ public class CrimsonArcherEntity extends HostileEntity implements RangedAttackMo
 		return ProjectileUtil.createArrowProjectile(this, arrow, damageModifier);
 	}
 	
-	public int tickTimer(){
-		return age;
-	}
-	
 	public void equipStack(EquipmentSlot slot, ItemStack stack){
 		super.equipStack(slot, stack);
 		if(!world.isClient)
@@ -145,18 +103,5 @@ public class CrimsonArcherEntity extends HostileEntity implements RangedAttackMo
 	public void readCustomDataFromNbt(NbtCompound nbt){
 		super.readCustomDataFromNbt(nbt);
 		updateAttackType();
-	}
-	
-	// animation - not really used, geckolib is used here primarily for models
-	
-	public void registerControllers(AnimationData data){
-		data.addAnimationController(new AnimationController<>(this, "idle", 20, event -> {
-			event.getController().setAnimation(idleAnim);
-			return PlayState.CONTINUE;
-		}));
-	}
-	
-	public AnimationFactory getFactory(){
-		return animFactory;
 	}
 }

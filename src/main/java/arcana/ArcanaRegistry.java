@@ -10,7 +10,7 @@ import arcana.effects.TaintedStatusEffect;
 import arcana.enchantments.ProjectingEnchantment;
 import arcana.enchantments.WarpingCurseEnchantment;
 import arcana.entities.ThrownAlumentumEntity;
-import arcana.entities.crimson.CrimsonArcherEntity;
+import arcana.entities.crimson.*;
 import arcana.entities.locomotive.SuspensionEngineEntity;
 import arcana.entities.locomotive.Symbol;
 import arcana.fluids.TaintGooFluid;
@@ -376,11 +376,46 @@ public final class ArcanaRegistry{
 			.dimensions(EntityDimensions.fixed(1.8f, 1))
 			.build();
 	
+	public static final EntityType<CrimsonKnightEntity> CRIMSON_KNIGHT = FabricEntityTypeBuilder
+			.createLiving()
+			.entityFactory(CrimsonKnightEntity::new)
+			.spawnGroup(SpawnGroup.MONSTER)
+			.defaultAttributes(CrimsonKnightEntity::createKnightAttributes)
+			.dimensions(EntityDimensions.fixed(1, 1.8f))
+			.build();
 	public static final EntityType<CrimsonArcherEntity> CRIMSON_ARCHER = FabricEntityTypeBuilder
 			.createLiving()
 			.entityFactory(CrimsonArcherEntity::new)
 			.spawnGroup(SpawnGroup.MONSTER)
 			.defaultAttributes(CrimsonArcherEntity::createArcherAttributes)
+			.dimensions(EntityDimensions.fixed(1, 1.8f))
+			.build();
+	public static final EntityType<CrimsonProtectorEntity> CRIMSON_PROTECTOR = FabricEntityTypeBuilder
+			.createLiving()
+			.entityFactory(CrimsonProtectorEntity::new)
+			.spawnGroup(SpawnGroup.MONSTER)
+			.defaultAttributes(CrimsonProtectorEntity::createProtectorAttributes)
+			.dimensions(EntityDimensions.fixed(1, 1.8f))
+			.build();
+	public static final EntityType<CrimsonMissionaryEntity> CRIMSON_MISSIONARY = FabricEntityTypeBuilder
+			.createLiving()
+			.entityFactory(CrimsonMissionaryEntity::new)
+			.spawnGroup(SpawnGroup.MONSTER)
+			.defaultAttributes(CrimsonMissionaryEntity::createMissionaryAttributes)
+			.dimensions(EntityDimensions.fixed(1, 1.8f))
+			.build();
+	public static final EntityType<CrimsonHeavyKnightEntity> CRIMSON_HEAVY_KNIGHT = FabricEntityTypeBuilder
+			.createLiving()
+			.entityFactory(CrimsonHeavyKnightEntity::new)
+			.spawnGroup(SpawnGroup.MONSTER)
+			.defaultAttributes(CrimsonHeavyKnightEntity::createHeavyKnightAttributes)
+			.dimensions(EntityDimensions.fixed(1, 1.8f))
+			.build();
+	public static final EntityType<CrimsonJesterEntity> CRIMSON_JESTER = FabricEntityTypeBuilder
+			.createLiving()
+			.entityFactory(CrimsonJesterEntity::new)
+			.spawnGroup(SpawnGroup.MONSTER)
+			.defaultAttributes(CrimsonJesterEntity::createJesterAttributes)
 			.dimensions(EntityDimensions.fixed(1, 1.8f))
 			.build();
 	
@@ -729,7 +764,13 @@ public final class ArcanaRegistry{
 		// entity types
 		register("thrown_alumentum", THROWN_ALUMENTUM);
 		register("suspension_engine", SUSPENSION_ENGINE);
+		
+		register("crimson_knight", CRIMSON_KNIGHT);
 		register("crimson_archer", CRIMSON_ARCHER);
+		register("crimson_protector", CRIMSON_PROTECTOR);
+		register("crimson_missionary", CRIMSON_MISSIONARY);
+		register("crimson_jester", CRIMSON_JESTER);
+		register("crimson_heavy_knight", CRIMSON_HEAVY_KNIGHT);
 		
 		// status effects
 		register("tainted", TAINTED);

@@ -1,53 +1,69 @@
 {
   "entries": [
     {
-      "key": "arcana:crimson_trailing",
-      "name": "research.arcana.crimson_trailing",
-      "desc": "research.arcana.crimson_trailing.desc",
+      "key": "arcana:crimson_introduction",
+      "name": "research.arcana.crimson.introduction.title",
+      "desc": "research.arcana.crimson.introduction.desc",
       "icons": [
         "arcana:crimson_rites"
       ],
-      "category": "arcana:crimson_basics",
+      "category": "arcana:crimson_rites",
       "parents": [
         "arcana:root"
       ],
       "meta": [
         "purple_base",
-        "spiky_base",
-        "locked"
+        "spiky_base"
       ],
       "x": 0,
       "y": 0,
       "sections": [
         {
           "type": "text",
-          "content": "research.arcana.crimson.all"
+          "content": "research.arcana.crimson.introduction.text"
         }
       ]
     },
     {
       "key": "arcana:crimson_initiation",
-      "name": "research.arcana.crimson_initiation",
-      "desc": "research.arcana.crimson_initiation.desc",
+      "name": "research.arcana.crimson.initiation.title",
+      "desc": "research.arcana.crimson.initiation.desc",
       "icons": [
-        "arcana:crimson_rites"
+        "arcana:research/crimson_initiation_icon"
       ],
-      "category": "arcana:crimson_basics",
+      "category": "arcana:crimson_rites",
       "parents": [
-        "arcana:crimson_trailing"
+        "arcana:crimson_introduction"
       ],
       "meta": [
-        "purple_base",
-        "locked"
+        "hex_base"
       ],
-      "x": 2,
-      "y": -2,
+      "x": 0,
+      "y": 2,
       "sections": [
         {
           "type": "text",
-          "content": "research.arcana.crimson_initiation.all"
+          "content": "research.arcana.crimson.initiation.stages.1"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:drinkable_taint",
+          "requirements": [
+            "arcana::puzzle{crimson_initiation}"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.crimson.initiation.stages.2"
         }
       ]
+    }
+  ],
+  "puzzles": [
+    {
+      "key": "arcana:crimson_initiation",
+      "type": "fieldwork",
+      "desc": "puzzle.arcana.fieldwork.crimson_initiation"
     }
   ]
 }

@@ -159,6 +159,8 @@
 
     "taint_goo_bucket": "Bucket of Taint Goo",
     "flux_meter": "Flux Meter",
+    "taint_in_a_bottle": "Taint in a Bottle",
+    "drinkable_taint": "Tainted Yoghurt",
 
     "arcanium_ingot": "Arcanium Ingot",
     "arcanium_axe": "Arcanium Axe",
@@ -577,7 +579,9 @@
     "chemistry.alchemical_glass.static_glass": "Confuse glass",
     "chemistry.essentia_distillation": "Force essentia from matter",
     "chemistry.crystal_curator": "Supersize essentia crystals",
-    "chemistry.essentia_logistics": "Just get things where I want"
+    "chemistry.essentia_logistics": "Just get things where I want",
+
+    "fieldwork.crimson_initiation": "it goes down better with sugar"
   },
 
   // Other UIs
@@ -592,7 +596,9 @@
       "fundamentals": "Fundamentals",
       "artifice": "Artifice",
       "auromancy": "Auromancy",
-      "alchemy": "Alchemy"
+      "alchemy": "Alchemy",
+
+      "crimson_rites": "crimson rites"
     },
 
     // Research Entries
@@ -946,6 +952,25 @@
         "Setting up essentia networks can be tedious. Just incredibly tedious. I just want to move the fundamental concepts of reality from point A to point B, why the issue? And why must it clog up so easily?",
         "As a nice convenience, an {i}Aspect Redirect{r} forces all specks entering to travel in one direction; and an {i}Aspect Router{r} splits specks across all other connected directions, randomly. These let me skip or compact some otherwise-complicated setups... but these {i}are{r} fairly expensive.\nAdditionally, I can create specially-configured {i}Void Jars{r} that continue to accept essentia when full, venting excess essentia into the aura; by which I mean as flux. It's certainly easier than carefully managing my essentia production, but it's not something I should overuse."
       ]
+    },
+
+    // Crimson Rites
+
+    "crimson": {
+      "introduction": {
+        "title": "introduction.",
+        "desc": "the crimson's open arms.",
+        "text": "we have all seen things that we might not want to have seen. we have all found out some piece of critical info that doesn't fit our worldview. perhaps something as magical as a revelation from beyond, or something as mundane as a broken heart.\nwhatever it is that lead you to the crimson, you're welcome here. you will be useful here. you will feel the fulfillment you deserve."
+      },
+
+      "initiation": {
+        "title": "initiation.",
+        "desc": "pacing yourself.",
+        "stages": [
+          "every page that sits in front of you is filled with difficult truths. such ideas require time to acclimate, time to swallow the concepts this world had worked hard to keep from your mind.\nbefore the truth may be revealed to you, you must prove yourself ready. to simply reveal everything at once would leave insufficient time to explain, would let those hammered-in worms of restraint keep you from Understanding. your first exercise will be trivial, just a small show of commitment.",
+          "you already make for such a good follower."
+        ]
+      }
     }
   }
 }

@@ -2,10 +2,10 @@ package arcana.research;
 
 import arcana.ArcanaRegistry;
 import arcana.ArcanaTags;
-import arcana.aura.Node;
-import arcana.aura.NodeTypes;
 import arcana.aura.AuraChunk;
 import arcana.aura.AuraWorld;
+import arcana.aura.Node;
+import arcana.aura.NodeTypes;
 import arcana.components.Researcher;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
@@ -24,6 +24,7 @@ public final class BuiltinResearch{
 	public static final Identifier fluxPuzzle = arcId("flux_build_research");
 	public static final Identifier highestReachPuzzle = arcId("highest_reach");
 	public static final Identifier lowestDepthsPuzzle = arcId("lowest_depths");
+	public static final Identifier drinkableTaintPuzzle = arcId("crimson_initiation");
 	
 	public static final Identifier silverwoodResearch = arcId("silverwood_trees");
 	public static final Identifier greatwoodResearch = arcId("greatwood_trees");

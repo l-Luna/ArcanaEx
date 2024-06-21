@@ -50,10 +50,10 @@
       "bg": "arcana:research/bg_tainted.png"
     },
     {
-      "key": "arcana:crimson_basics",
+      "key": "arcana:crimson_rites",
       "in": "arcana:crimson_rites",
-      "icon": "arcana:research/crimson_basics.png",
-      "name": "research.arcana.category.crimson",
+      "icon": "arcana:research/eldritch_cat_icon.png",
+      "name": "research.arcana.category.crimson_rites",
       "bg": "arcana:research/bg_eldritch.png"
     }
   ]

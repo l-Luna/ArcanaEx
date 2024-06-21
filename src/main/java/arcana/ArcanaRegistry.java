@@ -46,6 +46,7 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.*;
 import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.fluid.FlowableFluid;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.*;
@@ -107,6 +108,9 @@ public final class ArcanaRegistry{
 	public static final FlowableFluid STILL_TAINT_GOO = new TaintGooFluid.Still();
 	public static final FlowableFluid FLOWING_TAINT_GOO = new TaintGooFluid.Flowing();
 	
+	// status effects...
+	public static final StatusEffect TAINTED = new TaintedStatusEffect();
+	
 	// items...
 	public static final Item SCRIBBLED_NOTES = new ScribbledNotesItem(GROUPED_SINGLE);
 	public static final Item SCRIBING_TOOLS = new Item(new Settings().group(Tab.MAIN).maxDamage(200));
@@ -126,6 +130,12 @@ public final class ArcanaRegistry{
 	
 	public static final Item TAINT_GOO_BUCKET = new BucketItem(STILL_TAINT_GOO, new Settings().group(Tab.MAIN).maxCount(1).recipeRemainder(Items.BUCKET));
 	public static final Item FLUX_METER = new Item(GROUPED_SINGLE);
+	public static final Item TAINT_IN_A_BOTTLE = new TaintInABottleItem(GROUPED);
+	public static final Item DRINKABLE_TAINT = new DrinkableTaintItem(new Settings().group(Tab.MAIN).maxCount(1).food(new FoodComponent.Builder()
+			.hunger(4)
+			.saturationModifier(1.1f)
+			.statusEffect(new StatusEffectInstance(TAINTED, 40 * 20, 1), 1)
+			.build()));
 	
 	public static final Item ARCANIUM_INGOT = new Item(GROUPED);
 	public static final Item ARCANIUM_SWORD = new SwordItem(ArcanaToolMaterials.ARCANIUM, 3, -2.4f, new Settings().group(Tab.EQUIPMENT));
@@ -423,9 +433,6 @@ public final class ArcanaRegistry{
 	@SuppressWarnings("InstantiationOfUtilityClass") // no, it's just an identity token
 	public static final EntityGroup CRIMSON_GROUP = new EntityGroup();
 	
-	// status effects...
-	public static final StatusEffect TAINTED = new TaintedStatusEffect();
-	
 	public static final List<Item> items = new ArrayList<>();
 	public static final List<Block> blocks = new ArrayList<>();
 	
@@ -453,6 +460,8 @@ public final class ArcanaRegistry{
 		
 		register("taint_goo_bucket", TAINT_GOO_BUCKET);
 		register("flux_meter", FLUX_METER);
+		register("taint_in_a_bottle", TAINT_IN_A_BOTTLE);
+		register("drinkable_taint", DRINKABLE_TAINT);
 		
 		register("arcanium_ingot", ARCANIUM_INGOT);
 		register("arcanium_sword", ARCANIUM_SWORD);

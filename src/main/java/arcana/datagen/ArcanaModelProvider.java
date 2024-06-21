@@ -98,6 +98,7 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 	public void generateItemModels(ItemModelGenerator itemGen){
 		noAutoGen.add(WAND);
 		noAutoGen.add(TOME_OF_SHARING);
+		noAutoGen.add(DRINKABLE_TAINT);
 		noAutoGen.add(NITOR.asItem());
 		noAutoGen.add(INFUSION_PILLAR.asItem());
 		noAutoGen.add(ESSENTIA_TUBE.asItem());

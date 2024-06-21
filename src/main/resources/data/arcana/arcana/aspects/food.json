@@ -60,7 +60,7 @@
   "minecraft:poisonous_potato": [
     "4*plant",
     "taint",
-    "undead"
+    "wrath"
   ],
   "minecraft:carrot": [
     "3*plant",
@@ -188,11 +188,16 @@
   "minecraft:tropical_fish": [
     "2*flesh",
     "water",
-    "journey"
+    "weather"
   ],
   "minecraft:pufferfish": [
     "4*flesh",
     "weapon",
     "armour"
+  ],
+  "minecraft:rabbit_foot": [
+    "5*flesh",
+    "magic",
+    "flight"
   ]
 }

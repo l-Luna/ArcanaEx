@@ -5,6 +5,7 @@
     "arcana:phials/crystal",
     "arcana:phials/energy",
     "arcana:phials/exchange",
-    "arcana:phials/movement"
+    "arcana:phials/movement",
+    "arcana:phials/weather"
   ]
 }

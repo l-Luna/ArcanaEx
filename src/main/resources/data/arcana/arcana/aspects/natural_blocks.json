@@ -319,8 +319,7 @@
   ],
   "minecraft:sculk_shrieker": [
     "8*life",
-    // TODO: anger
-    "7*weapon",
+    "7*wrath",
     "4*taint"
   ],
 

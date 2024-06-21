@@ -60,7 +60,8 @@
   ],
   "minecraft:turtle_egg": [
     "3*life",
-    "water"
+    "water",
+    "weather"
   ],
   "+#minecraft:beds": [
     "6*sloth"
@@ -80,6 +81,11 @@
     "7*mind",
     "6*senses",
     "3*magic"
+  ],
+  "arcana:crimson_rites": [
+    "6*mind",
+    "6*senses",
+    "6*wrath"
   ],
   "arcana:tome_of_sharing": [
     "6*mind",

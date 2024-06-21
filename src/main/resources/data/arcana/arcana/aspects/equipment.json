@@ -55,6 +55,12 @@
     "3*metal"
   ],
 
+  "minecraft:goat_horn": [
+    "3*senses",
+    "3*wrath",
+    "2*flesh"
+  ],
+
   "arcana:paving_stone_of_travel": [
     "3*earth",
     "air",

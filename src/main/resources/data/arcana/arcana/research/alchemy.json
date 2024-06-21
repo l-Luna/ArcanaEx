@@ -596,7 +596,8 @@
         "arcana:crystallization_press",
         "arcana:crystals/exchange",
         "arcana:crystals/movement",
-        "arcana:crystallization_press"
+        "arcana:crystallization_press",
+        "arcana:crystals/weather"
       ],
       "category": "arcana:alchemy",
       "parents": [

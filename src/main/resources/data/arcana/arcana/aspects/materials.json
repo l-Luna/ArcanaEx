@@ -225,7 +225,7 @@
   ],
 
   // fix weird feedback loop
-  "arcana:arcanium": [
+  "arcana:arcanium_ingot": [
     "3*magic",
     "metal"
   ],

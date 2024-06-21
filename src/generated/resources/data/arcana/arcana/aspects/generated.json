@@ -125,6 +125,12 @@
   "arcana:crystals/weapon": [
     "arcana:weapon"
   ],
+  "arcana:crystals/weather": [
+    "arcana:weather"
+  ],
+  "arcana:crystals/wrath": [
+    "arcana:wrath"
+  ],
   "arcana:phials/air": [
     "8*arcana:air"
   ],
@@ -229,5 +235,11 @@
   ],
   "arcana:phials/weapon": [
     "8*arcana:weapon"
+  ],
+  "arcana:phials/weather": [
+    "8*arcana:weather"
+  ],
+  "arcana:phials/wrath": [
+    "8*arcana:wrath"
   ]
 }

@@ -37,12 +37,13 @@
   ],
   "minecraft:lightning_rod": [
     "8*metal",
+    "7*weather",
     "3*tool",
     "energy"
   ],
   "minecraft:daylight_detector": [
     "16*crystal",
-    "6*light",
+    "6*weather",
     "3*senses"
   ],
   "minecraft:chipped_anvil": [
@@ -57,7 +58,14 @@
     "13*senses",
     "12*light",
     "machine",
-    "envy"
+    "wrath"
+  ],
+  "minecraft:beacon": [
+    "77*light",
+    "41*energy",
+    "13*weather",
+    "12*void",
+    "10*crystal"
   ],
 
   "#c:shulker_boxes": [
@@ -139,8 +147,8 @@
     "3*plant"
   ],
   "arcana:mystic_mist": [
+    "21*weather",
     "16*metal",
-    "16*air",
     "12*magic",
     "7*water",
     "2*ice",

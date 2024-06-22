@@ -105,8 +105,12 @@ public class WandItem extends Item implements WarpingItem{
 			AspectMap cost = fi.castCost(wandStack, focusStack, player).copy();
 			cost.multiply(aspect -> costMultiplier(aspect, wandStack, player));
 			if(aspectsFrom(wandStack).contains(cost)){
-				updateAspects(wandStack, aspects -> aspects.take(cost));
-				return fi.castOnBlock(context);
+				ActionResult result = fi.castOnBlock(context);
+				if(result != ActionResult.PASS && result != ActionResult.FAIL){
+					// no point charging for something that didn't work
+					updateAspects(wandStack, aspects -> aspects.take(cost));
+				}
+				return result;
 			}
 		}
 		
@@ -122,8 +126,12 @@ public class WandItem extends Item implements WarpingItem{
 			var cost = fi.castCost(wand, focusStack, user).copy();
 			cost.multiply(aspect -> costMultiplier(aspect, stack, user));
 			if(stored.contains(cost)){
-				updateAspects(wand, aspects -> aspects.take(cost));
-				return fi.castOnEntity(wand, focusStack, user, entity, hand);
+				ActionResult result = fi.castOnEntity(wand, focusStack, user, entity, hand);
+				if(result != ActionResult.PASS && result != ActionResult.FAIL){
+					// no point charging for something that didn't work
+					updateAspects(wand, aspects -> aspects.take(cost));
+				}
+				return result;
 			}
 		}
 		return super.useOnEntity(stack, user, entity, hand);

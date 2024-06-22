@@ -63,18 +63,20 @@ public class EquivalentExchangeFocusItem extends FocusItem{
 			
 			if(toPlace.canPlaceAt(world, pos)){
 				BlockState old = world.getBlockState(pos);
-				if(ctx.getWorld() instanceof ServerWorld){
-					boolean changed = false;
-					for(ItemStack stack : old.getDroppedStacks(swapContext(ctx, old)))
-						changed |= (player.giveItemStack(stack));
-					if(changed){
-						player.currentScreenHandler.sendContentUpdates();
-						player.getInventory().markDirty();
+				if(!toPlace.equals(old)){
+					if(ctx.getWorld() instanceof ServerWorld){
+						boolean changed = false;
+						for(ItemStack stack : old.getDroppedStacks(swapContext(ctx, old)))
+							changed |= (player.giveItemStack(stack));
+						if(changed){
+							player.currentScreenHandler.sendContentUpdates();
+							player.getInventory().markDirty();
+						}
 					}
+					world.setBlockState(pos, toPlace);
+					otherStack.decrement(1);
+					return ActionResult.SUCCESS;
 				}
-				world.setBlockState(pos, toPlace);
-				otherStack.decrement(1);
-				return ActionResult.SUCCESS;
 			}
 		}
 		return super.useOnBlock(ctx);

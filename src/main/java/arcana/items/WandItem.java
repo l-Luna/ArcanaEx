@@ -26,15 +26,13 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Pair;
-import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.*;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -147,19 +145,24 @@ public class WandItem extends Item implements WarpingItem{
 			return;
 		AuraWorld aura = AuraWorld.from(world);
 		aura.raycastNodes(user.getEyePos(), 4.5, false, user).ifPresent(node -> {
-			AspectMap aspects = node.getAspects();
-			if(!aspects.aspectSet().isEmpty()){
-				Aspect aspect = aspects.aspectByIndex(world.random.nextInt(aspects.size()));
+			// only attempt to drain aspects that the node has and the wand needs
+			AspectMap nodeAspects = node.getAspects();
+			AspectMap wandAspects = aspectsFrom(stack);
+			int wandCapacity = capacity(stack);
+			List<Aspect> candidateAspects = new ArrayList<>(nodeAspects.aspectSet());
+			candidateAspects.removeIf(x -> wandAspects.get(x) >= wandCapacity);
+			
+			if(!candidateAspects.isEmpty()){
+				Aspect aspect = Util.getRandom(candidateAspects, world.random);
 				int aspectDrainWait = 8;
 				int aspectDrainAmount = 3 + world.random.nextInt(3);
-				int capacity = capacity(stack);
 				if(world.getTime() % aspectDrainWait == 0){
-					var capacityLeft = capacity - aspectsFrom(stack).get(aspect);
+					var capacityLeft = wandCapacity - wandAspects.get(aspect);
 					if(capacityLeft < 0)
 						capacityLeft = 0;
-					int realDrainAmount = Math.min(Math.min(aspects.get(aspect), aspectDrainAmount), capacityLeft);
-					aspects.take(aspect, realDrainAmount);
-					updateAspects(stack, map -> map.addCapped(aspect, realDrainAmount, capacity));
+					int realDrainAmount = Math.min(Math.min(nodeAspects.get(aspect), aspectDrainAmount), capacityLeft);
+					nodeAspects.take(aspect, realDrainAmount);
+					updateAspects(stack, map -> map.addCapped(aspect, realDrainAmount, wandCapacity));
 					aura.sync();
 				}
 			}

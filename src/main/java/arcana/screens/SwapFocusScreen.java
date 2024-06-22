@@ -33,9 +33,6 @@ public class SwapFocusScreen extends Screen{
 		// who needs sprites when you have squares
 		ItemStack wandStack = client.player.getStackInHand(hand);
 		if(wandStack.getItem() instanceof WandItem){
-			ItemStack currentFocus = WandItem.focusFrom(wandStack);
-			if(!currentFocus.isEmpty())
-				client.getItemRenderer().renderInGui(currentFocus, width / 2 - 8, height / 2 - 8);
 			List<ItemStack> foci = getFoci(client.player);
 			int size = foci.size();
 			int distance = size * 5 + 28;
@@ -56,6 +53,18 @@ public class SwapFocusScreen extends Screen{
 				int x = (int)(Math.cos(v) * distance) - 8 + width / 2;
 				int y = (int)(Math.sin(v) * distance) - 8 + height / 2;
 				client.getItemRenderer().renderInGui(focus, x, y);
+				
+				if(mouseX >= x && mouseX < x + 16 && mouseY >= y && mouseY < y + 16)
+					renderTooltip(matrices, focus, mouseX, mouseY);
+			}
+			ItemStack currentFocus = WandItem.focusFrom(wandStack);
+			if(!currentFocus.isEmpty()){
+				int x = width / 2 - 8;
+				int y = height / 2 - 8;
+				client.getItemRenderer().renderInGui(currentFocus, x, y);
+				
+				if(mouseX >= x && mouseX < x + 16 && mouseY >= y && mouseY < y + 16)
+					renderTooltip(matrices, currentFocus, mouseX, mouseY);
 			}
 		}
 	}

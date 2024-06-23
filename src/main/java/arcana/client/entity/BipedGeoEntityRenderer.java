@@ -19,6 +19,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3f;
 import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.processor.IBone;
 import software.bernie.geckolib3.geo.render.built.GeoBone;
 import software.bernie.geckolib3.geo.render.built.GeoModel;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
@@ -79,33 +80,21 @@ public class BipedGeoEntityRenderer<T extends LivingEntity & IAnimatable> extend
 		copy(rightLegBone, base.rightLeg);
 		copy(leftLegBone, base.leftLeg);
 		
-		super.render(model, animatable, delta, type, matrices, vcp, vc, packedLight, packedOverlay, red, green, blue, alpha);
-	}
-	
-	public void renderRecursively(GeoBone bone,
-	                              MatrixStack matrices,
-	                              VertexConsumer vc,
-	                              int packedLight,
-	                              int packedOverlay,
-	                              float red,
-	                              float green,
-	                              float blue,
-	                              float alpha){
-		super.renderRecursively(bone, matrices, vc, packedLight, packedOverlay, red, green, blue, alpha);
-		
-		boolean isLeft;
-		if(getCurrentModelRenderCycle() == EModelRenderCycle.INITIAL
-			&& ((isLeft = bone.name.equals(leftArmBone)) || bone.name.equals(rightArmBone))){
+		boolean isLeft = true;
+		if(getCurrentModelRenderCycle() == EModelRenderCycle.INITIAL){
 			ItemStack stack = animatable.getStackInHand(isLeft ? Hand.MAIN_HAND : Hand.OFF_HAND);
 			if(!stack.isEmpty()){
 				matrices.push();
 				
-				RenderUtils.prepMatrixForBone(matrices, bone);
-				RenderUtils.translateAndRotateMatrixForBone(matrices, bone);
+				IBone bone = modelProvider.getBone(leftArmBone);
+				RenderUtils.prepMatrixForBone(matrices, (GeoBone)bone);
+				//RenderUtils.translateAndRotateMatrixForBone(matrices, bone);
+//				base.setArmAngle(isLeft ? Arm.LEFT : Arm.RIGHT, matrices);
+//				matrices.translate(-bone.getPositionX() / 16f, bone.getPositionY() / 16f, bone.getPositionZ() / 16f);
 				
 				matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(180));
 				matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180));
-				matrices.translate((isLeft ? 1f : -1) / 8.0F, 0.55, -0.1);
+				matrices.translate((isLeft ? 1f : -1) / 2f, -0.8, -0.1);
 				
 				MinecraftClient.getInstance().getItemRenderer().renderItem(animatable,
 						stack,
@@ -123,6 +112,22 @@ public class BipedGeoEntityRenderer<T extends LivingEntity & IAnimatable> extend
 				matrices.pop();
 			}
 		}
+		
+		super.render(model, animatable, delta, type, matrices, vcp, vc, packedLight, packedOverlay, red, green, blue, alpha);
+	}
+	
+	public void renderRecursively(GeoBone bone,
+	                              MatrixStack matrices,
+	                              VertexConsumer vc,
+	                              int packedLight,
+	                              int packedOverlay,
+	                              float red,
+	                              float green,
+	                              float blue,
+	                              float alpha){
+		super.renderRecursively(bone, matrices, vc, packedLight, packedOverlay, red, green, blue, alpha);
+		
+		
 	}
 	
 	private void copy(String boneName, ModelPart vbone){

@@ -66,7 +66,7 @@ public class BipedGeoEntityRenderer<T extends LivingEntity & IAnimatable> extend
 		// TODO: other arm poses
 		base.rightArmPose = base.leftArmPose = BipedEntityModel.ArmPose.EMPTY;
 		if(animatable instanceof MobEntity me && me.isAttacking() && me.getMainHandStack().isOf(Items.BOW))
-			base.rightArmPose = BipedEntityModel.ArmPose.BOW_AND_ARROW;
+			base.leftArmPose = BipedEntityModel.ArmPose.BOW_AND_ARROW;
 		base.handSwingProgress = animatable.getHandSwingProgress(delta);
 		
 		base.setAngles(animatable,

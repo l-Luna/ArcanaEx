@@ -57,6 +57,8 @@ public class BipedGeoEntityRenderer<T extends LivingEntity & IAnimatable> extend
 	                   float green,
 	                   float blue,
 	                   float alpha){
+		setCurrentRTB(vcp);
+		
 		float bodyYaw = MathHelper.lerpAngleDegrees(delta, animatable.prevBodyYaw, animatable.bodyYaw);
 		float headYaw = MathHelper.lerpAngleDegrees(delta, animatable.prevHeadYaw, animatable.headYaw);
 		float headPitch = MathHelper.lerpAngleDegrees(delta, animatable.prevPitch, animatable.getPitch());
@@ -65,6 +67,7 @@ public class BipedGeoEntityRenderer<T extends LivingEntity & IAnimatable> extend
 		base.rightArmPose = base.leftArmPose = BipedEntityModel.ArmPose.EMPTY;
 		if(animatable instanceof MobEntity me && me.isAttacking() && me.getMainHandStack().isOf(Items.BOW))
 			base.rightArmPose = BipedEntityModel.ArmPose.BOW_AND_ARROW;
+		base.handSwingProgress = animatable.getHandSwingProgress(delta);
 		
 		base.setAngles(animatable,
 				/* limb angle */ animatable.limbAngle - animatable.limbDistance * (1 - delta),
@@ -114,20 +117,6 @@ public class BipedGeoEntityRenderer<T extends LivingEntity & IAnimatable> extend
 		}
 		
 		super.render(model, animatable, delta, type, matrices, vcp, vc, packedLight, packedOverlay, red, green, blue, alpha);
-	}
-	
-	public void renderRecursively(GeoBone bone,
-	                              MatrixStack matrices,
-	                              VertexConsumer vc,
-	                              int packedLight,
-	                              int packedOverlay,
-	                              float red,
-	                              float green,
-	                              float blue,
-	                              float alpha){
-		super.renderRecursively(bone, matrices, vc, packedLight, packedOverlay, red, green, blue, alpha);
-		
-		
 	}
 	
 	private void copy(String boneName, ModelPart vbone){

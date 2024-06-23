@@ -4,6 +4,7 @@ import arcana.aspects.AspectMap;
 import arcana.aspects.AspectStack;
 import arcana.aspects.Aspects;
 import arcana.items.FocusItem;
+import arcana.items.WandItem;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.*;
 import net.minecraft.entity.LivingEntity;
@@ -28,7 +29,7 @@ public class FireFocusItem extends FocusItem{
 	}
 	
 	public AspectMap castCost(ItemStack wand, ItemStack focus, PlayerEntity user){
-		return AspectMap.fromAspectStack(new AspectStack(Aspects.FIRE, 5));
+		return AspectMap.fromAspectStack(new AspectStack(Aspects.FIRE, 3));
 	}
 	
 	public ActionResult castOnBlock(ItemUsageContext ctx){
@@ -62,8 +63,12 @@ public class FireFocusItem extends FocusItem{
 	}
 	
 	public ActionResult castOnEntity(ItemStack wand, ItemStack focus, PlayerEntity user, LivingEntity target, Hand hand){
-		target.setOnFireFor(6);
-		target.damage(DamageSource.ON_FIRE, 4);
+		// anything from 10 to 45 is obtainable
+		int strength = WandItem.capFrom(wand).strength() + WandItem.coreFrom(wand).strength();
+		float damage = Math.round(0.12f * strength + 3);
+		
+		target.setOnFireFor((int)(damage + 2));
+		target.damage(DamageSource.ON_FIRE, damage);
 		target.setAttacker(user);
 		return ActionResult.success(user.world.isClient);
 	}

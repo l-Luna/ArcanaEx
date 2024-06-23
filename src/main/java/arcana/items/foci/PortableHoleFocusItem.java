@@ -4,6 +4,7 @@ import arcana.aspects.AspectMap;
 import arcana.aspects.AspectStack;
 import arcana.aspects.Aspects;
 import arcana.items.FocusItem;
+import arcana.items.WandItem;
 import com.google.common.collect.Lists;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -24,13 +25,19 @@ public class PortableHoleFocusItem extends FocusItem{
 	}
 	
 	public AspectMap castCost(@Nullable ItemStack wand, ItemStack focus, PlayerEntity user){
-		return AspectMap.fromAspectStacks(List.of(new AspectStack(Aspects.ENTROPY, 8), new AspectStack(Aspects.ORDER, 2)));
+		return AspectMap.fromAspectStacks(List.of(new AspectStack(Aspects.ENTROPY, 6), new AspectStack(Aspects.ORDER, 2)));
 	}
 	
 	public ActionResult castOnBlock(ItemUsageContext ctx){
+		ItemStack wandStack = ctx.getStack();
+		// requires better than an iron cap
+		int complexity = WandItem.capFrom(wandStack).complexity() + WandItem.coreFrom(wandStack).complexity();
+		int difficulty = WandItem.capFrom(wandStack).strength() + WandItem.coreFrom(wandStack).strength();
+		if(complexity < 12)
+			return ActionResult.FAIL;
 		// thanks una
 		World world = ctx.getWorld();
-		int distance = 16;
+		int distance = 12 + Math.round(0.14f * difficulty);
 		List<Axis> axes = List.of(Axis.values());
 		Axis fwd = ctx.getSide().getAxis();
 		Axis axisX = axes.stream().filter(a -> a != fwd).findFirst().get();

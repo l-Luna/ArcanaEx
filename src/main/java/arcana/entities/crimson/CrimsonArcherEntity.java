@@ -48,9 +48,6 @@ public class CrimsonArcherEntity extends CrimsonEntity implements RangedAttackMo
 	
 	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt){
 		EntityData i = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
-		Random rng = world.getRandom();
-		initEquipment(rng, difficulty);
-		updateEnchantments(random, difficulty);
 		updateAttackType();
 		return i;
 	}
@@ -71,7 +68,7 @@ public class CrimsonArcherEntity extends CrimsonEntity implements RangedAttackMo
 	// attributes
 	
 	public static DefaultAttributeContainer.Builder createArcherAttributes(){
-		return CrimsonEntity.createCrimsonAttributes().add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.30);
+		return CrimsonEntity.createCrimsonAttributes().add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.3);
 	}
 	
 	// behaviour

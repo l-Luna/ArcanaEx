@@ -1,17 +1,19 @@
 package arcana.entities.crimson;
 
 import arcana.ArcanaRegistry;
-import net.minecraft.entity.EntityDimensions;
-import net.minecraft.entity.EntityGroup;
-import net.minecraft.entity.EntityPose;
-import net.minecraft.entity.EntityType;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
 import net.minecraft.item.RangedWeaponItem;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -31,6 +33,14 @@ public class CrimsonEntity extends HostileEntity implements IAnimatable{
 	
 	// setup
 	
+	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt){
+		EntityData i = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+		initEquipment(world.getRandom(), difficulty);
+		updateEnchantments(random, difficulty);
+		setLeftHanded(true);
+		return i;
+	}
+	
 	protected void initGoals(){
 		super.initGoals();
 		goalSelector.add(5, new WanderAroundFarGoal(this, 1));
@@ -43,7 +53,9 @@ public class CrimsonEntity extends HostileEntity implements IAnimatable{
 	// attributes
 	
 	public static DefaultAttributeContainer.Builder createCrimsonAttributes(){
-		return HostileEntity.createHostileAttributes() /* .add(...) */;
+		return HostileEntity.createHostileAttributes()
+				.add(EntityAttributes.GENERIC_ARMOR, 4)
+				.add(EntityAttributes.GENERIC_FOLLOW_RANGE, 36);
 	}
 	
 	public EntityGroup getGroup(){

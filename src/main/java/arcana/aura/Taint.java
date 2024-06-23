@@ -26,8 +26,15 @@ public class Taint{
 	
 	public static final Map<Block, Block> TAINT_MAP = new HashMap<>(Map.of(
 			Blocks.STONE, ArcanaRegistry.TAINTED_ROCK,
+			Blocks.ANDESITE, ArcanaRegistry.TAINTED_ANDESITE,
+			Blocks.GRANITE, ArcanaRegistry.TAINTED_GRANITE,
+			Blocks.DIORITE, ArcanaRegistry.TAINTED_DIORITE,
 			Blocks.DIRT, ArcanaRegistry.TAINTED_SOIL,
-			Blocks.GRASS_BLOCK, ArcanaRegistry.TAINTED_GRASS_BLOCK
+			Blocks.GRASS_BLOCK, ArcanaRegistry.TAINTED_GRASS_BLOCK,
+			Blocks.SAND, ArcanaRegistry.TAINTED_SAND,
+			Blocks.SANDSTONE, ArcanaRegistry.TAINTED_SANDSTONE,
+			Blocks.GRAVEL, ArcanaRegistry.TAINTED_GRAVEL,
+			Blocks.SNOW_BLOCK, ArcanaRegistry.TAINTED_SNOW_BLOCK
 	));
 	
 	public static final List<Property<?>> PRESERVE = new ArrayList<>(List.of(

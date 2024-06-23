@@ -5,6 +5,7 @@ import arcana.aspects.Aspects;
 import arcana.blocks.*;
 import arcana.blocks.be.*;
 import arcana.blocks.tainted.TaintedBlock;
+import arcana.blocks.tainted.TaintedFallingBlock;
 import arcana.blocks.tainted.TaintedSnowyBlock;
 import arcana.blocks.tubes.*;
 import arcana.client.particles.AspectParticleEffect;
@@ -330,8 +331,16 @@ public final class ArcanaRegistry{
 	
 	// natural tainted blocks
 	public static final Block TAINTED_ROCK = new TaintedBlock(of(Material.STONE, MapColor.PURPLE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(1.6f, 6));
+	public static final Block TAINTED_ANDESITE = new TaintedBlock(of(Material.STONE, MapColor.PURPLE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(1.6f, 6));
+	public static final Block TAINTED_DIORITE = new TaintedBlock(of(Material.STONE, MapColor.PURPLE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(1.6f, 6));
+	public static final Block TAINTED_GRANITE = new TaintedBlock(of(Material.STONE, MapColor.PURPLE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(1.6f, 6));
+	
 	public static final Block TAINTED_SOIL = new TaintedBlock(of(Material.SOIL, MapColor.PURPLE).dropsSelf().usesTool(SHOVEL_MINEABLE).strength(0.5f).sounds(BlockSoundGroup.GRAVEL));
 	public static final Block TAINTED_GRASS_BLOCK = new TaintedSnowyBlock(of(Material.SOLID_ORGANIC, MapColor.PURPLE).usesTool(SHOVEL_MINEABLE).strength(0.6f).sounds(BlockSoundGroup.GRASS));
+	public static final Block TAINTED_SAND = new TaintedFallingBlock(of(Material.AGGREGATE, MapColor.PURPLE).usesTool(SHOVEL_MINEABLE).strength(0.5f).sounds(BlockSoundGroup.SAND));
+	public static final Block TAINTED_SANDSTONE = new TaintedBlock(of(Material.STONE, MapColor.PURPLE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(0.8f));
+	public static final Block TAINTED_GRAVEL = new TaintedFallingBlock(of(Material.AGGREGATE, MapColor.PURPLE).usesTool(SHOVEL_MINEABLE).strength(0.7f).sounds(BlockSoundGroup.GRAVEL));
+	public static final Block TAINTED_SNOW_BLOCK = new TaintedFallingBlock(of(Material.SNOW_BLOCK, MapColor.PURPLE).requiresTool(SHOVEL_MINEABLE).strength(0.2f).sounds(BlockSoundGroup.SNOW));
 	
 	// unique tainted blocks
 	public static final Block TAINT_CRUST = new TaintedBlock(of(Material.SOLID_ORGANIC, MapColor.PURPLE).requiresTool(HOE_MINEABLE).strength(0.7f).sounds(BlockSoundGroup.SLIME));
@@ -712,8 +721,15 @@ public final class ArcanaRegistry{
 		register("taint_goo", TAINT_GOO, false);
 		
 		register("tainted_rock", TAINTED_ROCK);
+		register("tainted_andesite", TAINTED_ANDESITE);
+		register("tainted_granite", TAINTED_GRANITE);
+		register("tainted_diorite", TAINTED_DIORITE);
 		register("tainted_soil", TAINTED_SOIL);
 		register("tainted_grass_block", TAINTED_GRASS_BLOCK);
+		register("tainted_sand", TAINTED_SAND);
+		register("tainted_sandstone", TAINTED_SANDSTONE);
+		register("tainted_gravel", TAINTED_GRAVEL);
+		register("tainted_snow_block", TAINTED_SNOW_BLOCK);
 		register("taint_crust", TAINT_CRUST);
 		
 		// screen handlers

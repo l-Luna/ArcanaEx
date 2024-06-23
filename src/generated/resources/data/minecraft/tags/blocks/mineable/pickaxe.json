@@ -45,6 +45,10 @@
     "arcana:locomotive_symbols/synchronize",
     "arcana:locomotive_symbols/grab",
     "arcana:locomotive_symbols/eject",
-    "arcana:tainted_rock"
+    "arcana:tainted_rock",
+    "arcana:tainted_andesite",
+    "arcana:tainted_granite",
+    "arcana:tainted_diorite",
+    "arcana:tainted_sandstone"
   ]
 }

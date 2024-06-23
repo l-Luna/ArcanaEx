@@ -54,7 +54,14 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		blockGen.registerSimpleCubeAll(PAVING_STONE_OF_TRAVEL);
 		blockGen.registerSimpleCubeAll(PAVING_STONE_OF_WARDING);
 		blockGen.registerSimpleCubeAll(TAINTED_ROCK);
+		blockGen.registerSimpleCubeAll(TAINTED_ANDESITE);
+		blockGen.registerSimpleCubeAll(TAINTED_GRANITE);
+		blockGen.registerSimpleCubeAll(TAINTED_DIORITE);
 		blockGen.registerSimpleCubeAll(TAINTED_SOIL);
+		blockGen.registerSimpleCubeAll(TAINTED_SAND);
+		blockGen.registerSimpleCubeAll(TAINTED_SANDSTONE);
+		blockGen.registerSimpleCubeAll(TAINTED_GRAVEL);
+		blockGen.registerSimpleCubeAll(TAINTED_SNOW_BLOCK);
 		blockGen.registerSimpleCubeAll(TAINT_CRUST);
 		
 		blockGen.registerTintableCross(SILVERWOOD_SAPLING, BlockStateModelGenerator.TintType.NOT_TINTED);

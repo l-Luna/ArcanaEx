@@ -353,8 +353,15 @@
     "taint_goo": "Taint Goo",
 
     "tainted_rock": "Tainted Rock",
+    "tainted_andesite": "Tainted Andesite",
+    "tainted_granite": "Tainted Granite",
+    "tainted_diorite": "Tainted Diorite",
     "tainted_soil": "Tainted Soil",
     "tainted_grass_block": "Tainted Grass",
+    "tainted_sand": "Tainted Sand",
+    "tainted_sandstone": "Tainted Sandstone",
+    "tainted_gravel": "Tainted Gravel",
+    "tainted_snow_block": "Tainted Snow Block",
     "taint_crust": "Taint Crust"
   },
 

@@ -344,16 +344,50 @@
 
   "arcana:tainted_rock": [
     "3*earth",
-    "taint"
+    "2*taint"
+  ],
+  "arcana:tainted_andesite": [
+    "3*earth",
+    "2*taint",
+    "crystal"
+  ],
+  "arcana:tainted_granite": [
+    "3*earth",
+    "2*taint",
+    "crystal"
+  ],
+  "arcana:tainted_diorite": [
+    "3*earth",
+    "2*taint",
+    "crystal"
   ],
   "arcana:tainted_soil": [
     "2*earth",
-    "taint"
+    "2*taint"
   ],
   "arcana:tainted_grass_block": [
     "2*earth",
-    "taint",
+    "2*taint",
     "life"
+  ],
+  "arcana:tainted_sand": [
+    "3*entropy",
+    "2*taint",
+    "earth"
+  ],
+  "arcana:tainted_sandstone": [
+    "3*earth",
+    "2*taint",
+    "entropy"
+  ],
+  "arcana:tainted_gravel": [
+    "2*earth",
+    "2*entropy",
+    "2*taint"
+  ],
+  "arcana:tainted_snow_block": [
+    "4*ice",
+    "2*taint"
   ],
   "arcana:taint_crust": [
     "4*taint"

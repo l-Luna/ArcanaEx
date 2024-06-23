@@ -340,5 +340,22 @@
     "undead",
     "flesh",
     "envy"
+  ],
+
+  "arcana:tainted_rock": [
+    "3*earth",
+    "taint"
+  ],
+  "arcana:tainted_soil": [
+    "2*earth",
+    "taint"
+  ],
+  "arcana:tainted_grass_block": [
+    "2*earth",
+    "taint",
+    "life"
+  ],
+  "arcana:taint_crust": [
+    "4*taint"
   ]
 }

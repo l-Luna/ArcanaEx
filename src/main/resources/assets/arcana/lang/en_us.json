@@ -350,7 +350,12 @@
 
     "symbol": "Symbol: {}",
 
-    "taint_goo": "Taint Goo"
+    "taint_goo": "Taint Goo",
+
+    "tainted_rock": "Tainted Rock",
+    "tainted_soil": "Tainted Soil",
+    "tainted_grass_block": "Tainted Grass",
+    "taint_crust": "Taint Crust"
   },
 
   "block.minecraft.banner.arcana": {

@@ -44,6 +44,7 @@
     "arcana:locomotive_symbols/drift",
     "arcana:locomotive_symbols/synchronize",
     "arcana:locomotive_symbols/grab",
-    "arcana:locomotive_symbols/eject"
+    "arcana:locomotive_symbols/eject",
+    "arcana:tainted_rock"
   ]
 }

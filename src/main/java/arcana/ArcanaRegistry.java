@@ -4,6 +4,8 @@ import arcana.aspects.Aspect;
 import arcana.aspects.Aspects;
 import arcana.blocks.*;
 import arcana.blocks.be.*;
+import arcana.blocks.tainted.TaintedBlock;
+import arcana.blocks.tainted.TaintedSnowyBlock;
 import arcana.blocks.tubes.*;
 import arcana.client.particles.AspectParticleEffect;
 import arcana.effects.TaintedStatusEffect;
@@ -83,8 +85,7 @@ import static arcana.blocks.ArcanaBlockSettings.BlockLayer.TRANSLUCENT;
 import static arcana.blocks.ArcanaBlockSettings.of;
 import static arcana.items.CapItem.capProperties;
 import static arcana.items.CoreItem.coreProperties;
-import static net.minecraft.tag.BlockTags.AXE_MINEABLE;
-import static net.minecraft.tag.BlockTags.PICKAXE_MINEABLE;
+import static net.minecraft.tag.BlockTags.*;
 
 public final class ArcanaRegistry{
 	
@@ -326,6 +327,14 @@ public final class ArcanaRegistry{
 	
 	public static final Block LIGHT_BLOCK = new LightFocusBlock(of(Material.DECORATION).dropsNothing().breakInstantly().ticksRandomly().luminance(state -> 7 + state.get(LightFocusBlock.life)));
 	public static final Block TAINT_GOO = new FluidBlock(STILL_TAINT_GOO, FabricBlockSettings.copy(Blocks.WATER));
+	
+	// natural tainted blocks
+	public static final Block TAINTED_ROCK = new TaintedBlock(of(Material.STONE, MapColor.PURPLE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(1.6f, 6));
+	public static final Block TAINTED_SOIL = new TaintedBlock(of(Material.SOIL, MapColor.PURPLE).dropsSelf().usesTool(SHOVEL_MINEABLE).strength(0.5f).sounds(BlockSoundGroup.GRAVEL));
+	public static final Block TAINTED_GRASS_BLOCK = new TaintedSnowyBlock(of(Material.SOLID_ORGANIC, MapColor.PURPLE).usesTool(SHOVEL_MINEABLE).strength(0.6f).sounds(BlockSoundGroup.GRASS));
+	
+	// unique tainted blocks
+	public static final Block TAINT_CRUST = new TaintedBlock(of(Material.SOLID_ORGANIC, MapColor.PURPLE).requiresTool(HOE_MINEABLE).strength(0.7f).sounds(BlockSoundGroup.SLIME));
 	
 	// screen handlers...
 	public static final ScreenHandlerType<ArcaneCraftingScreenHandler> ARCANE_CRAFTING_SCREEN_HANDLER = new ScreenHandlerType<>(ArcaneCraftingScreenHandler::new);
@@ -701,6 +710,11 @@ public final class ArcanaRegistry{
 		
 		register("light_block", LIGHT_BLOCK, false);
 		register("taint_goo", TAINT_GOO, false);
+		
+		register("tainted_rock", TAINTED_ROCK);
+		register("tainted_soil", TAINTED_SOIL);
+		register("tainted_grass_block", TAINTED_GRASS_BLOCK);
+		register("taint_crust", TAINT_CRUST);
 		
 		// screen handlers
 		register("arcane_crafting", ARCANE_CRAFTING_SCREEN_HANDLER);

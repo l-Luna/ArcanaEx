@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "arcana:block/tainted_soil",
+    "particle": "arcana:block/tainted_soil",
+    "side": "arcana:block/tainted_grass_block",
+    "top": "arcana:block/tainted_grass_block_top"
+  }
+}

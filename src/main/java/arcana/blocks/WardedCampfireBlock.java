@@ -12,6 +12,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraft.world.poi.PointOfInterestStorage;
 
@@ -50,7 +51,7 @@ public class WardedCampfireBlock extends CampfireBlock{
 	}
 	
 	public static void handleTime(ServerWorld sw){
-		if(sw.isDay())
+		if(sw.isDay() || !sw.shouldTickTime || !sw.getLevelProperties().getGameRules().getBoolean(GameRules.DO_DAYLIGHT_CYCLE))
 			return;
 		int psum = 0;
 		for(ServerPlayerEntity player : sw.getPlayers())

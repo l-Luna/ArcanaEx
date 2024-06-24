@@ -25,5 +25,7 @@ accessible field net/minecraft/block/AbstractBlock settings Lnet/minecraft/block
 accessible field net/minecraft/block/entity/BlockEntityType blocks Ljava/util/Set;
 mutable field net/minecraft/block/entity/BlockEntityType blocks Ljava/util/Set;
 
+accessible field net/minecraft/server/world/ServerWorld shouldTickTime Z
+
 accessible method net/minecraft/item/BlockItem getPlacementState (Lnet/minecraft/item/ItemPlacementContext;)Lnet/minecraft/block/BlockState;
 accessible method net/minecraft/item/ItemUsageContext getHitResult ()Lnet/minecraft/util/hit/BlockHitResult;

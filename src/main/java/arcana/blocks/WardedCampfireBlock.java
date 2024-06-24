@@ -8,8 +8,13 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.CampfireBlockEntity;
+import net.minecraft.entity.Entity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.poi.PointOfInterestStorage;
+
+import static arcana.Arcana.arcId;
 
 public class WardedCampfireBlock extends CampfireBlock{
 	
@@ -28,5 +33,18 @@ public class WardedCampfireBlock extends CampfireBlock{
 			return state.get(LIT)
 					? checkType(type, ArcanaRegistry.WARDED_CAMPFIRE_BE, CampfireBlockEntity::litServerTick)
 					: checkType(type, ArcanaRegistry.WARDED_CAMPFIRE_BE, CampfireBlockEntity::unlitServerTick);
+	}
+	
+	public static boolean isProtected(ServerWorld w, BlockPos pos){
+		return w.getPointOfInterestStorage().getInCircle(
+				poiTy -> poiTy.matchesId(arcId("warded_campfire")),
+				pos,
+				24,
+				PointOfInterestStorage.OccupationStatus.ANY
+		).findAny().isPresent();
+	}
+	
+	public static boolean isProtected(Entity e){
+		return e.world instanceof ServerWorld sw && isProtected(sw, e.getBlockPos());
 	}
 }

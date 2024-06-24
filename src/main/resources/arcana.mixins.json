@@ -12,6 +12,7 @@
     "InventoryChangedCriterionMixin",
     "ItemStackMixin",
     "LivingEntityMixin",
+    "PlayerEntityMixin",
     "RecipeManagerMixin",
     "StructureTemplateMixin"
   ],

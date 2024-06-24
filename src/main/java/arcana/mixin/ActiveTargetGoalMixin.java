@@ -1,11 +1,10 @@
 package arcana.mixin;
 
+import arcana.blocks.WardedCampfireBlock;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.world.poi.PointOfInterestStorage;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -14,8 +13,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.function.Predicate;
-
-import static arcana.Arcana.arcId;
 
 @Mixin(ActiveTargetGoal.class)
 public class ActiveTargetGoalMixin{
@@ -40,13 +37,6 @@ public class ActiveTargetGoalMixin{
 	
 	@Unique
 	private static boolean isNotWarded(LivingEntity e){
-		if(e == null || !(e.world instanceof ServerWorld sw))
-			return false;
-		return sw.getPointOfInterestStorage().getInCircle(
-				poiTy -> poiTy.matchesId(arcId("warded_campfire")),
-				e.getBlockPos(),
-				24,
-				PointOfInterestStorage.OccupationStatus.ANY
-		).findAny().isEmpty();
+		return e == null || !WardedCampfireBlock.isProtected(e);
 	}
 }

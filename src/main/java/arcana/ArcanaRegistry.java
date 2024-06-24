@@ -40,6 +40,7 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.sign.SignTypeRegistry;
+import net.fabricmc.fabric.api.object.builder.v1.world.poi.PointOfInterestHelper;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
@@ -73,6 +74,7 @@ import net.minecraft.world.gen.feature.PlacedFeature;
 import net.minecraft.world.gen.foliage.FoliagePlacerType;
 import net.minecraft.world.gen.placementmodifier.HeightmapPlacementModifier;
 import net.minecraft.world.gen.trunk.TrunkPlacerType;
+import net.minecraft.world.poi.PointOfInterestType;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -344,6 +346,10 @@ public final class ArcanaRegistry{
 	
 	// unique tainted blocks
 	public static final Block TAINT_CRUST = new TaintedBlock(of(Material.SOLID_ORGANIC, MapColor.PURPLE).requiresTool(HOE_MINEABLE).strength(0.7f).sounds(BlockSoundGroup.SLIME));
+	
+	// points of interest...
+	// created in register
+	public static PointOfInterestType WARDED_CAMPFIRE_POI;
 	
 	// screen handlers...
 	public static final ScreenHandlerType<ArcaneCraftingScreenHandler> ARCANE_CRAFTING_SCREEN_HANDLER = new ScreenHandlerType<>(ArcaneCraftingScreenHandler::new);
@@ -731,6 +737,9 @@ public final class ArcanaRegistry{
 		register("tainted_gravel", TAINTED_GRAVEL);
 		register("tainted_snow_block", TAINTED_SNOW_BLOCK);
 		register("taint_crust", TAINT_CRUST);
+		
+		// points of interest
+		WARDED_CAMPFIRE_POI = PointOfInterestHelper.register(arcId("warded_campfire"), 0, 2, WARDED_CAMPFIRE);
 		
 		// screen handlers
 		register("arcane_crafting", ARCANE_CRAFTING_SCREEN_HANDLER);

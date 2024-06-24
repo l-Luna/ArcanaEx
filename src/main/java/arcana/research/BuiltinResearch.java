@@ -24,6 +24,7 @@ public final class BuiltinResearch{
 	public static final Identifier fluxPuzzle = arcId("flux_build_research");
 	public static final Identifier highestReachPuzzle = arcId("highest_reach");
 	public static final Identifier lowestDepthsPuzzle = arcId("lowest_depths");
+	public static final Identifier distilleryPathfinderPuzzle = arcId("distillery_pathfinder");
 	public static final Identifier drinkableTaintPuzzle = arcId("crimson_initiation");
 	
 	public static final Identifier silverwoodResearch = arcId("silverwood_trees");

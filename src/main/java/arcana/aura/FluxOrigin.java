@@ -8,6 +8,8 @@ import net.minecraft.util.registry.Registry;
 public enum FluxOrigin{
 	CRUCIBLE_EMPTYING(ArcanaRegistry.CRUCIBLE, "arcana.flux_origin.crucible_empty"),
 	CRUCIBLE_BOILOFF(ArcanaRegistry.CRUCIBLE, "arcana.flux_origin.crucible_boiloff"),
+	
+	DISTILLERY_FAILURE(ArcanaRegistry.DISTILLERY_PATHFINDER, "arcana.flux_origin.distillery_failure")
 	;
 	
 	public final Identifier sprite;

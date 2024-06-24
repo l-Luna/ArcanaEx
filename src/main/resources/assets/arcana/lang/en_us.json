@@ -133,7 +133,8 @@
     "presentation": "{}: {}",
 
     "crucible_empty": "Emptied Crucible",
-    "crucible_boiloff": "Crucible Boil-off"
+    "crucible_boiloff": "Crucible Boil-off",
+    "distillery_failure": "Distillery Failure"
   },
 
   // Items

@@ -21,6 +21,8 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
+import java.util.Optional;
+
 public class DistilleryPathfinderBlock extends BlockWithEntity{
 	
 	protected static final VoxelShape SHAPE = VoxelShapes.union(
@@ -48,6 +50,7 @@ public class DistilleryPathfinderBlock extends BlockWithEntity{
 		if(world.isClient)
 			return ActionResult.SUCCESS;
 		if(world.getBlockEntity(pos) instanceof DistilleryPathfinderBlockEntity pathfinder){
+			pathfinder.ownerUuid = Optional.of(player.getUuid());
 			player.openHandledScreen(pathfinder);
 			player.incrementStat(Stats.INTERACT_WITH_FURNACE);
 		}

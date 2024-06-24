@@ -504,7 +504,11 @@
       "sections": [
         {
           "type": "text",
-          "content": "research.arcana.essentia_distillation.stages.1",
+          "content": "research.arcana.essentia_distillation.stages.1"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:distillery_pathfinder",
           "requirements": [
             "arcana::puzzle{distillery_pathfinder}"
           ]

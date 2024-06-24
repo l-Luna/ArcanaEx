@@ -9,6 +9,7 @@ import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.CampfireBlockEntity;
 import net.minecraft.entity.Entity;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -46,5 +47,16 @@ public class WardedCampfireBlock extends CampfireBlock{
 	
 	public static boolean isProtected(Entity e){
 		return e.world instanceof ServerWorld sw && isProtected(sw, e.getBlockPos());
+	}
+	
+	public static void handleTime(ServerWorld sw){
+		if(sw.isDay())
+			return;
+		int psum = 0;
+		for(ServerPlayerEntity player : sw.getPlayers())
+			if(isProtected(player))
+				psum++;
+		if(psum >= Math.ceil(sw.getPlayers().size() / 2f))
+			sw.setTimeOfDay(sw.getTimeOfDay() + 1);
 	}
 }

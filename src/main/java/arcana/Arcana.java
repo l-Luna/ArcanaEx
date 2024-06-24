@@ -1,6 +1,7 @@
 package arcana;
 
 import arcana.aspects.ItemAspectRegistry;
+import arcana.blocks.WardedCampfireBlock;
 import arcana.commands.NodeCommand;
 import arcana.commands.ResearchCommand;
 import arcana.commands.WarpCommand;
@@ -62,6 +63,7 @@ public final class Arcana implements ModInitializer{
 		CommandRegistrationCallback.EVENT.register(WarpCommand::register);
 		
 		ServerTickEvents.END_WORLD_TICK.register(world -> world.getPlayers().forEach(BuiltinResearch::checkTick));
+		ServerTickEvents.END_WORLD_TICK.register(WardedCampfireBlock::handleTime);
 	}
 	
 	public static Identifier arcId(String s){

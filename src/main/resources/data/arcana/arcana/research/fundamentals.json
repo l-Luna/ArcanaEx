@@ -83,9 +83,6 @@
         {
           "type": "text",
           "content": "research.arcana.flux.stage.2"
-        },
-        {
-          "type": "flux_stats"
         }
       ]
     },
@@ -697,6 +694,9 @@
         {
           "type": "arcane_crafting",
           "content": "arcana:flux_meter"
+        },
+        {
+          "type": "flux_stats"
         }
       ]
     }

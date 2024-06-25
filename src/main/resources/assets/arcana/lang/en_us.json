@@ -722,7 +722,7 @@
     "flux_meter": {
       "title": "Measuring Flux",
       "stages": [
-        "With access to more capable materials, I should look towards creating a device capable of measuring local flux directly.\nThe spread of flux is complex and unpredictable, better to know for certain than to going off gut feeling, or estimate based on total flux.",
+        "With access to more capable materials, I should look towards creating a device capable of measuring local flux directly.\nThe spread of flux is complex and unpredictable, better to know for certain than to going off gut feeling.",
         "The design of the Flux Meter is surprisingly simple for its utility. When held, it displays the local flux around me, as a bar that fills the meter. I can view an exact number by pressing shift.\nIf the flux level were to exceed {c3}100{r}, the maximum the meter can display, it begins to flash white. It would be a mistake to let it reach so high.\nAdditionally, to help keep things under control, I'll keep track of the source of my flux production on the following pages, and perhaps even do something about it."
       ]
     },

@@ -36,7 +36,8 @@
     "crucible_heating_blocks": "Crucible Heating Blocks",
     "crucible_heating_fluids": "Crucible Heating Fluids",
 
-    "taint_goo": "Taint Goo"
+    "taint_goo": "Taint Goo",
+    "raw_tainted_blocks": "Raw Tainted Blocks"
   },
 
   // if you say so
@@ -586,6 +587,7 @@
     "chemistry.purification.other": "Study impure unreactive metal",
     "chemistry.alumentum": "Create a high-energy flame",
     "chemistry.hedge_alchemy": "Manipulate material properties",
+    "chemistry.taint_in_a_bottle": "Seal the seeds of taint",
     "chemistry.automated_alchemy": "Teach a machine to want",
     "chemistry.alchemical_glass.hardened_glass": "Strengthen glass",
     "chemistry.alchemical_glass.luminiferous_glass": "Lighten glass",
@@ -911,6 +913,15 @@
     "hedge_alchemy.stage.1": "There are a great few items that are incredibly tedious to obtain, in constant short supply when I need them most. Perhaps I can use alchemy to create them?\nMy first step will be to examine some samples, and find similar structures that can - fingers crossed - be converted into eachother.",
     "hedge_alchemy.stage.2": "From my observation, {i}Gunpowder{r} is closely alchemically related to {i}Blaze Powder{r}; {i}Redstone{r} and {i}Glowstone{r} have similar structures; and {i}Quartz{r} has an odd (but promising) resemblance to {i}Diamond{r}. The Lava was a dud.\nI believe I can alchemy to emulate more mundane reactions: tanning {i}Rotten Flesh{r} into {i}Leather{r}, freezing {i}Snow{r} into {i}Ice{r}, drying {i}Leaves{r} into {i}Dead Bushes{r}, and binding {i}String{r} into {i}Cobwebs{r}.\nSome experimental verification is needed.",
     "hedge_alchemy.stage.3": "Most of these conversions are viable alchemy recipes. Quartz-to-diamond was a dud too, simply turning into flint in any practical setting, and converting snow into ice proved far less efficient than expected.\nCould this be due to my equipment, or my technique? Perhaps, but in any case, the remainder remain useful.",
+
+    "taint_in_a_bottle": {
+      "title": "Containing Taint",
+      "desc": "Bottled madness",
+      "stages": [
+        "Taint is dangerous and eager to spread. Given even a small amount of flux, it will poison the land around it startlingly fast. Perhaps alchemy could be used to contain it? First, I'll attempt to seal some into a bottle, and in the future I can construct a more general solution.",
+        "...the applications of this are limited at best, and dangerous at worst. When Taint in a Bottle is thrown and hits a surface, it instantly taints up to six nearby blocks, and releases some flux.\nAs a weapon, the bottles are dangerous, but also expensive. Tainting a large area would require quite a few bottles, but would also render that area uninhabitable for quite some time...\nI could collect the blocks for further study, but I don't believe I can get a net profit of Virimus, and placing them will render them eager to spread once more.\nI don't see any practical uses of this. Only a mad scientist would mass produce this."
+      ]
+    },
 
     "automated_alchemy": "Automated Alchemy",
     "automated_alchemy.desc": "On demand",

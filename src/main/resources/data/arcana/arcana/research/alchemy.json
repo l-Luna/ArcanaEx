@@ -380,6 +380,42 @@
       ]
     },
     {
+      "key": "arcana:taint_in_a_bottle",
+      "name": "research.arcana.taint_in_a_bottle.title",
+      "desc": "research.arcana.taint_in_a_bottle.desc",
+      "icons": [
+        "arcana:taint_in_a_bottle"
+      ],
+      "category": "arcana:alchemy",
+      "parents": [
+        "arcana:hedge_alchemy",
+        "arcana:flux"
+      ],
+      "meta": [
+        "warping:1"
+      ],
+      "x": -4,
+      "y": -2,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.taint_in_a_bottle.stages.1",
+          "requirements": [
+            "6*#arcana:raw_tainted_blocks",
+            "arcana::puzzle{taint_in_a_bottle}"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.taint_in_a_bottle.stages.2"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:taint_in_a_bottle"
+        }
+      ]
+    },
+    {
       "key": "arcana:automated_alchemy",
       "name": "research.arcana.automated_alchemy",
       "desc": "research.arcana.automated_alchemy.desc",
@@ -784,6 +820,17 @@
         "ice",
         "flesh",
         "undead"
+      ]
+    },
+    {
+      "key": "arcana:taint_in_a_bottle",
+      "type": "chemistry",
+      "desc": "puzzle.arcana.chemistry.taint_in_a_bottle",
+      "size": 3,
+      "nodes": [
+        "taint",
+        "armour",
+        "ice"
       ]
     },
     {

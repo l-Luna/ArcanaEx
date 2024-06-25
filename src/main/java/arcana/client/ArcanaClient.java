@@ -51,6 +51,7 @@ import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.CampfireBlockEntityRenderer;
+import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.ModelIdentifier;
@@ -152,6 +153,7 @@ public final class ArcanaClient implements ClientModInitializer{
 		BlockRenderLayerMap.INSTANCE.putFluids(RenderLayer.getTranslucent(), ArcanaRegistry.STILL_TAINT_GOO, ArcanaRegistry.FLOWING_TAINT_GOO);
 		
 		EntityRendererRegistry.register(ArcanaRegistry.THROWN_ALUMENTUM, ThrownAlumentumEntityRenderer::new);
+		EntityRendererRegistry.register(ArcanaRegistry.THROWN_TAINT_BOTTLE, FlyingItemEntityRenderer::new);
 		EntityRendererRegistry.register(ArcanaRegistry.SUSPENSION_ENGINE, SuspensionEngineRenderer::new);
 		EntityRendererRegistry.register(ArcanaRegistry.CRIMSON_KNIGHT, ctx -> new CrimsonEntityRenderer<>(ctx, "knight"));
 		EntityRendererRegistry.register(ArcanaRegistry.CRIMSON_ARCHER, ctx -> new CrimsonEntityRenderer<>(ctx, "archer"));

@@ -11,10 +11,7 @@ import net.minecraft.state.property.Property;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Taint{
 	
@@ -42,6 +39,17 @@ public class Taint{
 			Properties.WATERLOGGED
 	));
 	
+	public static Optional<BlockState> taintBlock(BlockState original){
+		if(TAINT_MAP.containsKey(original.getBlock())){
+			BlockState tainted = TAINT_MAP.get(original.getBlock()).getDefaultState();
+			for(Property<?> prop : PRESERVE)
+				tainted = preserve(tainted, original, prop);
+			return Optional.of(tainted);
+		}
+		
+		return Optional.empty();
+	}
+	
 	public static void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random rng){
 		if(state.getProperties().contains(Props.STABILIZED) && state.get(Props.STABILIZED))
 			return;
@@ -53,17 +61,13 @@ public class Taint{
 		if(localAura.getFlux() > 12){
 			// make four attempts to taint a block nearby
 			for(int i = 0; i < 4; i++){
+				// TODO: pure node protection
 				BlockPos target = pos.add(rng.nextBetween(-1, 1), rng.nextBetween(-1, 1), rng.nextBetween(-1, 1));
-				BlockState targetState = world.getBlockState(target);
-				Block targetBlock = targetState.getBlock();
-				if(TAINT_MAP.containsKey(targetBlock)){
-					BlockState newState = TAINT_MAP.get(targetBlock).getDefaultState();
-					for(Property<?> prop : PRESERVE)
-						newState = preserve(newState, targetState, prop);
-					world.setBlockState(target, newState);
+				var tainted = taintBlock(world.getBlockState(target));
+				if(tainted.isPresent()){
+					world.setBlockState(target, tainted.get());
 					localAura.incrementFlux(-2, null);
 					localAura.world.sync();
-					break;
 				}
 			}
 		}

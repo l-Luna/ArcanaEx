@@ -13,6 +13,7 @@ import arcana.effects.TaintedStatusEffect;
 import arcana.enchantments.ProjectingEnchantment;
 import arcana.enchantments.WarpingCurseEnchantment;
 import arcana.entities.ThrownAlumentumEntity;
+import arcana.entities.ThrownTaintBottleEntity;
 import arcana.entities.crimson.*;
 import arcana.entities.locomotive.SuspensionEngineEntity;
 import arcana.entities.locomotive.Symbol;
@@ -403,6 +404,12 @@ public final class ArcanaRegistry{
 	// entities...
 	public static final EntityType<ThrownAlumentumEntity> THROWN_ALUMENTUM = FabricEntityTypeBuilder
 			.create(SpawnGroup.MISC, ThrownAlumentumEntity::new)
+			.build();
+	public static final EntityType<ThrownTaintBottleEntity> THROWN_TAINT_BOTTLE = FabricEntityTypeBuilder
+			.<ThrownTaintBottleEntity>create(SpawnGroup.MISC, ThrownTaintBottleEntity::new)
+			.trackRangeChunks(4)
+			.trackedUpdateRate(10)
+			.dimensions(EntityDimensions.fixed(0.25f, 0.25f))
 			.build();
 	
 	public static final EntityType<SuspensionEngineEntity> SUSPENSION_ENGINE = FabricEntityTypeBuilder
@@ -811,6 +818,8 @@ public final class ArcanaRegistry{
 		
 		// entity types
 		register("thrown_alumentum", THROWN_ALUMENTUM);
+		register("thrown_taint_bottle", THROWN_TAINT_BOTTLE);
+		
 		register("suspension_engine", SUSPENSION_ENGINE);
 		
 		register("crimson_knight", CRIMSON_KNIGHT);

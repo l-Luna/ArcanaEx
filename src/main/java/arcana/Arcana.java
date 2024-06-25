@@ -5,6 +5,7 @@ import arcana.blocks.WardedCampfireBlock;
 import arcana.commands.NodeCommand;
 import arcana.commands.ResearchCommand;
 import arcana.commands.WarpCommand;
+import arcana.entities.ThrownTaintBottleEntity;
 import arcana.recipes.AlchemyRecipe;
 import arcana.recipes.InfusionRecipe;
 import arcana.recipes.ShapedArcaneCraftingRecipe;
@@ -22,8 +23,15 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.CommonLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.minecraft.block.DispenserBlock;
+import net.minecraft.block.dispenser.ProjectileDispenserBehavior;
+import net.minecraft.entity.projectile.ProjectileEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Util;
+import net.minecraft.util.math.Position;
+import net.minecraft.world.World;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,6 +72,13 @@ public final class Arcana implements ModInitializer{
 		
 		ServerTickEvents.END_WORLD_TICK.register(world -> world.getPlayers().forEach(BuiltinResearch::checkTick));
 		ServerTickEvents.END_WORLD_TICK.register(WardedCampfireBlock::handleTime);
+		
+		DispenserBlock.registerBehavior(ArcanaRegistry.TAINT_IN_A_BOTTLE, new ProjectileDispenserBehavior(){
+			protected ProjectileEntity createProjectile(World world, Position position, ItemStack stack){
+				return Util.make(new ThrownTaintBottleEntity(position.getX(), position.getY(), position.getZ(), world),
+						entity -> entity.setItem(stack));
+			}
+		});
 	}
 	
 	public static Identifier arcId(String s){

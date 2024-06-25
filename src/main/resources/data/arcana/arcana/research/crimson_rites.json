@@ -16,7 +16,7 @@
         "spiky_base"
       ],
       "x": 0,
-      "y": 0,
+      "y": -2,
       "sections": [
         {
           "type": "text",
@@ -39,7 +39,7 @@
         "hex_base"
       ],
       "x": 0,
-      "y": 2,
+      "y": 0,
       "sections": [
         {
           "type": "text",
@@ -55,6 +55,44 @@
         {
           "type": "text",
           "content": "research.arcana.crimson.initiation.stages.2"
+        }
+      ]
+    },
+    {
+      "key": "arcana:force_of_space",
+      "name": "research.arcana.crimson.force_of_space.title",
+      "category": "arcana:crimson_rites",
+      "icons": [
+        "arcana:research/space_icon"
+      ],
+      "parents": [
+        "arcana:crimson_initiation"
+      ],
+      "x": 2,
+      "y": 2,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.crimson.force_of_space.text"
+        }
+      ]
+    },
+    {
+      "key": "arcana:force_of_time",
+      "name": "research.arcana.crimson.force_of_time.title",
+      "category": "arcana:crimson_rites",
+      "icons": [
+        "arcana:research/time_icon"
+      ],
+      "parents": [
+        "arcana:crimson_initiation"
+      ],
+      "x": -2,
+      "y": 2,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.crimson.force_of_time.text"
         }
       ]
     }

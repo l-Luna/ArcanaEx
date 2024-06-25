@@ -986,8 +986,17 @@
         "desc": "pacing yourself.",
         "stages": [
           "every page that sits in front of you is filled with difficult truths. such ideas require time to acclimate, time to swallow the concepts this world had worked hard to keep from your mind.\nbefore the truth may be revealed to you, you must prove yourself ready. to simply reveal everything at once would leave insufficient time to explain, would let those hammered-in worms of restraint keep you from Understanding. your first exercise will be trivial, just a small show of commitment.",
-          "you already make for such a good follower."
+          "you will make for such a useful follower."
         ]
+      },
+
+      "force_of_space": {
+        "title": "forces of space.",
+        "text": "the world is truly, truly vast, and even it is not alone in the cosmos. the size of it seems insurmountable, but we are numerous, we the Truthseekers that must discover and liberate it all.\nyou, too, must become a Truthseeker. become a cartographer, become an astronomer, study the space around you - together, we may someday discover it all."
+      },
+      "force_of_time": {
+        "title": "forces of time.",
+        "text": "the world is ancient. every living creature has an enormous lineage; every civilisation had their own predecessors, and among {i}their{r} predecessors were historians trying to understand the Beginning.\nyou are still quite early in your journey, but it is no well-kept secret that our reality has had a turbulent past. civilisations rose and fell not just by eachothers' hands, but by the whims of a shifting- changing- melding- twisting kind of Magic. entirely random at a first glance, its progression becomes clear with more knowledge - and yet more worrisome.\nfollowing this path forward, we find a dead future. a reality that not only loses its magic, but one that loses {u}life{r} itself, one where no intelligent beings could speak and thrive. tracing it back into the past, a strange picture of the Beginning starts to emerge; but one yet contradictory and vague.\nyou must make it your duty to discover the past, to complete these blanks, and - through our shared achievements - perhaps avert the calamitous future that awaits."
       }
     }
   }

@@ -3,6 +3,7 @@ package arcana.entities;
 import arcana.ArcanaRegistry;
 import arcana.aspects.Aspects;
 import arcana.aura.AuraChunk;
+import arcana.aura.AuraWorld;
 import arcana.aura.FluxOrigin;
 import arcana.aura.Taint;
 import net.minecraft.entity.EntityType;
@@ -61,6 +62,7 @@ public class ThrownTaintBottleEntity extends ThrownItemEntity{
 			
 			// add flux
 			AuraChunk.at(world, getBlockPos()).incrementFlux(rng.nextInt(3) + 3 + (6 - tainted), FluxOrigin.TAINT_IN_A_BOTTLE);
+			AuraWorld.from(world).sync();
 			// add particles
 			int i = WorldEvents.INSTANT_SPLASH_POTION_SPLASHED;
 			world.syncWorldEvent(i, getBlockPos(), Aspects.TAINT.colour());

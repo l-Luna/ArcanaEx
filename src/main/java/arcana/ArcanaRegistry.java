@@ -746,7 +746,7 @@ public final class ArcanaRegistry{
 		register("taint_crust", TAINT_CRUST);
 		
 		// points of interest
-		WARDED_CAMPFIRE_POI = PointOfInterestHelper.register(arcId("warded_campfire"), 0, 2, WARDED_CAMPFIRE);
+		WARDED_CAMPFIRE_POI = PointOfInterestHelper.register(arcId("warded_campfire"), 0, 2, WARDED_CAMPFIRE.getStateManager().getStates().stream().filter(x -> x.get(Properties.LIT)).toList());
 		
 		// screen handlers
 		register("arcane_crafting", ARCANE_CRAFTING_SCREEN_HANDLER);

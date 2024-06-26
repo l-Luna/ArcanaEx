@@ -9,12 +9,14 @@ import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.CampfireBlockEntity;
 import net.minecraft.entity.Entity;
+import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraft.world.poi.PointOfInterestStorage;
+import org.jetbrains.annotations.Nullable;
 
 import static arcana.Arcana.arcId;
 
@@ -22,6 +24,12 @@ public class WardedCampfireBlock extends CampfireBlock{
 	
 	public WardedCampfireBlock(Settings settings){
 		super(false, 0, settings);
+		setDefaultState(getDefaultState().with(LIT, false));
+	}
+	
+	@Nullable
+	public BlockState getPlacementState(ItemPlacementContext ctx){
+		return super.getPlacementState(ctx).with(LIT, false);
 	}
 	
 	public BlockEntity createBlockEntity(BlockPos pos, BlockState state){
@@ -33,8 +41,12 @@ public class WardedCampfireBlock extends CampfireBlock{
 			return state.get(LIT) ? checkType(type, ArcanaRegistry.WARDED_CAMPFIRE_BE, CampfireBlockEntity::clientTick) : null;
 		else
 			return state.get(LIT)
-					? checkType(type, ArcanaRegistry.WARDED_CAMPFIRE_BE, CampfireBlockEntity::litServerTick)
+					? checkType(type, ArcanaRegistry.WARDED_CAMPFIRE_BE, WardedCampfireBlockEntity::litServerTick)
 					: checkType(type, ArcanaRegistry.WARDED_CAMPFIRE_BE, CampfireBlockEntity::unlitServerTick);
+	}
+	
+	public static boolean canBeLit(BlockState state){
+		return state.isOf(ArcanaRegistry.WARDED_CAMPFIRE) && !state.get(WATERLOGGED) && !state.get(LIT);
 	}
 	
 	public static boolean isProtected(ServerWorld w, BlockPos pos){

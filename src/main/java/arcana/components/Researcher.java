@@ -256,7 +256,6 @@ public final class Researcher implements Component, AutoSyncedComponent{
 		for(NbtElement puzzle : tag.getList("puzzles", NbtElement.STRING_TYPE))
 			completedPuzzles.add(new Identifier(puzzle.asString()));
 		
-		oldAddenda = new HashSet<>(completedAddenda);
 		completedAddenda.clear();
 		for(NbtElement addendum : tag.getList("addenda", NbtElement.STRING_TYPE))
 			completedAddenda.add(new Identifier(addendum.asString()));
@@ -286,6 +285,7 @@ public final class Researcher implements Component, AutoSyncedComponent{
 		preResearchUpdate(player);
 		AutoSyncedComponent.super.applySyncPacket(buf);
 		postResearchUpdate(player);
+		oldAddenda = new HashSet<>(completedAddenda);
 	}
 	
 	private static void preResearchUpdate(PlayerEntity player){
@@ -299,9 +299,12 @@ public final class Researcher implements Component, AutoSyncedComponent{
 	
 	private void postResearchUpdate(PlayerEntity player){
 		if(player.world.isClient){
-			Set<Identifier> newAddenda = new HashSet<>(completedAddenda);
-			if(oldAddenda != null)
+			Set<Identifier> newAddenda;
+			if(oldAddenda != null){
+				newAddenda = new HashSet<>(completedAddenda);
 				newAddenda.removeAll(oldAddenda);
+			}else
+				newAddenda = Set.of();
 			try{
 				Class.forName("arcana.client.ArcanaClient").getMethod("postResearchUpdate", Set.class).invoke(null, newAddenda);
 			}catch(Exception e){

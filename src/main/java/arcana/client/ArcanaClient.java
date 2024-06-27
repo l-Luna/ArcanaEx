@@ -230,8 +230,11 @@ public final class ArcanaClient implements ClientModInitializer{
 					MinecraftClient.getInstance().getToastManager().add(new ResearchUnlockedToast(entry, false));
 			}
 		
-		for(Identifier addendum : newAddenda)
-			MinecraftClient.getInstance().getToastManager().add(new ResearchUnlockedToast(Research.getAddendum(addendum).owner(), true));
+		for(Identifier addendum : newAddenda){
+			Entry owner = Research.getAddendum(addendum).owner();
+			if(researcher.isEntryComplete(owner))
+				MinecraftClient.getInstance().getToastManager().add(new ResearchUnlockedToast(owner, true));
+		}
 	}
 	
 	public static void sendTryAdvance(Entry entry){

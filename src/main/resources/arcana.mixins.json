@@ -15,6 +15,7 @@
     "LivingEntityMixin",
     "PlayerEntityMixin",
     "RecipeManagerMixin",
+    "StatusEffectUtilMixin",
     "StructureTemplateMixin"
   ],
   "client": [

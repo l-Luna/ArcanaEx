@@ -11,9 +11,11 @@ import net.minecraft.text.Text;
 public class ResearchUnlockedToast implements Toast{
 	
 	private final Entry entry;
+	private final boolean addendum;
 	
-	public ResearchUnlockedToast(Entry entry){
+	public ResearchUnlockedToast(Entry entry, boolean addendum){
 		this.entry = entry;
+		this.addendum = addendum;
 	}
 	
 	public Visibility draw(MatrixStack matrices, ToastManager manager, long startTime){
@@ -26,7 +28,7 @@ public class ResearchUnlockedToast implements Toast{
 		RenderHelper.renderIcon(matrices, icons.get((int)((startTime / 200) % icons.size())), 8, 8, 1, 1, entry.getIntMeta("icon_frames"));
 		
 		var text = manager.getClient().textRenderer;
-		text.draw(matrices, Text.translatable("message.arcana.research_toast"), 30, 7, 0xffffff00);
+		text.draw(matrices, Text.translatable(addendum ? "message.arcana.addendum_toast" : "message.arcana.research_toast"), 30, 7, 0xffffff00);
 		text.draw(matrices, Text.translatable(entry.name()), 30, 18, 0xffffffff);
 		
 		return startTime > 5000 ? Visibility.HIDE : Visibility.SHOW;

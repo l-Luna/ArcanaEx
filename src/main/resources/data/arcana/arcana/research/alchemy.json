@@ -30,7 +30,7 @@
     },
     {
       "key": "arcana:magical_metallurgy",
-      "name": "research.arcana.magical_metallurgy",
+      "name": "research.arcana.magical_metallurgy.title",
       "desc": "research.arcana.magical_metallurgy.desc",
       "icons": [
         "arcana:arcanium_ingot"
@@ -44,14 +44,14 @@
       "sections": [
         {
           "type": "text",
-          "content": "research.arcana.magical_metallurgy.stage.1",
+          "content": "research.arcana.magical_metallurgy.stages.1",
           "requirements": [
             "arcana::puzzle{arcanium}"
           ]
         },
         {
           "type": "text",
-          "content": "research.arcana.magical_metallurgy.stage.2"
+          "content": "research.arcana.magical_metallurgy.stages.2"
         },
         {
           "type": "alchemy",
@@ -72,6 +72,18 @@
         {
           "type": "arcane_crafting",
           "content": "arcana:equipment/arcanium_ring"
+        }
+      ],
+      "addenda": [
+        {
+          "key": "arcana:magical_metallurgy/set_bonus",
+          "name": "research.arcana.magical_metallurgy.addenda.set_bonus.name",
+          "sections": [
+            {
+              "type": "text",
+              "content": "research.arcana.magical_metallurgy.addenda.set_bonus.text"
+            }
+          ]
         }
       ]
     },

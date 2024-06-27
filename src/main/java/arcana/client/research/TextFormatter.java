@@ -3,6 +3,7 @@ package arcana.client.research;
 import arcana.aspects.Aspect;
 import arcana.aspects.Aspects;
 import arcana.client.AspectRenderer;
+import arcana.research.Addendum;
 import arcana.research.Entry;
 import arcana.research.Research;
 import arcana.research.sections.TextSection;
@@ -353,8 +354,18 @@ public class TextFormatter{
 		// There's currently only config-formatted sections, but hey, might wanna extend that later.
 		if(section != null/* && ArcanaConfig.ENTRY_TITLES.get()*/){
 			Entry entry = Research.getEntry(section.getIn());
+			// add titles to initial sections
 			if(entry.sections().get(0).equals(section))
 				in = "{c}{size:1.5}" + I18n.translate(entry.name()) + "{r}{~sep}" + in;
+			else{
+				// add titles to addenda initial sections
+				for(Addendum addendum : entry.addenda())
+					if(addendum.sections().get(0).equals(section)){
+						String adName = I18n.translate(addendum.name());
+						in = "{c}{size:1.2}" + I18n.translate("research.entry.addendum", adName) + "{r}{~sep}" + in;
+						break;
+					}
+			}
 		}
 		if(in.contains("{$")){
 			Pattern findBraces = Pattern.compile("(\\{\\$.*?})");

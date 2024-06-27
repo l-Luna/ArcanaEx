@@ -9,6 +9,7 @@ import arcana.blocks.tainted.TaintedFallingBlock;
 import arcana.blocks.tainted.TaintedSnowyBlock;
 import arcana.blocks.tubes.*;
 import arcana.client.particles.AspectParticleEffect;
+import arcana.effects.SetBonusStatusEffect;
 import arcana.effects.TaintedStatusEffect;
 import arcana.enchantments.ProjectingEnchantment;
 import arcana.enchantments.WarpingCurseEnchantment;
@@ -115,6 +116,7 @@ public final class ArcanaRegistry{
 	
 	// status effects...
 	public static final StatusEffect TAINTED = new TaintedStatusEffect();
+	public static final StatusEffect ARCANE_AURA = new SetBonusStatusEffect();
 	
 	// items...
 	public static final Item SCRIBBLED_NOTES = new ScribbledNotesItem(GROUPED_SINGLE);
@@ -831,6 +833,7 @@ public final class ArcanaRegistry{
 		
 		// status effects
 		register("tainted", TAINTED);
+		register("arcane_aura", ARCANE_AURA);
 	}
 	
 	private static void register(String name, Item item){

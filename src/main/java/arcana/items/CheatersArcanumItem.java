@@ -20,6 +20,7 @@ public class CheatersArcanumItem extends ResearchBookItem{
 		if(!world.isClient){ // a waiver of responsibility
 			var from = Researcher.from(user);
 			Research.streamEntries().forEach(from::completeEntry);
+			Research.streamAddenda().forEach(from::completeAddendum);
 			from.doSync();
 		}
 		return super.use(world, user, hand);

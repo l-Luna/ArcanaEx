@@ -37,6 +37,8 @@ public final class BuiltinResearch{
 	public static final Identifier researchExpertiseResearch = arcId("research_expertise");
 	public static final Identifier researchMasteryResearch = arcId("research_mastery");
 	
+	public static final Identifier arcaniumSetBonusAddendum = arcId("magical_metallurgy/set_bonus");
+	
 	public static final List<Identifier> infoResearch = List.of(
 			silverwoodResearch,
 			greatwoodResearch,
@@ -79,6 +81,12 @@ public final class BuiltinResearch{
 		}
 		if(AuraChunk.at(player.world, player.getBlockPos()).getFlux() > 40){
 			researcher.completePuzzle(Research.getPuzzle(fluxPuzzle));
+			researcher.doSync();
+		}
+		
+		// TODO: set bonus addenda should really be in SetBonusStatusEffect::handleArmourSetBonus
+		if(player.hasStatusEffect(ArcanaRegistry.ARCANE_AURA)){
+			researcher.completeAddendum(Research.getAddendum(arcaniumSetBonusAddendum));
 			researcher.doSync();
 		}
 	}

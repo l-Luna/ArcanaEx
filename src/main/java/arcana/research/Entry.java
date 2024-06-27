@@ -1,5 +1,6 @@
 package arcana.research;
 
+import arcana.util.NbtUtil;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
@@ -22,6 +23,7 @@ public record Entry(
 		List<Parent> parents,
 		List<Icon> icons,
 		List<String> meta,
+		List<Addendum> addenda,
 		int x,
 		int y){
 	
@@ -70,6 +72,8 @@ public record Entry(
 			metaList.add(NbtString.of(s));
 		compound.put("meta", metaList);
 		
+		compound.put("addenda", addenda.stream().map(Addendum::toNbt).collect(NbtUtil.toNbtList()));
+		
 		return compound;
 	}
 	
@@ -94,7 +98,13 @@ public record Entry(
 		for(NbtElement parent : compound.getList("meta", NbtElement.STRING_TYPE))
 			meta.add(parent.asString());
 		
-		return new Entry(id, in, name, desc, sections, parents, icons, meta, x, y);
+		List<Addendum> addenda = new ArrayList<>();
+		Entry entry = new Entry(id, in, name, desc, sections, parents, icons, meta, addenda, x, y);
+		
+		for(NbtElement nbt : compound.getList("addenda", NbtElement.COMPOUND_TYPE))
+			addenda.add(Addendum.fromNbt((NbtCompound)nbt, entry));
+		
+		return entry;
 	}
 	
 	// recursive equality with parent category

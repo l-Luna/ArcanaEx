@@ -32,6 +32,10 @@ public final class Research{
 		return streamEntries().filter(x -> x.id().equals(entry)).findFirst().orElse(null);
 	}
 	
+	public static Addendum getAddendum(Identifier entry){
+		return streamAddenda().filter(x -> x.id().equals(entry)).findFirst().orElse(null);
+	}
+	
 	public static Puzzle getPuzzle(Identifier puzzle){
 		return puzzles.get(puzzle);
 	}
@@ -46,6 +50,10 @@ public final class Research{
 	
 	public static Stream<Entry> streamEntries(){
 		return streamCategories().flatMap(x -> x.entries().stream());
+	}
+	
+	public static Stream<Addendum> streamAddenda(){
+		return streamEntries().flatMap(x -> x.addenda().stream());
 	}
 	
 	public static Stream<Puzzle> streamPuzzles(){

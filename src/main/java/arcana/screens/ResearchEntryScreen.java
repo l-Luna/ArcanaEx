@@ -6,10 +6,7 @@ import arcana.client.research.EntrySectionRenderer;
 import arcana.client.research.RequirementRenderer;
 import arcana.client.research.sections.TextSectionRenderer;
 import arcana.components.Researcher;
-import arcana.research.Entry;
-import arcana.research.EntrySection;
-import arcana.research.Pin;
-import arcana.research.Requirement;
+import arcana.research.*;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
@@ -24,7 +21,7 @@ import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static arcana.screens.ResearchBookScreen.bookPrefix;
 
@@ -160,7 +157,7 @@ public class ResearchEntryScreen extends Screen{
 		left.visible = canTurnLeft();
 		right.visible = canTurnRight();
 		Researcher researcher = Researcher.from(client.player);
-		cont.visible = researcher.entryStage(entry) < getVisibleSections().size();
+		cont.visible = researcher.entryStage(entry) < entry.sections().size();
 		
 		pins.forEach(this::remove);
 		pins.clear();
@@ -182,7 +179,7 @@ public class ResearchEntryScreen extends Screen{
 	}
 	
 	private int totalLength(){
-		return entry.sections().stream().filter(this::visible).mapToInt(this::span).sum();
+		return getVisibleSections().stream().mapToInt(this::span).sum();
 	}
 	
 	// What entry we're looking at
@@ -225,11 +222,21 @@ public class ResearchEntryScreen extends Screen{
 	}
 	
 	private List<EntrySection> getVisibleSections(){
-		return entry.sections().stream().filter(this::visible).collect(Collectors.toList());
+		return Stream.concat(
+				entry.sections().stream()
+						.filter(this::stageVisible),
+				entry.addenda().stream()
+						.filter(this::addendumVisible)
+						.flatMap(y -> y.sections().stream())
+		).toList();
 	}
 	
-	private boolean visible(EntrySection section){
+	private boolean stageVisible(EntrySection section){
 		return Researcher.from(client.player).entryStage(entry) >= entry.sections().indexOf(section);
+	}
+	
+	private boolean addendumVisible(Addendum addendum){
+		return Researcher.from(client.player).isAddendumComplete(addendum);
 	}
 	
 	private <T extends Requirement> RequirementRenderer<T> renderer(T requirement){

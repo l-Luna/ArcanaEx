@@ -4,10 +4,8 @@ import arcana.ArcanaRegistry;
 import arcana.aura.AuraWorld;
 import arcana.aura.NodeTypes;
 import arcana.items.WarpingItem;
-import arcana.research.Entry;
-import arcana.research.Parent;
-import arcana.research.Puzzle;
-import arcana.research.Research;
+import arcana.research.*;
+import arcana.util.NbtUtil;
 import dev.onyxstudios.cca.api.v3.component.Component;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistryV3;
@@ -43,6 +41,11 @@ public final class Researcher implements Component, AutoSyncedComponent{
 	private final Map<Identifier, Integer> stages = new HashMap<>();
 	private final Map<Identifier, ArrayList<Integer>> pinned = new HashMap<>();
 	private final Set<Identifier> completedPuzzles = new HashSet<>();
+	private final Set<Identifier> completedAddenda = new HashSet<>();
+	
+	// notifying of new addenda
+	// this is set to always be one resync out of date (or null if there are no syncs), to allow the client to see new addenda
+	private Set<Identifier> oldAddenda;
 	
 	// warp level
 	private int warp;
@@ -65,6 +68,10 @@ public final class Researcher implements Component, AutoSyncedComponent{
 	
 	public boolean isPuzzleComplete(Puzzle puzzle){
 		return completedPuzzles.contains(puzzle.id());
+	}
+	
+	public boolean isAddendumComplete(Addendum addendum){
+		return completedAddenda.contains(addendum.id());
 	}
 	
 	public int getWarp(){
@@ -126,6 +133,10 @@ public final class Researcher implements Component, AutoSyncedComponent{
 	
 	public void completePuzzle(Puzzle puzzle){
 		completedPuzzles.add(puzzle.id());
+	}
+	
+	public void completeAddendum(Addendum addendum){
+		completedAddenda.add(addendum.id());
 	}
 	
 	public long getLastWarpEventTime(){
@@ -242,9 +253,13 @@ public final class Researcher implements Component, AutoSyncedComponent{
 			pinned.put(new Identifier(key), Arrays.stream(pins.getIntArray(key)).boxed().collect(Collectors.toCollection(ArrayList::new)));
 		
 		completedPuzzles.clear();
-		NbtList puzzles = tag.getList("puzzles", NbtElement.STRING_TYPE);
-		for(NbtElement puzzle : puzzles)
+		for(NbtElement puzzle : tag.getList("puzzles", NbtElement.STRING_TYPE))
 			completedPuzzles.add(new Identifier(puzzle.asString()));
+		
+		oldAddenda = new HashSet<>(completedAddenda);
+		completedAddenda.clear();
+		for(NbtElement addendum : tag.getList("addenda", NbtElement.STRING_TYPE))
+			completedAddenda.add(new Identifier(addendum.asString()));
 	}
 	
 	public void writeToNbt(NbtCompound tag){
@@ -263,6 +278,8 @@ public final class Researcher implements Component, AutoSyncedComponent{
 		NbtList puzzlesTag = new NbtList();
 		completedPuzzles.forEach(x -> puzzlesTag.add(NbtString.of(x.toString())));
 		tag.put("puzzles", puzzlesTag);
+		
+		tag.put("addenda", completedAddenda.stream().map(x -> NbtString.of(x.toString())).collect(NbtUtil.toNbtList()));
 	}
 	
 	public void applySyncPacket(PacketByteBuf buf){
@@ -280,12 +297,16 @@ public final class Researcher implements Component, AutoSyncedComponent{
 			}
 	}
 	
-	private static void postResearchUpdate(PlayerEntity player){
-		if(player.world.isClient)
+	private void postResearchUpdate(PlayerEntity player){
+		if(player.world.isClient){
+			Set<Identifier> newAddenda = new HashSet<>(completedAddenda);
+			if(oldAddenda != null)
+				newAddenda.removeAll(oldAddenda);
 			try{
-				Class.forName("arcana.client.ArcanaClient").getMethod("postResearchUpdate").invoke(null);
+				Class.forName("arcana.client.ArcanaClient").getMethod("postResearchUpdate", Set.class).invoke(null, newAddenda);
 			}catch(Exception e){
 				e.printStackTrace();
 			}
+		}
 	}
 }

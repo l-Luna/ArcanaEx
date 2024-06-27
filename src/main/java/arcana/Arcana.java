@@ -5,6 +5,7 @@ import arcana.blocks.WardedCampfireBlock;
 import arcana.commands.NodeCommand;
 import arcana.commands.ResearchCommand;
 import arcana.commands.WarpCommand;
+import arcana.effects.SetBonusStatusEffect;
 import arcana.entities.ThrownTaintBottleEntity;
 import arcana.recipes.AlchemyRecipe;
 import arcana.recipes.InfusionRecipe;
@@ -71,6 +72,7 @@ public final class Arcana implements ModInitializer{
 		CommandRegistrationCallback.EVENT.register(WarpCommand::register);
 		
 		ServerTickEvents.END_WORLD_TICK.register(world -> world.getPlayers().forEach(BuiltinResearch::checkTick));
+		ServerTickEvents.END_WORLD_TICK.register(world -> world.getPlayers().forEach(SetBonusStatusEffect::handleArmourSetBonus));
 		ServerTickEvents.END_WORLD_TICK.register(WardedCampfireBlock::handleTime);
 		
 		DispenserBlock.registerBehavior(ArcanaRegistry.TAINT_IN_A_BOTTLE, new ProjectileDispenserBehavior(){

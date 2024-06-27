@@ -218,7 +218,7 @@ public final class ArcanaClient implements ClientModInitializer{
 	}
 	
 	@ReflectivelyUtilized // by Researcher::applySyncPacket
-	public static void postResearchUpdate(){
+	public static void postResearchUpdate(Set<Identifier> newAddenda){
 		var client = MinecraftClient.getInstance();
 		if(client.currentScreen instanceof ResearchEntryScreen entryScreen)
 			entryScreen.updateButtons();
@@ -227,8 +227,11 @@ public final class ArcanaClient implements ClientModInitializer{
 			for(Identifier identifier : notifyIfComplete){
 				var entry = Research.getEntry(identifier);
 				if(researcher.isEntryComplete(entry))
-					MinecraftClient.getInstance().getToastManager().add(new ResearchUnlockedToast(entry));
+					MinecraftClient.getInstance().getToastManager().add(new ResearchUnlockedToast(entry, false));
 			}
+		
+		for(Identifier addendum : newAddenda)
+			MinecraftClient.getInstance().getToastManager().add(new ResearchUnlockedToast(Research.getAddendum(addendum).owner(), true));
 	}
 	
 	public static void sendTryAdvance(Entry entry){

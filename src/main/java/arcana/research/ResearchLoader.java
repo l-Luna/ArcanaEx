@@ -149,7 +149,26 @@ public final class ResearchLoader extends JsonDataLoader implements Identifiable
 					meta = list;
 				}
 				
-				Entry entryObject = new Entry(key, category, name, desc, sections, parents, icons, meta, x, y);
+				List<Addendum> addenda = new ArrayList<>();
+				Entry entryObject = new Entry(key, category, name, desc, sections, parents, icons, meta, addenda, x, y);
+				
+				if(entry.has("addenda")){
+					for(JsonElement element : entry.getAsJsonArray("addenda")){
+						// TODO: update logging
+						JsonObject eObj = element.getAsJsonObject();
+						Identifier adKey = new Identifier(eObj.get("key").getAsString());
+						String adName = eObj.get("name").getAsString();
+						List<EntrySection> adSections = jsonToSections(eObj.getAsJsonArray("sections"), file);
+						List<Requirement> adAutoUnlockReqs = eObj.has("auto_unlock_reqs")
+								? jsonToRequirements(eObj.get("auto_unlock_reqs").getAsJsonArray(), file)
+								: List.of();
+						addenda.add(new Addendum(entryObject, adKey, adName, adSections, adAutoUnlockReqs));
+						
+						for(EntrySection section : adSections)
+							section.in = entryObject.id();
+					}
+				}
+				
 				category.entries().add(entryObject);
 				sections.forEach(section -> section.in = entryObject.id());
 			}

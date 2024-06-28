@@ -72,7 +72,7 @@ public class FireFocusItem extends FocusItem{
 	
 	public ActionResult castOnEntity(ItemStack wand, ItemStack focus, PlayerEntity user, LivingEntity target, Hand hand){
 		// anything from 10 to 45 is obtainable
-		int strength = WandItem.capFrom(wand).strength() + WandItem.coreFrom(wand).strength();
+		int strength = WandItem.focusStrength(wand, user);
 		float damage = Math.round(0.12f * strength + 3);
 		
 		target.setOnFireFor((int)(damage + 2));

@@ -279,11 +279,22 @@ public class WandItem extends Item implements WarpingItem{
 		return ret;
 	}
 	
-	public static float costMultiplier(Aspect aspect, ItemStack stack,  PlayerEntity player){
+	public static float costMultiplier(Aspect aspect, ItemStack stack, PlayerEntity player){
 		return (100 - (percentOff(aspect, stack, player) + percentOffFromEquipment(aspect, player))) / 100f;
 	}
 	
 	public static int capacity(ItemStack stack){
 		return capFrom(stack).capacity() + coreFrom(stack).capacity();
+	}
+	
+	public static int focusStrength(ItemStack stack, @Nullable PlayerEntity player){
+		int strength = capFrom(stack).strength() + coreFrom(stack).strength();
+		if(player != null && player.hasStatusEffect(ArcanaRegistry.ARCANE_AURA))
+			strength += (int)(strength * 0.2);
+		return strength;
+	}
+	
+	public static int focusComplexity(ItemStack stack){
+		return capFrom(stack).complexity() + coreFrom(stack).complexity();
 	}
 }

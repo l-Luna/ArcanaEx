@@ -31,8 +31,8 @@ public class PortableHoleFocusItem extends FocusItem{
 	public ActionResult castOnBlock(ItemUsageContext ctx){
 		ItemStack wandStack = ctx.getStack();
 		// requires better than an iron cap
-		int complexity = WandItem.capFrom(wandStack).complexity() + WandItem.coreFrom(wandStack).complexity();
-		int difficulty = WandItem.capFrom(wandStack).strength() + WandItem.coreFrom(wandStack).strength();
+		int complexity = WandItem.focusComplexity(wandStack);
+		int difficulty = WandItem.focusStrength(wandStack, ctx.getPlayer());
 		if(complexity < 12)
 			return ActionResult.FAIL;
 		// thanks una

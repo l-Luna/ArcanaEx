@@ -18,6 +18,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
+import net.minecraft.world.Heightmap;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
@@ -50,11 +51,13 @@ public class SurfaceNodeFeature extends Feature<DefaultFeatureConfig>{
 		BlockPos pos = context.getOrigin();
 		var rng = context.getRandom();
 		StructureWorldAccess world = context.getWorld();
-		if(rng.nextInt(100) < nodeChance){
-			AuraWorld aura = AuraWorld.from(world);
-			BlockPos nodePos = pos.up(5);
-			// add the node
+		BlockPos floorPos = world.getTopPosition(Heightmap.Type.OCEAN_FLOOR_WG, pos);
+		pos = floorPos.getY() < pos.getY() ? floorPos : pos;
+		if(rng.nextInt(200) < nodeChance){
 			NodeType type = randomType(rng);
+			AuraWorld aura = AuraWorld.from(world);
+			BlockPos nodePos = type != NodeTypes.HUNGRY ? pos.up(5) : pos.up(rng.nextBetween(-2, 2));
+			// add the node
 			aura.addNode(new Node(type, aura.getWorld(), new Vec3d(nodePos.getX() + rng.nextDouble(), nodePos.getY() + rng.nextDouble(), nodePos.getZ() + rng.nextDouble())));
 			if(type == NodeTypes.TAINTED)
 				aura.getOrCreateChunk(nodePos).incrementFlux(rng.nextBetween(7, 12), null);

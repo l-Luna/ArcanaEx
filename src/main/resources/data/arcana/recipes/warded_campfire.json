@@ -1,0 +1,36 @@
+{
+  "type": "arcana:infusion",
+  "central": {
+    "item": "minecraft:campfire"
+  },
+  "ingredients": [
+    {
+      "item": "arcana:alumentum"
+    },
+    {
+      "item": "minecraft:shield"
+    },
+    {
+      "item": "minecraft:golden_apple"
+    },
+    {
+      "item": "minecraft:potion",
+      "matches": "has_potion_type minecraft:invisibility"
+    },
+    {
+      "item": "minecraft:clock"
+    },
+    {
+      "item": "minecraft:cake"
+    }
+  ],
+  "aspects": [
+    "40*sloth",
+    "30*life",
+    "20*armour"
+  ],
+  "instability": 0,
+  "result": {
+    "item": "arcana:warded_campfire"
+  }
+}

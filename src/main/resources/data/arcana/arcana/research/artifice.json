@@ -239,7 +239,8 @@
       ],
       "category": "arcana:artifice",
       "parents": [
-        "/arcana:arcane_levitator"
+        "/arcana:arcane_levitator",
+        "arcana:essentia_distillation"
       ],
       "x": 2,
       "y": 4,

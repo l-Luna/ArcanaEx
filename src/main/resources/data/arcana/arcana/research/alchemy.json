@@ -599,7 +599,7 @@
         "&arcana:essentia_distillation"
       ],
       "x": 6,
-      "y": -4,
+      "y": -5,
       "sections": [
         {
           "type": "text",
@@ -656,7 +656,7 @@
         "arcana:essentia_distillation"
       ],
       "x": 7,
-      "y": -2,
+      "y": -3,
       "sections": [
         {
           "type": "text",
@@ -702,7 +702,7 @@
         "arcana:essentia_transport"
       ],
       "x": 8,
-      "y": -4,
+      "y": -5,
       "sections": [
         {
           "type": "text",
@@ -734,6 +734,49 @@
         {
           "type": "crafting",
           "content": "arcana:void_jar_from_warded_jar"
+        }
+      ]
+    },
+    {
+      "key": "arcana:substrate_synthesis",
+      "name": "research.arcana.substrate_synthesis.title",
+      "icons": [
+        "arcana:synthetic_scaffolding"
+      ],
+      "category": "arcana:alchemy",
+      "parents": [
+        "arcana:essentia_distillation"
+      ],
+      "x": 7,
+      "y": -1,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.substrate_synthesis.stages.1",
+          "requirements": [
+            "4*minecraft:sugar",
+            "4*minecraft:blaze_powder",
+            "4*minecraft:clay_ball",
+            "4*minecraft:gravel",
+            "4*minecraft:carrot",
+            "4*minecraft:gunpowder",
+            "4*minecraft:slime_ball"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.substrate_synthesis.stages.2",
+          "requirements": [
+            "arcana::puzzle{substrate_synthesis}"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.substrate_synthesis.stages.3"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:synthetic_scaffolding"
         }
       ]
     }
@@ -929,6 +972,16 @@
       "nodes": [
         "machine",
         "sloth"
+      ]
+    },
+    {
+      "key": "arcana:substrate_synthesis",
+      "type": "chemistry",
+      "desc": "puzzle.arcana.chemistry.substrate_synthesis",
+      "size": 2,
+      "nodes": [
+        "slime",
+        "magic"
       ]
     }
   ]

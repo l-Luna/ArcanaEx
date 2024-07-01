@@ -600,6 +600,7 @@
     "chemistry.essentia_distillation": "Force essentia from matter",
     "chemistry.crystal_curator": "Supersize essentia crystals",
     "chemistry.essentia_logistics": "Just get things where I want",
+    "chemistry.substrate_synthesis": "Suspend magic in gel",
 
     "fieldwork.crimson_initiation": "it goes down better with sugar"
   },
@@ -982,6 +983,15 @@
       "stages": [
         "Setting up essentia networks can be tedious. Just incredibly tedious. I just want to move the fundamental concepts of reality from point A to point B, why the issue? And why must it clog up so easily?",
         "As a nice convenience, an {i}Aspect Redirect{r} forces all specks entering to travel in one direction; and an {i}Aspect Router{r} splits specks across all other connected directions, randomly. These let me skip or compact some otherwise-complicated setups... but these {i}are{r} fairly expensive.\nAdditionally, I can create specially-configured {i}Void Jars{r} that continue to accept essentia when full, venting excess essentia into the aura; by which I mean as flux. It's certainly easier than carefully managing my essentia production, but it's not something I should overuse."
+      ]
+    },
+
+    "substrate_synthesis": {
+      "title": "Substrate Synthesis",
+      "stages": [
+        "As established, I need to find substrates more efficient than the primal aspect crystals, which require a handful to break down even moderately complex objects.\nMany substances can be used as mundane fillers, and I believe altering one may allow for creating a powerful substrate.",
+        "Providing something too dense with any single aspect produces a low-quality substrate, but binding multiple together with {aspect:slime} Gelum produces something much more effective. Indeed, mundane slime is almost sufficient already, though some magic will enhance it much further.",
+        "By combining magical and mundane ingredients, I can produce Synthetic Scaffolding, a more efficient distillation substrate. Each of these can account for {c3}15{r} essentia each."
       ]
     },
 

@@ -737,7 +737,7 @@
     "artifice_root.text": "The study of {i}artifice{r}, the construction of magical devices through arcane crafting, will be documented here.\nThe Goggles of Revealing recipe from {c3}Fundamentals{r} is included here for completeness.",
 
     "arcane_stone": "Arcane Stone",
-    "arcane_stone.text": "Arcane Stone is a fairly simple application of arcane crafting. It looks nice, it's stronger than ordinary stone, and may be useful in further crafting.\nArcane Stone Bricks can be created through crafting or stonecutting.",
+    "arcane_stone.text": "Arcane Stone is a fairly simple application of arcane crafting. It looks nice, it's stronger than ordinary stone, and may be useful in further crafting.\nI can use it to make pedestals, which put a single item on display.\nArcane Stone Bricks can be created through crafting or stonecutting.",
 
     "paving_stones": "Arcane Paving Stones",
     "paving_stones.desc": "Essential infrastructure",

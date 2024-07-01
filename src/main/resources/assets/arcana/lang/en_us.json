@@ -7,7 +7,7 @@
     "equipment": "Equipment",
     "crystals": "Crystals",
     "phials": "Phials",
-    "locomotives": "Locomotives"
+    "locomotives": "Constructs"
   },
 
   "category.arcana": "Arcana",
@@ -350,7 +350,7 @@
     "clusters.entropy": "Perditio Cluster",
     "clusters.aura": "Auram Cluster",
 
-    "symbol": "Symbol: {}",
+    "symbol": "Control Symbol: {}",
 
     "taint_goo": "Taint Goo",
 

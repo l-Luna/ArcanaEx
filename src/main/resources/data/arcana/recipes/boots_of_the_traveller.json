@@ -5,7 +5,7 @@
   },
   "ingredients": [
     {
-      "tag": "minecraft:fishes"
+      "item": "minecraft:rabbit_foot"
     },
     {
       "item": "minecraft:map"
@@ -17,7 +17,7 @@
       "item": "minecraft:feather"
     },
     {
-      "tag": "minecraft:boats"
+      "item": "minecraft:minecart"
     },
     {
       "item": "arcana:crystals/air"

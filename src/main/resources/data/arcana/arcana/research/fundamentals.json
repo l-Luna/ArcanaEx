@@ -236,9 +236,13 @@
         },
         {
           "type": "crafting",
-          "content": "arcana:research_table",
+          "content": "arcana:research_table"
+        },
+        {
+          "type": "crafting",
+          "content": "arcana:scribing_tools",
           "requirements": [
-            "0*arcana:research_table"
+            "0*arcana:research_table", "0*arcana:scribing_tools"
           ]
         },
         {

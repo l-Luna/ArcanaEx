@@ -8,7 +8,7 @@
       "item": "minecraft:rabbit_foot"
     },
     "B": {
-      "item": "minecraft:beef"
+      "item": "minecraft:milk_bucket"
     },
     "C": {
       "item": "minecraft:carrot"
@@ -27,7 +27,7 @@
     }
   },
   "pattern": [
-    "RKG",
+    "RGK",
     "PTW",
     "BCG"
   ],

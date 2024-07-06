@@ -264,7 +264,7 @@
     "empty_phial": "Empty Phial",
 
     "primordial_pearl": "Primordial {}",
-    "primordial_pearl.nouns": "Heart,Brain,Mind,Soul,Pearl,Flesh,Blood,Face,Essence,Pearl",
+    "primordial_pearl.nouns": "Heart,Brain,Mind,Soul,Polymorph,Flesh,Blood,Face,Essence,Polymorph",
     "primordial_pearl.desc": "\"existing at or from the beginning of time\"",
 
     "broken_amulet": "Broken Amulet",
@@ -279,7 +279,7 @@
     "arcane_crafting_table": "Arcane Crafting Table",
     "crucible": "Crucible",
     "research_table": "Research Table",
-    "knowledgeable_dropper": "Knowledgeable Dropper",
+    "knowledgeable_dropper": "Aware Dropper",
 
     "arcane_furnace": "Arcane Furnace",
     "alembic": "Alembic",
@@ -607,7 +607,7 @@
 
   // Other UIs
   "container.arcana": {
-    "knowledgeable_dropper": "Knowledgeable Dropper",
+    "knowledgeable_dropper": "Aware Dropper",
     "arcane_furnace": "Arcane Furnace"
   },
 
@@ -657,7 +657,7 @@
     "nodal_geodes.desc": "Hidden in the depths",
     "nodal_geodes.text": "When venturing underground for resources, I came across a geode filled with vis crystals, with a node at its centre. Such {i}Nodal Geodes{r} are a valuable source of otherwise-sparse crystals.\nUnlike surface nodes, each geode is attuned to only one kind of primal vis, which permeates through the rock that makes it up, alongside condensing into crystals. The node within will be especially potent in that aspect.\nGiven a method of viewing nodes, finding nodal geodes should not be too difficult, but reaching them might be a chore.",
 
-    "primordial_pearl": "Primordial Pearl",
+    "primordial_pearl": "Primordial Polymorph",
     "primordial_pearl.desc": "A world astray",
     "primordial_pearl.text": "For the first time I find myself with a puzzle that I do not believe should be solved.{~sep}This object refuses to take a distinct form, and while it is conceptually complex, only contains huge amounts of primal aspects. These aspects do not act like the ordinary primals.\nEvery one of my various theories falls apart every moment this changes form. I would suggest it might be consciously obfuscating itself, but doing so leaves it perfectly simple and easy to understand - for one, fleeting moment, until all clarity is lost once more.\nIt stays constant only in one aspect: the aspects it contains. It... must have existed before compound aspects themselves, if there was such a time? Or perhaps it exists in some other way, one that cannot be expressed as aspects entirely?",
 
@@ -936,7 +936,7 @@
     "automated_alchemy.stage.1": "There's nothing particularly remarkable about alchemy.{~sep}Sure, it takes a bit of know-how to figure out which reactions are possible, and gently guide the liquid concepts in the pot to approach that. But really, what's stopping me from simply... teaching a dropper how to do it?",
     "automated_alchemy.stage.2": "Prototype after prototype wasted. Something odd is afoot here. Even getting a machine to perform identical actions to myself does not cause the proper reactions. Almost like some {i}intent{r} is necessary.",
     "automated_alchemy.stage.3": "Now, a thinking machine. That would do it.",
-    "automated_alchemy.stage.4": "Giving a Dropper a basic level of \"understanding\" is a perfectly safe and simple method of automating alchemy.\nThe Knowledgeable Dropper can be given a Tome of Sharing within it's extra tenth slot. Items it drops will be eligible for any alchemy recipes stored within the research bound to the book. When an alchemy recipe is performed automatically, the result will be thrown from the crucible in a random, free horizontal direction (or just randomly if none are free).\nAnother minor feature is that these droppers have slightly less variation in how they drop items.\nIt turns out that Tomes of Sharing do remember research entries, but simply choose not to show them to players. The thought of my equipment colluding to snoop on my mind is unsettling... but what can a book really do?",
+    "automated_alchemy.stage.4": "Giving a Dropper a basic level of \"understanding\" is a perfectly safe and simple method of automating alchemy.\nThe Aware Dropper can be given a Tome of Sharing within it's extra tenth slot. Items it drops will be eligible for any alchemy recipes stored within the research bound to the book. When an alchemy recipe is performed automatically, the result will be thrown from the crucible in a random, free horizontal direction (or just randomly if none are free).\nAnother minor feature is that these droppers have slightly less variation in how they drop items.\nIt turns out that Tomes of Sharing do remember research entries, but simply choose not to show them to players. The thought of my equipment colluding to snoop on my mind is unsettling... but what can a book really do?",
 
     "alchemical_glass": "Alchemical Glass",
     "alchemical_glass.desc": "Advancing my material knowledge",

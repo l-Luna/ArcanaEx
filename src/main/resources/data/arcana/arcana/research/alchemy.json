@@ -538,8 +538,7 @@
       "name": "research.arcana.essentia_distillation.title",
       "desc": "research.arcana.essentia_distillation.desc",
       "icons": [
-        "arcana:arcane_furnace",
-        "arcana:alembic"
+        "arcana:arcane_furnace"
       ],
       "category": "arcana:alchemy",
       "parents": [

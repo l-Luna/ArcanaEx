@@ -41,6 +41,7 @@ public abstract class AbstractRecipeSectionRenderer<T extends AbstractRecipeSect
 	
 	// static for use in WandInteractionSectionRenderer
 	public static void renderResult(MatrixStack matrices, ItemStack stack, int x, int y, int screenWidth, int screenHeight, EntrySection section){
+		matrices.push();
 		MinecraftClient client = MinecraftClient.getInstance();
 		TextRenderer textRenderer = client.textRenderer;
 		RenderSystem.setShaderTexture(0, overlayTexture(section));
@@ -49,10 +50,25 @@ public abstract class AbstractRecipeSectionRenderer<T extends AbstractRecipeSect
 		drawTexture(matrices, rX, rY, 101, 1, 167, 58, 20, 256, 256);
 		client.getItemRenderer().renderInGui(stack, rX + 29 - 8, rY + 10 - 8);
 		client.getItemRenderer().renderGuiItemOverlay(textRenderer, stack, rX + 29 - 8, rY + 10 - 8);
-		var name = stack.getName().getString();
+		String name = stack.getName().getString();
+		if(name.contains(":")){
+			String[] split = name.split(":");
+			String prefix = split[0] + ":";
+			name = split[1].trim();
+			matrices.push();
+			int stX = x + (screenWidth - 256) / 2 + (int)(pageWidth - textRenderer.getWidth(prefix)*0.8f) / 2;
+			int stY = y + (screenHeight - bgHeight) / 2 + 8 - textRenderer.fontHeight - heightOffset;
+			matrices.translate(stX, stY, 0);
+			matrices.scale(0.8f, 0.8f, 1f);
+			textRenderer.draw(matrices, prefix, 0, 0, 0x000000);
+			matrices.pop();
+			matrices.translate(0, 5, 0);
+		}
+		
 		int stX = x + (screenWidth - 256) / 2 + (pageWidth - textRenderer.getWidth(name)) / 2;
 		int stY = y + (screenHeight - bgHeight) / 2 + 11 - textRenderer.fontHeight - heightOffset;
 		textRenderer.draw(matrices, name, stX, stY, 0x000000);
+		matrices.pop();
 	}
 	
 	public void renderResultTooltip(MatrixStack matrices, ItemStack stack, int x, int y, int mouseX, int mouseY, int screenWidth, int screenHeight){

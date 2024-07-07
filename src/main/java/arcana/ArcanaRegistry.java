@@ -36,6 +36,8 @@ import arcana.worldgen.silverwood.SilverwoodSaplingGenerator;
 import arcana.worldgen.silverwood.SilverwoodTree;
 import arcana.worldgen.silverwood.SilverwoodTrunkPlacer;
 import com.unascribed.lib39.fractal.api.ItemSubGroup;
+import com.unascribed.lib39.weld.api.BigBlock;
+import com.unascribed.lib39.weld.api.BigBlockItem;
 import dev.emi.trinkets.api.TrinketItem;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -291,6 +293,7 @@ public final class ArcanaRegistry{
 	public static final Block PAVING_STONE_OF_WARDING = new PavingStoneOfWardingBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3.5f, 7));
 	public static final Block PEDESTAL = new PedestalBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3).nonOpaque());
 	public static final Block ARCANE_LEVITATOR = new ArcaneLevitatorBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).sounds(BlockSoundGroup.WOOD).strength(2));
+	public static final BigBlock THAUMIC_HALO = new ThaumicHaloBlock(of(Material.METAL).dropsSelf().requiresTool(PICKAXE_MINEABLE).renderLayer(CUTOUT).strength(3).nonOpaque());
 	public static final Block CRYSTALLIZATION_PRESS = new CrystallizationPressBlock(of(Material.METAL).dropsSelf().requiresTool(PICKAXE_MINEABLE).sounds(BlockSoundGroup.ANCIENT_DEBRIS).strength(4).nonOpaque());
 	public static final Block MYSTIC_MIST = new MysticMistBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).sounds(BlockSoundGroup.METAL).strength(2.5f).nonOpaque());
 	public static final Block WARDED_CAMPFIRE = new WardedCampfireBlock(of(Material.WOOD).dropsSelf().renderLayer(CUTOUT).strength(2).sounds(BlockSoundGroup.WOOD).luminance(whenLit(15)).nonOpaque());
@@ -647,6 +650,8 @@ public final class ArcanaRegistry{
 		register("paving_stone_of_warding", PAVING_STONE_OF_WARDING);
 		register("pedestal", PEDESTAL);
 		register("arcane_levitator", ARCANE_LEVITATOR);
+		register("thaumic_halo", THAUMIC_HALO, false);
+		register("thaumic_halo", new BigBlockItem(THAUMIC_HALO, GROUPED));
 		register("crystallization_press", CRYSTALLIZATION_PRESS);
 		register("mystic_mist", MYSTIC_MIST);
 		register("warded_campfire", WARDED_CAMPFIRE);

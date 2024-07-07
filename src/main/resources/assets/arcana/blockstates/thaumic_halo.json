@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "y=0": {
+      "model": "arcana:block/thaumic_halo_base"
+    },
+    "y=1": {
+      "model": "arcana:block/thaumic_halo_mast"
+    }
+  }
+}

@@ -119,8 +119,10 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		noAutoGen.add(ESSENTIA_REDIRECT.asItem());
 		noAutoGen.add(WARDED_CAMPFIRE.asItem());
 		noAutoGen.add(RESEARCH_TABLE.asItem());
+		noAutoGen.add(THAUMIC_HALO.asItem());
 		
 		itemGen.register(NITOR.asItem(), Models.GENERATED);
+		itemGen.register(THAUMIC_HALO.asItem(), Models.GENERATED);
 		
 		for(CrystalClusterBlock value : Aspects.clusters.values()){
 			noAutoGen.add(value.asItem());

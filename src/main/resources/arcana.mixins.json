@@ -9,7 +9,6 @@
     "BlockEntityAccessor",
     "CampfireBlockMixin",
     "CookingRecipeSerializerMixin",
-    "EntityMixin",
     "InventoryChangedCriterionMixin",
     "ItemStackMixin",
     "LivingEntityMixin",

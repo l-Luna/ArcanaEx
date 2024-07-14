@@ -102,6 +102,9 @@ dependencies {
 		exclude(group: "net.fabricmc.fabric-api")
 		exclude(group: "net.fabricmc", module: "fabric-loader")
 	}
+	modImplementation include("com.github.emilyploszaj:step-height-entity-attribute:${project.step_height_attr_version}") {
+		transitive = false
+	}
 
 	modRuntimeOnly ("supercoder79:databreaker:0.2.10") {
 		exclude module : "fabric-loader"

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/button_inventory",
+  "textures": {
+    "texture": "arcana:block/arcane_stone_bricks"
+  }
+}

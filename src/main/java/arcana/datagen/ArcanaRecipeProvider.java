@@ -4,6 +4,7 @@ import arcana.ArcanaTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.block.Block;
+import net.minecraft.data.family.BlockFamily;
 import net.minecraft.data.server.recipe.RecipeJsonProvider;
 import net.minecraft.data.server.recipe.SmithingRecipeJsonBuilder;
 import net.minecraft.item.Item;
@@ -24,17 +25,22 @@ public class ArcanaRecipeProvider extends FabricRecipeProvider{
 		offerBarkBlockRecipe(exporter, SILVERWOOD_WOOD, SILVERWOOD_LOG);
 		offerBarkBlockRecipe(exporter, STRIPPED_SILVERWOOD_WOOD, STRIPPED_SILVERWOOD_LOG);
 		
-		offerDoorRecipe(SILVERWOOD_DOOR, SILVERWOOD_PLANKS, exporter);
-		offerTrapdoorRecipe(SILVERWOOD_TRAPDOOR, SILVERWOOD_PLANKS, exporter);
-		offerSignRecipe(SILVERWOOD_SIGN, SILVERWOOD_PLANKS, exporter);
-		
 		offerPlanksRecipe(exporter, GREATWOOD_PLANKS, ArcanaTags.GREATWOOD_LOGS);
 		offerBarkBlockRecipe(exporter, GREATWOOD_WOOD, GREATWOOD_LOG);
 		offerBarkBlockRecipe(exporter, STRIPPED_GREATWOOD_WOOD, STRIPPED_GREATWOOD_LOG);
 		
-		offerDoorRecipe(GREATWOOD_DOOR, GREATWOOD_PLANKS, exporter);
-		offerTrapdoorRecipe(GREATWOOD_TRAPDOOR, GREATWOOD_PLANKS, exporter);
-		offerSignRecipe(GREATWOOD_SIGN, GREATWOOD_PLANKS, exporter);
+		for(BlockFamily family : ArcanaBlockFamilies.ALL)
+			generateFamily(exporter, family);
+		
+		offerStonecuttingRecipe(exporter, ARCANE_STONE_BRICKS, ARCANE_STONE);
+		
+		offerStonecuttingRecipe(exporter, ARCANE_STONE_SLAB, ARCANE_STONE, 2);
+		offerStonecuttingRecipe(exporter, ARCANE_STONE_STAIRS, ARCANE_STONE);
+		offerStonecuttingRecipe(exporter, ARCANE_STONE_WALL, ARCANE_STONE);
+		
+		offerStonecuttingRecipe(exporter, ARCANE_STONE_BRICKS_SLAB, ARCANE_STONE_BRICKS, 2);
+		offerStonecuttingRecipe(exporter, ARCANE_STONE_BRICKS_STAIRS, ARCANE_STONE_BRICKS);
+		offerStonecuttingRecipe(exporter, ARCANE_STONE_BRICKS_WALL, ARCANE_STONE_BRICKS);
 		
 		offerReversibleCompactingRecipesWithReverseRecipeGroup(exporter, VOID_METAL_INGOT, VOID_METAL_BLOCK, "void_metal_ingot_from_void_metal_block", "void_metal_ingot");
 		offerReversibleCompactingRecipesWithCompactingRecipeGroup(exporter, VOID_METAL_NUGGET, VOID_METAL_INGOT, "void_metal_ingot_from_nuggets", "void_metal_ingot");

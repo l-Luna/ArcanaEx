@@ -315,6 +315,18 @@
     "arcane_stone": "Arcane Stone",
     "arcane_stone_bricks": "Arcane Stone Bricks",
 
+    "arcane_stone_slab": "Arcane Stone Slab",
+    "arcane_stone_stairs": "Arcane Stone Stairs",
+    "arcane_stone_pressure_plate": "Arcane Stone Pressure Plate",
+    "arcane_stone_button": "Arcane Stone Button",
+    "arcane_stone_wall": "Arcane Stone Wall",
+
+    "arcane_stone_bricks_slab": "Arcane Stone Brick Slab",
+    "arcane_stone_bricks_stairs": "Arcane Stone Brick Stairs",
+    "arcane_stone_bricks_pressure_plate": "Arcane Stone Brick Pressure Plate",
+    "arcane_stone_bricks_button": "Arcane Stone Brick Button",
+    "arcane_stone_bricks_wall": "Arcane Stone Brick Wall",
+
     "silverwood_sapling": "Silverwood Sapling",
     "silverwood_log": "Silverwood Log",
     "silverwood_leaves": "Silverwood Leaves",
@@ -323,6 +335,13 @@
     "silverwood_wood": "Silverwood Wood",
     "stripped_silverwood_log": "Stripped Silverwood Log",
     "stripped_silverwood_wood": "Stripped Silverwood Wood",
+
+    "silverwood_slab": "Silverwood Slab",
+    "silverwood_stairs": "Silverwood Stairs",
+    "silverwood_fence": "Silverwood Fence",
+    "silverwood_fence_gate": "Silverwood Fence Gate",
+    "silverwood_pressure_plate": "Silverwood Pressure Plate",
+    "silverwood_button": "Silverwood Button",
 
     "silverwood_door": "Silverwood Door",
     "silverwood_trapdoor": "Silverwood Trapdoor",
@@ -337,6 +356,13 @@
     "greatwood_wood": "Greatwood Wood",
     "stripped_greatwood_log": "Stripped Greatwood Log",
     "stripped_greatwood_wood": "Stripped Greatwood Wood",
+
+    "greatwood_slab": "Greatwood Slab",
+    "greatwood_stairs": "Greatwood Stairs",
+    "greatwood_fence": "Greatwood Fence",
+    "greatwood_fence_gate": "Greatwood Fence Gate",
+    "greatwood_pressure_plate": "Greatwood Pressure Plate",
+    "greatwood_button": "Greatwood Button",
 
     "greatwood_door": "Greatwood Door",
     "greatwood_trapdoor": "Greatwood Trapdoor",

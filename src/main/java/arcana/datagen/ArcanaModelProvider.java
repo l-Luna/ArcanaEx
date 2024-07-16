@@ -8,11 +8,11 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.block.Block;
 import net.minecraft.data.client.*;
+import net.minecraft.data.family.BlockFamily;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.item.ToolItem;
-import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,11 +42,7 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		blockGen.registerSimpleCubeAll(ARCANIUM_BLOCK);
 		blockGen.registerSimpleCubeAll(VOID_METAL_BLOCK);
 		blockGen.registerSimpleCubeAll(SILVERLEAF_AMALGAMATE_BLOCK);
-		blockGen.registerSimpleCubeAll(ARCANE_STONE);
-		blockGen.registerSimpleCubeAll(ARCANE_STONE_BRICKS);
-		blockGen.registerSimpleCubeAll(SILVERWOOD_PLANKS);
 		blockGen.registerSimpleCubeAll(SILVERWOOD_LEAVES);
-		blockGen.registerSimpleCubeAll(GREATWOOD_PLANKS);
 		blockGen.registerSingleton(GREATWOOD_LEAVES, TexturedModel.LEAVES);
 		blockGen.registerSimpleCubeAll(HARDENED_GLASS);
 		blockGen.registerSimpleCubeAll(LUMINIFEROUS_GLASS);
@@ -74,16 +70,11 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		blockGen.registerLog(GREATWOOD_LOG).log(GREATWOOD_LOG).wood(GREATWOOD_WOOD);
 		blockGen.registerLog(STRIPPED_GREATWOOD_LOG).log(STRIPPED_GREATWOOD_LOG).wood(STRIPPED_GREATWOOD_WOOD);
 		
-		blockGen.registerDoor(SILVERWOOD_DOOR);
-		noAutoGen.add(SILVERWOOD_DOOR.asItem());
-		blockGen.registerTrapdoor(SILVERWOOD_TRAPDOOR);
-		noAutoGen.add(SILVERWOOD_TRAPDOOR.asItem());
-		registerSign(SILVERWOOD_SIGN, SILVERWOOD_WALL_SIGN, SILVERWOOD_PLANKS, blockGen);
-		blockGen.registerDoor(GREATWOOD_DOOR);
-		noAutoGen.add(GREATWOOD_DOOR.asItem());
-		blockGen.registerTrapdoor(GREATWOOD_TRAPDOOR);
-		noAutoGen.add(GREATWOOD_TRAPDOOR.asItem());
-		registerSign(GREATWOOD_SIGN, GREATWOOD_WALL_SIGN, GREATWOOD_PLANKS, blockGen);
+		for(BlockFamily family : ArcanaBlockFamilies.ALL){
+			blockGen.registerCubeAllModelTexturePool(family.getBaseBlock()).family(family);
+			for(Block value : family.getVariants().values())
+				noAutoGen.add(value.asItem());
+		}
 		
 		blockGen.registerCooker(ARCANE_FURNACE, TexturedModel.ORIENTABLE);
 		
@@ -149,11 +140,11 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		return "Arcana Blockstates and Models";
 	}
 	
-	public void registerSign(Block signBlock, Block wallSignBlock, Block particles, BlockStateModelGenerator blockGen){
+	/*public void registerSign(Block signBlock, Block wallSignBlock, Block particles, BlockStateModelGenerator blockGen){
 		Identifier particleModel = Models.PARTICLE.upload(signBlock, TextureMap.particle(particles), blockGen.modelCollector);
 		blockGen.blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(signBlock, particleModel));
 		blockGen.blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(wallSignBlock, particleModel));
 		blockGen.registerItemModel(signBlock.asItem());
 		noAutoGen.add(signBlock.asItem());
-	}
+	}*/
 }

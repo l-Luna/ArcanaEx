@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "arcana:block/silverwood_slab"
+    },
+    "type=double": {
+      "model": "arcana:block/silverwood_planks"
+    },
+    "type=top": {
+      "model": "arcana:block/silverwood_slab_top"
+    }
+  }
+}

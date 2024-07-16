@@ -53,6 +53,8 @@ public class ArcanaLootTablesProvider extends FabricBlockLootTableProvider{
 		addDrop(SILVERWOOD_DOOR, BlockLootTableGenerator::doorDrops);
 		addDrop(GREATWOOD_DOOR, BlockLootTableGenerator::doorDrops);
 		
+		addDrop(GREATWOOD_SLAB, BlockLootTableGenerator::slabDrops);
+		
 		Aspects.clusters.forEach((aspect, cluster) -> {
 			var drop = Aspects.crystals.get(aspect);
 			addDrop(cluster,

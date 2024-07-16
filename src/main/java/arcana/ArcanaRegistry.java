@@ -301,8 +301,21 @@ public final class ArcanaRegistry{
 	public static final Block ARCANIUM_BLOCK = new Block(of(Material.METAL, MapColor.PINK).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(5, 6).sounds(BlockSoundGroup.METAL));
 	public static final Block VOID_METAL_BLOCK = new Block(of(Material.METAL, MapColor.PURPLE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(5, 6).sounds(BlockSoundGroup.METAL));
 	public static final Block SILVERLEAF_AMALGAMATE_BLOCK = new Block(of(Material.METAL, MapColor.WHITE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(5, 6).sounds(BlockSoundGroup.METAL));
+	
 	public static final Block ARCANE_STONE = new Block(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3, 7));
 	public static final Block ARCANE_STONE_BRICKS = new Block(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3.5f, 7));
+	
+	public static final Block ARCANE_STONE_SLAB = new SlabBlock(of(Material.STONE).requiresTool(PICKAXE_MINEABLE).strength(3, 7).sounds(BlockSoundGroup.WOOD));
+	public static final Block ARCANE_STONE_STAIRS = new StairsBlock(ARCANE_STONE.getDefaultState(), of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(2));
+	public static final Block ARCANE_STONE_PRESSURE_PLATE = new PressurePlateBlock(PressurePlateBlock.ActivationRule.MOBS, of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(.5f));
+	public static final Block ARCANE_STONE_BUTTON = new StoneButtonBlock(of(Material.STONE).dropsSelf().noCollision().strength(.5f));
+	public static final Block ARCANE_STONE_WALL = new WallBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(2));
+	
+	public static final Block ARCANE_STONE_BRICKS_SLAB = new SlabBlock(of(Material.STONE).requiresTool(PICKAXE_MINEABLE).strength(3, 7).sounds(BlockSoundGroup.WOOD));
+	public static final Block ARCANE_STONE_BRICKS_STAIRS = new StairsBlock(ARCANE_STONE_BRICKS.getDefaultState(), of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(2));
+	public static final Block ARCANE_STONE_BRICKS_PRESSURE_PLATE = new PressurePlateBlock(PressurePlateBlock.ActivationRule.MOBS, of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(.5f));
+	public static final Block ARCANE_STONE_BRICKS_BUTTON = new StoneButtonBlock(of(Material.STONE).dropsSelf().noCollision().strength(.5f));
+	public static final Block ARCANE_STONE_BRICKS_WALL = new WallBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(2));
 	
 	public static final Block SILVERWOOD_SAPLING = new SaplingBlock(new SilverwoodSaplingGenerator(), of(Material.PLANT).dropsSelf().renderLayer(CUTOUT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
 	public static final Block SILVERWOOD_LOG = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
@@ -312,6 +325,13 @@ public final class ArcanaRegistry{
 	public static final Block SILVERWOOD_WOOD = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
 	public static final Block STRIPPED_SILVERWOOD_LOG = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
 	public static final Block STRIPPED_SILVERWOOD_WOOD = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
+	
+	public static final Block SILVERWOOD_SLAB = new SlabBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
+	public static final Block SILVERWOOD_STAIRS = new StairsBlock(SILVERWOOD_PLANKS.getDefaultState(), of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
+	public static final Block SILVERWOOD_FENCE = new FenceBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
+	public static final Block SILVERWOOD_FENCE_GATE = new FenceGateBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
+	public static final Block SILVERWOOD_PRESSURE_PLATE = new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING, of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(.5f).sounds(BlockSoundGroup.WOOD));
+	public static final Block SILVERWOOD_BUTTON = new WoodenButtonBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(.5f).noCollision().sounds(BlockSoundGroup.WOOD));
 	
 	public static final SignType SILVERWOOD_SIGN_TY = SignTypeRegistry.registerSignType(arcId("silverwood"));
 	public static final Block SILVERWOOD_DOOR = new DoorBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).renderLayer(CUTOUT).strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque());
@@ -327,6 +347,13 @@ public final class ArcanaRegistry{
 	public static final Block GREATWOOD_WOOD = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
 	public static final Block STRIPPED_GREATWOOD_LOG = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
 	public static final Block STRIPPED_GREATWOOD_WOOD = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
+	
+	public static final Block GREATWOOD_SLAB = new SlabBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
+	public static final Block GREATWOOD_STAIRS = new StairsBlock(GREATWOOD_PLANKS.getDefaultState(), of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
+	public static final Block GREATWOOD_FENCE = new FenceBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
+	public static final Block GREATWOOD_FENCE_GATE = new FenceGateBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
+	public static final Block GREATWOOD_PRESSURE_PLATE = new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING, of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(.5f).sounds(BlockSoundGroup.WOOD));
+	public static final Block GREATWOOD_BUTTON = new WoodenButtonBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(.5f).noCollision().sounds(BlockSoundGroup.WOOD));
 	
 	public static final SignType GREATWOOD_SIGN_TY = SignTypeRegistry.registerSignType(arcId("greatwood"));
 	public static final Block GREATWOOD_DOOR = new DoorBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).renderLayer(CUTOUT).strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque());
@@ -662,6 +689,18 @@ public final class ArcanaRegistry{
 		register("arcane_stone", ARCANE_STONE);
 		register("arcane_stone_bricks", ARCANE_STONE_BRICKS);
 		
+		register("arcane_stone_slab", ARCANE_STONE_SLAB);
+		register("arcane_stone_stairs", ARCANE_STONE_STAIRS);
+		register("arcane_stone_pressure_plate", ARCANE_STONE_PRESSURE_PLATE);
+		register("arcane_stone_button", ARCANE_STONE_BUTTON);
+		register("arcane_stone_wall", ARCANE_STONE_WALL);
+		
+		register("arcane_stone_bricks_slab", ARCANE_STONE_BRICKS_SLAB);
+		register("arcane_stone_bricks_stairs", ARCANE_STONE_BRICKS_STAIRS);
+		register("arcane_stone_bricks_pressure_plate", ARCANE_STONE_BRICKS_PRESSURE_PLATE);
+		register("arcane_stone_bricks_button", ARCANE_STONE_BRICKS_BUTTON);
+		register("arcane_stone_bricks_wall", ARCANE_STONE_BRICKS_WALL);
+		
 		register("silverwood_sapling", SILVERWOOD_SAPLING);
 		register("silverwood_log", SILVERWOOD_LOG);
 		register("silverwood_leaves", SILVERWOOD_LEAVES);
@@ -672,6 +711,13 @@ public final class ArcanaRegistry{
 		register("stripped_silverwood_wood", STRIPPED_SILVERWOOD_WOOD);
 		StrippableBlockRegistry.register(SILVERWOOD_LOG, STRIPPED_SILVERWOOD_LOG);
 		StrippableBlockRegistry.register(SILVERWOOD_WOOD, STRIPPED_SILVERWOOD_WOOD);
+		
+		register("silverwood_slab", SILVERWOOD_SLAB);
+		register("silverwood_stairs", SILVERWOOD_STAIRS);
+		register("silverwood_fence", SILVERWOOD_FENCE);
+		register("silverwood_fence_gate", SILVERWOOD_FENCE_GATE);
+		register("silverwood_pressure_plate", SILVERWOOD_PRESSURE_PLATE);
+		register("silverwood_button", SILVERWOOD_BUTTON);
 		
 		register("silverwood_door", SILVERWOOD_DOOR);
 		register("silverwood_trapdoor", SILVERWOOD_TRAPDOOR);
@@ -689,6 +735,13 @@ public final class ArcanaRegistry{
 		register("stripped_greatwood_wood", STRIPPED_GREATWOOD_WOOD);
 		StrippableBlockRegistry.register(GREATWOOD_LOG, STRIPPED_GREATWOOD_LOG);
 		StrippableBlockRegistry.register(GREATWOOD_WOOD, STRIPPED_GREATWOOD_WOOD);
+		
+		register("greatwood_slab", GREATWOOD_SLAB);
+		register("greatwood_stairs", GREATWOOD_STAIRS);
+		register("greatwood_fence", GREATWOOD_FENCE);
+		register("greatwood_fence_gate", GREATWOOD_FENCE_GATE);
+		register("greatwood_pressure_plate", GREATWOOD_PRESSURE_PLATE);
+		register("greatwood_button", GREATWOOD_BUTTON);
 		
 		register("greatwood_door", GREATWOOD_DOOR);
 		register("greatwood_trapdoor", GREATWOOD_TRAPDOOR);

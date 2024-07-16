@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "arcana:block/greatwood_slab"
+    },
+    "type=double": {
+      "model": "arcana:block/greatwood_planks"
+    },
+    "type=top": {
+      "model": "arcana:block/greatwood_slab_top"
+    }
+  }
+}

@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-public class NbtUtil{
+public final class NbtUtil{
 	
 	public static NbtCompound from(Map<String, Object> data){
 		NbtCompound compound = new NbtCompound();

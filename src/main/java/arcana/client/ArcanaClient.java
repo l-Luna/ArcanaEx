@@ -10,7 +10,9 @@ import arcana.blocks.ArcanaBlockSettings;
 import arcana.blocks.be.WardedCampfireBlockEntity;
 import arcana.client.ber.*;
 import arcana.client.entity.CrimsonEntityRenderer;
+import arcana.client.entity.PrismaticOrbEntityRenderer;
 import arcana.client.entity.SuspensionEngineRenderer;
+import arcana.client.entity.ThrownAlumentumEntityRenderer;
 import arcana.client.particles.EssentiaStreamParticle;
 import arcana.client.particles.HungryNodeBlockParticle;
 import arcana.client.particles.HungryNodeDiscParticle;
@@ -154,6 +156,7 @@ public final class ArcanaClient implements ClientModInitializer{
 		
 		EntityRendererRegistry.register(ArcanaRegistry.THROWN_ALUMENTUM, ThrownAlumentumEntityRenderer::new);
 		EntityRendererRegistry.register(ArcanaRegistry.THROWN_TAINT_BOTTLE, FlyingItemEntityRenderer::new);
+		EntityRendererRegistry.register(ArcanaRegistry.PRISMATIC_ORB, PrismaticOrbEntityRenderer::new);
 		EntityRendererRegistry.register(ArcanaRegistry.SUSPENSION_ENGINE, SuspensionEngineRenderer::new);
 		EntityRendererRegistry.register(ArcanaRegistry.CRIMSON_KNIGHT, ctx -> new CrimsonEntityRenderer<>(ctx, "knight"));
 		EntityRendererRegistry.register(ArcanaRegistry.CRIMSON_ARCHER, ctx -> new CrimsonEntityRenderer<>(ctx, "archer"));

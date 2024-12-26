@@ -1,4 +1,4 @@
-package arcana.client;
+package arcana.client.entity;
 
 import arcana.entities.ThrownAlumentumEntity;
 import net.minecraft.client.render.entity.EntityRenderer;
@@ -7,7 +7,7 @@ import net.minecraft.util.Identifier;
 
 public class ThrownAlumentumEntityRenderer extends EntityRenderer<ThrownAlumentumEntity>{
 	
-	protected ThrownAlumentumEntityRenderer(EntityRendererFactory.Context ctx){
+	public ThrownAlumentumEntityRenderer(EntityRendererFactory.Context ctx){
 		super(ctx);
 	}
 	

@@ -13,6 +13,7 @@ import arcana.effects.SetBonusStatusEffect;
 import arcana.effects.TaintedStatusEffect;
 import arcana.enchantments.ProjectingEnchantment;
 import arcana.enchantments.WarpingCurseEnchantment;
+import arcana.entities.PrismaticOrbEntity;
 import arcana.entities.ThrownAlumentumEntity;
 import arcana.entities.ThrownTaintBottleEntity;
 import arcana.entities.crimson.*;
@@ -442,6 +443,13 @@ public final class ArcanaRegistry{
 			.trackRangeChunks(4)
 			.trackedUpdateRate(10)
 			.dimensions(EntityDimensions.fixed(0.25f, 0.25f))
+			.build();
+	
+	public static final EntityType<PrismaticOrbEntity> PRISMATIC_ORB = FabricEntityTypeBuilder
+			.create(SpawnGroup.MISC, PrismaticOrbEntity::new)
+			.trackRangeChunks(4)
+			.trackedUpdateRate(10)
+			.dimensions(EntityDimensions.fixed(0.1f, 0.1f))
 			.build();
 	
 	public static final EntityType<SuspensionEngineEntity> SUSPENSION_ENGINE = FabricEntityTypeBuilder
@@ -879,6 +887,8 @@ public final class ArcanaRegistry{
 		// entity types
 		register("thrown_alumentum", THROWN_ALUMENTUM);
 		register("thrown_taint_bottle", THROWN_TAINT_BOTTLE);
+		
+		register("prismatic_orb", PRISMATIC_ORB);
 		
 		register("suspension_engine", SUSPENSION_ENGINE);
 		

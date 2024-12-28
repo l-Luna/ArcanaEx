@@ -1,6 +1,9 @@
 package arcana.items.foci;
 
 import arcana.ArcanaRegistry;
+import arcana.aspects.AspectMap;
+import arcana.aspects.AspectStack;
+import arcana.aspects.Aspects;
 import arcana.entities.PrismaticOrbEntity;
 import arcana.items.FocusItem;
 import arcana.util.MathUtil;
@@ -10,7 +13,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.UUID;
 
 public class PrismaticLightFocusItem extends FocusItem{
@@ -21,6 +26,10 @@ public class PrismaticLightFocusItem extends FocusItem{
 	
 	public static Vec3d hoverPosition(PlayerEntity player){
 		return player.getEyePos().add(MathUtil.facingToVec(player).multiply(2));
+	}
+	
+	public AspectMap castCost(@Nullable ItemStack wand, ItemStack focus, PlayerEntity user){
+		return AspectMap.fromAspectStacks(List.of(new AspectStack(Aspects.FIRE, 4), new AspectStack(Aspects.AIR, 1)));
 	}
 	
 	public boolean isContinuous(){

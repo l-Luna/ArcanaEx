@@ -146,7 +146,7 @@ public class WandItem extends Item implements WarpingItem{
 			return;
 		AuraWorld aura = AuraWorld.from(world);
 		Optional<Node> nodeO = aura.raycastNodes(user.getEyePos(), 4.5, false, user);
-		if(nodeO.isPresent()){
+		if(nodeO.isPresent() && !isContinuousCasting(stack)){
 			Node node = nodeO.get();
 			// only attempt to drain aspects that the node has and the wand needs
 			AspectMap nodeAspects = node.getAspects();
@@ -172,10 +172,20 @@ public class WandItem extends Item implements WarpingItem{
 		}else{
 			updateFocus(stack, focusStack -> {
 				if(user instanceof PlayerEntity player && focusStack.getItem() instanceof FocusItem fi && fi.isContinuous()){
+					boolean successful = isContinuousCasting(stack);
 					int ticksUsed = getMaxUseTime(stack) - remainingUseTicks;
-					if(ticksUsed == 0)
-						fi.startContinuousCast(stack, focusStack, player);
-					fi.tickContinuousCast(stack, focusStack, player);
+					if(ticksUsed == 0){
+						var cost = fi.castCost(stack, focusStack, player).copy();
+						cost.multiply(aspect -> costMultiplier(aspect, stack, player));
+						if(aspectsFrom(stack).contains(cost)){
+							updateAspects(stack, aspects -> aspects.take(cost));
+							fi.startContinuousCast(stack, focusStack, player);
+							successful = true;
+							setIsContinuousCasting(stack, true);
+						}
+					}
+					if(successful)
+						fi.tickContinuousCast(stack, focusStack, player);
 				}
 			});
 		}
@@ -186,6 +196,7 @@ public class WandItem extends Item implements WarpingItem{
 			if(user instanceof PlayerEntity player && focusStack.getItem() instanceof FocusItem fi && fi.isContinuous())
 				fi.endContinuousCast(stack, focusStack, player);
 		});
+		setIsContinuousCasting(stack, false);
 	}
 	
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand){
@@ -243,18 +254,18 @@ public class WandItem extends Item implements WarpingItem{
 	
 	// TODO: NBT-backed aspect map?
 	
-	public static void updateAspects(ItemStack stack, Consumer<AspectMap> updater){
-		var map = aspectsFrom(stack);
-		updater.accept(map);
-		putAspects(stack, map);
-	}
-	
 	public static AspectMap aspectsFrom(ItemStack stack){
 		return AspectMap.fromNbt(stack.getSubNbt("aspects"));
 	}
 	
 	public static void putAspects(ItemStack stack, AspectMap aspects){
 		stack.getOrCreateNbt().put("aspects", aspects.toNbt());
+	}
+	
+	public static void updateAspects(ItemStack stack, Consumer<AspectMap> updater){
+		var map = aspectsFrom(stack);
+		updater.accept(map);
+		putAspects(stack, map);
 	}
 	
 	public static Cap capFrom(ItemStack stack){
@@ -279,6 +290,14 @@ public class WandItem extends Item implements WarpingItem{
 		ItemStack focusStack = focusFrom(wand);
 		updater.accept(focusStack);
 		putFocus(wand, focusStack);
+	}
+	
+	public static boolean isContinuousCasting(ItemStack wand){
+		return wand.getOrCreateNbt().getBoolean("continuous_casting");
+	}
+	
+	public static void setIsContinuousCasting(ItemStack wand, boolean value){
+		wand.getOrCreateNbt().putBoolean("continuous_casting", value);
 	}
 	
 	public int warping(ItemStack stack, PlayerEntity player){

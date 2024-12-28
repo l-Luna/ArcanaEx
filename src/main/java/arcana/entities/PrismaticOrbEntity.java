@@ -134,4 +134,9 @@ public class PrismaticOrbEntity extends ProjectileEntity{
 	public Packet<?> createSpawnPacket(){
 		return new EntitySpawnS2CPacket(this);
 	}
+	
+	public boolean shouldRender(double distance){
+		// our hitbox is pretty small, so use the same distance that shulker bullets do
+		return distance < 16384;
+	}
 }

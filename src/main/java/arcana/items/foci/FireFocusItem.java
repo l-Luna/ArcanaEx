@@ -18,7 +18,6 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -70,7 +69,7 @@ public class FireFocusItem extends FocusItem{
 		}
 	}
 	
-	public ActionResult castOnEntity(ItemStack wand, ItemStack focus, PlayerEntity user, LivingEntity target, Hand hand){
+	public ActionResult castOnEntity(ItemStack wand, ItemStack focus, PlayerEntity user, LivingEntity target){
 		// anything from 10 to 45 is obtainable
 		int strength = WandItem.focusStrength(wand, user);
 		float damage = Math.round(0.12f * strength + 3);

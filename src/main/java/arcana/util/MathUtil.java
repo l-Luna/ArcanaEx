@@ -7,13 +7,13 @@ public final class MathUtil{
 
 	public static Vec3d facingToVec(float pitch, float yaw){
 		return new Vec3d(
-				Math.cos(pitch) * Math.sin(yaw),
-				Math.cos(yaw) * Math.cos(pitch),
-				Math.sin(pitch)
+				-Math.cos(pitch) * Math.sin(yaw),
+				-Math.sin(pitch),
+				Math.cos(yaw) * Math.cos(pitch)
 		);
 	}
 	
 	public static Vec3d facingToVec(Entity entity){
-		return facingToVec(entity.getPitch(), entity.getYaw());
+		return facingToVec((float)Math.toRadians(entity.getPitch()), (float)Math.toRadians(entity.getYaw()));
 	}
 }

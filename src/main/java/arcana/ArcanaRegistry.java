@@ -21,10 +21,7 @@ import arcana.entities.locomotive.SuspensionEngineEntity;
 import arcana.entities.locomotive.Symbol;
 import arcana.fluids.TaintGooFluid;
 import arcana.items.*;
-import arcana.items.foci.EquivalentExchangeFocusItem;
-import arcana.items.foci.FireFocusItem;
-import arcana.items.foci.LightFocusItem;
-import arcana.items.foci.PortableHoleFocusItem;
+import arcana.items.foci.*;
 import arcana.screens.*;
 import arcana.worldgen.SurfaceNodeFeature;
 import arcana.worldgen.geodes.NodalGeodes;
@@ -251,7 +248,7 @@ public final class ArcanaRegistry{
 	public static final Item FIRE_FOCUS = new FireFocusItem(GROUPED_SINGLE);
 	public static final Item PORTABLE_HOLE_FOCUS = new PortableHoleFocusItem(GROUPED_SINGLE);
 	public static final Item LIGHT_FOCUS = new LightFocusItem(GROUPED_SINGLE);
-	public static final Item PRISMATIC_LIGHT_FOCUS = new FocusItem(GROUPED_SINGLE);
+	public static final Item PRISMATIC_LIGHT_FOCUS = new PrismaticLightFocusItem(GROUPED_SINGLE);
 	public static final Item EQUIVALENT_EXCHANGE_FOCUS = new EquivalentExchangeFocusItem(GROUPED_SINGLE);
 	
 	// banner patterns...

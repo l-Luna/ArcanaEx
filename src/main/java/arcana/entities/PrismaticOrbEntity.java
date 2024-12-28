@@ -1,6 +1,6 @@
 package arcana.entities;
 
-import arcana.util.MathUtil;
+import arcana.items.foci.PrismaticLightFocusItem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
@@ -34,7 +34,7 @@ public class PrismaticOrbEntity extends ProjectileEntity{
 		setShot(true);
 		Entity owner = getOwner();
 		if(owner != null)
-			setVelocity(owner, owner.getPitch(), owner.getYaw(), 0, 3f, 0.7f);
+			setVelocity(owner, owner.getPitch(), owner.getYaw(), 0, 1.8f, 0.7f);
 		else
 			setVelocity(world.random.nextDouble(), world.random.nextDouble(), world.random.nextDouble(), 1f, 0f);
 	}
@@ -43,7 +43,8 @@ public class PrismaticOrbEntity extends ProjectileEntity{
 		if(!hasShot()){
 			Entity owner = getOwner();
 			if(owner instanceof PlayerEntity player){
-				setPosition(player.getEyePos().add(MathUtil.facingToVec(player).multiply(2)));
+				setPosition(PrismaticLightFocusItem.hoverPosition(player));
+				velocityDirty = true;
 				float size = getSize();
 				if(size < 1f)
 					setSize(Math.min(1, size + 1 / 30f));
@@ -64,27 +65,26 @@ public class PrismaticOrbEntity extends ProjectileEntity{
 	protected void onCollision(HitResult hit){
 		super.onCollision(hit);
 		// particle burst
-		//for(int i = 0; i < 20; i++)
-			((ServerWorld)world).spawnParticles(ParticleTypes.END_ROD,
-					getPos().getX(),
-					getPos().getY(),
-					getPos().getZ(),
-					30,
-					0,
-					0,
-					0,
-					0.3f);
+		((ServerWorld)world).spawnParticles(ParticleTypes.END_ROD,
+				getPos().getX(),
+				getPos().getY(),
+				getPos().getZ(),
+				30,
+				0,
+				0,
+				0,
+				0.3f);
+		
 		// deal damage to all nearby entities
-		if(!world.isClient){
-			Entity owner = getOwner();
-			for(Entity entity : world.getOtherEntities(this, new Box(getPos().subtract(1, 1, 1), getPos().add(1, 1, 1))))
-				if(entity instanceof LivingEntity target){
-					boolean undeadTarget = target.getGroup() == EntityGroup.UNDEAD;
-					target.damage(DamageSource.magic(this, owner), getDamage(undeadTarget));
-					if(undeadTarget)
-						target.setOnFireFor(4);
-				}
-		}
+		Entity owner = getOwner();
+		float d = 1.5f;
+		for(Entity entity : world.getOtherEntities(this, new Box(getPos().subtract(d, d, d), getPos().add(d, d, d))))
+			if(entity instanceof LivingEntity target){
+				boolean undeadTarget = target.getGroup() == EntityGroup.UNDEAD;
+				target.damage(DamageSource.magic(this, owner), getDamage(undeadTarget));
+				if(undeadTarget)
+					target.setOnFireFor(4);
+			}
 		
 		discard();
 	}
@@ -92,6 +92,10 @@ public class PrismaticOrbEntity extends ProjectileEntity{
 	public float getDamage(boolean undeadTarget){
 		// 3 base damage + 4 charged damage + 4 undead bonus damage
 		return (int)(3 + (4 * getSize()) + (undeadTarget ? 4 : 0));
+	}
+	
+	protected boolean canHit(Entity entity){
+		return hasShot() && entity != getOwner() && super.canHit(entity);
 	}
 	
 	protected void initDataTracker(){

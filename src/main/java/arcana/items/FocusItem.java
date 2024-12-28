@@ -13,7 +13,6 @@ import net.minecraft.item.ItemUsageContext;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
-import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -29,6 +28,11 @@ public class FocusItem extends Item{
 		return Text.translatable(getTranslationKey(focusStack)).formatted(Formatting.AQUA);
 	}
 	
+	@Environment(EnvType.CLIENT)
+	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context){
+		tooltip.add(WandItem.costText(castCost(stack, null, MinecraftClient.getInstance().player)));
+	}
+	
 	// TODO: split into Focus interface, like Cap/Core?
 	public AspectMap castCost(@Nullable ItemStack wand, ItemStack focus, PlayerEntity user){
 		return new AspectMap();
@@ -38,12 +42,15 @@ public class FocusItem extends Item{
 		return ActionResult.PASS;
 	}
 	
-	public ActionResult castOnEntity(ItemStack wand, ItemStack focus, PlayerEntity user, LivingEntity target, Hand hand){
+	public ActionResult castOnEntity(ItemStack wand, ItemStack focus, PlayerEntity user, LivingEntity target){
 		return ActionResult.PASS;
 	}
 	
-	@Environment(EnvType.CLIENT)
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context){
-		tooltip.add(WandItem.costText(castCost(stack, null, MinecraftClient.getInstance().player)));
+	public boolean isContinuous(){
+		return false;
 	}
+	
+	public void startContinuousCast(ItemStack wand, ItemStack focus, PlayerEntity user){}
+	public void tickContinuousCast(ItemStack wand, ItemStack focus, PlayerEntity user){}
+	public void endContinuousCast(ItemStack wand, ItemStack focus, PlayerEntity user){}
 }

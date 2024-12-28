@@ -3,6 +3,7 @@ package arcana.items;
 import arcana.ArcanaRegistry;
 import arcana.aspects.*;
 import arcana.aura.AuraWorld;
+import arcana.aura.Node;
 import arcana.blocks.be.InfusionMatrixBlockEntity;
 import arcana.client.ArcanaClient;
 import dev.emi.trinkets.api.SlotReference;
@@ -124,7 +125,7 @@ public class WandItem extends Item implements WarpingItem{
 			var cost = fi.castCost(wand, focusStack, user).copy();
 			cost.multiply(aspect -> costMultiplier(aspect, stack, user));
 			if(stored.contains(cost)){
-				ActionResult result = fi.castOnEntity(wand, focusStack, user, entity, hand);
+				ActionResult result = fi.castOnEntity(wand, focusStack, user, entity);
 				if(result != ActionResult.PASS && result != ActionResult.FAIL){
 					// no point charging for something that didn't work
 					updateAspects(wand, aspects -> aspects.take(cost));
@@ -144,7 +145,9 @@ public class WandItem extends Item implements WarpingItem{
 		if(world.isClient)
 			return;
 		AuraWorld aura = AuraWorld.from(world);
-		aura.raycastNodes(user.getEyePos(), 4.5, false, user).ifPresent(node -> {
+		Optional<Node> nodeO = aura.raycastNodes(user.getEyePos(), 4.5, false, user);
+		if(nodeO.isPresent()){
+			Node node = nodeO.get();
 			// only attempt to drain aspects that the node has and the wand needs
 			AspectMap nodeAspects = node.getAspects();
 			AspectMap wandAspects = aspectsFrom(stack);
@@ -166,6 +169,22 @@ public class WandItem extends Item implements WarpingItem{
 					aura.sync();
 				}
 			}
+		}else{
+			updateFocus(stack, focusStack -> {
+				if(user instanceof PlayerEntity player && focusStack.getItem() instanceof FocusItem fi && fi.isContinuous()){
+					int ticksUsed = getMaxUseTime(stack) - remainingUseTicks;
+					if(ticksUsed == 0)
+						fi.startContinuousCast(stack, focusStack, player);
+					fi.tickContinuousCast(stack, focusStack, player);
+				}
+			});
+		}
+	}
+	
+	public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks){
+		updateFocus(stack, focusStack -> {
+			if(user instanceof PlayerEntity player && focusStack.getItem() instanceof FocusItem fi && fi.isContinuous())
+				fi.endContinuousCast(stack, focusStack, player);
 		});
 	}
 	
@@ -254,6 +273,12 @@ public class WandItem extends Item implements WarpingItem{
 		var focusTag = new NbtCompound();
 		focus.writeNbt(focusTag);
 		wand.setSubNbt("focus", focusTag);
+	}
+	
+	public static void updateFocus(ItemStack wand, Consumer<ItemStack> updater){
+		ItemStack focusStack = focusFrom(wand);
+		updater.accept(focusStack);
+		putFocus(wand, focusStack);
 	}
 	
 	public int warping(ItemStack stack, PlayerEntity player){

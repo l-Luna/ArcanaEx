@@ -48,8 +48,18 @@ public class PrismaticOrbEntityRenderer extends EntityRenderer<PrismaticOrbEntit
 		// 6 orbs following paths that look like rotating around the diagonal of a sphere,
 		// with either dimension's frequency scaled, and the object's size scaled
 		for(int xf = 1; xf < 4; xf++)
-			for(int yf = 0; yf < 4; yf++)
-				colCuboid(vc, ms, ColorHelper.Argb.getArgb(255, (int)(255f * (xf / 4f + 0.25f)), (int)(255f * (yf / 4f + 0.25f)), 255), MathUtil.facingToVec((float)(Math.sin(time * xf / 7f) * Math.PI), (float)(Math.cos(time * yf / 7f) * Math.PI)).multiply(0.1f), 0.1f);
+			for(int yf = 0; yf < 4; yf++){
+				float eSize = entity.getSize();
+				float cDist = 0.03f + 0.12f * eSize;
+				float cSize = 0.05f + 0.13f * eSize;
+				colCuboid(vc,
+						ms,
+						ColorHelper.Argb.getArgb(255, (int)(255f * (xf / 4f + 0.25f)), (int)(255f * (yf / 4f + 0.25f)), 255),
+						MathUtil.facingToVec(
+								(float)(Math.sin(time * xf / 7f) * Math.PI),
+								(float)(Math.cos(time * yf / 7f) * Math.PI)).multiply(cDist),
+						cSize);
+			}
 		ms.pop();
 		
 		RenderSystem.setShaderColor(1, 1, 1, 1);

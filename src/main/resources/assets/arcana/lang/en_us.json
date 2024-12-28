@@ -611,6 +611,7 @@
     "chemistry.light_focus": "Convert vis into light",
     "chemistry.portable_hole_focus": "Use vis to shorten space",
     "chemistry.equivalent_exchange_focus": "Swap matter with vis",
+    "chemistry.prismatic_light_focus": "Interleave threads of light",
     "chemistry.arcanium": "Connect metals and magic",
     "chemistry.transmutation.copper": "Understand the transmutation of Copper",
     "chemistry.transmutation.gold": "Understand the transmutation of Gold",
@@ -903,6 +904,15 @@
     "equivalent_exchange_focus.desc": "Unbroken symmetry",
     "equivalent_exchange_focus.stage.1": "When parts of the world are phased out, although I can move through that space, new blocks can't be put in their place.\nWhile it makes sense - the matter all still exists - it {i}would{r} be convenient to be able to quickly replace blocks in the world through other means, for easy construction and refurbishment.",
     "equivalent_exchange_focus.stage.2": "This new focus simply instantly breaks the block I look at, replacing it with whichever block is in my off-hand.\nDerived from diamond, the focus can destroy any block breakable by diamond; the casting cost scales with the mining level of the block I try to replace, up to {c3}3x{r} for anything demanding diamond tools.",
+
+    "prismatic_light_focus": {
+      "title": "Wand Focus: Prismatic Light",
+      "desc": "Searing retribution",
+      "stages": [
+        "It's about time I put together some proper magical weaponry - there's no good reason for me to {i}still{r} be swinging around glorified sticks, not when I could be raining pure destructive energy down from afar. No, not anymore.",
+        "Unlike simpler foci, the focus of prismatic light takes a moment to charge, building up an orb of interleaved light. After dropping my concentration, the orb will fly in the direction I look, bursting on contact and damaging anything that gets too close; the larger I let it get, the stronger that burst.\nObviously, the undead are particularly susceptible, but anything will fall with enough strikes."
+      ]
+    },
 
     // Alchemy Tab
     "alchemy_root": "Alchemy",

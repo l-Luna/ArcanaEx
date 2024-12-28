@@ -598,6 +598,41 @@
           "content": "arcana:equivalent_exchange_focus"
         }
       ]
+    },
+    {
+      "key": "arcana:prismatic_light_focus",
+      "name": "research.arcana.prismatic_light_focus.title",
+      "desc": "research.arcana.prismatic_light_focus.desc",
+      "icons": [
+        "arcana:prismatic_light_focus"
+      ],
+      "category": "arcana:auromancy",
+      "parents": [
+        "arcana:light_focus",
+        "arcana:portable_hole_focus"
+      ],
+      "x": 7,
+      "y": -1,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.prismatic_light_focus.stages.1",
+          "requirements": [
+            "16*minecraft:spectral_arrow",
+            "arcana:alumentum",
+            "minecraft:soul_torch",
+            "arcana::puzzle{arcana:prismatic_light_focus}"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.prismatic_light_focus.stages.2"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:prismatic_light_focus"
+        }
+      ]
     }
   ],
   "puzzles": [
@@ -679,6 +714,18 @@
         "mining",
         "magic",
         "order"
+      ]
+    },
+    {
+      "key": "arcana:prismatic_light_focus",
+      "type": "chemistry",
+      "desc": "puzzle.arcana.chemistry.prismatic_light_focus",
+      "size": 3,
+      "nodes": [
+        "light",
+        "weapon",
+        "magic",
+        "flight"
       ]
     },
     {

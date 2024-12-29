@@ -292,7 +292,8 @@
       ],
       "category": "arcana:fundamentals",
       "parents": [
-        "arcana:node_channelling"
+        "arcana:node_channelling",
+        "arcana:silverwood_wand_core"
       ],
       "meta": [
         "warping:1"

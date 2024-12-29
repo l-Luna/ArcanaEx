@@ -208,7 +208,8 @@
       ],
       "category": "arcana:artifice",
       "parents": [
-        "arcana:artifice_root"
+        "arcana:artifice_root",
+        "arcana:alchemy_root"
       ],
       "x": 0,
       "y": 2,

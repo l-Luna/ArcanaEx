@@ -359,6 +359,10 @@ public final class ArcanaRegistry{
 	public static final Block GREATWOOD_SIGN = new SignBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).renderLayer(CUTOUT).strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque(), GREATWOOD_SIGN_TY);
 	public static final Block GREATWOOD_WALL_SIGN = new WallSignBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).renderLayer(CUTOUT).dropsLike(GREATWOOD_SIGN).strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque(), GREATWOOD_SIGN_TY);
 	
+	public static final WoodenStatueBlock SPEAK_NO_EVIL_STATUE = new WoodenStatueBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD).nonOpaque(), WoodenStatueBlock.Type.speak);
+	public static final WoodenStatueBlock SEE_NO_EVIL_STATUE = new WoodenStatueBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD).nonOpaque(), WoodenStatueBlock.Type.see);
+	public static final WoodenStatueBlock HEAR_NO_EVIL_STATUE = new WoodenStatueBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD).nonOpaque(), WoodenStatueBlock.Type.hear);
+	
 	public static final Block LIGHT_BLOCK = new LightFocusBlock(of(Material.DECORATION).dropsNothing().breakInstantly().ticksRandomly().luminance(state -> 7 + state.get(LightFocusBlock.life)));
 	public static final Block TAINT_GOO = new FluidBlock(STILL_TAINT_GOO, FabricBlockSettings.copy(Blocks.WATER));
 	
@@ -757,6 +761,13 @@ public final class ArcanaRegistry{
 		// HACKFIX, since fabric halfassed this API
 		BlockEntityType.SIGN.blocks = new HashSet<>(BlockEntityType.SIGN.blocks);
 		BlockEntityType.SIGN.blocks.addAll(Set.of(SILVERWOOD_SIGN, SILVERWOOD_WALL_SIGN, GREATWOOD_SIGN, GREATWOOD_WALL_SIGN));
+		
+		register("speak_no_evil_statue", SPEAK_NO_EVIL_STATUE, false);
+		register("speak_no_evil_statue", new BigBlockItem(SPEAK_NO_EVIL_STATUE, GROUPED));
+		register("see_no_evil_statue", SEE_NO_EVIL_STATUE, false);
+		register("see_no_evil_statue", new BigBlockItem(SEE_NO_EVIL_STATUE, GROUPED));
+		register("hear_no_evil_statue", HEAR_NO_EVIL_STATUE, false);
+		register("hear_no_evil_statue", new BigBlockItem(HEAR_NO_EVIL_STATUE, GROUPED));
 		
 		for(Aspect primal : Aspects.hasCluster){
 			CrystalClusterBlock clusterBlock = new CrystalClusterBlock(

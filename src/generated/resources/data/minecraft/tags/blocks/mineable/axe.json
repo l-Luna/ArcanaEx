@@ -33,6 +33,9 @@
     "arcana:greatwood_door",
     "arcana:greatwood_trapdoor",
     "arcana:greatwood_sign",
-    "arcana:greatwood_wall_sign"
+    "arcana:greatwood_wall_sign",
+    "arcana:speak_no_evil_statue",
+    "arcana:see_no_evil_statue",
+    "arcana:hear_no_evil_statue"
   ]
 }

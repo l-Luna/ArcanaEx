@@ -80,6 +80,7 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		
 		blockGen.registerCooker(ARCANE_FURNACE, TexturedModel.ORIENTABLE);
 		
+		blockGen.registerLantern(CRIMSON_LANTERN);
 		registerBars(CHAIN_WALL, blockGen);
 		
 		for(CrystalClusterBlock value : Aspects.clusters.values()){
@@ -115,6 +116,7 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		noAutoGen.add(WARDED_CAMPFIRE.asItem());
 		noAutoGen.add(RESEARCH_TABLE.asItem());
 		noAutoGen.add(THAUMIC_HALO.asItem());
+		noAutoGen.add(CRIMSON_LANTERN.asItem());
 		noAutoGen.add(CHAIN_WALL.asItem());
 		noAutoGen.add(METAL_LADDER.asItem());
 		

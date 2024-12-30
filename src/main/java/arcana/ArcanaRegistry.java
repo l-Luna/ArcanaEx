@@ -33,6 +33,8 @@ import arcana.worldgen.silverwood.SilverwoodFoliagePlacer;
 import arcana.worldgen.silverwood.SilverwoodSaplingGenerator;
 import arcana.worldgen.silverwood.SilverwoodTree;
 import arcana.worldgen.silverwood.SilverwoodTrunkPlacer;
+import com.google.common.collect.ImmutableList;
+import com.mojang.datafixers.util.Pair;
 import com.unascribed.lib39.fractal.api.ItemSubGroup;
 import com.unascribed.lib39.weld.api.BigBlock;
 import com.unascribed.lib39.weld.api.BigBlockItem;
@@ -63,25 +65,37 @@ import net.minecraft.particle.ParticleType;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.property.Properties;
+import net.minecraft.structure.StructureSet;
+import net.minecraft.structure.pool.StructurePool;
+import net.minecraft.structure.pool.StructurePoolElement;
+import net.minecraft.structure.pool.StructurePools;
+import net.minecraft.tag.TagKey;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 import net.minecraft.util.SignType;
-import net.minecraft.util.registry.BuiltinRegistries;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryEntry;
+import net.minecraft.util.registry.*;
 import net.minecraft.world.Heightmap;
+import net.minecraft.world.StructureSpawns;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.GenerationStep;
+import net.minecraft.world.gen.StructureTerrainAdaptation;
+import net.minecraft.world.gen.YOffset;
+import net.minecraft.world.gen.chunk.placement.RandomSpreadStructurePlacement;
+import net.minecraft.world.gen.chunk.placement.SpreadType;
+import net.minecraft.world.gen.chunk.placement.StructurePlacement;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.PlacedFeature;
 import net.minecraft.world.gen.foliage.FoliagePlacerType;
+import net.minecraft.world.gen.heightprovider.ConstantHeightProvider;
 import net.minecraft.world.gen.placementmodifier.HeightmapPlacementModifier;
+import net.minecraft.world.gen.structure.JigsawStructure;
+import net.minecraft.world.gen.structure.Structure;
 import net.minecraft.world.gen.trunk.TrunkPlacerType;
 import net.minecraft.world.poi.PointOfInterestType;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.function.ToIntFunction;
 
 import static arcana.Arcana.arcId;
@@ -432,6 +446,57 @@ public final class ArcanaRegistry{
 			RegistryEntry.of(SURFACE_NODE_CONF_FEATURE),
 			List.of(HeightmapPlacementModifier.of(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES))
 	);
+	
+	// structures
+	public static final RegistryEntry<StructurePool> CRIMSON_OUTPOST_STRUCTURE_POOL = StructurePools.register(
+			new StructurePool(
+					new Identifier("arcana:crimson_outpost"),
+					new Identifier("empty"),
+					ImmutableList.of(Pair.of(StructurePoolElement.ofLegacySingle("arcana:crimson_outpost"), 1)),
+					StructurePool.Projection.RIGID
+			)
+	);
+	
+	public static final Structure CRIMSON_OUTPOST = new JigsawStructure(
+			createStructureConfig(
+					ArcanaTags.GREATWOOD_SPAWNABLE,
+					Map.of(),
+					GenerationStep.Feature.SURFACE_STRUCTURES,
+					StructureTerrainAdaptation.BEARD_THIN
+			),
+			CRIMSON_OUTPOST_STRUCTURE_POOL,
+			1,
+			ConstantHeightProvider.create(YOffset.fixed(0)),
+			false,
+			Heightmap.Type.WORLD_SURFACE_WG
+	);
+	
+	public static final StructurePlacement CRIMSON_OUTPOST_PLACEMENT = new RandomSpreadStructurePlacement(48, 12, SpreadType.LINEAR, 1256);
+	
+	public static final RegistryEntry<StructurePool> CRIMSON_CAMP_STRUCTURE_POOL = StructurePools.register(
+			new StructurePool(
+					new Identifier("arcana:crimson_camp"),
+					new Identifier("empty"),
+					ImmutableList.of(Pair.of(StructurePoolElement.ofLegacySingle("arcana:crimson_camp"), 1)),
+					StructurePool.Projection.RIGID
+			)
+	);
+	
+	public static final Structure CRIMSON_CAMP = new JigsawStructure(
+			createStructureConfig(
+					ArcanaTags.GREATWOOD_SPAWNABLE,
+					Map.of(),
+					GenerationStep.Feature.SURFACE_STRUCTURES,
+					StructureTerrainAdaptation.BEARD_THIN
+			),
+			CRIMSON_CAMP_STRUCTURE_POOL,
+			1,
+			ConstantHeightProvider.create(YOffset.fixed(0)),
+			false,
+			Heightmap.Type.WORLD_SURFACE_WG
+	);
+	
+	public static final StructurePlacement CRIMSON_CAMP_PLACEMENT = new RandomSpreadStructurePlacement(38, 12, SpreadType.LINEAR, 1356);
 	
 	// particle types...
 	public static ParticleType<BlockStateParticleEffect> HUNGRY_NODE_DISC = FabricParticleTypes.complex(BlockStateParticleEffect.PARAMETERS_FACTORY);
@@ -894,6 +959,10 @@ public final class ArcanaRegistry{
 		register("greatwood_tree", GreatwoodTree.GREATWOOD_TREE);
 		register("greatwood_tree", GreatwoodTree.SCATTERED_GREATWOOD_TREE);
 		
+		// structures
+		register("crimson_outpost", CRIMSON_OUTPOST, CRIMSON_OUTPOST_PLACEMENT);
+		register("crimson_camp", CRIMSON_CAMP, CRIMSON_CAMP_PLACEMENT);
+		
 		// particle types
 		register("hungry_node_disc", HUNGRY_NODE_DISC);
 		register("hungry_node_block", HUNGRY_NODE_BLOCK);
@@ -998,6 +1067,21 @@ public final class ArcanaRegistry{
 	
 	private static void registerCoreOnly(Core core){
 		Core.cores.put(core.id(), core);
+	}
+	
+	private static void register(String name, Structure structure, StructurePlacement placement){
+		RegistryKey<Structure> structureKey = RegistryKey.of(Registry.STRUCTURE_KEY, arcId(name));
+		RegistryEntry<Structure> structureEntry = BuiltinRegistries.add(BuiltinRegistries.STRUCTURE, structureKey, structure);
+		RegistryKey<StructureSet> setKey = RegistryKey.of(Registry.STRUCTURE_SET_KEY, arcId(name));
+		BuiltinRegistries.add(BuiltinRegistries.STRUCTURE_SET, setKey, new StructureSet(structureEntry, placement));
+	}
+	
+	private static Structure.Config createStructureConfig(TagKey<Biome> biomeTag, Map<SpawnGroup, StructureSpawns> spawns, GenerationStep.Feature featureStep, StructureTerrainAdaptation terrainAdaptation){
+		return new Structure.Config(getOrCreateBiomeTag(biomeTag), spawns, featureStep, terrainAdaptation);
+	}
+	
+	private static RegistryEntryList<Biome> getOrCreateBiomeTag(TagKey<Biome> key){
+		return BuiltinRegistries.BIOME.getOrCreateEntryList(key);
 	}
 	
 	private static ToIntFunction<BlockState> whenLit(int litLevel){

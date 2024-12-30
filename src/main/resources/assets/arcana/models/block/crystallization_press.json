@@ -4,7 +4,7 @@
 	"texture_size": [128, 128],
 	"textures": {
 		"0": "arcana:block/crystallization_press",
-		"particle": "arcana:block/crystallization_press"
+		"particle": "arcana:block/crystallization_press_particles"
 	},
 	"elements": [
 		{

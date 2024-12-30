@@ -1,6 +1,8 @@
 package arcana.blocks.be;
 
 import arcana.ArcanaRegistry;
+import arcana.aura.AuraWorld;
+import arcana.aura.FluxOrigin;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
@@ -24,6 +26,11 @@ public class ArcaneLevitatorBlockEntity extends BlockEntity{
 			else
 				break;
 		}
+		// if this is powered by redstone, or otherwise would have 0 range, don't emit flux or do anything
+		if(height == 0)
+			return;
+		if(world.getTime() % (20 * 1000) == 0)
+			AuraWorld.from(world).getOrCreateChunk(pos).incrementFlux(0.5f, FluxOrigin.ARCANE_LEVITATOR);
 		// limit height at solid block
 		for(int y = 1; y < height; y++)
 			if(world.getBlockState(pos.up(y)).isSolidBlock(world, pos.up(y))){

@@ -13,6 +13,8 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.item.ToolItem;
+import net.minecraft.state.property.Properties;
+import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,6 +80,8 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		
 		blockGen.registerCooker(ARCANE_FURNACE, TexturedModel.ORIENTABLE);
 		
+		registerBars(CHAIN_WALL, blockGen);
+		
 		for(CrystalClusterBlock value : Aspects.clusters.values()){
 			blockGen.blockStateCollector.accept(VariantsBlockStateSupplier
 					.create(value, BlockStateVariant.create())
@@ -111,6 +115,8 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		noAutoGen.add(WARDED_CAMPFIRE.asItem());
 		noAutoGen.add(RESEARCH_TABLE.asItem());
 		noAutoGen.add(THAUMIC_HALO.asItem());
+		noAutoGen.add(CHAIN_WALL.asItem());
+		noAutoGen.add(METAL_LADDER.asItem());
 		
 		itemGen.register(NITOR.asItem(), Models.GENERATED);
 		itemGen.register(THAUMIC_HALO.asItem(), Models.GENERATED);
@@ -140,11 +146,46 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		return "Arcana Blockstates and Models";
 	}
 	
-	/*public void registerSign(Block signBlock, Block wallSignBlock, Block particles, BlockStateModelGenerator blockGen){
-		Identifier particleModel = Models.PARTICLE.upload(signBlock, TextureMap.particle(particles), blockGen.modelCollector);
-		blockGen.blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(signBlock, particleModel));
-		blockGen.blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(wallSignBlock, particleModel));
-		blockGen.registerItemModel(signBlock.asItem());
-		noAutoGen.add(signBlock.asItem());
-	}*/
+	private void registerBars(Block block, BlockStateModelGenerator blockGen){
+		Identifier postEnds = ModelIds.getBlockSubModelId(block, "_post_ends");
+		Identifier post = ModelIds.getBlockSubModelId(block, "_post");
+		Identifier cap = ModelIds.getBlockSubModelId(block, "_cap");
+		Identifier capAlt = ModelIds.getBlockSubModelId(block, "_cap_alt");
+		Identifier side = ModelIds.getBlockSubModelId(block, "_side");
+		Identifier sideAlt = ModelIds.getBlockSubModelId(block, "_side_alt");
+		blockGen.blockStateCollector.accept(
+				MultipartBlockStateSupplier.create(block)
+						.with(BlockStateVariant.create().put(VariantSettings.MODEL, postEnds))
+						.with(
+								When.create().set(Properties.NORTH, false).set(Properties.EAST, false).set(Properties.SOUTH, false).set(Properties.WEST, false),
+								BlockStateVariant.create().put(VariantSettings.MODEL, post)
+						)
+						.with(
+								When.create().set(Properties.NORTH, true).set(Properties.EAST, false).set(Properties.SOUTH, false).set(Properties.WEST, false),
+								BlockStateVariant.create().put(VariantSettings.MODEL, cap)
+						)
+						.with(
+								When.create().set(Properties.NORTH, false).set(Properties.EAST, true).set(Properties.SOUTH, false).set(Properties.WEST, false),
+								BlockStateVariant.create().put(VariantSettings.MODEL, cap).put(VariantSettings.Y, VariantSettings.Rotation.R90)
+						)
+						.with(
+								When.create().set(Properties.NORTH, false).set(Properties.EAST, false).set(Properties.SOUTH, true).set(Properties.WEST, false),
+								BlockStateVariant.create().put(VariantSettings.MODEL, capAlt)
+						)
+						.with(
+								When.create().set(Properties.NORTH, false).set(Properties.EAST, false).set(Properties.SOUTH, false).set(Properties.WEST, true),
+								BlockStateVariant.create().put(VariantSettings.MODEL, capAlt).put(VariantSettings.Y, VariantSettings.Rotation.R90)
+						)
+						.with(When.create().set(Properties.NORTH, true), BlockStateVariant.create().put(VariantSettings.MODEL, side))
+						.with(
+								When.create().set(Properties.EAST, true),
+								BlockStateVariant.create().put(VariantSettings.MODEL, side).put(VariantSettings.Y, VariantSettings.Rotation.R90)
+						)
+						.with(When.create().set(Properties.SOUTH, true), BlockStateVariant.create().put(VariantSettings.MODEL, sideAlt))
+						.with(
+								When.create().set(Properties.WEST, true),
+								BlockStateVariant.create().put(VariantSettings.MODEL, sideAlt).put(VariantSettings.Y, VariantSettings.Rotation.R90)
+						)
+		);
+	}
 }

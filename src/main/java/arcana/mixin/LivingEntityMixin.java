@@ -3,6 +3,9 @@ package arcana.mixin;
 import arcana.ArcanaRegistry;
 import arcana.ArcanaTags;
 import arcana.items.BootsOfTheTravellerItem;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.LadderBlock;
+import net.minecraft.block.TrapdoorBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -12,6 +15,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tag.FluidTags;
+import net.minecraft.util.math.BlockPos;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -72,5 +76,16 @@ public abstract class LivingEntityMixin{
 		if(inTaintGoo)
 			if(self.world.getTime() % 80 == 0 || !self.hasStatusEffect(ArcanaRegistry.TAINTED))
 				self.addStatusEffect(new StatusEffectInstance(ArcanaRegistry.TAINTED, 5 * 20));
+	}
+	
+	// make trapdoors work right with metal ladders
+	
+	@Inject(method = "canEnterTrapdoor", at = @At("HEAD"), cancellable = true)
+	private void canEnterTrapdoor(BlockPos pos, BlockState state, CallbackInfoReturnable<Boolean> cir){
+		if(state.get(TrapdoorBlock.OPEN)){
+			BlockState ladderState = ((LivingEntity)(Object)this).world.getBlockState(pos.down());
+			if(ladderState.isOf(ArcanaRegistry.METAL_LADDER) && ladderState.get(LadderBlock.FACING) == state.get(TrapdoorBlock.FACING))
+				cir.setReturnValue(true);
+		}
 	}
 }

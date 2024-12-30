@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/ladder",
+  "textures": {
+    "particle": "arcana:block/metal_ladder",
+    "texture": "arcana:block/metal_ladder"
+  }
+}

@@ -34,6 +34,7 @@ public class ResearchTableBlock extends BigBlock implements Waterloggable, Block
 	public static final BooleanProperty left = BooleanProperty.of("left");
 	public static final DirectionProperty facing = Properties.HORIZONTAL_FACING;
 	public static final BooleanProperty waterlogged = Properties.WATERLOGGED;
+	public static final BooleanProperty hasInk = BooleanProperty.of("has_ink");
 	
 	public ResearchTableBlock(Settings settings){
 		super(null, null, null, settings);
@@ -41,7 +42,7 @@ public class ResearchTableBlock extends BigBlock implements Waterloggable, Block
 	
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder){
 		super.appendProperties(builder);
-		builder.add(left, facing, waterlogged);
+		builder.add(left, facing, waterlogged, hasInk);
 	}
 	
 	// BigBlock handles multi-block-ness for us, but we need to handle orientability ourselves
@@ -88,7 +89,14 @@ public class ResearchTableBlock extends BigBlock implements Waterloggable, Block
 		FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
 		return super.getPlacementState(ctx)
 				.with(waterlogged, fluidState.getFluid() == Fluids.WATER)
-				.with(facing, ctx.getPlayerFacing().rotateYCounterclockwise());
+				.with(facing, ctx.getPlayerFacing().rotateYCounterclockwise())
+				.with(hasInk, false);
+	}
+	
+	protected BlockState copyState(BlockState us, BlockState neighbor){
+		return super.copyState(us, neighbor)
+				.with(waterlogged, neighbor.get(waterlogged))
+				.with(hasInk, neighbor.get(hasInk));
 	}
 	
 	@Nullable

@@ -1,12 +1,14 @@
 package arcana.blocks.be;
 
 import arcana.ArcanaRegistry;
+import arcana.blocks.ResearchTableBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public class ResearchTableBlockEntity extends BlockEntity{
 	
@@ -14,7 +16,12 @@ public class ResearchTableBlockEntity extends BlockEntity{
 	
 	public ResearchTableBlockEntity(BlockPos pos, BlockState state){
 		super(ArcanaRegistry.RESEARCH_TABLE_BE, pos, state);
-		scribingTools.addListener(__ -> markDirty());
+		scribingTools.addListener(inv -> {
+			World w = getWorld();
+			if(w != null && w.getBlockState(getPos()).isOf(ArcanaRegistry.RESEARCH_TABLE))
+				w.setBlockState(getPos(), w.getBlockState(getPos()).with(ResearchTableBlock.hasInk, !inv.isEmpty()));
+			markDirty();
+		});
 		note.addListener(__ -> markDirty());
 	}
 	

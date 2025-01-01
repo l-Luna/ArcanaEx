@@ -169,6 +169,9 @@ public final class ArcanaRegistry{
 	public static final Item ARCANIUM_LEGGINGS = new ArmorItem(ArcanaArmourMaterials.ARCANIUM, EquipmentSlot.LEGS, new Settings().group(Tab.EQUIPMENT));
 	public static final Item ARCANIUM_BOOTS = new ArmorItem(ArcanaArmourMaterials.ARCANIUM, EquipmentSlot.FEET, new Settings().group(Tab.EQUIPMENT));
 	
+	public static final Item THAUMIUM_INGOT = new Item(GROUPED);
+	public static final Item THAUMIUM_NUGGET = new Item(GROUPED);
+	
 	public static final Item VOID_METAL_INGOT = new Item(GROUPED);
 	public static final Item VOID_METAL_NUGGET = new Item(GROUPED);
 	public static final Item VOID_SEED = new Item(GROUPED);
@@ -311,6 +314,7 @@ public final class ArcanaRegistry{
 	public static final Block WARDED_CAMPFIRE = new WardedCampfireBlock(of(Material.WOOD).dropsSelf().renderLayer(CUTOUT).strength(2).sounds(BlockSoundGroup.WOOD).luminance(whenLit(15)).nonOpaque());
 	
 	public static final Block ARCANIUM_BLOCK = new Block(of(Material.METAL, MapColor.PINK).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(5, 6).sounds(BlockSoundGroup.METAL));
+	public static final Block THAUMIUM_BLOCK = new Block(of(Material.METAL, MapColor.DARK_DULL_PINK).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(5, 6).sounds(BlockSoundGroup.METAL));
 	public static final Block VOID_METAL_BLOCK = new Block(of(Material.METAL, MapColor.PURPLE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(5, 6).sounds(BlockSoundGroup.METAL));
 	public static final Block SILVERLEAF_AMALGAMATE_BLOCK = new Block(of(Material.METAL, MapColor.WHITE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(5, 6).sounds(BlockSoundGroup.METAL));
 	
@@ -615,6 +619,9 @@ public final class ArcanaRegistry{
 		register("arcanium_leggings", ARCANIUM_LEGGINGS);
 		register("arcanium_boots", ARCANIUM_BOOTS);
 		
+		register("thaumium_ingot", THAUMIUM_INGOT);
+		register("thaumium_nugget", THAUMIUM_NUGGET);
+		
 		register("void_metal_ingot", VOID_METAL_INGOT);
 		register("void_metal_nugget", VOID_METAL_NUGGET);
 		register("void_seed", VOID_SEED);
@@ -762,8 +769,10 @@ public final class ArcanaRegistry{
 		register("warded_campfire", WARDED_CAMPFIRE);
 		
 		register("arcanium_block", ARCANIUM_BLOCK);
+		register("thaumium_block", THAUMIUM_BLOCK);
 		register("void_metal_block", VOID_METAL_BLOCK);
 		register("silverleaf_amalgamate_block", SILVERLEAF_AMALGAMATE_BLOCK);
+		
 		register("arcane_stone", ARCANE_STONE);
 		register("arcane_stone_bricks", ARCANE_STONE_BRICKS);
 		

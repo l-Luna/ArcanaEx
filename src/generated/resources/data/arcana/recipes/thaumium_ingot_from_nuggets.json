@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "thaumium_ingot",
+  "key": {
+    "#": {
+      "item": "arcana:thaumium_nugget"
+    }
+  },
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "result": {
+    "item": "arcana:thaumium_ingot"
+  }
+}

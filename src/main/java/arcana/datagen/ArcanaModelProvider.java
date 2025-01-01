@@ -42,6 +42,7 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		blockGen.registerSimpleState(INFUSION_MATRIX);
 		
 		blockGen.registerSimpleCubeAll(ARCANIUM_BLOCK);
+		blockGen.registerSimpleCubeAll(THAUMIUM_BLOCK);
 		blockGen.registerSimpleCubeAll(VOID_METAL_BLOCK);
 		blockGen.registerSimpleCubeAll(SILVERLEAF_AMALGAMATE_BLOCK);
 		blockGen.registerSimpleCubeAll(SILVERWOOD_LEAVES);

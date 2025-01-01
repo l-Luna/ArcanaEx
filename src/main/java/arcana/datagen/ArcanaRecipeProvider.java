@@ -42,6 +42,8 @@ public class ArcanaRecipeProvider extends FabricRecipeProvider{
 		offerStonecuttingRecipe(exporter, ARCANE_STONE_BRICKS_STAIRS, ARCANE_STONE_BRICKS);
 		offerStonecuttingRecipe(exporter, ARCANE_STONE_BRICKS_WALL, ARCANE_STONE_BRICKS);
 		
+		offerReversibleCompactingRecipesWithReverseRecipeGroup(exporter, THAUMIUM_INGOT, THAUMIUM_BLOCK, "thaumium_ingot_from_thaumium_block", "thaumium_ingot");
+		offerReversibleCompactingRecipesWithCompactingRecipeGroup(exporter, THAUMIUM_NUGGET, THAUMIUM_INGOT, "thaumium_ingot_from_nuggets", "thaumium_ingot");
 		offerReversibleCompactingRecipesWithReverseRecipeGroup(exporter, VOID_METAL_INGOT, VOID_METAL_BLOCK, "void_metal_ingot_from_void_metal_block", "void_metal_ingot");
 		offerReversibleCompactingRecipesWithCompactingRecipeGroup(exporter, VOID_METAL_NUGGET, VOID_METAL_INGOT, "void_metal_ingot_from_nuggets", "void_metal_ingot");
 		offerReversibleCompactingRecipes(exporter, SILVERLEAF_AMALGAMATE, SILVERLEAF_AMALGAMATE_BLOCK);

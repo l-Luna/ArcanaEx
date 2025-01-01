@@ -175,6 +175,9 @@
     "arcanium_leggings": "Arcanium Leggings",
     "arcanium_boots": "Arcanium Boots",
 
+    "thaumium_ingot": "Thaumium Ingot",
+    "thaumium_nugget": "Thaumium Nugget",
+
     "void_metal_ingot": "Void Metal Ingot",
     "void_metal_nugget": "Void Metal Nugget",
     "void_seed": "Void Seed",
@@ -310,6 +313,7 @@
     "warded_campfire": "Warded Campfire",
 
     "arcanium_block": "Arcanium Block",
+    "thaumium_block": "Thaumium Block",
     "void_metal_block": "Void Metal Block",
     "silverleaf_amalgamate_block": "Solidified Silverleaf Amalgamate",
     "arcane_stone": "Arcane Stone",

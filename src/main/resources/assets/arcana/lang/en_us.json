@@ -705,7 +705,7 @@
     // Fundamentals Tab: Progression
     "wandcraft": "Wandcraft",
     "wandcraft.desc": "Equipment from long past",
-    "wandcraft.stage.1": "To continue any further, I'll need some way of directly manipulating vis. The tools once used for this were wands, constructed from a wide variety of materials that combine to create powerful magic.\nConstructing a simple wand is as simple as capping off a stick with purpose-build metal wand caps, the same design reusable as I improve my materials and skills.\n{i}Some{r} notes seem to refer to the use of a special glove, directly grabbing the vis with my hands; constructing such a thing seems impossible with what I have available, however.",
+    "wandcraft.stage.1": "To continue any further, I'll need some way of directly manipulating vis. The tools once used for this were wands, constructed from a wide variety of materials that combine to create powerful magic.\nConstructing a simple wand is as simple as capping off a stick with purpose-built metal wand caps, the same design reusable as I improve my materials and skills.\n{i}Some{r} notes seem to refer to the use of a special glove, directly grabbing the vis with my hands; constructing such a thing seems impossible with what I have available, however.",
     "wandcraft.stage.2": "Now, I have a real way to control magic. Soon, I'll be tapping on walls and whispering spells to open hidden gateways...\nBut first, I'll need to charge my wand with energy, by draining a node of it's power.",
 
     "nodes": "Nodes",

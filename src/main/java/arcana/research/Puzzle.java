@@ -69,6 +69,10 @@ public abstract class Puzzle{
 	public abstract Identifier type();
 	public abstract NbtCompound data();
 	
+	public boolean visible(){
+		return true;
+	}
+	
 	public Identifier id(){
 		return id;
 	}

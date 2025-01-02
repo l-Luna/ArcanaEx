@@ -87,8 +87,11 @@ public final class Researcher implements Component, AutoSyncedComponent{
 		return entryStage(entry) >= entry.sections().size();
 	}
 	
-	public int getCompletedPuzzleCount(){
-		return completedPuzzles.size();
+	public int getCompletedVisiblePuzzleCount(){
+		return (int)completedPuzzles.stream()
+				.map(Research::getPuzzle)
+				.filter(Puzzle::visible)
+				.count();
 	}
 	
 	// checks if all requirements are complete, takes requirements if so, and syncs with client if anything did happen

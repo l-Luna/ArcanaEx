@@ -17,4 +17,8 @@ public class Fieldwork extends Puzzle{
 	public NbtCompound data(){
 		return new NbtCompound();
 	}
+	
+	public boolean visible(){
+		return false;
+	}
 }

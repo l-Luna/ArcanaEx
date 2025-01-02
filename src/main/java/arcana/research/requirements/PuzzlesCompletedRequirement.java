@@ -13,7 +13,7 @@ public class PuzzlesCompletedRequirement extends Requirement{
 	public static final Identifier TYPE = arcId("puzzles_completed");
 	
 	public boolean satisfiedBy(PlayerEntity player){
-		return Researcher.from(player).getCompletedPuzzleCount() >= amount;
+		return Researcher.from(player).getCompletedVisiblePuzzleCount() >= amount;
 	}
 	
 	public void takeFrom(PlayerEntity player){

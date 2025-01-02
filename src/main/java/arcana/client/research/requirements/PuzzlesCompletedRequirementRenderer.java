@@ -23,7 +23,7 @@ public class PuzzlesCompletedRequirementRenderer implements RequirementRenderer<
 	}
 	
 	public List<? extends Text> tooltip(PuzzlesCompletedRequirement requirement, int time){
-		int done = Researcher.from(client().player).getCompletedPuzzleCount();
+		int done = Researcher.from(client().player).getCompletedVisiblePuzzleCount();
 		return List.of(
 				Text.translatable("research.requirement.arcana.puzzles_completed", requirement.getAmount()),
 				Text.translatable("research.requirement.arcana.puzzles_completed.progress", done, requirement.getAmount())

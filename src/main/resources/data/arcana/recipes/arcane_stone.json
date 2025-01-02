@@ -14,7 +14,7 @@
     "SSS"
   ],
   "aspects": [
-    "8*order"
+    "4*order"
   ],
   "result": {
     "item": "arcana:arcane_stone",

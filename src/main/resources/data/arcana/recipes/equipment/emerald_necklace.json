@@ -2,18 +2,21 @@
   "type": "arcana:arcane_crafting",
   "key": {
     "X": {
-      "item": "minecraft:copper_ingot"
+      "item": "minecraft:gold_nugget"
+    },
+    "E": {
+      "item": "minecraft:emerald"
     }
   },
   "pattern": [
     " X ",
     "X X",
-    " X "
+    "EX "
   ],
   "aspects": [
     "12*order"
   ],
   "result": {
-    "item": "arcana:copper_ring"
+    "item": "arcana:emerald_necklace"
   }
 }

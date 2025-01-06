@@ -20,6 +20,7 @@
     "boots": "Boots",
     "horse_armours": "Horse Armours",
     "rings": "Arcana Rings",
+    "necklaces": "Arcana Necklaces",
 
     "aspect_crystals": "Primal Crystals",
     "cluster_seeds": "Primal Cluster Seeds",
@@ -203,8 +204,9 @@
     "silverleaf_leggings": "Silverleaf Leggings",
     "silverleaf_boots": "Silverleaf Shoes",
 
+    "emerald_necklace": "Emerald Necklace",
+    "gold_ring": "Gold Ring",
     "arcanium_ring": "Arcanium Ring",
-    "copper_ring": "Copper Ring",
     "adorned_ring": "Adorned Ring",
 
     "boots_of_the_traveller": "Boots of the Traveller",

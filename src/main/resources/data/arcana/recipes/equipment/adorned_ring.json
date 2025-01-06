@@ -2,7 +2,7 @@
   "type": "arcana:arcane_crafting",
   "key": {
     "X": {
-      "item": "arcana:copper_ring"
+      "item": "arcana:gold_ring"
     },
     "O": {
       "item": "arcana:crystals/order"

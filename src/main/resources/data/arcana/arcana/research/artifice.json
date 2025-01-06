@@ -111,7 +111,8 @@
       "name": "research.arcana.mundane_jewelry.title",
       "desc": "research.arcana.mundane_jewelry.desc",
       "icons": [
-        "arcana:copper_ring"
+        "arcana:gold_ring",
+        "arcana:emerald_necklace"
       ],
       "category": "arcana:artifice",
       "parents": [
@@ -129,7 +130,11 @@
         },
         {
           "type": "arcane_crafting",
-          "content": "arcana:equipment/copper_ring"
+          "content": "arcana:equipment/emerald_necklace"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:equipment/gold_ring"
         }
       ]
     },

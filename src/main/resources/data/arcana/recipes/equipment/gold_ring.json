@@ -1,0 +1,19 @@
+{
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "X": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "pattern": [
+    " X ",
+    "X X",
+    " X "
+  ],
+  "aspects": [
+    "12*order"
+  ],
+  "result": {
+    "item": "arcana:gold_ring"
+  }
+}

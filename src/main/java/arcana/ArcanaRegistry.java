@@ -197,8 +197,9 @@ public final class ArcanaRegistry{
 	public static final Item SILVERLEAF_LEGGINGS = new ArmorItem(ArcanaArmourMaterials.SILVERLEAF, EquipmentSlot.LEGS, new Settings().group(Tab.EQUIPMENT));
 	public static final Item SILVERLEAF_BOOTS = new ArmorItem(ArcanaArmourMaterials.SILVERLEAF, EquipmentSlot.FEET, new Settings().group(Tab.EQUIPMENT));
 	
+	public static final Item EMERALD_NECKLACE = new NecklaceItem(new Settings().group(Tab.EQUIPMENT).maxCount(1));
+	public static final Item GOLD_RING = new RingItem(new Settings().group(Tab.EQUIPMENT).maxCount(1), 2, 0);
 	public static final Item ARCANIUM_RING = new RingItem(new Settings().group(Tab.EQUIPMENT).maxCount(1), 3, 0);
-	public static final Item COPPER_RING = new RingItem(new Settings().group(Tab.EQUIPMENT).maxCount(1), 2, 0);
 	public static final Item ADORNED_RING = new RingItem(new Settings().group(Tab.EQUIPMENT).maxCount(1), 1, 5);
 	
 	public static final Item BOOTS_OF_THE_TRAVELLER = new BootsOfTheTravellerItem(ArcanaArmourMaterials.BOOTS_OF_THE_TRAVELLER, new Settings().group(Tab.EQUIPMENT));
@@ -647,8 +648,9 @@ public final class ArcanaRegistry{
 		register("silverleaf_leggings", SILVERLEAF_LEGGINGS);
 		register("silverleaf_boots", SILVERLEAF_BOOTS);
 		
+		register("emerald_necklace", EMERALD_NECKLACE);
+		register("gold_ring", GOLD_RING);
 		register("arcanium_ring", ARCANIUM_RING);
-		register("copper_ring", COPPER_RING);
 		register("adorned_ring", ADORNED_RING);
 		
 		register("boots_of_the_traveller", BOOTS_OF_THE_TRAVELLER);

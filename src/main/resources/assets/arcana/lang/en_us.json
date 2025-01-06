@@ -616,7 +616,6 @@
     "chemistry.monocle_of_revealing": "Create a more efficient vis lens",
     "chemistry.copper_wand_caps": "Conduct vis through copper",
     "chemistry.leather_wand_caps": "Conduct vis through leather",
-    "chemistry.greatwood_wand_core": "Store vis in greatwood",
     "chemistry.nether_stem_wand_core": "Store vis in the stem of nether fungi",
     "chemistry.varnished_wood_wand_core": "Design a fine vis battery",
     "chemistry.silverwood_wand_core": "Refine silverwood",
@@ -739,7 +738,7 @@
     "auromancy": "Auromancy",
     "auromancy.desc": "The gateway of miracles",
     "auromancy.stage.1": "This wood-and-iron wand isn't always going to cut it. Really, it's a terrible, glorified vis battery, with few ways to put it's magic to good use. Surely I can build something better?",
-    "auromancy.stage.2": "Gold is certainly an improvement over iron, but it doesn't take a genius to know that. Even ordinary enchanting prefers it over everything.\nI believe some dedicated study towards wands and vis manipulation is in order. I'll store this in the {c3}Auromancy{r} tab of the Arcanum, accessible by selecting the wand icon on the left.",
+    "auromancy.stage.2": "Gold is certainly an improvement over iron, but it doesn't take a genius to know that. Even ordinary enchanting prefers it over everything. The use of a magical wood is also fairly straightforward, though the proper techniques less so.\nI believe some dedicated study towards wands and vis manipulation is in order. I'll store this in the {c3}Auromancy{r} tab of the Arcanum, accessible by selecting the wand icon on the left.",
 
     "alchemy": "Alchemy",
     "alchemy.desc": "Fission and Fusion",
@@ -837,7 +836,7 @@
 
     // Auromancy Tab
     "auromancy_root": "Auromancy",
-    "auromancy_root.text": "The study of {i}auromancy{r}, the manipulation of the aura and vis around me, will be documented here.\nThe iron and gold wand caps, and the general wand recipe are included here for completeness.",
+    "auromancy_root.text": "The study of {i}auromancy{r}, the manipulation of the aura and vis around me, will be documented here.\nThe iron and gold wand caps, greatwood wand core, and the general wand recipe are included here for completeness.",
 
     "wand_components": "Caps and Cores",
     "wand_components.text": "Every wand is constructed from wand caps and a core, which dictate it's properties.{~sep}The core is responsible for storing vis. The more vis a core can store, the more I can use it to perform arcane crafting, and the more powerful the items I craft can be.\nThe cap is responsible for channeling and shaping that vis. They affect the speed in which vis is drawn from nodes, and adds a small amount of vis storage.\nBoth components also affect spellcasting through foci. A wand has a \"complexity\" score, based on the quality of its cap, that determines how complex the effects it produces can be. More powerful foci may require higher complexities, and modifications made to foci may only apply if a certain complexity is met.\nWands also have a \"difficulty\" score, given by their cores, that determines how much \"force\" it can push the vis with. The same focus may provide stronger effects - like more damage or healing - with a higher difficulty wand.\nFinally, some caps and cores may provide additional side effects, like discounts or bonuses, depending on what they're made from. I might want to use different wands for different tasks.",
@@ -851,11 +850,6 @@
     "leather_wand_caps.desc": "Artisanal Quality",
     "leather_wand_caps.stage.1": "While metals are an obvious go-to for channelling vis, I should experiment with other, more flexible materials.\nHaving a greater degree of control over the shape and design of the cap might allow me to produce something more efficient.",
     "leather_wand_caps.stage.2": "Wand caps crafted from leather are slightly worse than gold when it comes to drawing vis form nodes, or focusing them into spells, but do provide a decent bonus to arcane crafting.\nAny wand strapped with leather reduces the amount of vis required to craft by {c3}8%{r}.",
-
-    "greatwood_wand_core": "Greatwood Wand Core",
-    "greatwood_wand_core.desc": "With great power...",
-    "greatwood_wand_core.stage.1": "Making a wand out of a material already attuned to vis is likely to provide a significant boost in its capabilities.",
-    "greatwood_wand_core.stage.2": "The greatwood tree's wood makes for an excellent storage of vis. Wands built with it have a higher maximum capacity and difficulty score than any other material currently available.",
 
     "nether_stem_wand_core": "Nether Stem Wand Core",
     "nether_stem_wand_core.desc": "Otherworldly construction",

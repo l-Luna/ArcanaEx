@@ -333,6 +333,8 @@
           "type": "text",
           "content": "research.arcana.auromancy.stage.1",
           "requirements": [
+            "2*minecraft:gold_ingot",
+            "2*arcana:greatwood_log",
             "arcana::puzzle{auromancy_intro}"
           ]
         },
@@ -343,6 +345,10 @@
         {
           "type": "arcane_crafting",
           "content": "arcana:gold_wand_cap"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:greatwood_wand_core"
         }
       ]
     },

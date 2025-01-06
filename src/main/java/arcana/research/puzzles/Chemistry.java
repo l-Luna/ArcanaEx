@@ -58,7 +58,7 @@ public class Chemistry extends Puzzle{
 	}
 	
 	public NbtCompound getInitialNoteTag(ServerPlayerEntity player){
-		boolean hasMastery = Researcher.from(player).isEntryComplete(Research.getEntry(BuiltinResearch.researchMasteryResearch));
+		boolean hasMastery = Researcher.from(player).isEntryComplete(Research.getEntry(BuiltinResearch.researchMasteryEntry));
 		
 		NbtCompound tag = new NbtCompound();
 		AspectMap aspects = new AspectMap();

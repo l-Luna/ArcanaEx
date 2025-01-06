@@ -80,7 +80,7 @@ public final class AspectRenderer{
 			ret.add(fromText(Text.literal(aspect.id().toString()).formatted(Formatting.DARK_GRAY)));
 		
 		Researcher researcher = Researcher.from(MinecraftClient.getInstance().player);
-		if(researcher.isEntryComplete(Research.getEntry(BuiltinResearch.researchExpertiseResearch))
+		if(researcher.isEntryComplete(Research.getEntry(BuiltinResearch.researchExpertiseEntry))
 				&& Screen.hasShiftDown()
 				&& aspect.left() != null && aspect.right() != null){
 			ret.add(new ItemAspectsTooltipComponent(List.of(new AspectStack(aspect.left(), 1), new AspectStack(aspect.right(), 1)), null));

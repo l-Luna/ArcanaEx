@@ -212,7 +212,7 @@ public final class ArcanaClient implements ClientModInitializer{
 	public static void preResearchUpdate(){
 		var researcher = Researcher.from(MinecraftClient.getInstance().player);
 		// don't trigger on every world load
-		var root = Research.getEntry(BuiltinResearch.rootResearch);
+		var root = Research.getEntry(BuiltinResearch.rootEntry);
 		if(root != null && researcher.isEntryComplete(root)){
 			notifyIfComplete = new HashSet<>(BuiltinResearch.infoResearch);
 			notifyIfComplete.removeIf(x -> researcher.isEntryComplete(Research.getEntry(x)));
@@ -226,7 +226,7 @@ public final class ArcanaClient implements ClientModInitializer{
 		if(client.currentScreen instanceof ResearchEntryScreen entryScreen)
 			entryScreen.updateButtons();
 		var researcher = Researcher.from(MinecraftClient.getInstance().player);
-		if(researcher.isEntryComplete(Research.getEntry(BuiltinResearch.rootResearch)))
+		if(researcher.isEntryComplete(Research.getEntry(BuiltinResearch.rootEntry)))
 			for(Identifier identifier : notifyIfComplete){
 				var entry = Research.getEntry(identifier);
 				if(researcher.isEntryComplete(entry))

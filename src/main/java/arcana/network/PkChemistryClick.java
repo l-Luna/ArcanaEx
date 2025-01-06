@@ -50,8 +50,8 @@ public class PkChemistryClick extends C2SMessage{
 				NbtCompound grid = puzzleData.getCompound("grid_aspects");
 				Aspect toPlace = toSet == null ? null : Aspects.byName(toSet);
 				Aspect toReplace = grid.contains(hexId) ? Aspects.byName(grid.getString(hexId)) : null;
-				boolean hasExpertise = Researcher.from(player).isEntryComplete(Research.getEntry(BuiltinResearch.researchExpertiseResearch));
-				boolean hasMastery = Researcher.from(player).isEntryComplete(Research.getEntry(BuiltinResearch.researchMasteryResearch));
+				boolean hasExpertise = Researcher.from(player).isEntryComplete(Research.getEntry(BuiltinResearch.researchExpertiseEntry));
+				boolean hasMastery = Researcher.from(player).isEntryComplete(Research.getEntry(BuiltinResearch.researchMasteryEntry));
 				float returnChance = hasMastery ? 0.5f : hasExpertise ? 0.25f : 0;
 				
 				if(toPlace == null){

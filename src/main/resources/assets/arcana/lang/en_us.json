@@ -553,7 +553,10 @@
         "Click to get research note",
         "Requires scribing tools and paper"
       ],
-      "addendum": "Addendum: {i}{}{r}"
+      "addendum": "Addendum: {i}{}{r}",
+      "cant_solve": "???",
+      "already_solved": "Already solved",
+      "already_has_note": "Already have research note"
     },
     "book": {
       "category_with_completion": "{} ({}%)",

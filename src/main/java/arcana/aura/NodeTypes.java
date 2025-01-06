@@ -39,7 +39,7 @@ public class NodeTypes{
 			TAINTED = create("tainted", 60 * 20, 12);
 	
 	public static final List<NodeType> normalTypes = List.of(NORMAL, BRIGHT, FADING);
-	public static final List<NodeType> specialTypes = List.of(HUNGRY, ELDRITCH, PURE, TAINTED);
+	public static final List<NodeType> specialTypes = List.of(HUNGRY, ELDRITCH, PURE);
 	
 	private static NodeType create(String id, int rechargeTime, int aspectCap){
 		return create(id, rechargeTime, aspectCap, null);

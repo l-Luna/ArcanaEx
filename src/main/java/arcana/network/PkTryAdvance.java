@@ -29,6 +29,6 @@ public class PkTryAdvance extends C2SMessage{
 	}
 	
 	protected void handle(ServerPlayerEntity player){
-		Researcher.from(player).tryAdvance(Research.getEntry(entryId));
+		Researcher.from(player).tryAdvance(Research.getEntry(entryId), false);
 	}
 }

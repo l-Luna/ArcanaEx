@@ -95,7 +95,7 @@ public final class Researcher implements Component, AutoSyncedComponent{
 	}
 	
 	// checks if all requirements are complete, takes requirements if so, and syncs with client if anything did happen
-	public void tryAdvance(Entry entry){
+	public void tryAdvance(Entry entry, boolean onlyFree){
 		if(entryStage(entry) < entry.sections().size()){
 			for(Parent parent : entry.parents()){
 				Entry pEntry = Research.getEntry(parent.id());
@@ -106,8 +106,9 @@ public final class Researcher implements Component, AutoSyncedComponent{
 					return; // not enough progress on that parent
 			}
 			var sections = entry.sections().get(entryStage(entry));
-			if(sections.getRequirements().stream().allMatch(x -> x.satisfiedBy(player))){
-				sections.getRequirements().forEach(x -> x.takeFrom(player));
+			List<Requirement> reqs = sections.getRequirements();
+			if(onlyFree ? reqs.isEmpty() : reqs.stream().allMatch(x -> x.satisfiedBy(player))){
+				reqs.forEach(x -> x.takeFrom(player));
 				advanceEntry(entry);
 				player.syncComponent(KEY);
 			}
@@ -130,7 +131,7 @@ public final class Researcher implements Component, AutoSyncedComponent{
 		Research.streamChildrenOf(entry).forEach(x -> {
 			Parent parent = x.getRight();
 			if((parent.stage() != -1 && parent.stage() <= entryStage(entry)) || (parent.stage() == -1 && isEntryComplete(entry)))
-				tryAdvance(x.getLeft());
+				tryAdvance(x.getLeft(), true);
 		});
 	}
 	

@@ -28,7 +28,7 @@ public class ResearchBookItem extends Item{
 			Research.streamEntries()
 					.filter(x -> x.category().book().id().equals(bookId))
 					.filter(x -> x.meta().contains("root"))
-					.forEach(Researcher.from(user)::tryAdvance);
+					.forEach(entry -> Researcher.from(user).tryAdvance(entry, false));
 		}
 		user.incrementStat(Stats.USED.getOrCreateStat(this));
 		return TypedActionResult.success(user.getStackInHand(hand), world.isClient());

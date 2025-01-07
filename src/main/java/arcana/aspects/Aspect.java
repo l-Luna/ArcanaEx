@@ -18,6 +18,10 @@ public record Aspect(Identifier id, Aspect left, Aspect right, int colour) imple
 		return Aspects.orderedAspects.indexOf(this) - Aspects.orderedAspects.indexOf(o);
 	}
 	
+	public AspectStack stack(int amount){
+		return new AspectStack(this, amount);
+	}
+	
 	public boolean equals(Object obj){
 		return obj instanceof Aspect other && other.id().equals(id());
 	}

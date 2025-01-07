@@ -153,6 +153,7 @@ public class WandItem extends Item implements WarpingItem{
 			AspectMap wandAspects = aspectsFrom(stack);
 			int wandCapacity = capacity(stack);
 			List<Aspect> candidateAspects = new ArrayList<>(nodeAspects.aspectSet());
+			candidateAspects.removeIf(x -> !Aspects.primals.contains(x));
 			candidateAspects.removeIf(x -> wandAspects.get(x) >= wandCapacity);
 			
 			if(!candidateAspects.isEmpty()){

@@ -63,7 +63,8 @@
     "cardinal-components": [
       "arcana:aura_world",
       "arcana:researcher",
-      "arcana:kd_item"
+      "arcana:kd_item",
+      "arcana:ca_arrow"
     ]
   }
 }

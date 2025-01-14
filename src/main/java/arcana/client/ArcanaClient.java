@@ -123,6 +123,10 @@ public final class ArcanaClient implements ClientModInitializer{
 				ArcanaRegistry.GREATWOOD_LEAVES
 		);
 		ModelPredicateProviderRegistry.register(ArcanaRegistry.TOME_OF_SHARING, arcId("bound"), new TomeOfSharingPredicateProvider());
+		ModelPredicateProviderRegistry.register(ArcanaRegistry.CRIMSON_LONGBOW, arcId("pull"), (stack, w, e, s)
+				-> e == null ? 0 : e.getActiveItem() != stack ? 0 : (stack.getMaxUseTime() - e.getItemUseTimeLeft()) / 20f);
+		ModelPredicateProviderRegistry.register(ArcanaRegistry.CRIMSON_LONGBOW, arcId("pulling"), (stack, w, e, s)
+				-> e == null ? 0 : e.isUsingItem() && e.getActiveItem() == stack ? 1 : 0);
 		
 		HandledScreens.register(ArcanaRegistry.ARCANE_CRAFTING_SCREEN_HANDLER, ArcaneCraftingScreen::new);
 		HandledScreens.register(ArcanaRegistry.RESEARCH_TABLE_SCREEN_HANDLER, ResearchTableScreen::new);

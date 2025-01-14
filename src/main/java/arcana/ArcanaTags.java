@@ -20,6 +20,8 @@ public final class ArcanaTags{
 	public static final TagKey<Block> CRUCIBLE_HEATING_BLOCKS = TagKey.of(Registry.BLOCK_KEY, arcId("crucible_heating_blocks"));
 	public static final TagKey<Fluid> CRUCIBLE_HEATING_FLUIDS = TagKey.of(Registry.FLUID_KEY, arcId("crucible_heating_fluids"));
 	
+	public static final TagKey<Block> PROJECTED_ARROW_IGNORES = TagKey.of(Registry.BLOCK_KEY, arcId("projected_arrow_ignores"));
+	
 	public static final TagKey<Item> SILVERWOOD_LOGS = TagKey.of(Registry.ITEM_KEY, arcId("silverwood_logs"));
 	public static final TagKey<Item> GREATWOOD_LOGS = TagKey.of(Registry.ITEM_KEY, arcId("greatwood_logs"));
 	public static final TagKey<Item> SUBSTRATES = TagKey.of(Registry.ITEM_KEY, arcId("substrates"));

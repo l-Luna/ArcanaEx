@@ -382,7 +382,7 @@ public final class ArcanaRegistry{
 	public static final WoodenStatueBlock SEE_NO_EVIL_STATUE = new WoodenStatueBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD).nonOpaque(), WoodenStatueBlock.Type.see);
 	public static final WoodenStatueBlock HEAR_NO_EVIL_STATUE = new WoodenStatueBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD).nonOpaque(), WoodenStatueBlock.Type.hear);
 	
-	public static final Block CRIMSON_LANTERN = new LanternBlock(of(Material.METAL).renderLayer(CUTOUT).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3.5f).sounds(BlockSoundGroup.LANTERN).luminance(__ -> 12).nonOpaque());
+	public static final Block CRIMSON_LANTERN = new CrimsonLanternBlock(of(Material.METAL).renderLayer(CUTOUT).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3.5f).sounds(BlockSoundGroup.LANTERN).luminance(__ -> 12).nonOpaque());
 	public static final Block CHAIN_WALL = new PaneBlock(of(Material.METAL, MapColor.CLEAR).renderLayer(CUTOUT).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(2.5f).sounds(BlockSoundGroup.METAL).nonOpaque());
 	public static final Block METAL_LADDER = new LadderBlock(of(Material.WOOD).renderLayer(CUTOUT).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(2.5f).sounds(BlockSoundGroup.LADDER).nonOpaque());
 	
@@ -437,6 +437,7 @@ public final class ArcanaRegistry{
 	public static BlockEntityType<EssentiaRouterBlockEntity> ESSENTIA_ROUTER_BE = FabricBlockEntityTypeBuilder.create(EssentiaRouterBlockEntity::new, ESSENTIA_ROUTER).build();
 	public static BlockEntityType<ArcaneFurnaceBlockEntity> ARCANE_FURNACE_BE = FabricBlockEntityTypeBuilder.create(ArcaneFurnaceBlockEntity::new, ARCANE_FURNACE).build();
 	public static BlockEntityType<AlembicBlockEntity> ALEMBIC_BE = FabricBlockEntityTypeBuilder.create(AlembicBlockEntity::new, ALEMBIC).build();
+	public static BlockEntityType<CrimsonLanternBlockEntity> CRIMSON_LANTERN_BE = FabricBlockEntityTypeBuilder.create(CrimsonLanternBlockEntity::new, CRIMSON_LANTERN).build();
 	public static BlockEntityType<DistilleryPathfinderBlockEntity> DISTILLERY_PATHFINDER_BE = FabricBlockEntityTypeBuilder.create(DistilleryPathfinderBlockEntity::new, DISTILLERY_PATHFINDER).build();
 	
 	// enchantments...
@@ -935,6 +936,7 @@ public final class ArcanaRegistry{
 		register("essentia_router", ESSENTIA_ROUTER_BE);
 		register("arcane_furnace", ARCANE_FURNACE_BE);
 		register("alembic", ALEMBIC_BE);
+		register("crimson_lantern", CRIMSON_LANTERN_BE);
 		register("distillery_pathfinder", DISTILLERY_PATHFINDER_BE);
 		
 		// enchantments

@@ -788,6 +788,18 @@
       "type": "fieldwork"
     },
     {
+      "key": "arcana:milestone_has_wand",
+      "type": "fieldwork"
+    },
+    {
+      "key": "arcana:milestone_has_infusion",
+      "type": "fieldwork"
+    },
+    {
+      "key": "arcana:milestone_has_boss",
+      "type": "fieldwork"
+    },
+    {
       "key": "arcana:crystal_farmer",
       "type": "chemistry",
       "desc": "puzzle.arcana.chemistry.crystal_farmer",

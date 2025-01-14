@@ -99,7 +99,7 @@ public class WandItem extends Item implements WarpingItem{
 			}
 			if(state.getBlock() == ArcanaRegistry.INFUSION_MATRIX)
 				if(world.getBlockEntity(pos) instanceof InfusionMatrixBlockEntity e)
-					e.activate();
+					e.activate(player);
 		}else if(focusStack.getItem() instanceof FocusItem fi){
 			AspectMap cost = fi.castCost(wandStack, focusStack, player).copy();
 			cost.multiply(aspect -> costMultiplier(aspect, wandStack, player));

@@ -5,13 +5,16 @@ import arcana.aspects.Aspect;
 import arcana.aspects.AspectMap;
 import arcana.aspects.AspectStack;
 import arcana.client.particles.AspectParticleEffect;
+import arcana.components.Researcher;
 import arcana.recipes.InfusionInventory;
 import arcana.recipes.InfusionRecipe;
 import arcana.recipes.XIngredient;
+import arcana.research.BuiltinResearch;
 import arcana.util.StreamUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
@@ -118,7 +121,7 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 		return valid;
 	}
 	
-	public void activate(){
+	public void activate(PlayerEntity player){
 		if(!activated){
 			if(checkValid()){
 				// TODO: setup infusion pillars...
@@ -143,7 +146,14 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 					.forEach(aspects::add);
 			
 			InfusionInventory inv = new InfusionInventory(centre, outers, aspects);
-			world.getRecipeManager().getFirstMatch(InfusionRecipe.TYPE, inv, world).ifPresent(recipe -> crafting = recipe);
+			world.getRecipeManager().getFirstMatch(InfusionRecipe.TYPE, inv, world).ifPresent(recipe -> {
+				crafting = recipe;
+				Researcher researcher = Researcher.from(player);
+				if(!researcher.isPuzzleComplete(BuiltinResearch.infusionMilestonePuzzle)){
+					researcher.completePuzzle(BuiltinResearch.infusionMilestonePuzzle);
+					researcher.doSync();
+				}
+			});
 		}
 	}
 	

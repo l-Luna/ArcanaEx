@@ -24,6 +24,10 @@ public final class BuiltinResearch{
 	public static final Identifier researchTutorialEntry = arcId("research");
 	public static final Identifier researchTutorialPuzzle = arcId("chemistry_intro_puzzle");
 	
+	public static final Identifier wandMilestonePuzzle = arcId("milestone_has_wand");
+	public static final Identifier infusionMilestonePuzzle = arcId("milestone_has_infusion");
+	public static final Identifier bossMilestonePuzzle = arcId("milestone_has_boss");
+	
 	public static final Identifier fluxPuzzle = arcId("flux_build_research");
 	public static final Identifier highestReachPuzzle = arcId("highest_reach");
 	public static final Identifier lowestDepthsPuzzle = arcId("lowest_depths");
@@ -53,12 +57,17 @@ public final class BuiltinResearch{
 	);
 	
 	public static void checkInventory(PlayerEntity player){
+		Researcher researcher = Researcher.from(player);
 		if(player.getInventory().contains(ArcanaTags.SILVERWOOD_LOGS))
 			finishInfoEntry(player, silverwoodEntry);
 		if(player.getInventory().contains(ArcanaTags.GREATWOOD_LOGS))
 			finishInfoEntry(player, greatwoodEntry);
 		if(player.getInventory().contains(ArcanaRegistry.PRIMORDIAL_PEARL.getDefaultStack()))
 			finishInfoEntry(player, primordialPearlEntry);
+		if(player.getInventory().containsAny(stack -> stack.isOf(ArcanaRegistry.WAND)) && !researcher.isPuzzleComplete(wandMilestonePuzzle)){
+			researcher.completePuzzle(wandMilestonePuzzle);
+			researcher.doSync();
+		}
 	}
 	
 	public static void checkTick(PlayerEntity player){
@@ -74,22 +83,22 @@ public final class BuiltinResearch{
 		}
 		
 		Researcher researcher = Researcher.from(player);
-		if(player.getPos().y < player.world.getBottomY() + 20){
-			researcher.completePuzzle(Research.getPuzzle(lowestDepthsPuzzle));
+		if(player.getPos().y < player.world.getBottomY() + 20 && !researcher.isPuzzleComplete(lowestDepthsPuzzle)){
+			researcher.completePuzzle(lowestDepthsPuzzle);
 			researcher.doSync();
 		}
-		if(player.getPos().y > player.world.getTopY() - 30){
-			researcher.completePuzzle(Research.getPuzzle(highestReachPuzzle));
+		if(player.getPos().y > player.world.getTopY() - 30 && !researcher.isPuzzleComplete(highestReachPuzzle)){
+			researcher.completePuzzle(highestReachPuzzle);
 			researcher.doSync();
 		}
-		if(AuraChunk.at(player.world, player.getBlockPos()).getFlux() > 40){
-			researcher.completePuzzle(Research.getPuzzle(fluxPuzzle));
+		if(AuraChunk.at(player.world, player.getBlockPos()).getFlux() > 40 && !researcher.isPuzzleComplete(fluxPuzzle)){
+			researcher.completePuzzle(fluxPuzzle);
 			researcher.doSync();
 		}
 		
 		// TODO: set bonus addenda should really be in SetBonusStatusEffect::handleArmourSetBonus
-		if(player.hasStatusEffect(ArcanaRegistry.ARCANE_AURA)){
-			researcher.completeAddendum(Research.getAddendum(arcaniumSetBonusAddendum));
+		if(player.hasStatusEffect(ArcanaRegistry.ARCANE_AURA) && !researcher.isAddendumComplete(arcaniumSetBonusAddendum)){
+			researcher.completeAddendum(arcaniumSetBonusAddendum);
 			researcher.doSync();
 		}
 	}
@@ -97,8 +106,10 @@ public final class BuiltinResearch{
 	public static void finishInfoEntry(PlayerEntity player, Identifier entryAndPuzzle){
 		// puzzle prevents modified clients from continuing early; force-completing avoids tagging these as root
 		var researcher = Researcher.from(player);
-		researcher.completePuzzle(Research.getPuzzle(entryAndPuzzle));
-		researcher.completeEntry(Research.getEntry(entryAndPuzzle));
-		researcher.doSync();
+		if(!researcher.isPuzzleComplete(entryAndPuzzle)){
+			researcher.completePuzzle(entryAndPuzzle);
+			researcher.completeEntry(Research.getEntry(entryAndPuzzle));
+			researcher.doSync();
+		}
 	}
 }

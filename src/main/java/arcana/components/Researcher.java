@@ -70,8 +70,16 @@ public final class Researcher implements Component, AutoSyncedComponent{
 		return completedPuzzles.contains(puzzle.id());
 	}
 	
+	public boolean isPuzzleComplete(Identifier id){
+		return completedPuzzles.contains(id);
+	}
+	
 	public boolean isAddendumComplete(Addendum addendum){
 		return completedAddenda.contains(addendum.id());
+	}
+	
+	public boolean isAddendumComplete(Identifier addendum){
+		return completedAddenda.contains(addendum);
 	}
 	
 	public int getWarp(){
@@ -139,8 +147,16 @@ public final class Researcher implements Component, AutoSyncedComponent{
 		completedPuzzles.add(puzzle.id());
 	}
 	
+	public void completePuzzle(Identifier puzzle){
+		completedPuzzles.add(puzzle);
+	}
+	
 	public void completeAddendum(Addendum addendum){
 		completedAddenda.add(addendum.id());
+	}
+	
+	public void completeAddendum(Identifier addendum){
+		completedAddenda.add(addendum);
 	}
 	
 	public long getLastWarpEventTime(){

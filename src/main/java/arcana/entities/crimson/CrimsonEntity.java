@@ -7,7 +7,7 @@ import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Items;
+import net.minecraft.item.BowItem;
 import net.minecraft.item.RangedWeaponItem;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.LocalDifficulty;
@@ -63,7 +63,7 @@ public class CrimsonEntity extends HostileEntity implements IAnimatable{
 	}
 	
 	public boolean canUseRangedWeapon(RangedWeaponItem weapon){
-		return weapon == Items.BOW;
+		return weapon instanceof BowItem;
 	}
 	
 	protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions){

@@ -1,8 +1,8 @@
 package arcana.commands;
 
+import arcana.aura.AuraWorld;
 import arcana.aura.Node;
 import arcana.aura.NodeTypes;
-import arcana.aura.AuraWorld;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
@@ -58,7 +58,7 @@ public final class NodeCommand{
 		World world = context.getSource().getWorld();
 		AuraWorld aura = world.getComponent(AuraWorld.KEY);
 		
-		aura.addNode(new Node(NodeTypes.byName(getIdentifier(context, "type")), world, getVec3(context, "position")));
+		aura.addNode(new Node(NodeTypes.byName(getIdentifier(context, "type")), world, getVec3(context, "position"), world.random));
 		return 1;
 	}
 	

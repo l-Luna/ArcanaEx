@@ -32,7 +32,7 @@ public class NodalGeodeFeature extends Feature<NodalGeodeFeatureConfig>{
 			int i = geodeConfig.maxGenOffset;
 			BlockPos nodePos = pos.add(i / 3, i / 3, i / 3);
 			NodeType type = randomType(rng);
-			Node toAdd = new Node(type, aura.getWorld(), new Vec3d(nodePos.getX() + rng.nextDouble(), nodePos.getY() + rng.nextDouble(), nodePos.getZ() + rng.nextDouble()));
+			Node toAdd = new Node(type, aura.getWorld(), new Vec3d(nodePos.getX() + rng.nextDouble(), nodePos.getY() + rng.nextDouble(), nodePos.getZ() + rng.nextDouble()), rng);
 			toAdd.getOrCreateTag().putBoolean("in_geode", true);
 			// TODO: aspect caps
 			toAdd.getAspects().add(context.getConfig().primaryAspect, 10);

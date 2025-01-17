@@ -1,8 +1,8 @@
 package arcana.worldgen.silverwood;
 
+import arcana.aura.AuraWorld;
 import arcana.aura.Node;
 import arcana.aura.NodeTypes;
-import arcana.aura.AuraWorld;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.block.BlockState;
@@ -69,7 +69,7 @@ public class SilverwoodTrunkPlacer extends TrunkPlacer{
 			// add pure node at half height
 			AuraWorld aura = AuraWorld.from((StructureWorldAccess)world); // either World or ChunkRegion
 			if(rand.nextInt(100) < 20)
-				aura.addNode(new Node(NodeTypes.PURE, aura.getWorld(), new Vec3d(pos.getX(), y + height / 2f, pos.getZ())));
+				aura.addNode(new Node(NodeTypes.PURE, aura.getWorld(), new Vec3d(pos.getX(), y + height / 2f, pos.getZ()), rand));
 			
 			return List.of(new FoliagePlacer.TreeNode(pos.up(height - 4), 1, false));
 		}

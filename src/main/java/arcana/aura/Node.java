@@ -40,9 +40,21 @@ public class Node implements Position{
 		aspectCap = new AspectMap();
 		tag = new NbtCompound();
 		uuid = UUID.randomUUID();
+	}
+	
+	public Node(NodeType type, World world, Position pos, Random random){
+		this.type = type;
+		this.world = world;
+		x = pos.getX();
+		y = pos.getY();
+		z = pos.getZ();
+		aspects = new AspectMap();
+		aspectCap = new AspectMap();
+		tag = new NbtCompound();
+		uuid = UUID.randomUUID();
 		
 		// it's a bit weird to put random generation here, but `fromNbt` would overwrite this immediately anyways
-		randomiseCap();
+		randomiseCap(random);
 	}
 	
 	public Node(Node node){
@@ -78,11 +90,10 @@ public class Node implements Position{
 		}
 	}
 	
-	protected void randomiseCap(){
+	protected void randomiseCap(Random random){
 		// at least 1 aspect at full capacity; 2 at half-full; 3 at 0-half
 		// with a 1/7 chance of an extra non-primal aspect
 		int cap = type.aspectCap();
-		Random random = world.getRandom();
 		List<Aspect> primals = Util.copyShuffled(Aspects.primals.stream(), random);
 		aspectCap.add(primals.get(0), cap);
 		aspectCap.add(primals.get(1), random.nextBetween(cap/2, cap));
@@ -122,7 +133,7 @@ public class Node implements Position{
 		if(nbt.contains("aspectCap"))
 			node.aspectCap = AspectMap.fromNbt(nbt.getCompound("aspectCap"));
 		else
-			node.randomiseCap();
+			node.randomiseCap(world.random); // possibly a race condition??
 		if(nbt.contains("tag"))
 			node.tag = nbt.getCompound("tag");
 		return node;

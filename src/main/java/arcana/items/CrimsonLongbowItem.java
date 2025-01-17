@@ -8,8 +8,9 @@ public class CrimsonLongbowItem extends BowItem{
 		super(settings);
 	}
 	
-	// BowItemMixin does the actual logic of marking the arrows as projected,
+	// BowItemMixin does the actual logic of marking the arrows as projected (+CrimsonArcherEntity),
 	// and HorizontalConnectingBlockMixin changes their collision
+	
 	// it might be better to change usages of collisionShape instead of the implementation,
 	// (e.g. to allow including things in the tag that don't use the common superclass,)
 	// but it would be less performant for everything else

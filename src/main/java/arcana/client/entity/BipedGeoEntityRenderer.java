@@ -13,8 +13,8 @@ import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.item.BowItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3f;
@@ -65,7 +65,7 @@ public class BipedGeoEntityRenderer<T extends LivingEntity & IAnimatable> extend
 		
 		// TODO: other arm poses
 		base.rightArmPose = base.leftArmPose = BipedEntityModel.ArmPose.EMPTY;
-		if(animatable instanceof MobEntity me && me.isAttacking() && me.getMainHandStack().isOf(Items.BOW))
+		if(animatable instanceof MobEntity me && me.isAttacking() && me.getMainHandStack().getItem() instanceof BowItem)
 			base.leftArmPose = BipedEntityModel.ArmPose.BOW_AND_ARROW;
 		base.handSwingProgress = animatable.getHandSwingProgress(delta);
 		

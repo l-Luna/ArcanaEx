@@ -29,3 +29,13 @@ accessible field net/minecraft/server/world/ServerWorld shouldTickTime Z
 
 accessible method net/minecraft/item/BlockItem getPlacementState (Lnet/minecraft/item/ItemPlacementContext;)Lnet/minecraft/block/BlockState;
 accessible method net/minecraft/item/ItemUsageContext getHitResult ()Lnet/minecraft/util/hit/BlockHitResult;
+
+accessible field net/minecraft/entity/ai/goal/BowAttackGoal actor Lnet/minecraft/entity/mob/HostileEntity;
+accessible field net/minecraft/entity/ai/goal/BowAttackGoal targetSeeingTicker I
+accessible field net/minecraft/entity/ai/goal/BowAttackGoal squaredRange F
+accessible field net/minecraft/entity/ai/goal/BowAttackGoal combatTicks I
+accessible field net/minecraft/entity/ai/goal/BowAttackGoal speed D
+accessible field net/minecraft/entity/ai/goal/BowAttackGoal movingToLeft Z
+accessible field net/minecraft/entity/ai/goal/BowAttackGoal backward Z
+accessible field net/minecraft/entity/ai/goal/BowAttackGoal cooldown I
+accessible field net/minecraft/entity/ai/goal/BowAttackGoal attackInterval I

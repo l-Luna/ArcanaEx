@@ -611,6 +611,11 @@
         "arcana:crimson_blade",
         "arcana:crimson_longbow"
       ],
+      "meta": [
+        "hidden",
+        "hexagon_base",
+        "purple_base"
+      ],
       "category": "arcana:fundamentals",
       "x": -8,
       "y": 2,

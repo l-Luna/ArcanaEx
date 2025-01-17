@@ -7,6 +7,7 @@ import arcana.aura.AuraWorld;
 import arcana.aura.Node;
 import arcana.aura.NodeTypes;
 import arcana.components.Researcher;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Box;
@@ -41,6 +42,11 @@ public final class BuiltinResearch{
 	public static final Identifier eldritchNodesEntry = arcId("eldritch_nodes");
 	public static final Identifier nodalGeodesEntry = arcId("nodal_geodes");
 	
+	public static final Identifier crimsonEquipmentEntry = arcId("crimson_equipment");
+	public static final Identifier projectingAddendum = arcId("crimson_equipment/projecting");
+	public static final Identifier crimsonBladeAddendum = arcId("crimson_equipment/crimson_blade");
+	public static final Identifier crimsonLongbowAddendum = arcId("crimson_equipment/crimson_longbow");
+	
 	public static final Identifier researchExpertiseEntry = arcId("research_expertise");
 	public static final Identifier researchMasteryEntry = arcId("research_mastery");
 	
@@ -53,7 +59,8 @@ public final class BuiltinResearch{
 			hungryNodesEntry,
 			eldritchNodesEntry,
 			nodalGeodesEntry,
-			fluxEntry
+			fluxEntry,
+			crimsonEquipmentEntry
 	);
 	
 	public static void checkInventory(PlayerEntity player){
@@ -66,6 +73,24 @@ public final class BuiltinResearch{
 			finishInfoEntry(player, primordialPearlEntry);
 		if(player.getInventory().containsAny(stack -> stack.isOf(ArcanaRegistry.WAND)) && !researcher.isPuzzleComplete(wandMilestonePuzzle)){
 			researcher.completePuzzle(wandMilestonePuzzle);
+			researcher.doSync();
+		}
+		if(player.getInventory().containsAny(stack -> {
+			Integer level = EnchantmentHelper.get(stack).get(ArcanaRegistry.PROJECTING);
+			return level != null && level > 0;
+		}) && !researcher.isAddendumComplete(projectingAddendum)){
+			researcher.completeEntry(Research.getEntry(crimsonEquipmentEntry));
+			researcher.completeAddendum(projectingAddendum);
+			researcher.doSync();
+		}
+		if(player.getInventory().contains(ArcanaRegistry.CRIMSON_BLADE.getDefaultStack()) && !researcher.isAddendumComplete(crimsonBladeAddendum)){
+			researcher.completeEntry(Research.getEntry(crimsonEquipmentEntry));
+			researcher.completeAddendum(crimsonBladeAddendum);
+			researcher.doSync();
+		}
+		if(player.getInventory().contains(ArcanaRegistry.CRIMSON_LONGBOW.getDefaultStack()) && !researcher.isAddendumComplete(crimsonLongbowAddendum)){
+			researcher.completeEntry(Research.getEntry(crimsonEquipmentEntry));
+			researcher.completeAddendum(crimsonLongbowAddendum);
 			researcher.doSync();
 		}
 	}

@@ -604,6 +604,56 @@
       ]
     },
     {
+      "key": "arcana:crimson_equipment",
+      "name": "research.arcana.crimson_equipment.name",
+      "icons": [
+        "minecraft:enchanted_book",
+        "arcana:crimson_blade",
+        "arcana:crimson_longbow"
+      ],
+      "category": "arcana:fundamentals",
+      "x": -8,
+      "y": 2,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.crimson_equipment.text"
+        }
+      ],
+      "addenda": [
+        {
+          "key": "arcana:crimson_equipment/projecting",
+          "name": "research.arcana.crimson_equipment.addenda.projecting.name",
+          "sections": [
+            {
+              "type": "text",
+              "content": "research.arcana.crimson_equipment.addenda.projecting.text"
+            }
+          ]
+        },
+        {
+          "key": "arcana:crimson_equipment/crimson_blade",
+          "name": "research.arcana.crimson_equipment.addenda.crimson_blade.name",
+          "sections": [
+            {
+              "type": "text",
+              "content": "research.arcana.crimson_equipment.addenda.crimson_blade.text"
+            }
+          ]
+        },
+        {
+          "key": "arcana:crimson_equipment/crimson_longbow",
+          "name": "research.arcana.crimson_equipment.addenda.crimson_longbow.name",
+          "sections": [
+            {
+              "type": "text",
+              "content": "research.arcana.crimson_equipment.addenda.crimson_longbow.text"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "key": "arcana:crystal_farmer",
       "name": "research.arcana.crystal_farmer",
       "desc": "research.arcana.crystal_farmer.desc",

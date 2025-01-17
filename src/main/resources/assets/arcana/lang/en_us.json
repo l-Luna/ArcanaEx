@@ -209,6 +209,7 @@
     "arcanium_ring": "Arcanium Ring",
     "adorned_ring": "Adorned Ring",
 
+    "crimson_blade": "Crimson Blade",
     "crimson_longbow": "Crimson Longbow",
 
     "boots_of_the_traveller": "Boots of the Traveller",
@@ -707,6 +708,25 @@
     "primordial_pearl": "Primordial Polymorph",
     "primordial_pearl.desc": "A world astray",
     "primordial_pearl.text": "For the first time I find myself with a puzzle that I do not believe should be solved.{~sep}This object refuses to take a distinct form, and while it is conceptually complex, only contains huge amounts of primal aspects. These aspects do not act like the ordinary primals.\nEvery one of my various theories falls apart every moment this changes form. I would suggest it might be consciously obfuscating itself, but doing so leaves it perfectly simple and easy to understand - for one, fleeting moment, until all clarity is lost once more.\nIt stays constant only in one aspect: the aspects it contains. It... must have existed before compound aspects themselves, if there was such a time? Or perhaps it exists in some other way, one that cannot be expressed as aspects entirely?",
+
+    "crimson_equipment": {
+      "name": "Crimson Equipment",
+      "text": "The Crimson Cultists have devised a number of interesting weapons, most of which incorporate their knowledge of the {i}Projecting{r} enchantment into their design quite effectively.",
+      "addenda": {
+        "projecting": {
+          "name": "Projecting",
+          "text": "A curious enchantment applicable to rings. When worn, a projecting ring creates a spectral presence a short distance from myself, extending my attack and placement range slightly. Rings that already hold strong magic can only support lower levels.\nThe enchanted books found in Crimson settlements have a horrible sense of fear around them... I don't believe the cultists created these through ordinary means."
+        },
+        "crimson_blade": {
+          "name": "Crimson Blade",
+          "text": "The Crimson Blade extends its reach not by being physically longer - in fact, it's somewhat shorter than an ordinary sword - but by creating a magical projectile that extends a short distance from the user. This projectile deals the same amount of damage as the blade's physical damage, but in the form of magical damage, and is only cast if the blade does not physically connect with its opponent."
+        },
+        "crimson_longbow": {
+          "name": "Crimson Longbow",
+          "text": "Arrows fired from a Crimson Longbow have the strange property of being capable of phasing through certain thin materials, such as iron bars or glass panes. This occurs even if the arrow is already magical (say, spectral or tipped). The Cultists seem to have designed their outposts around this, giving their Archers an undeniable advantage from a distance."
+        }
+      }
+    },
 
     // Fundamentals Tab: Progression
     "wandcraft": "Wandcraft",

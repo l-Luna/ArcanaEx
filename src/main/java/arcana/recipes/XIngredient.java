@@ -191,6 +191,7 @@ public class XIngredient implements Predicate<ItemStack>{
 					.peek(this::enchant);
 		}
 		
+		// TODO: wrong for enchanted books?
 		public boolean test(ItemStack stack){
 			return EnchantmentHelper.getLevel(enchantment, stack) > 0;
 		}

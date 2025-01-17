@@ -202,6 +202,7 @@ public final class ArcanaRegistry{
 	public static final Item ARCANIUM_RING = new RingItem(new Settings().group(Tab.EQUIPMENT).maxCount(1), 3, 0);
 	public static final Item ADORNED_RING = new RingItem(new Settings().group(Tab.EQUIPMENT).maxCount(1), 1, 5);
 	
+	public static final Item CRIMSON_BLADE = new SwordItem(ArcanaToolMaterials.CRIMSON, 3, -2.4f, new Settings().group(Tab.EQUIPMENT));
 	public static final Item CRIMSON_LONGBOW = new CrimsonLongbowItem(new Settings().group(Tab.EQUIPMENT).maxDamage(564));
 	
 	public static final Item BOOTS_OF_THE_TRAVELLER = new BootsOfTheTravellerItem(ArcanaArmourMaterials.BOOTS_OF_THE_TRAVELLER, new Settings().group(Tab.EQUIPMENT));
@@ -656,6 +657,7 @@ public final class ArcanaRegistry{
 		register("arcanium_ring", ARCANIUM_RING);
 		register("adorned_ring", ADORNED_RING);
 		
+		register("crimson_blade", CRIMSON_BLADE);
 		register("crimson_longbow", CRIMSON_LONGBOW);
 		
 		register("boots_of_the_traveller", BOOTS_OF_THE_TRAVELLER);

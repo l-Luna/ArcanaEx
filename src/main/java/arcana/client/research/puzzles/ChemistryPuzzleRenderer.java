@@ -92,6 +92,9 @@ public class ChemistryPuzzleRenderer implements PuzzleRenderer<Chemistry>{
 				return false;
 			}
 			
+			if(puzzle.excludedByFlux(rx, ry))
+				return false;
+			
 			RenderSystem.setShaderTexture(0, overlayTex);
 			DrawableHelper.drawTexture(matrices, xPos, yPos, 0, 0, 0, 20, 20, 256, 256);
 			
@@ -131,7 +134,7 @@ public class ChemistryPuzzleRenderer implements PuzzleRenderer<Chemistry>{
 		// draw highlights over everything else
 		processHexes(size, x, y, (xPos, yPos, turn, rx, ry) -> {
 			if(turn % nodeGap != 0)
-				if(within(mouseX, mouseY, xPos + 1, yPos + 2, 18, 16))
+				if(within(mouseX, mouseY, xPos + 1, yPos + 2, 18, 16) && !puzzle.excludedByFlux(rx, ry))
 					highlight(matrices, xPos + 1, yPos + 2, 18, 16);
 			return false;
 		});
@@ -202,7 +205,7 @@ public class ChemistryPuzzleRenderer implements PuzzleRenderer<Chemistry>{
 			
 			if(within(mouseX, mouseY, xPos + 1, yPos + 2, 18, 16)){
 				String hexId = rx + "," + ry;
-				if(selected != null && button == 0 && !gridTag.contains(hexId)){
+				if(selected != null && button == 0 && !gridTag.contains(hexId) && !puzzle.excludedByFlux(rx, ry)){
 					new PkChemistryClick(hexId, selected).sendToServer();
 					if(aspects.get(selected) == 1){
 						if(combineLeft == selected) combineLeft = null;

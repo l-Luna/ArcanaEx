@@ -32,12 +32,13 @@ public class Chemistry extends Puzzle{
 	public static final Identifier TYPE = arcId("chemistry");
 	
 	private final List<Aspect> nodes;
-	private final int size, flux;
+	private final int size, absences, absenceSeed;
 	
-	public Chemistry(List<Aspect> nodes, int size, int flux){
+	public Chemistry(List<Aspect> nodes, int size, int absences, int absenceSeed){
 		this.nodes = nodes;
 		this.size = size;
-		this.flux = flux;
+		this.absences = absences;
+		this.absenceSeed = absenceSeed;
 	}
 	
 	public Chemistry(NbtCompound data){
@@ -45,7 +46,8 @@ public class Chemistry extends Puzzle{
 				data.getList("nodes", NbtElement.STRING_TYPE), NbtString.class,
 				x -> Aspects.byName(x.asString())).toList();
 		size = data.getInt("size");
-		flux = data.getInt("flux");
+		absences = data.getInt("absences");
+		absenceSeed = data.getInt("absenceSeed");
 	}
 	
 	public Chemistry(JsonObject obj){
@@ -54,7 +56,8 @@ public class Chemistry extends Puzzle{
 			nodes.add(Aspects.byName(nodeElem.getAsString()));
 		
 		size = JsonHelper.getInt(obj, "size", 4);
-		flux = JsonHelper.getInt(obj, "flux", 0);
+		absences = JsonHelper.getInt(obj, "absences", 0);
+		absenceSeed = JsonHelper.getInt(obj, "absenceSeed", 0);
 	}
 	
 	public NbtCompound getInitialNoteTag(ServerPlayerEntity player){
@@ -77,6 +80,10 @@ public class Chemistry extends Puzzle{
 		return size;
 	}
 	
+	public int getAbsences(){
+		return absences;
+	}
+	
 	public Identifier type(){
 		return TYPE;
 	}
@@ -90,7 +97,8 @@ public class Chemistry extends Puzzle{
 		data.put("nodes", nodeList);
 		
 		data.putInt("size", size);
-		data.putInt("flux", flux);
+		data.putInt("absences", absences);
+		data.putInt("absenceSeed", absenceSeed);
 		
 		return data;
 	}
@@ -166,6 +174,10 @@ public class Chemistry extends Puzzle{
 	}
 	
 	// utilities used by rendering and validation
+	
+	public boolean excludedByFlux(int x, int y){
+		return Math.abs(Objects.hash(x, y, absenceSeed) % 100) < (100 * ((float)getAbsences() / 37));
+	}
 	
 	public static boolean processHexes(int size, int x, int y, HexConsumer application){
 		for(int ry = 0; ry < size; ry++){

@@ -43,39 +43,44 @@ public class PkChemistryClick extends C2SMessage{
 		ScreenHandler handler = player.currentScreenHandler;
 		if(handler instanceof ResearchTableScreenHandler rtsh){
 			var notes = rtsh.slots.get(37).getStack();
-			var nbt = notes.getNbt();
-			if(nbt != null){
-				var puzzleData = nbt.getCompound("puzzle_data");
-				AspectMap stored = AspectMap.fromNbt(puzzleData.getCompound("stored_aspects"));
-				NbtCompound grid = puzzleData.getCompound("grid_aspects");
-				Aspect toPlace = toSet == null ? null : Aspects.byName(toSet);
-				Aspect toReplace = grid.contains(hexId) ? Aspects.byName(grid.getString(hexId)) : null;
-				boolean hasExpertise = Researcher.from(player).isEntryComplete(Research.getEntry(BuiltinResearch.researchExpertiseEntry));
-				boolean hasMastery = Researcher.from(player).isEntryComplete(Research.getEntry(BuiltinResearch.researchMasteryEntry));
-				float returnChance = hasMastery ? 0.5f : hasExpertise ? 0.25f : 0;
-				
-				if(toPlace == null){
-					grid.remove(hexId);
-					if(toReplace != null && hasExpertise && player.world.random.nextFloat() < returnChance){
-						stored.add(toReplace, 1);
+			if(!notes.isEmpty()){
+				var nbt = notes.getNbt();
+				if(nbt != null){
+					Chemistry puzzle = (Chemistry)Research.getPuzzle(new Identifier(nbt.getString("puzzle_id")));
+					// TODO: validate missing spaces
+					var puzzleData = nbt.getCompound("puzzle_data");
+					AspectMap stored = AspectMap.fromNbt(puzzleData.getCompound("stored_aspects"));
+					NbtCompound grid = puzzleData.getCompound("grid_aspects");
+					Aspect toPlace = toSet == null ? null : Aspects.byName(toSet);
+					Aspect toReplace = grid.contains(hexId) ? Aspects.byName(grid.getString(hexId)) : null;
+					boolean hasExpertise = Researcher.from(player).isEntryComplete(Research.getEntry(BuiltinResearch.researchExpertiseEntry));
+					boolean hasMastery = Researcher.from(player).isEntryComplete(Research.getEntry(BuiltinResearch.researchMasteryEntry));
+					float returnChance = hasMastery ? 0.5f : hasExpertise ? 0.25f : 0;
+					
+					if(toPlace == null){
+						grid.remove(hexId);
+						if(toReplace != null && hasExpertise && player.world.random.nextFloat() < returnChance){
+							stored.add(toReplace, 1);
+							puzzleData.put("stored_aspects", stored.toNbt());
+						}
+					}else if(stored.contains(toPlace)){
+						stored.take(toPlace, 1);
 						puzzleData.put("stored_aspects", stored.toNbt());
+						grid.putString(hexId, toSet);
+						if(toReplace != null && hasExpertise && player.world.random.nextFloat() < returnChance){
+							stored.add(toReplace, 1);
+							puzzleData.put("stored_aspects", stored.toNbt());
+						}
 					}
-				}else if(stored.contains(toPlace)){
-					stored.take(toPlace, 1);
-					puzzleData.put("stored_aspects", stored.toNbt());
-					grid.putString(hexId, toSet);
-					if(toReplace != null && hasExpertise && player.world.random.nextFloat() < returnChance){
-						stored.add(toReplace, 1);
-						puzzleData.put("stored_aspects", stored.toNbt());
+					puzzleData.put("grid_aspects", grid); // need to explicitly set in case it didn't exist
+					
+					if(puzzle.validate(puzzleData)){
+						ItemStack complete = new ItemStack(ArcanaRegistry.COMPLETE_RESEARCH_NOTES);
+						complete.setNbt(notes.getNbt());
+						rtsh.slots.get(37).setStack(complete);
 					}
+					rtsh.updateToClient();
 				}
-				puzzleData.put("grid_aspects", grid); // need to explicitly set in case it didn't exist
-				if(((Chemistry)Research.getPuzzle(new Identifier(nbt.getString("puzzle_id")))).validate(puzzleData)){
-					ItemStack complete = new ItemStack(ArcanaRegistry.COMPLETE_RESEARCH_NOTES);
-					complete.setNbt(notes.getNbt());
-					rtsh.slots.get(37).setStack(complete);
-				}
-				rtsh.updateToClient();
 			}
 		}
 	}

@@ -35,7 +35,7 @@ public final class ResearchCommand{
 	                            CommandRegistryAccess registry,
 	                            CommandManager.RegistrationEnvironment env){
 		// arcana-research <player> reset
-		// arcana-research <player> [give|take] [entry|puzzle] id
+		// arcana-research <player> [give|take] [entry|puzzle|addendum] id
 		dispatcher.register(
 				literal("arcana-research")
 						.requires(source -> source.hasPermissionLevel(2))

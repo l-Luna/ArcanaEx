@@ -209,6 +209,10 @@ public final class Researcher implements Component, AutoSyncedComponent{
 		completedPuzzles.remove(puzzle.id());
 	}
 	
+	public void uncompleteAddendum(Addendum addendum){
+		completedAddenda.remove(addendum.id());
+	}
+	
 	public Map<Identifier, ? extends List<Integer>> getPinned(){
 		return pinned;
 	}

@@ -1,6 +1,7 @@
 package arcana.commands;
 
 import arcana.components.Researcher;
+import arcana.research.Addendum;
 import arcana.research.Entry;
 import arcana.research.Puzzle;
 import arcana.research.Research;
@@ -27,6 +28,9 @@ public final class ResearchCommand{
 	private static final SuggestionProvider<ServerCommandSource> SUGGEST_PUZZLES =
 			(context, builder) -> CommandSource.suggestIdentifiers(Research.streamPuzzles().map(Puzzle::id), builder);
 	
+	private static final SuggestionProvider<ServerCommandSource> SUGGEST_ADDENDA =
+			(context, builder) -> CommandSource.suggestIdentifiers(Research.streamAddenda().map(Addendum::id), builder);
+	
 	public static void register(CommandDispatcher<ServerCommandSource> dispatcher,
 	                            CommandRegistryAccess registry,
 	                            CommandManager.RegistrationEnvironment env){
@@ -49,6 +53,11 @@ public final class ResearchCommand{
 														.executes(ResearchCommand::performGivePuzzle)
 														.suggests(SUGGEST_PUZZLES)
 												)
+										).then(literal("addendum")
+												.then(argument("addendum", IdentifierArgumentType.identifier())
+														.executes(ResearchCommand::performGiveAddendum)
+														.suggests(SUGGEST_ADDENDA)
+												)
 										)
 								).then(literal("take")
 										.then(literal("entry")
@@ -60,6 +69,11 @@ public final class ResearchCommand{
 												.then(argument("puzzle", IdentifierArgumentType.identifier())
 														.executes(ResearchCommand::performTakePuzzle)
 														.suggests(SUGGEST_PUZZLES)
+												)
+										).then(literal("addendum")
+												.then(argument("addendum", IdentifierArgumentType.identifier())
+														.executes(ResearchCommand::performTakeAddendum)
+														.suggests(SUGGEST_ADDENDA)
 												)
 										)
 								))
@@ -103,6 +117,20 @@ public final class ResearchCommand{
 		return had ? 0 : 1;
 	}
 	
+	private static int performGiveAddendum(CommandContext<ServerCommandSource> context) throws CommandSyntaxException{
+		var player = EntityArgumentType.getPlayer(context, "player");
+		Researcher researcher = Researcher.from(player);
+		Addendum puzzle = Research.getAddendum(IdentifierArgumentType.getIdentifier(context, "addendum"));
+		boolean had = researcher.isAddendumComplete(puzzle);
+		researcher.completeAddendum(puzzle);
+		researcher.doSync();
+		context.getSource().sendMessage(Text.translatable(
+				"message.arcana.command.research.give.addendum",
+				Text.literal(puzzle.id().toString()),
+				player.getDisplayName()));
+		return had ? 0 : 1;
+	}
+	
 	private static int performTakeEntry(CommandContext<ServerCommandSource> context) throws CommandSyntaxException{
 		var player = EntityArgumentType.getPlayer(context, "player");
 		Researcher researcher = Researcher.from(player);
@@ -126,6 +154,20 @@ public final class ResearchCommand{
 		researcher.doSync();
 		context.getSource().sendMessage(Text.translatable(
 				"message.arcana.command.research.take.puzzle",
+				Text.literal(puzzle.id().toString()),
+				player.getDisplayName()));
+		return had ? 1 : 0;
+	}
+	
+	private static int performTakeAddendum(CommandContext<ServerCommandSource> context) throws CommandSyntaxException{
+		var player = EntityArgumentType.getPlayer(context, "player");
+		Researcher researcher = Researcher.from(player);
+		Addendum puzzle = Research.getAddendum(IdentifierArgumentType.getIdentifier(context, "addendum"));
+		boolean had = researcher.isAddendumComplete(puzzle);
+		researcher.uncompleteAddendum(puzzle);
+		researcher.doSync();
+		context.getSource().sendMessage(Text.translatable(
+				"message.arcana.command.research.take.addendum",
 				Text.literal(puzzle.id().toString()),
 				player.getDisplayName()));
 		return had ? 1 : 0;

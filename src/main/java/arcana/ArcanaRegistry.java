@@ -9,6 +9,7 @@ import arcana.blocks.tainted.TaintedFallingBlock;
 import arcana.blocks.tainted.TaintedSnowyBlock;
 import arcana.blocks.tubes.*;
 import arcana.client.particles.AspectParticleEffect;
+import arcana.effects.AspectPowerStatusEffect;
 import arcana.effects.SetBonusStatusEffect;
 import arcana.effects.TaintedStatusEffect;
 import arcana.enchantments.ProjectingEnchantment;
@@ -131,6 +132,21 @@ public final class ArcanaRegistry{
 	// status effects...
 	public static final StatusEffect TAINTED = new TaintedStatusEffect();
 	public static final StatusEffect ARCANE_AURA = new SetBonusStatusEffect();
+	public static final StatusEffect AIR_POWER = new AspectPowerStatusEffect(Aspects.AIR);
+	public static final StatusEffect FIRE_POWER = new AspectPowerStatusEffect(Aspects.FIRE);
+	public static final StatusEffect WATER_POWER = new AspectPowerStatusEffect(Aspects.WATER);
+	public static final StatusEffect EARTH_POWER = new AspectPowerStatusEffect(Aspects.EARTH);
+	public static final StatusEffect ORDER_POWER = new AspectPowerStatusEffect(Aspects.ORDER);
+	public static final StatusEffect ENTROPY_POWER = new AspectPowerStatusEffect(Aspects.ENTROPY);
+	
+	public static final List<StatusEffect> ASPECT_EFFECTS = List.of(
+			ArcanaRegistry.AIR_POWER,
+			ArcanaRegistry.FIRE_POWER,
+			ArcanaRegistry.WATER_POWER,
+			ArcanaRegistry.EARTH_POWER,
+			ArcanaRegistry.ORDER_POWER,
+			ArcanaRegistry.ENTROPY_POWER
+	);
 	
 	// items...
 	public static final Item SCRIBBLED_NOTES = new ScribbledNotesItem(GROUPED_SINGLE);
@@ -157,6 +173,13 @@ public final class ArcanaRegistry{
 			.saturationModifier(1.1f)
 			.statusEffect(new StatusEffectInstance(TAINTED, 40 * 20, 1), 1)
 			.build()));
+	
+	public static final Item RAREFIED_SHERBERT = new Item(new Settings().group(Tab.MAIN).food(aspectCandyFood(AIR_POWER)));
+	public static final Item SOBERING_SYRUP = new Item(new Settings().group(Tab.MAIN).food(aspectCandyFood(FIRE_POWER)));
+	public static final Item SEAFOAM_SODA = new Item(new Settings().group(Tab.MAIN).food(aspectCandyFood(WATER_POWER)));
+	public static final Item BEDROCK_CANDY = new Item(new Settings().group(Tab.MAIN).food(aspectCandyFood(EARTH_POWER)));
+	public static final Item GUMMY_CUBES = new Item(new Settings().group(Tab.MAIN).food(aspectCandyFood(ORDER_POWER)));
+	public static final Item TWISTED_LIQUORICE = new Item(new Settings().group(Tab.MAIN).food(aspectCandyFood(ENTROPY_POWER)));
 	
 	public static final Item ARCANIUM_INGOT = new Item(GROUPED);
 	public static final Item ARCANIUM_SWORD = new SwordItem(ArcanaToolMaterials.ARCANIUM, 3, -2.4f, new Settings().group(Tab.EQUIPMENT));
@@ -613,6 +636,13 @@ public final class ArcanaRegistry{
 		register("taint_in_a_bottle", TAINT_IN_A_BOTTLE);
 		register("drinkable_taint", DRINKABLE_TAINT);
 		
+		register("rarefied_sherbert", RAREFIED_SHERBERT);
+		register("sobering_syrup", SOBERING_SYRUP);
+		register("seafoam_soda", SEAFOAM_SODA);
+		register("bedrock_candy", BEDROCK_CANDY);
+		register("gummy_cubes", GUMMY_CUBES);
+		register("twisted_liquorice", TWISTED_LIQUORICE);
+		
 		register("arcanium_ingot", ARCANIUM_INGOT);
 		register("arcanium_sword", ARCANIUM_SWORD);
 		register("arcanium_shovel", ARCANIUM_SHOVEL);
@@ -1006,6 +1036,12 @@ public final class ArcanaRegistry{
 		// status effects
 		register("tainted", TAINTED);
 		register("arcane_aura", ARCANE_AURA);
+		register("air_power", AIR_POWER);
+		register("fire_power", FIRE_POWER);
+		register("water_power", WATER_POWER);
+		register("earth_power", EARTH_POWER);
+		register("order_power", ORDER_POWER);
+		register("entropy_power", ENTROPY_POWER);
 	}
 	
 	private static void register(String name, Item item){
@@ -1105,5 +1141,15 @@ public final class ArcanaRegistry{
 	
 	private static ToIntFunction<BlockState> whenLit(int litLevel){
 		return state -> state.get(Properties.LIT) ? litLevel : 0;
+	}
+	
+	private static FoodComponent aspectCandyFood(StatusEffect effect){
+		return new FoodComponent.Builder()
+				.hunger(3)
+				.saturationModifier(0.5f)
+				.alwaysEdible()
+				.snack()
+				.statusEffect(new StatusEffectInstance(effect, 135 * 20, 0, true, true), 1)
+				.build();
 	}
 }

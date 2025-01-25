@@ -222,6 +222,13 @@
     "altered_iron": "Altered Iron",
     "alumentum": "Alumentum",
 
+    "rarefied_sherbert": "Rarefied Sherbert",
+    "sobering_syrup": "Sobering Syrup",
+    "seafoam_soda": "Seafoam Soda",
+    "bedrock_candy": "Bedrock Candy",
+    "gummy_cubes": "Gummy Cubes",
+    "twisted_liquorice": "Twisted Liquorice",
+
     "shattered_husk": "Shattered Husk",
     "synthetic_scaffolding": "Synthetic Scaffolding",
     "formless_foam": "Formless Foam",
@@ -470,6 +477,13 @@
   "effect.arcana": {
     "tainted": "Tainted",
     "arcane_aura": "Arcane Aura",
+
+    "air_power": "Aer Power",
+    "fire_power": "Ignis Power",
+    "water_power": "Aqua Power",
+    "earth_power": "Terra Power",
+    "order_power": "Ordo Power",
+    "entropy_power": "Perditio Power",
 
     "set_bonus": "Set Bonus"
   },

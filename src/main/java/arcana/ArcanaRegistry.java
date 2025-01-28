@@ -54,6 +54,8 @@ import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.*;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.fluid.FlowableFluid;
@@ -132,12 +134,18 @@ public final class ArcanaRegistry{
 	// status effects...
 	public static final StatusEffect TAINTED = new TaintedStatusEffect();
 	public static final StatusEffect ARCANE_AURA = new SetBonusStatusEffect();
-	public static final StatusEffect AIR_POWER = new AspectPowerStatusEffect(Aspects.AIR);
+	
+	public static final StatusEffect AIR_POWER = new AspectPowerStatusEffect(Aspects.AIR)
+			.addAttributeModifier(EntityAttributes.GENERIC_MOVEMENT_SPEED, "63c5f0ac-285e-42b7-9744-32d527655214", .1f, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
 	public static final StatusEffect FIRE_POWER = new AspectPowerStatusEffect(Aspects.FIRE);
 	public static final StatusEffect WATER_POWER = new AspectPowerStatusEffect(Aspects.WATER);
-	public static final StatusEffect EARTH_POWER = new AspectPowerStatusEffect(Aspects.EARTH);
-	public static final StatusEffect ORDER_POWER = new AspectPowerStatusEffect(Aspects.ORDER);
-	public static final StatusEffect ENTROPY_POWER = new AspectPowerStatusEffect(Aspects.ENTROPY);
+	public static final StatusEffect EARTH_POWER = new AspectPowerStatusEffect(Aspects.EARTH)
+			.addAttributeModifier(EntityAttributes.GENERIC_ATTACK_SPEED, "fa52fb6d-66c8-4e3a-9afd-dcc8de1114b5", .1f, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+	public static final StatusEffect ORDER_POWER = new AspectPowerStatusEffect(Aspects.ORDER)
+			.addAttributeModifier(EntityAttributes.GENERIC_ARMOR, "518d94ba-0c3c-4706-89c6-ed2c47437e53", 2, EntityAttributeModifier.Operation.ADDITION)
+			.addAttributeModifier(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, "6aef6e54-29b8-4cfc-a219-2fdcf22cc557", .1f, EntityAttributeModifier.Operation.ADDITION);
+	public static final StatusEffect ENTROPY_POWER = new AspectPowerStatusEffect(Aspects.ENTROPY)
+			.addAttributeModifier(EntityAttributes.GENERIC_ATTACK_DAMAGE, "acf64683-f1b5-4518-bd64-5ffb72918ab6", .1f, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
 	
 	public static final List<StatusEffect> ASPECT_EFFECTS = List.of(
 			ArcanaRegistry.AIR_POWER,

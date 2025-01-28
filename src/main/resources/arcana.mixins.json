@@ -10,6 +10,7 @@
     "BowItemMixin",
     "CampfireBlockMixin",
     "CookingRecipeSerializerMixin",
+    "EnchantmentHelperMixin",
     "HorizontalConnectingBlockMixin",
     "InventoryChangedCriterionMixin",
     "ItemStackMixin",

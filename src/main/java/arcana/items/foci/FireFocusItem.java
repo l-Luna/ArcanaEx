@@ -1,5 +1,6 @@
 package arcana.items.foci;
 
+import arcana.ArcanaRegistry;
 import arcana.aspects.AspectMap;
 import arcana.aspects.AspectStack;
 import arcana.aspects.Aspects;
@@ -73,6 +74,10 @@ public class FireFocusItem extends FocusItem{
 		// anything from 10 to 45 is obtainable
 		int strength = WandItem.focusStrength(wand, user);
 		float damage = Math.round(0.12f * strength + 3);
+		
+		// bonus damage if the user has ignis power
+		if(user.hasStatusEffect(ArcanaRegistry.FIRE_POWER))
+			damage += 4;
 		
 		target.setOnFireFor((int)(damage + 2));
 		target.damage(DamageSource.ON_FIRE, damage);

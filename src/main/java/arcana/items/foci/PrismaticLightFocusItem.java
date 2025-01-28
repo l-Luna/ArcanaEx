@@ -42,6 +42,7 @@ public class PrismaticLightFocusItem extends FocusItem{
 			PrismaticOrbEntity orb = new PrismaticOrbEntity(ArcanaRegistry.PRISMATIC_ORB, w);
 			orb.setOwner(user);
 			orb.setPosition(hoverPosition(user));
+			orb.setBurning(user.hasStatusEffect(ArcanaRegistry.FIRE_POWER));
 			w.spawnEntity(orb);
 			focus.getOrCreateNbt().putUuid("orbId", orb.getUuid());
 		}

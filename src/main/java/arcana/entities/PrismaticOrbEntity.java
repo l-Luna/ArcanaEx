@@ -25,6 +25,7 @@ public class PrismaticOrbEntity extends ProjectileEntity{
 	
 	private static final TrackedData<Float> size = DataTracker.registerData(PrismaticOrbEntity.class, TrackedDataHandlerRegistry.FLOAT);
 	private static final TrackedData<Boolean> shot = DataTracker.registerData(PrismaticOrbEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+	private static final TrackedData<Boolean> burning = DataTracker.registerData(PrismaticOrbEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 	
 	public PrismaticOrbEntity(EntityType<? extends PrismaticOrbEntity> type, World world){
 		super(type, world);
@@ -55,6 +56,13 @@ public class PrismaticOrbEntity extends ProjectileEntity{
 			HitResult hitResult = ProjectileUtil.getCollision(this, this::canHit);
 			if(hitResult.getType() != HitResult.Type.MISS)
 				onCollision(hitResult);
+			
+			if(isBurning() && world.random.nextFloat() < 0.2f)
+				((ServerWorld)world).spawnParticles(ParticleTypes.DRIPPING_LAVA,
+						getPos().getX(),
+						getPos().getY(),
+						getPos().getZ(),
+						1, 0, 0, 0, 0);
 		}
 		
 		setPosition(getPos().add(getVelocity()));
@@ -65,7 +73,8 @@ public class PrismaticOrbEntity extends ProjectileEntity{
 	protected void onCollision(HitResult hit){
 		super.onCollision(hit);
 		// particle burst
-		((ServerWorld)world).spawnParticles(ParticleTypes.END_ROD,
+		ServerWorld sw = (ServerWorld)world;
+		sw.spawnParticles(ParticleTypes.END_ROD,
 				getPos().getX(),
 				getPos().getY(),
 				getPos().getZ(),
@@ -74,6 +83,16 @@ public class PrismaticOrbEntity extends ProjectileEntity{
 				0,
 				0,
 				0.3f);
+		if(isBurning())
+			sw.spawnParticles(ParticleTypes.FLAME,
+					getPos().getX(),
+					getPos().getY(),
+					getPos().getZ(),
+					7,
+					0,
+					0,
+					0,
+					0.2f);
 		
 		// deal damage to all nearby entities
 		Entity owner = getOwner();
@@ -84,6 +103,8 @@ public class PrismaticOrbEntity extends ProjectileEntity{
 				target.damage(DamageSource.magic(this, owner), getDamage(undeadTarget));
 				if(undeadTarget)
 					target.setOnFireFor(4);
+				if(isBurning())
+					target.setOnFireFor(8);
 			}
 		
 		discard();
@@ -101,6 +122,7 @@ public class PrismaticOrbEntity extends ProjectileEntity{
 	protected void initDataTracker(){
 		dataTracker.startTracking(size, 0f);
 		dataTracker.startTracking(shot, false);
+		dataTracker.startTracking(burning, false);
 	}
 	
 	public float getSize(){
@@ -119,16 +141,26 @@ public class PrismaticOrbEntity extends ProjectileEntity{
 		dataTracker.set(shot, to);
 	}
 	
+	public boolean isBurning(){
+		return dataTracker.get(burning);
+	}
+	
+	public void setBurning(boolean to){
+		dataTracker.set(burning, to);
+	}
+	
 	protected void readCustomDataFromNbt(NbtCompound nbt){
 		super.readCustomDataFromNbt(nbt);
 		setSize(nbt.getFloat("size"));
 		setShot(nbt.getBoolean("shot"));
+		setBurning(nbt.getBoolean("burning"));
 	}
 	
 	protected void writeCustomDataToNbt(NbtCompound nbt){
 		super.writeCustomDataToNbt(nbt);
 		nbt.putFloat("size", getSize());
 		nbt.putBoolean("shot", hasShot());
+		nbt.putBoolean("burning", isBurning());
 	}
 	
 	public Packet<?> createSpawnPacket(){

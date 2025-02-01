@@ -1,6 +1,7 @@
 package arcana.commands;
 
 import arcana.components.Researcher;
+import arcana.datagen.ArcanaDocsProvider;
 import arcana.research.Addendum;
 import arcana.research.Entry;
 import arcana.research.Puzzle;
@@ -36,6 +37,7 @@ public final class ResearchCommand{
 	                            CommandManager.RegistrationEnvironment env){
 		// arcana-research <player> reset
 		// arcana-research <player> [give|take] [entry|puzzle|addendum] id
+		// arcana-research generate-docs
 		dispatcher.register(
 				literal("arcana-research")
 						.requires(source -> source.hasPermissionLevel(2))
@@ -76,7 +78,7 @@ public final class ResearchCommand{
 														.suggests(SUGGEST_ADDENDA)
 												)
 										)
-								))
+						)).then(literal("generate-docs").executes(ResearchCommand::generateDocs))
 		);
 	}
 	
@@ -171,5 +173,15 @@ public final class ResearchCommand{
 				Text.literal(puzzle.id().toString()),
 				player.getDisplayName()));
 		return had ? 1 : 0;
+	}
+	
+	private static int generateDocs(CommandContext<ServerCommandSource> context){
+		try{
+			ArcanaDocsProvider.booksToDocs();
+		}catch(Exception e){
+			e.printStackTrace();
+			throw e;
+		}
+		return 0;
 	}
 }

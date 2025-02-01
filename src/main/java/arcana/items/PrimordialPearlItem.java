@@ -5,6 +5,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.resource.language.I18n;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Style;
@@ -23,7 +24,8 @@ public class PrimordialPearlItem extends Item{
 	@Environment(EnvType.CLIENT)
 	public Text getName(){
 		String[] nouns = I18n.translate("item.arcana.primordial_pearl.nouns").split(",");
-		String noun = nouns[(int)((MinecraftClient.getInstance().world.getTime() / 2) % nouns.length)];
+		ClientWorld world = MinecraftClient.getInstance().world;
+		String noun = nouns[(int)((world != null ? world.getTime() / 2 : 0) % nouns.length)];
 		return Text.translatable(getTranslationKey(), noun);
 	}
 	

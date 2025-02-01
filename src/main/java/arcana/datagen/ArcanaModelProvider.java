@@ -106,6 +106,7 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		noAutoGen.add(WAND);
 		noAutoGen.add(TOME_OF_SHARING);
 		noAutoGen.add(DRINKABLE_TAINT);
+		noAutoGen.add(CRIMSON_LONGBOW);
 		noAutoGen.add(NITOR.asItem());
 		noAutoGen.add(INFUSION_PILLAR.asItem());
 		noAutoGen.add(ESSENTIA_TUBE.asItem());
@@ -190,5 +191,7 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 								BlockStateVariant.create().put(VariantSettings.MODEL, sideAlt).put(VariantSettings.Y, VariantSettings.Rotation.R90)
 						)
 		);
+		// extremely unclear why this is necessary here
+		blockGen.excludeFromSimpleItemModelGeneration(block);
 	}
 }

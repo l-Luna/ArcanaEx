@@ -46,8 +46,8 @@ public class TextFormatter{
 	// TODO: text size, shadow
 	public static class TextSpan implements Span{
 		
-		private final CustomTextStyle renderStyle;
-		String text;
+		public final CustomTextStyle renderStyle;
+		public final String text;
 		
 		public TextSpan(String text, CustomTextStyle style){
 			this.text = text;
@@ -75,7 +75,7 @@ public class TextFormatter{
 	
 	public static class AspectSpan implements Span{
 		
-		private final Aspect aspect;
+		public final Aspect aspect;
 		
 		public AspectSpan(Aspect aspect){
 			this.aspect = aspect;
@@ -97,7 +97,7 @@ public class TextFormatter{
 	
 	public static class MultiSpan implements Span{
 		
-		private final List<Span> spans;
+		public final List<Span> spans;
 		
 		public MultiSpan(List<Span> spans){
 			this.spans = spans;
@@ -134,8 +134,8 @@ public class TextFormatter{
 	
 	public static class SpanParagraph implements Paragraph{
 		
-		List<Span> spans;
-		boolean centred;
+		public final List<Span> spans;
+		public final boolean centred;
 		
 		List<List<Span>> lines = new ArrayList<>();
 		float height;
@@ -230,8 +230,11 @@ public class TextFormatter{
 	}
 	
 	public static float width(String str, CustomTextStyle style){
+		TextRenderer renderer = MinecraftClient.getInstance().textRenderer;
+		if(renderer == null)
+			return str.length();
 		float ret = 0;
-		FontStorage font = (MinecraftClient.getInstance().textRenderer).getFontStorage(Style.DEFAULT_FONT_ID);
+		FontStorage font = renderer.getFontStorage(Style.DEFAULT_FONT_ID);
 		boolean formatting = false;
 		for(char c : str.toCharArray())
 			if(c == '\u00a7')

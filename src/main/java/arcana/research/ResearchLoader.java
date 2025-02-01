@@ -21,7 +21,8 @@ import static arcana.Arcana.arcId;
 
 public final class ResearchLoader extends JsonDataLoader implements IdentifiableResourceReloadListener{
 	
-	private static final Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
+	public static final Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
+	
 	private static final Logger logger = LogUtils.getLogger();
 	
 	private static final Map<Identifier, JsonArray> bookQueue = new HashMap<>();
@@ -37,7 +38,7 @@ public final class ResearchLoader extends JsonDataLoader implements Identifiable
 		return arcId("research");
 	}
 	
-	protected void apply(Map<Identifier, JsonElement> prepared, ResourceManager manager, Profiler profiler){
+	public void apply(Map<Identifier, JsonElement> prepared, ResourceManager _rm, Profiler _pr){
 		bookQueue.clear();
 		categoryQueue.clear();
 		entryQueue.clear();

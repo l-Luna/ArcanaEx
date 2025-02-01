@@ -98,6 +98,7 @@ public final class Researcher implements Component, AutoSyncedComponent{
 	public int getCompletedVisiblePuzzleCount(){
 		return (int)completedPuzzles.stream()
 				.map(Research::getPuzzle)
+				.filter(Objects::nonNull)
 				.filter(Puzzle::visible)
 				.count();
 	}

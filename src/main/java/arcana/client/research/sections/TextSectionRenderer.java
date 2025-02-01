@@ -80,7 +80,7 @@ public class TextSectionRenderer implements EntrySectionRenderer<TextSection>{
 		return curPage;
 	}
 	
-	private static List<Paragraph> format(TextSection section){
+	public static List<Paragraph> format(TextSection section){
 		return textCache.computeIfAbsent(section, s -> TextFormatter.compile(getTranslatedText(s), s));
 	}
 	

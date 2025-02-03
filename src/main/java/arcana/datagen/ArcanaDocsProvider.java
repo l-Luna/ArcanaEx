@@ -31,9 +31,20 @@ public class ArcanaDocsProvider{
 	
 	public static void booksToDocs(){
 		StringBuilder there = new StringBuilder();
-		there.append("<h1>Arcana Research</h1>\n");
+		there.append("""
+			<html>
+			<head>
+				<link href="./style.css" rel="stylesheet" />
+			</head>
+			<body>
+			<h1>Arcana Research</h1>
+			""");
 		for(Book book : Research.books.values())
 			bookToDocs(book, there);
+		there.append("""
+			</body>
+			</html>
+			""");
 		try{
 			Files.writeString(Path.of("./docs/generated.html"), there, StandardOpenOption.CREATE);
 		}catch(IOException e){
@@ -58,10 +69,10 @@ public class ArcanaDocsProvider{
 			EntrySection section = sections.get(i);
 			sectionToDocs(section, where);
 			if(i != sections.size() - 1){
-				where.append("<p><img class=\"requirements-icon\" src=\"then.png\" alt=\"requirements\" >");
+				where.append("<div class=\"requirements-block\"><img class=\"requirements-icon\" src=\"then.png\" alt=\"requirements\" />");
 				for(Requirement requirement : section.getRequirements())
 					requirementToDocs(requirement, where);
-				where.append("</p>");
+				where.append("</div>");
 			}
 		}
 	}
@@ -89,14 +100,17 @@ public class ArcanaDocsProvider{
 			where.append("</p>");
 		}
 		if(paragraph instanceof TextFormatter.SeparatorParagraph)
-			where.append("<p><img class=\"separator-paragraph\" src=\"separator.png\" alt=\"paragraph separator\" /></p>");
+			where.append("<img class=\"separator-paragraph\" src=\"separator.png\" alt=\"paragraph separator\" width=\"88\" height=\"5\" />");
 	}
 	
 	private static void spanToDocs(TextFormatter.Span span, StringBuilder where){
 		if(span instanceof TextFormatter.TextSpan ts){
-			where.append("<span class=\"").append(customStyleToClasses(ts.renderStyle)).append("\">");
+			String classes = customStyleToClasses(ts.renderStyle);
+			if(!classes.isBlank())
+				where.append("<span class=\"").append(classes).append("\">");
 			where.append(ts.text);
-			where.append("</span>");
+			if(!classes.isBlank())
+				where.append("</span>");
 		}
 		if(span instanceof TextFormatter.AspectSpan as)
 			where.append("<img class=\"aspect-icon\" src=\"icons/aspects/%s.png\" alt=\"%s\" />".formatted(as.aspect.id().getPath(), as.aspect.id()));
@@ -107,7 +121,7 @@ public class ArcanaDocsProvider{
 	
 	private static <Req extends Requirement> void requirementToDocs(Req requirement, StringBuilder where){
 		RequirementRenderer<Req> renderer = RequirementRenderer.get(requirement);
-		where.append("<span>");
+		where.append("<div class=\"requirement-block\">");
 		if(requirement instanceof PuzzleRequirement pr){
 			Puzzle p = Research.getPuzzle(pr.getPuzzleId());
 			if(p instanceof Fieldwork)
@@ -119,33 +133,29 @@ public class ArcanaDocsProvider{
 			where.append("<img class=\"requirement-icon\" src=\"icons/complete_research_notes.png\" alt=\"completed research icon\" />");
 		if(requirement instanceof XpRequirement)
 			where.append("<img class=\"requirement-icon\" src=\"icons/xp.png\" alt=\"xp icon\" />");
-		where.append("<span class=\"requirement-tooltip\">");
+		where.append("<div class=\"requirement-tooltip\">");
 		textsToDocs(renderer.tooltip(requirement, 0), where);
-		where.append("</span>");
-		where.append("</span>");
+		where.append("</div>");
+		where.append("</div>");
 	}
 	
 	private static void textsToDocs(List<? extends Text> texts, StringBuilder where){
 		int size = texts.size();
-		if(size > 0){
-			textToDocs(texts.get(0), where);
-			if(size > 1){
-				where.append(" (");
-				for(int i = 1; i < size; i++){
-					textToDocs(texts.get(i), where);
-					if(i != size - 1)
-						where.append(", ");
-				}
-				where.append(")");
-			}
+		for(int i = 0; i < size; i++){
+			textToDocs(texts.get(i), where);
+			if(i != size - 1)
+				where.append("<br />");
 		}
 	}
 	
 	private static void textToDocs(Text text, StringBuilder where){
 		text.visit((style, asString) -> {
-			where.append("<span class=\"").append(styleToClasses(style)).append("\">");
+			String classes = styleToClasses(style);
+			if(!classes.isBlank())
+				where.append("<span class=\"").append(classes).append("\">");
 			where.append(asString);
-			where.append("</span>");
+			if(!classes.isBlank())
+				where.append("</span>");
 			return Optional.empty();
 		}, Style.EMPTY);
 	}

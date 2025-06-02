@@ -150,18 +150,23 @@ public class ResearchBookScreen extends Screen{
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 		RenderSystem.setShaderTexture(0, categories.get(tab).bg());
 		
-		float xScale = 1024f / (512 + 32 - frameWidth());
-		float yScale = 1024f / (512 + 34 - frameHeight());
-		float scale = Math.max(xScale, yScale);
+		int bgWidth = frameWidth() - 32;
+		int bgHeight = frameHeight() - 34;
+		float rawXScale = 1.2f * (bgWidth / 512f);
+		float rawYScale = 1.2f * (bgHeight / 512f);
+		float scale = Math.max(rawXScale, rawYScale);
 		
-		int width = frameWidth() - 32;
-		float xOffset = xScale == scale ? 0 : (512 - (width + 1024 / scale)) / 2;
-		int height = frameHeight() - 34;
-		float yOffset = yScale == scale ? 0 : (512 - (height + 1024 / scale)) / 2;
-		int x = (this.width - frameWidth()) / 2 + 16;
-		int y = (this.height - frameHeight()) / 2 + 17;
+		int screenX = (this.width - frameWidth()) / 2 + 16;
+		int screenY = (this.height - frameHeight()) / 2 + 17;
+		float maxSize = Math.max(bgWidth, bgHeight);
+		float xSzDiff = scale * MAX_PAN * (maxSize - bgWidth) / maxSize;
+		float ySzDiff = scale * MAX_PAN * (maxSize - bgHeight) / maxSize;
+		// remap an area of size [-MAX_PAN, MAX_PAN] -> [szDiff, MAX_PAN * scale - size + szDiff]
+		float u = (((-xPan / 2f + 256f) / MAX_PAN) * (MAX_PAN * scale - maxSize)) + xSzDiff / 2f;
+		float v = (((yPan / 2f + 256f) / MAX_PAN) * (MAX_PAN * scale - maxSize)) + ySzDiff / 2f;
+		// TODO: not completely correctly centred on the smaller axis though
 		
-		drawTexture(matrices, x, y, (-xPan + MAX_PAN) / scale + xOffset, (yPan + MAX_PAN) / scale + yOffset, width, height, MAX_PAN, MAX_PAN);
+		drawTexture(matrices, screenX, screenY, u, v, bgWidth, bgHeight, (int)Math.ceil(MAX_PAN * scale), (int)Math.ceil(MAX_PAN * scale));
 	}
 	
 	private void renderEntries(MatrixStack matrices, float delta){

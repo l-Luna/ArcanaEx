@@ -8,6 +8,7 @@
     "6*fire",
     "4*energy"
   ],
+  "research": "alumentum",
   "result": {
     "item": "arcana:alumentum"
   }

@@ -2,16 +2,20 @@ package arcana.integration.emi;
 
 import arcana.aspects.AspectMap;
 import arcana.recipes.AlchemyRecipe;
+import arcana.research.Entry;
+import arcana.research.Research;
 import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.render.EmiTexture;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.widget.WidgetHolder;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.OptionalInt;
 import java.util.stream.Stream;
 
 import static arcana.Arcana.arcId;
@@ -19,23 +23,27 @@ import static arcana.client.research.sections.AlchemyRecipeSectionRenderer.posit
 
 public class EmiAlchemyRecipe implements EmiRecipe{
 	
-	private static final Identifier texture = arcId("textures/gui/emi/alchemy.png");
-	private static final EmiTexture background = new EmiTexture(texture, 0, 0, 94, 102);
+	private static final EmiTexture background = new EmiTexture(arcId("textures/gui/emi/alchemy.png"), 0, 0, 94, 102);
+	private static final EmiTexture researchNote = new EmiTexture(arcId("textures/gui/research/research_note.png"), 0, 0, 16, 16, 16, 16, 16, 16);
 	
 	protected final Identifier id;
 	protected final EmiIngredient input;
 	protected final EmiStack output;
 	protected final AspectMap aspects;
+	protected final @Nullable Identifier researchId;
+	protected final OptionalInt researchStage;
 	
 	public EmiAlchemyRecipe(AlchemyRecipe recipe){
-		this(recipe.getId(), EmiIngredient.of(recipe.getIngredients().get(0)), EmiStack.of(recipe.getOutput()), recipe.getAspects());
+		this(recipe.getId(), EmiIngredient.of(recipe.getIngredients().get(0)), EmiStack.of(recipe.getOutput()), recipe.getAspects(), recipe.getResearchId(), recipe.getResearchStage());
 	}
 	
-	public EmiAlchemyRecipe(Identifier id, EmiIngredient input, EmiStack output, AspectMap aspects){
+	public EmiAlchemyRecipe(Identifier id, EmiIngredient input, EmiStack output, AspectMap aspects, @Nullable Identifier researchId, OptionalInt researchStage){
 		this.id = id;
 		this.input = input;
 		this.output = output;
 		this.aspects = aspects;
+		this.researchId = researchId;
+		this.researchStage = researchStage;
 	}
 	
 	public EmiRecipeCategory getCategory(){
@@ -59,7 +67,7 @@ public class EmiAlchemyRecipe implements EmiRecipe{
 	}
 	
 	public int getDisplayHeight(){
-		return 102;
+		return 116;
 	}
 	
 	public void addWidgets(WidgetHolder widgets){
@@ -68,5 +76,14 @@ public class EmiAlchemyRecipe implements EmiRecipe{
 		widgets.addSlot(output, 49, 5).drawBack(false).recipeContext(this);
 		positionAspects(aspects, 36, 50).forEach((stack, pos) ->
 				widgets.addSlot(new AspectEmiStack(stack), pos.getLeft(), pos.getRight()).drawBack(false));
+		if(researchId != null){
+			widgets.addTexture(researchNote, 0, 98);
+			Entry entry = Research.getEntry(researchId);
+			if(entry != null)
+				widgets.addText(Text.translatable(entry.name()), 18, 102, 0, false);
+			else{
+				widgets.addText(Text.literal("<invalid entry>"), 18, 102, 0, false);
+			}
+		}
 	}
 }

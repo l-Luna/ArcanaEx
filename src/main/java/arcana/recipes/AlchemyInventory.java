@@ -2,7 +2,6 @@ package arcana.recipes;
 
 import arcana.aspects.AspectMap;
 import arcana.blocks.be.CrucibleBlockEntity;
-import arcana.research.Parent;
 import arcana.research.Research;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
@@ -44,7 +43,7 @@ public class AlchemyInventory extends SimpleInventory{
 		return stages.getOrDefault(entryId, 0);
 	}
 	
-	public boolean complete(Parent parent){
-		return entryStage(parent.id()) >= (parent.stage() == -1 ? Research.getEntry(parent.id()).sections().size() : parent.stage());
+	public boolean complete(Identifier entryId, int stage){
+		return entryStage(entryId) >= (stage == -1 ? Research.getEntry(entryId).sections().size() : stage);
 	}
 }

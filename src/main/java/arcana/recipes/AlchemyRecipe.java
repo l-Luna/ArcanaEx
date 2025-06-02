@@ -12,8 +12,12 @@ import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.OptionalInt;
 
 import static arcana.Arcana.arcId;
+import static arcana.Arcana.maybeArcId;
 
 public class AlchemyRecipe implements Recipe<AlchemyInventory>, AspectRecipe{
 	
@@ -37,15 +41,18 @@ public class AlchemyRecipe implements Recipe<AlchemyInventory>, AspectRecipe{
 		);
 	}
 	
-	public AlchemyRecipe(Identifier id, XIngredient ingredient, AspectMap aspects, ItemStack output){
+	public AlchemyRecipe(Identifier id, @Nullable Identifier researchId, OptionalInt stage, XIngredient ingredient, AspectMap aspects, ItemStack output){
 		this.id = id;
+		this.researchId = researchId;
+		researchStage = stage;
 		this.ingredient = ingredient;
 		this.aspects = aspects;
 		this.output = output;
 	}
 	
 	private final Identifier id;
-	// TODO: research requirement
+	private final @Nullable Identifier researchId;
+	private final OptionalInt researchStage;
 	
 	private final XIngredient ingredient;
 	private final AspectMap aspects;
@@ -53,7 +60,9 @@ public class AlchemyRecipe implements Recipe<AlchemyInventory>, AspectRecipe{
 	private final ItemStack output;
 	
 	public boolean matches(AlchemyInventory inventory, World world){
-		return ingredient.test(inventory.getStack(0)) && inventory.getAspects().contains(aspects);
+		if(ingredient.test(inventory.getStack(0)) && inventory.getAspects().contains(aspects))
+			return researchId == null || inventory.complete(researchId, researchStage.orElse(-1));
+		return false;
 	}
 	
 	public ItemStack craft(AlchemyInventory inventory){
@@ -89,6 +98,14 @@ public class AlchemyRecipe implements Recipe<AlchemyInventory>, AspectRecipe{
 		return aspects;
 	}
 	
+	public @Nullable Identifier getResearchId(){
+		return researchId;
+	}
+	
+	public OptionalInt getResearchStage(){
+		return researchStage;
+	}
+	
 	public void affect(AspectMap aspects){
 		aspects.add(this.aspects);
 	}
@@ -99,17 +116,48 @@ public class AlchemyRecipe implements Recipe<AlchemyInventory>, AspectRecipe{
 			XIngredient ingredient = XIngredient.fromJson(JsonHelper.getObject(json, "ingredient"));
 			var aspects = ItemAspectRegistry.parseAspectStackList(id, JsonHelper.getArray(json, "aspects")).orElseGet(AspectMap::new);
 			ItemStack output = ShapedRecipe.outputFromJson(JsonHelper.getObject(json, "result"));
-			return new AlchemyRecipe(id, ingredient, aspects, output);
+			//Identifier researchId = json.has("research") ? maybeArcId(json.get("research").getAsString()) : null;
+			Identifier researchId = null;
+			var researchStage = OptionalInt.empty();
+			if(json.has("research")){
+				String researchString = json.get("research").getAsString();
+				if(researchString.contains("@")){
+					var split = researchString.split("@", 2);
+					researchString = split[0];
+					researchStage = OptionalInt.of(Integer.parseInt(split[1]));
+				}
+				researchId = maybeArcId(researchString);
+			}
+			return new AlchemyRecipe(id, researchId, researchStage, ingredient, aspects, output);
 		}
 		
 		public void write(PacketByteBuf buf, AlchemyRecipe recipe){
 			recipe.ingredient.write(buf);
 			buf.writeNbt(recipe.aspects.toNbt());
 			buf.writeItemStack(recipe.output);
+			boolean hasReq = recipe.researchId != null;
+			buf.writeBoolean(hasReq);
+			if(hasReq){
+				buf.writeIdentifier(recipe.researchId);
+				boolean hasStage = recipe.researchStage.isPresent();
+				buf.writeBoolean(hasStage);
+				if(hasStage)
+					buf.writeVarInt(recipe.researchStage.getAsInt());
+			}
 		}
 		
 		public AlchemyRecipe read(Identifier id, PacketByteBuf buf){
-			return new AlchemyRecipe(id, XIngredient.read(buf), AspectMap.fromNbt(buf.readNbt()), buf.readItemStack());
+			XIngredient ingredient = XIngredient.read(buf);
+			AspectMap aspects = AspectMap.fromNbt(buf.readNbt());
+			ItemStack output = buf.readItemStack();
+			Identifier researchId = null;
+			OptionalInt researchStage = OptionalInt.empty();
+			if(buf.readBoolean()){
+				researchId = buf.readIdentifier();
+				if(buf.readBoolean())
+					researchStage = OptionalInt.of(buf.readVarInt());
+			}
+			return new AlchemyRecipe(id, researchId, researchStage, ingredient, aspects, output);
 		}
 	}
 }

@@ -35,10 +35,12 @@ public class ResearchNotesItem extends Item{
 		super.appendTooltip(stack, world, tooltip, context);
 		var nbt = stack.getNbt();
 		if(nbt != null)
-			if(nbt.contains("puzzle_id"))
-				for(MutableText text
-						: PuzzleRequirementRenderer.tooltipForPuzzle(Research.getPuzzle(new Identifier(nbt.getString("puzzle_id")))))
-					tooltip.add(text.formatted(Formatting.AQUA));
+			if(nbt.contains("puzzle_id")){
+				Puzzle puzzle = Research.getPuzzle(new Identifier(nbt.getString("puzzle_id")));
+				if(puzzle != null)
+					for(MutableText text : PuzzleRequirementRenderer.tooltipForPuzzle(puzzle))
+						tooltip.add(text.formatted(Formatting.AQUA));
+			}
 	}
 	
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand){

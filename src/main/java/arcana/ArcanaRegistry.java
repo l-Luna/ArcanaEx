@@ -12,6 +12,7 @@ import arcana.client.particles.AspectParticleEffect;
 import arcana.effects.AspectPowerStatusEffect;
 import arcana.effects.SetBonusStatusEffect;
 import arcana.effects.TaintedStatusEffect;
+import arcana.enchantments.LootSwapEnchantment;
 import arcana.enchantments.ProjectingEnchantment;
 import arcana.enchantments.WarpingCurseEnchantment;
 import arcana.entities.PrismaticOrbEntity;
@@ -35,6 +36,7 @@ import arcana.worldgen.silverwood.SilverwoodSaplingGenerator;
 import arcana.worldgen.silverwood.SilverwoodTree;
 import arcana.worldgen.silverwood.SilverwoodTrunkPlacer;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.mojang.datafixers.util.Pair;
 import com.unascribed.lib39.fractal.api.ItemSubGroup;
 import com.unascribed.lib39.weld.api.BigBlock;
@@ -53,6 +55,7 @@ import net.minecraft.block.*;
 import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -475,8 +478,32 @@ public final class ArcanaRegistry{
 	public static BlockEntityType<DistilleryPathfinderBlockEntity> DISTILLERY_PATHFINDER_BE = FabricBlockEntityTypeBuilder.create(DistilleryPathfinderBlockEntity::new, DISTILLERY_PATHFINDER).build();
 	
 	// enchantments...
+	public static final Map<Item, Item> TRANSMUTATIVE_SWAPS = ImmutableMap.<Item, Item>builder()
+			.put(Items.GUNPOWDER, Items.BLAZE_POWDER)
+			.put(Items.STRING, Items.COBWEB)
+			.put(Items.QUARTZ, Items.FLINT)
+			.put(Items.STICK, Items.DEAD_BUSH)
+			.put(Items.REDSTONE, Items.GLOWSTONE_DUST)
+			.put(Items.GLOWSTONE_DUST, Items.REDSTONE)
+			.put(Items.SNOWBALL, Items.ICE)
+			.put(Items.ROTTEN_FLESH, Items.LEATHER)
+			.put(Items.SPIDER_EYE, Items.FERMENTED_SPIDER_EYE)
+			.put(Items.CHICKEN, Items.RABBIT)
+			.put(Items.RABBIT, Items.CHICKEN)
+			.put(Items.MUTTON, Items.BEEF)
+			.put(Items.BEEF, Items.MUTTON)
+			.put(Items.GOLD_NUGGET, Items.IRON_NUGGET)
+			.build();
+	public static final Map<Item, Item> PURIFYING_SWAPS = Map.of(
+			Items.RAW_IRON, ALCHEMICAL_IRON,
+			Items.RAW_COPPER, ALCHEMICAL_COPPER,
+			Items.RAW_GOLD, ALCHEMICAL_GOLD
+	);
+	
 	public static Enchantment WARPING = new WarpingCurseEnchantment(Enchantment.Rarity.VERY_RARE, EquipmentSlot.values());
 	public static Enchantment PROJECTING = new ProjectingEnchantment();
+	public static LootSwapEnchantment TRANSMUTATIVE = new LootSwapEnchantment(EnchantmentTarget.WEAPON, TRANSMUTATIVE_SWAPS, 1, 1.0f);
+	public static LootSwapEnchantment PURIFYING = new LootSwapEnchantment(EnchantmentTarget.DIGGER, PURIFYING_SWAPS, 3, 0.2f);
 	
 	// features...
 	// TODO: move elsewhere? e.g. to each feature's class
@@ -986,6 +1013,8 @@ public final class ArcanaRegistry{
 		// enchantments
 		register("warping", WARPING);
 		register("projecting", PROJECTING);
+		register("transmutative", TRANSMUTATIVE);
+		register("purifying", PURIFYING);
 		
 		// features
 		register("surface_node", SURFACE_NODE_FEATURE);

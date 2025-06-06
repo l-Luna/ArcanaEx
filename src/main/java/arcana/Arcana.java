@@ -7,6 +7,7 @@ import arcana.commands.ResearchCommand;
 import arcana.commands.WarpCommand;
 import arcana.effects.AspectPowerStatusEffect;
 import arcana.effects.SetBonusStatusEffect;
+import arcana.enchantments.LootSwapEnchantment;
 import arcana.entities.ThrownTaintBottleEntity;
 import arcana.recipes.AlchemyRecipe;
 import arcana.recipes.InfusionRecipe;
@@ -24,6 +25,7 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.CommonLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.dispenser.ProjectileDispenserBehavior;
@@ -76,6 +78,8 @@ public final class Arcana implements ModInitializer{
 		ServerTickEvents.END_WORLD_TICK.register(world -> world.getPlayers().forEach(SetBonusStatusEffect::handleArmourSetBonus));
 		ServerTickEvents.END_WORLD_TICK.register(world -> world.getPlayers().forEach(AspectPowerStatusEffect::handleExclusivity));
 		ServerTickEvents.END_WORLD_TICK.register(WardedCampfireBlock::handleTime);
+		
+		LootTableEvents.MODIFY.register(LootSwapEnchantment::modifyLootTable);
 		
 		DispenserBlock.registerBehavior(ArcanaRegistry.TAINT_IN_A_BOTTLE, new ProjectileDispenserBehavior(){
 			protected ProjectileEntity createProjectile(World world, Position position, ItemStack stack){

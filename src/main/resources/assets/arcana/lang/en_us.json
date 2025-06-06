@@ -457,7 +457,9 @@
   // Enchantments
   "enchantment.arcana": {
     "warping": "Warping",
-    "projecting": "Projecting"
+    "projecting": "Projecting",
+    "transmutative": "Transmutative",
+    "purifying": "Purifying"
   },
 
   // Entities

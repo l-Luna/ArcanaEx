@@ -90,8 +90,9 @@ public class LootSwapEnchantment extends Enchantment{
 				level = Math.max(level, EnchantmentHelper.getLevel(enchantment, toolStack));
 			
 			if(level > 0){
-				float chance = (level * enchantment.baseChance) / stack.getCount();
-				if(context.getRandom().nextFloat() < chance)
+				float bc = enchantment.baseChance;
+				float chance = (level * bc) / stack.getCount();
+				if(bc >= 1.0 || context.getRandom().nextFloat() < chance)
 					stack = new ItemStack(enchantment.swaps.get(stack.getItem()), stack.getCount());
 			}
 			return stack;

@@ -42,26 +42,24 @@ public class XIngredient implements Predicate<ItemStack>{
 	private final Item item;
 	private final TagKey<Item> tag;
 	
-	private final String matcherName, matcherParams;
+	@NotNull
 	private final StackMatcher stackMatcher;
 	
 	// for recipe viewing
 	private ItemStack[] matchingStacks = null;
 	
-	private XIngredient(Item item, TagKey<Item> tag, String matcherName, String matcherParams, StackMatcher stackMatcher){
+	private XIngredient(Item item, TagKey<Item> tag, @NotNull StackMatcher stackMatcher){
 		this.item = item;
 		this.tag = tag;
-		this.matcherName = matcherName;
-		this.matcherParams = matcherParams;
 		this.stackMatcher = stackMatcher;
 	}
 	
-	public XIngredient(Item item, String matcherName, String matcherParams){
-		this(item, null, matcherName, matcherParams, matchers.get(matcherName).apply(matcherParams));
+	public XIngredient(Item item, @NotNull StackMatcher matcher){
+		this(item, null, matcher);
 	}
 	
-	public XIngredient(TagKey<Item> tag, String matcherName, String matcherParams){
-		this(null, tag, matcherName, matcherParams, matchers.get(matcherName).apply(matcherParams));
+	public XIngredient(TagKey<Item> tag, @NotNull StackMatcher matcher){
+		this(null, tag, matcher);
 	}
 	
 	public boolean test(ItemStack stack){
@@ -75,22 +73,17 @@ public class XIngredient implements Predicate<ItemStack>{
 	}
 	
 	public static XIngredient fromJson(JsonObject json){
-		String matcherName = "any", matcherParams = "";
-		if(json.has("matches")){
-			String matcher = JsonHelper.getString(json, "matches", "any");
-			String[] parts = matcher.split(" ", 2);
-			matcherName = parts[0];
-			if(parts.length > 1)
-				matcherParams = parts[1];
-		}
+		StackMatcher stackMatcher = AnyMatcher.INSTANCE;
+		if(json.has("matches"))
+			stackMatcher = matcherFromString(JsonHelper.getString(json, "matches", "any"));
 		
 		if(json.has("item") && json.has("tag"))
 			throw new JsonParseException("An ingredient should either be an item or tag, not both");
 		else if(json.has("item"))
-			return new XIngredient(ShapedRecipe.getItem(json), matcherName, matcherParams);
+			return new XIngredient(ShapedRecipe.getItem(json), stackMatcher);
 		else if(json.has("tag")){
 			TagKey<Item> tag = TagKey.of(Registry.ITEM_KEY, new Identifier(JsonHelper.getString(json, "tag")));
-			return new XIngredient(tag, matcherName, matcherParams);
+			return new XIngredient(tag, stackMatcher);
 		}else
 			throw new JsonParseException("An ingredient needs either an item or tag");
 	}
@@ -103,16 +96,22 @@ public class XIngredient implements Predicate<ItemStack>{
 			buf.writeIdentifier(tag.id());
 			buf.writeBoolean(false);
 		}
-		buf.writeString(matcherName);
-		buf.writeString(matcherParams);
+		buf.writeString(stackMatcher.asString());
 	}
 	
 	public static XIngredient read(PacketByteBuf buf){
 		Identifier id = buf.readIdentifier();
 		if(buf.readBoolean())
-			return new XIngredient(Registry.ITEM.get(id), buf.readString(), buf.readString());
+			return new XIngredient(Registry.ITEM.get(id), matcherFromString(buf.readString()));
 		else
-			return new XIngredient(TagKey.of(Registry.ITEM_KEY, id), buf.readString(), buf.readString());
+			return new XIngredient(TagKey.of(Registry.ITEM_KEY, id), matcherFromString(buf.readString()));
+	}
+	
+	public static StackMatcher matcherFromString(String desc){
+		var split = desc.split(" ", 2);
+		String matcherName = split[0];
+		String matcherParams = split.length > 1 ? split[1] : "";
+		return matchers.get(matcherName).apply(matcherParams);
 	}
 	
 	@NotNull
@@ -131,7 +130,7 @@ public class XIngredient implements Predicate<ItemStack>{
 					.map(RegistryEntry::value)
 					.map(ItemStack::new);
 		// TODO: apply multiple matchers in turn
-		candidates = stackMatcher.applyMatching(candidates);
+		candidates = stackMatcher.previewStream(candidates);
 		return candidates.toArray(ItemStack[]::new);
 	}
 	
@@ -148,28 +147,50 @@ public class XIngredient implements Predicate<ItemStack>{
 	
 	public interface StackMatcher extends Predicate<ItemStack>{
 		
-		Stream<ItemStack> applyMatching(Stream<ItemStack> in);
+		ItemStack preview(ItemStack in);
+		
+		Stream<ItemStack> previewStream(Stream<ItemStack> in);
+		
+		String asString();
 	}
 	
 	public static final class AnyMatcher implements StackMatcher{
 		
-		public Stream<ItemStack> applyMatching(Stream<ItemStack> in){
+		public static final AnyMatcher INSTANCE = new AnyMatcher();
+		
+		public ItemStack preview(ItemStack in){
+			return in;
+		}
+		
+		public Stream<ItemStack> previewStream(Stream<ItemStack> in){
 			return in;
 		}
 		
 		public boolean test(ItemStack stack){
 			return true;
 		}
+		
+		public String asString(){
+			return "any";
+		}
 	}
 	
 	public static final class MaxDurabilityMatcher implements StackMatcher{
 		
-		public Stream<ItemStack> applyMatching(Stream<ItemStack> in){
+		public ItemStack preview(ItemStack in){
+			return in;
+		}
+		
+		public Stream<ItemStack> previewStream(Stream<ItemStack> in){
 			return in; // stacks are only suggested at full durability
 		}
 		
 		public boolean test(ItemStack stack){
 			return stack.getDamage() == stack.getMaxDamage();
+		}
+		
+		public String asString(){
+			return "max_durability";
 		}
 	}
 	
@@ -185,15 +206,25 @@ public class XIngredient implements Predicate<ItemStack>{
 			this(new Identifier(enchantmentId));
 		}
 		
-		public Stream<ItemStack> applyMatching(Stream<ItemStack> in){
+		public ItemStack preview(ItemStack in){
+			ItemStack stack = in.copy();
+			enchant(stack);
+			return stack;
+		}
+		
+		public Stream<ItemStack> previewStream(Stream<ItemStack> in){
 			return in.filter(stack -> enchantment.isAcceptableItem(stack) || stack.getItem() instanceof EnchantedBookItem)
 					.map(ItemStack::copy)
 					.peek(this::enchant);
 		}
 		
-		// TODO: wrong for enchanted books?
 		public boolean test(ItemStack stack){
-			return EnchantmentHelper.getLevel(enchantment, stack) > 0;
+			Map<Enchantment, Integer> enchants = EnchantmentHelper.get(stack);
+			return enchants.containsKey(enchantment) && enchants.get(enchantment) >= 1;
+		}
+		
+		public String asString(){
+			return "enchanted_with " + Registry.ENCHANTMENT.getId(enchantment);
 		}
 		
 		private void enchant(ItemStack stack){
@@ -212,12 +243,20 @@ public class XIngredient implements Predicate<ItemStack>{
 			potion = Potion.byId(potionId);
 		}
 		
-		public Stream<ItemStack> applyMatching(Stream<ItemStack> in){
+		public ItemStack preview(ItemStack in){
+			return PotionUtil.setPotion(in, potion);
+		}
+		
+		public Stream<ItemStack> previewStream(Stream<ItemStack> in){
 			return in.map(x -> PotionUtil.setPotion(x, potion));
 		}
 		
 		public boolean test(ItemStack stack){
 			return Objects.equals(PotionUtil.getPotion(stack), potion);
+		}
+		
+		public String asString(){
+			return "has_potion_type " + Registry.POTION.getId(potion);
 		}
 	}
 }

@@ -1,5 +1,6 @@
 package arcana.research.requirements;
 
+import arcana.recipes.XIngredient;
 import arcana.research.Requirement;
 import arcana.util.NbtUtil;
 import net.minecraft.entity.player.PlayerEntity;
@@ -7,6 +8,7 @@ import net.minecraft.item.Item;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
@@ -18,12 +20,16 @@ public class ItemRequirement extends Requirement{
 	
 	private final Item item;
 	
-	public ItemRequirement(Item item){
+	@NotNull
+	private final XIngredient.StackMatcher matcher;
+	
+	public ItemRequirement(Item item, @NotNull XIngredient.StackMatcher matcher){
 		this.item = item;
+		this.matcher = matcher;
 	}
 	
 	public boolean satisfiedBy(PlayerEntity player){
-		return player.getInventory().remove(x -> x.getItem().equals(item), 0, player.playerScreenHandler.getCraftingInput()) >= (getAmount() == 0 ? 1 : getAmount());
+		return player.getInventory().remove(x -> x.getItem().equals(item) && matcher.test(x), 0, player.playerScreenHandler.getCraftingInput()) >= (getAmount() == 0 ? 1 : getAmount());
 	}
 	
 	public void takeFrom(PlayerEntity player){
@@ -35,10 +41,17 @@ public class ItemRequirement extends Requirement{
 	}
 	
 	public NbtCompound data(){
-		return NbtUtil.from(Map.of("item", Registry.ITEM.getId(item)));
+		return NbtUtil.from(Map.of(
+				"item", Registry.ITEM.getId(item),
+				"matcher", matcher.asString()
+		));
 	}
 	
 	public Item getItem(){
 		return item;
+	}
+	
+	public @NotNull XIngredient.StackMatcher getMatcher(){
+		return matcher;
 	}
 }

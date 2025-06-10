@@ -7,6 +7,8 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 
+import java.util.Optional;
+
 import static arcana.client.research.EntrySectionRenderer.overlayTexture;
 import static arcana.screens.ResearchEntryScreen.*;
 import static net.minecraft.client.gui.DrawableHelper.drawTexture;
@@ -16,7 +18,7 @@ public class WandInteractionSectionRenderer implements EntrySectionRenderer<Wand
 	public void render(MatrixStack matrices, WandInteractionSection section, int pageIdx, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right){
 		int x = right ? pageX + rightXOffset : pageX;
 		
-		AbstractRecipeSectionRenderer.renderResult(matrices, new ItemStack(section.getResult()), x, pageY, screenWidth, screenHeight, section);
+		AbstractRecipeSectionRenderer.renderResult(matrices, new ItemStack(section.getResult()), Optional.empty(), x, pageY, screenWidth, screenHeight, section);
 		
 		int inputX = x + (screenWidth - 256 + pageWidth) / 2 - 8;
 		int inputY = pageY + (screenHeight - bgHeight + pageHeight) / 2 - 8 + 35 - heightOffset;

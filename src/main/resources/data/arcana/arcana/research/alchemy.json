@@ -746,7 +746,7 @@
       "parents": [
         "arcana:essentia_distillation"
       ],
-      "x": 7,
+      "x": 9,
       "y": -1,
       "sections": [
         {
@@ -776,6 +776,74 @@
         {
           "type": "arcane_crafting",
           "content": "arcana:synthetic_scaffolding"
+        }
+      ]
+    },
+    {
+      "key": "arcana:purifying_enchantment",
+      "name": "research.arcana.purifying_enchantment.title",
+      "desc": "research.arcana.purifying_enchantment.desc",
+      "icons": [
+        "minecraft:enchanted_book",
+        "arcana:alchemical_iron"
+      ],
+      "category": "arcana:alchemy",
+      "parents": [
+        "arcana:essentia_distillation"
+      ],
+      "x": 7,
+      "y": 0,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.purifying_enchantment.stages.1",
+          "requirements": [
+            "minecraft:enchanted_book & enchanted_with minecraft:efficiency",
+            "minecraft:enchanted_book & enchanted_with minecraft:fortune",
+            "minecraft:enchanted_book & enchanted_with minecraft:silk_touch"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.purifying_enchantment.stages.2"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:enchantments/purifying"
+        }
+      ]
+    },
+    {
+      "key": "arcana:transmutative_enchantment",
+      "name": "research.arcana.transmutative_enchantment.title",
+      "desc": "research.arcana.transmutative_enchantment.desc",
+      "icons": [
+        "minecraft:enchanted_book",
+        "arcana:aspects/exchange"
+      ],
+      "category": "arcana:alchemy",
+      "parents": [
+        "arcana:purifying_enchantment"
+      ],
+      "x": 8,
+      "y": 1,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.transmutative_enchantment.stages.1",
+          "requirements": [
+            "minecraft:enchanted_book & enchanted_with minecraft:looting",
+            "minecraft:enchanted_book & enchanted_with arcana:purifying",
+            "minecraft:enchanted_book & enchanted_with minecraft:fire_aspect"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.transmutative_enchantment.stages.2"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:enchantments/transmutative"
         }
       ]
     }

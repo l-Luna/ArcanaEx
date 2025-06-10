@@ -8,6 +8,10 @@
     "6*crystal",
     "8*magic"
   ],
+  "minecraft:enchanted_book": [
+    "3*mind",
+    "2*magic"
+  ],
   "minecraft:name_tag": [
     "10*mind"
   ],

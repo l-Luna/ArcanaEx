@@ -1,15 +1,19 @@
 package arcana.client.research.sections;
 
 import arcana.client.research.EntrySectionRenderer;
+import arcana.recipes.RenamableRecipe;
 import arcana.research.EntrySection;
 import arcana.research.sections.AbstractRecipeSection;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Recipe;
+
+import java.util.Optional;
 
 import static arcana.client.research.EntrySectionRenderer.overlayTexture;
 import static arcana.screens.ResearchEntryScreen.*;
@@ -22,7 +26,9 @@ public abstract class AbstractRecipeSectionRenderer<T extends AbstractRecipeSect
 	public void render(MatrixStack matrices, T section, int pageIdx, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right){
 		client().world.getRecipeManager().get(section.getRecipeId()).ifPresent(recipe -> {
 			ItemStack result = recipe.getOutput();
-			renderResult(matrices, result, right ? pageX + rightXOffset : pageX, pageY, screenWidth, screenHeight, section);
+			Optional<String> overrideName = recipe instanceof RenamableRecipe rr ? rr.getTranslationKey() : Optional.empty();
+			overrideName = overrideName.map(I18n::translate);
+			renderResult(matrices, result, overrideName, right ? pageX + rightXOffset : pageX, pageY, screenWidth, screenHeight, section);
 			renderRecipe(matrices, recipe, section, pageIdx, screenWidth, screenHeight, mouseX, mouseY, right);
 		});
 	}
@@ -40,7 +46,7 @@ public abstract class AbstractRecipeSectionRenderer<T extends AbstractRecipeSect
 	protected abstract void renderRecipeTooltips(MatrixStack matrices, Recipe<?> recipe, T section, int pageIdx, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right);
 	
 	// static for use in WandInteractionSectionRenderer
-	public static void renderResult(MatrixStack matrices, ItemStack stack, int x, int y, int screenWidth, int screenHeight, EntrySection section){
+	public static void renderResult(MatrixStack matrices, ItemStack stack, Optional<String> overrideName, int x, int y, int screenWidth, int screenHeight, EntrySection section){
 		matrices.push();
 		MinecraftClient client = MinecraftClient.getInstance();
 		TextRenderer textRenderer = client.textRenderer;
@@ -50,7 +56,7 @@ public abstract class AbstractRecipeSectionRenderer<T extends AbstractRecipeSect
 		drawTexture(matrices, rX, rY, 101, 1, 167, 58, 20, 256, 256);
 		client.getItemRenderer().renderInGui(stack, rX + 29 - 8, rY + 10 - 8);
 		client.getItemRenderer().renderGuiItemOverlay(textRenderer, stack, rX + 29 - 8, rY + 10 - 8);
-		String name = stack.getName().getString();
+		String name = overrideName.orElse(stack.getName().getString());
 		if(name.contains(":")){
 			String[] split = name.split(":");
 			String prefix = split[0] + ":";

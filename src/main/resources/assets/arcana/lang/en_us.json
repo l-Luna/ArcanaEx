@@ -459,7 +459,10 @@
     "warping": "Warping",
     "projecting": "Projecting",
     "transmutative": "Transmutative",
-    "purifying": "Purifying"
+    "purifying": "Purifying",
+
+    "purifying.recipe": "Arcane Enchantment: Purifying",
+    "transmutative.recipe": "Arcane Enchantment: Transmutative"
   },
 
   // Entities
@@ -1081,6 +1084,24 @@
         "As established, I need to find substrates more efficient than the primal aspect crystals, which require a handful to break down even moderately complex objects.\nMany substances can be used as mundane fillers, and I believe altering one may allow for creating a powerful substrate.",
         "Providing something too dense with any single aspect produces a low-quality substrate, but binding multiple together with {aspect:slime} Gelum produces something much more effective. Indeed, mundane slime is almost sufficient already, though some magic will enhance it much further.",
         "By combining magical and mundane ingredients, I can produce Synthetic Scaffolding, a more efficient distillation substrate. Each of these can account for {c3}15{r} essentia each."
+      ]
+    },
+
+    "purifying_enchantment": {
+      "title": "Arcane Enchantment: Purifying",
+      "desc": "Alchemy where it should be",
+      "stages": [
+        "The process of metal purification, while useful, still has some slightly inefficiencies. More importantly, it is inconvenient to need to lug back piles of raw ores from mining expeditions only to find myself with another pile of tedium to attend to. Bulk processing aids this somewhat, but the best shortcut would be to combine the two steps entirely: my pickaxe should perform alchemy for me.\nNow equipped with the ability to purify and manipulate essentia directly, I believe this should be possible, potentially even easy. The medium of enchanting provides a means to apply precise effects to otherwise-mundane tools; an essentia coating should work just as well.",
+        "Mimicking the structure of other mining enchantments leads to a straightforward recipe for a {i}Refining{r} enchantment, which causes raw ore drops to be randomly transmuted into their purified, alchemical forms. The chance begins at 20%, and is multiplied by the enchantment's level, up to 3.\nEntire stacks are transmuted at once. If a block would drop multiple of an item, the chance is divided by the size of the stack."
+      ]
+    },
+
+    "transmutative_enchantment": {
+      "title": "Arcane Enchantment: Transmutative",
+      "desc": "Alchemy where it could be",
+      "stages": [
+        "I've studied far much varied alchemy than simply purifying metals. It would be interesting to see what might happen with more varied, less controlled transmutative magic applied to a weapon.",
+        "Following the same formula Purifying, I arrive at {i}Transmutative{r}, which replaces mob drops with transmuted variants. These transmutations include most recipes from Hedge Alchemy, with a number of additional, more unpredictable ones.\nUnlike Purifying, these transmutations are guaranteed."
       ]
     },
 

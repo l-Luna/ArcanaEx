@@ -1,6 +1,7 @@
 package arcana.research;
 
 import arcana.Arcana;
+import arcana.recipes.XIngredient;
 import arcana.research.requirements.ItemRequirement;
 import arcana.research.requirements.ItemTagRequirement;
 import com.google.gson.*;
@@ -256,11 +257,17 @@ public final class ResearchLoader extends JsonDataLoader implements Identifiable
 					ret.add(tagReq);
 				}else{
 					// it's an item
-					Identifier item = new Identifier(desc);
-					Item value = Registry.ITEM.get(item);
-					ItemRequirement add = new ItemRequirement(value);
-					add.amount = amount;
-					ret.add(add);
+					// optional matcher section: `minecraft:wooden_sword & has_enchantment minecraft:sharpness`
+					XIngredient.StackMatcher matcher = XIngredient.AnyMatcher.INSTANCE;
+					if(desc.contains("&")){
+						var split = desc.split("&", 2);
+						desc = split[0].trim();
+						matcher = XIngredient.matcherFromString(split[1].trim());
+					}
+					Item item = Registry.ITEM.get(new Identifier(desc));
+					ItemRequirement itemReq = new ItemRequirement(item, matcher);
+					itemReq.amount = amount;
+					ret.add(itemReq);
 				}
 			}
 		}

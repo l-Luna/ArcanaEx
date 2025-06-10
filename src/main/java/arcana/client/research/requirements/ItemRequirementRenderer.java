@@ -15,6 +15,7 @@ public class ItemRequirementRenderer implements RequirementRenderer<ItemRequirem
 	
 	public void render(MatrixStack matrices, int x, int y, ItemRequirement requirement, int time, float delta){
 		var stack = new ItemStack(requirement.getItem());
+		stack = requirement.getMatcher().preview(stack);
 		if(requirement.getItem() instanceof WandItem)
 			stack = WandItem.basicWand();
 		client().getItemRenderer().renderGuiItemIcon(stack, x, y);
@@ -22,6 +23,7 @@ public class ItemRequirementRenderer implements RequirementRenderer<ItemRequirem
 	
 	public List<Text> tooltip(ItemRequirement requirement, int time){
 		var stack = new ItemStack(requirement.getItem());
+		stack = requirement.getMatcher().preview(stack);
 		if(requirement.getItem() instanceof WandItem)
 			stack = WandItem.basicWand();
 		var tooltips = stack.getTooltip(

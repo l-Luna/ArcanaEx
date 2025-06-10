@@ -13,9 +13,11 @@ import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.registry.Registry;
 
+import java.util.Optional;
+
 import static arcana.Arcana.arcId;
 
-public class ShapedArcaneCraftingRecipe extends ShapedRecipe implements ArcaneCraftingRecipe{
+public class ShapedArcaneCraftingRecipe extends ShapedRecipe implements ArcaneCraftingRecipe, RenamableRecipe{
 	
 	public static RecipeType<ShapedArcaneCraftingRecipe> TYPE;
 	public static Serializer SERIALIZER;
@@ -38,6 +40,7 @@ public class ShapedArcaneCraftingRecipe extends ShapedRecipe implements ArcaneCr
 	}
 	
 	private AspectMap aspects;
+	private String translationKey;
 	
 	public ShapedArcaneCraftingRecipe(Identifier id, String group, int width, int height, DefaultedList<Ingredient> input, ItemStack output){
 		super(id, group, width, height, input, output);
@@ -55,24 +58,38 @@ public class ShapedArcaneCraftingRecipe extends ShapedRecipe implements ArcaneCr
 		return aspects;
 	}
 	
+	public Optional<String> getTranslationKey(){
+		return Optional.ofNullable(translationKey);
+	}
+	
 	public static class Serializer extends ShapedRecipe.Serializer{
 		
 		public ShapedRecipe read(Identifier id, JsonObject json){
 			ShapedRecipe orig = super.read(id, json);
-			ShapedArcaneCraftingRecipe recipe = new ShapedArcaneCraftingRecipe(orig);
+			ItemStack output = orig.getOutput();
+			if(json.has("apply"))
+				output = XIngredient.matcherFromString(json.get("apply").getAsString()).preview(output);
+			ShapedArcaneCraftingRecipe recipe = new ShapedArcaneCraftingRecipe(orig.getId(), orig.getGroup(), orig.getWidth(), orig.getHeight(), orig.getIngredients(), output);
 			recipe.aspects = ItemAspectRegistry.parseAspectStackList(id, JsonHelper.getArray(json, "aspects")).orElse(null);
+			recipe.translationKey = JsonHelper.getString(json, "name", null);
 			return recipe;
 		}
 		
 		public void write(PacketByteBuf bytes, ShapedRecipe recipe){
 			super.write(bytes, recipe);
 			bytes.writeNbt(((ShapedArcaneCraftingRecipe)recipe).aspects.toNbt());
+			String key = ((ShapedArcaneCraftingRecipe)recipe).translationKey;
+			bytes.writeBoolean(key != null);
+			if(key != null)
+				bytes.writeString(key);
 		}
 		
 		public ShapedRecipe read(Identifier id, PacketByteBuf bytes){
 			ShapedRecipe orig = super.read(id, bytes);
 			ShapedArcaneCraftingRecipe recipe = new ShapedArcaneCraftingRecipe(orig);
 			recipe.aspects = AspectMap.fromNbt(bytes.readNbt());
+			if(bytes.readBoolean())
+				recipe.translationKey = bytes.readString();
 			return recipe;
 		}
 	}

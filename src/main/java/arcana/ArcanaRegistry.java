@@ -493,6 +493,8 @@ public final class ArcanaRegistry{
 			.put(Items.MUTTON, Items.BEEF)
 			.put(Items.BEEF, Items.MUTTON)
 			.put(Items.GOLD_NUGGET, Items.IRON_NUGGET)
+			.put(Items.MAGMA_CREAM, Items.NETHER_WART)
+			.put(Items.BONE_MEAL, Items.KELP)
 			.build();
 	public static final Map<Item, Item> PURIFYING_SWAPS = Map.of(
 			Items.RAW_IRON, ALCHEMICAL_IRON,

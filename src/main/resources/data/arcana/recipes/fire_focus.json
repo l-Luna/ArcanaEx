@@ -8,6 +8,7 @@
     "8*energy",
     "3*magic"
   ],
+  "research": "wand_foci@0",
   "result": {
     "item": "arcana:fire_focus"
   }

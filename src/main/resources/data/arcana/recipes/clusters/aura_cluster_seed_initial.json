@@ -11,6 +11,7 @@
     "30*order",
     "30*entropy"
   ],
+  "research": "aura_crystallization",
   "result": {
     "item": "arcana:cluster_seeds/aura"
   }

@@ -6,6 +6,7 @@
   "aspects": [
     "50*magic"
   ],
+  "research": "magical_metallurgy",
   "result": {
     "item": "arcana:arcanium_block"
   }

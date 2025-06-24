@@ -7,6 +7,7 @@
     "10*taint",
     "10*ice"
   ],
+  "research": "taint_in_a_bottle",
   "result": {
     "item": "arcana:taint_in_a_bottle"
   }

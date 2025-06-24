@@ -8,6 +8,7 @@
     "3*energy",
     "3*fire"
   ],
+  "research": "alchemy",
   "result": {
     "item": "arcana:nitor"
   }

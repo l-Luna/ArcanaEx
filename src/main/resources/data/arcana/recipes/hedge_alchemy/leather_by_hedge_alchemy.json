@@ -8,6 +8,7 @@
     "fabric",
     "exchange"
   ],
+  "research": "hedge_alchemy",
   "result": {
     "item": "minecraft:leather"
   }

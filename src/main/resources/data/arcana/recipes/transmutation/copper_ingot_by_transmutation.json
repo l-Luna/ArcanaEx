@@ -8,6 +8,7 @@
     "metal",
     "tool"
   ],
+  "research": "transmutation@1",
   "result": {
     "item": "minecraft:copper_ingot"
   }

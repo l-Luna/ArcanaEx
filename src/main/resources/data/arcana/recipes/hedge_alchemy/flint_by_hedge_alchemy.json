@@ -7,6 +7,7 @@
     "10*earth",
     "exchange"
   ],
+  "research": "hedge_alchemy",
   "result": {
     "item": "minecraft:flint"
   }

@@ -8,6 +8,7 @@
     "order",
     "crystal"
   ],
+  "research": "purification@4",
   "result": {
     "item": "arcana:alchemical_copper"
   }

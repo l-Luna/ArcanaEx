@@ -9,6 +9,7 @@
     "8*void",
     "3*magic"
   ],
+  "research": "portable_hole_focus",
   "result": {
     "item": "arcana:portable_hole_focus"
   }

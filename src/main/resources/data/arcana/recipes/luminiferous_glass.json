@@ -7,6 +7,8 @@
     "4*light",
     "2*ice"
   ],
+
+  "research": "alchemical_glass@3",
   "result": {
     "item": "arcana:luminiferous_glass"
   }

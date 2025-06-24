@@ -8,6 +8,7 @@
     "8*void",
     "6*magic"
   ],
+  "research": "obsidian_wand_core",
   "result": {
     "item": "arcana:obsidian_wand_core"
   }

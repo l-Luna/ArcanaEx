@@ -8,6 +8,7 @@
     "metal",
     "greed"
   ],
+  "research": "transmutation@3",
   "result": {
     "item": "minecraft:gold_ingot"
   }

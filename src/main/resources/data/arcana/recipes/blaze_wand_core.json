@@ -8,6 +8,7 @@
     "8*light",
     "6*magic"
   ],
+  "research": "blaze_wand_core",
   "result": {
     "item": "arcana:blaze_wand_core"
   }

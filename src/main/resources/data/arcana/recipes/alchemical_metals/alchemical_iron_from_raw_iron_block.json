@@ -8,6 +8,7 @@
     "8*order",
     "8*crystal"
   ],
+  "research": "purification@1",
   "result": {
     "item": "arcana:alchemical_iron",
     "count": 9

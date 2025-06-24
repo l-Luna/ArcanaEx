@@ -8,6 +8,7 @@
     "12*energy",
     "8*magic"
   ],
+  "research": "silverwood_wand_core",
   "result": {
     "item": "arcana:silverwood_wand_core"
   }

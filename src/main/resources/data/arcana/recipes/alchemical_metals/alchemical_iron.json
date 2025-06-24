@@ -8,6 +8,7 @@
     "order",
     "crystal"
   ],
+  "research": "purification@1",
   "result": {
     "item": "arcana:alchemical_iron"
   }

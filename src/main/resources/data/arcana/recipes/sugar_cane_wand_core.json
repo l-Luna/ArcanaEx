@@ -8,6 +8,7 @@
     "8*exchange",
     "6*magic"
   ],
+  "research": "sugar_cane_wand_core",
   "result": {
     "item": "arcana:sugar_cane_wand_core"
   }

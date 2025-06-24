@@ -6,6 +6,7 @@
   "aspects": [
     "6*magic"
   ],
+  "research": "metallurgy_shortcut",
   "result": {
     "item": "arcana:altered_iron"
   }

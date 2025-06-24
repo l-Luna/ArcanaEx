@@ -8,6 +8,7 @@
     "plant",
     "exchange"
   ],
+  "research": "crystal_farmer",
   "result": {
     "item": "arcana:cluster_seeds/earth"
   }

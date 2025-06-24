@@ -8,6 +8,7 @@
     "8*metal",
     "8*tool"
   ],
+  "research": "transmutation@5",
   "result": {
     "item": "minecraft:copper_block"
   }

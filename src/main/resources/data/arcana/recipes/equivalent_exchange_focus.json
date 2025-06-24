@@ -8,6 +8,7 @@
     "6*order",
     "3*magic"
   ],
+  "research": "equivalent_exchange_focus",
   "result": {
     "item": "arcana:equivalent_exchange_focus"
   }

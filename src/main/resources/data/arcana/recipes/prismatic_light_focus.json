@@ -10,6 +10,7 @@
     "3*wrath",
     "3*magic"
   ],
+  "research": "prismatic_light_focus",
   "result": {
     "item": "arcana:prismatic_light_focus"
   }

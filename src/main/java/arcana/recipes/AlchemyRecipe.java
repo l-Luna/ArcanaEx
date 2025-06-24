@@ -41,10 +41,10 @@ public class AlchemyRecipe implements Recipe<AlchemyInventory>, AspectRecipe{
 		);
 	}
 	
-	public AlchemyRecipe(Identifier id, @Nullable Identifier researchId, OptionalInt stage, XIngredient ingredient, AspectMap aspects, ItemStack output){
+	public AlchemyRecipe(Identifier id, @Nullable Identifier researchId, OptionalInt researchStage, XIngredient ingredient, AspectMap aspects, ItemStack output){
 		this.id = id;
 		this.researchId = researchId;
-		researchStage = stage;
+		this.researchStage = researchStage;
 		this.ingredient = ingredient;
 		this.aspects = aspects;
 		this.output = output;
@@ -116,7 +116,6 @@ public class AlchemyRecipe implements Recipe<AlchemyInventory>, AspectRecipe{
 			XIngredient ingredient = XIngredient.fromJson(JsonHelper.getObject(json, "ingredient"));
 			var aspects = ItemAspectRegistry.parseAspectStackList(id, JsonHelper.getArray(json, "aspects")).orElseGet(AspectMap::new);
 			ItemStack output = ShapedRecipe.outputFromJson(JsonHelper.getObject(json, "result"));
-			//Identifier researchId = json.has("research") ? maybeArcId(json.get("research").getAsString()) : null;
 			Identifier researchId = null;
 			var researchStage = OptionalInt.empty();
 			if(json.has("research")){

@@ -37,6 +37,7 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 	public static final EmiRecipeCategory ARCANE_CRAFTING = new EmiRecipeCategory(arcId("arcane_crafting"), EmiStack.of(ArcanaRegistry.ARCANE_CRAFTING_TABLE.asItem()));
 	public static final EmiRecipeCategory ALCHEMY = new EmiRecipeCategory(arcId("alchemy"), EmiStack.of(ArcanaRegistry.CRUCIBLE.asItem()));
 	public static final EmiRecipeCategory INFUSION = new EmiRecipeCategory(arcId("infusion"), EmiStack.of(ArcanaRegistry.INFUSION_MATRIX.asItem()));
+	public static final EmiRecipeCategory ASPECT_CRYSTALLIZATION = new EmiRecipeCategory(arcId("aspect_crystallization"), EmiStack.of(ArcanaRegistry.CRYSTALLIZATION_PRESS.asItem()));
 	
 	public void register(EmiRegistry registry){
 		
@@ -48,6 +49,7 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 		registry.addCategory(ARCANE_CRAFTING);
 		registry.addCategory(ALCHEMY);
 		registry.addCategory(INFUSION);
+		registry.addCategory(ASPECT_CRYSTALLIZATION);
 		
 		for(Aspect value : Aspects.aspects.values())
 			registry.addEmiStack(new AspectEmiStack(value));
@@ -85,6 +87,8 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 				.map(x -> new EmiAspectsByItemsRecipe(EmiStack.of(x.getKey()), x.getValue().asStacks()))
 				.forEach(registry::addRecipe);
 		
+		Aspects.getOrderedAspects().stream().map(EmiAspectCrystallizationRecipe::new).forEach(registry::addRecipe);
+		
 		registry.addRecipe(new EmiWandRecipe(arcId("wand")));
 		
 		EmiStack basicWand = EmiStack.of(WandItem.basicWand());
@@ -111,6 +115,7 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 		registry.addWorkstation(ARCANE_CRAFTING, EmiStack.of(ArcanaRegistry.ARCANE_CRAFTING_TABLE.asItem()));
 		registry.addWorkstation(ALCHEMY, EmiStack.of(ArcanaRegistry.CRUCIBLE.asItem()));
 		registry.addWorkstation(INFUSION, EmiStack.of(ArcanaRegistry.INFUSION_MATRIX.asItem()));
+		registry.addWorkstation(ASPECT_CRYSTALLIZATION, EmiStack.of(ArcanaRegistry.CRYSTALLIZATION_PRESS.asItem()));
 		
 		registry.addRecipeHandler(ArcanaRegistry.ARCANE_CRAFTING_SCREEN_HANDLER, new EmiArcaneCraftingRecipeHandler());
 		registry.addStackProvider(ResearchEntryScreen.class, new ResearchEntryScreenStackProvider());

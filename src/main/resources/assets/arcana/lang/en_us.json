@@ -55,7 +55,8 @@
       "aspects_by_items": "Aspects by Items",
       "arcane_crafting": "Arcane Crafting",
       "alchemy": "Alchemy",
-      "infusion": "Infusion"
+      "infusion": "Infusion",
+      "aspect_crystallization": "Aspect Crystallization"
     },
     "info.arcana.arcanum": "Right click on a node with Scribbled Notes to get an Arcanum and begin Arcana."
   },

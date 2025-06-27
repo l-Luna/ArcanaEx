@@ -3,6 +3,7 @@ package arcana.research;
 import arcana.Arcana;
 import arcana.research.puzzles.Chemistry;
 import arcana.research.puzzles.Fieldwork;
+import arcana.research.puzzles.Lighthouses;
 import arcana.util.NbtUtil;
 import com.google.gson.JsonObject;
 import net.minecraft.nbt.NbtCompound;
@@ -57,6 +58,9 @@ public abstract class Puzzle{
 		factories.put(Chemistry.TYPE, Chemistry::new);
 		deserializers.put(Chemistry.TYPE, Chemistry::new);
 		
+		factories.put(Lighthouses.TYPE, Lighthouses::new);
+		deserializers.put(Lighthouses.TYPE, Lighthouses::new);
+		
 		factories.put(Fieldwork.TYPE, __ -> new Fieldwork());
 		deserializers.put(Fieldwork.TYPE, __ -> new Fieldwork());
 	}
@@ -67,6 +71,7 @@ public abstract class Puzzle{
 	protected String desc = "";
 	
 	public abstract Identifier type();
+	
 	public abstract NbtCompound data();
 	
 	public boolean visible(){

@@ -22,6 +22,8 @@ public record Aspect(Identifier id, Aspect left, Aspect right, int colour) imple
 		return new AspectStack(this, amount);
 	}
 	
+	// child of, related to...
+	
 	public boolean equals(Object obj){
 		return obj instanceof Aspect other && other.id().equals(id());
 	}

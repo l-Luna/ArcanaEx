@@ -18,12 +18,16 @@ public final class NbtUtil{
 			var value = entry.getValue();
 			if(value instanceof Integer i)
 				compound.putInt(key, i);
+			else if(value instanceof Boolean b)
+				compound.putBoolean(key, b);
 			else if(value instanceof String s)
 				compound.putString(key, s);
 			else if(value instanceof Identifier i)
 				compound.putString(key, i.toString());
 			else if(value instanceof NbtElement e)
 				compound.put(key, e);
+			else if(value instanceof HexPos pos)
+				compound.putLong(key, pos.toLong());
 			// ...
 		}
 		return compound;

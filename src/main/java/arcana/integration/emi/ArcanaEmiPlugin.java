@@ -18,7 +18,9 @@ import dev.emi.emi.api.recipe.EmiWorldInteractionRecipe;
 import dev.emi.emi.api.recipe.VanillaEmiRecipeCategories;
 import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.stack.TagEmiIngredient;
+import dev.emi.emi.config.FluidUnit;
 import net.minecraft.block.Blocks;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Pair;
@@ -108,6 +110,13 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 				.leftInput(EmiStack.of(Blocks.CAULDRON.asItem()))
 				.rightInput(basicWand, true)
 				.output(EmiStack.of(ArcanaRegistry.CRUCIBLE.asItem()))
+				.build());
+		
+		registry.addRecipe(EmiWorldInteractionRecipe.builder()
+				.id(arcId("/fluid_interaction/taint_goo"))
+				.leftInput(EmiStack.of(ArcanaRegistry.STILL_TAINT_GOO, FluidUnit.BUCKET))
+				.rightInput(EmiStack.of(Fluids.LAVA, FluidUnit.BUCKET), true)
+				.output(EmiStack.of(ArcanaRegistry.TAINT_CRUST.asItem()))
 				.build());
 		
 		registry.addRecipe(new EmiInfoRecipe(

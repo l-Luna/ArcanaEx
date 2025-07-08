@@ -1,6 +1,7 @@
 package arcana.fluids;
 
 import arcana.ArcanaRegistry;
+import arcana.ArcanaTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -10,10 +11,12 @@ import net.minecraft.fluid.FluidState;
 import net.minecraft.item.Item;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.Properties;
+import net.minecraft.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
+import net.minecraft.world.WorldEvents;
 import net.minecraft.world.WorldView;
 
 public abstract class TaintGooFluid extends FlowableFluid{
@@ -67,14 +70,26 @@ public abstract class TaintGooFluid extends FlowableFluid{
 		return ArcanaRegistry.TAINT_GOO.getDefaultState().with(Properties.LEVEL_15, getBlockStateLevel(state));
 	}
 	
+	// see FluidBlockMixin for lava flowing into tainted goo
+	protected void flow(WorldAccess world, BlockPos pos, BlockState state, Direction direction, FluidState fluidState){
+		FluidState belowState = world.getFluidState(pos.down());
+		if(isIn(ArcanaTags.TAINT_GOO) && belowState.isIn(FluidTags.LAVA)){
+			world.setBlockState(pos, ArcanaRegistry.TAINT_CRUST.getDefaultState(), Block.NOTIFY_ALL);
+			world.syncWorldEvent(WorldEvents.LAVA_EXTINGUISHED, pos, 0);
+			return;
+		}
+		
+		super.flow(world, pos, state, direction, fluidState);
+	}
+	
 	public static class Flowing extends TaintGooFluid{
 		
-		protected void appendProperties(StateManager.Builder<Fluid, FluidState> builder) {
+		protected void appendProperties(StateManager.Builder<Fluid, FluidState> builder){
 			super.appendProperties(builder);
 			builder.add(LEVEL);
 		}
 		
-		public int getLevel(FluidState state) {
+		public int getLevel(FluidState state){
 			return state.get(LEVEL);
 		}
 		

@@ -47,7 +47,7 @@ public class EmiItemsByAspectsRecipe extends EmiIngredientRecipe{
 	}
 	
 	public @Nullable Identifier getId(){
-		return arcId("items_with/" + EmiUtil.subId(aspect.getId()));
+		return arcId("/items_with/" + EmiUtil.subId(aspect.getId()));
 	}
 	
 	public List<EmiIngredient> getInputs(){

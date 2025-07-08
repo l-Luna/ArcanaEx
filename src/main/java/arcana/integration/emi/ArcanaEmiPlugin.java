@@ -9,6 +9,7 @@ import arcana.recipes.AlchemyRecipe;
 import arcana.recipes.InfusionRecipe;
 import arcana.recipes.ShapedArcaneCraftingRecipe;
 import arcana.screens.ResearchEntryScreen;
+import dev.emi.emi.api.EmiInitRegistry;
 import dev.emi.emi.api.EmiPlugin;
 import dev.emi.emi.api.EmiRegistry;
 import dev.emi.emi.api.recipe.EmiInfoRecipe;
@@ -21,6 +22,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Pair;
+import net.minecraft.util.registry.Registry;
 
 import java.util.Comparator;
 import java.util.List;
@@ -39,8 +41,11 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 	public static final EmiRecipeCategory INFUSION = new EmiRecipeCategory(arcId("infusion"), EmiStack.of(ArcanaRegistry.INFUSION_MATRIX.asItem()));
 	public static final EmiRecipeCategory ASPECT_CRYSTALLIZATION = new EmiRecipeCategory(arcId("aspect_crystallization"), EmiStack.of(ArcanaRegistry.CRYSTALLIZATION_PRESS.asItem()));
 	
+	public void initialize(EmiInitRegistry registry){
+		registry.addIngredientSerializer(AspectEmiStack.class, new AspectEmiStack.AspectEmiStackSerializer());
+	}
+	
 	public void register(EmiRegistry registry){
-		
 		// TODO: cleanup
 		
 		registry.addCategory(ITEMS_BY_ASPECTS);
@@ -77,14 +82,14 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 		
 		// add tags first
 		ItemAspectRegistry.getAllTagAspects().entrySet().stream()
-				.map(x -> new EmiAspectsByItemsRecipe(new TagEmiIngredient(x.getKey(), 1), x.getValue().asStacks()))
+				.map(x -> new EmiAspectsByItemsRecipe(new TagEmiIngredient(x.getKey(), 1), x.getValue().asStacks(), x.getKey().id()))
 				.forEach(registry::addRecipe);
 		
 		ItemAspectRegistry.getAllItemAspects().entrySet().stream()
-				.filter(x -> x.getValue().size() > 0)
+				.filter(x -> !x.getValue().isEmpty())
 				// skip items that can be grouped under a tag
 				.filter(x -> !ItemAspectRegistry.usesTagAspects(x.getKey()) || ItemAspectRegistry.hasAnyBonusAspects(x.getKey()))
-				.map(x -> new EmiAspectsByItemsRecipe(EmiStack.of(x.getKey()), x.getValue().asStacks()))
+				.map(x -> new EmiAspectsByItemsRecipe(EmiStack.of(x.getKey()), x.getValue().asStacks(), Registry.ITEM.getId(x.getKey())))
 				.forEach(registry::addRecipe);
 		
 		Aspects.getOrderedAspects().stream().map(EmiAspectCrystallizationRecipe::new).forEach(registry::addRecipe);
@@ -93,13 +98,13 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 		
 		EmiStack basicWand = EmiStack.of(WandItem.basicWand());
 		registry.addRecipe(EmiWorldInteractionRecipe.builder()
-				.id(arcId("world_convert_arcane_crafting_table"))
+				.id(arcId("/world_convert_arcane_crafting_table"))
 				.leftInput(EmiStack.of(Blocks.CRAFTING_TABLE.asItem()))
 				.rightInput(basicWand, true)
 				.output(EmiStack.of(ArcanaRegistry.ARCANE_CRAFTING_TABLE.asItem()))
 				.build());
 		registry.addRecipe(EmiWorldInteractionRecipe.builder()
-				.id(arcId("world_convert_crucible"))
+				.id(arcId("/world_convert_crucible"))
 				.leftInput(EmiStack.of(Blocks.CAULDRON.asItem()))
 				.rightInput(basicWand, true)
 				.output(EmiStack.of(ArcanaRegistry.CRUCIBLE.asItem()))
@@ -108,7 +113,7 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 		registry.addRecipe(new EmiInfoRecipe(
 				List.of(EmiStack.of(ArcanaRegistry.SCRIBBLED_NOTES), EmiStack.of(ArcanaRegistry.ARCANUM)),
 				List.of(Text.translatable("emi.info.arcana.arcanum")),
-				null
+				arcId("/info/arcanum")
 		));
 		
 		registry.addWorkstation(VanillaEmiRecipeCategories.CRAFTING, EmiStack.of(ArcanaRegistry.ARCANE_CRAFTING_TABLE.asItem()));
@@ -119,8 +124,6 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 		
 		registry.addRecipeHandler(ArcanaRegistry.ARCANE_CRAFTING_SCREEN_HANDLER, new EmiArcaneCraftingRecipeHandler());
 		registry.addStackProvider(ResearchEntryScreen.class, new ResearchEntryScreenStackProvider());
-		
-		registry.addIngredientSerializer(AspectEmiStack.class, new AspectEmiStack.AspectEmiStackSerializer());
 		
 		var manager = registry.getRecipeManager();
 		manager.listAllOfType(ShapedArcaneCraftingRecipe.TYPE).stream().map(EmiArcaneCraftingRecipe::new).forEach(registry::addRecipe);

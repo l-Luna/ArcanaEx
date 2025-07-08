@@ -2,6 +2,7 @@ package arcana.integration.emi;
 
 import arcana.aspects.Aspect;
 import arcana.aspects.Aspects;
+import dev.emi.emi.EmiUtil;
 import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.render.EmiTexture;
@@ -33,7 +34,7 @@ public class EmiAspectCrystallizationRecipe implements EmiRecipe{
 	}
 	
 	public @Nullable Identifier getId(){
-		return null;
+		return arcId("/crystallization/" + EmiUtil.subId(((Aspect)essentia.getKey()).id()));
 	}
 	
 	public List<EmiIngredient> getInputs(){

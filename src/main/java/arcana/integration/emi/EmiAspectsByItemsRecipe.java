@@ -1,6 +1,7 @@
 package arcana.integration.emi;
 
 import arcana.aspects.AspectStack;
+import dev.emi.emi.EmiUtil;
 import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.render.EmiTexture;
@@ -13,14 +14,18 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collections;
 import java.util.List;
 
+import static arcana.Arcana.arcId;
+
 public class EmiAspectsByItemsRecipe implements EmiRecipe{
 	
 	private final EmiIngredient item;
 	private final List<AspectEmiStack> aspects;
+	private final Identifier baseId;
 	
-	public EmiAspectsByItemsRecipe(EmiIngredient item, List<AspectStack> aspects){
+	public EmiAspectsByItemsRecipe(EmiIngredient item, List<AspectStack> aspects, Identifier baseId){
 		this.item = item;
 		this.aspects = aspects.stream().map(AspectEmiStack::new).toList();
+		this.baseId = baseId;
 	}
 	
 	public EmiRecipeCategory getCategory(){
@@ -28,7 +33,7 @@ public class EmiAspectsByItemsRecipe implements EmiRecipe{
 	}
 	
 	public @Nullable Identifier getId(){
-		return null;
+		return arcId("/aspects_of/" + EmiUtil.subId(baseId));
 	}
 	
 	public List<EmiIngredient> getInputs(){

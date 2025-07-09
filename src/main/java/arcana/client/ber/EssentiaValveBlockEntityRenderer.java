@@ -1,5 +1,6 @@
 package arcana.client.ber;
 
+import arcana.ArcanaRegistry;
 import arcana.blocks.tubes.EssentiaValveBlockEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ConnectingBlock;
@@ -30,15 +31,15 @@ public class EssentiaValveBlockEntityRenderer implements BlockEntityRenderer<Ess
 	                   VertexConsumerProvider vertexConsumers,
 	                   int light,
 	                   int overlay){
-		// this doesn't work at all and i'm massively overcomplicating it i'm sorry
-		
 		BlockModelRenderer.enableBrightnessCache();
 		matrices.push();
-		//matrices.translate(.5, .5, .5);
+		
+		// apply everything to the centre of the model
+		matrices.translate(0.5, 0.5, 0.5);
+		
 		// rotate to pick an empty side
 		BlockState state = be.getWorld().getBlockState(be.getPos());
-		//matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90));
-		if(state.get(ConnectingBlock.UP))
+		if(state.isOf(ArcanaRegistry.ESSENTIA_VALVE) && state.get(ConnectingBlock.UP))
 			if(!state.get(ConnectingBlock.NORTH))
 				matrices.multiply(Vec3f.NEGATIVE_X.getDegreesQuaternion(90));
 			else if(!state.get(ConnectingBlock.EAST))
@@ -49,25 +50,33 @@ public class EssentiaValveBlockEntityRenderer implements BlockEntityRenderer<Ess
 				matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(90));
 			else if(!state.get(ConnectingBlock.DOWN))
 				matrices.multiply(Vec3f.NEGATIVE_X.getDegreesQuaternion(180));
+		
 		// set base gear height
-		matrices.translate(1, 1, 0);
+		matrices.translate(0, 0.2, 0);
+		
 		// modify height & rotation based on state
 		if(be.enabled()){
 			// display higher up
 			// if lastChangedTick is less than 20 different from the current tick, transition
 			float tickDiff = Math.min(10, (be.getWorld().getTime() + tickDelta) - be.lastChangedTick);
-			float heightDiff = (tickDiff / 10) * .07f;
+			float heightDiff = (tickDiff / 10) * .06f;
 			float rotationDiff = (tickDiff / 10) * 135;
-			//matrices.translate(0, heightDiff, 0);
-			matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(rotationDiff + 45));
+			matrices.translate(0, heightDiff, 0);
+			matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(rotationDiff + 45));
 		}else{
 			float tickDiff = Math.min(10, (be.getWorld().getTime() + tickDelta) - be.lastChangedTick);
-			float heightDiff = (1 - (tickDiff / 10)) * .07f;
+			float heightDiff = (1 - (tickDiff / 10)) * .06f;
 			float rotationDiff = (1 - (tickDiff / 10)) * 135;
-			//matrices.translate(0, heightDiff, 0);
-			matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(rotationDiff + 45));
+			matrices.translate(0, heightDiff, 0);
+			matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(rotationDiff + 45));
 		}
-		//matrices.scale(0.5f, 0.5f, 0.5f);
+		
+		// shrink gear model
+		matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90));
+		matrices.scale(0.7f, 0.7f, 0.7f);
+		
+		// un-center
+		matrices.translate(-0.5, -0.5, -0.5);
 		
 		BakedModelManager modelManager = MinecraftClient.getInstance().getBakedModelManager();
 		BlockRenderManager renderManager = MinecraftClient.getInstance().getBlockRenderManager();

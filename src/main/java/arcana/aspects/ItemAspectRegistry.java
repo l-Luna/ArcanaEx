@@ -219,11 +219,7 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 	
 	private void computeInheritedAspects(){
 		// TODO: this is a naive approach
-		// the proper way to do this would be to create a directed graph between items with recipes as edges,
-		// removing all edges into items with set aspects,
-		// removing all cycles in the graph (how?),
-		// topologically sorting it so that every item is processed after all possible ingredients,
-		// calculating the aspects assigned by each recipe, and then choosing whichever provides the least
+		// could get better results by toposorting the condensation of the item/recipe graph?
 		
 		// here we simply look at each possible craftable item and recursively generate aspects,
 		// producing weird behaviour on cycles
@@ -242,8 +238,11 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 	}
 	
 	private AspectMap generate(Item item){
-		if(generating.contains(item)) // counts as nothing to itself
+		if(generating.contains(item)){
+			// counts as nothing to itself
+			logger.warn("Encountered cycle picking aspects for {}", Registry.ITEM.getId(item));
 			return new AspectMap();
+		}
 		generating.add(item);
 		// consider every recipe that produces this
 		List<AspectMap> choices = new ArrayList<>();

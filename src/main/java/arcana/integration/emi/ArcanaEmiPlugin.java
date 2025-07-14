@@ -16,7 +16,9 @@ import dev.emi.emi.api.recipe.EmiInfoRecipe;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.recipe.EmiWorldInteractionRecipe;
 import dev.emi.emi.api.recipe.VanillaEmiRecipeCategories;
+import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
+import dev.emi.emi.api.stack.ListEmiIngredient;
 import dev.emi.emi.api.stack.TagEmiIngredient;
 import dev.emi.emi.config.FluidUnit;
 import net.minecraft.block.Blocks;
@@ -118,6 +120,22 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 				.rightInput(EmiStack.of(Fluids.LAVA, FluidUnit.BUCKET), true)
 				.output(EmiStack.of(ArcanaRegistry.TAINT_CRUST.asItem()))
 				.build());
+		
+		for(Aspect aspect : Aspects.hasCluster){
+			// this is a bit silly, but does get across the general idea
+			EmiIngredient aspectStack;
+			if(aspect.equals(Aspects.AURA))
+				aspectStack = new ListEmiIngredient(Aspects.primals.stream().map(AspectEmiStack::new).toList(), 24);
+			else
+				aspectStack = new AspectEmiStack(aspect, 8);
+			registry.addRecipe(EmiWorldInteractionRecipe.builder()
+					.id(arcId("/cluster_growth/" + aspect.id().getPath()))
+					.leftInput(EmiStack.of(Aspects.clusterSeeds.get(aspect)))
+					.rightInput(aspectStack, false)
+					.output(EmiStack.of(Aspects.clusters.get(aspect).asItem()))
+					.supportsRecipeTree(false)
+					.build());
+		}
 		
 		registry.addRecipe(new EmiInfoRecipe(
 				List.of(EmiStack.of(ArcanaRegistry.SCRIBBLED_NOTES), EmiStack.of(ArcanaRegistry.ARCANUM)),

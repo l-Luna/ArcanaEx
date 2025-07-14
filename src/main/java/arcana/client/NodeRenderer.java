@@ -2,10 +2,10 @@ package arcana.client;
 
 import arcana.aspects.Aspect;
 import arcana.aspects.Aspects;
+import arcana.aura.AuraWorld;
 import arcana.aura.Node;
 import arcana.aura.NodeType;
 import arcana.aura.NodeTypes;
-import arcana.aura.AuraWorld;
 import arcana.items.GogglesOfRevealingItem;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -89,12 +89,12 @@ public final class NodeRenderer{
 			var looking = auraWorld.raycastNodes(player.getEyePos(), 6.5, false, player).orElse(null);
 			for(Node node : allNodes)
 				if(shouldView(node))
-					if(node == looking)
-						lerpView.put(node, MathHelper.lerp(context.tickDelta() / 5f, lerpView.computeIfAbsent(node, __ -> 0f), 1));
+					if(node.equals(looking))
+						lerpView.put(node, MathHelper.lerp(context.tickDelta() / 5f, lerpView.getOrDefault(node, 0f), 1));
 					else
-						lerpView.put(node, MathHelper.lerp(context.tickDelta() / 5f, lerpView.computeIfAbsent(node, __ -> 1f), 0));
+						lerpView.put(node, MathHelper.lerp(context.tickDelta() / 5f, lerpView.getOrDefault(node, 0f), 0));
 				else
-					lerpView.put(node, 0f);
+					lerpView.remove(node);
 			
 			Aspects.primals.forEach(primal -> {
 				RenderSystem.setShaderTexture(0, AspectRenderer.texture(primal));

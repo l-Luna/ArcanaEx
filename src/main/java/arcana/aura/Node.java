@@ -179,6 +179,10 @@ public class Node implements Position{
 		return aspects;
 	}
 	
+	public AspectMap getAspectCap(){
+		return aspectCap;
+	}
+	
 	public NbtCompound getOrCreateTag(){
 		if(tag == null)
 			tag = new NbtCompound();

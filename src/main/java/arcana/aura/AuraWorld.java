@@ -182,11 +182,11 @@ public final class AuraWorld implements Component, ServerTickingComponent, AutoS
 				ChunkPos towards = world.random.nextBoolean()
 						? new ChunkPos(pos.x + (world.random.nextBoolean() ? 1 : -1), pos.z)
 						: new ChunkPos(pos.x, pos.z + (world.random.nextBoolean() ? 1 : -1));
-				float fluxThere = AuraChunk.from(world, towards).flux();
+				AuraChunk there = AuraChunk.from(world, towards);
 				// if we pass the arbitrary threshold...
-				if((fluxThere > 0 && here.flux() > fluxThere + 10) || (here.flux() > 20)){
+				if(there != null && ((there.flux() > 0 && here.flux() > there.flux() + 10) || (here.flux() > 20))){
 					// pass along 1/10 of the difference, floored to the nearest 0.01
-					float passRaw = (here.flux() - fluxThere) / 10;
+					float passRaw = (here.flux() - there.flux()) / 10;
 					float pass = (int)(passRaw * 100) / 100f;
 					diff.put(pos.toLong(), diff.get(pos.toLong()) - pass);
 					diff.put(towards.toLong(), diff.get(towards.toLong()) + pass);

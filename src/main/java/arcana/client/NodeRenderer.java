@@ -2,22 +2,22 @@ package arcana.client;
 
 import arcana.aspects.Aspect;
 import arcana.aspects.Aspects;
-import arcana.aura.AuraWorld;
-import arcana.aura.Node;
-import arcana.aura.NodeType;
-import arcana.aura.NodeTypes;
+import arcana.aura.*;
 import arcana.items.GogglesOfRevealingItem;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
+import net.fabricmc.fabric.impl.event.lifecycle.LoadedChunksCache;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Position;
 import net.minecraft.util.math.Quaternion;
 import net.minecraft.util.math.Vec3f;
+import net.minecraft.world.World;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -53,11 +53,15 @@ public final class NodeRenderer{
 		BufferBuilder buffer = tessellator.getBuffer();
 		
 		Camera camera = context.camera();
+		ClientWorld world = context.world();
 		
-		var auraWorld = context.world().getComponent(AuraWorld.KEY);
-		List<Node> allNodes = auraWorld.getNodes();
+		AuraWorld auraWorld = AuraWorld.from(world);
+		List<Node> allVisible = ((LoadedChunksCache)world).fabric_getLoadedChunks().stream()
+				.map(AuraChunk::from)
+				.flatMap(x->x.nodes().stream())
+				.toList();
 		
-		var nodesByType = allNodes
+		var nodesByType = allVisible
 				.stream()
 				.collect(Collectors.groupingBy(Node::getType));
 		
@@ -69,7 +73,7 @@ public final class NodeRenderer{
 			buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);
 			for(Node node : nodes)
 				if(shouldView(node))
-					drawNode(camera, node, buffer, .12f);
+					drawNode(camera, node, buffer, .12f, world);
 			BufferRenderer.drawWithShader(buffer.end());
 		});
 		
@@ -81,13 +85,13 @@ public final class NodeRenderer{
 				buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);
 				for(Node node : nodes)
 					if(shouldView(node))
-						drawNode(camera, node, buffer, .85f);
+						drawNode(camera, node, buffer, .85f, world);
 				BufferRenderer.drawWithShader(buffer.end());
 			});
 			
 			// only render aspects for the one you look at
 			var looking = auraWorld.raycastNodes(player.getEyePos(), 6.5, false, player).orElse(null);
-			for(Node node : allNodes)
+			for(Node node : allVisible)
 				if(shouldView(node))
 					if(node.equals(looking))
 						lerpView.put(node, MathHelper.lerp(context.tickDelta() / 5f, lerpView.getOrDefault(node, 0f), 1));
@@ -99,26 +103,26 @@ public final class NodeRenderer{
 			Aspects.primals.forEach(primal -> {
 				RenderSystem.setShaderTexture(0, AspectRenderer.texture(primal));
 				buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);
-				for(Node node : allNodes)
+				for(Node node : allVisible)
 					if(shouldView(node))
-						drawNodeAspect(camera, node, buffer, primal);
+						drawNodeAspect(camera, node, buffer, primal, world);
 				BufferRenderer.drawWithShader(buffer.end());
 			});
 			
-			for(Node node : allNodes){
+			for(Node node : allVisible){
 				if(shouldView(node)){
 					// can't batch non-primals, so avoid these if we can
 					for(Aspect aspect : node.getAspects().aspectSet())
 						if(!Aspects.primals.contains(aspect)){
 							RenderSystem.setShaderTexture(0, AspectRenderer.texture(aspect));
 							buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);
-							drawNodeAspect(camera, node, buffer, aspect);
+							drawNodeAspect(camera, node, buffer, aspect, world);
 							BufferRenderer.drawWithShader(buffer.end());
 						}
 				}
 			}
 			
-			for(Node node : allNodes)
+			for(Node node : allVisible)
 				if(shouldView(node))
 					for(Aspect aspect : node.getAspects().aspectSet())
 						drawNodeAspectCount(camera, node, buffer, aspect);
@@ -134,11 +138,11 @@ public final class NodeRenderer{
 		return maxDist * maxDist >= client.player.squaredDistanceTo(node.getX(), node.getY(), node.getZ());
 	}
 	
-	private static void drawNode(Camera camera, Node node, BufferBuilder buffer, float alpha){
-		drawQuad(camera, node, Vec3f.ZERO, buffer, alpha, scale(node), v(node, false), v(node, true), light(node));
+	private static void drawNode(Camera camera, Node node, BufferBuilder buffer, float alpha, World w){
+		drawQuad(camera, node, Vec3f.ZERO, buffer, alpha, scale(node), v(node, false, w), v(node, true, w), light(node, w));
 	}
 	
-	private static void drawNodeAspect(Camera camera, Node node, BufferBuilder buffer, Aspect aspect){
+	private static void drawNodeAspect(Camera camera, Node node, BufferBuilder buffer, Aspect aspect, World world){
 		if(node.getAspects().size() == 0 || !node.getAspects().contains(aspect))
 			return;
 		Vec3f offset = Vec3f.POSITIVE_Y.copy();
@@ -147,7 +151,7 @@ public final class NodeRenderer{
 		offset.rotate(Quaternion.fromEulerXyz(0, 0, (float)((Math.PI * 2) * (node.getAspects().indexOf(aspect) / (float)node.getAspects().size()))));
 		var alpha = (float)(.85 - Math.sqrt(MinecraftClient.getInstance().player.squaredDistanceTo(node.getX(), node.getY(), node.getZ())) / 10);
 		alpha *= lerpView.getOrDefault(node, 0f);
-		drawQuad(camera, node, offset, buffer, alpha, .35f, 0, 1, light(node));
+		drawQuad(camera, node, offset, buffer, alpha, .35f, 0, 1, light(node, world));
 	}
 	
 	private static void drawNodeAspectCount(Camera camera, Node node, BufferBuilder buffer, Aspect aspect){
@@ -228,13 +232,13 @@ public final class NodeRenderer{
 	}
 	
 	@SuppressWarnings("IntegerDivisionInFloatingPointContext") // intentional
-	private static float v(Node n, boolean max){
+	private static float v(Node n, boolean max, World world){
 		float f = maxFrames(n.getType());
-		return (1 / f) * ((n.getWorld().getTime() / 2 + n.getUuid().hashCode()) % (int)(f) + (max ? 1 : 0));
+		return (1 / f) * ((world.getTime() / 2 + n.getUuid().hashCode()) % (int)(f) + (max ? 1 : 0));
 	}
 	
-	private static int light(Node n){
-		return WorldRenderer.getLightmapCoordinates(n.getWorld(), n.asBlockPos());
+	private static int light(Node n, World world){
+		return WorldRenderer.getLightmapCoordinates(world, n.asBlockPos());
 	}
 	
 	private static Identifier loadTexture(NodeType nt){

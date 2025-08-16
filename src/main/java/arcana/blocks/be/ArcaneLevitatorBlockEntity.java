@@ -30,7 +30,7 @@ public class ArcaneLevitatorBlockEntity extends BlockEntity{
 		if(height == 0)
 			return;
 		if(world.getTime() % (20 * 1000) == 0)
-			AuraWorld.from(world).getOrCreateChunk(pos).incrementFlux(0.5f, FluxOrigin.ARCANE_LEVITATOR);
+			AuraWorld.from(world).incrementFlux(0.5f, FluxOrigin.ARCANE_LEVITATOR, pos);
 		// limit height at solid block
 		for(int y = 1; y < height; y++)
 			if(world.getBlockState(pos.up(y)).isSolidBlock(world, pos.up(y))){

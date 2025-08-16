@@ -166,8 +166,8 @@ public class WandItem extends Item implements WarpingItem{
 						capacityLeft = 0;
 					int realDrainAmount = Math.min(Math.min(nodeAspects.get(aspect), aspectDrainAmount), capacityLeft);
 					nodeAspects.take(aspect, realDrainAmount);
+					node.markDirty();
 					updateAspects(stack, map -> map.addCapped(aspect, realDrainAmount, wandCapacity));
-					aura.sync();
 				}
 			}
 		}else{

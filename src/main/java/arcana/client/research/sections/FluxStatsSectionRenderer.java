@@ -27,7 +27,7 @@ public class FluxStatsSectionRenderer implements EntrySectionRenderer<FluxStatsS
 		int x = (right ? pageX + rightXOffset : pageX) + (screenWidth - 256) / 2;
 		int y = pageY + (screenHeight - bgHeight) / 2 + 10 - heightOffset;
 		
-		Map<FluxOrigin, Float> stats = AuraWorld.from(MinecraftClient.getInstance().world).getFluxStats();
+		Map<FluxOrigin, Float> stats = AuraWorld.from(MinecraftClient.getInstance().world).globalFluxStats();
 		List<FluxOrigin> ordOrigins = new ArrayList<>(stats.keySet());
 		var itemRenderer = MinecraftClient.getInstance().getItemRenderer();
 		TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
@@ -68,6 +68,6 @@ public class FluxStatsSectionRenderer implements EntrySectionRenderer<FluxStatsS
 	}
 	
 	public int span(FluxStatsSection section, PlayerEntity player){
-		return (int)Math.ceil(AuraWorld.from(player.world).getFluxStats().size() / 5f);
+		return (int)Math.ceil(AuraWorld.from(player.world).globalFluxStats().size() / 5f);
 	}
 }

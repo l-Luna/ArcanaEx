@@ -5,7 +5,7 @@ import arcana.ArcanaTags;
 import arcana.aspects.AspectMap;
 import arcana.aspects.AspectStack;
 import arcana.aspects.ItemAspectRegistry;
-import arcana.aura.AuraChunk;
+import arcana.aura.AuraWorld;
 import arcana.aura.FluxOrigin;
 import arcana.blocks.CrucibleBlock;
 import arcana.components.KdItem;
@@ -127,7 +127,7 @@ public class CrucibleBlockEntity extends BlockEntity{
 		int aspectTotal = aspects.total();
 		if(aspectTotal > 0)
 			// TODO(balance): adjust the numbers here
-			AuraChunk.at(world, pos).incrementFlux(aspectTotal / 2f, FluxOrigin.CRUCIBLE_EMPTYING);
+			AuraWorld.from(world).incrementFlux(aspectTotal / 2f, FluxOrigin.CRUCIBLE_EMPTYING, pos);
 		aspects.clear();
 	}
 	

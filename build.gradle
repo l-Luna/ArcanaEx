@@ -84,7 +84,7 @@ dependencies {
 	modImplementation "dev.emi:emi-fabric:${emi_version}"
 	modImplementation 'software.bernie.geckolib:geckolib-fabric-1.19:3.1.40'
 
-	for(String cc_module : ["base", "world", "entity"])
+	for(String cc_module : ["base", "world", "entity", "chunk"])
 		modImplementation include("dev.onyxstudios.cardinal-components-api:cardinal-components-${cc_module}:${cardinal_comp_version}") {
 			exclude(group: "net.fabricmc.fabric-api")
 			exclude(group: "net.fabricmc", module: "fabric-loader")

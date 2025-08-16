@@ -5,7 +5,6 @@ import arcana.aspects.Aspect;
 import arcana.aspects.AspectMap;
 import arcana.aspects.Aspects;
 import arcana.aura.AuraChunk;
-import arcana.aura.AuraWorld;
 import arcana.items.WandItem;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
@@ -82,7 +81,8 @@ public class HudRenderer{
 			
 			if(mainHand.isOf(ArcanaRegistry.FLUX_METER) || offHand.isOf(ArcanaRegistry.FLUX_METER)){
 				int frame = (int)((world.getTime() + delta) % 10);
-				float flux = AuraWorld.from(world).getChunk(player.getBlockPos()).map(AuraChunk::getFlux).orElse(0f);
+				AuraChunk auraHere = AuraChunk.from(world, player.getBlockPos());
+				float flux = auraHere != null ? auraHere.flux() : 0;
 				int pixHeight = (int)Math.min(flux, 100);
 				
 				RenderSystem.setShader(GameRenderer::getPositionTexShader);

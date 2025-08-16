@@ -56,7 +56,7 @@ public class StructureTemplateMixin{
 					Vec3d transformed = StructureTemplate.transformAround(e.pos, mirror, rotation, pivot);
 					Vec3d offset = transformed.add(pos.getX(), pos.getY(), pos.getZ());
 					World w = world.toServerWorld();
-					AuraWorld.from(w).addNode(new Node(ty, w, offset, world.getRandom()));
+					AuraWorld.from(w).addNode(new Node(ty, offset, ty.randomCap(world.getRandom())));
 				}else
 					Arcana.logger.error("Found node in structure with invalid node type {}", id);
 				

@@ -116,7 +116,8 @@ public final class BuiltinResearch{
 			researcher.completePuzzle(highestReachPuzzle);
 			researcher.doSync();
 		}
-		if(AuraChunk.at(player.world, player.getBlockPos()).getFlux() > 40 && !researcher.isPuzzleComplete(fluxPuzzle)){
+		AuraChunk auraHere = AuraChunk.from(player.world, player.getBlockPos());
+		if(auraHere != null && auraHere.flux() > 40 && !researcher.isPuzzleComplete(fluxPuzzle)){
 			researcher.completePuzzle(fluxPuzzle);
 			researcher.doSync();
 		}

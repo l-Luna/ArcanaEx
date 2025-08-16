@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 
 import static arcana.Arcana.arcId;
 
@@ -45,7 +45,7 @@ public class NodeTypes{
 		return create(id, rechargeTime, aspectCap, null);
 	}
 	
-	private static NodeType create(String id, int rechargeTime, int aspectCap, Consumer<Node> ticker){
+	private static NodeType create(String id, int rechargeTime, int aspectCap, BiConsumer<Node, World> ticker){
 		Identifier identifier = arcId(id);
 		NodeType type = new NodeType(identifier, rechargeTime, aspectCap, ticker);
 		NODE_TYPES.put(identifier, type);
@@ -59,8 +59,7 @@ public class NodeTypes{
 	// TODO: config
 	private static final float hungryCarryFraction = 0.4f;
 	
-	private static void tickHungry(Node node){
-		World world = node.getWorld();
+	private static void tickHungry(Node node, World world){
 		BlockPos pos = new BlockPos(node);
 		// check blocks in range
 		int range = /*(int)(.7 * Math.sqrt(node.getAspects().asStacks().stream().mapToInt(AspectStack::amount).sum()) + 1)*/6;
@@ -94,9 +93,8 @@ public class NodeTypes{
 										var aspects = ItemAspectRegistry.get(stack).copy();
 										aspects.multiply(__ -> hungryCarryFraction);
 										node.getAspects().add(aspects);
+										node.markDirty();
 									}
-									// sync
-									AuraWorld.from(world).sync();
 									// destroy block
 									world.removeBlock(cursor, false);
 								}
@@ -119,13 +117,11 @@ public class NodeTypes{
 		}
 	}
 	
-	private static void tickPure(Node node){
-		World world = node.getWorld();
+	private static void tickPure(Node node, World world){
 		if(world.random.nextInt(30) != 0)
 			return;
 		
-		BlockPos pos = new BlockPos(node);
-		AuraWorld.from(world).getChunk(pos).ifPresent(aura -> aura.incrementFlux(-5, null));
+		AuraWorld.from(world).incrementFlux(-5, null, new BlockPos(node));
 	}
 	
 	private static boolean empty(BlockState state){

@@ -27,10 +27,13 @@
       "arcana.integration.emi.ArcanaEmiPlugin"
     ],
     "cardinal-components-world": [
-      "arcana.components.WorldComponentInit"
+      "arcana.components.ComponentInit"
     ],
     "cardinal-components-entity": [
-      "arcana.components.EntityComponentInit"
+      "arcana.components.ComponentInit"
+    ],
+    "cardinal-components-chunk": [
+      "arcana.components.ComponentInit"
     ]
   },
   "mixins": [
@@ -64,7 +67,8 @@
       "arcana:aura_world",
       "arcana:researcher",
       "arcana:kd_item",
-      "arcana:ca_arrow"
+      "arcana:ca_arrow",
+      "arcana:aura_chunk"
     ]
   }
 }

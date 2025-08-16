@@ -56,9 +56,9 @@ public class Taint{
 		if(world.isClient)
 			return;
 		
-		AuraChunk localAura = AuraChunk.at(world, pos);
+		AuraChunk localAura = AuraChunk.from(world, pos);
 		// if the local flux is great enough to spread taint
-		if(localAura.getFlux() > 12){
+		if(localAura != null && localAura.flux() > 12){
 			// make four attempts to taint a block nearby
 			for(int i = 0; i < 4; i++){
 				// TODO: pure node protection
@@ -66,8 +66,7 @@ public class Taint{
 				var tainted = taintBlock(world.getBlockState(target));
 				if(tainted.isPresent()){
 					world.setBlockState(target, tainted.get());
-					localAura.incrementFlux(-2, null);
-					localAura.world.sync();
+					localAura.setFlux(localAura.flux() - 2);
 				}
 			}
 		}

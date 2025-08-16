@@ -5,7 +5,7 @@ import arcana.aspects.Aspect;
 import arcana.aspects.AspectMap;
 import arcana.aspects.Aspects;
 import arcana.aspects.ItemAspectRegistry;
-import arcana.aura.AuraChunk;
+import arcana.aura.AuraWorld;
 import arcana.aura.FluxOrigin;
 import arcana.components.Researcher;
 import arcana.research.BuiltinResearch;
@@ -136,7 +136,7 @@ public class DistilleryPathfinderBlockEntity extends BlockEntity implements Name
 			material.decrement(1);
 			markDirty(); // lol
 			world.setBlockState(pos, ArcanaRegistry.TAINT_GOO.getDefaultState());
-			AuraChunk.at(world, pos).incrementFlux(12, FluxOrigin.DISTILLERY_FAILURE);
+			AuraWorld.from(world).incrementFlux(12, FluxOrigin.DISTILLERY_FAILURE, pos);
 			// TODO: close any screens of this block
 			
 			if(ownerUuid.isPresent() && world instanceof ServerWorld sw && sw.getEntity(ownerUuid.get()) instanceof PlayerEntity pe){

@@ -1,8 +1,6 @@
 package arcana.commands;
 
-import arcana.aura.AuraWorld;
-import arcana.aura.Node;
-import arcana.aura.NodeTypes;
+import arcana.aura.*;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
@@ -13,6 +11,7 @@ import net.minecraft.command.argument.Vec3ArgumentType;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import static net.minecraft.command.argument.IdentifierArgumentType.getIdentifier;
@@ -56,9 +55,9 @@ public final class NodeCommand{
 	
 	private static int performAdd(CommandContext<ServerCommandSource> context){
 		World world = context.getSource().getWorld();
-		AuraWorld aura = world.getComponent(AuraWorld.KEY);
 		
-		aura.addNode(new Node(NodeTypes.byName(getIdentifier(context, "type")), world, getVec3(context, "position"), world.random));
+		NodeType type = NodeTypes.byName(getIdentifier(context, "type"));
+		AuraWorld.from(world).addNode(new Node(type, getVec3(context, "position"), type.randomCap(world.random)));
 		return 1;
 	}
 	
@@ -68,8 +67,11 @@ public final class NodeCommand{
 	
 	private static int performList(CommandContext<ServerCommandSource> context){
 		World world = context.getSource().getWorld();
-		AuraWorld aura = world.getComponent(AuraWorld.KEY);
-		context.getSource().sendMessage(Text.literal(aura.getNodes().toString()));
+		AuraChunk auraHere = AuraChunk.from(world, new BlockPos(context.getSource().getPosition()));
+		if(auraHere != null)
+			context.getSource().sendMessage(Text.literal(auraHere.nodes().toString()));
+		else
+			context.getSource().sendError(Text.literal("Chunk not loaded"));
 		return 1;
 	}
 }

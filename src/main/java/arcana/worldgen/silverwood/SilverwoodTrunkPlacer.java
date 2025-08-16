@@ -69,7 +69,7 @@ public class SilverwoodTrunkPlacer extends TrunkPlacer{
 			// add pure node at half height
 			AuraWorld aura = AuraWorld.from((StructureWorldAccess)world); // either World or ChunkRegion
 			if(rand.nextInt(100) < 20)
-				aura.addNode(new Node(NodeTypes.PURE, aura.getWorld(), new Vec3d(pos.getX(), y + height / 2f, pos.getZ()), rand));
+				aura.addNode(new Node(NodeTypes.PURE, new Vec3d(pos.getX(), y + height / 2f, pos.getZ()), NodeTypes.PURE.randomCap(rand)));
 			
 			return List.of(new FoliagePlacer.TreeNode(pos.up(height - 4), 1, false));
 		}

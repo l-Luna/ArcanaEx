@@ -2,7 +2,7 @@ package arcana.aura;
 
 import arcana.aspects.Aspect;
 import arcana.aspects.AspectMap;
-import arcana.aspects.Aspects;
+import com.mojang.logging.LogUtils;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
@@ -12,12 +12,13 @@ import net.minecraft.util.math.Position;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
+import org.slf4j.Logger;
 
-import java.util.List;
 import java.util.UUID;
 
 public class Node implements Position{
-
+	
+	private static final Logger logger = LogUtils.getLogger();
 	private static final double HALF_NODE = .7;
 	
 	private NodeType type;
@@ -27,39 +28,23 @@ public class Node implements Position{
 	private AspectMap aspects, aspectCap;
 	private NbtCompound tag;
 	
-	private World world;
 	private UUID uuid;
 	
-	public Node(NodeType type, World world, Position pos){
-		this.type = type;
-		this.world = world;
-		x = pos.getX();
-		y = pos.getY();
-		z = pos.getZ();
-		aspects = new AspectMap();
-		aspectCap = new AspectMap();
-		tag = new NbtCompound();
-		uuid = UUID.randomUUID();
-	}
+	private AuraChunk chunk;
 	
-	public Node(NodeType type, World world, Position pos, Random random){
+	public Node(NodeType type, Position pos, AspectMap aspectCap){
 		this.type = type;
-		this.world = world;
 		x = pos.getX();
 		y = pos.getY();
 		z = pos.getZ();
 		aspects = new AspectMap();
-		aspectCap = new AspectMap();
+		this.aspectCap = aspectCap;
 		tag = new NbtCompound();
 		uuid = UUID.randomUUID();
-		
-		// it's a bit weird to put random generation here, but `fromNbt` would overwrite this immediately anyways
-		randomiseCap(random);
 	}
 	
 	public Node(Node node){
 		type = node.type;
-		world = node.world;
 		x = node.x;
 		y = node.y;
 		z = node.z;
@@ -67,42 +52,28 @@ public class Node implements Position{
 		aspects = node.aspects.copy();
 		aspectCap = node.aspectCap.copy();
 		tag = node.tag.copy();
+		chunk = node.chunk;
 		uuid = UUID.randomUUID();
 	}
 	
-	public void tick(){
+	public void tick(World world){
 		if(ticksUntilRecharge <= 0){
 			ticksUntilRecharge = type.rechargeTime() + world.random.nextBetween(-3 * 20, 3 * 20);
-			doRecharge();
+			doRecharge(world.random);
 		}
 		ticksUntilRecharge--;
 		
 		if(type.ticker() != null)
-			type.ticker().accept(this);
+			type.ticker().accept(this, world);
 	}
 	
-	protected void doRecharge(){
+	protected void doRecharge(Random rng){
 		// add 2-5 of 3 aspects in our cap
-		var rng = world.random;
 		for(int i = 0; i < 3; i++){
 			Aspect aspect = Util.getRandom(aspectCap.aspectSet().stream().toList(), rng);
 			aspects.addCapped(aspect, rng.nextBetween(2, 5), aspectCap.get(aspect));
+			markDirty();
 		}
-	}
-	
-	protected void randomiseCap(Random random){
-		// at least 1 aspect at full capacity; 2 at half-full; 3 at 0-half
-		// with a 1/7 chance of an extra non-primal aspect
-		int cap = type.aspectCap();
-		List<Aspect> primals = Util.copyShuffled(Aspects.primals.stream(), random);
-		aspectCap.add(primals.get(0), cap);
-		aspectCap.add(primals.get(1), random.nextBetween(cap/2, cap));
-		aspectCap.add(primals.get(2), random.nextBetween(cap/2, cap));
-		aspectCap.add(primals.get(3), random.nextBetween(0, cap/2));
-		aspectCap.add(primals.get(4), random.nextBetween(0, cap/2));
-		aspectCap.add(primals.get(5), random.nextBetween(0, cap/2));
-		if(random.nextInt(7) == 0)
-			aspectCap.add(Util.getRandom(Aspects.aspects.values().stream().toList(), random), random.nextBetween(cap/2, cap));
 	}
 	
 	public NbtCompound toNbt(){
@@ -123,17 +94,13 @@ public class Node implements Position{
 		return c;
 	}
 	
-	public static Node fromNbt(NbtCompound nbt, World world){
+	public static Node fromNbt(NbtCompound nbt){
 		var pos = new Vec3d(nbt.getDouble("x"), nbt.getDouble("y"), nbt.getDouble("z"));
 		NodeType nodeType = NodeTypes.byName(new Identifier(nbt.getString("type")));
-		var node = new Node(nodeType, world, pos);
+		var node = new Node(nodeType, pos, AspectMap.fromNbt(nbt.getCompound("aspectCap")));
 		node.ticksUntilRecharge = nbt.getInt("ticksUntilRecharge");
 		node.uuid = nbt.getUuid("uuid");
 		node.aspects = AspectMap.fromNbt(nbt.getCompound("aspects"));
-		if(nbt.contains("aspectCap"))
-			node.aspectCap = AspectMap.fromNbt(nbt.getCompound("aspectCap"));
-		else
-			node.randomiseCap(world.random); // possibly a race condition??
 		if(nbt.contains("tag"))
 			node.tag = nbt.getCompound("tag");
 		return node;
@@ -167,10 +134,6 @@ public class Node implements Position{
 		return z;
 	}
 	
-	public World getWorld(){
-		return world;
-	}
-	
 	public UUID getUuid(){
 		return uuid;
 	}
@@ -195,6 +158,17 @@ public class Node implements Position{
 	
 	public void setTag(NbtCompound tag){
 		this.tag = tag;
+	}
+	
+	public void setChunk(AuraChunk chunk){
+		this.chunk = chunk;
+	}
+	
+	public void markDirty(){
+		if(chunk != null)
+			chunk.markDirty();
+		else
+			logger.error("Tried to mark dirty node with no set AuraChunk (UUID {})", uuid);
 	}
 	
 	public int hashCode(){

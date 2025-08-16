@@ -37,7 +37,7 @@ public class NodalGeodeFeature extends Feature<NodalGeodeFeatureConfig>{
 			BlockPos nodePos = pos.add(i / 3, i / 3, i / 3);
 			// create node
 			NodeType type = randomType(rng);
-			Node toAdd = new Node(type, aura.getWorld(), new Vec3d(nodePos.getX() + rng.nextDouble(), nodePos.getY() + rng.nextDouble(), nodePos.getZ() + rng.nextDouble()), rng);
+			Node toAdd = new Node(type, new Vec3d(nodePos.getX() + rng.nextDouble(), nodePos.getY() + rng.nextDouble(), nodePos.getZ() + rng.nextDouble()), type.randomCap(rng));
 			toAdd.getOrCreateTag().putBoolean("in_geode", true);
 			// setup aspect cap
 			// contain greater-than-maximum of this primal,
@@ -59,7 +59,7 @@ public class NodalGeodeFeature extends Feature<NodalGeodeFeatureConfig>{
 			// update chunk
 			aura.addNode(toAdd);
 			if(type == NodeTypes.TAINTED)
-				aura.getOrCreateChunk(nodePos).incrementFlux(rng.nextBetween(7, 12), null);
+				aura.incrementFlux(rng.nextBetween(7, 12), null, nodePos);
 			return true;
 		}
 		return false;

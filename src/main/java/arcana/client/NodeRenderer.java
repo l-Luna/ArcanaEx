@@ -4,6 +4,7 @@ import arcana.aspects.Aspect;
 import arcana.aspects.Aspects;
 import arcana.aura.*;
 import arcana.items.GogglesOfRevealingItem;
+import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
@@ -72,7 +73,7 @@ public final class NodeRenderer{
 		
 		// update node states
 		// only render aspects for the one you look at
-		var looking = auraWorld.raycastNodes(player.getEyePos(), 6.5, false, player).orElse(null);
+		var looking = auraWorld.raycastNodes(player.getEyePos(), ReachEntityAttributes.getReachDistance(player, 4.5), false, player).orElse(null);
 		for(Node node : allVisible){
 			NodeState ns = stateFor(node);
 			ns.aspectLerp = MathHelper.lerp(1 - (float)Math.pow(2, -dt/3), ns.aspectLerp, node.equals(looking) ? 1 : 0);

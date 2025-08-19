@@ -6,6 +6,7 @@ import arcana.aura.AuraWorld;
 import arcana.aura.Node;
 import arcana.blocks.be.InfusionMatrixBlockEntity;
 import arcana.client.ArcanaClient;
+import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import dev.emi.trinkets.api.SlotReference;
 import dev.emi.trinkets.api.TrinketsApi;
 import net.fabricmc.api.EnvType;
@@ -141,11 +142,10 @@ public class WandItem extends Item implements WarpingItem{
 	}
 	
 	public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks){
-		// TODO: use reach-entity-attributes to check player's true range
 		if(world.isClient)
 			return;
 		AuraWorld aura = AuraWorld.from(world);
-		Optional<Node> nodeO = aura.raycastNodes(user.getEyePos(), 4.5, false, user);
+		Optional<Node> nodeO = aura.raycastNodes(user.getEyePos(), ReachEntityAttributes.getReachDistance(user, 4.5), false, user);
 		if(nodeO.isPresent() && !isContinuousCasting(stack)){
 			Node node = nodeO.get();
 			// only attempt to drain aspects that the node has and the wand needs

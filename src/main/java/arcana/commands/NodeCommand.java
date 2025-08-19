@@ -71,12 +71,13 @@ public final class NodeCommand{
 		if(auraHere != null)
 			context.getSource().sendMessage(Text.literal(auraHere.nodes().toString()));
 		else
-			context.getSource().sendError(Text.literal("Chunk not loaded"));
+			context.getSource().sendError(Text.translatable("message.arcana.command.nodes.list.fail"));
 		return 1;
 	}
 	
 	private static int performHitboxes(CommandContext<ServerCommandSource> context){
-		NodeRenderer.toggleHitboxRendering();
+		boolean result = NodeRenderer.toggleHitboxRendering();
+		context.getSource().sendMessage(Text.translatable("message.arcana.command.nodes.hitboxes." + (result ? "on" : "off")));
 		return 0;
 	}
 }

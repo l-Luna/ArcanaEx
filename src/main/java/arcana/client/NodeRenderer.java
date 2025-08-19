@@ -14,18 +14,17 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
-import net.minecraft.util.math.*;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Position;
+import net.minecraft.util.math.Quaternion;
+import net.minecraft.util.math.Vec3f;
 import net.minecraft.world.World;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.WeakHashMap;
-import java.util.stream.Collectors;
+import java.util.*;
 
 public final class NodeRenderer{
 	
@@ -67,9 +66,9 @@ public final class NodeRenderer{
 				.flatMap(x -> x.nodes().stream())
 				.toList();
 		
-		var nodesByType = allVisible
-				.stream()
-				.collect(Collectors.groupingBy(Node::getType));
+		Map<NodeType, List<Node>> nodesByType = new HashMap<>();
+		for(Node node : allVisible)
+			nodesByType.computeIfAbsent(node.getType(), __ -> new ArrayList<>()).add(node);
 		
 		// update node states
 		// only render aspects for the one you look at
@@ -127,16 +126,12 @@ public final class NodeRenderer{
 		
 		// show node hitboxes
 		if(showNodeHitboxes){
-			/*for(Node node : allVisible)
-				WorldRenderer.drawBox(context.matrixStack(), context.consumers().getBuffer(RenderLayer.getLines()), node.bounds(), 0f, 0.5f, 1f, 1f);*/
-			RenderSystem.setShader(GameRenderer::getPositionColorShader);
+			RenderSystem.setShader(GameRenderer::getRenderTypeLinesShader);
 			RenderSystem.lineWidth(1f);
 			BufferBuilder bufferBuilder = tessellator.getBuffer();
-			bufferBuilder.begin(VertexFormat.DrawMode.DEBUG_LINES, VertexFormats.POSITION_COLOR);
-			for(Node node : allVisible){
-				Box box = node.bounds().offset(camera.getPos().negate());
-				WorldRenderer.drawBox(bufferBuilder, box.minX, box.minY, box.minZ, box.maxX, box.maxY, box.maxZ, 0f, 0.5f, 1f, 1f);
-			}
+			bufferBuilder.begin(VertexFormat.DrawMode.LINES, VertexFormats.LINES);
+			for(Node node : allVisible)
+				WorldRenderer.drawBox(new MatrixStack(), bufferBuilder, node.bounds().offset(camera.getPos().negate()), 0f, 0.5f, 1f, 1f);
 			tessellator.draw();
 		}
 		

@@ -559,6 +559,15 @@
         "set": "Set {}'s warp to {} (had {})",
         "trigger": "Triggered random warp event for {}",
         "trigger.specific": "Triggered warp event {} for {}"
+      },
+      "nodes": {
+        "list": {
+          "fail": "Chunk not loaded"
+        },
+        "hitboxes": {
+          "on": "Node hitboxes: shown",
+          "off": "Node hitboxes: hidden"
+        }
       }
     },
     "warp": {

@@ -10,13 +10,11 @@ import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.fabricmc.fabric.impl.event.lifecycle.LoadedChunksCache;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Position;
-import net.minecraft.util.math.Quaternion;
-import net.minecraft.util.math.Vec3f;
+import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 
 import java.io.BufferedReader;
@@ -31,9 +29,14 @@ import java.util.stream.Collectors;
 
 public final class NodeRenderer{
 	
+	private static class NodeState{
+		public float aspectLerp, drawLerp, shakeTimer;
+	}
+	
 	private static final Map<NodeType, Integer> framesByType = new HashMap<>(NodeTypes.NODE_TYPES.size());
 	
-	private static final Map<Node, Float> lerpView = new WeakHashMap<>();
+	private static boolean showNodeHitboxes = false;
+	private static final Map<Node, NodeState> nodeStates = new WeakHashMap<>();
 	
 	@SuppressWarnings("resource") // ???
 	public static void renderAll(WorldRenderContext context){
@@ -65,6 +68,14 @@ public final class NodeRenderer{
 				.stream()
 				.collect(Collectors.groupingBy(Node::getType));
 		
+		// update node states
+		// only render aspects for the one you look at
+		var looking = auraWorld.raycastNodes(player.getEyePos(), 6.5, false, player).orElse(null);
+		for(Node node : allVisible){
+			NodeState ns = stateFor(node);
+			ns.aspectLerp = MathHelper.lerp(context.tickDelta() / 5f, ns.aspectLerp, node.equals(looking) ? 1 : 0);
+		}
+		
 		// first pass, visible through blocks if you have goggles of revealing
 		if(hasGoggles)
 			RenderSystem.disableDepthTest();
@@ -72,8 +83,7 @@ public final class NodeRenderer{
 			RenderSystem.setShaderTexture(0, loadTexture(type));
 			buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);
 			for(Node node : nodes)
-				if(shouldView(node))
-					drawNode(camera, node, buffer, .12f, world);
+				drawNode(camera, node, buffer, .12f, world);
 			BufferRenderer.drawWithShader(buffer.end());
 		});
 		
@@ -84,94 +94,105 @@ public final class NodeRenderer{
 				RenderSystem.setShaderTexture(0, loadTexture(type));
 				buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);
 				for(Node node : nodes)
-					if(shouldView(node))
-						drawNode(camera, node, buffer, .85f, world);
+					drawNode(camera, node, buffer, .85f, world);
 				BufferRenderer.drawWithShader(buffer.end());
 			});
-			
-			// only render aspects for the one you look at
-			var looking = auraWorld.raycastNodes(player.getEyePos(), 6.5, false, player).orElse(null);
-			for(Node node : allVisible)
-				if(shouldView(node))
-					if(node.equals(looking))
-						lerpView.put(node, MathHelper.lerp(context.tickDelta() / 5f, lerpView.getOrDefault(node, 0f), 1));
-					else
-						lerpView.put(node, MathHelper.lerp(context.tickDelta() / 5f, lerpView.getOrDefault(node, 0f), 0));
-				else
-					lerpView.remove(node);
 			
 			Aspects.primals.forEach(primal -> {
 				RenderSystem.setShaderTexture(0, AspectRenderer.texture(primal));
 				buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);
 				for(Node node : allVisible)
-					if(shouldView(node))
-						drawNodeAspect(camera, node, buffer, primal, world);
+					drawNodeAspect(camera, node, buffer, primal, world);
 				BufferRenderer.drawWithShader(buffer.end());
 			});
 			
 			for(Node node : allVisible){
-				if(shouldView(node)){
-					// can't batch non-primals, so avoid these if we can
-					for(Aspect aspect : node.getAspects().aspectSet())
-						if(!Aspects.primals.contains(aspect)){
-							RenderSystem.setShaderTexture(0, AspectRenderer.texture(aspect));
-							buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);
-							drawNodeAspect(camera, node, buffer, aspect, world);
-							BufferRenderer.drawWithShader(buffer.end());
-						}
-				}
+				// can't batch non-primals, so avoid these if we can
+				for(Aspect aspect : node.getAspects().aspectSet())
+					if(!Aspects.primals.contains(aspect)){
+						RenderSystem.setShaderTexture(0, AspectRenderer.texture(aspect));
+						buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);
+						drawNodeAspect(camera, node, buffer, aspect, world);
+						BufferRenderer.drawWithShader(buffer.end());
+					}
 			}
 			
 			for(Node node : allVisible)
-				if(shouldView(node))
-					for(Aspect aspect : node.getAspects().aspectSet())
-						drawNodeAspectCount(camera, node, buffer, aspect);
+				for(Aspect aspect : node.getAspects().aspectSet())
+					drawNodeAspectCount(camera, node, buffer, aspect);
+		}
+		
+		// show node hitboxes
+		if(showNodeHitboxes){
+			/*for(Node node : allVisible)
+				WorldRenderer.drawBox(context.matrixStack(), context.consumers().getBuffer(RenderLayer.getLines()), node.bounds(), 0f, 0.5f, 1f, 1f);*/
+			RenderSystem.setShader(GameRenderer::getPositionColorShader);
+			RenderSystem.lineWidth(1f);
+			BufferBuilder bufferBuilder = tessellator.getBuffer();
+			bufferBuilder.begin(VertexFormat.DrawMode.DEBUG_LINES, VertexFormats.POSITION_COLOR);
+			for(Node node : allVisible){
+				Box box = node.bounds().offset(camera.getPos().negate());
+				WorldRenderer.drawBox(bufferBuilder, box.minX, box.minY, box.minZ, box.maxX, box.maxY, box.maxZ, 0f, 0.5f, 1f, 1f);
+			}
+			tessellator.draw();
 		}
 		
 		RenderSystem.depthMask(true);
 		context.lightmapTextureManager().disable();
 	}
 	
-	private static boolean shouldView(Node node){
-		var client = MinecraftClient.getInstance();
-		var maxDist = client.options.getClampedViewDistance() * 14;
-		return maxDist * maxDist >= client.player.squaredDistanceTo(node.getX(), node.getY(), node.getZ());
+	public static boolean toggleHitboxRendering(){
+		return showNodeHitboxes ^= true;
+	}
+	
+	private static NodeState stateFor(Node node){
+		return nodeStates.computeIfAbsent(node, __ -> new NodeState());
+	}
+	
+	private static float scaleFor(Node n){
+		return 1;
+	}
+	
+	private static int lightFor(Node n, World world){
+		return WorldRenderer.getLightmapCoordinates(world, n.asBlockPos());
 	}
 	
 	private static void drawNode(Camera camera, Node node, BufferBuilder buffer, float alpha, World w){
-		drawQuad(camera, node, Vec3f.ZERO, buffer, alpha, scale(node), v(node, false, w), v(node, true, w), light(node, w));
+		drawQuad(camera, node, Vec3f.ZERO, buffer, alpha, scaleFor(node), v(node, false, w), v(node, true, w), lightFor(node, w));
 	}
 	
 	private static void drawNodeAspect(Camera camera, Node node, BufferBuilder buffer, Aspect aspect, World world){
-		if(node.getAspects().size() == 0 || !node.getAspects().contains(aspect))
+		if(node.getAspects().isEmpty() || !node.getAspects().contains(aspect))
 			return;
 		Vec3f offset = Vec3f.POSITIVE_Y.copy();
-		offset.scale(1.2f * lerpView.getOrDefault(node, 0f));
+		NodeState ns = stateFor(node);
+		offset.scale(1.2f * ns.aspectLerp);
 		offset.add(0, 0, -0.01f);
 		offset.rotate(Quaternion.fromEulerXyz(0, 0, (float)((Math.PI * 2) * (node.getAspects().indexOf(aspect) / (float)node.getAspects().size()))));
 		var alpha = (float)(.85 - Math.sqrt(MinecraftClient.getInstance().player.squaredDistanceTo(node.getX(), node.getY(), node.getZ())) / 10);
-		alpha *= lerpView.getOrDefault(node, 0f);
-		drawQuad(camera, node, offset, buffer, alpha, .35f, 0, 1, light(node, world));
+		alpha *= ns.aspectLerp;
+		drawQuad(camera, node, offset, buffer, alpha, .35f, 0, 1, lightFor(node, world));
 	}
 	
 	private static void drawNodeAspectCount(Camera camera, Node node, BufferBuilder buffer, Aspect aspect){
-		if(node.getAspects().size() == 0 || !node.getAspects().contains(aspect))
+		if(node.getAspects().isEmpty() || !node.getAspects().contains(aspect))
 			return;
 		
+		NodeState ns = stateFor(node);
 		String amount = node.getAspects().underlying().get(aspect).toString();
 		
 		double sqrDist = MinecraftClient.getInstance().player.squaredDistanceTo(node.getX(), node.getY(), node.getZ());
 		var alpha = (float)(1 - Math.sqrt(sqrDist) / 10);
-		alpha *= lerpView.getOrDefault(node, 0f);
-		if(alpha < 4 / 255f) // text renderer thinks zero/very low alpha = full alpha but i forgot to say it
+		alpha *= ns.aspectLerp;
+		if(alpha < 4 / 255f) // text renderer treats zero/very low alpha as implicit full alpha
 			alpha = 4 / 255f;
 		var intAlpha = (int)(alpha * 255) << 24;
 		
 		Vec3f offset = Vec3f.POSITIVE_Y.copy();
-		offset.scale(1.2f * lerpView.getOrDefault(node, 0f));
+		offset.scale(1.2f * ns.aspectLerp);
 		offset.rotate(Quaternion.fromEulerXyz(0, 0, (float)((Math.PI * 2) * (node.getAspects().indexOf(aspect) / (float)node.getAspects().size()))));
 		
-		var stack = RenderSystem.getModelViewStack();
+		MatrixStack stack = RenderSystem.getModelViewStack();
 		stack.push();
 		stack.multiply(camera.getRotation());
 		stack.translate(-node.getX(), node.getY(), -node.getZ());
@@ -227,19 +248,13 @@ public final class NodeRenderer{
 				.next();
 	}
 	
-	private static float scale(Node n){
-		return 1;
-	}
-	
 	@SuppressWarnings("IntegerDivisionInFloatingPointContext") // intentional
 	private static float v(Node n, boolean max, World world){
 		float f = maxFrames(n.getType());
 		return (1 / f) * ((world.getTime() / 2 + n.getUuid().hashCode()) % (int)(f) + (max ? 1 : 0));
 	}
 	
-	private static int light(Node n, World world){
-		return WorldRenderer.getLightmapCoordinates(world, n.asBlockPos());
-	}
+	// TODO: reimpl
 	
 	private static Identifier loadTexture(NodeType nt){
 		if(!framesByType.containsKey(nt))

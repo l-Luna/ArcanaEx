@@ -1,12 +1,12 @@
 package arcana.commands;
 
 import arcana.aura.*;
+import arcana.client.NodeRenderer;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.CommandSource;
-import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.command.argument.Vec3ArgumentType;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
@@ -44,11 +44,11 @@ public final class NodeCommand{
 										.suggests(SUGGEST_NODE_TYPES)
 								)
 						).then(literal("remove") // TODO: use NodesArgumentType
-								.then(argument("nodes", EntityArgumentType.entities())
-										.executes(NodeCommand::performRemove)
-								)
+								.executes(NodeCommand::performRemove)
 						).then(literal("list")
 								.executes(NodeCommand::performList)
+						).then(literal("hitboxes")
+								.executes(NodeCommand::performHitboxes)
 						)
 		);
 	}
@@ -73,5 +73,10 @@ public final class NodeCommand{
 		else
 			context.getSource().sendError(Text.literal("Chunk not loaded"));
 		return 1;
+	}
+	
+	private static int performHitboxes(CommandContext<ServerCommandSource> context){
+		NodeRenderer.toggleHitboxRendering();
+		return 0;
 	}
 }

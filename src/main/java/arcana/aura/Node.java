@@ -19,7 +19,7 @@ import java.util.UUID;
 public class Node implements Position{
 	
 	private static final Logger logger = LogUtils.getLogger();
-	private static final double HALF_NODE = .7;
+	public static final double HALF_NODE = .7;
 	
 	private NodeType type;
 	private double x, y, z;

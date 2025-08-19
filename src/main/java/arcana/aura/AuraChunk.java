@@ -108,6 +108,7 @@ public class AuraChunk implements Component, AutoSyncedComponent, ServerTickingC
 	
 	public void markDirty(){
 		dirty = true;
+		chunk.setNeedsSaving(true);
 	}
 	
 	public void sync(){

@@ -40,6 +40,8 @@ public final class NodeRenderer{
 	
 	@SuppressWarnings("resource") // ???
 	public static void renderAll(WorldRenderContext context){
+		context.profiler().push("arcana:nodes");
+		
 		var player = MinecraftClient.getInstance().player;
 		boolean hasGoggles = GogglesOfRevealingItem.hasRevealing(player);
 		
@@ -61,7 +63,7 @@ public final class NodeRenderer{
 		AuraWorld auraWorld = AuraWorld.from(world);
 		List<Node> allVisible = ((LoadedChunksCache)world).fabric_getLoadedChunks().stream()
 				.map(AuraChunk::from)
-				.flatMap(x->x.nodes().stream())
+				.flatMap(x -> x.nodes().stream())
 				.toList();
 		
 		var nodesByType = allVisible
@@ -139,6 +141,8 @@ public final class NodeRenderer{
 		
 		RenderSystem.depthMask(true);
 		context.lightmapTextureManager().disable();
+		
+		context.profiler().pop();
 	}
 	
 	public static boolean toggleHitboxRendering(){

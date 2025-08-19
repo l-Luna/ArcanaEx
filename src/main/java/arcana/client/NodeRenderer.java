@@ -43,6 +43,7 @@ public final class NodeRenderer{
 		context.profiler().push("arcana:nodes");
 		
 		var player = MinecraftClient.getInstance().player;
+		float dt = MinecraftClient.getInstance().getLastFrameDuration();
 		boolean hasGoggles = GogglesOfRevealingItem.hasRevealing(player);
 		
 		context.lightmapTextureManager().enable();
@@ -75,7 +76,7 @@ public final class NodeRenderer{
 		var looking = auraWorld.raycastNodes(player.getEyePos(), 6.5, false, player).orElse(null);
 		for(Node node : allVisible){
 			NodeState ns = stateFor(node);
-			ns.aspectLerp = MathHelper.lerp(context.tickDelta() / 5f, ns.aspectLerp, node.equals(looking) ? 1 : 0);
+			ns.aspectLerp = MathHelper.lerp(1 - (float)Math.pow(2, -dt/3), ns.aspectLerp, node.equals(looking) ? 1 : 0);
 		}
 		
 		// first pass, visible through blocks if you have goggles of revealing

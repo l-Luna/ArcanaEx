@@ -87,6 +87,7 @@ public final class AuraWorld implements Component, ServerTickingComponent, AutoS
 		else{
 			logger.info("pendingNodes added");
 			pendingNodes.add(node);
+			sync();
 		}
 	}
 	
@@ -106,19 +107,19 @@ public final class AuraWorld implements Component, ServerTickingComponent, AutoS
 			bhr = viewer.world.raycast(new RaycastContext(from, to, RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, viewer));
 		Box bounds = new Box(from, to).expand(Node.HALF_NODE);
 		Node ret = null;
-		double curDist = length;
+		double curSqrDist = length * length;
 		for(Node node : getNodesInBounds(bounds)){
 			Optional<Vec3d> hit = node.bounds().raycast(from, to);
-			if(hit.isPresent()){ // TODO: use squared distance in comparisons? skip nodes based on block hit?
-				double dist = from.distanceTo(hit.get());
-				if(dist < curDist){
+			if(hit.isPresent()){
+				double sqrDist = from.squaredDistanceTo(hit.get());
+				if(sqrDist < curSqrDist){
 					ret = node;
-					curDist = dist;
+					curSqrDist = sqrDist;
 				}
 			}
 		}
 		if(!ignoreBlocks)
-			if(bhr.getPos().distanceTo(from) < curDist)
+			if(bhr.getPos().squaredDistanceTo(from) < curSqrDist)
 				return Optional.empty(); // blocked by a block
 		return Optional.ofNullable(ret);
 	}

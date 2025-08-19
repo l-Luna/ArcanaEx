@@ -86,8 +86,8 @@ public class AuraChunk implements Component, AutoSyncedComponent, ServerTickingC
 		int minX = (int)Math.floor(box.minX / 16.0), minZ = (int)Math.floor(box.minZ / 16.0);
 		int maxX = (int)Math.ceil(box.maxX / 16.0), maxZ = (int)Math.ceil(box.maxZ / 16.0);
 		List<AuraChunk> ret = new ArrayList<>((maxX - minX) * (maxZ - minZ));
-		for(int x = minX; x < maxX; x++)
-			for(int z = minZ; z < maxZ; z++)
+		for(int x = minX; x <= maxX; x++)
+			for(int z = minZ; z <= maxZ; z++)
 				ret.add(from(w, new ChunkPos(x, z)));
 		return ret;
 	}

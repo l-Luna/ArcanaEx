@@ -104,7 +104,7 @@ public final class AuraWorld implements Component, ServerTickingComponent, AutoS
 		BlockHitResult bhr = null;
 		if(!ignoreBlocks)
 			bhr = viewer.world.raycast(new RaycastContext(from, to, RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, viewer));
-		Box bounds = new Box(from, to);
+		Box bounds = new Box(from, to).expand(Node.HALF_NODE);
 		Node ret = null;
 		double curDist = length;
 		for(Node node : getNodesInBounds(bounds)){

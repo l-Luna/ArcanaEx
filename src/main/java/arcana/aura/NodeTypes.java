@@ -35,7 +35,7 @@ public class NodeTypes{
 	
 			HUNGRY = create("hungry", 40 * 20, 25, NodeTypes::tickHungry),
 			ELDRITCH = create("eldritch", 49 * 20, 18),
-			PURE = create("pure", 48 * 2, 23, NodeTypes::tickPure),
+			PURE = create("pure", 48 * 20, 23, NodeTypes::tickPure),
 			TAINTED = create("tainted", 60 * 20, 12);
 	
 	public static final List<NodeType> normalTypes = List.of(NORMAL, BRIGHT, FADING);

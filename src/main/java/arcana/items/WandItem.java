@@ -6,7 +6,7 @@ import arcana.aura.AuraWorld;
 import arcana.aura.Node;
 import arcana.blocks.be.InfusionMatrixBlockEntity;
 import arcana.client.ArcanaClient;
-import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
+import arcana.components.Caster;
 import dev.emi.trinkets.api.SlotReference;
 import dev.emi.trinkets.api.TrinketsApi;
 import net.fabricmc.api.EnvType;
@@ -28,13 +28,15 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.Pair;
+import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -142,62 +144,20 @@ public class WandItem extends Item implements WarpingItem{
 	}
 	
 	public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks){
-		if(world.isClient)
+		if(world.isClient || !(user instanceof PlayerEntity pe))
 			return;
+		
 		AuraWorld aura = AuraWorld.from(world);
-		Optional<Node> nodeO = aura.raycastNodes(user.getEyePos(), ReachEntityAttributes.getReachDistance(user, 4.5), false, user);
-		if(nodeO.isPresent() && !isContinuousCasting(stack)){
-			Node node = nodeO.get();
-			// only attempt to drain aspects that the node has and the wand needs
-			AspectMap nodeAspects = node.getAspects();
-			AspectMap wandAspects = aspectsFrom(stack);
-			int wandCapacity = capacity(stack);
-			List<Aspect> candidateAspects = new ArrayList<>(nodeAspects.aspectSet());
-			candidateAspects.removeIf(x -> !Aspects.primals.contains(x));
-			candidateAspects.removeIf(x -> wandAspects.get(x) >= wandCapacity);
-			
-			if(!candidateAspects.isEmpty()){
-				Aspect aspect = Util.getRandom(candidateAspects, world.random);
-				int aspectDrainWait = 8;
-				int aspectDrainAmount = 3 + world.random.nextInt(3);
-				if(world.getTime() % aspectDrainWait == 0){
-					var capacityLeft = wandCapacity - wandAspects.get(aspect);
-					if(capacityLeft < 0)
-						capacityLeft = 0;
-					int realDrainAmount = Math.min(Math.min(nodeAspects.get(aspect), aspectDrainAmount), capacityLeft);
-					nodeAspects.take(aspect, realDrainAmount);
-					node.markDirty();
-					updateAspects(stack, map -> map.addCapped(aspect, realDrainAmount, wandCapacity));
-				}
-			}
-		}else{
-			updateFocus(stack, focusStack -> {
-				if(user instanceof PlayerEntity player && focusStack.getItem() instanceof FocusItem fi && fi.isContinuous()){
-					boolean successful = isContinuousCasting(stack);
-					int ticksUsed = getMaxUseTime(stack) - remainingUseTicks;
-					if(ticksUsed == 0){
-						var cost = fi.castCost(stack, focusStack, player).copy();
-						cost.multiply(aspect -> costMultiplier(aspect, stack, player));
-						if(aspectsFrom(stack).contains(cost)){
-							updateAspects(stack, aspects -> aspects.take(cost));
-							fi.startContinuousCast(stack, focusStack, player);
-							successful = true;
-							setIsContinuousCasting(stack, true);
-						}
-					}
-					if(successful)
-						fi.tickContinuousCast(stack, focusStack, player);
-				}
-			});
-		}
+		Optional<Node> nodeO = aura.raycastNodes(user, false);
+		nodeO.ifPresent(node -> Caster.from(pe).beginDraining(node, user.getActiveHand()));
+		
+		if(focusFrom(stack).getItem() instanceof FocusItem fi && fi.isContinuous())
+			Caster.from(pe).beginContinuousCasting(user.getActiveHand());
 	}
 	
 	public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks){
-		updateFocus(stack, focusStack -> {
-			if(user instanceof PlayerEntity player && focusStack.getItem() instanceof FocusItem fi && fi.isContinuous())
-				fi.endContinuousCast(stack, focusStack, player);
-		});
-		setIsContinuousCasting(stack, false);
+		if(user instanceof PlayerEntity pe)
+			Caster.from(pe).endState();
 	}
 	
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand){
@@ -291,14 +251,6 @@ public class WandItem extends Item implements WarpingItem{
 		ItemStack focusStack = focusFrom(wand);
 		updater.accept(focusStack);
 		putFocus(wand, focusStack);
-	}
-	
-	public static boolean isContinuousCasting(ItemStack wand){
-		return wand.getOrCreateNbt().getBoolean("continuous_casting");
-	}
-	
-	public static void setIsContinuousCasting(ItemStack wand, boolean value){
-		wand.getOrCreateNbt().putBoolean("continuous_casting", value);
 	}
 	
 	public int warping(ItemStack stack, PlayerEntity player){

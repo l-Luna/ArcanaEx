@@ -10,6 +10,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
@@ -50,7 +51,9 @@ public class FocusItem extends Item{
 		return false;
 	}
 	
-	public void startContinuousCast(ItemStack wand, ItemStack focus, PlayerEntity user){}
-	public void tickContinuousCast(ItemStack wand, ItemStack focus, PlayerEntity user){}
-	public void endContinuousCast(ItemStack wand, ItemStack focus, PlayerEntity user){}
+	public void startContinuousCast(ItemStack wand, ItemStack focus, PlayerEntity user, NbtCompound state){}
+	public boolean tickContinuousCast(ItemStack wand, ItemStack focus, PlayerEntity user, NbtCompound state){
+		return true;
+	}
+	public void endContinuousCast(ItemStack wand, ItemStack focus, PlayerEntity user, NbtCompound state){}
 }

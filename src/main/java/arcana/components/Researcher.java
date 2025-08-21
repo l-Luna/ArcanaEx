@@ -18,6 +18,7 @@ import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtString;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Box;
 
@@ -26,6 +27,8 @@ import java.util.stream.Collectors;
 
 import static arcana.Arcana.arcId;
 
+// handles tracking research progress and research book preferences
+// not synced to other clients
 public final class Researcher implements Component, AutoSyncedComponent{
 	
 	public static final ComponentKey<Researcher> KEY = ComponentRegistryV3.INSTANCE.getOrCreate(arcId("researcher"), Researcher.class);
@@ -336,5 +339,9 @@ public final class Researcher implements Component, AutoSyncedComponent{
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public boolean shouldSyncWith(ServerPlayerEntity player){
+		return player == this.player;
 	}
 }

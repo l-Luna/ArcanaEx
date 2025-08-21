@@ -20,7 +20,7 @@ public class ScribbledNotesItem extends Item{
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand){
 		var stack = user.getStackInHand(hand);
 		var ret = new AtomicReference<>(TypedActionResult.pass(stack));
-		AuraWorld.from(world).raycastNodes(user.getEyePos(), 4.5, false, user).ifPresent(node -> {
+		AuraWorld.from(world).raycastNodes(user, false).ifPresent(node -> {
 			var newStack = new ItemStack(ArcanaRegistry.ARCANUM);
 			System.out.println(stack);
 			user.setStackInHand(hand, newStack);

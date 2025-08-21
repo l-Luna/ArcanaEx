@@ -10,6 +10,7 @@ import arcana.util.MathUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -36,7 +37,7 @@ public class PrismaticLightFocusItem extends FocusItem{
 		return true;
 	}
 	
-	public void startContinuousCast(ItemStack wand, ItemStack focus, PlayerEntity user){
+	public void startContinuousCast(ItemStack wand, ItemStack focus, PlayerEntity user, NbtCompound state){
 		World w = user.world;
 		if(!w.isClient){
 			PrismaticOrbEntity orb = new PrismaticOrbEntity(ArcanaRegistry.PRISMATIC_ORB, w);
@@ -44,18 +45,17 @@ public class PrismaticLightFocusItem extends FocusItem{
 			orb.setPosition(hoverPosition(user));
 			orb.setBurning(user.hasStatusEffect(ArcanaRegistry.FIRE_POWER));
 			w.spawnEntity(orb);
-			focus.getOrCreateNbt().putUuid("orbId", orb.getUuid());
+			state.putUuid("orbId", orb.getUuid());
 		}
 	}
 	
-	public void endContinuousCast(ItemStack wand, ItemStack focus, PlayerEntity user){
+	public void endContinuousCast(ItemStack wand, ItemStack focus, PlayerEntity user, NbtCompound state){
 		World w = user.world;
 		if(!w.isClient){
 			ServerWorld sw = (ServerWorld)w;
-			var stackNbt = focus.getNbt();
-			if(stackNbt == null || !stackNbt.containsUuid("orbId"))
+			if(!state.containsUuid("orbId"))
 				return;
-			UUID orbId = stackNbt.getUuid("orbId");
+			UUID orbId = state.getUuid("orbId");
 			Entity e = sw.getEntity(orbId);
 			if(e instanceof PrismaticOrbEntity poe)
 				poe.release();

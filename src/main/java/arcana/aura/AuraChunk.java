@@ -76,9 +76,9 @@ public class AuraChunk implements Component, AutoSyncedComponent, ServerTickingC
 	
 	@Nullable
 	public static AuraChunk from(World w, BlockPos pos){
-		if(!w.isChunkLoaded(pos.getX() / 16, pos.getZ() / 16))
+		if(!w.isChunkLoaded(pos.getX() >> 4, pos.getZ() >> 4))
 			return null;
-		Chunk c = w.getChunk(pos.getX() / 16, pos.getZ() / 16, ChunkStatus.EMPTY, false);
+		Chunk c = w.getChunk(pos.getX() >> 4, pos.getZ() >> 4, ChunkStatus.EMPTY, false);
 		return c != null ? from(c) : null;
 	}
 	

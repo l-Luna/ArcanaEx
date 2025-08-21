@@ -2,6 +2,7 @@ package arcana.aura;
 
 import arcana.util.NbtUtil;
 import arcana.util.StreamUtil;
+import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import com.mojang.logging.LogUtils;
 import dev.onyxstudios.cca.api.v3.component.Component;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
@@ -12,6 +13,7 @@ import it.unimi.dsi.fastutil.longs.Long2FloatMap;
 import it.unimi.dsi.fastutil.longs.Long2FloatOpenHashMap;
 import net.fabricmc.fabric.impl.event.lifecycle.LoadedChunksCache;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.server.world.ServerWorld;
@@ -55,6 +57,10 @@ public final class AuraWorld implements Component, ServerTickingComponent, AutoS
 		return globalFluxStats;
 	}
 	
+	public List<Node> pendingNodes(){
+		return Collections.unmodifiableList(pendingNodes);
+	}
+	
 	// accessors
 	
 	public static AuraWorld from(World world){
@@ -85,7 +91,6 @@ public final class AuraWorld implements Component, ServerTickingComponent, AutoS
 		if(there != null)
 			there.addNode(node);
 		else{
-			logger.info("pendingNodes added");
 			pendingNodes.add(node);
 			sync();
 		}
@@ -97,6 +102,14 @@ public final class AuraWorld implements Component, ServerTickingComponent, AutoS
 				.flatMap(chunk -> chunk.nodes().stream())
 				.filter(node -> bounds.contains(node.asVec3d()))
 				.collect(Collectors.toList());
+	}
+	
+	public Optional<Node> raycastNodes(LivingEntity viewer, boolean ignoreBlocks){
+		return raycastNodes(viewer, ReachEntityAttributes.getReachDistance(viewer, 4.5), ignoreBlocks);
+	}
+	
+	public Optional<Node> raycastNodes(Entity viewer, double length, boolean ignoreBlocks){
+		return raycastNodes(viewer.getEyePos(), length, ignoreBlocks, viewer);
 	}
 	
 	public Optional<Node> raycastNodes(Position fromPos, double length, boolean ignoreBlocks, Entity viewer){
@@ -161,7 +174,6 @@ public final class AuraWorld implements Component, ServerTickingComponent, AutoS
 			Node node = pendingNodes.get(i);
 			AuraChunk there = AuraChunk.from(world, node.asBlockPos());
 			if(there != null){
-				logger.info("pendingNodes used");
 				pendingNodes.remove(i);
 				there.addNode(node);
 				sync();

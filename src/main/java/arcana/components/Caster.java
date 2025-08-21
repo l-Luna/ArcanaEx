@@ -74,13 +74,12 @@ public class Caster implements Component, AutoSyncedComponent, ServerTickingComp
 			return;
 		this.wandHand = wandHand;
 		wandStack().ifPresent(wand -> {
-			chooseDrainAspect(from, wand).ifPresent(asp -> {
-				reset();
-				state = CasterState.DRAWING;
-				drainTargetNode = NodeReference.ref(from);
-				drainTargetAspect = asp;
-				sync();
-			});
+			Optional<Aspect> drainAspect = chooseDrainAspect(from, wand);
+			reset();
+			state = CasterState.DRAWING;
+			drainTargetNode = NodeReference.ref(from);
+			drainTargetAspect = drainAspect.orElse(Aspects.AIR);
+			sync();
 		});
 	}
 	
@@ -97,6 +96,12 @@ public class Caster implements Component, AutoSyncedComponent, ServerTickingComp
 	public void endState(){
 		reset();
 		sync();
+	}
+	
+	//
+	
+	public NodeReference drainTargetNode(){
+		return drainTargetNode;
 	}
 	
 	//

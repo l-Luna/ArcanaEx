@@ -3,6 +3,7 @@ package arcana.client;
 import arcana.aspects.Aspect;
 import arcana.aspects.Aspects;
 import arcana.aura.*;
+import arcana.components.Caster;
 import arcana.items.GogglesOfRevealingItem;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -72,10 +73,14 @@ public final class NodeRenderer{
 		
 		// update node states
 		// only render aspects for the one you look at
-		var looking = auraWorld.raycastNodes(player, false).orElse(null);
+		Node looking = auraWorld.raycastNodes(player, false).orElse(null);
+		NodeReference drainingRef = Caster.from(player).drainTargetNode();
+		Node draining = drainingRef == null ? null : drainingRef.deref(world).orElse(null);
 		for(Node node : allVisible){
 			NodeState ns = stateFor(node);
 			ns.aspectLerp = MathHelper.lerp(1 - (float)Math.pow(2, -dt/3), ns.aspectLerp, node.equals(looking) ? 1 : 0);
+			boolean isDT = node.equals(draining);
+			ns.drawLerp = MathHelper.lerp(1 - (float)Math.pow(2, -dt/(isDT ? 8 : 2)), ns.drawLerp, isDT ? 1 : 0);
 		}
 		
 		// first pass, visible through blocks if you have goggles of revealing
@@ -150,7 +155,7 @@ public final class NodeRenderer{
 	}
 	
 	private static float scaleFor(Node n){
-		return 1;
+		return MathHelper.lerp(stateFor(n).drawLerp, 1, 0.5f);
 	}
 	
 	private static int lightFor(Node n, World world){

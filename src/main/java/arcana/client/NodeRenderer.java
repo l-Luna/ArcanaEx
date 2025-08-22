@@ -166,7 +166,8 @@ public final class NodeRenderer{
 	}
 	
 	private static float scaleFor(Node n){
-		return MathHelper.lerp(stateFor(n).drawLerp, 1, 0.5f);
+		NodeState ns = stateFor(n);
+		return MathHelper.lerp(Math.min(ns.drawLerp + ns.shakeTimer / 50, 1), 1, 0.5f);
 	}
 	
 	private static int lightFor(Node n, World world){
@@ -179,7 +180,7 @@ public final class NodeRenderer{
 			return Vec3f.ZERO;
 		Random rng = MinecraftClient.getInstance().world.random;
 		Vec3f f = new Vec3f(rng.nextFloat() - 0.5f, rng.nextFloat() - 0.5f, rng.nextFloat() - 0.5f);
-		f.scale(MathHelper.sqrt(timer) / 5);
+		f.scale(MathHelper.sqrt(timer) / 15);
 		return f;
 	}
 	

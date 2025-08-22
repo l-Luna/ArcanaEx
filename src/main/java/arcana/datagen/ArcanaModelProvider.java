@@ -4,6 +4,7 @@ import arcana.aspects.Aspects;
 import arcana.blocks.CrystalClusterBlock;
 import arcana.blocks.SymbolBlock;
 import arcana.entities.locomotive.Symbol;
+import arcana.items.ScalpelItem;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.block.Block;
@@ -137,6 +138,8 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		for(Item item : items)
 			if(!(noAutoGen.contains(item) || item instanceof BlockItem))
 				if(item instanceof ToolItem)
+					itemGen.register(item, Models.HANDHELD);
+				else if(item instanceof ScalpelItem) // TODO: custom template for 3rd person view
 					itemGen.register(item, Models.HANDHELD);
 				else
 					itemGen.register(item, Models.GENERATED);

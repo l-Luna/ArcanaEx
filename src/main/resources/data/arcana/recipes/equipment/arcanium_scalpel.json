@@ -1,0 +1,24 @@
+{
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "I": {
+      "item": "arcana:arcanium_ingot"
+    },
+    "C": {
+      "item": "arcana:crystals/aura"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "C ",
+    "SI"
+  ],
+  "aspects": [
+    "70*entropy"
+  ],
+  "result": {
+    "item": "arcana:arcanium_scalpel"
+  }
+}

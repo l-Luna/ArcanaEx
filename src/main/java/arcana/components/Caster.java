@@ -134,9 +134,7 @@ public class Caster implements Component, AutoSyncedComponent, ServerTickingComp
 				AspectMap wandAspects = WandItem.aspectsFrom(wand), nodeAspects = node.getAspects();
 				if(!nodeAspects.contains(drainTargetAspect)){
 					// if in a stuck state, reroll until we aren't
-					Optional<Aspect> aspect = chooseDrainAspect(node, wand);
-					if(aspect.isPresent())
-						drainTargetAspect = aspect.get();
+					chooseDrainAspect(node, wand).ifPresent(value -> drainTargetAspect = value);
 				}else if(drainTimer <= 0){
 					if(drainTimer == 0){
 						int aspectDrainAmount = 3 + world().random.nextInt(3);
@@ -149,18 +147,20 @@ public class Caster implements Component, AutoSyncedComponent, ServerTickingComp
 						nodeAspects.take(drainTargetAspect, realDrainAmount);
 						node.markDirty();
 						WandItem.updateAspects(wand, map -> map.addCapped(drainTargetAspect, realDrainAmount, wandCapacity));
-						
-						Optional<Aspect> aspect = chooseDrainAspect(node, wand);
 						// if the node is out of aspects to draw, stay in this state on the old aspect
-						if(aspect.isPresent())
-							drainTargetAspect = aspect.get();
+						chooseDrainAspect(node, wand).ifPresent(value -> drainTargetAspect = value);
 					}
 					drainTimer = world().random.nextBetween(6, 9);
 					sync();
 				}
 				
-				if(nodeAspects.contains(drainTargetAspect))
+				if(nodeAspects.contains(drainTargetAspect)){
 					drainTimer--;
+					// TODO: particles during draining
+					/*if(world().getTime() % 15 == 0){
+						world().addParticle();
+					}*/
+				}
 				stateTimer++;
 			}
 			case CONTINUOUS_CASTING -> WandItem.updateFocus(wand, focusStack -> {

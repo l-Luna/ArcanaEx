@@ -1,6 +1,5 @@
 package arcana.network;
 
-import arcana.Networking;
 import arcana.ReflectivelyUtilized;
 import arcana.components.Researcher;
 import arcana.research.Pin;

@@ -1,6 +1,5 @@
-package arcana;
+package arcana.network;
 
-import arcana.network.*;
 import com.unascribed.lib39.tunnel.api.NetworkContext;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 

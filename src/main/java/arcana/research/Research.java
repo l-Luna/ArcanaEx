@@ -1,6 +1,6 @@
 package arcana.research;
 
-import arcana.Networking;
+import arcana.network.Networking;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
 

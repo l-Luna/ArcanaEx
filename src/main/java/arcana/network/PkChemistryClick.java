@@ -1,7 +1,6 @@
 package arcana.network;
 
 import arcana.ArcanaRegistry;
-import arcana.Networking;
 import arcana.ReflectivelyUtilized;
 import arcana.aspects.Aspect;
 import arcana.aspects.AspectMap;

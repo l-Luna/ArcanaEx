@@ -2,7 +2,6 @@ package arcana.network;
 
 import arcana.ArcanaRegistry;
 import arcana.ArcanaTags;
-import arcana.Networking;
 import arcana.ReflectivelyUtilized;
 import arcana.research.Puzzle;
 import arcana.research.Research;

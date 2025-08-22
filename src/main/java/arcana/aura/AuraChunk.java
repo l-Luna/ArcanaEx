@@ -18,9 +18,7 @@ import net.minecraft.world.chunk.ChunkStatus;
 import net.minecraft.world.chunk.WorldChunk;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static arcana.Arcana.arcId;
@@ -106,9 +104,19 @@ public class AuraChunk implements Component, AutoSyncedComponent, ServerTickingC
 	
 	public void readFromNbt(NbtCompound tag){
 		flux = tag.getFloat("flux");
-		nodes = StreamUtil.streamAndApply(tag.getList("nodes", NbtElement.COMPOUND_TYPE), NbtCompound.class, Node::fromNbt)
-				.peek(x -> x.setChunk(this))
-				.collect(Collectors.toCollection(ArrayList::new));
+		Map<UUID, Node> oldNodes = nodes.stream().collect(Collectors.toMap(Node::getUuid, x -> x));
+		nodes = new ArrayList<>(oldNodes.size());
+		// try to keep Node objects stable
+		StreamUtil.streamAndApply(tag.getList("nodes", NbtElement.COMPOUND_TYPE), NbtCompound.class, Node::fromNbt).forEach(n -> {
+			n.setChunk(this);
+			UUID uuid = n.getUuid();
+			if(oldNodes.containsKey(uuid)){
+				Node oldNode = oldNodes.get(uuid);
+				oldNode.copyFrom(n);
+				nodes.add(oldNode);
+			}else
+				nodes.add(n);
+		});
 	}
 	
 	public void markDirty(){

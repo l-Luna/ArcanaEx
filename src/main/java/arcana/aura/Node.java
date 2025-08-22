@@ -152,6 +152,19 @@ public class Node implements Position{
 		return node;
 	}
 	
+	/* package-private */ void copyFrom(Node other){
+		this.type = other.type;
+		this.x = other.x;
+		this.y = other.y;
+		this.z = other.z;
+		this.ticksUntilRecharge = other.ticksUntilRecharge;
+		this.aspects = other.aspects;
+		this.aspectCap = other.aspectCap;
+		this.tag = other.tag;
+		this.uuid = other.uuid;
+		this.chunk = other.chunk;
+	}
+	
 	public BlockPos asBlockPos(){
 		return new BlockPos(x, y, z);
 	}

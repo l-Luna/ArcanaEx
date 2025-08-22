@@ -17,6 +17,8 @@ import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.List;
@@ -56,7 +58,7 @@ public class NodeTypes{
 		return NODE_TYPES.get(id);
 	}
 	
-	public static NodeType weakerType(NodeType type){
+	public static @Nullable NodeType weakerType(NodeType type){
 		if(type == FADING || type == TAINTED)
 			return null;
 		if(type == NORMAL)
@@ -70,7 +72,7 @@ public class NodeTypes{
 		return FADING; // PURE and ELDRITCH
 	}
 	
-	public static NodeType strongerType(NodeType type){
+	public static @NotNull NodeType strongerType(NodeType type){
 		if(type == FADING)
 			return NORMAL;
 		if(type == NORMAL)

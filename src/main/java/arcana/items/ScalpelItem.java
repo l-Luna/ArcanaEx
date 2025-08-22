@@ -9,12 +9,22 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 
 public class ScalpelItem extends Item{
 	
-	public ScalpelItem(Settings settings){
+	public enum ScalpelType{
+		ROSE,
+		SILVER,
+		BLACK
+	}
+	
+	public final ScalpelType type;
+	
+	public ScalpelItem(Settings settings, ScalpelType type){
 		super(settings.maxDamageIfAbsent(100));
+		this.type = type;
 	}
 	
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand){
@@ -25,8 +35,14 @@ public class ScalpelItem extends Item{
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user){
 		if(!world.isClient)
 			AuraWorld.from(world).raycastNodes(user, false).ifPresent(node -> {
-				new PkShakeNode(node, 40).sendToAllWatching(user);
-				node.damage(true, world.random);
+				if(type == ScalpelType.BLACK){
+					node.destroy(true); // TODO
+				}else{
+					Random rng = world.random;
+					new PkShakeNode(node, 40).sendToAllWatching(user);
+					boolean degrade = type == ScalpelType.ROSE || rng.nextInt(4) == 0;
+					node.damage(degrade, rng);
+				}
 				stack.damage(1, user, e -> e.sendToolBreakStatus(e.getActiveHand()));
 			});
 		return stack;

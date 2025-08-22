@@ -231,9 +231,9 @@ public final class ArcanaRegistry{
 	public static final Item SILVERLEAF_LEGGINGS = new ArmorItem(ArcanaArmourMaterials.SILVERLEAF, EquipmentSlot.LEGS, new Settings().group(Tab.EQUIPMENT));
 	public static final Item SILVERLEAF_BOOTS = new ArmorItem(ArcanaArmourMaterials.SILVERLEAF, EquipmentSlot.FEET, new Settings().group(Tab.EQUIPMENT));
 	
-	public static final Item ARCANIUM_SCALPEL = new ScalpelItem(new Settings().group(Tab.EQUIPMENT).maxDamage(100));
-	public static final Item VOID_METAL_SCALPEL = new ScalpelItem(new Settings().group(Tab.EQUIPMENT).maxDamage(100));
-	public static final Item SILVERLEAF_SCALPEL = new ScalpelItem(new Settings().group(Tab.EQUIPMENT).maxDamage(100));
+	public static final Item ARCANIUM_SCALPEL = new ScalpelItem(new Settings().group(Tab.EQUIPMENT).maxDamage(100), ScalpelItem.ScalpelType.ROSE);
+	public static final Item SILVERLEAF_SCALPEL = new ScalpelItem(new Settings().group(Tab.EQUIPMENT).maxDamage(100), ScalpelItem.ScalpelType.SILVER);
+	public static final Item VOID_METAL_SCALPEL = new ScalpelItem(new Settings().group(Tab.EQUIPMENT).maxDamage(100), ScalpelItem.ScalpelType.BLACK);
 	
 	public static final Item EMERALD_NECKLACE = new NecklaceItem(new Settings().group(Tab.EQUIPMENT).maxCount(1));
 	public static final Item GOLD_RING = new RingItem(new Settings().group(Tab.EQUIPMENT).maxCount(1), 2, 0);
@@ -725,8 +725,8 @@ public final class ArcanaRegistry{
 		register("silverleaf_boots", SILVERLEAF_BOOTS);
 		
 		register("arcanium_scalpel", ARCANIUM_SCALPEL);
-		register("void_metal_scalpel", VOID_METAL_SCALPEL);
 		register("silverleaf_scalpel", SILVERLEAF_SCALPEL);
+		register("void_metal_scalpel", VOID_METAL_SCALPEL);
 		
 		register("emerald_necklace", EMERALD_NECKLACE);
 		register("gold_ring", GOLD_RING);

@@ -1,7 +1,9 @@
 package arcana.aura;
 
 import arcana.util.NbtUtil;
+import com.unascribed.lib39.tunnel.api.ImmutableMarshallable;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.ChunkStatus;
@@ -13,7 +15,7 @@ import java.util.UUID;
 /**
  * Helper type for serializing references to nodes in-world, via their UUID and chunk.
  */
-public record NodeReference(UUID uuid, ChunkPos pos){
+public record NodeReference(UUID uuid, ChunkPos pos) implements ImmutableMarshallable{
 	
 	/**
 	 * Create a reference to a given node.
@@ -56,5 +58,14 @@ public record NodeReference(UUID uuid, ChunkPos pos){
 				"chunkX", pos.x,
 				"chunkZ", pos.z
 		));
+	}
+	
+	public void writeToNetwork(PacketByteBuf buf){
+		buf.writeUuid(uuid);
+		buf.writeChunkPos(pos);
+	}
+	
+	public static NodeReference readFromNetwork(PacketByteBuf buf){
+		return new NodeReference(buf.readUuid(), buf.readChunkPos());
 	}
 }

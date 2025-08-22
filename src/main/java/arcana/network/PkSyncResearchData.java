@@ -30,7 +30,7 @@ public class PkSyncResearchData extends S2CMessage{
 	}
 	
 	public PkSyncResearchData(){
-		super(Networking.arcCtx);
+		super(Networking.context);
 		bookNbts = Research.books.values().stream().map(Book::toNbt).toList();
 		puzzleNbts = Research.puzzles.values().stream().map(Puzzle::getPassData).toList();
 	}

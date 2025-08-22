@@ -32,7 +32,7 @@ public class PkChemistryClick extends C2SMessage{
 	}
 	
 	public PkChemistryClick(String hexId, Aspect toSet){
-		super(Networking.arcCtx);
+		super(Networking.context);
 		this.hexId = hexId;
 		this.toSet = toSet == null ? null : toSet.id().toString();
 	}

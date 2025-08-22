@@ -28,7 +28,7 @@ public class PkSwapFocus extends C2SMessage{
 	}
 	
 	public PkSwapFocus(Hand hand, int focusIdx){
-		super(Networking.arcCtx);
+		super(Networking.context);
 		this.hand = hand;
 		this.focusIdx = focusIdx;
 	}

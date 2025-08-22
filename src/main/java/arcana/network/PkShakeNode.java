@@ -1,34 +1,34 @@
 package arcana.network;
 
 import arcana.ReflectivelyUtilized;
-import arcana.warp.WarpEvent;
-import arcana.warp.WarpEvents;
+import arcana.aura.Node;
+import arcana.aura.NodeReference;
+import arcana.client.NodeRenderer;
 import com.unascribed.lib39.tunnel.api.NetworkContext;
 import com.unascribed.lib39.tunnel.api.S2CMessage;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.util.Identifier;
 
-public class PkTriggerWarpEvent extends S2CMessage{
+public class PkShakeNode extends S2CMessage{
 	
-	Identifier eventId;
-	boolean hadPrecursor;
+	NodeReference node;
+	int ticks;
 	
 	@ReflectivelyUtilized
-	public PkTriggerWarpEvent(NetworkContext ctx){
+	public PkShakeNode(NetworkContext ctx){
 		super(ctx);
 	}
 	
-	public PkTriggerWarpEvent(WarpEvent eventId, boolean hadPrecursor){
-		super(Networking.context);
-		this.eventId = eventId.id();
-		this.hadPrecursor = hadPrecursor;
+	public PkShakeNode(Node node, int ticks){
+		this(Networking.context);
+		this.node = NodeReference.ref(node);
+		this.ticks = ticks;
 	}
 	
 	@Environment(EnvType.CLIENT)
 	protected void handle(MinecraftClient client, ClientPlayerEntity player){
-		WarpEvents.events.get(eventId).performOnClient(player, hadPrecursor);
+		node.deref(player.world).ifPresent(node -> NodeRenderer.shakeNode(node, ticks));
 	}
 }

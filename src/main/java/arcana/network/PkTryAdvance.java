@@ -19,7 +19,7 @@ public class PkTryAdvance extends C2SMessage{
 	}
 	
 	public PkTryAdvance(Identifier entryId){
-		super(Networking.arcCtx);
+		super(Networking.context);
 		this.entryId = entryId;
 	}
 	

@@ -22,7 +22,7 @@ public class PkModifyPins extends C2SMessage{
 	}
 	
 	public PkModifyPins(Pin pin, boolean add){
-		super(Networking.arcCtx);
+		super(Networking.context);
 		entry = pin.entry().id();
 		stage = pin.stage();
 		this.add = add;

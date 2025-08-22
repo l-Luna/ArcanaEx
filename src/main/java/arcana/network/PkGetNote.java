@@ -24,7 +24,7 @@ public class PkGetNote extends C2SMessage{
 	}
 	
 	public PkGetNote(Identifier puzzleId){
-		super(Networking.arcCtx);
+		super(Networking.context);
 		this.puzzleId = puzzleId;
 	}
 	

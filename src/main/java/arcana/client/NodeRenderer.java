@@ -19,6 +19,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Position;
 import net.minecraft.util.math.Quaternion;
 import net.minecraft.util.math.Vec3f;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 
 import java.io.BufferedReader;
@@ -81,6 +82,7 @@ public final class NodeRenderer{
 			ns.aspectLerp = MathHelper.lerp(1 - (float)Math.pow(2, -dt/3), ns.aspectLerp, node.equals(looking) ? 1 : 0);
 			boolean isDT = node.equals(draining);
 			ns.drawLerp = MathHelper.lerp(1 - (float)Math.pow(2, -dt/(isDT ? 8 : 2)), ns.drawLerp, isDT ? 1 : 0);
+			ns.shakeTimer = Math.max(0, ns.shakeTimer - 1);
 		}
 		
 		// first pass, visible through blocks if you have goggles of revealing
@@ -146,9 +148,18 @@ public final class NodeRenderer{
 		context.profiler().pop();
 	}
 	
+	//
+	
 	public static boolean toggleHitboxRendering(){
 		return showNodeHitboxes ^= true;
 	}
+	
+	public static void shakeNode(Node node, int ticks){
+		NodeState ns = stateFor(node);
+		ns.shakeTimer = Math.max(ns.shakeTimer, ticks);
+	}
+	
+	//
 	
 	private static NodeState stateFor(Node node){
 		return nodeStates.computeIfAbsent(node, __ -> new NodeState());
@@ -162,8 +173,20 @@ public final class NodeRenderer{
 		return WorldRenderer.getLightmapCoordinates(world, n.asBlockPos());
 	}
 	
+	private static Vec3f offsetFor(Node n){
+		float timer = stateFor(n).shakeTimer;
+		if(timer <= 0)
+			return Vec3f.ZERO;
+		Random rng = MinecraftClient.getInstance().world.random;
+		Vec3f f = new Vec3f(rng.nextFloat() - 0.5f, rng.nextFloat() - 0.5f, rng.nextFloat() - 0.5f);
+		f.scale(MathHelper.sqrt(timer) / 5);
+		return f;
+	}
+	
+	//
+	
 	private static void drawNode(Camera camera, Node node, BufferBuilder buffer, float alpha, World w){
-		drawQuad(camera, node, Vec3f.ZERO, buffer, alpha, scaleFor(node), v(node, false, w), v(node, true, w), lightFor(node, w));
+		drawQuad(camera, node, offsetFor(node), buffer, alpha, scaleFor(node), v(node, false, w), v(node, true, w), lightFor(node, w));
 	}
 	
 	private static void drawNodeAspect(Camera camera, Node node, BufferBuilder buffer, Aspect aspect, World world){
@@ -258,6 +281,8 @@ public final class NodeRenderer{
 		float f = maxFrames(n.getType());
 		return (1 / f) * ((world.getTime() / 2 + n.getUuid().hashCode()) % (int)(f) + (max ? 1 : 0));
 	}
+	
+	//
 	
 	// TODO: reimpl
 	

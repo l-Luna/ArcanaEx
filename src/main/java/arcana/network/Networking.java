@@ -7,17 +7,18 @@ import static arcana.Arcana.arcId;
 
 public final class Networking{
 	
-	public static final NetworkContext arcCtx = NetworkContext.forChannel(arcId("network"));
+	public static final NetworkContext context = NetworkContext.forChannel(arcId("network"));
 	
 	public static void setup(){
-		arcCtx.register(PkSyncResearchData.class);
-		arcCtx.register(PkTryAdvance.class);
-		arcCtx.register(PkModifyPins.class);
-		arcCtx.register(PkGetNote.class);
-		arcCtx.register(PkChemistryClick.class);
-		arcCtx.register(PkChemistryCombineAspects.class);
-		arcCtx.register(PkSwapFocus.class);
-		arcCtx.register(PkTriggerWarpEvent.class);
+		context.register(PkSyncResearchData.class);
+		context.register(PkTryAdvance.class);
+		context.register(PkModifyPins.class);
+		context.register(PkGetNote.class);
+		context.register(PkChemistryClick.class);
+		context.register(PkChemistryCombineAspects.class);
+		context.register(PkSwapFocus.class);
+		context.register(PkTriggerWarpEvent.class);
+		context.register(PkShakeNode.class);
 		
 		ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, didJoin) -> new PkSyncResearchData().sendTo(player));
 	}

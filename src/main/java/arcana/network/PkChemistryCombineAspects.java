@@ -21,7 +21,7 @@ public class PkChemistryCombineAspects extends C2SMessage{
 	}
 	
 	public PkChemistryCombineAspects(Aspect left, Aspect right){
-		super(Networking.arcCtx);
+		super(Networking.context);
 		this.left = left.id();
 		this.right = right.id();
 	}

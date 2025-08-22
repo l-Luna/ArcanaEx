@@ -2,6 +2,7 @@ package arcana.aura;
 
 import arcana.aspects.Aspect;
 import arcana.aspects.AspectMap;
+import arcana.aspects.Aspects;
 import com.mojang.logging.LogUtils;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
@@ -56,6 +57,8 @@ public class Node implements Position{
 		uuid = UUID.randomUUID();
 	}
 	
+	//
+	
 	public void tick(World world){
 		if(ticksUntilRecharge <= 0){
 			ticksUntilRecharge = type.rechargeTime() + world.random.nextBetween(-3 * 20, 3 * 20);
@@ -67,14 +70,57 @@ public class Node implements Position{
 			type.ticker().accept(this, world);
 	}
 	
-	protected void doRecharge(Random rng){
+	public void damage(boolean degrade, Random rng){
+		for(int i = 0; i < 2; i++){
+			Aspect aspect = Util.getRandom(aspectCap.aspectSet().stream().toList(), rng);
+			aspectCap.take(aspect, rng.nextBetween(2, 5));
+		}
+		
+		if(degrade || aspectCap.isEmpty()){
+			NodeType nextType = NodeTypes.weakerType(type);
+			if(nextType == null){
+				destroy(true);
+				return;
+			}else
+				type = nextType;
+		}
+		
+		markDirty();
+	}
+	
+	public void enhance(boolean upgrade, Random rng){
+		if(upgrade){
+			type = NodeTypes.strongerType(type);
+			for(int i = 0; i < 4; i++)
+				aspectCap.add(Util.getRandom(aspectCap.aspectSet().stream().toList(), rng), rng.nextBetween(1, 4));
+		}
+		
+		doRecharge(rng);
+		if(rng.nextInt(20) == 0)
+			aspectCap.addCapped(Util.getRandom(Aspects.primals, rng), rng.nextBetween(1, 3), type.aspectCap());
+		
+		markDirty();
+	}
+	
+	public void destroy(boolean effects){
+		chunk.removeNode(this);
+		if(effects){
+			// particles...
+		}
+	}
+	
+	//
+	
+	private void doRecharge(Random rng){
 		// add 2-5 of 3 aspects in our cap
 		for(int i = 0; i < 3; i++){
 			Aspect aspect = Util.getRandom(aspectCap.aspectSet().stream().toList(), rng);
 			aspects.addCapped(aspect, rng.nextBetween(2, 5), aspectCap.get(aspect));
-			markDirty();
 		}
+		markDirty();
 	}
+	
+	//
 	
 	public NbtCompound toNbt(){
 		NbtCompound c = new NbtCompound();

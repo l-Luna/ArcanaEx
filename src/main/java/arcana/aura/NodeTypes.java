@@ -56,6 +56,29 @@ public class NodeTypes{
 		return NODE_TYPES.get(id);
 	}
 	
+	public static NodeType weakerType(NodeType type){
+		if(type == FADING || type == TAINTED)
+			return null;
+		if(type == NORMAL)
+			return FADING;
+		if(type == BRIGHT)
+			return NORMAL;
+		
+		if(type == HUNGRY)
+			return HUNGRY;
+		
+		return FADING; // PURE and ELDRITCH
+	}
+	
+	public static NodeType strongerType(NodeType type){
+		if(type == FADING)
+			return NORMAL;
+		if(type == NORMAL)
+			return BRIGHT;
+		
+		return type;
+	}
+	
 	// TODO: config
 	private static final float hungryCarryFraction = 0.4f;
 	

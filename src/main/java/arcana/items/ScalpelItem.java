@@ -25,7 +25,8 @@ public class ScalpelItem extends Item{
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user){
 		if(!world.isClient)
 			AuraWorld.from(world).raycastNodes(user, false).ifPresent(node -> {
-				new PkShakeNode(node, 35).sendToAllWatching(user);
+				new PkShakeNode(node, 40).sendToAllWatching(user);
+				node.damage(true, world.random);
 				stack.damage(1, user, e -> e.sendToolBreakStatus(e.getActiveHand()));
 			});
 		return stack;

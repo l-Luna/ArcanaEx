@@ -8,6 +8,7 @@ import arcana.aura.Node;
 import arcana.aura.NodeReference;
 import arcana.items.FocusItem;
 import arcana.items.WandItem;
+import arcana.network.PkShakeNode;
 import dev.onyxstudios.cca.api.v3.component.Component;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistryV3;
@@ -19,6 +20,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -136,8 +138,9 @@ public class Caster implements Component, AutoSyncedComponent, ServerTickingComp
 					// if in a stuck state, reroll until we aren't
 					chooseDrainAspect(node, wand).ifPresent(value -> drainTargetAspect = value);
 				}else if(drainTimer <= 0){
+					Random rng = world().random;
 					if(drainTimer == 0){
-						int aspectDrainAmount = 3 + world().random.nextInt(3);
+						int aspectDrainAmount = 3 + rng.nextInt(3);
 						int wandCapacity = WandItem.capacity(wand);
 						
 						int capacityLeft = wandCapacity - wandAspects.get(drainTargetAspect);
@@ -145,12 +148,18 @@ public class Caster implements Component, AutoSyncedComponent, ServerTickingComp
 							capacityLeft = 0;
 						int realDrainAmount = Math.min(Math.min(nodeAspects.get(drainTargetAspect), aspectDrainAmount), capacityLeft);
 						nodeAspects.take(drainTargetAspect, realDrainAmount);
-						node.markDirty();
 						WandItem.updateAspects(wand, map -> map.addCapped(drainTargetAspect, realDrainAmount, wandCapacity));
 						// if the node is out of aspects to draw, stay in this state on the old aspect
 						chooseDrainAspect(node, wand).ifPresent(value -> drainTargetAspect = value);
+						
+						if(node.getAspects().isEmpty()){
+							node.damage(rng.nextInt(80) == 0, rng);
+							new PkShakeNode(node, 30).sendToAllWatching(player);
+						}
+						
+						node.markDirty();
 					}
-					drainTimer = world().random.nextBetween(6, 9);
+					drainTimer = rng.nextBetween(6, 9);
 					sync();
 				}
 				
@@ -193,7 +202,7 @@ public class Caster implements Component, AutoSyncedComponent, ServerTickingComp
 		candidateAspects.removeIf(x -> wandAspects.get(x) >= WandItem.capacity(wand));
 		if(candidateAspects.isEmpty())
 			return Optional.empty();
-		return Optional.of(Util.getRandom(candidateAspects, player.world.random));
+		return Optional.of(Util.getRandom(candidateAspects, world().random));
 	}
 	
 	private Optional<ItemStack> wandStack(){

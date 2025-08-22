@@ -62,7 +62,7 @@ public final class Aspects{
 	public static final Aspect SLOTH = create("sloth", MIND, ICE, 0x3dcbcb);
 	public static final Aspect GREED = create("greed", MIND, VOID, 0xf4f62d);
 	public static final Aspect WRATH = create("wrath", MIND, WEAPON, 0x6e2b71);
-	public static final Aspect MAGIC = create("magic", SENSES, ENERGY, 0xed1507);
+	public static final Aspect MAGIC = create("magic", SENSES, ENERGY, 0xe242b3);
 	
 	public static final Aspect TAINT = create("taint", MAGIC, ENTROPY, 0x903e8e);
 	public static final Aspect AURA = create("aura", MAGIC, AIR, 0xa0e2cb);

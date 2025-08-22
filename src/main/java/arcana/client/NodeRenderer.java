@@ -37,6 +37,7 @@ public final class NodeRenderer{
 	private static final Map<NodeType, Integer> framesByType = new HashMap<>(NodeTypes.NODE_TYPES.size());
 	
 	private static boolean showNodeHitboxes = false;
+	// TODO: use UUIDs instead to be stable when resyncing
 	private static final Map<Node, NodeState> nodeStates = new WeakHashMap<>();
 	
 	@SuppressWarnings("resource") // ???

@@ -60,6 +60,11 @@ public class AuraChunk implements Component, AutoSyncedComponent, ServerTickingC
 		markDirty();
 	}
 	
+	public void removeNode(Node node){
+		nodes.remove(node);
+		markDirty();
+	}
+	
 	// accessors
 	
 	public static AuraChunk from(Chunk chunk){

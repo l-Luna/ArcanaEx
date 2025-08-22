@@ -47,6 +47,9 @@ public final class BuiltinResearch{
 	public static final Identifier crimsonBladeAddendum = arcId("crimson_equipment/crimson_blade");
 	public static final Identifier crimsonLongbowAddendum = arcId("crimson_equipment/crimson_longbow");
 	
+	public static final Identifier nodeChannellingEntry = arcId("node_channelling");
+	public static final Identifier nodeChannelling2Entry = arcId("node_channelling_2");
+	
 	public static final Identifier researchExpertiseEntry = arcId("research_expertise");
 	public static final Identifier researchMasteryEntry = arcId("research_mastery");
 	

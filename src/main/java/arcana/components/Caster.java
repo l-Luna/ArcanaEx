@@ -9,6 +9,8 @@ import arcana.aura.NodeReference;
 import arcana.items.FocusItem;
 import arcana.items.WandItem;
 import arcana.network.PkShakeNode;
+import arcana.research.BuiltinResearch;
+import arcana.research.Research;
 import dev.onyxstudios.cca.api.v3.component.Component;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistryV3;
@@ -138,6 +140,10 @@ public class Caster implements Component, AutoSyncedComponent, ServerTickingComp
 					// if in a stuck state, reroll until we aren't
 					chooseDrainAspect(node, wand).ifPresent(value -> drainTargetAspect = value);
 				}else if(drainTimer <= 0){
+					Researcher researcher = Researcher.from(player);
+					boolean hasChannelling = researcher.isEntryComplete(Research.getEntry(BuiltinResearch.nodeChannellingEntry));
+					boolean hasChannelling2 = researcher.isEntryComplete(Research.getEntry(BuiltinResearch.nodeChannelling2Entry));
+					
 					Random rng = world().random;
 					if(drainTimer == 0){
 						int aspectDrainAmount = 3 + rng.nextInt(3);
@@ -152,14 +158,16 @@ public class Caster implements Component, AutoSyncedComponent, ServerTickingComp
 						// if the node is out of aspects to draw, stay in this state on the old aspect
 						chooseDrainAspect(node, wand).ifPresent(value -> drainTargetAspect = value);
 						
-						if(node.getAspects().isEmpty()){
-							node.damage(rng.nextInt(80) == 0, rng);
+						int damageChance = hasChannelling2 ? 20 : hasChannelling ? 3 : 1;
+						int paleChance = hasChannelling2 ? 250 : hasChannelling ? 80 : 40;
+						if(node.getAspects().isEmpty() && rng.nextInt(damageChance) == 0){
+							node.damage(rng.nextInt(paleChance) == 0, rng);
 							new PkShakeNode(node, 30).sendToAllWatching(player);
 						}
 						
 						node.markDirty();
 					}
-					drainTimer = rng.nextBetween(6, 9);
+					drainTimer = hasChannelling2 ? rng.nextBetween(2, 5) : hasChannelling ? rng.nextBetween(7, 10) : rng.nextBetween(8, 17);
 					sync();
 				}
 				

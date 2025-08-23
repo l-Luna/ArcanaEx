@@ -1,5 +1,6 @@
 package arcana.client.ber;
 
+import arcana.aspects.AspectMap;
 import arcana.aspects.AspectStack;
 import arcana.aspects.Aspects;
 import arcana.blocks.be.MysticMistBlockEntity;
@@ -39,38 +40,9 @@ public class MysticMistBlockEntityRenderer implements BlockEntityRenderer<Mystic
 		if(stack == null)
 			return;
 		
-		// 101% chance this should not be copy-pasted everywhere
 		var player = MinecraftClient.getInstance().player;
-		aspects:
-		if(GogglesOfRevealingItem.hasRevealing(player)){
-			matrices.push();
-			
-			matrices.translate(0.5, 1.8, 0.5);
-			matrices.multiply(Quaternion.fromEulerXyzDegrees(new Vec3f(0, -MinecraftClient.getInstance().cameraEntity.getYaw(), 0)));
-			matrices.translate(0.5, 0, 0);
-			
-			var pos = entity.getPos();
-			double sqrDist = player.squaredDistanceTo(pos.getX() + .5, pos.getY() + .5, pos.getZ() + .5);
-			if(sqrDist > 8 * 8){
-				matrices.pop();
-				break aspects;
-			}
-			var alpha = (float)(1 - Math.sqrt(sqrDist) / 10);
-			var intAlpha = (int)(Math.max(0, alpha * 255)) << 24;
-			
-			var scale = 24f;
-			matrices.translate((16 / scale - 1) / 2f, 0, 0);
-			matrices.scale(1 / scale, 1 / scale, -1 / scale);
-			matrices.multiply(Quaternion.fromEulerXyz(0, 0, (float)Math.PI));
-			RenderSystem.enableDepthTest();
-			RenderSystem.enableBlend();
-			RenderSystem.defaultBlendFunc();
-			AspectRenderer.renderAspect(stack.type(), matrices, 0, 0, 0, 1, 1, 1, alpha);
-			AspectRenderer.renderAspectStackOverlay(stack.amount(), matrices, MinecraftClient.getInstance().textRenderer, 0, 0, 0, 0xFFFFFF | intAlpha);
-			
-			matrices.pop();
-		}
-		// end
+		if(GogglesOfRevealingItem.hasRevealing(player))
+			AspectRenderer.renderAspectsInWorld(matrices, player, AspectMap.fromAspectStack(stack), entity.getPos(), new Vec3f(0, 1.8f, 0));
 		
 		// heat effect
 		if(stack.type().equals(Aspects.FIRE)){

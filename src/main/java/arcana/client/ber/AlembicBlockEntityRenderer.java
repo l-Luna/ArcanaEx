@@ -1,14 +1,13 @@
 package arcana.client.ber;
 
+import arcana.aspects.AspectMap;
 import arcana.blocks.be.AlembicBlockEntity;
 import arcana.client.AspectRenderer;
 import arcana.items.GogglesOfRevealingItem;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.math.Quaternion;
 import net.minecraft.util.math.Vec3f;
 
 public class AlembicBlockEntityRenderer implements BlockEntityRenderer<AlembicBlockEntity>{
@@ -20,11 +19,11 @@ public class AlembicBlockEntityRenderer implements BlockEntityRenderer<AlembicBl
 	                   int light,
 	                   int overlay){
 		var player = MinecraftClient.getInstance().player;
-		
 		if(!GogglesOfRevealingItem.hasRevealing(player) || entity.stored == null)
 			return;
+		AspectRenderer.renderAspectsInWorld(matrices, player, AspectMap.fromAspectStack(entity.stored), entity.getPos(), new Vec3f(0, 1, -0.8f));
 		
-		matrices.push();
+		/*matrices.push();
 		matrices.translate(0.5, 1, 0.5);
 		matrices.multiply(Quaternion.fromEulerXyzDegrees(new Vec3f(0, -MinecraftClient.getInstance().cameraEntity.getYaw(), 0)));
 		matrices.translate(0.5, 0, -0.8);
@@ -48,6 +47,6 @@ public class AlembicBlockEntityRenderer implements BlockEntityRenderer<AlembicBl
 		AspectRenderer.renderAspect(entity.stored.type(), matrices, 0, 0, 0, 1, 1, 1, alpha);
 		AspectRenderer.renderAspectStackOverlay(entity.stored.amount(), matrices, MinecraftClient.getInstance().textRenderer, 0, 0, 0, 0xFFFFFF | intAlpha);
 		
-		matrices.pop();
+		matrices.pop();*/
 	}
 }

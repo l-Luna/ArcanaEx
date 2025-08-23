@@ -1,6 +1,7 @@
 package arcana.client;
 
 import arcana.aspects.Aspect;
+import arcana.aspects.AspectMap;
 import arcana.aspects.AspectStack;
 import arcana.components.Researcher;
 import arcana.research.BuiltinResearch;
@@ -12,9 +13,14 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Quaternion;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3f;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +49,6 @@ public final class AspectRenderer{
 	}
 	
 	public static void renderAspect(Aspect aspect, MatrixStack matrices, int x, int y, int z, float r, float g, float b, float a){
-		// aspect sprite is "$modid:textures/aspects/$id"
 		RenderSystem.setShader(GameRenderer::getPositionColorTexShader);
 		RenderSystem.setShaderColor(r, g, b, a);
 		RenderSystem.setShaderTexture(0, texture(aspect));
@@ -51,6 +56,7 @@ public final class AspectRenderer{
 	}
 	
 	public static Identifier texture(Aspect aspect){
+		// aspect sprite is "$modid:textures/aspects/$id"
 		return new Identifier(aspect.id().getNamespace(), "textures/aspects/%s.png".formatted(aspect.id().getPath()));
 	}
 	
@@ -63,6 +69,47 @@ public final class AspectRenderer{
 		matrices.translate(0, 0, z + 1);
 		var label = String.valueOf(amount);
 		text.drawWithShadow(matrices, label, x + 18 - text.getWidth(label), y + 9, colour);
+		matrices.pop();
+	}
+	
+	public static void renderAspectsInWorld(MatrixStack matrices, PlayerEntity player, AspectMap aspects, BlockPos pos, Vec3f offset){
+		if(player == null)
+			return;
+		Vec3d playerPos = player.getLerpedPos(MinecraftClient.getInstance().getTickDelta());
+		
+		matrices.push();
+		// apply centering before rotation
+		matrices.translate(0.5, 0, 0.5);
+		double diffX = pos.getX() - playerPos.getX() + 0.5, diffZ = pos.getZ() - playerPos.getZ() + 0.5;
+		float angle = (float)Math.atan2(diffX, diffZ);
+		matrices.multiply(Quaternion.fromEulerXyz(new Vec3f(0, angle, 0)));
+		// but block-specific offset after
+		matrices.translate(offset.getX(), offset.getY(), offset.getZ());
+		
+		List<AspectStack> stacks = aspects.asStacks();
+		
+		double sqrDist = playerPos.squaredDistanceTo(pos.getX() + .5, pos.getY() + .5, pos.getZ() + .5);
+		if(sqrDist > 8 * 8){
+			matrices.pop();
+			return;
+		}
+		var alpha = (float)(1 - Math.sqrt(sqrDist) / 10);
+		var intAlpha = (int)(Math.max(0, alpha * 255)) << 24;
+		
+		for(int i = 0, size = stacks.size(); i < size; i++){
+			AspectStack stack = stacks.get(i);
+			matrices.push();
+			var scale = 24f;
+			matrices.scale(1 / scale, 1 / scale, -1 / scale);
+			matrices.translate(16 * (size / 2d - i), 0, 0);
+			matrices.multiply(Quaternion.fromEulerXyz(0, 0, (float)Math.PI));
+			RenderSystem.enableDepthTest();
+			RenderSystem.enableBlend();
+			RenderSystem.defaultBlendFunc();
+			AspectRenderer.renderAspect(stack.type(), matrices, 0, 0, 0, 1, 1, 1, alpha);
+			AspectRenderer.renderAspectStackOverlay(stack.amount(), matrices, MinecraftClient.getInstance().textRenderer, 0, 0, 0, 0xFFFFFF | intAlpha);
+			matrices.pop();
+		}
 		matrices.pop();
 	}
 	

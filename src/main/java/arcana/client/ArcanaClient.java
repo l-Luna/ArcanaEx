@@ -144,6 +144,7 @@ public final class ArcanaClient implements ClientModInitializer{
 		BlockEntityRendererRegistry.register(ArcanaRegistry.MYSTIC_MIST_BE, ctx -> new MysticMistBlockEntityRenderer());
 		BlockEntityRendererRegistry.register(ArcanaRegistry.ESSENTIA_VALVE_BE, ctx -> new EssentiaValveBlockEntityRenderer());
 		BlockEntityRendererRegistry.register(ArcanaRegistry.ALEMBIC_BE, ctx -> new AlembicBlockEntityRenderer());
+		BlockEntityRendererRegistry.register(ArcanaRegistry.THAUMIC_HALO_BE, ctx -> new ThaumicHaloBlockEntityRenderer());
 		// ohhhh but the variance! the variance! it's so bad!
 		BlockEntityRendererRegistry.register(ArcanaRegistry.WARDED_CAMPFIRE_BE, ctx ->
 				(BlockEntityRenderer<WardedCampfireBlockEntity>)(BlockEntityRenderer<?>)new CampfireBlockEntityRenderer(ctx));

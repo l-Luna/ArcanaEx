@@ -480,6 +480,7 @@ public final class ArcanaRegistry{
 	public static BlockEntityType<AlembicBlockEntity> ALEMBIC_BE = FabricBlockEntityTypeBuilder.create(AlembicBlockEntity::new, ALEMBIC).build();
 	public static BlockEntityType<CrimsonLanternBlockEntity> CRIMSON_LANTERN_BE = FabricBlockEntityTypeBuilder.create(CrimsonLanternBlockEntity::new, CRIMSON_LANTERN).build();
 	public static BlockEntityType<DistilleryPathfinderBlockEntity> DISTILLERY_PATHFINDER_BE = FabricBlockEntityTypeBuilder.create(DistilleryPathfinderBlockEntity::new, DISTILLERY_PATHFINDER).build();
+	public static BlockEntityType<ThaumicHaloBlockEntity> THAUMIC_HALO_BE = FabricBlockEntityTypeBuilder.create(ThaumicHaloBlockEntity::new, THAUMIC_HALO).build();
 	
 	// enchantments...
 	public static final Map<Item, Item> TRANSMUTATIVE_SWAPS = ImmutableMap.<Item, Item>builder()
@@ -1020,6 +1021,7 @@ public final class ArcanaRegistry{
 		register("alembic", ALEMBIC_BE);
 		register("crimson_lantern", CRIMSON_LANTERN_BE);
 		register("distillery_pathfinder", DISTILLERY_PATHFINDER_BE);
+		register("thaumic_halo", THAUMIC_HALO_BE);
 		
 		// enchantments
 		register("warping", WARPING);

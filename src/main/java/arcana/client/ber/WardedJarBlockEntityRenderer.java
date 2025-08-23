@@ -89,7 +89,7 @@ public class WardedJarBlockEntityRenderer implements BlockEntityRenderer<WardedJ
 			var player = MinecraftClient.getInstance().player;
 			if(!GogglesOfRevealingItem.hasRevealing(player))
 				return;
-			AspectRenderer.renderAspectsInWorld(matrices, player, AspectMap.fromAspectStack(stack), entity.getPos(), new Vec3f(0, 0.7f, 0));
+			AspectRenderer.renderAspectsInWorld(matrices, player, AspectMap.fromAspectStack(stack), entity.getPos(), new Vec3f(0, 0.7f, -0.6f));
 		}
 	}
 	

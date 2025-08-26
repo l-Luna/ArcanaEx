@@ -18,8 +18,6 @@ import dev.emi.emi.api.recipe.EmiWorldInteractionRecipe;
 import dev.emi.emi.api.recipe.VanillaEmiRecipeCategories;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
-import dev.emi.emi.api.stack.ListEmiIngredient;
-import dev.emi.emi.api.stack.TagEmiIngredient;
 import dev.emi.emi.config.FluidUnit;
 import net.minecraft.block.Blocks;
 import net.minecraft.fluid.Fluids;
@@ -34,7 +32,6 @@ import java.util.stream.Collectors;
 
 import static arcana.Arcana.arcId;
 
-@SuppressWarnings("UnstableApiUsage") // TagEmiIngredient
 public final class ArcanaEmiPlugin implements EmiPlugin{
 	
 	public static final EmiRecipeCategory ITEMS_BY_ASPECTS = new EmiRecipeCategory(arcId("items_by_aspects"), new AspectEmiStack(Aspects.ENERGY));
@@ -86,7 +83,7 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 		
 		// add tags first
 		ItemAspectRegistry.getAllTagAspects().entrySet().stream()
-				.map(x -> new EmiAspectsByItemsRecipe(new TagEmiIngredient(x.getKey(), 1), x.getValue().asStacks(), x.getKey().id()))
+				.map(x -> new EmiAspectsByItemsRecipe(EmiIngredient.of(x.getKey(), 1), x.getValue().asStacks(), x.getKey().id()))
 				.forEach(registry::addRecipe);
 		
 		ItemAspectRegistry.getAllItemAspects().entrySet().stream()
@@ -125,7 +122,7 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 			// this is a bit silly, but does get across the general idea
 			EmiIngredient aspectStack;
 			if(aspect.equals(Aspects.AURA))
-				aspectStack = new ListEmiIngredient(Aspects.primals.stream().map(AspectEmiStack::new).toList(), 24);
+				aspectStack = EmiIngredient.of(Aspects.primals.stream().map(AspectEmiStack::new).toList(), 24);
 			else
 				aspectStack = new AspectEmiStack(aspect, 8);
 			registry.addRecipe(EmiWorldInteractionRecipe.builder()

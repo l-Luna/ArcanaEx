@@ -30,12 +30,12 @@ public class EmiArcaneCraftingRecipe implements EmiRecipe{
 	private static final EmiTexture background = new EmiTexture(texture, 0, 0, 129, 120);
 	
 	private static final Map<Aspect, Vec2f> aspectPositions = Map.of(
-			Aspects.AIR, new Vec2f(46, 3),
-			Aspects.FIRE, new Vec2f(3, 27),
-			Aspects.WATER, new Vec2f(89, 27),
-			Aspects.EARTH, new Vec2f(3, 77),
-			Aspects.ORDER, new Vec2f(89, 77),
-			Aspects.ENTROPY, new Vec2f(46, 101)
+			Aspects.AIR, new Vec2f(2, 0),
+			Aspects.FIRE, new Vec2f(2, 18),
+			Aspects.WATER, new Vec2f(2, 18 * 2),
+			Aspects.EARTH, new Vec2f(4 + 18 * 4, 0),
+			Aspects.ORDER, new Vec2f(4 + 18 * 4, 18),
+			Aspects.ENTROPY, new Vec2f(4 + 18 * 4, 18 * 2)
 	);
 	
 	protected final Identifier id;
@@ -73,33 +73,33 @@ public class EmiArcaneCraftingRecipe implements EmiRecipe{
 	// TODO: consider using a smaller visual
 	
 	public int getDisplayWidth(){
-		return 129;
+		return 146;
 	}
 	
 	public int getDisplayHeight(){
-		return 120;
+		return 54;
 	}
 	
 	public void addWidgets(WidgetHolder widgets){
 		widgets.addTexture(background, 0, 0);
+		//widgets.addTexture(EmiTexture.EMPTY_ARROW, 18 + 18 + 60, 18);
 		for(int x = 0; x < 3; x++)
 			for(int y = 0; y < 3; y++){
 				int idx = x + y * 3;
-				widgets.addSlot(idx < input.size() ? input.get(idx) : EmiStack.EMPTY, 22 + x * (16 + 7), 28 + y * (16 + 7))
-						.drawBack(false);
+				widgets.addSlot(idx < input.size() ? input.get(idx) : EmiStack.EMPTY, 18 + 2 + x * (18), y * (18));
 			}
 		for(AspectStack stack : aspects.asStacks())
 			widgets.add(aspectWidget(stack));
-		widgets.addSlot(output, 107, 51).drawBack(false).recipeContext(this);
+		widgets.addSlot(output, 120, 14).large(true).recipeContext(this);
 	}
 	
 	private Widget aspectWidget(AspectStack stack){
 		int x = (int)aspectPositions.get(stack.type()).x;
 		int y = (int)aspectPositions.get(stack.type()).y;
 		if(stack.amount() == 0)
-			return new SlotWidget(EmiStack.EMPTY, x - 1, y - 1).drawBack(false);
+			return new SlotWidget(EmiStack.EMPTY, x - 1, y).drawBack(false);
 		else
-			return new SlotWidget(new AspectEmiStack(stack), x - 1, y - 1).drawBack(false);
+			return new SlotWidget(new AspectEmiStack(stack), x - 1, y).drawBack(false);
 	}
 	
 	// from EmiShapedRecipe

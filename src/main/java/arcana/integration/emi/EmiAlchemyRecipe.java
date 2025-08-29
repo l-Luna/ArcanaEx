@@ -1,16 +1,23 @@
 package arcana.integration.emi;
 
 import arcana.aspects.AspectMap;
+import arcana.components.Researcher;
 import arcana.recipes.AlchemyRecipe;
+import arcana.research.Entry;
+import arcana.research.Research;
 import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.render.EmiTexture;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.widget.WidgetHolder;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.OptionalInt;
 import java.util.stream.Stream;
@@ -22,6 +29,7 @@ public class EmiAlchemyRecipe implements EmiRecipe{
 	
 	private static final EmiTexture background = new EmiTexture(arcId("textures/gui/emi/alchemy.png"), 0, 0, 94, 102);
 	private static final EmiTexture researchNote = new EmiTexture(arcId("textures/gui/research/research_note.png"), 0, 0, 16, 16, 16, 16, 16, 16);
+	private static final EmiTexture completedResearchNote = new EmiTexture(arcId("textures/gui/research/complete_research_notes.png"), 0, 0, 16, 16, 16, 16, 16, 16);
 	
 	protected final Identifier id;
 	protected final EmiIngredient input;
@@ -73,14 +81,16 @@ public class EmiAlchemyRecipe implements EmiRecipe{
 		positionAspects(aspects, 24, 10).forEach((stack, pos) ->
 				widgets.addSlot(new AspectEmiStack(stack), pos.getLeft(), pos.getRight()).drawBack(false));
 		widgets.addSlot(output, 90, 14).large(true).recipeContext(this);
-		/*if(researchId != null){
-			widgets.addTexture(researchNote, 0, 98);
+		if(researchId != null){
 			Entry entry = Research.getEntry(researchId);
-			if(entry != null)
-				widgets.addText(Text.translatable(entry.name()), 18, 102, 0, false);
-			else{
-				widgets.addText(Text.literal("<invalid entry>"), 18, 102, 0, false);
-			}
-		}*/
+			// FIXME: do this more safely
+			boolean complete = entry == null || Researcher.from(MinecraftClient.getInstance().player).isEntryComplete(entry);
+			widgets.addTexture(complete ? completedResearchNote : researchNote, 2, 2 * 18);
+			List<Text> tooltip = new ArrayList<>(2);
+			tooltip.add(entry != null ? Text.translatable(entry.name()) : Text.literal("<invalid!>"));
+			if(MinecraftClient.getInstance().options.advancedItemTooltips)
+				tooltip.add(Text.literal(researchId.toString()).formatted(Formatting.DARK_GRAY));
+			widgets.addTooltipText(tooltip, 2, 2 * 18, 16, 16);
+		}
 	}
 }

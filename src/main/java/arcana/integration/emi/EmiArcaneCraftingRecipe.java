@@ -82,7 +82,6 @@ public class EmiArcaneCraftingRecipe implements EmiRecipe{
 	
 	public void addWidgets(WidgetHolder widgets){
 		widgets.addTexture(background, 0, 0);
-		//widgets.addTexture(EmiTexture.EMPTY_ARROW, 18 + 18 + 60, 18);
 		for(int x = 0; x < 3; x++)
 			for(int y = 0; y < 3; y++){
 				int idx = x + y * 3;

@@ -2,15 +2,12 @@ package arcana.integration.emi;
 
 import arcana.aspects.AspectMap;
 import arcana.recipes.AlchemyRecipe;
-import arcana.research.Entry;
-import arcana.research.Research;
 import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.render.EmiTexture;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.widget.WidgetHolder;
-import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
@@ -63,20 +60,20 @@ public class EmiAlchemyRecipe implements EmiRecipe{
 	}
 	
 	public int getDisplayWidth(){
-		return 94;
+		return 120;
 	}
 	
 	public int getDisplayHeight(){
-		return 116;
+		return 54;
 	}
 	
 	public void addWidgets(WidgetHolder widgets){
-		widgets.addTexture(background, 0, 0);
-		widgets.addSlot(input, 5, 24).drawBack(false);
-		widgets.addSlot(output, 49, 5).drawBack(false).recipeContext(this);
-		positionAspects(aspects, 36, 50).forEach((stack, pos) ->
+		widgets.addTexture(background, 18, 0);
+		widgets.addSlot(input, 2, 2);
+		positionAspects(aspects, 24, 10).forEach((stack, pos) ->
 				widgets.addSlot(new AspectEmiStack(stack), pos.getLeft(), pos.getRight()).drawBack(false));
-		if(researchId != null){
+		widgets.addSlot(output, 90, 14).large(true).recipeContext(this);
+		/*if(researchId != null){
 			widgets.addTexture(researchNote, 0, 98);
 			Entry entry = Research.getEntry(researchId);
 			if(entry != null)
@@ -84,6 +81,6 @@ public class EmiAlchemyRecipe implements EmiRecipe{
 			else{
 				widgets.addText(Text.literal("<invalid entry>"), 18, 102, 0, false);
 			}
-		}
+		}*/
 	}
 }

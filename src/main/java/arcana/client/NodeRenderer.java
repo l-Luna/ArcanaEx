@@ -197,19 +197,19 @@ public final class NodeRenderer{
 	private static void drawNodeAspect(Camera camera, Node node, BufferBuilder buffer, Aspect aspect, World world){
 		if(!node.getAspects().contains(aspect))
 			return;
-		Vec3f offset = Vec3f.POSITIVE_Y.copy();
 		NodeState ns = stateFor(node);
 		float scale = .7f;
+		// calculate positions in a circle around the node
+		Vec3f offset = Vec3f.POSITIVE_Y.copy();
 		offset.scale(1.2f * ns.aspectLerp);
 		offset.add(0, 0, -0.01f);
 		offset.rotate(Quaternion.fromEulerXyz(0, 0, (float)((Math.PI * 2) * (node.getAspects().indexOf(aspect) / (float)node.getAspects().size()))));
+		// centre, face to camera
 		offset.add(-scale / 2, -scale / 2, 0);
-		var alpha = (float)(.85 - Math.sqrt(MinecraftClient.getInstance().player.squaredDistanceTo(node.getX(), node.getY(), node.getZ())) / 10);
-		alpha *= ns.aspectLerp;
-		float frac = 1;
-		if(node.getAspectCap().contains(aspect))
-			frac = node.getAspects().get(aspect) / (float)node.getAspectCap().get(aspect);
-		// draw rest, frac offset, frac size
+		
+		float alpha = ns.aspectLerp * (float)(.85 - Math.sqrt(MinecraftClient.getInstance().player.squaredDistanceTo(node.getX(), node.getY(), node.getZ())) / 10);
+		float frac = node.getAspectCap().contains(aspect) ? node.getAspects().get(aspect) / (float)node.getAspectCap().get(aspect) : 1;
+		// draw bottom "full" part, frac offset, frac size
 		drawQuad(camera, node, offset, buffer, alpha, scale, 1 - frac, 1, frac, lightFor(node, world));
 		// draw top "empty" part, 0 offset, 1-frac size
 		offset.add(0, (frac) * scale, 0);

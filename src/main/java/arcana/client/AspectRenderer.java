@@ -47,13 +47,12 @@ public final class AspectRenderer{
 	
 	public static void renderAspect(Aspect aspect, MatrixStack matrices, int x, int y, int z, float r, float g, float b, float a){
 		RenderSystem.setShader(GameRenderer::getPositionColorTexShader);
-		RenderSystem.setShaderColor(r, g, b, a);
+		RenderSystem.setShaderColor(1, 1, 1, 1);
 		RenderSystem.setShaderTexture(0, texture(aspect));
 		RenderHelper.drawTexture(matrices, x, y, z, 0, 0, 16, 16, 16, 16, r, g, b, a);
 	}
 	
 	public static Identifier texture(Aspect aspect){
-		// aspect sprite is "$modid:textures/aspects/$id"
 		return new Identifier(aspect.id().getNamespace(), "textures/aspects/%s.png".formatted(aspect.id().getPath()));
 	}
 	

@@ -1,7 +1,6 @@
 package arcana.aura;
 
 import arcana.util.NbtUtil;
-import arcana.util.StreamUtil;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import com.mojang.logging.LogUtils;
 import dev.onyxstudios.cca.api.v3.component.Component;
@@ -15,7 +14,6 @@ import net.fabricmc.fabric.impl.event.lifecycle.LoadedChunksCache;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.*;
@@ -158,8 +156,7 @@ public final class AuraWorld implements Component, ServerTickingComponent, AutoS
 				logger.error("Invalid flux origin with name \"{}\", ignoring.", key);
 			}
 		
-		pendingNodes = StreamUtil.streamAndApply(tag.getList("pendingNodes", NbtElement.COMPOUND_TYPE), NbtCompound.class, Node::fromNbt)
-				.collect(Collectors.toCollection(ArrayList::new));
+		pendingNodes = NbtUtil.readMutList(tag, "pendingNodes", Node::fromNbt);
 	}
 	
 	public void sync(){

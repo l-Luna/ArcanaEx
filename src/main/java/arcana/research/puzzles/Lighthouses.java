@@ -5,11 +5,9 @@ import arcana.aspects.Aspects;
 import arcana.research.Puzzle;
 import arcana.util.HexPos;
 import arcana.util.NbtUtil;
-import arcana.util.StreamUtil;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
@@ -67,10 +65,7 @@ public class Lighthouses extends Puzzle{
 	}
 	
 	public Lighthouses(NbtCompound data){
-		obstacles = StreamUtil.streamAndApply(
-				data.getList("obstacles", NbtElement.COMPOUND_TYPE),
-				NbtCompound.class,
-				Obstacle::fromNbt).toList();
+		obstacles = NbtUtil.readList(data, "obstacles", Obstacle::fromNbt);
 		size = data.getInt("size");
 	}
 	

@@ -10,7 +10,7 @@ import arcana.recipes.InfusionInventory;
 import arcana.recipes.InfusionRecipe;
 import arcana.recipes.XIngredient;
 import arcana.research.BuiltinResearch;
-import arcana.util.StreamUtil;
+import arcana.util.NbtUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -31,7 +31,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static arcana.blocks.be.InfusionMatrixBlockEntity.InfusionState.*;
@@ -320,11 +319,7 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 		
 		@Nullable
 		private static XIngredient nextIngredient(NbtCompound tag, InfusionRecipe recipe){
-			List<ItemStack> absorbed = StreamUtil.streamAndApply(
-					tag.getList("absorbed", NbtElement.COMPOUND_TYPE),
-					NbtCompound.class,
-					ItemStack::fromNbt
-			).collect(Collectors.toCollection(ArrayList::new));
+			List<ItemStack> absorbed = NbtUtil.readMutList(tag, "absorbed", ItemStack::fromNbt);
 			// similar to recipe matching
 			XIngredient next = null;
 			ingredients:

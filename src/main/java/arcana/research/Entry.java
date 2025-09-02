@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static arcana.util.StreamUtil.streamAndApply;
-
 public record Entry(
 		Identifier id,
 		Category category,
@@ -82,9 +80,7 @@ public record Entry(
 		String name = compound.getString("name"), desc = compound.getString("desc");
 		int x = compound.getInt("x"), y = compound.getInt("y");
 		
-		List<EntrySection> sections = streamAndApply(
-				compound.getList("sections", NbtElement.COMPOUND_TYPE), NbtCompound.class,
-				EntrySection::deserialize).toList();
+		List<EntrySection> sections = NbtUtil.readList(compound, "sections", EntrySection::deserialize);
 		
 		List<Parent> parents = new ArrayList<>();
 		for(NbtElement parent : compound.getList("parents", NbtElement.STRING_TYPE))

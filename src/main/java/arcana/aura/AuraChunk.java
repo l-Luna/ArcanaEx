@@ -1,14 +1,12 @@
 package arcana.aura;
 
 import arcana.util.NbtUtil;
-import arcana.util.StreamUtil;
 import dev.onyxstudios.cca.api.v3.component.Component;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistryV3;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.ChunkPos;
@@ -107,7 +105,7 @@ public class AuraChunk implements Component, AutoSyncedComponent, ServerTickingC
 		Map<UUID, Node> oldNodes = nodes.stream().collect(Collectors.toMap(Node::getUuid, x -> x));
 		nodes = new ArrayList<>(oldNodes.size());
 		// try to keep Node objects stable
-		StreamUtil.streamAndApply(tag.getList("nodes", NbtElement.COMPOUND_TYPE), NbtCompound.class, Node::fromNbt).forEach(n -> {
+		NbtUtil.readList(tag, "nodes", Node::fromNbt).forEach(n -> {
 			n.setChunk(this);
 			UUID uuid = n.getUuid();
 			if(oldNodes.containsKey(uuid)){

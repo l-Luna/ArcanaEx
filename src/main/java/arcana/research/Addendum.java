@@ -2,12 +2,9 @@ package arcana.research;
 
 import arcana.util.NbtUtil;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
 import net.minecraft.util.Identifier;
 
 import java.util.List;
-
-import static arcana.util.StreamUtil.streamAndApply;
 
 public record Addendum(
 		Entry owner,
@@ -30,15 +27,8 @@ public record Addendum(
 	public static Addendum fromNbt(NbtCompound compound, Entry owner){
 		Identifier id = new Identifier(compound.getString("id"));
 		String name = compound.getString("name");
-		
-		List<EntrySection> sections = streamAndApply(
-				compound.getList("sections", NbtElement.COMPOUND_TYPE), NbtCompound.class,
-				EntrySection::deserialize).toList();
-		
-		List<Requirement> autoUnlockReqs = streamAndApply(
-				compound.getList("autoUnlockReqs", NbtElement.COMPOUND_TYPE), NbtCompound.class,
-				Requirement::deserialize).toList();
-		
+		List<EntrySection> sections = NbtUtil.readList(compound, "sections", EntrySection::deserialize);
+		List<Requirement> autoUnlockReqs = NbtUtil.readList(compound, "autoUnlockReqs", Requirement::deserialize);
 		return new Addendum(owner, id, name, sections, autoUnlockReqs);
 	}
 }

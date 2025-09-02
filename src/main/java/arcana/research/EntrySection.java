@@ -1,9 +1,9 @@
 package arcana.research;
 
 import arcana.research.sections.*;
+import arcana.util.NbtUtil;
 import com.google.gson.JsonObject;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
@@ -11,8 +11,6 @@ import net.minecraft.world.World;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Stream;
-
-import static arcana.util.StreamUtil.streamAndApply;
 
 public abstract class EntrySection{
 	
@@ -30,9 +28,7 @@ public abstract class EntrySection{
 	public static EntrySection deserialize(NbtCompound passData){
 		Identifier type = new Identifier(passData.getString("type"));
 		NbtCompound data = passData.getCompound("data");
-		List<Requirement> requirements = streamAndApply(
-				passData.getList("requirements", NbtElement.COMPOUND_TYPE), NbtCompound.class,
-				Requirement::deserialize).toList();
+		List<Requirement> requirements = NbtUtil.readList(passData, "requirements", Requirement::deserialize);
 		if(deserializers.get(type) != null){
 			EntrySection section = deserializers.get(type).apply(data);
 			requirements.forEach(section::addRequirement);

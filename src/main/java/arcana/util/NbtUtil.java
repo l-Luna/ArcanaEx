@@ -6,8 +6,11 @@ import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.util.Identifier;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.function.Function;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
@@ -41,5 +44,18 @@ public final class NbtUtil{
 	
 	public static Collector<NbtElement, ?, NbtList> toNbtList(){
 		return Collectors.toCollection(NbtList::new);
+	}
+	
+	public static <T> List<T> readList(NbtCompound compound, String name, Function<NbtCompound, T> reader){
+		return compound.getList(name, NbtElement.COMPOUND_TYPE)
+				.stream()
+				.filter(NbtCompound.class::isInstance)
+				.map(NbtCompound.class::cast)
+				.map(reader)
+				.toList();
+	}
+	
+	public static <T> List<T> readMutList(NbtCompound compound, String name, Function<NbtCompound, T> reader){
+		return new ArrayList<>(readList(compound, name, reader));
 	}
 }

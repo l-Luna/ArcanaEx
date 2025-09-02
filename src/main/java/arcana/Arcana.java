@@ -1,6 +1,7 @@
 package arcana;
 
 import arcana.aspects.ItemAspectRegistry;
+import arcana.aura.Taint;
 import arcana.blocks.WardedCampfireBlock;
 import arcana.commands.NodeCommand;
 import arcana.commands.ResearchCommand;
@@ -59,6 +60,7 @@ public final class Arcana implements ModInitializer{
 		InfusionRecipe.setup();
 		Research.setup();
 		WarpEvents.setup();
+		Taint.setup();
 		
 		SurfaceNodeFeature.addToWorldgen();
 		NodalGeodes.addToWorldgen();

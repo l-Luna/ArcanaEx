@@ -51,10 +51,10 @@ public class ThrownTaintBottleEntity extends ThrownItemEntity{
 			BlockPos.Mutable pos = new BlockPos.Mutable();
 			for(int tries = 0; tries < 12 && tainted < 6; tries++){
 				pos.set(getBlockPos()).move(rng.nextInt(5) - 2, rng.nextInt(3) - 1, rng.nextInt(5) - 2);
-				// TODO: pure node protection
+				// don't check for pure node protection, the player has made their choice
 				var newState = Taint.taintBlock(world.getBlockState(pos));
-				if(newState.isPresent()){
-					world.setBlockState(pos, newState.get());
+				if(newState != null){
+					world.setBlockState(pos, newState);
 					tainted++;
 				}
 			}

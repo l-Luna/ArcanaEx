@@ -2,6 +2,7 @@ package arcana.aura;
 
 import arcana.ArcanaRegistry;
 import arcana.aspects.ItemAspectRegistry;
+import arcana.util.SearchUtil;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import net.minecraft.block.Block;
@@ -38,7 +39,7 @@ public class NodeTypes{
 			HUNGRY = create("hungry", 40 * 20, 25, NodeTypes::tickHungry),
 			ELDRITCH = create("eldritch", 49 * 20, 18),
 			PURE = create("pure", 48 * 20, 23, NodeTypes::tickPure),
-			TAINTED = create("tainted", 60 * 20, 12);
+			TAINTED = create("tainted", 60 * 20, 12, NodeTypes::tickTainted);
 	
 	public static final List<NodeType> normalTypes = List.of(NORMAL, BRIGHT, FADING);
 	public static final List<NodeType> specialTypes = List.of(HUNGRY, ELDRITCH, PURE);
@@ -132,7 +133,7 @@ public class NodeTypes{
 		// make disc particles
 		// disc radius = 1/3 * pull radius
 		NbtCompound blocks = node.getTag().getCompound("blocks");
-		if(blocks.getKeys().size() > 0){
+		if(!blocks.getKeys().isEmpty()){
 			float discRad = (float)(range * (1 / 3f) + world.getRandom().nextGaussian() / 5f);
 			float xPos = (float)(node.getX());
 			float zPos = (float)(node.getZ() - discRad);
@@ -143,10 +144,24 @@ public class NodeTypes{
 	}
 	
 	private static void tickPure(Node node, World world){
-		if(world.random.nextInt(30) != 0)
-			return;
+		if(world.random.nextInt(30) == 0)
+			AuraWorld.from(world).incrementFlux(-world.random.nextBetween(3, 8), null, new BlockPos(node));
 		
-		AuraWorld.from(world).incrementFlux(-5, null, new BlockPos(node));
+		if(world.random.nextInt(80) == 0)
+			SearchUtil.randomSearch(world, node.asBlockPos(), 5, 3,
+					(pos, state) -> Taint.canUntaintBlock(state),
+					(pos, state) -> world.setBlockState(pos, Taint.untaintBlock(state, world.random)));
+	}
+	
+	private static void tickTainted(Node node, World world){
+		// TODO: flux origin?
+		if(world.random.nextInt(90) == 0)
+			AuraWorld.from(world).incrementFlux(world.random.nextBetween(1, 4), null, new BlockPos(node));
+		
+		if(world.random.nextInt(300) == 0)
+			SearchUtil.randomSearch(world, node.asBlockPos(), 7, 12,
+					(pos, state) -> Taint.canTaintBlock(state),
+					(pos, state) -> world.setBlockState(pos, Taint.taintBlock(state)));
 	}
 	
 	private static boolean empty(BlockState state){

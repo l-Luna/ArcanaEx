@@ -5,6 +5,7 @@ import arcana.aspects.Aspect;
 import arcana.aspects.AspectIo;
 import arcana.aspects.AspectStack;
 import arcana.aspects.Aspects;
+import arcana.util.SearchUtil;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.EntityType;
@@ -98,21 +99,21 @@ public class MysticMistBlockEntity extends BlockEntity implements AspectIo{
 		
 		switch(idx){
 			case 0 /* water */ -> {
-				mist.randomSearch((__, b) -> b.isIn(BlockTags.CROPS), 2, (cPos, cState) -> {
+				mist.randomSearch(2, (__, b) -> b.isIn(BlockTags.CROPS), (cPos, cState) -> {
 					if(cState.getBlock() instanceof Fertilizable f){
 						f.grow((ServerWorld)world, rng, cPos, cState);
 						world.syncWorldEvent(WorldEvents.BONE_MEAL_USED, cPos, 0);
 					}
 				});
 				// TODO: keep track of MM AoE so that farmland and fire can both treat it like rain
-				mist.randomSearch((__, b) -> b.isIn(BlockTags.FIRE), 24, (fPos, fState) ->
+				mist.randomSearch(24, (__, b) -> b.isIn(BlockTags.FIRE), (fPos, fState) ->
 						world.removeBlock(fPos, false));
-				mist.randomSearch((__, b) -> b.getBlock() instanceof FarmlandBlock, 24, (fPos, fState) ->
+				mist.randomSearch(24, (__, b) -> b.getBlock() instanceof FarmlandBlock, (fPos, fState) ->
 						world.setBlockState(fPos, fState.with(FarmlandBlock.MOISTURE, 7), Block.NOTIFY_LISTENERS));
 				// TODO: fill crucibles... implement on crucible end using AoE
 			}
 			case 1 /* fire */ -> {
-				mist.randomSearch((__, b) -> b.isOf(Blocks.NETHER_WART), 1, (cPos, cState) -> {
+				mist.randomSearch(1, (__, b) -> b.isOf(Blocks.NETHER_WART), (cPos, cState) -> {
 					if(cState.getBlock() instanceof NetherWartBlock){
 						int value = cState.get(NetherWartBlock.AGE) + 1;
 						if(value < 3){
@@ -128,9 +129,8 @@ public class MysticMistBlockEntity extends BlockEntity implements AspectIo{
 				// TODO: also extinguish fire
 				// roughly continuous every 5 seconds, with a minimum of half a second delay
 				if(world.getTime() % 10 == 0 && rng.nextInt(9) == 0){
-					mist.randomSearch(
+					mist.randomSearch(1,
 							(there, b) -> world.getBlockState(there.up()).isAir() && !b.isAir(),
-							1,
 							(there, __) -> {
 								// prefer to hit lightning rods
 								Optional<BlockPos> rod = ((ServerWorld)world).getPointOfInterestStorage().getNearestPosition(
@@ -150,9 +150,8 @@ public class MysticMistBlockEntity extends BlockEntity implements AspectIo{
 				}
 			}
 			case 3 /* ice */ ->
-					mist.randomSearch(
+					mist.randomSearch(1,
 							(there, b) -> world.getBlockState(there.up()).isAir() && b.isOpaqueFullCube(world, there),
-							1,
 							(there, __) -> world.setBlockState(there.up(), Blocks.SNOW.getDefaultState()));
 			case 4 /* aura */ -> {
 				// no-op
@@ -168,19 +167,8 @@ public class MysticMistBlockEntity extends BlockEntity implements AspectIo{
 		mist.markDirty();
 	}
 	
-	private void randomSearch(BiPredicate<BlockPos, BlockState> predicate, int rolls, BiConsumer<BlockPos, BlockState> then){
-		for(int i = 0; i < rolls; i++){
-			int x = pos.getX() + world.random.nextInt(radius * 2 + 1) - radius,
-				z = pos.getZ() + world.random.nextInt(radius * 2 + 1) - radius;
-			for(int yOff = vspace; yOff >= -2; yOff--){
-				BlockPos there = new BlockPos(x, getPos().getY() + yOff, z);
-				BlockState state = world.getBlockState(there);
-				if(predicate.test(there, state)){
-					then.accept(there, state);
-					break;
-				}
-			}
-		}
+	private void randomSearch(int rolls, BiPredicate<BlockPos, BlockState> predicate, BiConsumer<BlockPos, BlockState> then){
+		SearchUtil.vRandomSearch(world, pos, radius, vspace, rolls, predicate, then);
 	}
 	
 	public @Nullable AspectStack accept(AspectStack stack, World world, BlockPos pos, Direction from){

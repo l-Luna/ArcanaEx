@@ -42,7 +42,7 @@ public class AuraChunk implements Component, AutoSyncedComponent, ServerTickingC
 	}
 	
 	public void setFlux(float flux){
-		this.flux = flux;
+		this.flux = Math.max(0, flux);
 		markDirty();
 	}
 	

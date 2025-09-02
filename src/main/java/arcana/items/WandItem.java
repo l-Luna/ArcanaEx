@@ -11,6 +11,7 @@ import dev.emi.trinkets.api.SlotReference;
 import dev.emi.trinkets.api.TrinketsApi;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.item.v1.FabricItem;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
@@ -41,7 +42,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-public class WandItem extends Item implements WarpingItem{
+public class WandItem extends Item implements FabricItem, WarpingItem{
 	
 	public WandItem(Settings settings){
 		super(settings);
@@ -141,6 +142,10 @@ public class WandItem extends Item implements WarpingItem{
 	
 	public int getMaxUseTime(ItemStack stack){
 		return 72000;
+	}
+	
+	public boolean allowNbtUpdateAnimation(PlayerEntity player, Hand hand, ItemStack oldStack, ItemStack newStack){
+		return false;
 	}
 	
 	public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks){

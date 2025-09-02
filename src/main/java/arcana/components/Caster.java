@@ -37,7 +37,7 @@ public class Caster implements Component, AutoSyncedComponent, ServerTickingComp
 	
 	enum CasterState{
 		IDLE,
-		DRAWING,
+		DRAINING,
 		CONTINUOUS_CASTING
 	}
 	
@@ -80,7 +80,7 @@ public class Caster implements Component, AutoSyncedComponent, ServerTickingComp
 		wandStack().ifPresent(wand -> {
 			Optional<Aspect> drainAspect = chooseDrainAspect(from, wand);
 			reset();
-			state = CasterState.DRAWING;
+			state = CasterState.DRAINING;
 			drainTargetNode = NodeReference.ref(from);
 			drainTargetAspect = drainAspect.orElse(Aspects.AIR);
 			sync();
@@ -108,6 +108,14 @@ public class Caster implements Component, AutoSyncedComponent, ServerTickingComp
 		return drainTargetNode;
 	}
 	
+	public boolean isDraining(){
+		return state == CasterState.DRAINING;
+	}
+	
+	public boolean isContinuousCasting(){
+		return state == CasterState.CONTINUOUS_CASTING;
+	}
+	
 	//
 	
 	public void serverTick(){
@@ -123,7 +131,7 @@ public class Caster implements Component, AutoSyncedComponent, ServerTickingComp
 		AuraWorld auraWorld = AuraWorld.from(world());
 		
 		switch(state){
-			case DRAWING -> {
+			case DRAINING -> {
 				// check if draining can continue (node still exists and is closest to player)
 				var nodeO = drainTargetNode.deref(world());
 				if(nodeO.isEmpty()){

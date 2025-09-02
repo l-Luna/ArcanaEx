@@ -178,7 +178,7 @@ public final class NodeRenderer{
 	private static Vec3f offsetFor(Node n){
 		float timer = stateFor(n).shakeTimer;
 		if(timer <= 0)
-			return Vec3f.ZERO;
+			return Vec3f.ZERO.copy();
 		Random rng = MinecraftClient.getInstance().world.random;
 		Vec3f f = new Vec3f(rng.nextFloat() - 0.5f, rng.nextFloat() - 0.5f, rng.nextFloat() - 0.5f);
 		f.scale(MathHelper.sqrt(timer) / 15);
@@ -188,24 +188,36 @@ public final class NodeRenderer{
 	//
 	
 	private static void drawNode(Camera camera, Node node, BufferBuilder buffer, float alpha, World w){
-		drawQuad(camera, node, offsetFor(node), buffer, alpha, scaleFor(node), v(node, false, w), v(node, true, w), lightFor(node, w));
+		float scale = scaleFor(node);
+		Vec3f offset = offsetFor(node);
+		offset.add(-scale, -scale, 0);
+		drawQuad(camera, node, offset, buffer, alpha, scale * 2, v(node, false, w), v(node, true, w), 1, lightFor(node, w));
 	}
 	
 	private static void drawNodeAspect(Camera camera, Node node, BufferBuilder buffer, Aspect aspect, World world){
-		if(node.getAspects().isEmpty() || !node.getAspects().contains(aspect))
+		if(!node.getAspects().contains(aspect))
 			return;
 		Vec3f offset = Vec3f.POSITIVE_Y.copy();
 		NodeState ns = stateFor(node);
+		float scale = .7f;
 		offset.scale(1.2f * ns.aspectLerp);
 		offset.add(0, 0, -0.01f);
 		offset.rotate(Quaternion.fromEulerXyz(0, 0, (float)((Math.PI * 2) * (node.getAspects().indexOf(aspect) / (float)node.getAspects().size()))));
+		offset.add(-scale / 2, -scale / 2, 0);
 		var alpha = (float)(.85 - Math.sqrt(MinecraftClient.getInstance().player.squaredDistanceTo(node.getX(), node.getY(), node.getZ())) / 10);
 		alpha *= ns.aspectLerp;
-		drawQuad(camera, node, offset, buffer, alpha, .35f, 0, 1, lightFor(node, world));
+		float frac = 1;
+		if(node.getAspectCap().contains(aspect))
+			frac = node.getAspects().get(aspect) / (float)node.getAspectCap().get(aspect);
+		// draw rest, frac offset, frac size
+		drawQuad(camera, node, offset, buffer, alpha, scale, 1 - frac, 1, frac, lightFor(node, world));
+		// draw top "empty" part, 0 offset, 1-frac size
+		offset.add(0, (frac) * scale, 0);
+		drawQuad(camera, node, offset, buffer, alpha / 2, scale, 0, 1 - frac, 1 - frac, lightFor(node, world));
 	}
 	
 	private static void drawNodeAspectCount(Camera camera, Node node, BufferBuilder buffer, Aspect aspect){
-		if(node.getAspects().isEmpty() || !node.getAspects().contains(aspect))
+		if(!node.getAspects().contains(aspect))
 			return;
 		
 		NodeState ns = stateFor(node);
@@ -240,12 +252,12 @@ public final class NodeRenderer{
 		stack.pop();
 	}
 	
-	private static void drawQuad(Camera camera, Position pos, Vec3f offset, VertexConsumer cons, float alpha, float scale, float minV, float maxV, int light){
+	private static void drawQuad(Camera camera, Position pos, Vec3f offset, VertexConsumer cons, float alpha, float scale, float minV, float maxV, float height, int light){
 		if(alpha <= 0)
 			return;
 		
 		// based on BillboardParticle
-		Vec3f[] corners = { new Vec3f(-1, -1, 0), new Vec3f(-1, 1, 0), new Vec3f(1, 1, 0), new Vec3f(1, -1, 0) };
+		Vec3f[] corners = { new Vec3f(0, 0, 0), new Vec3f(0, height, 0), new Vec3f(1, height, 0), new Vec3f(1, 0, 0) };
 		Quaternion rot = camera.getRotation();
 		for(Vec3f corner : corners){
 			corner.scale(scale);

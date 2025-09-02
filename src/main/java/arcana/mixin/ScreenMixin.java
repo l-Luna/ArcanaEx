@@ -1,6 +1,5 @@
 package arcana.mixin;
 
-import arcana.client.AspectRenderer;
 import arcana.client.PinkMarkerComponent;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
@@ -20,7 +19,7 @@ public abstract class ScreenMixin{
 	            at = @At(value = "INVOKE",
 	                     target = "Lnet/minecraft/client/gui/screen/Screen;fillGradient(Lnet/minecraft/util/math/Matrix4f;Lnet/minecraft/client/render/BufferBuilder;IIIIIII)V"))
 	private void changeTooltipBackgroundColour(Args args, MatrixStack matrices, List<TooltipComponent> components, int x, int y){
-		if(!AspectRenderer.useAspectTooltipColours && components.stream().noneMatch(PinkMarkerComponent.class::isInstance))
+		if(components.stream().noneMatch(PinkMarkerComponent.class::isInstance))
 			return;
 		args.set(7, conv(args.get(7)));
 		args.set(8, conv(args.get(8)));

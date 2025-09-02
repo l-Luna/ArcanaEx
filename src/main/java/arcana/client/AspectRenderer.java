@@ -27,10 +27,7 @@ import java.util.List;
 
 public final class AspectRenderer{
 	
-	// public for access by ScreenMixin
-	public static boolean useAspectTooltipColours = false;
-	
-	public static void renderAspectStack(AspectStack stack, MatrixStack matrices,  int x, int y, int z){
+	public static void renderAspectStack(AspectStack stack, MatrixStack matrices, int x, int y, int z){
 		renderAspectStack(stack, matrices, MinecraftClient.getInstance().textRenderer, x, y, z);
 	}
 	
@@ -114,14 +111,13 @@ public final class AspectRenderer{
 	}
 	
 	public static void renderAspectTooltip(Aspect aspect, MatrixStack matrices, int x, int y){
-		useAspectTooltipColours = true;
 		MinecraftClient.getInstance().currentScreen.renderTooltipFromComponents(matrices, tooltips(aspect), x, y);
-		useAspectTooltipColours = false;
 	}
 	
 	public static List<TooltipComponent> tooltips(Aspect aspect){
-		List<TooltipComponent> ret = new ArrayList<>();
+		List<TooltipComponent> ret = new ArrayList<>(4);
 		ret.add(fromText(aspect.name()));
+		ret.add(new PinkMarkerComponent());
 		
 		if(MinecraftClient.getInstance().options.advancedItemTooltips)
 			ret.add(fromText(Text.literal(aspect.id().toString()).formatted(Formatting.DARK_GRAY)));

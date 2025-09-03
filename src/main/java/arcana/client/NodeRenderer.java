@@ -209,6 +209,7 @@ public final class NodeRenderer{
 		
 		float alpha = ns.aspectLerp * (float)(.85 - Math.sqrt(MinecraftClient.getInstance().player.squaredDistanceTo(node.getX(), node.getY(), node.getZ())) / 10);
 		float frac = node.getAspectCap().contains(aspect) ? node.getAspects().get(aspect) / (float)node.getAspectCap().get(aspect) : 1;
+		frac = Math.min(frac, 1);
 		// draw bottom "full" part, frac offset, frac size
 		drawQuad(camera, node, offset, buffer, alpha, scale, 1 - frac, 1, frac, lightFor(node, world));
 		// draw top "empty" part, 0 offset, 1-frac size

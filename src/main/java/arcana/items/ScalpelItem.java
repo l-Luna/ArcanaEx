@@ -2,24 +2,29 @@ package arcana.items;
 
 import arcana.aura.AuraWorld;
 import arcana.network.PkShakeNode;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.api.EnvironmentInterface;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Arm;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.UseAction;
+import net.minecraft.util.math.Vec3f;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 
-public class ScalpelItem extends Item{
+@EnvironmentInterface(value = EnvType.CLIENT, itf = PosableItem.class)
+public class ScalpelItem extends Item implements PosableItem{
 	
 	public enum ScalpelType{
 		ROSE,
 		SILVER,
 		BLACK
 	}
-	
 	public final ScalpelType type;
 	
 	public ScalpelItem(Settings settings, ScalpelType type){
@@ -49,11 +54,16 @@ public class ScalpelItem extends Item{
 	}
 	
 	public int getMaxUseTime(ItemStack stack){
-		return 2 * 20;
+		return 30;
 	}
 	
-	public UseAction getUseAction(ItemStack stack){
-		// TODO: custom pose for scalpels
-		return UseAction.SPEAR;
+	@Environment(EnvType.CLIENT)
+	public void applyPose(MatrixStack matrices, PlayerEntity player, ItemStack stack, float tickDelta, Hand hand, Arm arm){
+		matrices.multiply(Vec3f.POSITIVE_Y.getRadialQuaternion(0.2f));
+		float x = player.getItemUseTime() / (float)getMaxUseTime(stack);
+		float of = x < 0.7 ? -x/3f
+				: x <= 0.8 ? 9f*(x - 0.7f) - (0.7f/3)
+				: -4*(x - 0.8f) + 0.66f;
+		matrices.translate(0, 0, -of);
 	}
 }

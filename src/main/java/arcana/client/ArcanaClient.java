@@ -9,10 +9,7 @@ import arcana.aspects.WandAspectsTooltipData;
 import arcana.blocks.ArcanaBlockSettings;
 import arcana.blocks.be.WardedCampfireBlockEntity;
 import arcana.client.ber.*;
-import arcana.client.entity.CrimsonEntityRenderer;
-import arcana.client.entity.PrismaticOrbEntityRenderer;
-import arcana.client.entity.SuspensionEngineRenderer;
-import arcana.client.entity.ThrownAlumentumEntityRenderer;
+import arcana.client.entity.*;
 import arcana.client.particles.EssentiaStreamParticle;
 import arcana.client.particles.HungryNodeBlockParticle;
 import arcana.client.particles.HungryNodeDiscParticle;
@@ -169,6 +166,8 @@ public final class ArcanaClient implements ClientModInitializer{
 		EntityRendererRegistry.register(ArcanaRegistry.CRIMSON_MISSIONARY, ctx -> new CrimsonEntityRenderer<>(ctx, "missionary"));
 		EntityRendererRegistry.register(ArcanaRegistry.CRIMSON_JESTER, ctx -> new CrimsonEntityRenderer<>(ctx, "jester"));
 		EntityRendererRegistry.register(ArcanaRegistry.CRIMSON_HEAVY_KNIGHT, ctx -> new CrimsonEntityRenderer<>(ctx, "heavy_knight"));
+		EntityRendererRegistry.register(ArcanaRegistry.WISP, ctx -> new WispLikeEntityRenderer<>(ctx, true));
+		EntityRendererRegistry.register(ArcanaRegistry.COAGULATION, ctx -> new WispLikeEntityRenderer<>(ctx, false));
 		
 		for(Block block : ArcanaRegistry.blocks)
 			if(block.settings instanceof ArcanaBlockSettings abs)

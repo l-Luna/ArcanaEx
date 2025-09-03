@@ -15,9 +15,7 @@ import arcana.effects.TaintedStatusEffect;
 import arcana.enchantments.LootSwapEnchantment;
 import arcana.enchantments.ProjectingEnchantment;
 import arcana.enchantments.WarpingCurseEnchantment;
-import arcana.entities.PrismaticOrbEntity;
-import arcana.entities.ThrownAlumentumEntity;
-import arcana.entities.ThrownTaintBottleEntity;
+import arcana.entities.*;
 import arcana.entities.crimson.*;
 import arcana.entities.locomotive.SuspensionEngineEntity;
 import arcana.entities.locomotive.Symbol;
@@ -589,7 +587,6 @@ public final class ArcanaRegistry{
 			.trackedUpdateRate(10)
 			.dimensions(EntityDimensions.fixed(0.25f, 0.25f))
 			.build();
-	
 	public static final EntityType<PrismaticOrbEntity> PRISMATIC_ORB = FabricEntityTypeBuilder
 			.create(SpawnGroup.MISC, PrismaticOrbEntity::new)
 			.trackRangeChunks(4)
@@ -600,6 +597,23 @@ public final class ArcanaRegistry{
 	public static final EntityType<SuspensionEngineEntity> SUSPENSION_ENGINE = FabricEntityTypeBuilder
 			.create(SpawnGroup.MISC, SuspensionEngineEntity::new)
 			.dimensions(EntityDimensions.fixed(1.8f, 1))
+			.build();
+	
+	public static final EntityType<WispEntity> WISP = FabricEntityTypeBuilder
+			.createMob()
+			.entityFactory(WispEntity::new)
+			.spawnGroup(SpawnGroup.MISC)
+			.defaultAttributes(WispEntity::createDefaultAttributes)
+			.dimensions(EntityDimensions.fixed(1.5f, 1.5f))
+			.fireImmune()
+			.build();
+	public static final EntityType<CoagulationEntity> COAGULATION = FabricEntityTypeBuilder
+			.createMob()
+			.entityFactory(CoagulationEntity::new)
+			.spawnGroup(SpawnGroup.MISC)
+			.defaultAttributes(CoagulationEntity::createDefaultAttributes)
+			.dimensions(EntityDimensions.fixed(1.2f, 1.2f))
+			.fireImmune()
 			.build();
 	
 	public static final EntityType<CrimsonKnightEntity> CRIMSON_KNIGHT = FabricEntityTypeBuilder
@@ -1071,10 +1085,12 @@ public final class ArcanaRegistry{
 		// entity types
 		register("thrown_alumentum", THROWN_ALUMENTUM);
 		register("thrown_taint_bottle", THROWN_TAINT_BOTTLE);
-		
 		register("prismatic_orb", PRISMATIC_ORB);
 		
 		register("suspension_engine", SUSPENSION_ENGINE);
+		
+		register("wisp", WISP);
+		register("coagulation", COAGULATION);
 		
 		register("crimson_knight", CRIMSON_KNIGHT);
 		register("crimson_archer", CRIMSON_ARCHER);

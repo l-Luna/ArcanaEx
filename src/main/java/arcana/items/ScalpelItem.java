@@ -60,10 +60,10 @@ public class ScalpelItem extends Item implements PosableItem{
 	@Environment(EnvType.CLIENT)
 	public void applyPose(MatrixStack matrices, PlayerEntity player, ItemStack stack, float tickDelta, Hand hand, Arm arm){
 		matrices.multiply(Vec3f.POSITIVE_Y.getRadialQuaternion(0.2f));
-		float x = player.getItemUseTime() / (float)getMaxUseTime(stack);
+		float x = (player.getItemUseTime() + tickDelta) / (float)getMaxUseTime(stack);
 		float of = x < 0.7 ? -x/3f
-				: x <= 0.8 ? 9f*(x - 0.7f) - (0.7f/3)
-				: -4*(x - 0.8f) + 0.66f;
+				: x <= 0.8 ? 12f*(x - 0.7f) - (0.7f/3)
+				: -6*(x - 0.8f) + 0.96f;
 		matrices.translate(0, 0, -of);
 	}
 }

@@ -166,8 +166,8 @@ public final class ArcanaClient implements ClientModInitializer{
 		EntityRendererRegistry.register(ArcanaRegistry.CRIMSON_MISSIONARY, ctx -> new CrimsonEntityRenderer<>(ctx, "missionary"));
 		EntityRendererRegistry.register(ArcanaRegistry.CRIMSON_JESTER, ctx -> new CrimsonEntityRenderer<>(ctx, "jester"));
 		EntityRendererRegistry.register(ArcanaRegistry.CRIMSON_HEAVY_KNIGHT, ctx -> new CrimsonEntityRenderer<>(ctx, "heavy_knight"));
-		EntityRendererRegistry.register(ArcanaRegistry.WISP, ctx -> new WispLikeEntityRenderer<>(ctx, true));
-		EntityRendererRegistry.register(ArcanaRegistry.COAGULATION, ctx -> new WispLikeEntityRenderer<>(ctx, false));
+		EntityRendererRegistry.register(ArcanaRegistry.WISP, ctx -> new WispLikeEntityRenderer<>(ctx, 3, 21, false, 1));
+		EntityRendererRegistry.register(ArcanaRegistry.COAGULATION, ctx -> new WispLikeEntityRenderer<>(ctx, 2, 12, true, 0.5f));
 		
 		for(Block block : ArcanaRegistry.blocks)
 			if(block.settings instanceof ArcanaBlockSettings abs)

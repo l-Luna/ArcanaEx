@@ -13,20 +13,26 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Matrix3f;
 import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Vec3f;
+import net.minecraft.util.math.random.Random;
 
 import static arcana.Arcana.arcId;
 
 public class WispLikeEntityRenderer<T extends WispLikeEntity> extends EntityRenderer<T>{
 	
 	private static final Identifier texture = arcId("textures/entity/wisp.png");
-	private static final RenderLayer layer = RenderLayer.getEntityTranslucent(texture);
-	private static final float ringTime = 21;
+	private static final RenderLayer layer = RenderLayer.getEntityTranslucentEmissive(texture);
 	
-	private final boolean style;
+	private final int rings;
+	private final float ringTime;
+	private final boolean ringDir;
+	private final float ringRad;
 	
-	public WispLikeEntityRenderer(EntityRendererFactory.Context ctx, boolean style){
+	public WispLikeEntityRenderer(EntityRendererFactory.Context ctx, int rings, float ringTime, boolean ringDir, float ringRad){
 		super(ctx);
-		this.style = style;
+		this.rings = rings;
+		this.ringTime = ringTime;
+		this.ringDir = ringDir;
+		this.ringRad = ringRad;
 	}
 	
 	public Identifier getTexture(WispLikeEntity entity){
@@ -42,11 +48,14 @@ public class WispLikeEntityRenderer<T extends WispLikeEntity> extends EntityRend
 		matrices.multiply(dispatcher.getRotation());
 		matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180));
 		VertexConsumer vc = vertexConsumers.getBuffer(layer);
+		float deathLerp = entity.deathTime > 0 ? 1 - (entity.deathTime + tickDelta) / 20f : 1;
 		
-		for(int i = 0; i < 3; i++){
-			float localTime = ringTime - (entityTime + i * (ringTime / 3f)) % ringTime;
-			float radHere = localTime / ringTime + 1,
-			      alphaHere = MathHelper.sin(localTime * MathHelper.PI / ringTime);
+		for(int i = 0; i < rings; i++){
+			float localTime = (entityTime + i * (ringTime / rings)) % ringTime;
+			if(ringDir)
+				localTime = ringTime - localTime;
+			float radHere = (ringRad * localTime / ringTime) + ringRad + 5*(1-deathLerp),
+			      alphaHere = MathHelper.sin(localTime * MathHelper.PI / ringTime) * deathLerp;
 			matrices.push();
 			matrices.scale(radHere, radHere, radHere);
 			quad(vc, matrices, light, -14, -14, 0, 0, 28, 28, alphaHere);
@@ -54,23 +63,32 @@ public class WispLikeEntityRenderer<T extends WispLikeEntity> extends EntityRend
 		}
 		
 		matrices.push();
+		if(entity.hurtTime > 0){
+			Random rng = entity.world.random;
+			float scale = Math.min(entity.hurtTime, 10) / 10f;
+			matrices.translate(scale * rng.nextBetween(-10, 10) / 10f, scale * rng.nextBetween(-10, 10) / 10f, scale * rng.nextBetween(-10, 10) / 10f);
+		}
+		
+		matrices.push();
 		matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion((entityTime * 4) % 90));
 		matrices.translate(0, 0, -0.001);
 		matrices.scale(1.2f, 1.2f, 1);
-		quad(vc, matrices, light, -5, -5, 61, 12, 10, 10, 0.3f);
+		quad(vc, matrices, light, -5, -5, 61, 12, 10, 10, 0.3f * deathLerp);
 		matrices.pop();
 		
 		matrices.push();
 		float innerScale = 0.2f * MathHelper.sin(entityTime / 55f) + 0.9f;
 		matrices.scale(innerScale, innerScale, 1);
-		quad(vc, matrices, light, -4, -4, 61, 0, 8, 8, 1);
+		quad(vc, matrices, light, -4, -4, 61, 0, 8, 8, 1 * deathLerp);
+		matrices.pop();
+		
 		matrices.pop();
 		
 		matrices.pop();
 		super.render(entity, yaw, tickDelta, matrices, vertexConsumers, light);
 	}
 	
-	private static void quad(VertexConsumer vc,
+	private void quad(VertexConsumer vc,
 	                         MatrixStack matrices,
 	                         int light,
 	                         float x,
@@ -90,7 +108,7 @@ public class WispLikeEntityRenderer<T extends WispLikeEntity> extends EntityRend
 		vertex(vc, posMat, norMat, light, x, y + height, texU / 128f, (texV + height) / 128f, alpha);
 	}
 	
-	private static void vertex(VertexConsumer vc,
+	private void vertex(VertexConsumer vc,
 	                           Matrix4f posMat,
 	                           Matrix3f norMat,
 	                           int light,
@@ -104,7 +122,7 @@ public class WispLikeEntityRenderer<T extends WispLikeEntity> extends EntityRend
 				.texture(texU, texV)
 				.overlay(OverlayTexture.DEFAULT_UV)
 				.light(light)
-				.normal(norMat, 1, 0, 0)
+				.normal(0, 1, 0)
 				.next();
 	}
 }

@@ -1,6 +1,9 @@
 package arcana.entities;
 
+import arcana.ArcanaTags;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.Angerable;
@@ -41,6 +44,15 @@ public class WispEntity extends WispLikeEntity implements Angerable{
 	
 	Vec3d anchor(){
 		return anchor != null ? Vec3d.ofCenter(anchor) : getPos();
+	}
+	
+	public boolean handleAttack(Entity attacker){
+		return !(attacker instanceof LivingEntity le) || !le.getMainHandStack().isIn(ArcanaTags.WISP_WEAPONS);
+	}
+	
+	public boolean canHit(){
+		// false by default here, but actually handled in GameRendererMixin
+		return false;
 	}
 	
 	public void writeCustomDataToNbt(NbtCompound nbt){

@@ -6,6 +6,8 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.EntityDamageSource;
 import net.minecraft.entity.mob.Angerable;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.nbt.NbtCompound;
@@ -53,6 +55,15 @@ public class WispEntity extends WispLikeEntity implements Angerable{
 	public boolean canHit(){
 		// false by default here, but actually handled in GameRendererMixin
 		return false;
+	}
+	
+	public boolean isInvulnerableTo(DamageSource damageSource){
+		return !(damageSource instanceof EntityDamageSource eds)
+				|| handleAttack(eds.getAttacker())
+				|| eds.isExplosive()
+				|| eds.isFire()
+				|| eds.isThorns()
+				|| eds.isMagic();
 	}
 	
 	public void writeCustomDataToNbt(NbtCompound nbt){

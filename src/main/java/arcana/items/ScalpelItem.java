@@ -2,11 +2,17 @@ package arcana.items;
 
 import arcana.aura.AuraWorld;
 import arcana.network.PkShakeNode;
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Multimap;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.api.EnvironmentInterface;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.EntityAttribute;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -25,11 +31,30 @@ public class ScalpelItem extends Item implements PosableItem{
 		SILVER,
 		BLACK
 	}
+	
 	public final ScalpelType type;
+	
+	private final Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
 	
 	public ScalpelItem(Settings settings, ScalpelType type){
 		super(settings.maxDamageIfAbsent(100));
 		this.type = type;
+		
+		float attackDamage = switch(type){
+			case ROSE, SILVER -> 2.5f;
+			case BLACK -> 3.5f;
+		};
+		float attackSpeed = -3;
+		ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
+		builder.put(
+				EntityAttributes.GENERIC_ATTACK_DAMAGE,
+				new EntityAttributeModifier(ATTACK_DAMAGE_MODIFIER_ID, "Weapon modifier", attackDamage, EntityAttributeModifier.Operation.ADDITION)
+		);
+		builder.put(
+				EntityAttributes.GENERIC_ATTACK_SPEED,
+				new EntityAttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Weapon modifier", attackSpeed, EntityAttributeModifier.Operation.ADDITION)
+		);
+		this.attributeModifiers = builder.build();
 	}
 	
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand){
@@ -57,13 +82,22 @@ public class ScalpelItem extends Item implements PosableItem{
 		return 30;
 	}
 	
+	public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(EquipmentSlot slot){
+		return slot == EquipmentSlot.MAINHAND ? this.attributeModifiers : super.getAttributeModifiers(slot);
+	}
+	
+	public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker){
+		stack.damage(1, attacker, e -> e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND));
+		return true;
+	}
+	
 	@Environment(EnvType.CLIENT)
 	public void applyPose(MatrixStack matrices, PlayerEntity player, ItemStack stack, float tickDelta, Hand hand, Arm arm){
 		matrices.multiply(Vec3f.POSITIVE_Y.getRadialQuaternion(0.2f));
 		float x = (player.getItemUseTime() + tickDelta) / (float)getMaxUseTime(stack);
-		float of = x < 0.7 ? -x/3f
-				: x <= 0.8 ? 12f*(x - 0.7f) - (0.7f/3)
-				: -6*(x - 0.8f) + 0.96f;
+		float of = x < 0.7 ? -x / 3f
+				: x <= 0.8 ? 12f * (x - 0.7f) - (0.7f / 3)
+				: -6 * (x - 0.8f) + 0.96f;
 		matrices.translate(0, 0, -of);
 	}
 }

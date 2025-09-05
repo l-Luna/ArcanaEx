@@ -48,14 +48,16 @@ public class WispLikeEntityRenderer<T extends WispLikeEntity> extends EntityRend
 		matrices.multiply(dispatcher.getRotation());
 		matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180));
 		VertexConsumer vc = vertexConsumers.getBuffer(layer);
+		float birthLerp = entityTime > 60 ? 1 : 1 - (float)Math.pow(2, -entityTime / 10);
 		float deathLerp = entity.deathTime > 0 ? 1 - (entity.deathTime + tickDelta) / 20f : 1;
+		float alphaLerp = birthLerp * deathLerp;
 		
 		for(int i = 0; i < rings; i++){
 			float localTime = (entityTime + i * (ringTime / rings)) % ringTime;
 			if(ringDir)
 				localTime = ringTime - localTime;
-			float radHere = (ringRad * localTime / ringTime) + ringRad + 5*(1-deathLerp),
-			      alphaHere = MathHelper.sin(localTime * MathHelper.PI / ringTime) * deathLerp;
+			float radHere = birthLerp * ((ringRad * localTime / ringTime) + ringRad + 5*(1-deathLerp)),
+			      alphaHere = MathHelper.sin(localTime * MathHelper.PI / ringTime) * alphaLerp;
 			matrices.push();
 			matrices.scale(radHere, radHere, radHere);
 			quad(vc, matrices, light, -14, -14, 0, 0, 28, 28, alphaHere);
@@ -73,13 +75,13 @@ public class WispLikeEntityRenderer<T extends WispLikeEntity> extends EntityRend
 		matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion((entityTime * 4) % 90));
 		matrices.translate(0, 0, -0.001);
 		matrices.scale(1.2f, 1.2f, 1);
-		quad(vc, matrices, light, -5, -5, 61, 12, 10, 10, 0.3f * deathLerp);
+		quad(vc, matrices, light, -5, -5, 61, 12, 10, 10, 0.3f * alphaLerp);
 		matrices.pop();
 		
 		matrices.push();
 		float innerScale = 0.2f * MathHelper.sin(entityTime / 55f) + 0.9f;
 		matrices.scale(innerScale, innerScale, 1);
-		quad(vc, matrices, light, -4, -4, 61, 0, 8, 8, 1 * deathLerp);
+		quad(vc, matrices, light, -4, -4, 61, 0, 8, 8, 1 * alphaLerp);
 		matrices.pop();
 		
 		matrices.pop();

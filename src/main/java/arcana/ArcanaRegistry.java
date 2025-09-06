@@ -611,7 +611,7 @@ public final class ArcanaRegistry{
 			.fireImmune()
 			.build();
 	public static final EntityType<CoagulationEntity> COAGULATION = FabricEntityTypeBuilder
-			.createMob()
+			.<CoagulationEntity>createMob()
 			.entityFactory(CoagulationEntity::new)
 			.spawnGroup(SpawnGroup.MISC)
 			.defaultAttributes(CoagulationEntity::createDefaultAttributes)

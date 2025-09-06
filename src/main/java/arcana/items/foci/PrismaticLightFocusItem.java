@@ -37,7 +37,9 @@ public class PrismaticLightFocusItem extends FocusItem{
 		return true;
 	}
 	
-	public void startContinuousCast(ItemStack wand, ItemStack focus, PlayerEntity user, NbtCompound state){
+	public void startContinuousCast(ContinuousCastContext ccc){
+		PlayerEntity user = ccc.user;
+		NbtCompound state = ccc.state;
 		World w = user.world;
 		if(!w.isClient){
 			PrismaticOrbEntity orb = new PrismaticOrbEntity(ArcanaRegistry.PRISMATIC_ORB, w);
@@ -49,7 +51,9 @@ public class PrismaticLightFocusItem extends FocusItem{
 		}
 	}
 	
-	public void endContinuousCast(ItemStack wand, ItemStack focus, PlayerEntity user, NbtCompound state){
+	public void endContinuousCast(ContinuousCastContext ccc){
+		PlayerEntity user = ccc.user;
+		NbtCompound state = ccc.state;
 		World w = user.world;
 		if(!w.isClient){
 			ServerWorld sw = (ServerWorld)w;

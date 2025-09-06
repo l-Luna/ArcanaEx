@@ -51,9 +51,41 @@ public class FocusItem extends Item{
 		return false;
 	}
 	
-	public void startContinuousCast(ItemStack wand, ItemStack focus, PlayerEntity user, NbtCompound state){}
-	public boolean tickContinuousCast(ItemStack wand, ItemStack focus, PlayerEntity user, NbtCompound state){
-		return true;
+	public void startContinuousCast(ContinuousCastContext ccc){}
+	public void tickContinuousCast(ContinuousCastContext ccc){}
+	public void endContinuousCast(ContinuousCastContext ccc){}
+	
+	public static final class ContinuousCastContext{
+		public final ItemStack wand;
+		public final ItemStack focus;
+		public final PlayerEntity user;
+		public final NbtCompound state;
+		public final int castTime;
+		
+		private boolean stopping = false;
+		
+		public ContinuousCastContext(ItemStack wand, ItemStack focus, PlayerEntity user, NbtCompound state, int castTime){
+			this.wand = wand;
+			this.focus = focus;
+			this.user = user;
+			this.state = state;
+			this.castTime = castTime;
+		}
+		
+		public boolean requestDrain(AspectMap required){
+			if(WandItem.aspectsFrom(wand).contains(required)){
+				WandItem.updateAspects(wand, stored -> stored.take(required));
+				return true;
+			}
+			return false;
+		}
+		
+		public void stop(){
+			stopping = true;
+		}
+		
+		public boolean isStopping(){
+			return stopping;
+		}
 	}
-	public void endContinuousCast(ItemStack wand, ItemStack focus, PlayerEntity user, NbtCompound state){}
 }

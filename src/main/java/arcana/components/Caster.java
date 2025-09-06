@@ -190,20 +190,25 @@ public class Caster implements Component, AutoSyncedComponent, ServerTickingComp
 			}
 			case CONTINUOUS_CASTING -> WandItem.updateFocus(wand, focusStack -> {
 				if(focusStack.getItem() instanceof FocusItem fi && fi.isContinuous()){
+					var ccc = new FocusItem.ContinuousCastContext(wand, focusStack, player, contFocusState, stateTimer);
 					if(stateTimer == 0){
 						var cost = fi.castCost(wand, focusStack, player).copy();
 						cost.multiply(aspect -> WandItem.costMultiplier(aspect, wand, player));
 						if(WandItem.aspectsFrom(wand).contains(cost)){
 							WandItem.updateAspects(wand, aspects -> aspects.take(cost));
-							fi.startContinuousCast(wand, focusStack, player, contFocusState);
+							fi.startContinuousCast(ccc);
+							if(ccc.isStopping()){
+								endState(); player.stopUsingItem(); return;
+							}
 						}else{
 							endState(); return;
 						}
 					}
-					boolean cont = fi.tickContinuousCast(wand, focusStack, player, contFocusState);
+					fi.tickContinuousCast(ccc);
 					stateTimer++;
-					if(!cont)
-						endState();
+					if(ccc.isStopping()){
+						endState(); player.stopUsingItem();
+					}
 				}
 			});
 		}
@@ -232,7 +237,7 @@ public class Caster implements Component, AutoSyncedComponent, ServerTickingComp
 		if(state == CasterState.CONTINUOUS_CASTING && lastWandStack != null)
 			WandItem.updateFocus(lastWandStack, focus -> {
 				if(focus.getItem() instanceof FocusItem fi && fi.isContinuous())
-					fi.endContinuousCast(lastWandStack, focus, player, contFocusState);
+					fi.endContinuousCast(new FocusItem.ContinuousCastContext(lastWandStack, focus, player, contFocusState, stateTimer));
 			});
 		
 		state = CasterState.IDLE;

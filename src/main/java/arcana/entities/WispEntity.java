@@ -1,8 +1,10 @@
 package arcana.entities;
 
+import arcana.ArcanaRegistry;
 import arcana.ArcanaTags;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -10,6 +12,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.EntityDamageSource;
 import net.minecraft.entity.mob.Angerable;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -27,8 +30,12 @@ public class WispEntity extends WispLikeEntity implements Angerable{
 	private int angerTime;
 	private @Nullable UUID angryAt;
 	
-	public WispEntity(EntityType<? extends WispLikeEntity> entityType, World world){
+	public WispEntity(EntityType<? extends WispEntity> entityType, World world){
 		super(entityType, world);
+	}
+	
+	public WispEntity(World world){
+		this(ArcanaRegistry.WISP, world);
 	}
 	
 	public static DefaultAttributeContainer.Builder createDefaultAttributes(){
@@ -64,6 +71,20 @@ public class WispEntity extends WispLikeEntity implements Angerable{
 				|| eds.isFire()
 				|| eds.isThorns()
 				|| eds.isMagic();
+	}
+	
+	// start items with no velocity
+	public @Nullable ItemEntity dropStack(ItemStack stack, float yOffset){
+		if(stack.isEmpty())
+			return null;
+		else if(world.isClient)
+			return null;
+		else{
+			ItemEntity entity = new ItemEntity(world, getX(), getY() + yOffset, getZ(), stack, 0, 0, 0);
+			entity.setToDefaultPickupDelay();
+			world.spawnEntity(entity);
+			return entity;
+		}
 	}
 	
 	public void writeCustomDataToNbt(NbtCompound nbt){

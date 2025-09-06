@@ -1,6 +1,7 @@
 package arcana.items;
 
 import arcana.aura.AuraWorld;
+import arcana.entities.WispEntity;
 import arcana.network.PkShakeNode;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
@@ -72,6 +73,14 @@ public class ScalpelItem extends Item implements PosableItem{
 					new PkShakeNode(node, 40).sendToAllWatching(user);
 					boolean degrade = type == ScalpelType.ROSE || rng.nextInt(4) == 0;
 					node.damage(degrade, rng);
+					int wisps = rng.nextBetween(2, 3);
+					for(int i = 0; i < wisps; i++){
+						WispEntity wisp = new WispEntity(world);
+						wisp.setPosition(node.asVec3d());
+						wisp.setAnchorPos(node.asBlockPos());
+						wisp.setVelocity(rng.nextFloat() * 2 - 1, rng.nextFloat() * 2 - 1, rng.nextFloat() * 2 - 1);
+						world.spawnEntity(wisp);
+					}
 				}
 				stack.damage(1, user, e -> e.sendToolBreakStatus(e.getActiveHand()));
 			});

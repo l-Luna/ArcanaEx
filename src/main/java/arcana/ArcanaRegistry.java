@@ -229,6 +229,8 @@ public final class ArcanaRegistry{
 	public static final Item SILVERLEAF_LEGGINGS = new ArmorItem(ArcanaArmourMaterials.SILVERLEAF, EquipmentSlot.LEGS, new Settings().group(Tab.EQUIPMENT));
 	public static final Item SILVERLEAF_BOOTS = new ArmorItem(ArcanaArmourMaterials.SILVERLEAF, EquipmentSlot.FEET, new Settings().group(Tab.EQUIPMENT));
 	
+	public static final Item WISPY_ESSENCE = new Item(GROUPED);
+	
 	public static final Item ARCANIUM_SCALPEL = new ScalpelItem(new Settings().group(Tab.EQUIPMENT).maxDamage(100), ScalpelItem.ScalpelType.ROSE);
 	public static final Item SILVERLEAF_SCALPEL = new ScalpelItem(new Settings().group(Tab.EQUIPMENT).maxDamage(100), ScalpelItem.ScalpelType.SILVER);
 	public static final Item VOID_METAL_SCALPEL = new ScalpelItem(new Settings().group(Tab.EQUIPMENT).maxDamage(100), ScalpelItem.ScalpelType.BLACK);
@@ -307,6 +309,7 @@ public final class ArcanaRegistry{
 	public static final Item LIGHT_FOCUS = new LightFocusItem(GROUPED_SINGLE);
 	public static final Item PRISMATIC_LIGHT_FOCUS = new PrismaticLightFocusItem(GROUPED_SINGLE);
 	public static final Item EQUIVALENT_EXCHANGE_FOCUS = new EquivalentExchangeFocusItem(GROUPED_SINGLE);
+	public static final Item COAGULATION_FOCUS = new CoagulationFocusItem(GROUPED_SINGLE);
 	
 	// banner patterns...
 	public static final BannerPattern ELDRITCH_BANNER_PATTERN_SHAPE = new BannerPattern("arcana_eldritch");
@@ -600,7 +603,7 @@ public final class ArcanaRegistry{
 			.build();
 	
 	public static final EntityType<WispEntity> WISP = FabricEntityTypeBuilder
-			.createMob()
+			.<WispEntity>createMob()
 			.entityFactory(WispEntity::new)
 			.spawnGroup(SpawnGroup.MISC)
 			.defaultAttributes(WispEntity::createDefaultAttributes)
@@ -739,6 +742,8 @@ public final class ArcanaRegistry{
 		register("silverleaf_leggings", SILVERLEAF_LEGGINGS);
 		register("silverleaf_boots", SILVERLEAF_BOOTS);
 		
+		register("wispy_essence", WISPY_ESSENCE);
+		
 		register("arcanium_scalpel", ARCANIUM_SCALPEL);
 		register("silverleaf_scalpel", SILVERLEAF_SCALPEL);
 		register("void_metal_scalpel", VOID_METAL_SCALPEL);
@@ -808,6 +813,7 @@ public final class ArcanaRegistry{
 		register("light_focus", LIGHT_FOCUS);
 		register("prismatic_light_focus", PRISMATIC_LIGHT_FOCUS);
 		register("equivalent_exchange_focus", EQUIVALENT_EXCHANGE_FOCUS);
+		register("coagulation_focus", COAGULATION_FOCUS);
 		
 		register("eldritch", ELDRITCH_BANNER_PATTERN_SHAPE);
 		register("eldritch_banner_pattern", ELDRITCH_BANNER_PATTERN);

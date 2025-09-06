@@ -34,6 +34,7 @@
     "substrates": "Essentia Distillation Substrates",
     "scribing_tools": "Research Tools",
     "wisp_weapons": "Wisp Weapons",
+    "floats": "Floating Items",
 
     "crucible_heating_blocks": "Crucible Heating Blocks",
     "crucible_heating_fluids": "Crucible Heating Fluids",
@@ -209,6 +210,8 @@
     "silverleaf_boots": "Silverleaf Shoes",
     "silverleaf_scalpel": "Silver Scalpel",
 
+    "wispy_essence": "Wispy Essence",
+
     "emerald_necklace": "Emerald Necklace",
     "gold_ring": "Gold Ring",
     "arcanium_ring": "Arcanium Ring",
@@ -275,6 +278,7 @@
     "light_focus": "Wand Focus: Light",
     "prismatic_light_focus": "Wand Focus: Prismatic Light",
     "equivalent_exchange_focus": "Wand Focus: Equivalent Exchange",
+    "coagulation_focus": "Wand Focus: Coagulation",
 
     "eldritch_banner_pattern": "Banner Pattern",
     "eldritch_banner_pattern.desc": "Eldritch",

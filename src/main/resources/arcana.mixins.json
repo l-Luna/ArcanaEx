@@ -15,6 +15,7 @@
 		"FluidBlockMixin",
 		"HorizontalConnectingBlockMixin",
 		"InventoryChangedCriterionMixin",
+		"ItemEntityMixin",
 		"ItemStackMixin",
 		"LivingEntityMixin",
 		"PlayerEntityMixin",

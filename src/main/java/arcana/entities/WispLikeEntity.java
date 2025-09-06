@@ -26,6 +26,10 @@ public abstract class WispLikeEntity extends PathAwareEntity{
 		goalSelector.add(10, new FloatAroundGoal(this));
 	}
 	
+	public boolean hasNoGravity(){
+		return true;
+	}
+	
 	protected static class FloatAroundGoal extends Goal{
 		private final WispLikeEntity entity;
 		

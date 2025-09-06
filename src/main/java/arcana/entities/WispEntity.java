@@ -6,14 +6,17 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.EntityDamageSource;
 import net.minecraft.entity.mob.Angerable;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -38,6 +41,11 @@ public class WispEntity extends WispLikeEntity implements Angerable{
 		this(ArcanaRegistry.WISP, world);
 	}
 	
+	protected void initGoals(){
+		super.initGoals();
+		targetSelector.add(4, new ActiveTargetGoal<>(this, PlayerEntity.class, 10, true, false, this::shouldAngerAt));
+	}
+	
 	public static DefaultAttributeContainer.Builder createDefaultAttributes(){
 		return MobEntity.createMobAttributes()
 				.add(EntityAttributes.GENERIC_MAX_HEALTH, 20)
@@ -53,6 +61,12 @@ public class WispEntity extends WispLikeEntity implements Angerable{
 	
 	Vec3d anchor(){
 		return anchor != null ? Vec3d.ofCenter(anchor) : getPos();
+	}
+	
+	public void tick(){
+		super.tick();
+		if(!world.isClient)
+			tickAngerLogic((ServerWorld)world, false);
 	}
 	
 	public boolean handleAttack(Entity attacker){

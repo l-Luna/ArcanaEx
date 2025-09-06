@@ -1,5 +1,6 @@
 package arcana.entities;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.control.MoveControl;
 import net.minecraft.entity.ai.goal.Goal;
@@ -11,6 +12,7 @@ import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
@@ -32,6 +34,8 @@ public abstract class WispLikeEntity extends PathAwareEntity{
 	
 	protected void initGoals(){
 		goalSelector.add(0, new SwimGoal(this));
+		goalSelector.add(4, new StrafeTargetGoal(this));
+		goalSelector.add(5, new ChargeTargetGoal(this));
 		goalSelector.add(10, new FloatAroundGoal(this));
 		targetSelector.add(2, new RevengeGoal(this));
 	}
@@ -57,7 +61,7 @@ public abstract class WispLikeEntity extends PathAwareEntity{
 		}
 		
 		public boolean canStart(){
-			return entity.navigation.isIdle() && entity.random.nextInt(toGoalTicks(7)) == 0;
+			return entity.navigation.isIdle() && entity.random.nextInt(toGoalTicks(7)) == 0 && entity.getTarget() == null;
 		}
 		
 		public boolean shouldContinue(){
@@ -82,10 +86,105 @@ public abstract class WispLikeEntity extends PathAwareEntity{
 		}
 	}
 	
-	protected static class ChargeAttackGoal extends Goal{
+	protected static class StrafeTargetGoal extends Goal{
+		private final WispLikeEntity entity;
+		
+		public StrafeTargetGoal(WispLikeEntity entity){
+			this.entity = entity;
+			setControls(EnumSet.of(Goal.Control.MOVE));
+		}
 		
 		public boolean canStart(){
-			return false;
+			Entity target = entity.getTarget();
+			return target != null
+					&& target.isAlive()
+					&& !entity.moveControl.isMoving()
+					&& entity.random.nextInt(toGoalTicks(7)) == 0
+					&& entity.squaredDistanceTo(target) <= 5*5;
+		}
+		
+		public boolean shouldContinue(){
+			Entity target = entity.getTarget();
+			return entity.moveControl.isMoving()
+					&& target != null
+					&& target.isAlive();
+		}
+		
+		public boolean shouldRunEveryTick(){
+			return true;
+		}
+		
+		public void tick(){
+			Entity target = entity.getTarget();
+			if(target == null) return;
+			
+			// if the wisp is in the correct ring, eventually stop strafing
+			Vec3d diff = target.getPos().subtract(entity.getPos());
+			Vec3d hDir = diff.multiply(1, 0, 1).normalize();
+			boolean satisfied = diff.lengthSquared() > 5 * 5
+					&& diff.lengthSquared() < 6 * 6
+					&& Math.abs(diff.y) < 0.5f;
+			if(satisfied && entity.random.nextInt(toGoalTicks(20)) == 0)
+				stop();
+			
+			Vec3d vel = entity.getVelocity();
+			
+			// voted #1 jank 2025
+			// try fix Y position
+			vel = vel.add(0, diff.y * 0.3f, 0);
+			// try fix horizontal distance
+			vel = vel.add(hDir.negate().multiply((diff.length() - 5.5f) * 0.3f));
+			// add a rightwards drift
+			vel = vel.add(hDir.rotateY(MathHelper.PI/2).multiply(0.1f));
+			
+			entity.setVelocity(vel);
+		}
+	}
+	
+	protected static class ChargeTargetGoal extends Goal{
+		private final WispLikeEntity entity;
+		
+		public ChargeTargetGoal(WispLikeEntity entity){
+			this.entity = entity;
+			setControls(EnumSet.of(Goal.Control.MOVE));
+		}
+		
+		public boolean canStart(){
+			Entity target = entity.getTarget();
+			return target != null
+					&& target.isAlive()
+					&& !entity.moveControl.isMoving()
+					&& entity.random.nextInt(toGoalTicks(7)) == 0
+					&& entity.squaredDistanceTo(target) > 5*5;
+		}
+		
+		public boolean shouldContinue(){
+			Entity target = entity.getTarget();
+			return entity.moveControl.isMoving()
+					&& target != null
+					&& target.isAlive();
+		}
+		
+		public void start(){
+			Entity target = entity.getTarget();
+			if(target == null) return;
+			
+			Vec3d dir = target.getPos().subtract(entity.getPos()).normalize();
+			Vec3d targetPos = target.getPos().add(dir.multiply(5));
+			entity.moveControl.moveTo(targetPos.getX(), targetPos.getY(), targetPos.getZ(), 2.3f);
+		}
+		
+		public boolean shouldRunEveryTick(){
+			return true;
+		}
+		
+		public void tick(){
+			Entity target = entity.getTarget();
+			if(target == null) return;
+			
+			if(entity.getBoundingBox().intersects(target.getBoundingBox()))
+				entity.tryAttack(target);
+			
 		}
 	}
 	
@@ -102,7 +201,10 @@ public abstract class WispLikeEntity extends PathAwareEntity{
 					state = MoveControl.State.WAIT;
 					entity.setVelocity(entity.getVelocity().multiply(0.5));
 				}else
-					entity.setVelocity(entity.getVelocity().add(diff.multiply(this.speed * 0.05 / diff.length())));
+					entity.setVelocity(entity.getVelocity().add(diff.multiply(speed * 0.05 / diff.length())));
+				
+				if(entity.horizontalCollision || entity.verticalCollision)
+					state = State.WAIT;
 			}
 		}
 	}

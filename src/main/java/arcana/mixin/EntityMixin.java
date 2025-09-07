@@ -1,27 +1,56 @@
 package arcana.mixin;
 
 import arcana.ArcanaRegistry;
-import arcana.ArcanaTags;
+import arcana.duck.ArcanaFluidEntity;
+import arcana.fluids.ArcanaFluid;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.fluid.Fluid;
+import net.minecraft.tag.TagKey;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(Entity.class)
-public class EntityMixin{
+public class EntityMixin implements ArcanaFluidEntity{
 	
-	// when interacting with Taint Goo, gain the Tainted status effect
+	@Shadow
+	protected Object2DoubleMap<TagKey<Fluid>> fluidHeight;
+	@Unique
+	private ArcanaFluid maxSubmergedFluid;
+	@Unique
+	private double maxFluidHeight;
 	
 	@ModifyReturnValue(method = "updateWaterState", at = @At("TAIL"))
 	private boolean updateWaterState(boolean original){
 		Entity self = (Entity)(Object)this;
-		boolean inTaintGoo = self.updateMovementInFluid(ArcanaTags.TAINT_GOO, 0.001f);
-		if(inTaintGoo
-				&& self instanceof LivingEntity lem
-				&& (self.world.getTime() % 80 == 0 || !lem.hasStatusEffect(ArcanaRegistry.TAINTED)))
-			lem.addStatusEffect(new StatusEffectInstance(ArcanaRegistry.TAINTED, 5 * 20));
-		return original || inTaintGoo;
+		maxSubmergedFluid = null;
+		maxFluidHeight = 0;
+		boolean inAny = false;
+		for(ArcanaFluid fluid : ArcanaRegistry.stillFluids){
+			TagKey<Fluid> tag = fluid.getTag();
+			boolean submerged = self.updateMovementInFluid(tag, fluid.getEntityPushStrength(self));
+			if(submerged){
+				fluid.onEntityInteractTick(self);
+				double thisHeight = fluidHeight.getDouble(tag);
+				if(thisHeight > maxFluidHeight){
+					maxSubmergedFluid = fluid;
+					maxFluidHeight = thisHeight;
+				}
+				inAny = true;
+			}
+		}
+		return original || inAny;
+	}
+	
+	public @Nullable ArcanaFluid arcana$getMaxSubmergedFluid(){
+		return maxSubmergedFluid;
+	}
+	
+	public double arcana$getMaxFluidHeight(){
+		return maxFluidHeight;
 	}
 }

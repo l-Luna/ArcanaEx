@@ -1,11 +1,12 @@
 package arcana.mixin;
 
 import arcana.ArcanaRegistry;
-import arcana.ArcanaTags;
+import arcana.duck.ArcanaFluidEntity;
+import arcana.fluids.ArcanaFluid;
 import arcana.items.BootsOfTheTravellerItem;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Share;
-import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
+import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.LadderBlock;
 import net.minecraft.block.TrapdoorBlock;
@@ -111,7 +112,7 @@ public abstract class LivingEntityMixin extends Entity{
 	                                target = "Lnet/minecraft/entity/LivingEntity;getFluidHeight(Lnet/minecraft/tag/TagKey;)D",
 	                                ordinal = 1))
 	private double tickFluidSwimmingHeight(double original){
-		return Math.max(original, getFluidHeight(ArcanaTags.TAINT_GOO));
+		return Math.max(original, ((ArcanaFluidEntity)this).arcana$getMaxFluidHeight());
 	}
 	
 	@ModifyExpressionValue(method = "tickMovement",
@@ -119,17 +120,17 @@ public abstract class LivingEntityMixin extends Entity{
 	                                target = "Lnet/minecraft/entity/LivingEntity;isInLava()Z",
 	                                ordinal = 1))
 	private boolean tickFluidSwimmingKind(boolean original){
-		return original || isInTaintGoo();
+		return original || isInArcanaFluid();
 	}
 	
 	@ModifyExpressionValue(method = "travel",
 	                       at = @At(value = "INVOKE",
 	                                target = "Lnet/minecraft/entity/LivingEntity;isInLava()Z"))
-	private boolean travelFluidCheck(boolean original, @Share("override") LocalBooleanRef override){
-		boolean b = isInTaintGoo();
-		if(b)
-			override.set(true);
-		return original || b;
+	private boolean travelFluidCheck(boolean original, @Share("override") LocalRef<ArcanaFluid> override){
+		ArcanaFluid fluid = ((ArcanaFluidEntity)this).arcana$getMaxSubmergedFluid();
+		if(fluid != null)
+			override.set(fluid);
+		return original || (fluid != null);
 	}
 	
 	@Inject(method = "travel",
@@ -137,8 +138,9 @@ public abstract class LivingEntityMixin extends Entity{
 	                 target = "Lnet/minecraft/entity/LivingEntity;updateVelocity(FLnet/minecraft/util/math/Vec3d;)V",
 	                 ordinal = 1),
 	        cancellable = true)
-	private void travelFluidImpl(Vec3d movementInput, CallbackInfo ci, @Share("override") LocalBooleanRef override){
-		if(override.get()){
+	private void travelFluidImpl(Vec3d movementInput, CallbackInfo ci, @Share("override") LocalRef<ArcanaFluid> override){
+		ArcanaFluid fluid = override.get();
+		if(fluid != null){
 			ci.cancel();
 			LivingEntity lem = (LivingEntity)(Object)this;
 			double gravity = 0.08;
@@ -146,15 +148,17 @@ public abstract class LivingEntityMixin extends Entity{
 			if(falling && lem.hasStatusEffect(StatusEffects.SLOW_FALLING))
 				gravity = 0.01;
 			// just reimplement this segment to tweak the numbers
+			float dragFactor = fluid.getEntityDragFactor(this);
+			float speedFactor = fluid.getEntitySpeedFactor(this);
 			
 			double y = getY();
-			updateVelocity(0.017f, movementInput);
+			updateVelocity(speedFactor, movementInput);
 			move(MovementType.SELF, getVelocity());
-			if(getFluidHeight(ArcanaTags.TAINT_GOO) <= getSwimHeight()){
-				setVelocity(getVelocity().multiply(0.1, 0.8, 0.1));
+			if(getFluidHeight(fluid.getTag()) <= getSwimHeight()){
+				setVelocity(getVelocity().multiply(dragFactor, 0.8, dragFactor));
 				setVelocity(lem.applyFluidMovingSpeed(gravity, falling, getVelocity()));
 			}else
-				setVelocity(getVelocity().multiply(0.1));
+				setVelocity(getVelocity().multiply(dragFactor));
 			
 			if(!hasNoGravity())
 				setVelocity(getVelocity().add(0, -gravity / 6, 0));
@@ -169,8 +173,8 @@ public abstract class LivingEntityMixin extends Entity{
 	}
 	
 	@Unique
-	private boolean isInTaintGoo(){
-		return !firstUpdate && fluidHeight.getDouble(ArcanaTags.TAINT_GOO) > 0;
+	private boolean isInArcanaFluid(){
+		return !firstUpdate && ((ArcanaFluidEntity)this).arcana$getMaxFluidHeight() > 0;
 	}
 	
 	// make trapdoors work right with metal ladders

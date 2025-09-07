@@ -40,6 +40,7 @@
     "crucible_heating_fluids": "Crucible Heating Fluids",
 
     "taint_goo": "Taint Goo",
+    "putrefaction": "Putrefaction",
     "raw_tainted_blocks": "Raw Tainted Blocks"
   },
 
@@ -164,6 +165,7 @@
     "cheaters_arcanum.desc": "For the lazy",
 
     "taint_goo_bucket": "Bucket of Taint Goo",
+    "putrefaction_bucket": "Bucket of Putrefaction",
     "flux_meter": "Flux Meter",
     "taint_in_a_bottle": "Taint in a Bottle",
     "drinkable_taint": "Tainted Yoghurt",
@@ -414,6 +416,7 @@
     "symbol": "Control Symbol: {}",
 
     "taint_goo": "Taint Goo",
+    "putrefaction": "Putrefaction",
 
     "tainted_rock": "Tainted Rock",
     "tainted_andesite": "Tainted Andesite",

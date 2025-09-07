@@ -2,24 +2,25 @@ package arcana.fluids;
 
 import arcana.ArcanaRegistry;
 import arcana.ArcanaTags;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.fluid.FlowableFluid;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.Item;
-import net.minecraft.state.StateManager;
 import net.minecraft.state.property.Properties;
 import net.minecraft.tag.FluidTags;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.WorldAccess;
-import net.minecraft.world.WorldEvents;
+import net.minecraft.tag.TagKey;
 import net.minecraft.world.WorldView;
 
-public abstract class TaintGooFluid extends FlowableFluid{
+import java.util.Optional;
+
+public class TaintGooFluid extends ArcanaFluid{
+	
+	public TaintGooFluid(boolean isStillVariant){
+		super(isStillVariant);
+	}
 	
 	public Fluid getFlowing(){
 		return ArcanaRegistry.FLOWING_TAINT_GOO;
@@ -29,17 +30,41 @@ public abstract class TaintGooFluid extends FlowableFluid{
 		return ArcanaRegistry.STILL_TAINT_GOO;
 	}
 	
-	public boolean matchesType(Fluid fluid){
-		return fluid == getFlowing() || fluid == getStill();
+	public TagKey<Fluid> getTag(){
+		return ArcanaTags.TAINT_GOO_FLUID;
+	}
+	
+	public int getMaxLevel(){
+		return 4;
+	}
+	
+	public String getTexturePath(){
+		return "fluid/taint_goo";
+	}
+	
+	public Optional<BlockState> interact(FluidState self, FluidState other){
+		return other.isIn(FluidTags.LAVA) ? Optional.of(ArcanaRegistry.TAINT_CRUST.getDefaultState()) : Optional.empty();
+	}
+	
+	public float getEntityPushStrength(Entity entity){
+		return 0.001f;
+	}
+	
+	public float getEntityDragFactor(Entity entity){
+		return 0.1f;
+	}
+	
+	public float getEntitySpeedFactor(Entity entity){
+		return 0.017f;
+	}
+	
+	public void onEntityInteractTick(Entity entity){
+		if(entity instanceof LivingEntity lem && (lem.world.getTime() % 80 == 0 || !lem.hasStatusEffect(ArcanaRegistry.TAINTED)))
+			lem.addStatusEffect(new StatusEffectInstance(ArcanaRegistry.TAINTED, 5 * 20));
 	}
 	
 	protected boolean isInfinite(){
 		return false;
-	}
-	
-	protected void beforeBreakingBlock(WorldAccess world, BlockPos pos, BlockState state){
-		BlockEntity blockEntity = state.hasBlockEntity() ? world.getBlockEntity(pos) : null;
-		Block.dropStacks(state, world, pos, blockEntity);
 	}
 	
 	protected int getFlowSpeed(WorldView world){
@@ -54,58 +79,11 @@ public abstract class TaintGooFluid extends FlowableFluid{
 		return ArcanaRegistry.TAINT_GOO_BUCKET;
 	}
 	
-	protected boolean canBeReplacedWith(FluidState state, BlockView world, BlockPos pos, Fluid fluid, Direction direction){
-		return false;
-	}
-	
 	public int getTickRate(WorldView world){
 		return 40;
 	}
 	
-	protected float getBlastResistance(){
-		return 100;
-	}
-	
 	protected BlockState toBlockState(FluidState state){
 		return ArcanaRegistry.TAINT_GOO.getDefaultState().with(Properties.LEVEL_15, getBlockStateLevel(state));
-	}
-	
-	// see FluidBlockMixin for lava flowing into tainted goo
-	protected void flow(WorldAccess world, BlockPos pos, BlockState state, Direction direction, FluidState fluidState){
-		FluidState belowState = world.getFluidState(pos.down());
-		if(isIn(ArcanaTags.TAINT_GOO) && belowState.isIn(FluidTags.LAVA)){
-			world.setBlockState(pos, ArcanaRegistry.TAINT_CRUST.getDefaultState(), Block.NOTIFY_ALL);
-			world.syncWorldEvent(WorldEvents.LAVA_EXTINGUISHED, pos, 0);
-			return;
-		}
-		
-		super.flow(world, pos, state, direction, fluidState);
-	}
-	
-	public static class Flowing extends TaintGooFluid{
-		
-		protected void appendProperties(StateManager.Builder<Fluid, FluidState> builder){
-			super.appendProperties(builder);
-			builder.add(LEVEL);
-		}
-		
-		public int getLevel(FluidState state){
-			return state.get(LEVEL);
-		}
-		
-		public boolean isStill(FluidState state){
-			return false;
-		}
-	}
-	
-	public static class Still extends TaintGooFluid{
-		
-		public int getLevel(FluidState state){
-			return 4;
-		}
-		
-		public boolean isStill(FluidState state){
-			return true;
-		}
 	}
 }

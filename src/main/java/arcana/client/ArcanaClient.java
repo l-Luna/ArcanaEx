@@ -18,6 +18,7 @@ import arcana.client.research.EntrySectionRenderer;
 import arcana.client.research.PuzzleRenderer;
 import arcana.client.research.RequirementRenderer;
 import arcana.components.Researcher;
+import arcana.fluids.ArcanaFluid;
 import arcana.network.PkModifyPins;
 import arcana.network.PkTryAdvance;
 import arcana.research.BuiltinResearch;
@@ -99,8 +100,10 @@ public final class ArcanaClient implements ClientModInitializer{
 			
 			registry.register(EssentiaValveBlockEntityRenderer.GEAR_TEX);
 			
-			registry.register(arcId("fluid/taint_goo"));
-			registry.register(arcId("fluid/taint_goo_flowing"));
+			for(ArcanaFluid fluid : ArcanaRegistry.stillFluids){
+				registry.register(arcId(fluid.getTexturePath()));
+				registry.register(arcId(fluid.getTexturePath() + "_flowing"));
+			}
 		});
 		
 		ColorProviderRegistry.BLOCK.register(
@@ -146,15 +149,17 @@ public final class ArcanaClient implements ClientModInitializer{
 		BlockEntityRendererRegistry.register(ArcanaRegistry.WARDED_CAMPFIRE_BE, ctx ->
 				(BlockEntityRenderer<WardedCampfireBlockEntity>)(BlockEntityRenderer<?>)new CampfireBlockEntityRenderer(ctx));
 		
-		FluidRenderHandlerRegistry.INSTANCE.register(
-				ArcanaRegistry.STILL_TAINT_GOO,
-				ArcanaRegistry.FLOWING_TAINT_GOO,
-				new SimpleFluidRenderHandler(
-						arcId("fluid/taint_goo"),
-						arcId("fluid/taint_goo_flowing")
-				)
-		);
-		BlockRenderLayerMap.INSTANCE.putFluids(RenderLayer.getTranslucent(), ArcanaRegistry.STILL_TAINT_GOO, ArcanaRegistry.FLOWING_TAINT_GOO);
+		for(ArcanaFluid fluid : ArcanaRegistry.stillFluids){
+			FluidRenderHandlerRegistry.INSTANCE.register(
+					fluid.getStill(),
+					fluid.getFlowing(),
+					new SimpleFluidRenderHandler(
+							arcId(fluid.getTexturePath()),
+							arcId(fluid.getTexturePath() + "_flowing")
+					)
+			);
+			BlockRenderLayerMap.INSTANCE.putFluids(RenderLayer.getTranslucent(), fluid.getStill(), fluid.getFlowing());
+		}
 		
 		EntityRendererRegistry.register(ArcanaRegistry.THROWN_ALUMENTUM, ThrownAlumentumEntityRenderer::new);
 		EntityRendererRegistry.register(ArcanaRegistry.THROWN_TAINT_BOTTLE, FlyingItemEntityRenderer::new);

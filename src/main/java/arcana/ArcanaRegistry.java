@@ -19,6 +19,8 @@ import arcana.entities.*;
 import arcana.entities.crimson.*;
 import arcana.entities.locomotive.SuspensionEngineEntity;
 import arcana.entities.locomotive.Symbol;
+import arcana.fluids.ArcanaFluid;
+import arcana.fluids.PutrefactionFluid;
 import arcana.fluids.TaintGooFluid;
 import arcana.items.*;
 import arcana.items.foci.*;
@@ -129,8 +131,11 @@ public final class ArcanaRegistry{
 	private static final Settings GROUPED_SINGLE = new Settings().group(Tab.MAIN).maxCount(1);
 	
 	// fluids...
-	public static final FlowableFluid STILL_TAINT_GOO = new TaintGooFluid.Still();
-	public static final FlowableFluid FLOWING_TAINT_GOO = new TaintGooFluid.Flowing();
+	public static final FlowableFluid STILL_TAINT_GOO = new TaintGooFluid(true);
+	public static final FlowableFluid FLOWING_TAINT_GOO = new TaintGooFluid(false);
+	
+	public static final FlowableFluid STILL_PUTREFACTION = new PutrefactionFluid(true);
+	public static final FlowableFluid FLOWING_PUTREFACTION = new PutrefactionFluid(false);
 	
 	// status effects...
 	public static final StatusEffect TAINTED = new TaintedStatusEffect();
@@ -171,10 +176,11 @@ public final class ArcanaRegistry{
 	public static final Item COMPLETE_RESEARCH_NOTES = new ResearchNotesItem(new Settings().maxCount(1), true);
 	
 	public static final Item TOME_OF_SHARING = new TomeOfSharingItem(GROUPED_SINGLE);
-	
 	public static final Item CHEATERS_ARCANUM = new CheatersArcanumItem(GROUPED_SINGLE);
 	
 	public static final Item TAINT_GOO_BUCKET = new BucketItem(STILL_TAINT_GOO, new Settings().group(Tab.MAIN).maxCount(1).recipeRemainder(Items.BUCKET));
+	public static final Item PUTREFACTION_BUCKET = new BucketItem(STILL_PUTREFACTION, new Settings().group(Tab.MAIN).maxCount(1).recipeRemainder(Items.BUCKET));
+	
 	public static final Item FLUX_METER = new Item(GROUPED_SINGLE);
 	public static final Item TAINT_IN_A_BOTTLE = new TaintInABottleItem(GROUPED);
 	public static final Item DRINKABLE_TAINT = new DrinkableTaintItem(new Settings().group(Tab.MAIN).maxCount(1).food(new FoodComponent.Builder()
@@ -430,6 +436,7 @@ public final class ArcanaRegistry{
 	
 	public static final Block LIGHT_BLOCK = new LightFocusBlock(of(Material.DECORATION).dropsNothing().breakInstantly().ticksRandomly().luminance(state -> 7 + state.get(LightFocusBlock.life)));
 	public static final Block TAINT_GOO = new FluidBlock(STILL_TAINT_GOO, FabricBlockSettings.copy(Blocks.WATER));
+	public static final Block PUTREFACTION = new FluidBlock(STILL_PUTREFACTION, FabricBlockSettings.copy(Blocks.WATER));
 	
 	// natural tainted blocks
 	public static final Block TAINTED_ROCK = new TaintedBlock(of(Material.STONE, MapColor.PURPLE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(1.6f, 6));
@@ -668,11 +675,15 @@ public final class ArcanaRegistry{
 	
 	public static final List<Item> items = new ArrayList<>();
 	public static final List<Block> blocks = new ArrayList<>();
+	public static final List<ArcanaFluid> stillFluids = new ArrayList<>();
 	
 	public static void setup(){
 		// fluids
 		register("taint_goo", STILL_TAINT_GOO);
 		register("flowing_taint_goo", FLOWING_TAINT_GOO);
+		
+		register("putrefaction", STILL_PUTREFACTION);
+		register("flowing_putrefaction", FLOWING_PUTREFACTION);
 		
 		// items + wand components
 		register("scribbled_notes", SCRIBBLED_NOTES);
@@ -688,10 +699,11 @@ public final class ArcanaRegistry{
 		register("complete_research_notes", COMPLETE_RESEARCH_NOTES);
 		
 		register("tome_of_sharing", TOME_OF_SHARING);
-		
 		register("cheaters_arcanum", CHEATERS_ARCANUM);
 		
 		register("taint_goo_bucket", TAINT_GOO_BUCKET);
+		register("putrefaction_bucket", PUTREFACTION_BUCKET);
+		
 		register("flux_meter", FLUX_METER);
 		register("taint_in_a_bottle", TAINT_IN_A_BOTTLE);
 		register("drinkable_taint", DRINKABLE_TAINT);
@@ -996,6 +1008,7 @@ public final class ArcanaRegistry{
 		
 		register("light_block", LIGHT_BLOCK, false);
 		register("taint_goo", TAINT_GOO, false);
+		register("putrefaction", PUTREFACTION, false);
 		
 		register("tainted_rock", TAINTED_ROCK);
 		register("tainted_andesite", TAINTED_ANDESITE);
@@ -1138,6 +1151,8 @@ public final class ArcanaRegistry{
 	
 	private static void register(String name, Fluid fluid){
 		Registry.register(Registry.FLUID, arcId(name), fluid);
+		if(fluid instanceof ArcanaFluid af && af.isStill())
+			stillFluids.add(af);
 	}
 	
 	private static void register(String name, ScreenHandlerType<?> type){

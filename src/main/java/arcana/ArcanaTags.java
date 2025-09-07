@@ -32,7 +32,8 @@ public final class ArcanaTags{
 	public static final TagKey<Biome> SILVERWOOD_SPAWNABLE = TagKey.of(Registry.BIOME_KEY, arcId("silverwood_spawnable"));
 	public static final TagKey<Biome> GREATWOOD_SPAWNABLE = TagKey.of(Registry.BIOME_KEY, arcId("greatwood_spawnable"));
 	
-	public static final TagKey<Fluid> TAINT_GOO = TagKey.of(Registry.FLUID_KEY, arcId("taint_goo"));
+	public static final TagKey<Fluid> TAINT_GOO_FLUID = TagKey.of(Registry.FLUID_KEY, arcId("taint_goo"));
+	public static final TagKey<Fluid> PUTREFACTION_FLUID = TagKey.of(Registry.FLUID_KEY, arcId("putrefaction"));
 	
 	public static final TagKey<BannerPattern> ELDRITCH_BANNER_PATTERNS = TagKey.of(Registry.BANNER_PATTERN_KEY, arcId("pattern_item/eldritch"));
 	

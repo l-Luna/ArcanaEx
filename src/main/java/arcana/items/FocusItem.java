@@ -1,6 +1,7 @@
 package arcana.items;
 
 import arcana.aspects.AspectMap;
+import arcana.aspects.AspectStack;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -78,6 +79,13 @@ public class FocusItem extends Item{
 				return true;
 			}
 			return false;
+		}
+		
+		public void recharge(AspectMap added){
+			WandItem.updateAspects(wand, stored -> {
+				for(AspectStack stack : added.asStacks())
+					stored.addCapped(stack, WandItem.capacity(wand));
+			});
 		}
 		
 		public void stop(){

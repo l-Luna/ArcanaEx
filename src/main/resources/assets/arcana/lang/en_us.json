@@ -281,6 +281,7 @@
     "prismatic_light_focus": "Wand Focus: Prismatic Light",
     "equivalent_exchange_focus": "Wand Focus: Equivalent Exchange",
     "coagulation_focus": "Wand Focus: Coagulation",
+    "crystal_capacitor_focus": "Wand Focus: Crystal Capacitor",
 
     "eldritch_banner_pattern": "Banner Pattern",
     "eldritch_banner_pattern.desc": "Eldritch",
@@ -497,6 +498,7 @@
   "effect.arcana": {
     "tainted": "Tainted",
     "arcane_aura": "Arcane Aura",
+    "arcane_discharge": "Arcane Discharge",
 
     "air_power": "Aer Power",
     "fire_power": "Ignis Power",

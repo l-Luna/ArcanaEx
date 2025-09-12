@@ -9,6 +9,7 @@ import arcana.blocks.tainted.TaintedFallingBlock;
 import arcana.blocks.tainted.TaintedSnowyBlock;
 import arcana.blocks.tubes.*;
 import arcana.client.particles.AspectParticleEffect;
+import arcana.effects.ArcanaStatusEffect;
 import arcana.effects.AspectPowerStatusEffect;
 import arcana.effects.SetBonusStatusEffect;
 import arcana.effects.TaintedStatusEffect;
@@ -60,6 +61,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.fluid.FlowableFluid;
 import net.minecraft.fluid.Fluid;
@@ -140,6 +142,7 @@ public final class ArcanaRegistry{
 	// status effects...
 	public static final StatusEffect TAINTED = new TaintedStatusEffect();
 	public static final StatusEffect ARCANE_AURA = new SetBonusStatusEffect();
+	public static final StatusEffect ARCANE_DISCHARGE = new ArcanaStatusEffect(StatusEffectCategory.BENEFICIAL, 0xF881D6);
 	
 	public static final StatusEffect AIR_POWER = new AspectPowerStatusEffect(Aspects.AIR)
 			.addAttributeModifier(EntityAttributes.GENERIC_MOVEMENT_SPEED, "63c5f0ac-285e-42b7-9744-32d527655214", .1f, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
@@ -316,6 +319,7 @@ public final class ArcanaRegistry{
 	public static final Item PRISMATIC_LIGHT_FOCUS = new PrismaticLightFocusItem(GROUPED_SINGLE);
 	public static final Item EQUIVALENT_EXCHANGE_FOCUS = new EquivalentExchangeFocusItem(GROUPED_SINGLE);
 	public static final Item COAGULATION_FOCUS = new CoagulationFocusItem(GROUPED_SINGLE);
+	public static final Item CRYSTAL_CAPACITOR_FOCUS = new CrystalCapacitorFocusItem(new Settings().group(Tab.MAIN).maxCount(1).maxDamage(6));
 	
 	// banner patterns...
 	public static final BannerPattern ELDRITCH_BANNER_PATTERN_SHAPE = new BannerPattern("arcana_eldritch");
@@ -826,6 +830,7 @@ public final class ArcanaRegistry{
 		register("prismatic_light_focus", PRISMATIC_LIGHT_FOCUS);
 		register("equivalent_exchange_focus", EQUIVALENT_EXCHANGE_FOCUS);
 		register("coagulation_focus", COAGULATION_FOCUS);
+		register("crystal_capacitor_focus", CRYSTAL_CAPACITOR_FOCUS);
 		
 		register("eldritch", ELDRITCH_BANNER_PATTERN_SHAPE);
 		register("eldritch_banner_pattern", ELDRITCH_BANNER_PATTERN);
@@ -1121,6 +1126,7 @@ public final class ArcanaRegistry{
 		// status effects
 		register("tainted", TAINTED);
 		register("arcane_aura", ARCANE_AURA);
+		register("arcane_discharge", ARCANE_DISCHARGE);
 		register("air_power", AIR_POWER);
 		register("fire_power", FIRE_POWER);
 		register("water_power", WATER_POWER);

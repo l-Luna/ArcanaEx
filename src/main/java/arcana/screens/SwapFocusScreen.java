@@ -6,6 +6,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.option.KeyBinding;
+import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
@@ -31,6 +32,7 @@ public class SwapFocusScreen extends Screen{
 	
 	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta){
 		// who needs sprites when you have squares
+		ItemRenderer itemRenderer = client.getItemRenderer();
 		ItemStack wandStack = client.player.getStackInHand(hand);
 		if(wandStack.getItem() instanceof WandItem){
 			List<ItemStack> foci = getFoci(client.player);
@@ -47,21 +49,35 @@ public class SwapFocusScreen extends Screen{
 				int y = (int)(Math.sin(v) * (thisDist + 4)) - 4 + height / 2;
 				DrawableHelper.fillGradient(matrices, x, y, x + 8, y + 8, colour, colour, 0);
 			}
+			// draw the items first, to prevent damage bars appearing over tooltips
 			for(int i = 0; i < size; i++){
 				ItemStack focus = foci.get(i);
 				var v = (float)Math.toRadians(i * (360f / size));
 				int x = (int)(Math.cos(v) * distance) - 8 + width / 2;
 				int y = (int)(Math.sin(v) * distance) - 8 + height / 2;
-				client.getItemRenderer().renderInGui(focus, x, y);
-				
-				if(mouseX >= x && mouseX < x + 16 && mouseY >= y && mouseY < y + 16)
-					renderTooltip(matrices, focus, mouseX, mouseY);
+				itemRenderer.renderInGui(focus, x, y);
+				itemRenderer.renderGuiItemOverlay(textRenderer, focus, x, y);
 			}
 			ItemStack currentFocus = WandItem.focusFrom(wandStack);
 			if(!currentFocus.isEmpty()){
 				int x = width / 2 - 8;
 				int y = height / 2 - 8;
-				client.getItemRenderer().renderInGui(currentFocus, x, y);
+				itemRenderer.renderInGui(currentFocus, x, y);
+				itemRenderer.renderGuiItemOverlay(textRenderer, currentFocus, x, y);
+			}
+			// *then* tooltips
+			for(int i = 0; i < size; i++){
+				ItemStack focus = foci.get(i);
+				var v = (float)Math.toRadians(i * (360f / size));
+				int x = (int)(Math.cos(v) * distance) - 8 + width / 2;
+				int y = (int)(Math.sin(v) * distance) - 8 + height / 2;
+				
+				if(mouseX >= x && mouseX < x + 16 && mouseY >= y && mouseY < y + 16)
+					renderTooltip(matrices, focus, mouseX, mouseY);
+			}
+			if(!currentFocus.isEmpty()){
+				int x = width / 2 - 8;
+				int y = height / 2 - 8;
 				
 				if(mouseX >= x && mouseX < x + 16 && mouseY >= y && mouseY < y + 16)
 					renderTooltip(matrices, currentFocus, mouseX, mouseY);

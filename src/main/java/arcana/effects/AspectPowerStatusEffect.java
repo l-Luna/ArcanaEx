@@ -7,7 +7,7 @@ import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 
-public class AspectPowerStatusEffect extends StatusEffect{
+public class AspectPowerStatusEffect extends ArcanaStatusEffect{
 	
 	private final Aspect aspect;
 	

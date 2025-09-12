@@ -72,8 +72,10 @@ public class HudRenderer{
 				}
 				
 				ItemStack focusStack = WandItem.focusFrom(wandStack);
-				if(!focusStack.isEmpty())
+				if(!focusStack.isEmpty()){
 					MinecraftClient.getInstance().getItemRenderer().renderGuiItemIcon(focusStack, 8 + 21, 8 + 22);
+					MinecraftClient.getInstance().getItemRenderer().renderGuiItemOverlay(MinecraftClient.getInstance().textRenderer, focusStack, 8 + 21, 8 + 22);
+				}
 				
 				// for future HUD components
 				matrices.translate(70, 0, 0);

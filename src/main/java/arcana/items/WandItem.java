@@ -113,6 +113,7 @@ public class WandItem extends Item implements FabricItem, WarpingItem{
 				if(result != ActionResult.PASS && result != ActionResult.FAIL){
 					// no point charging for something that didn't work
 					updateAspects(wandStack, aspects -> aspects.take(cost));
+					// updateFocus(wandStack, oldFocus -> oldFocus.setDamage(focusStack.getDamage()));
 				}
 				return result;
 			}
@@ -123,17 +124,18 @@ public class WandItem extends Item implements FabricItem, WarpingItem{
 	
 	public ActionResult useOnEntity(ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand){
 		// creative mode "helpfully" copies the stack before use on entities, so we get the real thing here
-		ItemStack wand = user.getStackInHand(hand);
-		ItemStack focusStack = focusFrom(wand);
-		AspectMap stored = aspectsFrom(wand);
+		ItemStack wandStack = user.getStackInHand(hand);
+		ItemStack focusStack = focusFrom(wandStack);
+		AspectMap stored = aspectsFrom(wandStack);
 		if(focusStack.getItem() instanceof FocusItem fi){
-			var cost = fi.castCost(wand, focusStack, user).copy();
+			var cost = fi.castCost(wandStack, focusStack, user).copy();
 			cost.multiply(aspect -> costMultiplier(aspect, stack, user));
 			if(stored.contains(cost)){
-				ActionResult result = fi.castOnEntity(wand, focusStack, user, entity);
+				ActionResult result = fi.castOnEntity(wandStack, focusStack, user, entity);
 				if(result != ActionResult.PASS && result != ActionResult.FAIL){
 					// no point charging for something that didn't work
-					updateAspects(wand, aspects -> aspects.take(cost));
+					updateAspects(wandStack, aspects -> aspects.take(cost));
+					// updateFocus(wandStack, oldFocus -> oldFocus.setDamage(focusStack.getDamage()));
 				}
 				return result;
 			}
@@ -143,10 +145,6 @@ public class WandItem extends Item implements FabricItem, WarpingItem{
 	
 	public int getMaxUseTime(ItemStack stack){
 		return 72000;
-	}
-	
-	public boolean allowNbtUpdateAnimation(PlayerEntity player, Hand hand, ItemStack oldStack, ItemStack newStack){
-		return !focusFrom(oldStack).getItem().equals(focusFrom(newStack).getItem());
 	}
 	
 	public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks){
@@ -217,6 +215,23 @@ public class WandItem extends Item implements FabricItem, WarpingItem{
 			costs.append(Text.translatable("tooltip.arcana.wand.focus_cost.individual", stack.amount(), stack.type().name())
 					.formatted(ArcanaClient.colourForPrimal(stack.type())));
 		return Text.translatable("tooltip.arcana.wand.focus_cost.total", costs);
+	}
+	
+	public boolean allowNbtUpdateAnimation(PlayerEntity player, Hand hand, ItemStack oldStack, ItemStack newStack){
+		return !focusFrom(oldStack).getItem().equals(focusFrom(newStack).getItem());
+	}
+	
+	public boolean isItemBarVisible(ItemStack stack){
+		return focusFrom(stack).getMaxDamage() > 0;
+	}
+	
+	public int getItemBarColor(ItemStack stack){
+		return 0xF881D6;
+	}
+	
+	public int getItemBarStep(ItemStack stack){
+		ItemStack focusStack = focusFrom(stack);
+		return focusStack.getMaxDamage() > 0 ? Math.round(13 - focusStack.getDamage() * 13f / focusStack.getMaxDamage()) : 0;
 	}
 	
 	// TODO: NBT-backed aspect map?

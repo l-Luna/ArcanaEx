@@ -9,7 +9,7 @@ import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.ItemStack;
 
-public class SetBonusStatusEffect extends StatusEffect{
+public class SetBonusStatusEffect extends ArcanaStatusEffect{
 	
 	public SetBonusStatusEffect(){
 		super(StatusEffectCategory.BENEFICIAL, 0);

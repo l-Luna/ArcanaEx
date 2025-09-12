@@ -2,10 +2,9 @@ package arcana.effects;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 
-public class TaintedStatusEffect extends StatusEffect{
+public class TaintedStatusEffect extends ArcanaStatusEffect{
 	
 	public TaintedStatusEffect(){
 		super(StatusEffectCategory.HARMFUL, 0x8D4590);

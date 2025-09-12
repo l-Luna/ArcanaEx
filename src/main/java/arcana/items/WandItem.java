@@ -36,6 +36,7 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -145,7 +146,7 @@ public class WandItem extends Item implements FabricItem, WarpingItem{
 	}
 	
 	public boolean allowNbtUpdateAnimation(PlayerEntity player, Hand hand, ItemStack oldStack, ItemStack newStack){
-		return false;
+		return !focusFrom(oldStack).getItem().equals(focusFrom(newStack).getItem());
 	}
 	
 	public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks){
@@ -242,7 +243,7 @@ public class WandItem extends Item implements FabricItem, WarpingItem{
 		return Core.byName(stack.getOrCreateNbt().getString("core_id"));
 	}
 	
-	public static ItemStack focusFrom(ItemStack stack){
+	public static @NotNull ItemStack focusFrom(ItemStack stack){
 		return ItemStack.fromNbt(stack.getOrCreateNbt().getCompound("focus"));
 	}
 	

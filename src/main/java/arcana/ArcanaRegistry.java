@@ -68,6 +68,7 @@ import net.minecraft.fluid.Fluid;
 import net.minecraft.item.*;
 import net.minecraft.item.Item.Settings;
 import net.minecraft.particle.BlockStateParticleEffect;
+import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.particle.ParticleType;
 import net.minecraft.screen.ScreenHandlerType;
@@ -586,6 +587,8 @@ public final class ArcanaRegistry{
 	public static final StructurePlacement CRIMSON_CAMP_PLACEMENT = new RandomSpreadStructurePlacement(38, 12, SpreadType.LINEAR, 1356);
 	
 	// particle types...
+	public static DefaultParticleType TAINT_BUBBLE = FabricParticleTypes.simple();
+	
 	public static ParticleType<BlockStateParticleEffect> HUNGRY_NODE_DISC = FabricParticleTypes.complex(BlockStateParticleEffect.PARAMETERS_FACTORY);
 	public static ParticleType<BlockStateParticleEffect> HUNGRY_NODE_BLOCK = FabricParticleTypes.complex(BlockStateParticleEffect.PARAMETERS_FACTORY);
 	public static ParticleType<ItemStackParticleEffect> INFUSION_ITEM = FabricParticleTypes.complex(ItemStackParticleEffect.PARAMETERS_FACTORY);
@@ -1101,6 +1104,8 @@ public final class ArcanaRegistry{
 		register("crimson_camp", CRIMSON_CAMP, CRIMSON_CAMP_PLACEMENT);
 		
 		// particle types
+		register("taint_bubble", TAINT_BUBBLE);
+		
 		register("hungry_node_disc", HUNGRY_NODE_DISC);
 		register("hungry_node_block", HUNGRY_NODE_BLOCK);
 		register("infusion_item", INFUSION_ITEM);

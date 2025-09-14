@@ -10,10 +10,7 @@ import arcana.blocks.ArcanaBlockSettings;
 import arcana.blocks.be.WardedCampfireBlockEntity;
 import arcana.client.ber.*;
 import arcana.client.entity.*;
-import arcana.client.particles.EssentiaStreamParticle;
-import arcana.client.particles.HungryNodeBlockParticle;
-import arcana.client.particles.HungryNodeDiscParticle;
-import arcana.client.particles.InfusionItemParticle;
+import arcana.client.particles.*;
 import arcana.client.research.EntrySectionRenderer;
 import arcana.client.research.PuzzleRenderer;
 import arcana.client.research.RequirementRenderer;
@@ -193,6 +190,8 @@ public final class ArcanaClient implements ClientModInitializer{
 				GLFW.GLFW_KEY_G,
 				"category.arcana"
 		));
+		
+		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.TAINT_BUBBLE, spr -> new SimpleSpriteParticle.Factory(spr, 0.02f, 0, 50, 2f, true));
 		
 		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.HUNGRY_NODE_DISC, new HungryNodeDiscParticle.Factory());
 		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.HUNGRY_NODE_BLOCK, new HungryNodeBlockParticle.Factory());

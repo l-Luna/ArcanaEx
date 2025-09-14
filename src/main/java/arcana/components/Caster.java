@@ -1,5 +1,6 @@
 package arcana.components;
 
+import arcana.ArcanaRegistry;
 import arcana.aspects.Aspect;
 import arcana.aspects.AspectMap;
 import arcana.aspects.Aspects;
@@ -11,6 +12,7 @@ import arcana.items.WandItem;
 import arcana.network.PkShakeNode;
 import arcana.research.BuiltinResearch;
 import arcana.research.Research;
+import arcana.util.MathUtil;
 import dev.onyxstudios.cca.api.v3.component.Component;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistryV3;
@@ -19,6 +21,7 @@ import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
@@ -143,6 +146,7 @@ public class Caster implements Component, AutoSyncedComponent, ServerTickingComp
 				}
 				
 				// re-randomise time and draw the next aspect (if not -1)
+				Random rng = world().random;
 				AspectMap wandAspects = WandItem.aspectsFrom(wand), nodeAspects = node.getAspects();
 				if(!nodeAspects.contains(drainTargetAspect)){
 					// if in a stuck state, reroll until we aren't
@@ -152,7 +156,6 @@ public class Caster implements Component, AutoSyncedComponent, ServerTickingComp
 					boolean hasChannelling = researcher.isEntryComplete(Research.getEntry(BuiltinResearch.nodeChannellingEntry));
 					boolean hasChannelling2 = researcher.isEntryComplete(Research.getEntry(BuiltinResearch.nodeChannelling2Entry));
 					
-					Random rng = world().random;
 					if(drainTimer == 0){
 						int aspectDrainAmount = 3 + rng.nextInt(3);
 						int wandCapacity = WandItem.capacity(wand);
@@ -181,10 +184,18 @@ public class Caster implements Component, AutoSyncedComponent, ServerTickingComp
 				
 				if(nodeAspects.contains(drainTargetAspect)){
 					drainTimer--;
-					// TODO: particles during draining
-					/*if(world().getTime() % 15 == 0){
-						world().addParticle();
-					}*/
+					if(world() instanceof ServerWorld sw && world().getTime() % 7 == 0){
+						var dir = MathUtil.randomDir(rng);
+						sw.spawnParticles(ArcanaRegistry.LIGHTNING,
+								node.getX(),
+								node.getY(),
+								node.getZ(),
+								0,
+								dir.x,
+								dir.y,
+								dir.z,
+								rng.nextFloat() * 0.05f + 0.1f);
+					}
 				}
 				stateTimer++;
 			}

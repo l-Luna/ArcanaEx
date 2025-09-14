@@ -7,7 +7,6 @@ import arcana.components.Researcher;
 import arcana.research.BuiltinResearch;
 import arcana.research.Puzzle;
 import arcana.research.Research;
-import arcana.util.NbtUtil;
 import com.google.common.graph.EndpointPair;
 import com.google.common.graph.GraphBuilder;
 import com.google.common.graph.MutableGraph;
@@ -15,6 +14,7 @@ import com.google.common.graph.Traverser;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtString;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -41,7 +41,7 @@ public class Chemistry extends Puzzle{
 	}
 	
 	public Chemistry(NbtCompound data){
-		nodes = NbtUtil.readList(data, "nodes", x -> Aspects.byName(x.asString()));
+		nodes = data.getList("nodes", NbtElement.STRING_TYPE).stream().map(x->Aspects.byName(x.asString())).toList();
 		size = data.getInt("size");
 		absences = data.getInt("absences");
 		absenceSeed = data.getInt("absenceSeed");

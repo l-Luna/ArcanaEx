@@ -1,5 +1,6 @@
 package arcana.entities;
 
+import arcana.ArcanaRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.control.MoveControl;
@@ -38,6 +39,18 @@ public abstract class WispLikeEntity extends PathAwareEntity{
 		goalSelector.add(5, new ChargeTargetGoal(this));
 		goalSelector.add(10, new FloatAroundGoal(this));
 		targetSelector.add(2, new RevengeGoal(this));
+	}
+	
+	public void tick(){
+		super.tick();
+		if(world.isClient)
+			world.addParticle(ArcanaRegistry.LIGHTNING,
+					getX() + random.nextGaussian() * 0.1f,
+					getY() + random.nextGaussian() * 0.1f,
+					getZ() + random.nextGaussian() * 0.1f,
+					-getVelocity().x * 0.2f + random.nextGaussian() * 0.03f,
+					-getVelocity().y * 0.2f + random.nextGaussian() * 0.03f,
+					-getVelocity().z * 0.2f + random.nextGaussian() * 0.03f);
 	}
 	
 	public boolean hasNoGravity(){

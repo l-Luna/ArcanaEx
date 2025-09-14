@@ -588,6 +588,7 @@ public final class ArcanaRegistry{
 	
 	// particle types...
 	public static DefaultParticleType TAINT_BUBBLE = FabricParticleTypes.simple();
+	public static DefaultParticleType FLAME = FabricParticleTypes.simple();
 	
 	public static ParticleType<BlockStateParticleEffect> HUNGRY_NODE_DISC = FabricParticleTypes.complex(BlockStateParticleEffect.PARAMETERS_FACTORY);
 	public static ParticleType<BlockStateParticleEffect> HUNGRY_NODE_BLOCK = FabricParticleTypes.complex(BlockStateParticleEffect.PARAMETERS_FACTORY);
@@ -1105,6 +1106,7 @@ public final class ArcanaRegistry{
 		
 		// particle types
 		register("taint_bubble", TAINT_BUBBLE);
+		register("flame", FLAME);
 		
 		register("hungry_node_disc", HUNGRY_NODE_DISC);
 		register("hungry_node_block", HUNGRY_NODE_BLOCK);

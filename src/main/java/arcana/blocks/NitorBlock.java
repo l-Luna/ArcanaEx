@@ -1,9 +1,9 @@
 package arcana.blocks;
 
+import arcana.ArcanaRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
@@ -29,7 +29,7 @@ public class NitorBlock extends Block{
 			double vX = rng.nextGaussian() / 12;
 			double vY = rng.nextGaussian() / 12;
 			double vZ = rng.nextGaussian() / 12;
-			world.addParticle(ParticleTypes.FLAME, x + vX, y + vY, z + vZ, vX / 16, vY / 16, vZ / 16);
+			world.addParticle(ArcanaRegistry.FLAME, x + vX, y + vY, z + vZ, vX / 16, vY / 16, vZ / 16);
 		}
 	}
 	

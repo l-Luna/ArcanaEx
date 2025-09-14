@@ -192,6 +192,7 @@ public final class ArcanaClient implements ClientModInitializer{
 		));
 		
 		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.TAINT_BUBBLE, spr -> new SimpleSpriteParticle.Factory(spr, 0.02f, 0, 50, 2f, true));
+		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.FLAME, spr -> new SimpleSpriteParticle.Factory(spr, 0, 0.06f, 30, 1, false));
 		
 		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.HUNGRY_NODE_DISC, new HungryNodeDiscParticle.Factory());
 		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.HUNGRY_NODE_BLOCK, new HungryNodeBlockParticle.Factory());

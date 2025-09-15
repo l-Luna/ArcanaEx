@@ -3,11 +3,13 @@
 
   "itemGroup.arcana": {
     "group": "Arcana",
-    "main": "Main",
+    "main": "Arcana",
+    "resources": "Resources",
+    "wands": "Wands",
     "equipment": "Equipment",
     "crystals": "Crystals",
     "phials": "Phials",
-    "locomotives": "Constructs"
+    "tainted": "Tainted"
   },
 
   "category.arcana": "Arcana",

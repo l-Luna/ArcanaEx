@@ -5,6 +5,7 @@ import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.Material;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.tag.TagKey;
 
 public class ArcanaBlockSettings extends FabricBlockSettings{
@@ -12,6 +13,7 @@ public class ArcanaBlockSettings extends FabricBlockSettings{
 	private boolean dropsSelf = false;
 	private BlockLayer renderLayer = null;
 	private TagKey<Block> toolTag = null;
+	private ItemGroup group = null;
 	
 	protected ArcanaBlockSettings(Material material, MapColor color){
 		super(material, color);
@@ -57,6 +59,11 @@ public class ArcanaBlockSettings extends FabricBlockSettings{
 		return this;
 	}
 	
+	public ArcanaBlockSettings group(ItemGroup group){
+		this.group = group;
+		return this;
+	}
+	
 	//
 	
 	public BlockLayer getRenderLayer(){
@@ -69,6 +76,10 @@ public class ArcanaBlockSettings extends FabricBlockSettings{
 	
 	public TagKey<Block> getToolTag(){
 		return toolTag;
+	}
+	
+	public ItemGroup getGroup(){
+		return group;
 	}
 	
 	//

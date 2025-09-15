@@ -123,13 +123,21 @@ public final class ArcanaRegistry{
 				() -> new ItemStack(ARCANUM)
 		);
 		public static final ItemSubGroup MAIN = ItemSubGroup.create(ARCANA, arcId("main"));
+		public static final ItemSubGroup RESOURCES = ItemSubGroup.create(ARCANA, arcId("resources"));
 		public static final ItemSubGroup EQUIPMENT = ItemSubGroup.create(ARCANA, arcId("equipment"));
+		public static final ItemSubGroup WANDS = ItemSubGroup.create(ARCANA, arcId("wands"));
 		public static final ItemSubGroup CRYSTALS = ItemSubGroup.create(ARCANA, arcId("crystals"));
 		public static final ItemSubGroup PHIALS = ItemSubGroup.create(ARCANA, arcId("phials"));
+		public static final ItemSubGroup TAINTED = ItemSubGroup.create(ARCANA, arcId("tainted"));
 	}
 	
 	private static final Settings GROUPED = new Settings().group(Tab.MAIN);
 	private static final Settings GROUPED_SINGLE = new Settings().group(Tab.MAIN).maxCount(1);
+	
+	private static final Settings GROUPED_RES = new Settings().group(Tab.RESOURCES);
+	
+	private static final Settings GROUPED_WAND = new Settings().group(Tab.WANDS);
+	private static final Settings GROUPED_WAND_SINGLE = new Settings().group(Tab.WANDS).maxCount(1);
 	
 	// fluids...
 	public static final FlowableFluid STILL_TAINT_GOO = new TaintGooFluid(true);
@@ -198,7 +206,7 @@ public final class ArcanaRegistry{
 	public static final Item GUMMY_CUBES = new Item(new Settings().group(Tab.MAIN).food(aspectCandyFood(ORDER_POWER)));
 	public static final Item TWISTED_LIQUORICE = new Item(new Settings().group(Tab.MAIN).food(aspectCandyFood(ENTROPY_POWER)));
 	
-	public static final Item ARCANIUM_INGOT = new Item(GROUPED);
+	public static final Item ARCANIUM_INGOT = new Item(GROUPED_RES);
 	public static final Item ARCANIUM_SWORD = new SwordItem(ArcanaToolMaterials.ARCANIUM, 3, -2.4f, new Settings().group(Tab.EQUIPMENT));
 	public static final Item ARCANIUM_SHOVEL = new ShovelItem(ArcanaToolMaterials.ARCANIUM, 1.5f, -3, new Settings().group(Tab.EQUIPMENT));
 	public static final Item ARCANIUM_PICKAXE = new PickaxeItem(ArcanaToolMaterials.ARCANIUM, 1, -2.8f, new Settings().group(Tab.EQUIPMENT));
@@ -209,12 +217,12 @@ public final class ArcanaRegistry{
 	public static final Item ARCANIUM_LEGGINGS = new ArmorItem(ArcanaArmourMaterials.ARCANIUM, EquipmentSlot.LEGS, new Settings().group(Tab.EQUIPMENT));
 	public static final Item ARCANIUM_BOOTS = new ArmorItem(ArcanaArmourMaterials.ARCANIUM, EquipmentSlot.FEET, new Settings().group(Tab.EQUIPMENT));
 	
-	public static final Item THAUMIUM_INGOT = new Item(GROUPED);
-	public static final Item THAUMIUM_NUGGET = new Item(GROUPED);
+	public static final Item THAUMIUM_INGOT = new Item(GROUPED_RES);
+	public static final Item THAUMIUM_NUGGET = new Item(GROUPED_RES);
 	
-	public static final Item VOID_METAL_INGOT = new Item(GROUPED);
-	public static final Item VOID_METAL_NUGGET = new Item(GROUPED);
-	public static final Item VOID_SEED = new Item(GROUPED);
+	public static final Item VOID_METAL_INGOT = new Item(GROUPED_RES);
+	public static final Item VOID_METAL_NUGGET = new Item(GROUPED_RES);
+	public static final Item VOID_SEED = new Item(GROUPED_RES);
 	public static final Item VOID_METAL_SWORD = new SwordItem(ArcanaToolMaterials.VOID_METAL, 3, -2.4f, new Settings().group(Tab.EQUIPMENT));
 	public static final Item VOID_METAL_SHOVEL = new ShovelItem(ArcanaToolMaterials.VOID_METAL, 1.5f, -3, new Settings().group(Tab.EQUIPMENT));
 	public static final Item VOID_METAL_PICKAXE = new PickaxeItem(ArcanaToolMaterials.VOID_METAL, 1, -2.8f, new Settings().group(Tab.EQUIPMENT));
@@ -225,8 +233,8 @@ public final class ArcanaRegistry{
 	public static final Item VOID_METAL_LEGGINGS = new ArmorItem(ArcanaArmourMaterials.VOID_METAL, EquipmentSlot.LEGS, new Settings().group(Tab.EQUIPMENT));
 	public static final Item VOID_METAL_BOOTS = new ArmorItem(ArcanaArmourMaterials.VOID_METAL, EquipmentSlot.FEET, new Settings().group(Tab.EQUIPMENT));
 	
-	public static final Item SILVERLEAF = new Item(GROUPED);
-	public static final Item SILVERLEAF_AMALGAMATE = new Item(GROUPED);
+	public static final Item SILVERLEAF = new Item(GROUPED_RES);
+	public static final Item SILVERLEAF_AMALGAMATE = new Item(GROUPED_RES);
 	public static final Item SILVERLEAF_SWORD = new SwordItem(ArcanaToolMaterials.SILVERLEAF, 3, -2.4f, new Settings().group(Tab.EQUIPMENT));
 	public static final Item SILVERLEAF_SHOVEL = new ShovelItem(ArcanaToolMaterials.SILVERLEAF, 1.5f, -3, new Settings().group(Tab.EQUIPMENT));
 	public static final Item SILVERLEAF_PICKAXE = new PickaxeItem(ArcanaToolMaterials.SILVERLEAF, 1, -2.8f, new Settings().group(Tab.EQUIPMENT));
@@ -237,7 +245,7 @@ public final class ArcanaRegistry{
 	public static final Item SILVERLEAF_LEGGINGS = new ArmorItem(ArcanaArmourMaterials.SILVERLEAF, EquipmentSlot.LEGS, new Settings().group(Tab.EQUIPMENT));
 	public static final Item SILVERLEAF_BOOTS = new ArmorItem(ArcanaArmourMaterials.SILVERLEAF, EquipmentSlot.FEET, new Settings().group(Tab.EQUIPMENT));
 	
-	public static final Item WISPY_ESSENCE = new Item(GROUPED);
+	public static final Item WISPY_ESSENCE = new Item(GROUPED_RES);
 	
 	public static final Item ARCANIUM_SCALPEL = new ScalpelItem(new Settings().group(Tab.EQUIPMENT).maxDamage(100), ScalpelItem.ScalpelType.ROSE);
 	public static final Item SILVERLEAF_SCALPEL = new ScalpelItem(new Settings().group(Tab.EQUIPMENT).maxDamage(100), ScalpelItem.ScalpelType.SILVER);
@@ -255,70 +263,70 @@ public final class ArcanaRegistry{
 	public static final Item BOOTS_OF_THE_SAILOR = new BootsOfTheTravellerItem(ArcanaArmourMaterials.BOOTS_OF_THE_SAILOR, new Settings().group(Tab.EQUIPMENT));
 	public static final Item BOOTS_OF_THE_REAPER = new BootsOfTheTravellerItem(ArcanaArmourMaterials.BOOTS_OF_THE_REAPER, new Settings().group(Tab.EQUIPMENT));
 	
-	public static final Item ALCHEMICAL_IRON = new Item(GROUPED);
-	public static final Item ALCHEMICAL_GOLD = new Item(GROUPED);
-	public static final Item ALCHEMICAL_COPPER = new Item(GROUPED);
-	public static final Item ALTERED_IRON = new Item(GROUPED);
-	public static final Item ALUMENTUM = new AlumentumItem(GROUPED);
+	public static final Item ALCHEMICAL_IRON = new Item(GROUPED_RES);
+	public static final Item ALCHEMICAL_GOLD = new Item(GROUPED_RES);
+	public static final Item ALCHEMICAL_COPPER = new Item(GROUPED_RES);
+	public static final Item ALTERED_IRON = new Item(GROUPED_RES);
+	public static final Item ALUMENTUM = new AlumentumItem(GROUPED_RES);
 	
 	public static final Item SHATTERED_HUSK = new Item(GROUPED);
 	public static final Item SYNTHETIC_SCAFFOLDING = new Item(GROUPED);
 	public static final Item FORMLESS_FOAM = new Item(GROUPED);
 	
-	public static final Item WAND = new WandItem(GROUPED_SINGLE);
+	public static final Item WAND = new WandItem(GROUPED_WAND_SINGLE);
+	
+	// foci...
+	public static final Item FIRE_FOCUS = new FireFocusItem(GROUPED_WAND_SINGLE);
+	public static final Item PORTABLE_HOLE_FOCUS = new PortableHoleFocusItem(GROUPED_WAND_SINGLE);
+	public static final Item LIGHT_FOCUS = new LightFocusItem(GROUPED_WAND_SINGLE);
+	public static final Item PRISMATIC_LIGHT_FOCUS = new PrismaticLightFocusItem(GROUPED_WAND_SINGLE);
+	public static final Item EQUIVALENT_EXCHANGE_FOCUS = new EquivalentExchangeFocusItem(GROUPED_WAND_SINGLE);
+	public static final Item COAGULATION_FOCUS = new CoagulationFocusItem(GROUPED_WAND_SINGLE);
+	public static final Item CRYSTAL_CAPACITOR_FOCUS = new CrystalCapacitorFocusItem(new Settings().group(Tab.WANDS).maxCount(1).maxDamage(6));
 	
 	// caps...
-	public static final CapItem IRON_WAND_CAP = new CapItem(GROUPED, capProperties().capacity(5).complexity(3));
+	public static final CapItem IRON_WAND_CAP = new CapItem(GROUPED_WAND, capProperties().capacity(5).complexity(3));
 	
-	public static final CapItem GOLD_WAND_CAP = new CapItem(GROUPED, capProperties().capacity(14).complexity(15));
-	public static final CapItem COPPER_WAND_CAP = new CapItem(GROUPED, capProperties().capacity(10).complexity(12).strBonus(5));
-	public static final CapItem LEATHER_WAND_CAP = new CapItem(GROUPED, capProperties().capacity(10).complexity(12).discountAll(8));
+	public static final CapItem GOLD_WAND_CAP = new CapItem(GROUPED_WAND, capProperties().capacity(14).complexity(15));
+	public static final CapItem COPPER_WAND_CAP = new CapItem(GROUPED_WAND, capProperties().capacity(10).complexity(12).strBonus(5));
+	public static final CapItem LEATHER_WAND_CAP = new CapItem(GROUPED_WAND, capProperties().capacity(10).complexity(12).discountAll(8));
 	
-	public static final CapItem THAUMIUM_WAND_CAP = new CapItem(GROUPED, capProperties().capacity(25).complexity(35));
-	public static final CapItem BAMBOO_WAND_CAP = new CapItem(GROUPED, capProperties().capacity(20).complexity(30).discountFor(Aspects.AIR, 12));
-	public static final CapItem QUARTZ_WAND_CAP = new CapItem(GROUPED, capProperties().capacity(20).complexity(30).discountFor(Aspects.FIRE, 12));
-	public static final CapItem PRISMARINE_WAND_CAP = new CapItem(GROUPED, capProperties().capacity(20).complexity(30).discountFor(Aspects.WATER, 12));
-	public static final CapItem AMBER_WAND_CAP = new CapItem(GROUPED, capProperties().capacity(20).complexity(30).discountFor(Aspects.EARTH, 12));
-	public static final CapItem HONEYCOMB_WAND_CAP = new CapItem(GROUPED, capProperties().capacity(20).complexity(30).discountFor(Aspects.ORDER, 12));
+	public static final CapItem THAUMIUM_WAND_CAP = new CapItem(GROUPED_WAND, capProperties().capacity(25).complexity(35));
+	public static final CapItem BAMBOO_WAND_CAP = new CapItem(GROUPED_WAND, capProperties().capacity(20).complexity(30).discountFor(Aspects.AIR, 12));
+	public static final CapItem QUARTZ_WAND_CAP = new CapItem(GROUPED_WAND, capProperties().capacity(20).complexity(30).discountFor(Aspects.FIRE, 12));
+	public static final CapItem PRISMARINE_WAND_CAP = new CapItem(GROUPED_WAND, capProperties().capacity(20).complexity(30).discountFor(Aspects.WATER, 12));
+	public static final CapItem AMBER_WAND_CAP = new CapItem(GROUPED_WAND, capProperties().capacity(20).complexity(30).discountFor(Aspects.EARTH, 12));
+	public static final CapItem HONEYCOMB_WAND_CAP = new CapItem(GROUPED_WAND, capProperties().capacity(20).complexity(30).discountFor(Aspects.ORDER, 12));
 	// TODO: chaos elemental cap
 	
-	public static final CapItem NETHERITE_WAND_CAP = new CapItem(GROUPED, capProperties().capacity(55).complexity(75));
-	public static final CapItem MECHANICAL_WAND_CAP = new CapItem(GROUPED, capProperties().capacity(40).complexity(55)/*.mechanical()?*/);
-	public static final CapItem VOID_WAND_CAP = new CapItem(GROUPED, capProperties().capacity(50).complexity(80).warping(1));
-	public static final CapItem CRIMSON_WAND_CAP = new CapItem(GROUPED, capProperties().capacity(75).complexity(70).warping(2));
+	public static final CapItem NETHERITE_WAND_CAP = new CapItem(GROUPED_WAND, capProperties().capacity(55).complexity(75));
+	public static final CapItem MECHANICAL_WAND_CAP = new CapItem(GROUPED_WAND, capProperties().capacity(40).complexity(55)/*.mechanical()?*/);
+	public static final CapItem VOID_WAND_CAP = new CapItem(GROUPED_WAND, capProperties().capacity(50).complexity(80).warping(1));
+	public static final CapItem CRIMSON_WAND_CAP = new CapItem(GROUPED_WAND, capProperties().capacity(75).complexity(70).warping(2));
 	
 	public static final Cap MISSING_CAP = new Cap.Impl(arcId("missing"), 0, 0);
 	
 	// cores...
 	public static final Core STICK_CORE = new Core.Impl(arcId("stick_wand_core"), 20, 3);
 	
-	public static final CoreItem GREATWOOD_WAND_CORE = new CoreItem(GROUPED, coreProperties().capacity(45).strength(10));
-	public static final CoreItem NETHER_STEM_WAND_CORE = new CoreItem(GROUPED, coreProperties().capacity(37).strength(8).cmplxBonus(6));
-	public static final CoreItem VARNISHED_WOOD_WAND_CORE = new CoreItem(GROUPED, coreProperties().capacity(37).strength(8).discountAll(12));
+	public static final CoreItem GREATWOOD_WAND_CORE = new CoreItem(GROUPED_WAND, coreProperties().capacity(45).strength(10));
+	public static final CoreItem NETHER_STEM_WAND_CORE = new CoreItem(GROUPED_WAND, coreProperties().capacity(37).strength(8).cmplxBonus(6));
+	public static final CoreItem VARNISHED_WOOD_WAND_CORE = new CoreItem(GROUPED_WAND, coreProperties().capacity(37).strength(8).discountAll(12));
 	
-	public static final CoreItem SILVERWOOD_WAND_CORE = new CoreItem(GROUPED, coreProperties().capacity(78).strength(20));
-	public static final CoreItem SUGAR_CANE_WAND_CORE = new CoreItem(GROUPED, coreProperties().capacity(63).strength(15).discountFor(Aspects.AIR, 16));
-	public static final CoreItem BLAZE_WAND_CORE = new CoreItem(GROUPED, coreProperties().capacity(63).strength(15).discountFor(Aspects.FIRE, 16));
-	public static final CoreItem ICE_WAND_CORE = new CoreItem(GROUPED, coreProperties().capacity(63).strength(15).discountFor(Aspects.WATER, 16));
-	public static final CoreItem OBSIDIAN_WAND_CORE = new CoreItem(GROUPED, coreProperties().capacity(63).strength(15).discountFor(Aspects.EARTH, 16));
-	public static final CoreItem ARCANE_STONE_WAND_CORE = new CoreItem(GROUPED, coreProperties().capacity(63).strength(15).discountFor(Aspects.ORDER, 16));
-	public static final CoreItem BONE_WAND_CORE = new CoreItem(GROUPED, coreProperties().capacity(63).strength(15).discountFor(Aspects.ENTROPY, 16));
+	public static final CoreItem SILVERWOOD_WAND_CORE = new CoreItem(GROUPED_WAND, coreProperties().capacity(78).strength(20));
+	public static final CoreItem SUGAR_CANE_WAND_CORE = new CoreItem(GROUPED_WAND, coreProperties().capacity(63).strength(15).discountFor(Aspects.AIR, 16));
+	public static final CoreItem BLAZE_WAND_CORE = new CoreItem(GROUPED_WAND, coreProperties().capacity(63).strength(15).discountFor(Aspects.FIRE, 16));
+	public static final CoreItem ICE_WAND_CORE = new CoreItem(GROUPED_WAND, coreProperties().capacity(63).strength(15).discountFor(Aspects.WATER, 16));
+	public static final CoreItem OBSIDIAN_WAND_CORE = new CoreItem(GROUPED_WAND, coreProperties().capacity(63).strength(15).discountFor(Aspects.EARTH, 16));
+	public static final CoreItem ARCANE_STONE_WAND_CORE = new CoreItem(GROUPED_WAND, coreProperties().capacity(63).strength(15).discountFor(Aspects.ORDER, 16));
+	public static final CoreItem BONE_WAND_CORE = new CoreItem(GROUPED_WAND, coreProperties().capacity(63).strength(15).discountFor(Aspects.ENTROPY, 16));
 	
-	public static final CoreItem ARCANIUM_WAND_CORE = new CoreItem(GROUPED, coreProperties().capacity(130).strength(40));
-	public static final CoreItem MECHANICAL_WAND_CORE = new CoreItem(GROUPED, coreProperties().capacity(100).strength(30));
-	public static final CoreItem TAINTED_WAND_CORE = new CoreItem(GROUPED, coreProperties().capacity(110).strength(58).warping(1));
-	public static final CoreItem ELDRITCH_WAND_CORE = new CoreItem(GROUPED, coreProperties().capacity(165).strength(35).warping(2));
+	public static final CoreItem ARCANIUM_WAND_CORE = new CoreItem(GROUPED_WAND, coreProperties().capacity(130).strength(40));
+	public static final CoreItem MECHANICAL_WAND_CORE = new CoreItem(GROUPED_WAND, coreProperties().capacity(100).strength(30));
+	public static final CoreItem TAINTED_WAND_CORE = new CoreItem(GROUPED_WAND, coreProperties().capacity(110).strength(58).warping(1));
+	public static final CoreItem ELDRITCH_WAND_CORE = new CoreItem(GROUPED_WAND, coreProperties().capacity(165).strength(35).warping(2));
 	
 	public static final Core MISSING_CORE = new Core.Impl(arcId("missing"), 0, 0);
-	
-	// foci...
-	public static final Item FIRE_FOCUS = new FireFocusItem(GROUPED_SINGLE);
-	public static final Item PORTABLE_HOLE_FOCUS = new PortableHoleFocusItem(GROUPED_SINGLE);
-	public static final Item LIGHT_FOCUS = new LightFocusItem(GROUPED_SINGLE);
-	public static final Item PRISMATIC_LIGHT_FOCUS = new PrismaticLightFocusItem(GROUPED_SINGLE);
-	public static final Item EQUIVALENT_EXCHANGE_FOCUS = new EquivalentExchangeFocusItem(GROUPED_SINGLE);
-	public static final Item COAGULATION_FOCUS = new CoagulationFocusItem(GROUPED_SINGLE);
-	public static final Item CRYSTAL_CAPACITOR_FOCUS = new CrystalCapacitorFocusItem(new Settings().group(Tab.MAIN).maxCount(1).maxDamage(6));
 	
 	// banner patterns...
 	public static final BannerPattern ELDRITCH_BANNER_PATTERN_SHAPE = new BannerPattern("arcana_eldritch");
@@ -326,8 +334,8 @@ public final class ArcanaRegistry{
 	
 	// other...?
 	public static final Item EMPTY_PHIAL = new PhialItem(new Settings().group(Tab.PHIALS), null);
-	public static final Item PRIMORDIAL_PEARL = new PrimordialPearlItem(new Settings().group(Tab.MAIN).maxCount(1).rarity(Rarity.EPIC));
-	public static final Item BROKEN_AMULET = new TrinketItem(GROUPED_SINGLE);
+	public static final Item PRIMORDIAL_PEARL = new PrimordialPearlItem(new Settings().group(Tab.RESOURCES).maxCount(1).rarity(Rarity.EPIC));
+	public static final Item BROKEN_AMULET = new TrinketItem(new Settings().group(Tab.RESOURCES));
 	public static final Item CHALLENGERS_AMULET = new TrinketItem(GROUPED_SINGLE);
 	public static final Item VICTORS_MEDALLION = new TrinketItem(GROUPED_SINGLE);
 	
@@ -365,10 +373,10 @@ public final class ArcanaRegistry{
 	public static final Block MYSTIC_MIST = new MysticMistBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).sounds(BlockSoundGroup.METAL).strength(2.5f).nonOpaque());
 	public static final Block WARDED_CAMPFIRE = new WardedCampfireBlock(of(Material.WOOD).dropsSelf().renderLayer(CUTOUT).strength(2).sounds(BlockSoundGroup.WOOD).luminance(whenLit(15)).nonOpaque());
 	
-	public static final Block ARCANIUM_BLOCK = new Block(of(Material.METAL, MapColor.PINK).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(5, 6).sounds(BlockSoundGroup.METAL));
-	public static final Block THAUMIUM_BLOCK = new Block(of(Material.METAL, MapColor.DARK_DULL_PINK).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(5, 6).sounds(BlockSoundGroup.METAL));
-	public static final Block VOID_METAL_BLOCK = new Block(of(Material.METAL, MapColor.PURPLE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(5, 6).sounds(BlockSoundGroup.METAL));
-	public static final Block SILVERLEAF_AMALGAMATE_BLOCK = new Block(of(Material.METAL, MapColor.WHITE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(5, 6).sounds(BlockSoundGroup.METAL));
+	public static final Block ARCANIUM_BLOCK = new Block(of(Material.METAL, MapColor.PINK).group(Tab.RESOURCES).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(5, 6).sounds(BlockSoundGroup.METAL));
+	public static final Block THAUMIUM_BLOCK = new Block(of(Material.METAL, MapColor.DARK_DULL_PINK).group(Tab.RESOURCES).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(5, 6).sounds(BlockSoundGroup.METAL));
+	public static final Block VOID_METAL_BLOCK = new Block(of(Material.METAL, MapColor.PURPLE).group(Tab.RESOURCES).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(5, 6).sounds(BlockSoundGroup.METAL));
+	public static final Block SILVERLEAF_AMALGAMATE_BLOCK = new Block(of(Material.METAL, MapColor.WHITE).group(Tab.RESOURCES).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(5, 6).sounds(BlockSoundGroup.METAL));
 	
 	public static final Block ARCANE_STONE = new Block(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3, 7));
 	public static final Block ARCANE_STONE_BRICKS = new Block(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3.5f, 7));
@@ -442,20 +450,20 @@ public final class ArcanaRegistry{
 	public static final Block PUTREFACTION = new FluidBlock(STILL_PUTREFACTION, FabricBlockSettings.copy(Blocks.WATER));
 	
 	// natural tainted blocks
-	public static final Block TAINTED_ROCK = new TaintedBlock(of(Material.STONE, MapColor.PURPLE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(1.6f, 6));
-	public static final Block TAINTED_ANDESITE = new TaintedBlock(of(Material.STONE, MapColor.PURPLE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(1.6f, 6));
-	public static final Block TAINTED_DIORITE = new TaintedBlock(of(Material.STONE, MapColor.PURPLE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(1.6f, 6));
-	public static final Block TAINTED_GRANITE = new TaintedBlock(of(Material.STONE, MapColor.PURPLE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(1.6f, 6));
+	public static final Block TAINTED_ROCK = new TaintedBlock(of(Material.STONE, MapColor.PURPLE).group(Tab.TAINTED).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(1.6f, 6));
+	public static final Block TAINTED_ANDESITE = new TaintedBlock(of(Material.STONE, MapColor.PURPLE).group(Tab.TAINTED).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(1.6f, 6));
+	public static final Block TAINTED_DIORITE = new TaintedBlock(of(Material.STONE, MapColor.PURPLE).group(Tab.TAINTED).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(1.6f, 6));
+	public static final Block TAINTED_GRANITE = new TaintedBlock(of(Material.STONE, MapColor.PURPLE).group(Tab.TAINTED).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(1.6f, 6));
 	
-	public static final Block TAINTED_SOIL = new TaintedBlock(of(Material.SOIL, MapColor.PURPLE).dropsSelf().usesTool(SHOVEL_MINEABLE).strength(0.5f).sounds(BlockSoundGroup.GRAVEL));
-	public static final Block TAINTED_GRASS_BLOCK = new TaintedSnowyBlock(of(Material.SOLID_ORGANIC, MapColor.PURPLE).usesTool(SHOVEL_MINEABLE).strength(0.6f).sounds(BlockSoundGroup.GRASS));
-	public static final Block TAINTED_SAND = new TaintedFallingBlock(of(Material.AGGREGATE, MapColor.PURPLE).usesTool(SHOVEL_MINEABLE).strength(0.5f).sounds(BlockSoundGroup.SAND));
-	public static final Block TAINTED_SANDSTONE = new TaintedBlock(of(Material.STONE, MapColor.PURPLE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(0.8f));
-	public static final Block TAINTED_GRAVEL = new TaintedFallingBlock(of(Material.AGGREGATE, MapColor.PURPLE).usesTool(SHOVEL_MINEABLE).strength(0.7f).sounds(BlockSoundGroup.GRAVEL));
-	public static final Block TAINTED_SNOW_BLOCK = new TaintedFallingBlock(of(Material.SNOW_BLOCK, MapColor.PURPLE).requiresTool(SHOVEL_MINEABLE).strength(0.2f).sounds(BlockSoundGroup.SNOW));
+	public static final Block TAINTED_SOIL = new TaintedBlock(of(Material.SOIL, MapColor.PURPLE).group(Tab.TAINTED).dropsSelf().usesTool(SHOVEL_MINEABLE).strength(0.5f).sounds(BlockSoundGroup.GRAVEL));
+	public static final Block TAINTED_GRASS_BLOCK = new TaintedSnowyBlock(of(Material.SOLID_ORGANIC, MapColor.PURPLE).group(Tab.TAINTED).usesTool(SHOVEL_MINEABLE).strength(0.6f).sounds(BlockSoundGroup.GRASS));
+	public static final Block TAINTED_SAND = new TaintedFallingBlock(of(Material.AGGREGATE, MapColor.PURPLE).group(Tab.TAINTED).usesTool(SHOVEL_MINEABLE).strength(0.5f).sounds(BlockSoundGroup.SAND));
+	public static final Block TAINTED_SANDSTONE = new TaintedBlock(of(Material.STONE, MapColor.PURPLE).group(Tab.TAINTED).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(0.8f));
+	public static final Block TAINTED_GRAVEL = new TaintedFallingBlock(of(Material.AGGREGATE, MapColor.PURPLE).group(Tab.TAINTED).usesTool(SHOVEL_MINEABLE).strength(0.7f).sounds(BlockSoundGroup.GRAVEL));
+	public static final Block TAINTED_SNOW_BLOCK = new TaintedFallingBlock(of(Material.SNOW_BLOCK, MapColor.PURPLE).group(Tab.TAINTED).requiresTool(SHOVEL_MINEABLE).strength(0.2f).sounds(BlockSoundGroup.SNOW));
 	
 	// unique tainted blocks
-	public static final Block TAINT_CRUST = new TaintedBlock(of(Material.SOLID_ORGANIC, MapColor.PURPLE).requiresTool(HOE_MINEABLE).strength(0.7f).sounds(BlockSoundGroup.SLIME));
+	public static final Block TAINT_CRUST = new TaintedBlock(of(Material.SOLID_ORGANIC, MapColor.PURPLE).group(Tab.TAINTED).requiresTool(HOE_MINEABLE).strength(0.7f).sounds(BlockSoundGroup.SLIME));
 	
 	// points of interest...
 	// created in register
@@ -792,6 +800,14 @@ public final class ArcanaRegistry{
 		
 		register("wand", WAND);
 		
+		register("fire_focus", FIRE_FOCUS);
+		register("portable_hole_focus", PORTABLE_HOLE_FOCUS);
+		register("light_focus", LIGHT_FOCUS);
+		register("prismatic_light_focus", PRISMATIC_LIGHT_FOCUS);
+		register("equivalent_exchange_focus", EQUIVALENT_EXCHANGE_FOCUS);
+		register("coagulation_focus", COAGULATION_FOCUS);
+		register("crystal_capacitor_focus", CRYSTAL_CAPACITOR_FOCUS);
+		
 		register("iron_wand_cap", IRON_WAND_CAP);
 		register("gold_wand_cap", GOLD_WAND_CAP);
 		register("copper_wand_cap", COPPER_WAND_CAP);
@@ -824,14 +840,6 @@ public final class ArcanaRegistry{
 		register("tainted_wand_core", TAINTED_WAND_CORE);
 		register("eldritch_wand_core", ELDRITCH_WAND_CORE);
 		registerCoreOnly(MISSING_CORE);
-		
-		register("fire_focus", FIRE_FOCUS);
-		register("portable_hole_focus", PORTABLE_HOLE_FOCUS);
-		register("light_focus", LIGHT_FOCUS);
-		register("prismatic_light_focus", PRISMATIC_LIGHT_FOCUS);
-		register("equivalent_exchange_focus", EQUIVALENT_EXCHANGE_FOCUS);
-		register("coagulation_focus", COAGULATION_FOCUS);
-		register("crystal_capacitor_focus", CRYSTAL_CAPACITOR_FOCUS);
 		
 		register("eldritch", ELDRITCH_BANNER_PATTERN_SHAPE);
 		register("eldritch_banner_pattern", ELDRITCH_BANNER_PATTERN);
@@ -1138,8 +1146,12 @@ public final class ArcanaRegistry{
 	private static void register(String name, Block block, boolean andItem){
 		Registry.register(Registry.BLOCK, arcId(name), block);
 		blocks.add(block);
-		if(andItem)
-			register(name, new BlockItem(block, GROUPED));
+		if(andItem){
+			Settings settings = new Settings().group(Tab.MAIN);
+			if(block.settings instanceof ArcanaBlockSettings abs && abs.getGroup() != null)
+				settings.group(abs.getGroup());
+			register(name, new BlockItem(block, settings));
+		}
 	}
 	
 	private static void register(String name, Fluid fluid){

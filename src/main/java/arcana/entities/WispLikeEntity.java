@@ -46,7 +46,7 @@ public abstract class WispLikeEntity extends PathAwareEntity{
 		if(world.isClient)
 			world.addParticle(ArcanaRegistry.LIGHTNING,
 					getX() + random.nextGaussian() * 0.1f,
-					getY() + random.nextGaussian() * 0.1f,
+					getY() + (getHeight() / 2f) + random.nextGaussian() * 0.1f,
 					getZ() + random.nextGaussian() * 0.1f,
 					-getVelocity().x * 0.2f + random.nextGaussian() * 0.03f,
 					-getVelocity().y * 0.2f + random.nextGaussian() * 0.03f,

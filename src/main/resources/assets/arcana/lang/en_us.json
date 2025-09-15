@@ -210,7 +210,7 @@
     "alchemical_iron": "Alchemical Iron",
     "alchemical_gold": "Alchemical Gold",
     "alchemical_copper": "Alchemical Copper",
-    "altered_iron": "Altered Iron",
+    "alchemical_arcanium": "Altered Gold",
     "alumentum": "Alumentum",
 
     "rarefied_sherbert": "Rarefied Sherbert",
@@ -994,12 +994,12 @@
       "title": "Magical Metallurgy",
       "desc": "Where metals meet magic",
       "stages": [
-        "Mundane materials just aren't cutting it anymore.\nTools break too quickly, armour doesn't protect well enough, and these materials simply aren't as conductive to the arcane crafts as I would like. Even enchantment is a nuisance.\nThe notes often reference a material named {u}Thaumium{r}, created by alchemically imbuing a metal with magic itself. I don't know what their metallurgy was like - it seems that the set of ores available to me differ to what they had - but the principle seems sound.",
-        "This isn't thaumium. At least, not like they described. It's similar in strength and conductivity, but blindingly bright, and seems to be giving off it's infused magic over time... maybe I overshot somewhat.\nEither way, it's stronger than most materials I have in plentiful supply, and more conductive to vis than any.\nAll the usual tool and armour recipes work, producing stronger equipment than regular iron.\nAdditionally, I can use it to create a stylish ring; while it's defensive capabilities are lacking, it will be useful for further artifice work.\nEntire blocks can be transmuted, at a slight discount."
+        "Mundane materials just aren't cutting it anymore.\nTools break too quickly, armour doesn't protect well enough, and these materials simply aren't as conductive to the arcane crafts as I would like.\nThe notes often reference a material named {u}Thaumium{r}, created by alchemically imbuing a metal with magic itself. I don't know what their metallurgy was like - it seems that the set of ores available to me differ to what they had - but the principle seems sound.",
+        "This isn't thaumium. At least, not like they described. Some of its properties persist, but blindingly bright, shedding its contained magic over time... maybe I overshot somewhat.\nAll the usual tool and armour recipes work, producing equipment with an enchantability and mining speed above mundane gold or diamond, with a toughness slightly above iron.\nEntire blocks can be transmuted, at a slight discount."
       ],
       "addenda.set_bonus": {
         "name": "Arcane Aura",
-        "text": "When wearing a full set of armour made from this metal, the magic radiating from it becomes physically noticeable, almost.\nThe effect, dubbed Arcane Aura, boosts the strength of my spells."
+        "text": "When wearing a full set of armour made from this metal, the magic radiating from it becomes physical, almost.\nThis effect, Arcane Aura, boosts the strength of my spells."
       }
     },
 
@@ -1019,7 +1019,7 @@
     "transmutation_shortcut.text": "Extending my transmutation knowledge to purified metal turned out to be surprisingly trivial.\nAll transmutation recipes work on alchemical metal for the cost of a single ingot.",
 
     "metallurgy_shortcut": "Metallurgy Shortcut",
-    "metallurgy_shortcut.text": "Extending my metallurgy knowledge to purified metal turned out to be surprisingly trivial.\nAlchemical iron can be converted to Altered Iron for the cost of a single arcanium ingot. Altered iron can then be smelted to produce two arcanium ingots at once.",
+    "metallurgy_shortcut.text": "Extending my metallurgy knowledge to purified metal turned out to be surprisingly trivial.\nAlchemical gold can be converted to Altered Gold for the cost of a single arcanium ingot. Altered gold can then be smelted to produce two arcanium ingots at once.",
 
     "alumentum": "Mystical Fuel",
     "alumentum.stage.1": "Nitor was a start, but its stability makes it useless as a fuel, barely warm enough to heat a crucible; I'd be better off using a campfire than trying to make that work.\nNo, what I need is something far more energetic and excitable, only stable enough to transport to a blast furnace; perhaps it could even double as a weapon...",

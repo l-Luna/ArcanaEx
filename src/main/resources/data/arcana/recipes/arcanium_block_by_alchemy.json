@@ -1,7 +1,7 @@
 {
   "type": "arcana:alchemy",
   "ingredient": {
-    "item": "minecraft:iron_block"
+    "item": "minecraft:gold_block"
   },
   "aspects": [
     "50*magic"

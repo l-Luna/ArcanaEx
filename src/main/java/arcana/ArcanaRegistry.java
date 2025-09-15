@@ -264,7 +264,7 @@ public final class ArcanaRegistry{
 	public static final Item ALCHEMICAL_IRON = new Item(GROUPED_RES);
 	public static final Item ALCHEMICAL_GOLD = new Item(GROUPED_RES);
 	public static final Item ALCHEMICAL_COPPER = new Item(GROUPED_RES);
-	public static final Item ALTERED_IRON = new Item(GROUPED_RES);
+	public static final Item ALCHEMICAL_ARCANIUM = new Item(GROUPED_RES);
 	public static final Item ALUMENTUM = new AlumentumItem(GROUPED_RES);
 	
 	public static final Item SHATTERED_HUSK = new Item(GROUPED);
@@ -784,7 +784,7 @@ public final class ArcanaRegistry{
 		register("alchemical_iron", ALCHEMICAL_IRON);
 		register("alchemical_gold", ALCHEMICAL_GOLD);
 		register("alchemical_copper", ALCHEMICAL_COPPER);
-		register("altered_iron", ALTERED_IRON);
+		register("alchemical_arcanium", ALCHEMICAL_ARCANIUM);
 		register("alumentum", ALUMENTUM);
 		FuelRegistry.INSTANCE.add(ALUMENTUM, 1600 * 4); // 4x coal = half stack
 		

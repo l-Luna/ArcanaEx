@@ -254,7 +254,7 @@
       "key": "arcana:metallurgy_shortcut",
       "name": "research.arcana.metallurgy_shortcut",
       "icons": [
-        "arcana:altered_iron"
+        "arcana:alchemical_arcanium"
       ],
       "category": "arcana:alchemy",
       "parents": [
@@ -274,11 +274,11 @@
         },
         {
           "type": "alchemy",
-          "content": "arcana:alchemical_metals/altered_iron"
+          "content": "arcana:alchemical_metals/alchemical_arcanium"
         },
         {
           "type": "cooking",
-          "content": "arcana:alchemical_metals/arcanium_ingot_from_altered_iron_by_smelting"
+          "content": "arcana:alchemical_metals/arcanium_ingot_from_alchemical_arcanium_by_smelting"
         }
       ]
     },

@@ -1,13 +1,13 @@
 {
   "type": "arcana:alchemy",
   "ingredient": {
-    "item": "arcana:alchemical_iron"
+    "item": "arcana:alchemical_gold"
   },
   "aspects": [
     "6*magic"
   ],
   "research": "metallurgy_shortcut",
   "result": {
-    "item": "arcana:altered_iron"
+    "item": "arcana:alchemical_arcanium"
   }
 }

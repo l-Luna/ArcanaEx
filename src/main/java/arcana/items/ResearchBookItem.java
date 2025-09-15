@@ -34,7 +34,7 @@ public class ResearchBookItem extends Item{
 		return TypedActionResult.success(user.getStackInHand(hand), world.isClient());
 	}
 	
-	// "just use packets" no
+	// avoids direct reference without using a proxy interface
 	private static void openBook(Identifier bookId){
 		try{
 			Class.forName("arcana.client.ArcanaClient").getMethod("openBook", Identifier.class).invoke(null, bookId);

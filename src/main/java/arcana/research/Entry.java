@@ -23,7 +23,8 @@ public record Entry(
 		List<String> meta,
 		List<Addendum> addenda,
 		int x,
-		int y){
+		int y
+){
 	
 	public Stream<Pin> getAllPins(World world){
 		return sections().stream().flatMap(section -> section.pins(sections.indexOf(section), world, this));

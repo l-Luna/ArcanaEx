@@ -704,6 +704,10 @@
     },
 
     // Research Entries
+
+    // Scraps
+    "scribbled_notes": "!",
+
     // Fundamentals Tab: Root Research
     "root": "Arcana",
     "root.text": "A sudden burst of inspiration, key insights that make clear the meaning of these scribbled notes... the way forward is unclear, but I know that this is the start of something magical.\nI'll write down my research in this book: the Arcanum, with all of the old notes stored inside for reference.",

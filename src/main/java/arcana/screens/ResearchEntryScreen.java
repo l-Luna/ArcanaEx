@@ -50,7 +50,7 @@ public class ResearchEntryScreen extends Screen{
 	private ButtonWidget left, right, cont/*inue*/;
 	private List<PinButton> pins;
 	
-	protected ResearchEntryScreen(Entry entry, @Nullable Screen parent){
+	public ResearchEntryScreen(Entry entry, @Nullable Screen parent){
 		super(Text.literal(""));
 		this.entry = entry;
 		this.parent = parent;

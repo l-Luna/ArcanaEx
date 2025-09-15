@@ -213,8 +213,12 @@ public final class ArcanaClient implements ClientModInitializer{
 	
 	@ReflectivelyUtilized // by ResearchBookItem::use
 	public static void openBook(Identifier bookId){
-		var client = MinecraftClient.getInstance();
-		client.execute(() -> client.setScreen(new ResearchBookScreen(Research.getBook(bookId), null)));
+		MinecraftClient.getInstance().execute(() -> MinecraftClient.getInstance().setScreen(new ResearchBookScreen(Research.getBook(bookId), null)));
+	}
+	
+	@ReflectivelyUtilized // by DirectResearchEntryItem::use
+	public static void openEntry(Identifier entryId){
+		MinecraftClient.getInstance().execute(() -> MinecraftClient.getInstance().setScreen(new ResearchEntryScreen(Research.getEntry(entryId), null)));
 	}
 	
 	// TODO ugly

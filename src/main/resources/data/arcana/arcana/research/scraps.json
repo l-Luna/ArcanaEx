@@ -1,0 +1,46 @@
+{
+	"books": [
+		{
+			"key": "arcana:scribbled_notes"
+		},
+		{
+			"key": "arcana:crimson_scraps"
+		}
+	],
+	"categories": [
+		{
+			"key": "arcana:scribbled_notes",
+			"in": "arcana:scribbled_notes",
+			"icon": "",
+			"name": "",
+			"bg": ""
+		},
+		{
+			"key": "arcana:crimson_scraps",
+			"in": "arcana:crimson_scraps",
+			"icon": "",
+			"name": "",
+			"bg": ""
+		}
+	],
+	"entries": [
+		{
+			"key": "arcana:scribbled_notes",
+			"name": "",
+			"icons": [],
+			"category": "arcana:scribbled_notes",
+			"meta": [
+				"root",
+				"untitled"
+			],
+			"x": 0,
+			"y": 0,
+			"sections": [
+				{
+					"type": "text",
+					"content": "research.arcana.scribbled_notes"
+				}
+			]
+		}
+	]
+}

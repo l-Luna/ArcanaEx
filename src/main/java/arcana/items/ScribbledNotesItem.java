@@ -9,7 +9,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
-import java.util.concurrent.atomic.AtomicReference;
+import static arcana.Arcana.arcId;
 
 public class ScribbledNotesItem extends Item{
 	
@@ -18,14 +18,14 @@ public class ScribbledNotesItem extends Item{
 	}
 	
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand){
-		var stack = user.getStackInHand(hand);
-		var ret = new AtomicReference<>(TypedActionResult.pass(stack));
-		AuraWorld.from(world).raycastNodes(user, false).ifPresent(node -> {
-			var newStack = new ItemStack(ArcanaRegistry.ARCANUM);
-			System.out.println(stack);
+		ItemStack stack = user.getStackInHand(hand);
+		if(AuraWorld.from(world).raycastNodes(user, false).isPresent()){
+			ItemStack newStack = new ItemStack(ArcanaRegistry.ARCANUM);
 			user.setStackInHand(hand, newStack);
-			ret.set(TypedActionResult.success(newStack));
-		});
-		return ret.get();
+			return TypedActionResult.success(newStack);
+		}else{
+			DirectResearchEntryItem.openEntry(arcId("scribbled_notes"));
+			return TypedActionResult.success(stack);
+		}
 	}
 }

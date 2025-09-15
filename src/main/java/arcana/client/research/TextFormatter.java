@@ -358,7 +358,7 @@ public class TextFormatter{
 		if(section != null/* && ArcanaConfig.ENTRY_TITLES.get()*/){
 			Entry entry = Research.getEntry(section.getIn());
 			// add titles to initial sections
-			if(entry.sections().get(0).equals(section))
+			if(entry.sections().get(0).equals(section) && !entry.meta().contains("untitled"))
 				in = "{c}{size:1.5}" + I18n.translate(entry.name()) + "{r}{~sep}" + in;
 			else{
 				// add titles to addenda initial sections

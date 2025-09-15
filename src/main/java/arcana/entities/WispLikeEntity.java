@@ -3,6 +3,7 @@ package arcana.entities;
 import arcana.ArcanaRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.MovementType;
 import net.minecraft.entity.ai.control.MoveControl;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.RevengeGoal;
@@ -10,12 +11,9 @@ import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.ai.pathing.BirdNavigation;
 import net.minecraft.entity.ai.pathing.EntityNavigation;
 import net.minecraft.entity.mob.PathAwareEntity;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 
 import java.util.EnumSet;
@@ -42,7 +40,9 @@ public abstract class WispLikeEntity extends PathAwareEntity{
 	}
 	
 	public void tick(){
+		noClip = true;
 		super.tick();
+		noClip = false;
 		if(world.isClient)
 			world.addParticle(ArcanaRegistry.LIGHTNING,
 					getX() + random.nextGaussian() * 0.1f,
@@ -65,6 +65,11 @@ public abstract class WispLikeEntity extends PathAwareEntity{
 		return nav;
 	}
 	
+	public void move(MovementType movementType, Vec3d movement){
+		super.move(movementType, movement);
+		checkBlockCollision();
+	}
+	
 	protected static class FloatAroundGoal extends Goal{
 		private final WispLikeEntity entity;
 		
@@ -74,7 +79,9 @@ public abstract class WispLikeEntity extends PathAwareEntity{
 		}
 		
 		public boolean canStart(){
-			return entity.navigation.isIdle() && entity.random.nextInt(toGoalTicks(7)) == 0 && entity.getTarget() == null;
+			return entity.navigation.isIdle()
+					&& entity.random.nextInt(toGoalTicks(7)) == 0
+					&& entity.getTarget() == null;
 		}
 		
 		public boolean shouldContinue(){
@@ -90,11 +97,8 @@ public abstract class WispLikeEntity extends PathAwareEntity{
 				var rng = entity.random;
 				Vec3d target = anchor.add(rng.nextBetween(-10, 10), rng.nextBetween(-4, 8), rng.nextBetween(-10, 10));
 				BlockPos targetPos = new BlockPos(target);
-				if(entity.world.isAir(targetPos)){
-					BlockHitResult cast = entity.world.raycast(new RaycastContext(entity.getPos(), Vec3d.ofCenter(targetPos), RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, entity));
-					if(cast.getType() == HitResult.Type.MISS)
-						entity.moveControl.moveTo(targetPos.getX(), targetPos.getY(), targetPos.getZ(), 0.6);
-				}
+				if(entity.world.isAir(targetPos))
+					entity.moveControl.moveTo(targetPos.getX(), targetPos.getY(), targetPos.getZ(), 0.6);
 			}
 		}
 	}
@@ -113,7 +117,7 @@ public abstract class WispLikeEntity extends PathAwareEntity{
 					&& target.isAlive()
 					&& !entity.moveControl.isMoving()
 					&& entity.random.nextInt(toGoalTicks(7)) == 0
-					&& entity.squaredDistanceTo(target) <= 5*5;
+					&& (entity.squaredDistanceTo(target) <= 5 * 5 || Math.abs(entity.getY() - target.getY()) >= 1.5f);
 		}
 		
 		public boolean shouldContinue(){
@@ -129,27 +133,20 @@ public abstract class WispLikeEntity extends PathAwareEntity{
 		
 		public void tick(){
 			Entity target = entity.getTarget();
-			if(target == null) return;
+			if(target == null)
+				return;
 			
 			// if the wisp is in the correct ring, eventually stop strafing
 			Vec3d diff = target.getPos().subtract(entity.getPos());
 			Vec3d hDir = diff.multiply(1, 0, 1).normalize();
 			boolean satisfied = diff.lengthSquared() > 5 * 5
-					&& diff.lengthSquared() < 6 * 6
-					&& Math.abs(diff.y) < 0.5f;
+					&& Math.abs(diff.y) < 0.7f;
 			if(satisfied && entity.random.nextInt(toGoalTicks(20)) == 0)
 				stop();
 			
 			Vec3d vel = entity.getVelocity();
-			
-			// voted #1 jank 2025
-			// try fix Y position
-			vel = vel.add(0, diff.y * 0.3f, 0);
-			// try fix horizontal distance
-			vel = vel.add(hDir.negate().multiply((diff.length() - 5.5f) * 0.3f));
-			// add a rightwards drift
-			vel = vel.add(hDir.rotateY(MathHelper.PI/2).multiply(0.1f));
-			
+			vel = vel.add(0, MathHelper.clamp(diff.y, -1, 1) * 0.1f, 0);
+			vel = vel.add(hDir.negate().multiply(0.2f));
 			entity.setVelocity(vel);
 		}
 	}
@@ -168,7 +165,8 @@ public abstract class WispLikeEntity extends PathAwareEntity{
 					&& target.isAlive()
 					&& !entity.moveControl.isMoving()
 					&& entity.random.nextInt(toGoalTicks(7)) == 0
-					&& entity.squaredDistanceTo(target) > 5*5;
+					&& entity.squaredDistanceTo(target) > 5 * 5
+					&& Math.abs(entity.getY() - target.getY()) < 1.5f;
 		}
 		
 		public boolean shouldContinue(){
@@ -180,11 +178,13 @@ public abstract class WispLikeEntity extends PathAwareEntity{
 		
 		public void start(){
 			Entity target = entity.getTarget();
-			if(target == null) return;
+			if(target == null)
+				return;
 			
 			Vec3d dir = target.getPos().subtract(entity.getPos()).normalize();
 			Vec3d targetPos = target.getPos().add(dir.multiply(5));
-			entity.moveControl.moveTo(targetPos.getX(), targetPos.getY(), targetPos.getZ(), 2.3f);
+			entity.moveControl.moveTo(targetPos.getX(), targetPos.getY(), targetPos.getZ(), 2.6f);
+			entity.setVelocity(entity.getVelocity().multiply(1, 0, 1));
 		}
 		
 		public boolean shouldRunEveryTick(){
@@ -193,11 +193,11 @@ public abstract class WispLikeEntity extends PathAwareEntity{
 		
 		public void tick(){
 			Entity target = entity.getTarget();
-			if(target == null) return;
+			if(target == null)
+				return;
 			
 			if(entity.getBoundingBox().intersects(target.getBoundingBox()))
 				entity.tryAttack(target);
-			
 		}
 	}
 	

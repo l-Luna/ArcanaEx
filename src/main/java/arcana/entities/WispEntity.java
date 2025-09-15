@@ -66,7 +66,7 @@ public class WispEntity extends WispLikeEntity implements Angerable{
 	public void tick(){
 		super.tick();
 		if(!world.isClient)
-			tickAngerLogic((ServerWorld)world, false);
+			tickAngerLogic((ServerWorld)world, true);
 	}
 	
 	public boolean handleAttack(Entity attacker){
@@ -106,11 +106,13 @@ public class WispEntity extends WispLikeEntity implements Angerable{
 	public void writeCustomDataToNbt(NbtCompound nbt){
 		super.writeCustomDataToNbt(nbt);
 		writeAngerToNbt(nbt);
+		nbt.putLong("anchor", anchor.asLong());
 	}
 	
 	public void readCustomDataFromNbt(NbtCompound nbt){
 		super.readCustomDataFromNbt(nbt);
 		readAngerFromNbt(world, nbt);
+		anchor = nbt.contains("anchor") ? BlockPos.fromLong(nbt.getLong("anchor")) : null;
 	}
 	
 	// for angerable

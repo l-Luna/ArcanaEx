@@ -2,8 +2,6 @@ package arcana.datagen;
 
 import arcana.aspects.Aspects;
 import arcana.blocks.CrystalClusterBlock;
-import arcana.blocks.SymbolBlock;
-import arcana.entities.locomotive.Symbol;
 import arcana.items.ScalpelItem;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
@@ -96,11 +94,6 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 					}))
 			);
 		}
-		
-		for(SymbolBlock block : Symbol.blocks){
-			blockGen.registerNorthDefaultHorizontalRotation(block);
-			symbolModel.upload(block, TextureMap.texture(block), blockGen.modelCollector);
-		}
 	}
 	
 	public void generateItemModels(ItemModelGenerator itemGen){
@@ -129,10 +122,6 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		for(CrystalClusterBlock value : Aspects.clusters.values()){
 			noAutoGen.add(value.asItem());
 			itemGen.register(value.asItem(), Models.GENERATED);
-		}
-		for(Block value : Symbol.blocks){
-			noAutoGen.add(value.asItem());
-			Models.GENERATED.upload(ModelIds.getItemModelId(value.asItem()), TextureMap.layer0(value), itemGen.writer);
 		}
 		
 		for(Item item : items)

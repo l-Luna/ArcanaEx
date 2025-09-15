@@ -114,27 +114,6 @@
     "aura": "Auram"
   },
 
-  // Locomotive Symbols
-  "arcana.symbol": {
-    "blank": "Blank",
-
-    "hold": "Hold",
-    "fuel": "Fuel",
-    "load": "Load",
-    "unload": "Unload",
-
-    "follow_me": "Follow Me",
-    "turn_left": "Turn Left",
-    "turn_right": "Turn Right",
-    "split": "Split",
-
-    "drift": "Drift",
-    "synchronize": "Synchronize",
-
-    "grab": "Grab",
-    "eject": "Eject"
-  },
-
   "arcana.flux_origin": {
     "presentation": "{}: {}",
 

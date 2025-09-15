@@ -157,13 +157,13 @@ public class NodeTypes{
 		// make disc particles
 		// disc radius = 1/3 * pull radius
 		NbtCompound blocks = node.getTag().getCompound("blocks");
-		if(!blocks.getKeys().isEmpty()){
+		if(!blocks.getKeys().isEmpty() && world instanceof ServerWorld sw){
 			float discRad = (float)(range * (1 / 3f) + world.getRandom().nextGaussian() / 5f);
 			float xPos = (float)(node.getX());
 			float zPos = (float)(node.getZ() - discRad);
 			// TODO: weighted selection
 			BlockState state = (Registry.BLOCK.get(new Identifier(blocks.getKeys().toArray(new String[0])[world.getRandom().nextInt(blocks.getKeys().size())]))).getDefaultState();
-			world.addParticle(new BlockStateParticleEffect(ArcanaRegistry.HUNGRY_NODE_DISC, state), xPos, node.getY(), zPos, discRad / 6f, 0, discRad / 6f);
+			sw.spawnParticles(new BlockStateParticleEffect(ArcanaRegistry.HUNGRY_NODE_DISC, state), xPos, node.getY(), zPos, 0, discRad / 6f, 0, discRad / 6f, 1);
 		}
 	}
 	

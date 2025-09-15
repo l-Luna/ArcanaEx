@@ -74,9 +74,13 @@ public class Node implements Position{
 		for(int i = 0; i < 2; i++){
 			Aspect aspect = Util.getRandom(aspectCap.aspectSet().stream().toList(), rng);
 			aspectCap.take(aspect, rng.nextBetween(2, 5));
+			if(aspectCap.isEmpty()){
+				destroy(true);
+				return;
+			}
 		}
 		
-		if(degrade || aspectCap.isEmpty()){
+		if(degrade){
 			NodeType nextType = NodeTypes.weakerType(type);
 			if(nextType == null){
 				destroy(true);

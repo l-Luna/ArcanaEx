@@ -1,7 +1,11 @@
 package arcana.network;
 
 import com.unascribed.lib39.tunnel.api.NetworkContext;
+import com.unascribed.lib39.tunnel.api.S2CMessage;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 
 import static arcana.Arcana.arcId;
 
@@ -21,5 +25,11 @@ public final class Networking{
 		context.register(PkShakeNode.class);
 		
 		ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, didJoin) -> new PkSyncResearchData().sendTo(player));
+	}
+	
+	public static void sendToNearbyPlayers(World sw, S2CMessage message, Vec3d pos){
+		for(PlayerEntity pe : sw.getPlayers())
+			if(pe.getPos().isInRange(pos, 32))
+				message.sendTo(pe);
 	}
 }

@@ -1,9 +1,12 @@
 package arcana.blocks;
 
 import arcana.aspects.Aspect;
+import arcana.aspects.AspectMap;
 import arcana.aspects.Aspects;
 import arcana.aura.AuraWorld;
 import arcana.aura.Node;
+import arcana.network.Networking;
+import arcana.network.PkShakeNode;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
@@ -16,6 +19,7 @@ import net.minecraft.state.property.Property;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
@@ -87,15 +91,20 @@ public class CrystalClusterBlock extends WaterloggableBlock{
 			AuraWorld view = AuraWorld.from((World)world);
 			for(Node node : view.getNodesInBounds(new Box(pos.down(4).south(4).west(4), pos.up(4).north(4).east(4)))){
 				var toDrain = getAspect();
-				if(toDrain == Aspects.AURA)
-					toDrain = Aspects.primals.get(world.random.nextInt(6));
-				if(node.getAspects().contains(toDrain)){
-					int amount = aspect == Aspects.AURA ? world.random.nextInt(6) + 9 : world.random.nextInt(3) + 2;
-					if(node.getAspects().get(toDrain) >= amount){
-						node.getAspects().take(toDrain, amount);
+				boolean isAuram = toDrain == Aspects.AURA;
+				AspectMap nodeAspects = node.getAspects();
+				if(isAuram && !nodeAspects.isEmpty())
+					toDrain = nodeAspects.aspectByIndex(random.nextInt(nodeAspects.size()));
+				if(nodeAspects.contains(toDrain)){
+					int amount = isAuram ? world.random.nextInt(5) + 9 : world.random.nextInt(3) + 2;
+					if(nodeAspects.get(toDrain) >= amount){
+						nodeAspects.take(toDrain, amount);
 						node.markDirty();
 						world.setBlockState(pos, state.with(size, state.get(size) + 1));
 						break;
+					}else if(isAuram){
+						node.damage(random.nextInt(12) == 0, random);
+						Networking.sendToNearbyPlayers(world, new PkShakeNode(node, 12), Vec3d.ofCenter(pos));
 					}
 				}
 			}

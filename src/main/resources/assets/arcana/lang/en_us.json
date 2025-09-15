@@ -594,6 +594,12 @@
     "research_toast": "Research Unlocked!",
     "addendum_toast": "Addendum Unlocked!"
   },
+
+  // Damage Sources
+  "death.attack.arcana": {
+    "hungry_node": "%1$s was consumed by a hungry node",
+    "hungry_node.player": "%1$s was thrown into a hungry node by %2$s"
+  },
   
   // Research UI
   "research": {

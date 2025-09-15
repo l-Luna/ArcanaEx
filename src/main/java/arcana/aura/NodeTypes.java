@@ -8,14 +8,21 @@ import com.google.common.collect.HashBiMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FluidBlock;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.TypeFilter;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
@@ -85,10 +92,10 @@ public class NodeTypes{
 	// TODO: config
 	private static final float hungryCarryFraction = 0.4f;
 	
-	private static void tickHungry(Node node, World world){
+	private static <T extends Entity> void tickHungry(Node node, World world){
 		BlockPos pos = new BlockPos(node);
-		// check blocks in range
 		int range = /*(int)(.7 * Math.sqrt(node.getAspects().asStacks().stream().mapToInt(AspectStack::amount).sum()) + 1)*/6;
+		// check blocks in range
 		Mutable cursor = new Mutable();
 		for(int x = -range; x < range; x++){
 			for(int y = -range; y < range; y++){
@@ -100,13 +107,18 @@ public class NodeTypes{
 					BlockState state = world.getBlockState(cursor);
 					if(!empty(state)){
 						if(Arrays.stream(Direction.values()).anyMatch(dir -> empty(world.getBlockState(cursor.offset(dir))))){
-							// spawn particles
-							float xR = world.getRandom().nextFloat(), yR = world.getRandom().nextFloat(), zR = world.getRandom().nextFloat();
-							if(world.getRandom().nextInt(2) == 0)
-								world.addParticle(new BlockStateParticleEffect(ArcanaRegistry.HUNGRY_NODE_BLOCK, state), cursor.getX() + xR, cursor.getY() + yR, cursor.getZ() + zR, -(x - Math.abs(node.getX() % 1) + xR) / 20f, -(y - Math.abs(node.getY() % 1) + yR) / 20f, -(z - Math.abs(node.getZ() % 1) + zR) / 20f);
-							// TODO: min break time
-							if(!world.isClient){
-								ServerWorld sw = (ServerWorld)world;
+							// ticking always happens on the server, so this always passes
+							// (TODO: just pass serverworld?)
+							if(world instanceof ServerWorld sw){
+								// spawn particles
+								if(world.getRandom().nextInt(2) == 0){
+									float xR = world.getRandom().nextFloat(), yR = world.getRandom().nextFloat(), zR = world.getRandom().nextFloat();
+									Vec3d fromPos = new Vec3d(cursor.getX() + xR, cursor.getY() + yR, cursor.getZ() + zR);
+									Vec3d mov = node.asVec3d().subtract(fromPos).multiply(1/20f);
+									sw.spawnParticles(new BlockStateParticleEffect(ArcanaRegistry.HUNGRY_NODE_BLOCK, state), fromPos.x, fromPos.y, fromPos.z, 0, mov.x, mov.y, mov.z, 1);
+								}
+								
+								// TODO: min break time
 								float hardness = state.getHardness(world, cursor);
 								if(hardness != -1 && world.getRandom().nextInt((int)(hardness * 300) + 1) == 0){
 									NbtCompound blocks = node.getOrCreateTag().getCompound("blocks");
@@ -130,6 +142,18 @@ public class NodeTypes{
 				}
 			}
 		}
+		// pull items nearby
+		for(ItemEntity entity : world.getEntitiesByType(EntityType.ITEM, new Box(pos).expand(range), x -> x.getPos().isInRange(node, range))){
+			Vec3d toVec = node.asVec3d().subtract(entity.getPos()).normalize().multiply(0.1f);
+			entity.addVelocity(toVec.x, toVec.y, toVec.z);
+		}
+		
+		// and damage entities that touch it
+		for(Entity entity : world.getEntitiesByType(TypeFilter.instanceOf(LivingEntity.class), new Box(pos).expand(range), x -> x.getPos().isInRange(node, range * 0.75f)))
+			entity.damage(ArcanaRegistry.HUNGRY_NODE_DAMAGE, 2f);
+		for(Entity entity : world.getEntitiesByType(EntityType.ITEM, new Box(pos).expand(1), x -> x.getPos().isInRange(node, Node.HALF_NODE)))
+			entity.damage(ArcanaRegistry.HUNGRY_NODE_DAMAGE, 2f);
+		
 		// make disc particles
 		// disc radius = 1/3 * pull radius
 		NbtCompound blocks = node.getTag().getCompound("blocks");

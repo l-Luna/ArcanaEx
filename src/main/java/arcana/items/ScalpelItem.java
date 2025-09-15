@@ -83,7 +83,7 @@ public class ScalpelItem extends Item implements PosableItem{
 					else{
 						Random rng = world.random;
 						new PkShakeNode(node, 40).sendToAllWatching(user);
-						boolean degrade = type == ScalpelType.ROSE || rng.nextInt(4) == 0;
+						boolean degrade = type == ScalpelType.ROSE || rng.nextInt(3) != 0;
 						node.damage(degrade, rng);
 						int wisps = rng.nextBetween(2, 3);
 						for(int i = 0; i < wisps; i++){

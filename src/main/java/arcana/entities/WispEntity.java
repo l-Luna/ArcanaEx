@@ -2,6 +2,7 @@ package arcana.entities;
 
 import arcana.ArcanaRegistry;
 import arcana.ArcanaTags;
+import arcana.items.ScalpelSlashable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
@@ -24,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
-public class WispEntity extends WispLikeEntity implements Angerable{
+public class WispEntity extends WispLikeEntity implements Angerable, ScalpelSlashable{
 	
 	// where the spawning node is
 	private BlockPos anchor;
@@ -135,5 +136,9 @@ public class WispEntity extends WispLikeEntity implements Angerable{
 	
 	public void chooseRandomAngerTime(){
 		setAngerTime(world.random.nextBetween(20 * 25, 20 * 40));
+	}
+	
+	public void onScalpelSlash(World world, PlayerEntity user, BlockPos pos){
+		kill();
 	}
 }

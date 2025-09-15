@@ -121,7 +121,8 @@
 
     "crucible_empty": "Emptied Crucible",
     "crucible_boiloff": "Crucible Boil-off",
-    "distillery_failure": "Distillery Failure"
+    "distillery_failure": "Distillery Failure",
+    "scalpel_tampering": "Scalpel Tampering"
   },
 
   // Items

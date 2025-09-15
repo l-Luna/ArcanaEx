@@ -12,7 +12,8 @@ public enum FluxOrigin{
 	
 	DISTILLERY_FAILURE(ArcanaRegistry.DISTILLERY_PATHFINDER, "arcana.flux_origin.distillery_failure"),
 	
-	TAINT_IN_A_BOTTLE(ArcanaRegistry.TAINT_IN_A_BOTTLE)
+	TAINT_IN_A_BOTTLE(ArcanaRegistry.TAINT_IN_A_BOTTLE),
+	SCALPEL_TAMPERING(ArcanaRegistry.ARCANIUM_SCALPEL, "arcana.flux_origin.scalpel_tampering")
 	;
 	
 	public final Identifier sprite;

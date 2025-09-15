@@ -1,17 +1,21 @@
 package arcana.blocks;
 
 import arcana.ArcanaRegistry;
+import arcana.aura.AuraWorld;
+import arcana.aura.FluxOrigin;
 import arcana.blocks.be.InfusionMatrixBlockEntity;
+import arcana.items.ScalpelSlashable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-public class InfusionMatrixBlock extends BlockWithEntity{
+public class InfusionMatrixBlock extends BlockWithEntity implements ScalpelSlashable{
 	
 	public InfusionMatrixBlock(Settings settings){
 		super(settings);
@@ -30,5 +34,11 @@ public class InfusionMatrixBlock extends BlockWithEntity{
 		super.onSyncedBlockEvent(state, world, pos, type, data);
 		BlockEntity be = world.getBlockEntity(pos);
 		return be != null && be.onSyncedBlockEvent(type, data);
+	}
+	
+	public void onScalpelSlash(World world, PlayerEntity user, BlockPos pos){
+		world.addBlockBreakParticles(pos, world.getBlockState(pos));
+		world.setBlockState(pos, ArcanaRegistry.TAINT_GOO.getDefaultState());
+		AuraWorld.from(world).incrementFlux(13, FluxOrigin.SCALPEL_TAMPERING, pos);
 	}
 }

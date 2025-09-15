@@ -23,7 +23,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Arm;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3f;
@@ -72,11 +74,11 @@ public class ScalpelItem extends Item implements PosableItem{
 	}
 	
 	public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks){
-		// tick 24 is the actual "hit" frame
-		if(remainingUseTicks == 6){
-			if(!world.isClient){
-				Optional<Node> nodeO = AuraWorld.from(world).raycastNodes(user, false);
-				if(nodeO.isPresent()){
+		// tick 23 is the actual "hit" frame
+		if(remainingUseTicks == 7 && user instanceof PlayerEntity pe){
+			Optional<Node> nodeO = AuraWorld.from(world).raycastNodes(user, false);
+			if(nodeO.isPresent()){
+				if(!world.isClient){
 					Node node = nodeO.get();
 					if(type == ScalpelType.BLACK)
 						node.destroy(true); // TODO
@@ -95,14 +97,24 @@ public class ScalpelItem extends Item implements PosableItem{
 						}
 					}
 					stack.damage(1, user, e -> e.sendToolBreakStatus(e.getActiveHand()));
-				}else{
-					double reach = ReachEntityAttributes.getReachDistance(user, 4.5);
-					Vec3d look = user.getRotationVec(1).multiply(reach);
-					Box box = user.getBoundingBox().stretch(look).expand(1);
-					EntityHitResult hit = ProjectileUtil.raycast(user, user.getEyePos(), user.getEyePos().add(look), box, WispEntity.class::isInstance, reach*reach);
-					if(hit != null)
-						hit.getEntity().kill();
 				}
+			}else{
+				double reach = ReachEntityAttributes.getReachDistance(user, 4.5);
+				double sqReach = reach * reach;
+				
+				HitResult blockHit = user.raycast(reach, 1, false);
+				sqReach = Math.min(sqReach, blockHit.getPos().squaredDistanceTo(user.getEyePos()));
+				
+				Vec3d look = user.getRotationVec(1).multiply(reach);
+				Box box = user.getBoundingBox().stretch(look).expand(1);
+				EntityHitResult entityHit = ProjectileUtil.raycast(user, user.getEyePos(), user.getEyePos().add(look), box, ScalpelSlashable.class::isInstance, sqReach);
+				
+				if(entityHit != null && entityHit.getEntity() instanceof ScalpelSlashable se)
+					se.onScalpelSlash(world, pe, entityHit.getEntity().getBlockPos());
+				else if(blockHit instanceof BlockHitResult bhr
+						&& bhr.getType() != HitResult.Type.MISS
+						&& world.getBlockState(bhr.getBlockPos()).getBlock() instanceof ScalpelSlashable se)
+					se.onScalpelSlash(world, pe, bhr.getBlockPos());
 			}
 		}
 	}

@@ -96,13 +96,10 @@ public class ScalpelItem extends Item implements PosableItem{
 					}
 					stack.damage(1, user, e -> e.sendToolBreakStatus(e.getActiveHand()));
 				}else{
-					/*HitResult hit = user.raycast(ReachEntityAttributes.getAttackRange(user, 4.5), 1, false);
-					if(hit instanceof EntityHitResult ehr && ehr.getEntity() instanceof WispEntity w)
-						w.kill();*/
 					double reach = ReachEntityAttributes.getReachDistance(user, 4.5);
 					Vec3d look = user.getRotationVec(1).multiply(reach);
 					Box box = user.getBoundingBox().stretch(look).expand(1);
-					EntityHitResult hit = ProjectileUtil.raycast(user, user.getEyePos(), user.getEyePos().add(look), box, WispEntity.class::isInstance, reach);
+					EntityHitResult hit = ProjectileUtil.raycast(user, user.getEyePos(), user.getEyePos().add(look), box, WispEntity.class::isInstance, reach*reach);
 					if(hit != null)
 						hit.getEntity().kill();
 				}

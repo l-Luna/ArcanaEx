@@ -4,9 +4,6 @@
       "key": "arcana:arcanum"
     },
     {
-      "key": "arcana:tainted_codex"
-    },
-    {
       "key": "arcana:crimson_rites"
     }
   ],
@@ -41,13 +38,6 @@
       "name": "research.arcana.category.alchemy",
       "bg": "arcana:research/bg_fundamentals.png",
       "requires": "arcana:alchemy"
-    },
-    {
-      "key": "arcana:tainted_basics",
-      "in": "arcana:tainted_codex",
-      "icon": "arcana:research/tainted_basics_cat_icon.png",
-      "name": "research.arcana.category.taint",
-      "bg": "arcana:research/bg_tainted.png"
     },
     {
       "key": "arcana:crimson_rites",

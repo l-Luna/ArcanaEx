@@ -180,13 +180,11 @@ public final class ArcanaRegistry{
 	
 	public static final Item ARCANUM = new ResearchBookItem(GROUPED_SINGLE, arcId("arcanum"));
 	public static final Item CRIMSON_RITES = new ResearchBookItem(GROUPED_SINGLE, arcId("crimson_rites"));
-	public static final Item TAINTED_CODEX = new ResearchBookItem(GROUPED_SINGLE, arcId("tainted_codex"));
+	public static final Item TOME_OF_SHARING = new TomeOfSharingItem(GROUPED_SINGLE);
+	public static final Item CHEATERS_ARCANUM = new CheatersArcanumItem(GROUPED_SINGLE);
 	
 	public static final Item RESEARCH_NOTES = new ResearchNotesItem(new Settings().maxCount(1), false);
 	public static final Item COMPLETE_RESEARCH_NOTES = new ResearchNotesItem(new Settings().maxCount(1), true);
-	
-	public static final Item TOME_OF_SHARING = new TomeOfSharingItem(GROUPED_SINGLE);
-	public static final Item CHEATERS_ARCANUM = new CheatersArcanumItem(GROUPED_SINGLE);
 	
 	public static final Item TAINT_GOO_BUCKET = new BucketItem(STILL_TAINT_GOO, new Settings().group(Tab.MAIN).maxCount(1).recipeRemainder(Items.BUCKET));
 	public static final Item PUTREFACTION_BUCKET = new BucketItem(STILL_PUTREFACTION, new Settings().group(Tab.MAIN).maxCount(1).recipeRemainder(Items.BUCKET));
@@ -706,13 +704,11 @@ public final class ArcanaRegistry{
 		
 		register("arcanum", ARCANUM);
 		register("crimson_rites", CRIMSON_RITES);
-		register("tainted_codex", TAINTED_CODEX);
+		register("tome_of_sharing", TOME_OF_SHARING);
+		register("cheaters_arcanum", CHEATERS_ARCANUM);
 		
 		register("research_notes", RESEARCH_NOTES);
 		register("complete_research_notes", COMPLETE_RESEARCH_NOTES);
-		
-		register("tome_of_sharing", TOME_OF_SHARING);
-		register("cheaters_arcanum", CHEATERS_ARCANUM);
 		
 		register("taint_goo_bucket", TAINT_GOO_BUCKET);
 		register("putrefaction_bucket", PUTREFACTION_BUCKET);

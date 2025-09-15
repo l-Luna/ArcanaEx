@@ -79,12 +79,13 @@ public class WispEntity extends WispLikeEntity implements Angerable{
 	}
 	
 	public boolean isInvulnerableTo(DamageSource damageSource){
-		return !(damageSource instanceof EntityDamageSource eds)
+		return !damageSource.isOutOfWorld() &&
+				(!(damageSource instanceof EntityDamageSource eds)
 				|| handleAttack(eds.getAttacker())
 				|| eds.isExplosive()
 				|| eds.isFire()
 				|| eds.isThorns()
-				|| eds.isMagic();
+				|| eds.isMagic());
 	}
 	
 	// start items with no velocity

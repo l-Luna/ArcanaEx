@@ -1,10 +1,12 @@
 package arcana.items;
 
 import arcana.aura.AuraWorld;
+import arcana.aura.Node;
 import arcana.entities.WispEntity;
 import arcana.network.PkShakeNode;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.api.EnvironmentInterface;
@@ -15,14 +17,20 @@ import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Arm;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3f;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
+
+import java.util.Optional;
 
 @EnvironmentInterface(value = EnvType.CLIENT, itf = PosableItem.class)
 public class ScalpelItem extends Item implements PosableItem{
@@ -63,27 +71,46 @@ public class ScalpelItem extends Item implements PosableItem{
 		return TypedActionResult.consume(user.getStackInHand(hand));
 	}
 	
-	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user){
-		if(!world.isClient)
-			AuraWorld.from(world).raycastNodes(user, false).ifPresent(node -> {
-				if(type == ScalpelType.BLACK){
-					node.destroy(true); // TODO
-				}else{
-					Random rng = world.random;
-					new PkShakeNode(node, 40).sendToAllWatching(user);
-					boolean degrade = type == ScalpelType.ROSE || rng.nextInt(4) == 0;
-					node.damage(degrade, rng);
-					int wisps = rng.nextBetween(2, 3);
-					for(int i = 0; i < wisps; i++){
-						WispEntity wisp = new WispEntity(world);
-						wisp.setPosition(node.asVec3d());
-						wisp.setAnchorPos(node.asBlockPos());
-						wisp.setVelocity(rng.nextFloat() * 2 - 1, rng.nextFloat() * 2 - 1, rng.nextFloat() * 2 - 1);
-						world.spawnEntity(wisp);
+	public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks){
+		// tick 24 is the actual "hit" frame
+		if(remainingUseTicks == 6){
+			if(!world.isClient){
+				Optional<Node> nodeO = AuraWorld.from(world).raycastNodes(user, false);
+				if(nodeO.isPresent()){
+					Node node = nodeO.get();
+					if(type == ScalpelType.BLACK)
+						node.destroy(true); // TODO
+					else{
+						Random rng = world.random;
+						new PkShakeNode(node, 40).sendToAllWatching(user);
+						boolean degrade = type == ScalpelType.ROSE || rng.nextInt(4) == 0;
+						node.damage(degrade, rng);
+						int wisps = rng.nextBetween(2, 3);
+						for(int i = 0; i < wisps; i++){
+							WispEntity wisp = new WispEntity(world);
+							wisp.setPosition(node.asVec3d());
+							wisp.setAnchorPos(node.asBlockPos());
+							wisp.setVelocity(rng.nextFloat() * 2 - 1, rng.nextFloat() * 2 - 1, rng.nextFloat() * 2 - 1);
+							world.spawnEntity(wisp);
+						}
 					}
+					stack.damage(1, user, e -> e.sendToolBreakStatus(e.getActiveHand()));
+				}else{
+					/*HitResult hit = user.raycast(ReachEntityAttributes.getAttackRange(user, 4.5), 1, false);
+					if(hit instanceof EntityHitResult ehr && ehr.getEntity() instanceof WispEntity w)
+						w.kill();*/
+					double reach = ReachEntityAttributes.getReachDistance(user, 4.5);
+					Vec3d look = user.getRotationVec(1).multiply(reach);
+					Box box = user.getBoundingBox().stretch(look).expand(1);
+					EntityHitResult hit = ProjectileUtil.raycast(user, user.getEyePos(), user.getEyePos().add(look), box, WispEntity.class::isInstance, reach);
+					if(hit != null)
+						hit.getEntity().kill();
 				}
-				stack.damage(1, user, e -> e.sendToolBreakStatus(e.getActiveHand()));
-			});
+			}
+		}
+	}
+	
+	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user){
 		return stack;
 	}
 	

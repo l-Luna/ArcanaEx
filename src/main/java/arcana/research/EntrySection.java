@@ -73,6 +73,9 @@ public abstract class EntrySection{
 		
 		factories.put(FluxStatsSection.TYPE, __ -> new FluxStatsSection());
 		deserializers.put(FluxStatsSection.TYPE, __ -> new FluxStatsSection());
+		
+		factories.put(BannerPatternPreviewSection.TYPE, BannerPatternPreviewSection::new);
+		deserializers.put(BannerPatternPreviewSection.TYPE, BannerPatternPreviewSection::new);
 	}
 	
 	private static <T> Function<JsonObject, T> withContentsStr(Function<String, T> builder){

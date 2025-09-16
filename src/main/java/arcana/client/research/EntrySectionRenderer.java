@@ -39,6 +39,7 @@ public interface EntrySectionRenderer<T extends EntrySection>{
 		renderers.put(WandInteractionSection.TYPE, new WandInteractionSectionRenderer());
 		renderers.put(AspectCombosSection.TYPE, new AspectCombosSectionRenderer());
 		renderers.put(FluxStatsSection.TYPE, new FluxStatsSectionRenderer());
+		renderers.put(BannerPatternPreviewSection.TYPE, new BannerPatternPreviewSectionRenderer());
 	}
 	
 	@SuppressWarnings("unchecked")

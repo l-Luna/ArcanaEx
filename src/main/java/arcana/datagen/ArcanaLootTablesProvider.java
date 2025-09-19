@@ -44,8 +44,6 @@ public class ArcanaLootTablesProvider extends FabricBlockLootTableProvider{
 						addDrop(block, BlockLootTableGenerator::slabDrops);
 					else if(block instanceof FlowerPotBlock)
 						addPottedPlantDrop(block);
-					else
-						addDrop(block);
 		
 		addDrop(SILVERWOOD_LEAVES, leaves -> leavesDrop(leaves, SILVERWOOD_SAPLING, saplingDropChance));
 		addDrop(GREATWOOD_LEAVES, leaves -> leavesDrop(leaves, GREATWOOD_SAPLING, saplingDropChance));

@@ -195,9 +195,9 @@ public final class NodeRenderer{
 	}
 	
 	private static void drawNodeAspect(Camera camera, Node node, BufferBuilder buffer, Aspect aspect, World world){
-		if(!node.getAspects().contains(aspect))
-			return;
 		NodeState ns = stateFor(node);
+		if(!node.getAspects().contains(aspect) || ns.aspectLerp < 0.00001)
+			return;
 		float scale = .7f;
 		// calculate positions in a circle around the node
 		Vec3f offset = Vec3f.POSITIVE_Y.copy();

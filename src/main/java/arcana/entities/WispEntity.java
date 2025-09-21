@@ -44,7 +44,7 @@ public class WispEntity extends WispLikeEntity implements Angerable, ScalpelSlas
 	
 	protected void initGoals(){
 		super.initGoals();
-		targetSelector.add(4, new ActiveTargetGoal<>(this, PlayerEntity.class, 10, true, false, this::shouldAngerAt));
+		targetSelector.add(4, new ActiveTargetGoal<>(this, PlayerEntity.class, 10, false, false, this::shouldAngerAt));
 	}
 	
 	public static DefaultAttributeContainer.Builder createDefaultAttributes(){

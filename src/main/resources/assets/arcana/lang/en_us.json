@@ -43,7 +43,9 @@
 
     "taint_goo": "Taint Goo",
     "putrefaction": "Putrefaction",
-    "raw_tainted_blocks": "Raw Tainted Blocks"
+    "raw_tainted_blocks": "Raw Tainted Blocks",
+
+    "magical_plants": "Magical Plants"
   },
 
   // if you say so
@@ -377,6 +379,12 @@
     "greatwood_trapdoor": "Greatwood Trapdoor",
     "greatwood_sign": "Greatwood Sign",
     "greatwood_wall_sign": "Greatwood Sign",
+
+    "vishroom": "Vishroom",
+    "cordispora": "Cordispora",
+    "snowdrop": "Snowdrop",
+    "firewheel": "Firewheel",
+    "lilium": "Lilium",
 
     "clusters.air": "Aer Cluster",
     "clusters.fire": "Ignis Cluster",

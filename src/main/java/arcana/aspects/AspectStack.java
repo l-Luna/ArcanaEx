@@ -16,6 +16,14 @@ public record AspectStack(@NotNull Aspect type, int amount){
 			).apply(i, AspectStack::new)
 	);
 	
+	public @Nullable AspectStack decrement(int by){
+		return amount <= by ? null : new AspectStack(type, amount - by);
+	}
+	
+	public @Nullable AspectStack decrement(){
+		return decrement(1);
+	}
+	
 	public Pair<@NotNull AspectStack /* this */, @Nullable AspectStack /* residual */> splitWithCapacity(int capacity){
 		if(amount <= capacity)
 			return new Pair<>(this, null);

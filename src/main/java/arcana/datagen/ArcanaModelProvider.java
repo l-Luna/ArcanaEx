@@ -62,10 +62,13 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		blockGen.registerSimpleCubeAll(TAINTED_SNOW_BLOCK);
 		blockGen.registerSimpleCubeAll(TAINT_CRUST);
 		
-		blockGen.registerTintableCross(SILVERWOOD_SAPLING, BlockStateModelGenerator.TintType.NOT_TINTED);
-		noAutoGen.add(SILVERWOOD_SAPLING.asItem());
-		blockGen.registerTintableCross(GREATWOOD_SAPLING, BlockStateModelGenerator.TintType.NOT_TINTED);
-		noAutoGen.add(GREATWOOD_SAPLING.asItem());
+		registerCross(SILVERWOOD_SAPLING, blockGen);
+		registerCross(GREATWOOD_SAPLING, blockGen);
+		registerCross(VISHROOM, blockGen);
+		registerCross(CORDISPORA, blockGen);
+		registerCross(SNOWDROP, blockGen);
+		registerCross(FIREWHEEL, blockGen);
+		registerCross(LILIUM, blockGen);
 		
 		blockGen.registerLog(SILVERWOOD_LOG).log(SILVERWOOD_LOG).wood(SILVERWOOD_WOOD);
 		blockGen.registerLog(STRIPPED_SILVERWOOD_LOG).log(STRIPPED_SILVERWOOD_LOG).wood(STRIPPED_SILVERWOOD_WOOD);
@@ -140,6 +143,11 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 	
 	public String getName(){
 		return "Arcana Blockstates and Models";
+	}
+	
+	private void registerCross(Block block, BlockStateModelGenerator blockGen){
+		blockGen.registerTintableCross(block, BlockStateModelGenerator.TintType.NOT_TINTED);
+		noAutoGen.add(block.asItem());
 	}
 	
 	private void registerBars(Block block, BlockStateModelGenerator blockGen){

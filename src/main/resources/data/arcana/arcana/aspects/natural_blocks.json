@@ -196,6 +196,10 @@
   "#minecraft:logs": [
     "8*plant"
   ],
+  "#c:mushrooms": [
+    "plant",
+    "void"
+  ],
   "minecraft:sugar_cane": [
     "plant",
     "senses"
@@ -296,6 +300,25 @@
     "2*earth",
     "plant",
     "taint"
+  ],
+  "minecraft:mushroom_stem": [
+    "plant"
+  ],
+  "minecraft:red_mushroom_block": [
+    "plant"
+  ],
+  "minecraft:brown_mushroom_block": [
+    "plant"
+  ],
+  "minecraft:warped_fungus": [
+    "2*plant",
+    "armour",
+    "flesh"
+  ],
+  "minecraft:crimson_fungus": [
+    "2*plant",
+    "weapon",
+    "fire"
   ],
 
   "minecraft:sculk_sensor": [

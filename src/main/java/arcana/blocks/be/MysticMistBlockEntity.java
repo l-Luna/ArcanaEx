@@ -161,7 +161,7 @@ public class MysticMistBlockEntity extends BlockEntity implements AspectIo{
 		// time ticks, but you get more for the more expensive aspects
 		mist.timer++;
 		if(mist.timer > baseAspectTime * Math.sqrt(idx + 1)){
-			mist.stored = stored.amount() <= 1 ? null : new AspectStack(stored.type(), stored.amount() - 1);
+			mist.stored = stored.decrement();
 			mist.timer = 0;
 		}
 		mist.markDirty();

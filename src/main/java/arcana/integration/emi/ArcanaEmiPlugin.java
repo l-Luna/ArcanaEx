@@ -4,6 +4,7 @@ import arcana.ArcanaRegistry;
 import arcana.aspects.Aspect;
 import arcana.aspects.Aspects;
 import arcana.aspects.ItemAspectRegistry;
+import arcana.aura.Taint;
 import arcana.items.WandItem;
 import arcana.recipes.AlchemyRecipe;
 import arcana.recipes.InfusionRecipe;
@@ -19,10 +20,12 @@ import dev.emi.emi.api.recipe.VanillaEmiRecipeCategories;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.config.FluidUnit;
+import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
 import net.minecraft.util.registry.Registry;
 
@@ -37,10 +40,15 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 	public static final EmiRecipeCategory ITEMS_BY_ASPECTS = new EmiRecipeCategory(arcId("items_by_aspects"), new AspectEmiStack(Aspects.ENERGY));
 	public static final EmiRecipeCategory ASPECTS_BY_ITEMS = new EmiRecipeCategory(arcId("aspects_by_items"), new AspectEmiStack(Aspects.LIGHT));
 	
+	public static final EmiRecipeCategory TAINTING = new EmiRecipeCategory(arcId("tainting"), new AspectEmiStack(Aspects.TAINT));
+	public static final EmiRecipeCategory UNTAINTING = new EmiRecipeCategory(arcId("untainting"), new AspectEmiStack(Aspects.AURA));
+	
 	public static final EmiRecipeCategory ARCANE_CRAFTING = new EmiRecipeCategory(arcId("arcane_crafting"), EmiStack.of(ArcanaRegistry.ARCANE_CRAFTING_TABLE.asItem()));
 	public static final EmiRecipeCategory ALCHEMY = new EmiRecipeCategory(arcId("alchemy"), EmiStack.of(ArcanaRegistry.CRUCIBLE.asItem()));
 	public static final EmiRecipeCategory INFUSION = new EmiRecipeCategory(arcId("infusion"), EmiStack.of(ArcanaRegistry.INFUSION_MATRIX.asItem()));
 	public static final EmiRecipeCategory ASPECT_CRYSTALLIZATION = new EmiRecipeCategory(arcId("aspect_crystallization"), EmiStack.of(ArcanaRegistry.CRYSTALLIZATION_PRESS.asItem()));
+	
+	public static final Identifier WIDGETS = arcId("textures/gui/emi/widgets.png");
 	
 	public void initialize(EmiInitRegistry registry){
 		registry.addIngredientSerializer(AspectEmiStack.class, new AspectEmiStack.AspectEmiStackSerializer());
@@ -52,6 +60,9 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 		registry.addCategory(ITEMS_BY_ASPECTS);
 		registry.addCategory(ASPECTS_BY_ITEMS);
 		
+		registry.addCategory(TAINTING);
+		registry.addCategory(UNTAINTING);
+		
 		registry.addCategory(ARCANE_CRAFTING);
 		registry.addCategory(ALCHEMY);
 		registry.addCategory(INFUSION);
@@ -60,7 +71,7 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 		for(Aspect value : Aspects.aspects.values())
 			registry.addEmiStack(new AspectEmiStack(value));
 		
-		// This code takes all item-aspect assignments,
+		// take all item-aspect assignments,
 		// converts {Cobblestone -> 3x Earth, Entropy} into {Earth -> 3x Cobblestone, Entropy -> Cobblestone},
 		// groups by aspects and turns those into recipes
 		// TODO: ideally, we could display tags, tag bonuses, items, and inherited aspects separately
@@ -92,6 +103,9 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 				.filter(x -> !ItemAspectRegistry.usesTagAspects(x.getKey()) || ItemAspectRegistry.hasAnyBonusAspects(x.getKey()))
 				.map(x -> new EmiAspectsByItemsRecipe(EmiStack.of(x.getKey()), x.getValue().asStacks(), Registry.ITEM.getId(x.getKey())))
 				.forEach(registry::addRecipe);
+		
+		Taint.TAINT_MAP.forEach((from, to) -> registry.addRecipe(new EmiTaintingRecipe(from.asItem(), to.asItem())));
+		Taint.UNTAINT_MAP.forEach((from, to) -> registry.addRecipe(new EmiUntaintingRecipe(from.asItem(), to.stream().map(Block::asItem).toList())));
 		
 		Aspects.getOrderedAspects().stream().map(EmiAspectCrystallizationRecipe::new).forEach(registry::addRecipe);
 		

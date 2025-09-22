@@ -60,6 +60,8 @@
     "category.arcana": {
       "items_by_aspects": "Items by Aspects",
       "aspects_by_items": "Aspects by Items",
+      "tainting": "Tainting",
+      "untainting": "Untainting",
       "arcane_crafting": "Arcane Crafting",
       "alchemy": "Alchemy",
       "infusion": "Infusion",

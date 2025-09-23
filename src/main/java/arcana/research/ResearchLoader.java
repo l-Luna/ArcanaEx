@@ -22,8 +22,7 @@ import static arcana.Arcana.arcId;
 
 public final class ResearchLoader extends JsonDataLoader implements IdentifiableResourceReloadListener{
 	
-	public static final Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
-	
+	private static final Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
 	private static final Logger logger = LogUtils.getLogger();
 	
 	private static final Map<Identifier, JsonArray> bookQueue = new HashMap<>();

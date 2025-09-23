@@ -174,7 +174,7 @@ public class NodeTypes{
 		if(world.random.nextInt(80) == 0)
 			SearchUtil.randomSearch(world, node.asBlockPos(), 5, 3,
 					(pos, state) -> Taint.canUntaintBlock(state),
-					(pos, state) -> world.setBlockState(pos, Taint.untaintBlock(state, world.random)));
+					(pos, state) -> world.setBlockState(pos, Taint.untaintBlock(state)));
 	}
 	
 	private static void tickTainted(Node node, World world){

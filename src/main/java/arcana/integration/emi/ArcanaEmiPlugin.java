@@ -24,6 +24,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tag.TagKey;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
@@ -104,8 +105,12 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 				.map(x -> new EmiAspectsByItemsRecipe(EmiStack.of(x.getKey()), x.getValue().asStacks(), Registry.ITEM.getId(x.getKey())))
 				.forEach(registry::addRecipe);
 		
-		Taint.TAINT_MAP.forEach((from, to) -> registry.addRecipe(new EmiTaintingRecipe(from.asItem(), to.asItem())));
-		Taint.UNTAINT_MAP.forEach((from, to) -> registry.addRecipe(new EmiUntaintingRecipe(from.asItem(), to.stream().map(Block::asItem).toList())));
+		Taint.TAINT_MAP.forEach((from, to) -> registry.addRecipe(new EmiTaintingRecipe(EmiStack.of(from.asItem()), to.asItem(), Registry.BLOCK.getId(from))));
+		Taint.UNTAINT_MAP.forEach((from, to) -> registry.addRecipe(new EmiUntaintingRecipe(EmiStack.of(from.asItem()), to.asItem(), Registry.BLOCK.getId(from))));
+		for(Pair<TagKey<Block>, Block> pair : Taint.TAINT_TAGS)
+			registry.addRecipe(new EmiTaintingRecipe(EmiIngredient.of(pair.getLeft()), pair.getRight().asItem(), pair.getLeft().id()));
+		for(Pair<TagKey<Block>, Block> pair : Taint.UNTAINT_TAGS)
+			registry.addRecipe(new EmiUntaintingRecipe(EmiIngredient.of(pair.getLeft()), pair.getRight().asItem(), pair.getLeft().id()));
 		
 		Aspects.getOrderedAspects().stream().map(EmiAspectCrystallizationRecipe::new).forEach(registry::addRecipe);
 		

@@ -12,7 +12,7 @@ import net.minecraft.util.math.random.Random;
  */
 public interface Tainted{
 	
-	BooleanProperty STABILIZED = Taint.Props.STABILIZED;
+	BooleanProperty STABILIZED = Taint.STABILIZED;
 	
 	default void taintTick(BlockState state, ServerWorld world, BlockPos pos, Random rng){
 		Taint.randomTick(state, world, pos, rng);

@@ -1,0 +1,18 @@
+{
+  "tainting": {
+    "minecraft:dirt": "arcana:tainted_soil",
+    "minecraft:grass_block": "arcana:tainted_grass_block",
+    "minecraft:stone": "arcana:tainted_rock",
+    "minecraft:deepslate": "arcana:tainted_rock",
+    "minecraft:andesite": "arcana:tainted_andesite",
+    "minecraft:diorite": "arcana:tainted_diorite",
+    "minecraft:granite": "arcana:tainted_granite",
+    "minecraft:sand": "arcana:tainted_sand",
+    "minecraft:sandstone": "arcana:tainted_sandstone",
+    "minecraft:gravel": "arcana:tainted_gravel",
+    "minecraft:snow_block": "arcana:tainted_snow_block"
+  },
+  "untainting": {
+    "arcana:tainted_rock": "minecraft:stone"
+  }
+}

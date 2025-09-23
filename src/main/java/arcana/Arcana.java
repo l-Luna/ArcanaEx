@@ -1,7 +1,7 @@
 package arcana;
 
 import arcana.aspects.ItemAspectRegistry;
-import arcana.aura.Taint;
+import arcana.aura.TaintMapLoader;
 import arcana.blocks.WardedCampfireBlock;
 import arcana.commands.NodeCommand;
 import arcana.commands.ResearchCommand;
@@ -47,6 +47,7 @@ public final class Arcana implements ModInitializer{
 	
 	public static final ItemAspectRegistry aspectRegistry = new ItemAspectRegistry();
 	public static final ResearchLoader researchLoader = new ResearchLoader();
+	public static final TaintMapLoader taintMapLoader = new TaintMapLoader();
 	
 	@Override
 	public void onInitialize(){
@@ -60,7 +61,6 @@ public final class Arcana implements ModInitializer{
 		InfusionRecipe.setup();
 		Research.setup();
 		WarpEvents.setup();
-		Taint.setup();
 		
 		SurfaceNodeFeature.addToWorldgen();
 		NodalGeodes.addToWorldgen();
@@ -69,6 +69,7 @@ public final class Arcana implements ModInitializer{
 		
 		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(aspectRegistry);
 		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(researchLoader);
+		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(taintMapLoader);
 		
 		CommonLifecycleEvents.TAGS_LOADED.register((registries, client) -> aspectRegistry.applyAssociations());
 		

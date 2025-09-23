@@ -15,6 +15,7 @@ public final class Networking{
 	
 	public static void setup(){
 		context.register(PkSyncResearchData.class);
+		context.register(PkSyncTaintData.class);
 		context.register(PkTryAdvance.class);
 		context.register(PkModifyPins.class);
 		context.register(PkGetNote.class);
@@ -24,7 +25,10 @@ public final class Networking{
 		context.register(PkTriggerWarpEvent.class);
 		context.register(PkShakeNode.class);
 		
-		ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, didJoin) -> new PkSyncResearchData().sendTo(player));
+		ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, didJoin) -> {
+			new PkSyncResearchData().sendTo(player);
+			new PkSyncTaintData().sendTo(player);
+		});
 	}
 	
 	public static void sendToNearbyPlayers(World sw, S2CMessage message, Vec3d pos){

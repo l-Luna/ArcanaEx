@@ -1,14 +1,14 @@
 package arcana.aura;
 
-import arcana.ArcanaRegistry;
 import arcana.util.SearchUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.state.property.Property;
+import net.minecraft.tag.TagKey;
+import net.minecraft.util.Pair;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.random.Random;
@@ -21,71 +21,78 @@ import java.util.Map;
 
 public class Taint{
 	
-	// static initialization moment
-	public static final class Props{
-		
-		public static final BooleanProperty STABILIZED = BooleanProperty.of("stabilized");
-	}
+	// taint mapping
 	
 	public static final Map<Block, Block> TAINT_MAP = new HashMap<>();
-	public static final Map<Block, List<Block>> UNTAINT_MAP = new HashMap<>();
+	public static final List<Pair<TagKey<Block>, Block>> TAINT_TAGS = new ArrayList<>();
+	public static final Map<Block, Block> UNTAINT_MAP = new HashMap<>();
+	public static final List<Pair<TagKey<Block>, Block>> UNTAINT_TAGS = new ArrayList<>();
 	
-	public static final List<Property<?>> PRESERVE = new ArrayList<>(List.of(
+	private static final List<Property<?>> PRESERVED = new ArrayList<>(List.of(
 			Properties.SNOWY,
 			Properties.WATERLOGGED
 	));
 	
-	public static void setup(){
-		registerTaintMapping(Blocks.STONE, ArcanaRegistry.TAINTED_ROCK);
-		registerTaintMapping(Blocks.ANDESITE, ArcanaRegistry.TAINTED_ANDESITE);
-		registerTaintMapping(Blocks.GRANITE, ArcanaRegistry.TAINTED_GRANITE);
-		registerTaintMapping(Blocks.DIORITE, ArcanaRegistry.TAINTED_DIORITE);
-		registerTaintMapping(Blocks.DIRT, ArcanaRegistry.TAINTED_SOIL);
-		registerTaintMapping(Blocks.GRASS_BLOCK, ArcanaRegistry.TAINTED_GRASS_BLOCK);
-		registerTaintMapping(Blocks.SAND, ArcanaRegistry.TAINTED_SAND);
-		registerTaintMapping(Blocks.SANDSTONE, ArcanaRegistry.TAINTED_SANDSTONE);
-		registerTaintMapping(Blocks.GRAVEL, ArcanaRegistry.TAINTED_GRAVEL);
-		registerTaintMapping(Blocks.SNOW_BLOCK, ArcanaRegistry.TAINTED_SNOW_BLOCK);
+	public static void resetMappings(){
+		TAINT_MAP.clear();
+		TAINT_TAGS.clear();
+		UNTAINT_MAP.clear();
+		UNTAINT_TAGS.clear();
 	}
 	
-	public static void registerTaintMapping(Block original, Block tainted){
-		TAINT_MAP.put(original, tainted);
-		UNTAINT_MAP.computeIfAbsent(tainted, __ -> new ArrayList<>()).add(original);
+	public static boolean canTfBlock(BlockState state, Map<Block, Block> blockMaps, List<Pair<TagKey<Block>, Block>> blockTags){
+		return blockMaps.containsKey(state.getBlock()) || blockTags.stream().anyMatch(x -> state.isIn(x.getLeft()));
+	}
+	
+	public static BlockState tfBlock(BlockState state, Map<Block, Block> blockMaps, List<Pair<TagKey<Block>, Block>> blockTags){
+		BlockState transformed = null;
+		Block block = state.getBlock();
+		if(blockMaps.containsKey(block))
+			transformed = blockMaps.get(block).getDefaultState();
+		else
+			for(Pair<TagKey<Block>, Block> pair : blockTags)
+				if(state.isIn(pair.getLeft())){
+					transformed = pair.getRight().getDefaultState();
+					break;
+				}
+		
+		if(transformed != null){
+			for(Property<?> prop : PRESERVED)
+				transformed = preserve(transformed, state, prop);
+			return transformed;
+		}
+		return null;
+	}
+	
+	// use a separate method to name the ? as T
+	private static <T extends Comparable<T>> BlockState preserve(BlockState newState, BlockState fromState, Property<T> prop){
+		if(newState.getProperties().contains(prop) && fromState.getProperties().contains(prop))
+			return newState.with(prop, fromState.get(prop));
+		return newState;
 	}
 	
 	public static boolean canTaintBlock(BlockState state){
-		return TAINT_MAP.containsKey(state.getBlock());
-	}
-	
-	public static BlockState taintBlock(BlockState state){
-		if(TAINT_MAP.containsKey(state.getBlock())){
-			BlockState tainted = TAINT_MAP.get(state.getBlock()).getDefaultState();
-			for(Property<?> prop : PRESERVE)
-				tainted = preserve(tainted, state, prop);
-			return tainted;
-		}
-		
-		return null;
+		return canTfBlock(state, TAINT_MAP, TAINT_TAGS);
 	}
 	
 	public static boolean canUntaintBlock(BlockState state){
-		return UNTAINT_MAP.containsKey(state.getBlock());
+		return canTfBlock(state, UNTAINT_MAP, UNTAINT_TAGS);
 	}
 	
-	public static BlockState untaintBlock(BlockState state, Random rng){
-		if(UNTAINT_MAP.containsKey(state.getBlock())){
-			List<Block> choices = UNTAINT_MAP.get(state.getBlock());
-			BlockState untainted = choices.get(rng.nextInt(choices.size())).getDefaultState();
-			for(Property<?> prop : PRESERVE)
-				untainted = preserve(untainted, state, prop);
-			return untainted;
-		}
-		
-		return null;
+	public static BlockState taintBlock(BlockState state){
+		return tfBlock(state, TAINT_MAP, TAINT_TAGS);
 	}
+	
+	public static BlockState untaintBlock(BlockState state){
+		return tfBlock(state, UNTAINT_MAP, UNTAINT_TAGS);
+	}
+	
+	// tainted block behaviour
+	
+	public static final BooleanProperty STABILIZED = BooleanProperty.of("stabilized");
 	
 	public static void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random rng){
-		if(state.getProperties().contains(Props.STABILIZED) && state.get(Props.STABILIZED))
+		if(!state.getProperties().contains(STABILIZED) || state.get(STABILIZED))
 			return;
 		if(world.isClient)
 			return;
@@ -110,11 +117,5 @@ public class Taint{
 							localAura.setFlux(localAura.flux() - 2);
 						});
 		}
-	}
-	
-	private static <T extends Comparable<T>> BlockState preserve(BlockState newState, BlockState fromState, Property<T> prop){
-		if(newState.getProperties().contains(prop) && fromState.getProperties().contains(prop))
-			return newState.with(prop, fromState.get(prop));
-		return newState;
 	}
 }

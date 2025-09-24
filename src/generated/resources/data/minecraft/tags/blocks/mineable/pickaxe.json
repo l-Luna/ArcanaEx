@@ -49,6 +49,8 @@
     "arcana:tainted_andesite",
     "arcana:tainted_granite",
     "arcana:tainted_diorite",
-    "arcana:tainted_sandstone"
+    "arcana:tainted_sandstone",
+    "arcana:tainted_hollowed_ore",
+    "arcana:hollowed_ore"
   ]
 }

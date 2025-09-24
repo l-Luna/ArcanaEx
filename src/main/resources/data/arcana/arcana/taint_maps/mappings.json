@@ -10,9 +10,13 @@
     "minecraft:sand": "arcana:tainted_sand",
     "minecraft:sandstone": "arcana:tainted_sandstone",
     "minecraft:gravel": "arcana:tainted_gravel",
-    "minecraft:snow_block": "arcana:tainted_snow_block"
+    "minecraft:snow_block": "arcana:tainted_snow_block",
+
+    "#c:ores": "arcana:tainted_hollowed_ore"
   },
   "untainting": {
-    "arcana:tainted_rock": "minecraft:stone"
+    "arcana:tainted_rock": "minecraft:stone",
+
+    "arcana:tainted_hollowed_ore": "arcana:hollowed_ore"
   }
 }

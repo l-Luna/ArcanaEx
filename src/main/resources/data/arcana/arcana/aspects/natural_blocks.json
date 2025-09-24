@@ -412,7 +412,19 @@
     "4*ice",
     "2*taint"
   ],
+  "arcana:tainted_hollowed_ore": [
+    "3*earth",
+    "2*crystal",
+    "2*metal",
+    "taint"
+  ],
   "arcana:taint_crust": [
     "4*taint"
+  ],
+
+  "arcana:hollowed_ore": [
+    "4*earth",
+    "2*crystal",
+    "2*metal"
   ]
 }

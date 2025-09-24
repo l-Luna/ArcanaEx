@@ -466,8 +466,13 @@ public final class ArcanaRegistry{
 	public static final Block TAINTED_GRAVEL = new TaintedFallingBlock(of(Material.AGGREGATE, MapColor.PURPLE).group(Tab.TAINTED).usesTool(SHOVEL_MINEABLE).strength(0.7f).sounds(BlockSoundGroup.GRAVEL));
 	public static final Block TAINTED_SNOW_BLOCK = new TaintedFallingBlock(of(Material.SNOW_BLOCK, MapColor.PURPLE).group(Tab.TAINTED).requiresTool(SHOVEL_MINEABLE).strength(0.2f).sounds(BlockSoundGroup.SNOW));
 	
+	public static final Block TAINTED_HOLLOWED_ORE = new TaintedBlock(of(Material.STONE, MapColor.PURPLE).group(Tab.TAINTED).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(1.8f, 6));
+	
 	// unique tainted blocks
 	public static final Block TAINT_CRUST = new TaintedBlock(of(Material.SOLID_ORGANIC, MapColor.PURPLE).group(Tab.TAINTED).requiresTool(HOE_MINEABLE).strength(0.7f).sounds(BlockSoundGroup.SLIME));
+	
+	// dead/damaged/untainted blocks
+	public static final Block HOLLOWED_ORE = new Block(of(Material.STONE).group(Tab.TAINTED).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(1.8f));
 	
 	// points of interest...
 	// created in register
@@ -1020,13 +1025,19 @@ public final class ArcanaRegistry{
 		register("tainted_andesite", TAINTED_ANDESITE);
 		register("tainted_granite", TAINTED_GRANITE);
 		register("tainted_diorite", TAINTED_DIORITE);
+		
 		register("tainted_soil", TAINTED_SOIL);
 		register("tainted_grass_block", TAINTED_GRASS_BLOCK);
 		register("tainted_sand", TAINTED_SAND);
 		register("tainted_sandstone", TAINTED_SANDSTONE);
 		register("tainted_gravel", TAINTED_GRAVEL);
 		register("tainted_snow_block", TAINTED_SNOW_BLOCK);
+		
+		register("tainted_hollowed_ore", TAINTED_HOLLOWED_ORE);
+		
 		register("taint_crust", TAINT_CRUST);
+		
+		register("hollowed_ore", HOLLOWED_ORE);
 		
 		// points of interest
 		WARDED_CAMPFIRE_POI = PointOfInterestHelper.register(arcId("warded_campfire"), 0, 2, WARDED_CAMPFIRE.getStateManager().getStates().stream().filter(x -> x.get(Properties.LIT)).toList());

@@ -9,7 +9,8 @@
     "equipment": "Equipment",
     "crystals": "Crystals",
     "phials": "Phials",
-    "tainted": "Tainted/Hollowed"
+    "tainted": "Tainted/Dead",
+    "creative": "Creative"
   },
 
   "category.arcana": "Arcana",
@@ -127,6 +128,16 @@
     "crucible_boiloff": "Crucible Boil-off",
     "distillery_failure": "Distillery Failure",
     "scalpel_tampering": "Scalpel Tampering"
+  },
+
+  "arcana.node": {
+    "normal": "Normal",
+    "bright": "Bright",
+    "fading": "Fading",
+    "hungry": "Hungry",
+    "eldritch": "Eldritch",
+    "pure": "Pure",
+    "tainted": "Tainted"
   },
 
   // Items
@@ -283,7 +294,10 @@
     "challengers_amulet": "Amulet of the Challenger",
     "victors_medallion": "Medallion of the Victor",
 
-    "cluster_seed": "{} Cluster Seed"
+    "cluster_seed": "{} Cluster Seed",
+
+    "node_placer": "Node Placer",
+    "node_remover": "Node Remover"
   },
 
   // Blocks

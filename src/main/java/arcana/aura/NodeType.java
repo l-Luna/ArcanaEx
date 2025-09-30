@@ -3,6 +3,7 @@ package arcana.aura;
 import arcana.aspects.Aspect;
 import arcana.aspects.AspectMap;
 import arcana.aspects.Aspects;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.random.Random;
@@ -28,5 +29,9 @@ public record NodeType(Identifier id, int rechargeTime, int aspectCap, BiConsume
 		if(rng.nextInt(7) == 0)
 			aspectCap.add(Util.getRandom(Aspects.aspects.values().stream().toList(), rng), rng.nextBetween(cap/2, cap));
 		return aspectCap;
+	}
+	
+	public Text name(){
+		return Text.translatable("arcana.node." + id().getPath());
 	}
 }

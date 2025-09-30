@@ -28,6 +28,7 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -36,6 +37,7 @@ import static arcana.Arcana.arcId;
 
 public class NodeTypes{
 	
+	public static final List<NodeType> ALL = new ArrayList<>();
 	public static final BiMap<Identifier, NodeType> NODE_TYPES = HashBiMap.create();
 	
 	public static final NodeType
@@ -59,11 +61,16 @@ public class NodeTypes{
 		Identifier identifier = arcId(id);
 		NodeType type = new NodeType(identifier, rechargeTime, aspectCap, ticker);
 		NODE_TYPES.put(identifier, type);
+		ALL.add(type);
 		return type;
 	}
 	
 	public static NodeType byName(Identifier id){
 		return NODE_TYPES.get(id);
+	}
+	
+	public static NodeType cycle(NodeType prev){
+		return ALL.get((ALL.indexOf(prev) + 1) % ALL.size());
 	}
 	
 	public static @Nullable NodeType weakerType(NodeType type){

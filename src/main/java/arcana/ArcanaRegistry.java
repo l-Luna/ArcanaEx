@@ -22,6 +22,8 @@ import arcana.fluids.ArcanaFluid;
 import arcana.fluids.PutrefactionFluid;
 import arcana.fluids.TaintGooFluid;
 import arcana.items.*;
+import arcana.items.creative.NodePlacerItem;
+import arcana.items.creative.NodeRemoverItem;
 import arcana.items.foci.*;
 import arcana.screens.*;
 import arcana.worldgen.SurfaceNodeFeature;
@@ -129,6 +131,7 @@ public final class ArcanaRegistry{
 		public static final ItemSubGroup CRYSTALS = ItemSubGroup.create(ARCANA, arcId("crystals"));
 		public static final ItemSubGroup PHIALS = ItemSubGroup.create(ARCANA, arcId("phials"));
 		public static final ItemSubGroup TAINTED = ItemSubGroup.create(ARCANA, arcId("tainted"));
+		public static final ItemSubGroup CREATIVE = ItemSubGroup.create(ARCANA, arcId("creative"));
 	}
 	
 	private static final Settings GROUPED = new Settings().group(Tab.MAIN);
@@ -138,6 +141,8 @@ public final class ArcanaRegistry{
 	
 	private static final Settings GROUPED_WAND = new Settings().group(Tab.WANDS);
 	private static final Settings GROUPED_WAND_SINGLE = new Settings().group(Tab.WANDS).maxCount(1);
+	
+	private static final Settings GROUPED_CREATIVE_SINGLE = new Settings().group(Tab.CREATIVE).maxCount(1).rarity(Rarity.EPIC);
 	
 	// fluids...
 	public static final FlowableFluid STILL_TAINT_GOO = new TaintGooFluid(true);
@@ -336,6 +341,10 @@ public final class ArcanaRegistry{
 	public static final Item BROKEN_AMULET = new TrinketItem(new Settings().group(Tab.RESOURCES));
 	public static final Item CHALLENGERS_AMULET = new TrinketItem(GROUPED_SINGLE);
 	public static final Item VICTORS_MEDALLION = new TrinketItem(GROUPED_SINGLE);
+	
+	// creative-only
+	public static final Item NODE_PLACER = new NodePlacerItem(GROUPED_CREATIVE_SINGLE);
+	public static final Item NODE_REMOVER = new NodeRemoverItem(GROUPED_CREATIVE_SINGLE);
 	
 	// blocks...
 	public static final Block ARCANE_CRAFTING_TABLE = new ArcaneCraftingTableBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).sounds(BlockSoundGroup.WOOD).strength(3).nonOpaque());
@@ -856,6 +865,9 @@ public final class ArcanaRegistry{
 		register("broken_amulet", BROKEN_AMULET);
 		register("challengers_amulet", CHALLENGERS_AMULET);
 		register("victors_medallion", VICTORS_MEDALLION);
+		
+		register("node_placer", NODE_PLACER);
+		register("node_remover", NODE_REMOVER);
 		
 		for(Aspect aspect : Aspects.getOrderedAspects()){
 			var shortName = aspect.id().getPath();

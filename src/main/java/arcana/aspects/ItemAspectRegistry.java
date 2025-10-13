@@ -1,5 +1,6 @@
 package arcana.aspects;
 
+import com.google.common.base.Stopwatch;
 import com.google.gson.*;
 import com.mojang.logging.LogUtils;
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
@@ -23,6 +24,7 @@ import net.minecraft.util.registry.Registry;
 import org.slf4j.Logger;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
@@ -108,6 +110,7 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 	
 	// applied after tag load event
 	public void applyAssociations(){
+		Stopwatch sw = Stopwatch.createStarted();
 		for(Item item : Registry.ITEM){
 			if(itemAssociations.containsKey(item))
 				itemAspects.put(item, itemAssociations.get(item));
@@ -131,18 +134,18 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 					newAspects.add(tagBonus.getValue());
 					aspects = newAspects;
 				}
-			if(aspects.size() > 0)
+			if(!aspects.isEmpty())
 				itemAspects.put(item, aspects);
 		}
 		
-		logger.info("Assigned aspects to %s items".formatted(itemAspects.size()));
+		logger.info("Assigned aspects to {} items in {}ms", itemAspects.size(), sw.elapsed(TimeUnit.MILLISECONDS));
 	}
 	
 	private void addStackFunctions(){
 		// add 2 magic per enchantment level
 		stackModifiers.add((stack, out) -> {
 			var enchants = EnchantmentHelper.get(stack);
-			if(enchants.size() > 0)
+			if(!enchants.isEmpty())
 				out.add(new AspectStack(Aspects.MAGIC, enchants.values().stream().mapToInt(x -> x).sum() * 2));
 		});
 	}

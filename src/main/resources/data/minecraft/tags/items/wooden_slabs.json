@@ -1,6 +1,8 @@
 {
   "values": [
     "arcana:silverwood_slab",
-    "arcana:greatwood_slab"
+    "arcana:greatwood_slab",
+    "arcana:taintwood_slab",
+    "arcana:hollowed_slab"
   ]
 }

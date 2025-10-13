@@ -27,6 +27,8 @@ public final class ArcanaTags{
 	
 	public static final TagKey<Item> SILVERWOOD_LOGS = TagKey.of(Registry.ITEM_KEY, arcId("silverwood_logs"));
 	public static final TagKey<Item> GREATWOOD_LOGS = TagKey.of(Registry.ITEM_KEY, arcId("greatwood_logs"));
+	public static final TagKey<Item> TAINTWOOD_LOGS = TagKey.of(Registry.ITEM_KEY, arcId("taintwood_logs"));
+	public static final TagKey<Item> HOLLOWED_LOGS = TagKey.of(Registry.ITEM_KEY, arcId("hollowed_logs"));
 	public static final TagKey<Item> SUBSTRATES = TagKey.of(Registry.ITEM_KEY, arcId("substrates"));
 	public static final TagKey<Item> SCRIBING_TOOLS = TagKey.of(Registry.ITEM_KEY, arcId("scribing_tools"));
 	public static final TagKey<Item> WISP_WEAPONS = TagKey.of(Registry.ITEM_KEY, arcId("wisp_weapons"));

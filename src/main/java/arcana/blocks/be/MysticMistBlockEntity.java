@@ -168,7 +168,13 @@ public class MysticMistBlockEntity extends BlockEntity implements AspectIo{
 	}
 	
 	private void randomSearch(int rolls, BiPredicate<BlockPos, BlockState> predicate, BiConsumer<BlockPos, BlockState> then){
-		SearchUtil.vRandomSearch(world, pos, radius, vspace, rolls, predicate, then);
+		SearchUtil.vRandomSearch(world, pos, radius, vspace, rolls, (pos, state) -> {
+			if(predicate.test(pos, state)){
+				then.accept(pos, state);
+				return true;
+			}
+			return false;
+		});
 	}
 	
 	public @Nullable AspectStack accept(AspectStack stack, World world, BlockPos pos, Direction from){

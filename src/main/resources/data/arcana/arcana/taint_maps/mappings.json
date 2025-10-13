@@ -12,11 +12,37 @@
     "minecraft:gravel": "arcana:tainted_gravel",
     "minecraft:snow_block": "arcana:tainted_snow_block",
 
-    "#c:ores": "arcana:tainted_hollowed_ore"
+    "#c:ores": "arcana:tainted_hollowed_ore",
+
+    // woods go before logs, because all woods count as logs
+    "#c:woods": "arcana:taintwood_wood",
+    "#minecraft:logs": "arcana:taintwood_log",
+    "#minecraft:planks": "arcana:taintwood_planks",
+    "#minecraft:wooden_slabs": "arcana:taintwood_slab",
+    "#minecraft:wooden_stairs": "arcana:taintwood_stairs",
+    "#minecraft:wooden_fences": "arcana:taintwood_fence",
+    // note that only wooden blocks have fence gates in vanilla
+    "#minecraft:fence_gates": "arcana:taintwood_fence_gate",
+    "#minecraft:wooden_pressure_plates": "arcana:taintwood_pressure_plate",
+    "#minecraft:wooden_buttons": "arcana:taintwood_button",
+    "#minecraft:wooden_doors": "arcana:taintwood_door",
+    "#minecraft:wooden_trapdoors": "arcana:taintwood_trapdoor"
   },
   "untainting": {
     "arcana:tainted_rock": "minecraft:stone",
 
-    "arcana:tainted_hollowed_ore": "arcana:hollowed_ore"
+    "arcana:tainted_hollowed_ore": "arcana:hollowed_ore",
+
+    "arcana:taintwood_log": "arcana:hollowed_log",
+    "arcana:taintwood_planks": "arcana:hollowed_planks",
+    "arcana:taintwood_wood": "arcana:hollowed_wood",
+    "arcana:taintwood_slab": "arcana:hollowed_slab",
+    "arcana:taintwood_stairs": "arcana:hollowed_stairs",
+    "arcana:taintwood_fence": "arcana:hollowed_fence",
+    "arcana:taintwood_fence_gate": "arcana:hollowed_fence_gate",
+    "arcana:taintwood_pressure_plate": "arcana:hollowed_pressure_plate",
+    "arcana:taintwood_button": "arcana:hollowed_button",
+    "arcana:taintwood_door": "arcana:hollowed_door",
+    "arcana:taintwood_trapdoor": "arcana:hollowed_trapdoor"
   }
 }

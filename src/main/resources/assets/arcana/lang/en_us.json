@@ -33,6 +33,8 @@
 
     "silverwood_logs": "Silverwood Logs",
     "greatwood_logs": "Greatwood Logs",
+    "taintwood_logs": "Taintwood Logs",
+    "hollowed_logs": "Hollowed Logs",
 
     "substrates": "Essentia Distillation Substrates",
     "scribing_tools": "Research Tools",
@@ -47,6 +49,10 @@
     "raw_tainted_blocks": "Raw Tainted Blocks",
 
     "magical_plants": "Magical Plants"
+  },
+
+  "tag.c": {
+    "woods": "Woods"
   },
 
   // if you say so
@@ -395,6 +401,32 @@
     "greatwood_trapdoor": "Greatwood Trapdoor",
     "greatwood_sign": "Greatwood Sign",
     "greatwood_wall_sign": "Greatwood Sign",
+
+    "taintwood_log": "Taintwood Log",
+    "taintwood_planks": "Taintwood Planks",
+    "taintwood_wood": "Taintwood Wood",
+
+    "taintwood_slab": "Taintwood Slab",
+    "taintwood_stairs": "Taintwood Stairs",
+    "taintwood_fence": "Taintwood Fence",
+    "taintwood_fence_gate": "Taintwood Fence Gate",
+    "taintwood_pressure_plate": "Taintwood Pressure Plate",
+    "taintwood_button": "Taintwood Button",
+    "taintwood_door": "Taintwood Door",
+    "taintwood_trapdoor": "Taintwood Trapdoor",
+
+    "hollowed_log": "Hollowed Log",
+    "hollowed_planks": "Hollowed Planks",
+    "hollowed_wood": "Hollowed Wood",
+
+    "hollowed_slab": "Hollowed Slab",
+    "hollowed_stairs": "Hollowed Stairs",
+    "hollowed_fence": "Hollowed Fence",
+    "hollowed_fence_gate": "Hollowed Fence Gate",
+    "hollowed_pressure_plate": "Hollowed Pressure Plate",
+    "hollowed_button": "Hollowed Button",
+    "hollowed_door": "Hollowed Door",
+    "hollowed_trapdoor": "Hollowed Trapdoor",
 
     "vishroom": "Vishroom",
     "cordispora": "Cordispora",

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "arcana:block/taintwood_planks",
+    "side": "arcana:block/taintwood_planks",
+    "top": "arcana:block/taintwood_planks"
+  }
+}

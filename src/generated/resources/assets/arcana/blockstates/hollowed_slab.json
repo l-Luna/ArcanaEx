@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "arcana:block/hollowed_slab"
+    },
+    "type=double": {
+      "model": "arcana:block/hollowed_planks"
+    },
+    "type=top": {
+      "model": "arcana:block/hollowed_slab_top"
+    }
+  }
+}

@@ -1,6 +1,8 @@
 {
   "values": [
     "arcana:silverwood_trapdoor",
-    "arcana:greatwood_trapdoor"
+    "arcana:greatwood_trapdoor",
+    "arcana:taintwood_trapdoor",
+    "arcana:hollowed_trapdoor"
   ]
 }

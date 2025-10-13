@@ -52,11 +52,8 @@ public class ThrownTaintBottleEntity extends ThrownItemEntity{
 			for(int tries = 0; tries < 12 && tainted < 6; tries++){
 				pos.set(getBlockPos()).move(rng.nextInt(5) - 2, rng.nextInt(3) - 1, rng.nextInt(5) - 2);
 				// don't check for pure node protection, the player has made their choice
-				var newState = Taint.taintBlock(world.getBlockState(pos));
-				if(newState != null){
-					world.setBlockState(pos, newState);
+				if(Taint.taintBlock(world, pos))
 					tainted++;
-				}
 			}
 			
 			// add flux

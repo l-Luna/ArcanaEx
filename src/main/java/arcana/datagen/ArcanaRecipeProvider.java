@@ -29,6 +29,11 @@ public class ArcanaRecipeProvider extends FabricRecipeProvider{
 		offerBarkBlockRecipe(exporter, GREATWOOD_WOOD, GREATWOOD_LOG);
 		offerBarkBlockRecipe(exporter, STRIPPED_GREATWOOD_WOOD, STRIPPED_GREATWOOD_LOG);
 		
+		offerPlanksRecipe(exporter, TAINTWOOD_PLANKS, ArcanaTags.TAINTWOOD_LOGS);
+		offerBarkBlockRecipe(exporter, TAINTWOOD_WOOD, TAINTWOOD_LOG);
+		offerPlanksRecipe(exporter, HOLLOWED_PLANKS, ArcanaTags.HOLLOWED_LOGS);
+		offerBarkBlockRecipe(exporter, HOLLOWED_WOOD, HOLLOWED_LOG);
+		
 		for(BlockFamily family : ArcanaBlockFamilies.ALL)
 			generateFamily(exporter, family);
 		

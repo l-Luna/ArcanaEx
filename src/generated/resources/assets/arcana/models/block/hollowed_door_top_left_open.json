@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_top_left_open",
+  "textures": {
+    "bottom": "arcana:block/hollowed_door_bottom",
+    "top": "arcana:block/hollowed_door_top"
+  }
+}

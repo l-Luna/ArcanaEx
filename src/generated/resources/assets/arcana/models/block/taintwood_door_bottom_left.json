@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_bottom_left",
+  "textures": {
+    "bottom": "arcana:block/taintwood_door_bottom",
+    "top": "arcana:block/taintwood_door_top"
+  }
+}

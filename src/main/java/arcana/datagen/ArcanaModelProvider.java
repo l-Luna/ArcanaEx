@@ -76,6 +76,8 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		blockGen.registerLog(STRIPPED_SILVERWOOD_LOG).log(STRIPPED_SILVERWOOD_LOG).wood(STRIPPED_SILVERWOOD_WOOD);
 		blockGen.registerLog(GREATWOOD_LOG).log(GREATWOOD_LOG).wood(GREATWOOD_WOOD);
 		blockGen.registerLog(STRIPPED_GREATWOOD_LOG).log(STRIPPED_GREATWOOD_LOG).wood(STRIPPED_GREATWOOD_WOOD);
+		blockGen.registerLog(TAINTWOOD_LOG).log(TAINTWOOD_LOG).wood(TAINTWOOD_WOOD);
+		blockGen.registerLog(HOLLOWED_LOG).log(HOLLOWED_LOG).wood(HOLLOWED_WOOD);
 		
 		for(BlockFamily family : ArcanaBlockFamilies.ALL){
 			blockGen.registerCubeAllModelTexturePool(family.getBaseBlock()).family(family);

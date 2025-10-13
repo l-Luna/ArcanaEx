@@ -3,6 +3,7 @@ package arcana.aura;
 import arcana.util.SearchUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
@@ -28,11 +29,6 @@ public class Taint{
 	public static final Map<Block, Block> UNTAINT_MAP = new HashMap<>();
 	public static final List<Pair<TagKey<Block>, Block>> UNTAINT_TAGS = new ArrayList<>();
 	
-	private static final List<Property<?>> PRESERVED = new ArrayList<>(List.of(
-			Properties.SNOWY,
-			Properties.WATERLOGGED
-	));
-	
 	public static void resetMappings(){
 		TAINT_MAP.clear();
 		TAINT_TAGS.clear();
@@ -40,11 +36,12 @@ public class Taint{
 		UNTAINT_TAGS.clear();
 	}
 	
-	public static boolean canTfBlock(BlockState state, Map<Block, Block> blockMaps, List<Pair<TagKey<Block>, Block>> blockTags){
-		return blockMaps.containsKey(state.getBlock()) || blockTags.stream().anyMatch(x -> state.isIn(x.getLeft()));
+	// use a separate method to name the ? as T
+	private static <T extends Comparable<T>> BlockState preserve(BlockState newState, BlockState fromState, Property<T> prop){
+		return newState.with(prop, fromState.get(prop));
 	}
 	
-	public static BlockState tfBlock(BlockState state, Map<Block, Block> blockMaps, List<Pair<TagKey<Block>, Block>> blockTags){
+	private static BlockState tfState(BlockState state, Map<Block, Block> blockMaps, List<Pair<TagKey<Block>, Block>> blockTags){
 		BlockState transformed = null;
 		Block block = state.getBlock();
 		if(blockMaps.containsKey(block))
@@ -56,35 +53,34 @@ public class Taint{
 					break;
 				}
 		
-		if(transformed != null){
-			for(Property<?> prop : PRESERVED)
-				transformed = preserve(transformed, state, prop);
-			return transformed;
-		}
-		return null;
+		if(transformed != null)
+			for(Property<?> prop : state.getProperties())
+				if(transformed.getProperties().contains(prop))
+					transformed = preserve(transformed, state, prop);
+		return transformed;
 	}
 	
-	// use a separate method to name the ? as T
-	private static <T extends Comparable<T>> BlockState preserve(BlockState newState, BlockState fromState, Property<T> prop){
-		if(newState.getProperties().contains(prop) && fromState.getProperties().contains(prop))
-			return newState.with(prop, fromState.get(prop));
-		return newState;
+	private static boolean tfSingleBlock(World world, BlockPos pos, Map<Block, Block> blockMaps, List<Pair<TagKey<Block>, Block>> blockTags){
+		BlockState tainted = tfState(world.getBlockState(pos), blockMaps, blockTags);
+		if(tainted != null)
+			world.setBlockState(pos, tainted, Block.FORCE_STATE | Block.NOTIFY_LISTENERS);
+		return tainted != null;
 	}
 	
-	public static boolean canTaintBlock(BlockState state){
-		return canTfBlock(state, TAINT_MAP, TAINT_TAGS);
+	private static boolean tfBlock(World world, BlockPos pos, Map<Block, Block> blockMaps, List<Pair<TagKey<Block>, Block>> blockTags){
+		BlockState block = world.getBlockState(pos);
+		boolean result = tfSingleBlock(world, pos, blockMaps, blockTags);
+		if(result && block.getProperties().contains(Properties.DOUBLE_BLOCK_HALF))
+			tfSingleBlock(world, block.get(Properties.DOUBLE_BLOCK_HALF) == DoubleBlockHalf.LOWER ? pos.up() : pos.down(), blockMaps, blockTags);
+		return result;
 	}
 	
-	public static boolean canUntaintBlock(BlockState state){
-		return canTfBlock(state, UNTAINT_MAP, UNTAINT_TAGS);
+	public static boolean taintBlock(World world, BlockPos pos){
+		return tfBlock(world, pos, TAINT_MAP, TAINT_TAGS);
 	}
 	
-	public static BlockState taintBlock(BlockState state){
-		return tfBlock(state, TAINT_MAP, TAINT_TAGS);
-	}
-	
-	public static BlockState untaintBlock(BlockState state){
-		return tfBlock(state, UNTAINT_MAP, UNTAINT_TAGS);
+	public static boolean untaintBlock(World world, BlockPos pos){
+		return tfBlock(world, pos, UNTAINT_MAP, UNTAINT_TAGS);
 	}
 	
 	// tainted block behaviour
@@ -110,11 +106,11 @@ public class Taint{
 							Box box = new Box(pos).expand(8);
 							if(aura.getNodesInBounds(box).stream().anyMatch(n -> n.getType() == NodeTypes.PURE && n.asBlockPos().getSquaredDistance(pos) <= 8 * 8))
 								return false;
-							return canTaintBlock(st);
-						},
-						(there, st) -> {
-							world.setBlockState(there, taintBlock(st));
-							localAura.setFlux(localAura.flux() - 2);
+							if(taintBlock(world, there)){
+								localAura.setFlux(localAura.flux() - 2);
+								return true;
+							}
+							return false;
 						});
 		}
 	}

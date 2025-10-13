@@ -74,11 +74,15 @@ public class ThaumicHaloBlockEntity extends BlockEntity{
 					node.enhance(halo.isBoosted && world.random.nextInt(18) == 0, world.random);
 				// convert small plants into magical plants
 				SearchUtil.vRandomSearch(world, pos, 10, 5, 4,
-						(p, st) ->
-								(st.isIn(ArcanaTags.HALO_CONVERTIBLE_FLOWERS) || st.isIn(ArcanaTags.HALO_CONVERTIBLE_MUSHROOMS)) && !st.isIn(ArcanaTags.HALO_CONVERTED),
 						(p, st) -> {
-							((ServerWorld)world).spawnParticles(ParticleTypes.END_ROD, p.getX(), p.getY(), p.getZ(), 12, 1, 1, 1, 0);
-							world.setBlockState(p, st.isIn(ArcanaTags.HALO_CONVERTIBLE_FLOWERS) ? Util.getRandom(magicFlowers, world.random).getDefaultState() : Util.getRandom(magicMushrooms, world.random).getDefaultState());
+							boolean isFlower = st.isIn(ArcanaTags.HALO_CONVERTIBLE_FLOWERS);
+							boolean isMushroom = st.isIn(ArcanaTags.HALO_CONVERTIBLE_MUSHROOMS);
+							if((isFlower || isMushroom) && !st.isIn(ArcanaTags.HALO_CONVERTED)){
+								((ServerWorld)world).spawnParticles(ParticleTypes.END_ROD, p.getX(), p.getY(), p.getZ(), 12, 1, 1, 1, 0);
+								world.setBlockState(p, isFlower ? Util.getRandom(magicFlowers, world.random).getDefaultState() : Util.getRandom(magicMushrooms, world.random).getDefaultState());
+								return true;
+							}
+							return false;
 						}
 				);
 				

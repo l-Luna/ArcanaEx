@@ -1,6 +1,8 @@
 {
   "values": [
     "arcana:silverwood_planks",
-    "arcana:greatwood_planks"
+    "arcana:greatwood_planks",
+    "arcana:taintwood_planks",
+    "arcana:hollowed_planks"
   ]
 }

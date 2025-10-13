@@ -1,6 +1,8 @@
 {
   "values": [
     "arcana:silverwood_fence",
-    "arcana:greatwood_fence"
+    "arcana:greatwood_fence",
+    "arcana:taintwood_fence",
+    "arcana:hollowed_fence"
   ]
 }

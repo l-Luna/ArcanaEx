@@ -1,6 +1,20 @@
 {
   "values": [
+    // vanilla fence gates are only defined as a block tag
+    // add them as an item tag too to hint EMI
+    "minecraft:acacia_fence_gate",
+    "minecraft:birch_fence_gate",
+    "minecraft:dark_oak_fence_gate",
+    "minecraft:jungle_fence_gate",
+    "minecraft:oak_fence_gate",
+    "minecraft:spruce_fence_gate",
+    "minecraft:crimson_fence_gate",
+    "minecraft:warped_fence_gate",
+    "minecraft:mangrove_fence_gate",
+
     "arcana:silverwood_fence_gate",
-    "arcana:greatwood_fence_gate"
+    "arcana:greatwood_fence_gate",
+    "arcana:taintwood_fence_gate",
+    "arcana:hollowed_fence_gate"
   ]
 }

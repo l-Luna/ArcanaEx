@@ -1,6 +1,8 @@
 {
   "values": [
     "arcana:silverwood_button",
-    "arcana:greatwood_button"
+    "arcana:greatwood_button",
+    "arcana:taintwood_button",
+    "arcana:hollowed_button"
   ]
 }

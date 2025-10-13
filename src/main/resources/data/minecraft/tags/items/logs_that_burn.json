@@ -1,6 +1,8 @@
 {
   "values": [
     "#arcana:silverwood_logs",
-    "#arcana:greatwood_logs"
+    "#arcana:greatwood_logs",
+    "#arcana:taintwood_logs",
+    "#arcana:hollowed_logs"
   ]
 }

@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "arcana:block/taintwood_slab"
+    },
+    "type=double": {
+      "model": "arcana:block/taintwood_planks"
+    },
+    "type=top": {
+      "model": "arcana:block/taintwood_slab_top"
+    }
+  }
+}

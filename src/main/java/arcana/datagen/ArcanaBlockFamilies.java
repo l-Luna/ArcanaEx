@@ -62,6 +62,36 @@ public class ArcanaBlockFamilies{
 			.noGenerateRecipes()
 			.build();
 	
+	public static final BlockFamily TAINTWOOD = BlockFamilies.register(TAINTWOOD_PLANKS)
+			.button(TAINTWOOD_BUTTON)
+			.fence(TAINTWOOD_FENCE)
+			.fenceGate(TAINTWOOD_FENCE_GATE)
+			.pressurePlate(TAINTWOOD_PRESSURE_PLATE)
+			.slab(TAINTWOOD_SLAB)
+			.stairs(TAINTWOOD_STAIRS)
+			.door(TAINTWOOD_DOOR)
+			.trapdoor(TAINTWOOD_TRAPDOOR)
+			.group("wooden")
+			.unlockCriterionName("has_planks")
+			.noGenerateModels()
+			.noGenerateRecipes()
+			.build();
+	
+	public static final BlockFamily HOLLOWED_WOOD = BlockFamilies.register(HOLLOWED_PLANKS)
+			.button(HOLLOWED_BUTTON)
+			.fence(HOLLOWED_FENCE)
+			.fenceGate(HOLLOWED_FENCE_GATE)
+			.pressurePlate(HOLLOWED_PRESSURE_PLATE)
+			.slab(HOLLOWED_SLAB)
+			.stairs(HOLLOWED_STAIRS)
+			.door(HOLLOWED_DOOR)
+			.trapdoor(HOLLOWED_TRAPDOOR)
+			.group("wooden")
+			.unlockCriterionName("has_planks")
+			.noGenerateModels()
+			.noGenerateRecipes()
+			.build();
+	
 	// we handle generating the models and recipes
-	public static final List<BlockFamily> ALL = List.of(ARCANE_STONE, ARCANE_STONE_BRICKS, SILVERWOOD, GREATWOOD);
+	public static final List<BlockFamily> ALL = List.of(ARCANE_STONE, ARCANE_STONE_BRICKS, SILVERWOOD, GREATWOOD, TAINTWOOD, HOLLOWED_WOOD);
 }

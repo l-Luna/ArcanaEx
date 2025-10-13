@@ -1,6 +1,8 @@
 {
   "values": [
     "arcana:silverwood_stairs",
-    "arcana:greatwood_stairs"
+    "arcana:greatwood_stairs",
+    "arcana:taintwood_stairs",
+    "arcana:hollowed_stairs"
   ]
 }

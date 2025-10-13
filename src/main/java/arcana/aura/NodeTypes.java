@@ -179,9 +179,7 @@ public class NodeTypes{
 			AuraWorld.from(world).incrementFlux(-world.random.nextBetween(3, 8), null, new BlockPos(node));
 		
 		if(world.random.nextInt(80) == 0)
-			SearchUtil.randomSearch(world, node.asBlockPos(), 5, 3,
-					(pos, state) -> Taint.canUntaintBlock(state),
-					(pos, state) -> world.setBlockState(pos, Taint.untaintBlock(state)));
+			SearchUtil.randomSearch(world, node.asBlockPos(), 5, 3, (pos, state) -> Taint.untaintBlock(world, pos));
 	}
 	
 	private static void tickTainted(Node node, World world){
@@ -190,9 +188,7 @@ public class NodeTypes{
 			AuraWorld.from(world).incrementFlux(world.random.nextBetween(1, 4), null, new BlockPos(node));
 		
 		if(world.random.nextInt(300) == 0)
-			SearchUtil.randomSearch(world, node.asBlockPos(), 7, 12,
-					(pos, state) -> Taint.canTaintBlock(state),
-					(pos, state) -> world.setBlockState(pos, Taint.taintBlock(state)));
+			SearchUtil.randomSearch(world, node.asBlockPos(), 7, 12, (pos, state) -> Taint.taintBlock(world, pos));
 	}
 	
 	private static boolean empty(BlockState state){

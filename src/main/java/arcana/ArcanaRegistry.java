@@ -444,6 +444,32 @@ public final class ArcanaRegistry{
 	public static final Block GREATWOOD_SIGN = new SignBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).renderLayer(CUTOUT).strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque(), GREATWOOD_SIGN_TY);
 	public static final Block GREATWOOD_WALL_SIGN = new WallSignBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).renderLayer(CUTOUT).dropsLike(GREATWOOD_SIGN).strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque(), GREATWOOD_SIGN_TY);
 	
+	public static final Block TAINTWOOD_LOG = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.FUNGUS));
+	public static final Block TAINTWOOD_PLANKS = new Block(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.FUNGUS));
+	public static final Block TAINTWOOD_WOOD = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.FUNGUS));
+	
+	public static final Block TAINTWOOD_DOOR = new DoorBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).group(Tab.TAINTED).renderLayer(CUTOUT).strength(1.6f).sounds(BlockSoundGroup.FUNGUS).nonOpaque());
+	public static final Block TAINTWOOD_TRAPDOOR = new TrapdoorBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).group(Tab.TAINTED).renderLayer(CUTOUT).dropsSelf().strength(1.6f).sounds(BlockSoundGroup.FUNGUS).nonOpaque().allowsSpawning(Blocks::never));
+	public static final Block TAINTWOOD_SLAB = new SlabBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.FUNGUS));
+	public static final Block TAINTWOOD_STAIRS = new StairsBlock(TAINTWOOD_PLANKS.getDefaultState(), of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(2).sounds(BlockSoundGroup.FUNGUS));
+	public static final Block TAINTWOOD_FENCE = new FenceBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.FUNGUS));
+	public static final Block TAINTWOOD_FENCE_GATE = new FenceGateBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.FUNGUS));
+	public static final Block TAINTWOOD_PRESSURE_PLATE = new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING, of(Material.WOOD).dropsSelf().group(Tab.TAINTED).usesTool(AXE_MINEABLE).strength(.5f).sounds(BlockSoundGroup.FUNGUS));
+	public static final Block TAINTWOOD_BUTTON = new WoodenButtonBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(.5f).noCollision().sounds(BlockSoundGroup.FUNGUS));
+	
+	public static final Block HOLLOWED_LOG = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.CORAL));
+	public static final Block HOLLOWED_PLANKS = new Block(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f, 3).sounds(BlockSoundGroup.CORAL));
+	public static final Block HOLLOWED_WOOD = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.CORAL));
+	
+	public static final Block HOLLOWED_DOOR = new DoorBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).group(Tab.TAINTED).renderLayer(CUTOUT).strength(1.6f).sounds(BlockSoundGroup.CORAL).nonOpaque());
+	public static final Block HOLLOWED_TRAPDOOR = new TrapdoorBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).group(Tab.TAINTED).renderLayer(CUTOUT).dropsSelf().strength(1.6f).sounds(BlockSoundGroup.CORAL).nonOpaque().allowsSpawning(Blocks::never));
+	public static final Block HOLLOWED_SLAB = new SlabBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.CORAL));
+	public static final Block HOLLOWED_STAIRS = new StairsBlock(HOLLOWED_PLANKS.getDefaultState(), of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(2).sounds(BlockSoundGroup.CORAL));
+	public static final Block HOLLOWED_FENCE = new FenceBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.CORAL));
+	public static final Block HOLLOWED_FENCE_GATE = new FenceGateBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.CORAL));
+	public static final Block HOLLOWED_PRESSURE_PLATE = new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING, of(Material.WOOD).dropsSelf().group(Tab.TAINTED).usesTool(AXE_MINEABLE).strength(.5f).sounds(BlockSoundGroup.CORAL));
+	public static final Block HOLLOWED_BUTTON = new WoodenButtonBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(.5f).noCollision().sounds(BlockSoundGroup.CORAL));
+	
 	public static final Block VISHROOM = new SizedPlantBlock(of(Material.PLANT).dropsSelf().renderLayer(CUTOUT).sounds(BlockSoundGroup.GRASS).noCollision().breakInstantly().offsetType(AbstractBlock.OffsetType.XZ), 14, 14);
 	public static final Block CORDISPORA = new SizedPlantBlock(of(Material.PLANT).dropsSelf().renderLayer(CUTOUT).sounds(BlockSoundGroup.GRASS).noCollision().breakInstantly().offsetType(AbstractBlock.OffsetType.XZ), 6, 6);
 	public static final Block SNOWDROP = new SizedPlantBlock(of(Material.PLANT).dropsSelf().renderLayer(CUTOUT).sounds(BlockSoundGroup.GRASS).noCollision().breakInstantly().offsetType(AbstractBlock.OffsetType.XZ), 13, 14);
@@ -986,6 +1012,32 @@ public final class ArcanaRegistry{
 		register("greatwood_sign", GREATWOOD_SIGN, false);
 		register("greatwood_wall_sign", GREATWOOD_WALL_SIGN, false);
 		register("greatwood_sign", new SignItem(new Settings().group(Tab.MAIN).maxCount(16), GREATWOOD_SIGN, GREATWOOD_WALL_SIGN));
+		
+		register("taintwood_log", TAINTWOOD_LOG);
+		register("taintwood_planks", TAINTWOOD_PLANKS);
+		register("taintwood_wood", TAINTWOOD_WOOD);
+		
+		register("taintwood_slab", TAINTWOOD_SLAB);
+		register("taintwood_stairs", TAINTWOOD_STAIRS);
+		register("taintwood_fence", TAINTWOOD_FENCE);
+		register("taintwood_fence_gate", TAINTWOOD_FENCE_GATE);
+		register("taintwood_pressure_plate", TAINTWOOD_PRESSURE_PLATE);
+		register("taintwood_button", TAINTWOOD_BUTTON);
+		register("taintwood_door", TAINTWOOD_DOOR);
+		register("taintwood_trapdoor", TAINTWOOD_TRAPDOOR);
+		
+		register("hollowed_log", HOLLOWED_LOG);
+		register("hollowed_planks", HOLLOWED_PLANKS);
+		register("hollowed_wood", HOLLOWED_WOOD);
+		
+		register("hollowed_slab", HOLLOWED_SLAB);
+		register("hollowed_stairs", HOLLOWED_STAIRS);
+		register("hollowed_fence", HOLLOWED_FENCE);
+		register("hollowed_fence_gate", HOLLOWED_FENCE_GATE);
+		register("hollowed_pressure_plate", HOLLOWED_PRESSURE_PLATE);
+		register("hollowed_button", HOLLOWED_BUTTON);
+		register("hollowed_door", HOLLOWED_DOOR);
+		register("hollowed_trapdoor", HOLLOWED_TRAPDOOR);
 		
 		// HACKFIX, since fabric halfassed this API
 		BlockEntityType.SIGN.blocks = new HashSet<>(BlockEntityType.SIGN.blocks);

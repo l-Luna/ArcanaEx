@@ -1,0 +1,38 @@
+{
+  "values": [
+    "minecraft:raw_iron",
+    "arcana:alchemical_iron",
+    "minecraft:iron_ingot",
+    "minecraft:iron_nugget",
+
+    "minecraft:raw_copper",
+    "arcana:alchemical_copper",
+    "minecraft:copper_ingot",
+
+    "minecraft:raw_gold",
+    "arcana:alchemical_gold",
+    "minecraft:gold_ingot",
+    "minecraft:gold_nugget",
+
+    "minecraft:flint",
+    "minecraft:coal",
+    "minecraft:redstone",
+    "minecraft:diamond",
+    "minecraft:quartz",
+    "minecraft:amethyst_shard",
+    "minecraft:slime_ball",
+
+    "arcana:thaumium_nugget",
+
+    "arcana:crystals/air",
+    "arcana:crystals/fire",
+    "arcana:crystals/water",
+    "arcana:crystals/earth",
+    "arcana:crystals/order",
+    "arcana:crystals/entropy",
+
+    "arcana:crystals/crystal",
+    "arcana:crystals/metal",
+    "arcana:crystals/slime"
+  ]
+}

@@ -6,9 +6,11 @@ import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.tag.TagKey;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryEntry;
 import net.minecraft.world.biome.Biome;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,5 +50,9 @@ public final class ArcanaTags{
 				.map(Pair::getSecond)
 				.map(x -> x.stream().map(RegistryEntry::value).toList())
 				.findAny().orElseGet(ArrayList::new);
+	}
+	
+	public static @Nullable Item randomItemIn(TagKey<Item> tag, Random rng){
+		return Registry.ITEM.getEntryList(tag).map(entries -> entries.get(rng.nextInt(entries.size())).value()).orElse(null);
 	}
 }

@@ -26,6 +26,7 @@ import arcana.items.creative.NodePlacerItem;
 import arcana.items.creative.NodeRemoverItem;
 import arcana.items.foci.*;
 import arcana.screens.*;
+import arcana.util.TagGiftEntry;
 import arcana.worldgen.SurfaceNodeFeature;
 import arcana.worldgen.geodes.NodalGeodes;
 import arcana.worldgen.greatwood.GreatwoodFoliagePlacer;
@@ -68,6 +69,7 @@ import net.minecraft.fluid.FlowableFluid;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.*;
 import net.minecraft.item.Item.Settings;
+import net.minecraft.loot.entry.LootPoolEntryType;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.particle.ItemStackParticleEffect;
@@ -501,7 +503,7 @@ public final class ArcanaRegistry{
 	public static final Block TAINTED_GRAVEL = new TaintedFallingBlock(of(Material.AGGREGATE, MapColor.PURPLE).group(Tab.TAINTED).usesTool(SHOVEL_MINEABLE).strength(0.7f).sounds(BlockSoundGroup.GRAVEL));
 	public static final Block TAINTED_SNOW_BLOCK = new TaintedFallingBlock(of(Material.SNOW_BLOCK, MapColor.PURPLE).group(Tab.TAINTED).requiresTool(SHOVEL_MINEABLE).strength(0.2f).sounds(BlockSoundGroup.SNOW));
 	
-	public static final Block TAINTED_HOLLOWED_ORE = new TaintedBlock(of(Material.STONE, MapColor.PURPLE).group(Tab.TAINTED).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(1.8f, 6));
+	public static final Block TAINTED_HOLLOWED_ORE = new TaintedBlock(of(Material.STONE, MapColor.PURPLE).group(Tab.TAINTED).requiresTool(PICKAXE_MINEABLE).strength(1.8f, 6));
 	
 	// unique tainted blocks
 	public static final Block TAINT_CRUST = new TaintedBlock(of(Material.SOLID_ORGANIC, MapColor.PURPLE).group(Tab.TAINTED).requiresTool(HOE_MINEABLE).strength(0.7f).sounds(BlockSoundGroup.SLIME));
@@ -1211,6 +1213,9 @@ public final class ArcanaRegistry{
 		register("earth_power", EARTH_POWER);
 		register("order_power", ORDER_POWER);
 		register("entropy_power", ENTROPY_POWER);
+		
+		// loot pool entry types
+		register("tag_gift", TagGiftEntry.TYPE);
 	}
 	
 	private static void register(String name, Item item){
@@ -1289,6 +1294,10 @@ public final class ArcanaRegistry{
 	
 	private static void register(String name, BannerPattern effect){
 		Registry.register(Registry.BANNER_PATTERN, arcId(name), effect);
+	}
+	
+	private static void register(String name, LootPoolEntryType type){
+		Registry.register(Registry.LOOT_POOL_ENTRY_TYPE, arcId(name), type);
 	}
 	
 	private static void registerCapOnly(Cap cap){

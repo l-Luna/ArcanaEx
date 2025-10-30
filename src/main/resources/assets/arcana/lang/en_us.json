@@ -305,7 +305,10 @@
     "cluster_seed": "{} Cluster Seed",
 
     "node_placer": "Node Placer",
-    "node_remover": "Node Remover"
+    "node_remover": "Node Remover",
+    "flux_sponge": "Flux Sponge",
+    "taint_injector": "Taint Injector",
+    "taint_eraser": "Taint Eraser"
   },
 
   // Blocks
@@ -509,7 +512,8 @@
         "all": "{}% vis discount",
         "aspect": "{}% {} discount"
       }
-    }
+    },
+    "radius": "Radius: {}"
   },
 
   // Enchantments

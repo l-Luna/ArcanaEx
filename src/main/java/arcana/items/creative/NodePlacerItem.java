@@ -32,9 +32,7 @@ public class NodePlacerItem extends Item{
 		NodeType type = typeFor(stack);
 		PlayerEntity player = ctx.getPlayer();
 		if(player != null && player.isSneaking()){
-			NodeType ty = NodeTypes.cycle(typeFor(stack));
-			setTypeFor(stack, ty);
-			player.sendMessage(ty.name(), true);
+			cycleType(player, stack);
 		}else{
 			BlockPos targetPos = ctx.getBlockPos().offset(ctx.getSide());
 			AuraWorld.from(ctx.getWorld()).addNode(new Node(type, Vec3d.ofCenter(targetPos), type.randomCap(ctx.getWorld().getRandom())));
@@ -45,9 +43,7 @@ public class NodePlacerItem extends Item{
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand){
 		if(user.isSneaking()){
 			ItemStack stack = user.getStackInHand(hand);
-			NodeType ty = NodeTypes.cycle(typeFor(stack));
-			setTypeFor(stack, ty);
-			user.sendMessage(ty.name(), true);
+			cycleType(user, stack);
 			return TypedActionResult.success(stack);
 		}
 		return super.use(world, user, hand);
@@ -67,5 +63,11 @@ public class NodePlacerItem extends Item{
 		if(stack.hasNbt() && stack.getNbt().contains("type"))
 			type = NodeTypes.byName(Identifier.tryParse(stack.getNbt().getString("type")));
 		return type;
+	}
+	
+	private static void cycleType(PlayerEntity user, ItemStack stack){
+		NodeType ty = NodeTypes.cycle(typeFor(stack));
+		setTypeFor(stack, ty);
+		user.sendMessage(ty.name(), true);
 	}
 }

@@ -61,6 +61,11 @@ public class AuraChunk implements Component, AutoSyncedComponent, ServerTickingC
 		markDirty();
 	}
 	
+	// would like to use this in AuraWorld, but generally keep this as an impl detail
+	/* package-private */ Chunk chunk(){
+		return chunk;
+	}
+	
 	// accessors
 	
 	public static AuraChunk from(Chunk chunk){

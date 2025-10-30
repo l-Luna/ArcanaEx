@@ -17,11 +17,10 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.*;
-import net.minecraft.world.ChunkRegion;
-import net.minecraft.world.RaycastContext;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.World;
+import net.minecraft.util.math.random.Random;
+import net.minecraft.world.*;
 import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.chunk.WorldChunk;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
@@ -184,17 +183,17 @@ public final class AuraWorld implements Component, ServerTickingComponent, AutoS
 		// that means we cannot mutate the aura chunks as we iterate, and instead want a difference buffer applied after all computation
 		
 		Long2FloatMap diff = new Long2FloatOpenHashMap(world.getChunkManager().getLoadedChunkCount());
-		var chunks = ((LoadedChunksCache)world).fabric_getLoadedChunks();
+		Set<WorldChunk> chunks = ((LoadedChunksCache)world).fabric_getLoadedChunks();
 		for(Chunk chunk : chunks){
 			AuraChunk here = AuraChunk.from(chunk);
 			var pos = chunk.getPos();
-			if(here.flux() > 10 && world.random.nextInt(5) == 0){
+			if(here.flux() > 20 && world.random.nextInt(5) == 0){
 				ChunkPos towards = world.random.nextBoolean()
 						? new ChunkPos(pos.x + (world.random.nextBoolean() ? 1 : -1), pos.z)
 						: new ChunkPos(pos.x, pos.z + (world.random.nextBoolean() ? 1 : -1));
 				AuraChunk there = AuraChunk.from(world, towards);
 				// if we pass the arbitrary threshold...
-				if(there != null && ((there.flux() > 0 && here.flux() > there.flux() + 10) || (here.flux() > 20))){
+				if(there != null && there.flux() > 0 && here.flux() > there.flux() + 12){
 					// pass along 1/10 of the difference, floored to the nearest 0.01
 					float passRaw = (here.flux() - there.flux()) / 10;
 					float pass = (int)(passRaw * 100) / 100f;
@@ -205,8 +204,28 @@ public final class AuraWorld implements Component, ServerTickingComponent, AutoS
 		}
 		
 		for(long l : diff.keySet()){
-			AuraChunk there = AuraChunk.from(world, new ChunkPos(l));
-			there.setFlux(there.flux() + diff.get(l));
+			ChunkPos pos = new ChunkPos(l);
+			AuraChunk there = AuraChunk.from(world, pos);
+			float flux = there.flux() + diff.get(l);
+			there.setFlux(flux);
+			if(flux > 80)
+				trySpawnTaintedNode(pos, there);
+		}
+	}
+	
+	private void trySpawnTaintedNode(ChunkPos pos, AuraChunk there){
+		boolean valid = true;
+		for(int xO = 0; xO < 5; xO++)
+			for(int zO = 0; zO < 5; zO++){
+				AuraChunk from = AuraChunk.from(world, new ChunkPos(xO + pos.x - 2, zO + pos.z - 2));
+				valid &= from != null && from.nodes().stream().noneMatch(x -> x.getType() == NodeTypes.TAINTED);
+			}
+		
+		if(valid){
+			there.setFlux(there.flux() - 80);
+			Random rng = world.random;
+			int x = rng.nextInt(15), z = rng.nextInt(15), y = there.chunk().sampleHeightmap(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, x, z);
+			addNode(new Node(NodeTypes.TAINTED, new Vec3d(pos.getStartX() + x + rng.nextFloat(), y + 4 + rng.nextFloat() * 6, pos.getStartZ() + z + rng.nextFloat()), NodeTypes.TAINTED.randomCap(rng)));
 		}
 	}
 }

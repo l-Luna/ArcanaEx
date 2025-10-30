@@ -22,8 +22,10 @@ import arcana.fluids.ArcanaFluid;
 import arcana.fluids.PutrefactionFluid;
 import arcana.fluids.TaintGooFluid;
 import arcana.items.*;
+import arcana.items.creative.FluxSpongeItem;
 import arcana.items.creative.NodePlacerItem;
 import arcana.items.creative.NodeRemoverItem;
+import arcana.items.creative.TaintConverterItem;
 import arcana.items.foci.*;
 import arcana.screens.*;
 import arcana.util.TagGiftEntry;
@@ -347,6 +349,9 @@ public final class ArcanaRegistry{
 	// creative-only
 	public static final Item NODE_PLACER = new NodePlacerItem(GROUPED_CREATIVE_SINGLE);
 	public static final Item NODE_REMOVER = new NodeRemoverItem(GROUPED_CREATIVE_SINGLE);
+	public static final Item FLUX_SPONGE = new FluxSpongeItem(GROUPED_CREATIVE_SINGLE);
+	public static final Item TAINT_INJECTOR = new TaintConverterItem(GROUPED_CREATIVE_SINGLE, true);
+	public static final Item TAINT_ERASER = new TaintConverterItem(GROUPED_CREATIVE_SINGLE, false);
 	
 	// blocks...
 	public static final Block ARCANE_CRAFTING_TABLE = new ArcaneCraftingTableBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).sounds(BlockSoundGroup.WOOD).strength(3).nonOpaque());
@@ -896,6 +901,9 @@ public final class ArcanaRegistry{
 		
 		register("node_placer", NODE_PLACER);
 		register("node_remover", NODE_REMOVER);
+		register("flux_sponge", FLUX_SPONGE);
+		register("taint_injector", TAINT_INJECTOR);
+		register("taint_eraser", TAINT_ERASER);
 		
 		for(Aspect aspect : Aspects.getOrderedAspects()){
 			var shortName = aspect.id().getPath();

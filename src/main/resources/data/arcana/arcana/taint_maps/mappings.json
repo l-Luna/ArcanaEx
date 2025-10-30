@@ -13,6 +13,7 @@
     "minecraft:snow_block": "arcana:tainted_snow_block",
 
     "#c:ores": "arcana:tainted_hollowed_ore",
+    "arcana:hollowed_ore": "arcana:tainted_hollowed_ore",
 
     // woods go before logs, because all woods count as logs
     "#c:woods": "arcana:taintwood_wood",

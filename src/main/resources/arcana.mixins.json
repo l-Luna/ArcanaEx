@@ -15,6 +15,7 @@
     "CookingRecipeSerializerMixin",
     "EnchantmentHelperMixin",
     "EntityMixin",
+    "ExplosionMixin",
     "FluidBlockMixin",
     "HorizontalConnectingBlockMixin",
     "InventoryChangedCriterionMixin",

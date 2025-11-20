@@ -1,6 +1,7 @@
 package arcana.aura;
 
 import arcana.components.ChunkLayer;
+import arcana.util.MathUtil;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistryV3;
 import net.minecraft.util.math.BlockPos;
@@ -17,8 +18,11 @@ public class WardedChunk extends ChunkLayer{
 		super(chunk);
 	}
 	
-	public static void setWarded(World w, BlockPos pos){
-		WardedChunk wc = w.getChunk(pos).getComponent(KEY);
-		
+	public static boolean isWarded(World w, BlockPos pos){
+		return w.getChunk(pos).getComponent(KEY).isMarkedO(MathUtil.toChunkOffset(pos));
+	}
+	
+	public static boolean setWarded(World w, BlockPos pos, boolean warded){
+		return w.getChunk(pos).getComponent(KEY).setMarkedO(MathUtil.toChunkOffset(pos), warded);
 	}
 }

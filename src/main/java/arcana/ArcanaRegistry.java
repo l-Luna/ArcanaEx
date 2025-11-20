@@ -290,6 +290,7 @@ public final class ArcanaRegistry{
 	public static final Item EQUIVALENT_EXCHANGE_FOCUS = new EquivalentExchangeFocusItem(GROUPED_WAND_SINGLE);
 	public static final Item COAGULATION_FOCUS = new CoagulationFocusItem(GROUPED_WAND_SINGLE);
 	public static final Item CRYSTAL_CAPACITOR_FOCUS = new CrystalCapacitorFocusItem(new Settings().group(Tab.WANDS).maxCount(1).maxDamage(6));
+	public static final Item WARD_FOCUS = new WardFocusItem(GROUPED_WAND_SINGLE);
 	
 	// caps...
 	public static final CapItem IRON_WAND_CAP = new CapItem(GROUPED_WAND, capProperties().capacity(5).complexity(3));
@@ -648,6 +649,8 @@ public final class ArcanaRegistry{
 	public static DefaultParticleType FLAME = FabricParticleTypes.simple();
 	public static DefaultParticleType LIGHTNING = FabricParticleTypes.simple();
 	
+	public static DefaultParticleType WARDING_EFFECT = FabricParticleTypes.simple();
+	
 	public static ParticleType<BlockStateParticleEffect> HUNGRY_NODE_DISC = FabricParticleTypes.complex(BlockStateParticleEffect.PARAMETERS_FACTORY);
 	public static ParticleType<BlockStateParticleEffect> HUNGRY_NODE_BLOCK = FabricParticleTypes.complex(BlockStateParticleEffect.PARAMETERS_FACTORY);
 	public static ParticleType<ItemStackParticleEffect> INFUSION_ITEM = FabricParticleTypes.complex(ItemStackParticleEffect.PARAMETERS_FACTORY);
@@ -856,6 +859,7 @@ public final class ArcanaRegistry{
 		register("equivalent_exchange_focus", EQUIVALENT_EXCHANGE_FOCUS);
 		register("coagulation_focus", COAGULATION_FOCUS);
 		register("crystal_capacitor_focus", CRYSTAL_CAPACITOR_FOCUS);
+		register("ward_focus", WARD_FOCUS);
 		
 		register("iron_wand_cap", IRON_WAND_CAP);
 		register("gold_wand_cap", GOLD_WAND_CAP);
@@ -1190,6 +1194,8 @@ public final class ArcanaRegistry{
 		register("taint_bubble", TAINT_BUBBLE);
 		register("flame", FLAME);
 		register("lightning", LIGHTNING);
+		
+		register("warding_effect", WARDING_EFFECT);
 		
 		register("hungry_node_disc", HUNGRY_NODE_DISC);
 		register("hungry_node_block", HUNGRY_NODE_BLOCK);

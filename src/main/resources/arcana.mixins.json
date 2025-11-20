@@ -5,6 +5,8 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "AbstractBlockMixin",
+    "AbstractBlockMixin$AbstractBlockMixin_Early",
+    "AbstractBlockStateMixin",
     "AbstractFurnaceBlockEntityMixin",
     "ActiveTargetGoalMixin",
     "BlockEntityAccessor",
@@ -26,9 +28,11 @@
   ],
   "client": [
     "ClientPlayerEntityMixin",
+    "DebugHudMixin",
     "GameRendererMixin",
     "HeldItemRendererMixin",
     "JsonUnbakedModelAccessor",
+    "ParticleManagerMixin",
     "ScreenMixin"
   ],
   "injectors": {

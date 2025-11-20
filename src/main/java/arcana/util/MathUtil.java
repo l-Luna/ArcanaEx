@@ -1,6 +1,7 @@
 package arcana.util;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
@@ -29,5 +30,9 @@ public final class MathUtil{
 				u * MathHelper.sin(theta),
 				z
 		);
+	}
+	
+	public static BlockPos toChunkOffset(BlockPos pos){
+		return new BlockPos(pos.getX() & 0b1111, pos.getY(), pos.getZ() & 0b1111);
 	}
 }

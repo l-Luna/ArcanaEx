@@ -41,7 +41,7 @@ public final class NodeRenderer{
 	private static final Map<Node, NodeState> nodeStates = new WeakHashMap<>();
 	
 	@SuppressWarnings("resource") // ???
-	public static void renderAll(WorldRenderContext context){
+	public static void render(WorldRenderContext context){
 		context.profiler().push("arcana:nodes");
 		
 		var player = MinecraftClient.getInstance().player;

@@ -1,6 +1,7 @@
 package arcana.client.entity;
 
 import arcana.client.ArcanaClient;
+import arcana.client.RenderHelper;
 import arcana.entities.PrismaticOrbEntity;
 import arcana.util.MathUtil;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -13,12 +14,8 @@ import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.ColorHelper;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
 
 public class PrismaticOrbEntityRenderer extends EntityRenderer<PrismaticOrbEntity>{
-	
-	private static Sprite whiteSprite = null;
 	
 	public PrismaticOrbEntityRenderer(EntityRendererFactory.Context ctx){
 		super(ctx);
@@ -32,7 +29,6 @@ public class PrismaticOrbEntityRenderer extends EntityRenderer<PrismaticOrbEntit
 		super.render(entity, yaw, dt, ms, vcs, light);
 		
 		var atlas = MinecraftClient.getInstance().getSpriteAtlas(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE);
-		whiteSprite = atlas.apply(ArcanaClient.miscWhite);
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
 		RenderSystem.enableDepthTest();
@@ -45,6 +41,7 @@ public class PrismaticOrbEntityRenderer extends EntityRenderer<PrismaticOrbEntit
 		ms.push();
 		ms.translate(-0.0625, -0.0625, -0.0625);
 		float time = entity.age + dt;
+		Sprite whiteSprite = atlas.apply(ArcanaClient.miscWhite);
 		// 6 orbs following paths that look like rotating around the diagonal of a sphere,
 		// with either dimension's frequency scaled, and the object's size scaled
 		for(int xf = 1; xf < 4; xf++)
@@ -52,77 +49,20 @@ public class PrismaticOrbEntityRenderer extends EntityRenderer<PrismaticOrbEntit
 				float eSize = entity.getSize();
 				float cDist = 0.03f + 0.12f * eSize;
 				float cSize = 0.05f + 0.13f * eSize;
-				colCuboid(vc,
+				RenderHelper.colCuboid(vc,
 						ms,
 						ColorHelper.Argb.getArgb(255, (int)(255f * (xf / 4f + 0.25f)), (int)(255f * (yf / 4f + 0.25f)), 255),
 						MathUtil.facingToVec(
 								(float)(Math.sin(time * xf / 7f) * Math.PI),
 								(float)(Math.cos(time * yf / 7f) * Math.PI)).multiply(cDist),
-						cSize);
+						cSize,
+						whiteSprite,
+						false);
 			}
 		ms.pop();
 		
 		RenderSystem.setShaderColor(1, 1, 1, 1);
 		BufferRenderer.drawWithShader(vc.end());
 		RenderSystem.disableBlend();
-	}
-	
-	private void colVertex(VertexConsumer cons, MatrixStack ms, int colour, float x, float y, float z, int nX, int nY, int nZ){
-		// normals + positions -> UVs
-		// lerp(..., abs(nY * x + nZ * y + nX * z)), lerp(..., abs(nZ * x + nX * y + nY * z))
-		cons.vertex(ms.peek().getPositionMatrix(), x, y, z)
-				.color(colour)
-				.texture(
-						MathHelper.lerp(Math.abs(nY * x + nZ * y + nX * z), whiteSprite.getMinU(), whiteSprite.getMaxU()),
-						MathHelper.lerp(Math.abs(nZ * x + nX * y + nY * z), whiteSprite.getMinV(), whiteSprite.getMaxV())
-				)
-				.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
-				.normal(nX, nY, nZ)
-				.next();
-	}
-	
-	private void colCuboid(VertexConsumer cons, MatrixStack ms, int colour, Vec3d pos, float size){
-		ms.push();
-		ms.translate(pos.x, pos.y, pos.z);
-		ms.scale(size, size, size);
-		
-		// top
-		int darker = ColorHelper.Argb.mixColor(colour, 0xFFCCCCCC);
-		colVertex(cons, ms, darker, 0, 1, 1, 0, 1, 0);
-		colVertex(cons, ms, darker, 1, 1, 1, 0, 1, 0);
-		colVertex(cons, ms, darker, 1, 1, 0, 0, 1, 0);
-		colVertex(cons, ms, darker, 0, 1, 0, 0, 1, 0);
-		
-		// bottom
-		colVertex(cons, ms, darker, 0, 0, 0, 0, -1, 0);
-		colVertex(cons, ms, darker, 1, 0, 0, 0, -1, 0);
-		colVertex(cons, ms, darker, 1, 0, 1, 0, -1, 0);
-		colVertex(cons, ms, darker, 0, 0, 1, 0, -1, 0);
-		
-		// east (+X) face
-		colVertex(cons, ms, colour, 1, 1, 0, 1, 0, 0);
-		colVertex(cons, ms, colour, 1, 1, 1, 1, 0, 0);
-		colVertex(cons, ms, colour, 1, 0, 1, 1, 0, 0);
-		colVertex(cons, ms, colour, 1, 0, 0, 1, 0, 0);
-		
-		// west (-X) face
-		colVertex(cons, ms, colour, 0, 1, 0, -1, 0, 0);
-		colVertex(cons, ms, colour, 0, 0, 0, -1, 0, 0);
-		colVertex(cons, ms, colour, 0, 0, 1, -1, 0, 0);
-		colVertex(cons, ms, colour, 0, 1, 1, -1, 0, 0);
-		
-		// north (-Z) face
-		colVertex(cons, ms, colour, 1, 0, 0, 0, 0, -1);
-		colVertex(cons, ms, colour, 0, 0, 0, 0, 0, -1);
-		colVertex(cons, ms, colour, 0, 1, 0, 0, 0, -1);
-		colVertex(cons, ms, colour, 1, 1, 0, 0, 0, -1);
-		
-		// south (+Z) face
-		colVertex(cons, ms, colour, 0, 0, 1, 0, 0, 1);
-		colVertex(cons, ms, colour, 1, 0, 1, 0, 0, 1);
-		colVertex(cons, ms, colour, 1, 1, 1, 0, 0, 1);
-		colVertex(cons, ms, colour, 0, 1, 1, 0, 0, 1);
-		
-		ms.pop();
 	}
 }

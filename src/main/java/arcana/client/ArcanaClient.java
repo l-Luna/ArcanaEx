@@ -70,6 +70,9 @@ public final class ArcanaClient implements ClientModInitializer{
 	
 	public static final Identifier miscWhite = arcId("misc/white");
 	
+	/*public static final BlockLayerRenderer wardRenderer = new BlockLayerRenderer(0.7f, arcId("block/warded")),
+			infestationRenderer = new BlockLayerRenderer(0.5f, arcId("block/infested"));*/
+	
 	public void onInitializeClient(){
 		TooltipComponentCallback.EVENT.register(data ->
 				data instanceof ItemAspectsTooltipData itd
@@ -78,7 +81,9 @@ public final class ArcanaClient implements ClientModInitializer{
 		TooltipComponentCallback.EVENT.register(d ->
 				d instanceof WandAspectsTooltipData w ? new WandAspectsTooltipComponent(w.wand()) : null);
 		
-		WorldRenderEvents.LAST.register(NodeRenderer::renderAll);
+		WorldRenderEvents.LAST.register(NodeRenderer::render);
+		/*WorldRenderEvents.AFTER_ENTITIES.register(wardRenderer::render);
+		WorldRenderEvents.AFTER_ENTITIES.register(infestationRenderer::render);*/
 		ClientTickEvents.END_CLIENT_TICK.register(SwapFocusScreen::tryOpen);
 		HudRenderCallback.EVENT.register(HudRenderer::renderHud);
 		
@@ -104,6 +109,9 @@ public final class ArcanaClient implements ClientModInitializer{
 				registry.register(arcId(fluid.getTexturePath()));
 				registry.register(arcId(fluid.getTexturePath() + "_flowing"));
 			}
+			
+			registry.register(arcId("block/warded"));
+			// registry.register(arcId("block/infested"));
 		});
 		
 		ColorProviderRegistry.BLOCK.register(
@@ -196,6 +204,8 @@ public final class ArcanaClient implements ClientModInitializer{
 		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.TAINT_BUBBLE, spr -> new SimpleSpriteParticle.Factory(spr, 0.02f, 0, 50, 2f, true));
 		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.FLAME, spr -> new SimpleSpriteParticle.Factory(spr, 0, 0.06f, 30, 1, false));
 		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.LIGHTNING, spr -> new SimpleSpriteParticle.Factory(spr, 0, 0.04f, 40, 1, true));
+		
+		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.WARDING_EFFECT, BlockEffectParticle.Factory::new);
 		
 		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.HUNGRY_NODE_DISC, new HungryNodeDiscParticle.Factory());
 		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.HUNGRY_NODE_BLOCK, new HungryNodeBlockParticle.Factory());

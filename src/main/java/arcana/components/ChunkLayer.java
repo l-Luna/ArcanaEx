@@ -17,8 +17,8 @@ public abstract class ChunkLayer implements Component, AutoSyncedComponent{
 	protected final Chunk chunk;
 	
 	// chunk section -> blocks, chunk section may be null if all blocks are unset
-	private BitSet[] markedBlocks;
-	private int[] count;
+	private final BitSet[] markedBlocks;
+	private final int[] count;
 	
 	public ChunkLayer(Chunk chunk){
 		this.chunk = chunk;
@@ -66,6 +66,10 @@ public abstract class ChunkLayer implements Component, AutoSyncedComponent{
 		if(--count[slice] == 0)
 			markedBlocks[slice] = null;
 		return true;
+	}
+	
+	protected boolean setMarkedO(BlockPos offset, boolean marked){
+		return marked ? markO(offset) : unmarkO(offset);
 	}
 	
 	//

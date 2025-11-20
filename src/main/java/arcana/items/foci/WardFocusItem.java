@@ -2,6 +2,8 @@ package arcana.items.foci;
 
 import arcana.ArcanaRegistry;
 import arcana.aura.WardedChunk;
+import arcana.client.particles.CubeParticleEffect;
+import arcana.client.particles.CubeParticleStyle;
 import arcana.items.FocusItem;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.util.ActionResult;
@@ -19,8 +21,7 @@ public class WardFocusItem extends FocusItem{
 		World w = ctx.getWorld();
 		boolean willWard = !WardedChunk.isWarded(w, pos);
 		WardedChunk.setWarded(w, pos, willWard);
-		if(willWard)
-			w.addParticle(ArcanaRegistry.WARDING_EFFECT, pos.getX(), pos.getY(), pos.getZ(), 0, 0, 0);
+		w.addParticle(new CubeParticleEffect(ArcanaRegistry.WARDING_EFFECT, willWard ? CubeParticleStyle.APPEAR : CubeParticleStyle.DISAPPEAR), pos.getX(), pos.getY(), pos.getZ(), 0, 0, 0);
 		return ActionResult.SUCCESS;
 	}
 }

@@ -9,6 +9,7 @@ import arcana.blocks.tainted.TaintedFallingBlock;
 import arcana.blocks.tainted.TaintedSnowyBlock;
 import arcana.blocks.tubes.*;
 import arcana.client.particles.AspectParticleEffect;
+import arcana.client.particles.CubeParticleEffect;
 import arcana.effects.ArcanaStatusEffect;
 import arcana.effects.AspectPowerStatusEffect;
 import arcana.effects.SetBonusStatusEffect;
@@ -649,7 +650,7 @@ public final class ArcanaRegistry{
 	public static DefaultParticleType FLAME = FabricParticleTypes.simple();
 	public static DefaultParticleType LIGHTNING = FabricParticleTypes.simple();
 	
-	public static DefaultParticleType WARDING_EFFECT = FabricParticleTypes.simple();
+	public static ParticleType<CubeParticleEffect> WARDING_EFFECT = FabricParticleTypes.complex(CubeParticleEffect.PARAMETERS_FACTORY);
 	
 	public static ParticleType<BlockStateParticleEffect> HUNGRY_NODE_DISC = FabricParticleTypes.complex(BlockStateParticleEffect.PARAMETERS_FACTORY);
 	public static ParticleType<BlockStateParticleEffect> HUNGRY_NODE_BLOCK = FabricParticleTypes.complex(BlockStateParticleEffect.PARAMETERS_FACTORY);

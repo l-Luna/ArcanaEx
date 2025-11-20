@@ -50,6 +50,7 @@ public abstract class ChunkLayer implements Component, AutoSyncedComponent{
 		else{
 			markedBlocks[slice].set(index);
 			count[slice]++;
+			chunk.setNeedsSaving(true);
 			return true;
 		}
 	}
@@ -65,6 +66,7 @@ public abstract class ChunkLayer implements Component, AutoSyncedComponent{
 		markedBlocks[slice].clear(index);
 		if(--count[slice] == 0)
 			markedBlocks[slice] = null;
+		chunk.setNeedsSaving(true);
 		return true;
 	}
 	

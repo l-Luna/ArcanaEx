@@ -144,10 +144,11 @@ public class RenderHelper{
 	//
 	
 	private static void colVertex(VertexConsumer cons, MatrixStack ms, int colour, float x, float y, float z, int nX, int nY, int nZ, Sprite sprite, boolean isParticle){
-		// normals + positions -> UVs
-		// lerp(..., abs(nY * x + nZ * y + nX * z)), lerp(..., abs(nZ * x + nX * y + nY * z))
-		float u = MathHelper.lerp(Math.abs(nY * x + nZ * y + nX * z), sprite.getMinU(), sprite.getMaxU());
-		float v = MathHelper.lerp(Math.abs(nZ * x + nX * y + nY * z), sprite.getMinV(), sprite.getMaxV());
+		// use face normals and cube positions to pick UVs (note |nX| + |nY| + |nZ| = 1)
+		// on side faces (|nX| + |nZ| = 1), use the other coordinate to decide U, and Y for V
+		// otherwise use X for U and Z for V
+		float u = MathHelper.lerp(Math.abs(nX * z + nZ * x + nY * x), sprite.getMinU(), sprite.getMaxU());
+		float v = MathHelper.lerp(Math.abs(nX * y + nZ * y + nY * z), sprite.getMinV(), sprite.getMaxV());
 		if(isParticle)
 			cons.vertex(ms.peek().getPositionMatrix(), x, y, z)
 					.texture(u, v)

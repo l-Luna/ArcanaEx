@@ -70,9 +70,6 @@ public final class ArcanaClient implements ClientModInitializer{
 	
 	public static final Identifier miscWhite = arcId("misc/white");
 	
-	/*public static final BlockLayerRenderer wardRenderer = new BlockLayerRenderer(0.7f, arcId("block/warded")),
-			infestationRenderer = new BlockLayerRenderer(0.5f, arcId("block/infested"));*/
-	
 	public void onInitializeClient(){
 		TooltipComponentCallback.EVENT.register(data ->
 				data instanceof ItemAspectsTooltipData itd
@@ -82,8 +79,6 @@ public final class ArcanaClient implements ClientModInitializer{
 				d instanceof WandAspectsTooltipData w ? new WandAspectsTooltipComponent(w.wand()) : null);
 		
 		WorldRenderEvents.LAST.register(NodeRenderer::render);
-		/*WorldRenderEvents.AFTER_ENTITIES.register(wardRenderer::render);
-		WorldRenderEvents.AFTER_ENTITIES.register(infestationRenderer::render);*/
 		ClientTickEvents.END_CLIENT_TICK.register(SwapFocusScreen::tryOpen);
 		HudRenderCallback.EVENT.register(HudRenderer::renderHud);
 		
@@ -112,6 +107,9 @@ public final class ArcanaClient implements ClientModInitializer{
 			
 			registry.register(arcId("block/warded"));
 			// registry.register(arcId("block/infested"));
+		});
+		CoreShaderRegistrationCallback.EVENT.register(context -> {
+			context.register(arcId("particle_turbulent"), ArcanaShaders.FX, shader -> ArcanaShaders.fxTurbulent = shader);
 		});
 		
 		ColorProviderRegistry.BLOCK.register(

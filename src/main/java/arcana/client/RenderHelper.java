@@ -67,7 +67,7 @@ public class RenderHelper{
 	                                      int width,
 	                                      int height,
 	                                      int corner,
-										  int texSize){
+	                                      int texSize){
 		drawStretchableBox(matrices, x, y, u, v, width, height, texSize, texSize, corner, corner, corner, corner);
 	}
 	
@@ -143,19 +143,25 @@ public class RenderHelper{
 	
 	//
 	
-	private static void colVertex(VertexConsumer cons, MatrixStack ms, int colour, float x, float y, float z, int nX, int nY, int nZ, Sprite sprite, boolean isParticle){
+	private static void colVertex(VertexConsumer cons, MatrixStack ms, int colour, float x, float y, float z, int nX, int nY, int nZ, Sprite sprite, boolean isFx){
 		// use face normals and cube positions to pick UVs (note |nX| + |nY| + |nZ| = 1)
 		// on side faces (|nX| + |nZ| = 1), use the other coordinate to decide U, and Y for V
 		// otherwise use X for U and Z for V
-		float u = MathHelper.lerp(Math.abs(nX * z + nZ * x + nY * x), sprite.getMinU(), sprite.getMaxU());
-		float v = MathHelper.lerp(Math.abs(nX * y + nZ * y + nY * z), sprite.getMinV(), sprite.getMaxV());
-		if(isParticle)
-			cons.vertex(ms.peek().getPositionMatrix(), x, y, z)
-					.texture(u, v)
-					.color(colour)
-					.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
-					.next();
-		else
+		float localU = Math.abs(nX * z + nZ * x + nY * x), localV = Math.abs(nX * y + nZ * y + nY * z);
+		float u = MathHelper.lerp(localU, sprite.getMinU(), sprite.getMaxU()), v = MathHelper.lerp(localV, sprite.getMinV(), sprite.getMaxV());
+		if(isFx){
+			if(!(cons instanceof BufferVertexConsumer bvc))
+				throw new IllegalArgumentException("Can only render FX vertices directly to tesselator!");
+			bvc.vertex(ms.peek().getPositionMatrix(), x, y, z);
+			bvc.texture(u, v);
+			bvc.color(colour);
+			bvc.light(LightmapTextureManager.MAX_LIGHT_COORDINATE);
+			// manually insert localUV... a bit messy, see BufferVertexConsumer#texture for reference
+			bvc.putFloat(0, localU);
+			bvc.putFloat(4, localV);
+			bvc.nextElement();
+			bvc.next();
+		}else
 			cons.vertex(ms.peek().getPositionMatrix(), x, y, z)
 					.color(colour)
 					.texture(u, v)
@@ -164,51 +170,51 @@ public class RenderHelper{
 					.next();
 	}
 	
-	public static void colCuboid(VertexConsumer cons, MatrixStack ms, int colour, Vec3d pos, float size, Sprite sprite, boolean isParticle){
-		colCuboid(cons, ms, colour, pos, size, size, size, sprite, isParticle);
+	public static void colCuboid(VertexConsumer cons, MatrixStack ms, int colour, Vec3d pos, float size, Sprite sprite, boolean isFx){
+		colCuboid(cons, ms, colour, pos, size, size, size, sprite, isFx);
 	}
 	
-	public static void colCuboid(VertexConsumer cons, MatrixStack ms, int colour, Vec3d pos, float xSize, float ySize, float zSize, Sprite sprite, boolean isParticle){
+	public static void colCuboid(VertexConsumer cons, MatrixStack ms, int colour, Vec3d pos, float xSize, float ySize, float zSize, Sprite sprite, boolean isFx){
 		ms.push();
 		ms.translate(pos.x, pos.y, pos.z);
 		ms.scale(xSize, ySize, zSize);
 		
 		// top
 		int darker = ColorHelper.Argb.mixColor(colour, 0xFFCCCCCC);
-		colVertex(cons, ms, darker, 0, 1, 1, 0, 1, 0, sprite, isParticle);
-		colVertex(cons, ms, darker, 1, 1, 1, 0, 1, 0, sprite, isParticle);
-		colVertex(cons, ms, darker, 1, 1, 0, 0, 1, 0, sprite, isParticle);
-		colVertex(cons, ms, darker, 0, 1, 0, 0, 1, 0, sprite, isParticle);
+		colVertex(cons, ms, darker, 0, 1, 1, 0, 1, 0, sprite, isFx);
+		colVertex(cons, ms, darker, 1, 1, 1, 0, 1, 0, sprite, isFx);
+		colVertex(cons, ms, darker, 1, 1, 0, 0, 1, 0, sprite, isFx);
+		colVertex(cons, ms, darker, 0, 1, 0, 0, 1, 0, sprite, isFx);
 		
 		// bottom
-		colVertex(cons, ms, darker, 0, 0, 0, 0, -1, 0, sprite, isParticle);
-		colVertex(cons, ms, darker, 1, 0, 0, 0, -1, 0, sprite, isParticle);
-		colVertex(cons, ms, darker, 1, 0, 1, 0, -1, 0, sprite, isParticle);
-		colVertex(cons, ms, darker, 0, 0, 1, 0, -1, 0, sprite, isParticle);
+		colVertex(cons, ms, darker, 0, 0, 0, 0, -1, 0, sprite, isFx);
+		colVertex(cons, ms, darker, 1, 0, 0, 0, -1, 0, sprite, isFx);
+		colVertex(cons, ms, darker, 1, 0, 1, 0, -1, 0, sprite, isFx);
+		colVertex(cons, ms, darker, 0, 0, 1, 0, -1, 0, sprite, isFx);
 		
 		// east (+X) face
-		colVertex(cons, ms, colour, 1, 1, 0, 1, 0, 0, sprite, isParticle);
-		colVertex(cons, ms, colour, 1, 1, 1, 1, 0, 0, sprite, isParticle);
-		colVertex(cons, ms, colour, 1, 0, 1, 1, 0, 0, sprite, isParticle);
-		colVertex(cons, ms, colour, 1, 0, 0, 1, 0, 0, sprite, isParticle);
+		colVertex(cons, ms, colour, 1, 1, 0, 1, 0, 0, sprite, isFx);
+		colVertex(cons, ms, colour, 1, 1, 1, 1, 0, 0, sprite, isFx);
+		colVertex(cons, ms, colour, 1, 0, 1, 1, 0, 0, sprite, isFx);
+		colVertex(cons, ms, colour, 1, 0, 0, 1, 0, 0, sprite, isFx);
 		
 		// west (-X) face
-		colVertex(cons, ms, colour, 0, 1, 0, -1, 0, 0, sprite, isParticle);
-		colVertex(cons, ms, colour, 0, 0, 0, -1, 0, 0, sprite, isParticle);
-		colVertex(cons, ms, colour, 0, 0, 1, -1, 0, 0, sprite, isParticle);
-		colVertex(cons, ms, colour, 0, 1, 1, -1, 0, 0, sprite, isParticle);
+		colVertex(cons, ms, colour, 0, 1, 0, -1, 0, 0, sprite, isFx);
+		colVertex(cons, ms, colour, 0, 0, 0, -1, 0, 0, sprite, isFx);
+		colVertex(cons, ms, colour, 0, 0, 1, -1, 0, 0, sprite, isFx);
+		colVertex(cons, ms, colour, 0, 1, 1, -1, 0, 0, sprite, isFx);
 		
 		// north (-Z) face
-		colVertex(cons, ms, colour, 1, 0, 0, 0, 0, -1, sprite, isParticle);
-		colVertex(cons, ms, colour, 0, 0, 0, 0, 0, -1, sprite, isParticle);
-		colVertex(cons, ms, colour, 0, 1, 0, 0, 0, -1, sprite, isParticle);
-		colVertex(cons, ms, colour, 1, 1, 0, 0, 0, -1, sprite, isParticle);
+		colVertex(cons, ms, colour, 1, 0, 0, 0, 0, -1, sprite, isFx);
+		colVertex(cons, ms, colour, 0, 0, 0, 0, 0, -1, sprite, isFx);
+		colVertex(cons, ms, colour, 0, 1, 0, 0, 0, -1, sprite, isFx);
+		colVertex(cons, ms, colour, 1, 1, 0, 0, 0, -1, sprite, isFx);
 		
 		// south (+Z) face
-		colVertex(cons, ms, colour, 0, 0, 1, 0, 0, 1, sprite, isParticle);
-		colVertex(cons, ms, colour, 1, 0, 1, 0, 0, 1, sprite, isParticle);
-		colVertex(cons, ms, colour, 1, 1, 1, 0, 0, 1, sprite, isParticle);
-		colVertex(cons, ms, colour, 0, 1, 1, 0, 0, 1, sprite, isParticle);
+		colVertex(cons, ms, colour, 0, 0, 1, 0, 0, 1, sprite, isFx);
+		colVertex(cons, ms, colour, 1, 0, 1, 0, 0, 1, sprite, isFx);
+		colVertex(cons, ms, colour, 1, 1, 1, 0, 0, 1, sprite, isFx);
+		colVertex(cons, ms, colour, 0, 1, 1, 0, 0, 1, sprite, isFx);
 		
 		ms.pop();
 	}

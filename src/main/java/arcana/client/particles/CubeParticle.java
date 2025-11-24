@@ -1,13 +1,15 @@
 package arcana.client.particles;
 
+import arcana.client.ArcanaShaders;
 import arcana.client.RenderHelper;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleFactory;
 import net.minecraft.client.particle.ParticleTextureSheet;
 import net.minecraft.client.particle.SpriteProvider;
-import net.minecraft.client.render.Camera;
-import net.minecraft.client.render.VertexConsumer;
+import net.minecraft.client.render.*;
 import net.minecraft.client.texture.Sprite;
+import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.math.ColorHelper;
@@ -27,15 +29,27 @@ public class CubeParticle extends Particle{
 	}
 	
 	public void buildGeometry(VertexConsumer vc, Camera camera, float tickDelta){
+		RenderSystem.setShader(ArcanaShaders::getFxTurbulentShader);
+		
+		BufferBuilder buffer = Tessellator.getInstance().getBuffer();
+		RenderSystem.enableBlend();
+		RenderSystem.depthMask(true);
+		RenderSystem.setShaderTexture(0, SpriteAtlasTexture.PARTICLE_ATLAS_TEXTURE);
+		buffer.begin(VertexFormat.DrawMode.QUADS, ArcanaShaders.FX);
+		
 		float age = (this.age + tickDelta) / (maxAge + 1);
 		float s = 1.01f * style.easeScale(age), o = (s - 1) / 2;
 		int alpha1 = (int)(style.easeAlpha(age) * 200);
 		int c = ColorHelper.Argb.getArgb(alpha1, (int)(red * 255), (int)(green * 255), (int)(blue * 255));
-		RenderHelper.colCuboid(vc, new MatrixStack(), c, new Vec3d(x, y, z).subtract(camera.getPos()).subtract(o, o, o), s, sprite, true);
+		RenderHelper.colCuboid(buffer, new MatrixStack(), c, new Vec3d(x, y, z).subtract(camera.getPos()).subtract(o, o, o), s, sprite, true);
+		
+		Tessellator.getInstance().draw();
+		
+		RenderSystem.setShader(GameRenderer::getParticleShader);
 	}
 	
 	public ParticleTextureSheet getType(){
-		return ParticleTextureSheet.PARTICLE_SHEET_TRANSLUCENT;
+		return ParticleTextureSheet.CUSTOM;
 	}
 	
 	public static final class Factory implements ParticleFactory<CubeParticleEffect>{

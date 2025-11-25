@@ -1,35 +1,30 @@
 {
-  "type": "arcana:infusion",
-  "central": {
-    "item": "minecraft:campfire"
-  },
-  "ingredients": [
-    {
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "A": {
       "item": "arcana:alumentum"
     },
-    {
-      "item": "minecraft:shield"
+    "C": {
+      "item": "minecraft:campfire"
     },
-    {
-      "item": "minecraft:golden_apple"
+    "W": {
+      "tag": "arcana:silverwood_logs"
     },
-    {
-      "item": "minecraft:potion",
-      "matches": "has_potion_type minecraft:invisibility"
+    "S": {
+      "item": "arcana:crystals/sloth"
     },
-    {
-      "item": "minecraft:clock"
-    },
-    {
-      "item": "minecraft:cake"
+    "R": {
+      "item": "arcana:crystals/armour"
     }
+  },
+  "pattern": [
+    " A ",
+    "SWR",
+    "WCW"
   ],
   "aspects": [
-    "40*sloth",
-    "30*life",
-    "20*armour"
+    "20*order"
   ],
-  "instability": 0,
   "result": {
     "item": "arcana:warded_campfire"
   }

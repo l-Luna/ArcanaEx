@@ -85,7 +85,8 @@ public class CrimsonLeechItem extends Item implements Vanishable, AnimatedSwingI
 			matrices.translate(0, equipProgress * 0.6F, 0);
 			matrices.translate(0, 0.4, -0.4 * (1-swingProgress) * (swingProgress) - 0.8);
 			matrices.scale(1, 0.9f - 0.2f * swingProgress, 1);
-			matrices.multiply(Quaternion.fromEulerXyz((-MathHelper.HALF_PI * (0.9f + 0.1f * swingProgress)), 0, 0));
+			float a = arm == Arm.RIGHT ? 0.9f : 0;
+			matrices.multiply(Quaternion.fromEulerXyz(-MathHelper.HALF_PI * (a + 0.1f * swingProgress), 0, 0));
 		}
 		
 		return true;

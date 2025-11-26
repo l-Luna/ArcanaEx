@@ -1,12 +1,15 @@
 package arcana.items;
 
+import arcana.ArcanaRegistry;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.api.EnvironmentInterface;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;
@@ -16,18 +19,24 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Vanishable;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.Text;
 import net.minecraft.util.Arm;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Quaternion;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.UUID;
 
 import static net.minecraft.entity.attribute.EntityAttributeModifier.Operation.ADDITION;
 
 @EnvironmentInterface(value = EnvType.CLIENT, itf = AnimatedSwingItem.class)
-public class CrimsonLeechItem extends Item implements Vanishable, AnimatedSwingItem{
+public class CrimsonLeechItem extends Item implements Vanishable, AnimatedSwingItem, WarpingItem{
 	
 	private static final UUID reachUuid = UUID.fromString("708e5db3-f04c-440c-a0af-d7295835d99a");
 	
@@ -36,7 +45,7 @@ public class CrimsonLeechItem extends Item implements Vanishable, AnimatedSwingI
 	public CrimsonLeechItem(Settings settings){
 		super(settings);
 		
-		float attackDamage = 5.5f;
+		float attackDamage = 6.5f;
 		ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
 		builder.put(
 				EntityAttributes.GENERIC_ATTACK_DAMAGE,
@@ -44,7 +53,7 @@ public class CrimsonLeechItem extends Item implements Vanishable, AnimatedSwingI
 		);
 		builder.put(
 				EntityAttributes.GENERIC_ATTACK_SPEED,
-				new EntityAttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Weapon modifier", -2.4f, EntityAttributeModifier.Operation.ADDITION)
+				new EntityAttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Weapon modifier", -2.8f, EntityAttributeModifier.Operation.ADDITION)
 		);
 		builder.put(
 				ReachEntityAttributes.ATTACK_RANGE,
@@ -57,16 +66,26 @@ public class CrimsonLeechItem extends Item implements Vanishable, AnimatedSwingI
 		return slot == EquipmentSlot.MAINHAND ? attributeModifiers : super.getAttributeModifiers(slot);
 	}
 	
-	public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker){
-		stack.damage(1, attacker, e -> e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND));
-		Random rng = attacker.world.random;
-		if(rng.nextInt(4) == 0)
-			attacker.heal(rng.nextInt(1) + 1);
-		return true;
-	}
-	
 	public int getEnchantability(){
 		return 1;
+	}
+	
+	public int warping(ItemStack stack, PlayerEntity player){
+		return 2;
+	}
+	
+	public static void handleEntityDeath(ServerWorld world, Entity killerEntity, LivingEntity killed){
+		if(killerEntity instanceof LivingEntity killer && killer.getStackInHand(Hand.MAIN_HAND).isOf(ArcanaRegistry.CRIMSON_LEECH)){
+			killer.heal(world.random.nextBetween(1, 4));
+			world.playSound(null, killed.getX(), killed.getY(), killed.getZ(), SoundEvents.ENTITY_CAT_HISS, SoundCategory.HOSTILE, 0.5f, 0.5f, 0);
+			// particles...
+		}
+	}
+	
+	@Environment(EnvType.CLIENT)
+	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context){
+		super.appendTooltip(stack, world, tooltip, context);
+		tooltip.add(ArcanaRegistry.WARPING.getName(2));
 	}
 	
 	@Environment(EnvType.CLIENT)

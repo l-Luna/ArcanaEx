@@ -10,6 +10,7 @@ import arcana.effects.AspectPowerStatusEffect;
 import arcana.effects.SetBonusStatusEffect;
 import arcana.enchantments.LootSwapEnchantment;
 import arcana.entities.ThrownTaintBottleEntity;
+import arcana.items.CrimsonLeechItem;
 import arcana.recipes.AlchemyRecipe;
 import arcana.recipes.InfusionRecipe;
 import arcana.recipes.ShapedArcaneCraftingRecipe;
@@ -24,6 +25,7 @@ import arcana.worldgen.greatwood.GreatwoodTree;
 import arcana.worldgen.silverwood.SilverwoodTree;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.CommonLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
@@ -81,6 +83,7 @@ public final class Arcana implements ModInitializer{
 		ServerTickEvents.END_WORLD_TICK.register(world -> world.getPlayers().forEach(SetBonusStatusEffect::handleArmourSetBonus));
 		ServerTickEvents.END_WORLD_TICK.register(world -> world.getPlayers().forEach(AspectPowerStatusEffect::handleExclusivity));
 		ServerTickEvents.END_WORLD_TICK.register(WardedCampfireBlock::handleTime);
+		ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register(CrimsonLeechItem::handleEntityDeath);
 		
 		LootTableEvents.MODIFY.register(LootSwapEnchantment::modifyLootTable);
 		

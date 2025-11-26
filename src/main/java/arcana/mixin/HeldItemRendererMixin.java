@@ -1,7 +1,10 @@
 package arcana.mixin;
 
 import arcana.components.Caster;
-import arcana.items.PosableItem;
+import arcana.items.AnimatedSwingItem;
+import arcana.items.AnimatedUseItem;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.item.HeldItemRenderer;
@@ -19,16 +22,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(HeldItemRenderer.class)
 public class HeldItemRendererMixin{
 	
-	@Inject(method = "renderFirstPersonItem",
-	        slice = @Slice(from = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;getUseAction()Lnet/minecraft/util/UseAction;")),
-	        at = @At(value = "INVOKE",
-	                 target = "Lnet/minecraft/client/render/item/HeldItemRenderer;applyEquipOffset(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/util/Arm;F)V",
-	                 ordinal = 0,
-	                 shift = At.Shift.AFTER))
-	void renderFirstPersonItem(AbstractClientPlayerEntity player, float tickDelta, float pitch, Hand hand, float swingProgress, ItemStack item, float equipProgress, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo ci){
+	@Inject(method = "renderFirstPersonItem", slice = @Slice(from = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;getUseAction()Lnet/minecraft/util/UseAction;")), at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/item/HeldItemRenderer;applyEquipOffset(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/util/Arm;F)V", ordinal = 0, shift = At.Shift.AFTER))
+	void renderFirstPersonItem_use(AbstractClientPlayerEntity player, float tickDelta, float pitch, Hand hand, float swingProgress, ItemStack item, float equipProgress, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo ci){
 		Arm arm = hand == Hand.MAIN_HAND ? player.getMainArm() : player.getMainArm().getOpposite();
-		if(item.getItem() instanceof PosableItem pi)
-			pi.applyPose(matrices, player, item, tickDelta, hand, arm);
+		if(item.getItem() instanceof AnimatedUseItem pi)
+			pi.applyUsingAnimation(matrices, player, item, tickDelta, hand, arm);
 		else{
 			Caster caster = Caster.from(player);
 			if(caster.isDraining()){
@@ -41,5 +39,29 @@ public class HeldItemRendererMixin{
 				matrices.multiply(Vec3f.POSITIVE_X.getRadialQuaternion(-0.9f));
 			}
 		}
+	}
+	
+	@WrapOperation(method = "renderFirstPersonItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/item/HeldItemRenderer;applySwingOffset(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/util/Arm;F)V"))
+	void renderFirstPersonItem_attack(HeldItemRenderer instance,
+	                                  MatrixStack matrices,
+	                                  Arm arm,
+	                                  float swingProgress,
+	                                  Operation<Void> original,
+	                                  // from renderFirstPersonItem
+	                                  AbstractClientPlayerEntity player,
+	                                  float tickDelta,
+	                                  float pitch,
+	                                  Hand hand,
+	                                  float _swingProgress,
+	                                  ItemStack item,
+	                                  float equipProgress,
+	                                  MatrixStack _matrices,
+	                                  VertexConsumerProvider vertexConsumers,
+	                                  int light){
+		if(item.getItem() instanceof AnimatedSwingItem aai){
+			aai.applySwingAnimation(matrices, player, item, tickDelta, swingProgress, equipProgress, hand, arm);
+			return;
+		}
+		original.call(instance, matrices, arm, swingProgress);
 	}
 }

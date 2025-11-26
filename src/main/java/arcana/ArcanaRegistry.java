@@ -266,6 +266,7 @@ public final class ArcanaRegistry{
 	
 	public static final Item CRIMSON_BLADE = new SwordItem(ArcanaToolMaterials.CRIMSON, 3, -2.4f, new Settings().group(Tab.EQUIPMENT));
 	public static final Item CRIMSON_LONGBOW = new CrimsonLongbowItem(new Settings().group(Tab.EQUIPMENT).maxDamage(564));
+	public static final Item CRIMSON_LEECH = new CrimsonLeechItem(new Settings().group(Tab.EQUIPMENT).maxDamage(874));
 	
 	public static final Item BOOTS_OF_THE_TRAVELLER = new BootsOfTheTravellerItem(ArcanaArmourMaterials.BOOTS_OF_THE_TRAVELLER, new Settings().group(Tab.EQUIPMENT));
 	public static final Item BOOTS_OF_THE_SAILOR = new BootsOfTheTravellerItem(ArcanaArmourMaterials.BOOTS_OF_THE_SAILOR, new Settings().group(Tab.EQUIPMENT));
@@ -833,6 +834,7 @@ public final class ArcanaRegistry{
 		
 		register("crimson_blade", CRIMSON_BLADE);
 		register("crimson_longbow", CRIMSON_LONGBOW);
+		register("crimson_leech", CRIMSON_LEECH);
 		
 		register("boots_of_the_traveller", BOOTS_OF_THE_TRAVELLER);
 		register("boots_of_the_sailor", BOOTS_OF_THE_SAILOR);

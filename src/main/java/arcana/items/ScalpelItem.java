@@ -34,8 +34,8 @@ import net.minecraft.world.World;
 
 import java.util.Optional;
 
-@EnvironmentInterface(value = EnvType.CLIENT, itf = PosableItem.class)
-public class ScalpelItem extends Item implements PosableItem{
+@EnvironmentInterface(value = EnvType.CLIENT, itf = AnimatedUseItem.class)
+public class ScalpelItem extends Item implements AnimatedUseItem{
 	
 	public enum ScalpelType{
 		ROSE,
@@ -137,7 +137,7 @@ public class ScalpelItem extends Item implements PosableItem{
 	}
 	
 	@Environment(EnvType.CLIENT)
-	public void applyPose(MatrixStack matrices, PlayerEntity player, ItemStack stack, float tickDelta, Hand hand, Arm arm){
+	public void applyUsingAnimation(MatrixStack matrices, PlayerEntity player, ItemStack stack, float tickDelta, Hand hand, Arm arm){
 		matrices.multiply(Vec3f.POSITIVE_Y.getRadialQuaternion(0.2f));
 		float x = (player.getItemUseTime() + tickDelta) / (float)getMaxUseTime(stack);
 		float of = x < 0.7 ? -x / 3f

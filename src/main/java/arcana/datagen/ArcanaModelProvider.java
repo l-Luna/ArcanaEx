@@ -108,6 +108,7 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		noAutoGen.add(TOME_OF_SHARING);
 		noAutoGen.add(DRINKABLE_TAINT);
 		noAutoGen.add(CRIMSON_LONGBOW);
+		noAutoGen.add(CRIMSON_LEECH);
 		noAutoGen.add(NITOR.asItem());
 		noAutoGen.add(INFUSION_PILLAR.asItem());
 		noAutoGen.add(ESSENTIA_TUBE.asItem());

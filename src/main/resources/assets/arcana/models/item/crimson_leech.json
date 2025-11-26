@@ -1,0 +1,14 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "arcana:item/crimson_leech"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "arcana:attacking": 1
+      },
+      "model": "arcana:item/crimson_leech_attacking"
+    }
+  ]
+}

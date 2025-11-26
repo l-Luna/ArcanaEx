@@ -9,8 +9,8 @@ import net.minecraft.util.Arm;
 import net.minecraft.util.Hand;
 
 @Environment(EnvType.CLIENT)
-public interface PosableItem{
-	
+public interface AnimatedSwingItem{
+
 	@Environment(EnvType.CLIENT)
-	void applyPose(MatrixStack matrices, PlayerEntity player, ItemStack stack, float tickDelta, Hand hand, Arm arm);
+	void applySwingAnimation(MatrixStack matrices, PlayerEntity player, ItemStack stack, float tickDelta, float swingProgress, float equipProgress, Hand hand, Arm arm);
 }

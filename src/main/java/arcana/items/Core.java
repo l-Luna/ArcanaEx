@@ -7,18 +7,19 @@ import com.google.common.collect.HashBiMap;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.NotNull;
 
 public interface Core{
 	
 	// statics
 	
-	BiMap<Identifier, Core> cores = HashBiMap.create();
+	BiMap<Identifier, @NotNull Core> cores = HashBiMap.create();
 	
-	static Core byName(String name){
+	static @NotNull Core byName(String name){
 		return byName(new Identifier(name));
 	}
 	
-	static Core byName(Identifier name){
+	static @NotNull Core byName(Identifier name){
 		return cores.getOrDefault(name, ArcanaRegistry.MISSING_CORE);
 	}
 	

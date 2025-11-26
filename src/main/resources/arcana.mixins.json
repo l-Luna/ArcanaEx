@@ -32,6 +32,7 @@
     "DebugHudMixin",
     "GameRendererMixin",
     "HeldItemRendererMixin",
+    "ItemRendererMixin",
     "JsonUnbakedModelAccessor",
     "ParticleManagerMixin",
     "ScreenMixin"

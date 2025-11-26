@@ -70,21 +70,24 @@ public class CrimsonLeechItem extends Item implements Vanishable, AnimatedSwingI
 	}
 	
 	@Environment(EnvType.CLIENT)
-	public void applySwingAnimation(MatrixStack matrices, PlayerEntity player, ItemStack stack, float tickDelta, float swingProgress, float equipProgress, Hand hand, Arm arm){
+	public boolean applySwingAnimation(MatrixStack matrices, PlayerEntity player, ItemStack stack, float tickDelta, float swingProgress, float equipProgress, Hand hand, Arm arm){
+		if(player.preferredHand != hand)
+			return false;
 		// TODO: cleanup
 		// undo some builtin offsets
 		int off = arm == Arm.RIGHT ? 1 : -1;
 		
-		float x = -0.4F * MathHelper.sin(MathHelper.sqrt(swingProgress) * (float)Math.PI);
-		float y = 0.2F * MathHelper.sin(MathHelper.sqrt(swingProgress) * (float)(Math.PI * 2));
-		float z = -0.2F * MathHelper.sin(swingProgress * (float)Math.PI);
+		float x = -0.4F * MathHelper.sin(MathHelper.sqrt(swingProgress) * MathHelper.PI);
+		float y = 0.2F * MathHelper.sin(MathHelper.sqrt(swingProgress) * (MathHelper.PI * 2));
+		float z = -0.2F * MathHelper.sin(swingProgress * MathHelper.PI);
 		matrices.translate(-off * x, -y, -z);
 		if(player.handSwinging){
 			matrices.translate(0, equipProgress * 0.6F, 0);
-			// show larger sprite in full scale
-			matrices.scale(2, 2, 2);
-			matrices.translate(0, 0.1, -0.3 * (1-swingProgress) * (swingProgress) - 0.1);
+			matrices.translate(0, 0.4, -0.4 * (1-swingProgress) * (swingProgress) - 0.8);
+			matrices.scale(1, 0.9f - 0.2f * swingProgress, 1);
 			matrices.multiply(Quaternion.fromEulerXyz((-MathHelper.HALF_PI * (0.9f + 0.1f * swingProgress)), 0, 0));
 		}
+		
+		return true;
 	}
 }

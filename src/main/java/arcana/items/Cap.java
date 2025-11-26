@@ -5,18 +5,19 @@ import arcana.aspects.Aspect;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.NotNull;
 
 public interface Cap{
 	
 	// statics
 	
-	BiMap<Identifier, Cap> caps = HashBiMap.create();
+	BiMap<Identifier, @NotNull Cap> caps = HashBiMap.create();
 	
-	static Cap byName(String name){
+	static @NotNull Cap byName(String name){
 		return byName(new Identifier(name));
 	}
 	
-	static Cap byName(Identifier name){
+	static @NotNull Cap byName(Identifier name){
 		return caps.getOrDefault(name, ArcanaRegistry.MISSING_CAP);
 	}
 	

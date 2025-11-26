@@ -38,7 +38,7 @@ public final class WandModel implements UnbakedModel{
 	private static final List<SpriteIdentifier> texDeps = Stream.of(
 					Cap.caps.values().stream().map(WandModel::capTexture),
 					Core.cores.values().stream().map(WandModel::coreTexture),
-					Registry.ITEM.stream().filter(FocusItem.class::isInstance).map(WandModel::focusTexture)
+					Registry.ITEM.stream().filter(FocusItem.class::isInstance).map(WandModel::focusModel)
 			).flatMap(x -> x).map(WandModel::atlased).toList();
 	
 	
@@ -102,11 +102,6 @@ public final class WandModel implements UnbakedModel{
 	
 	public static Identifier coreTexture(Core core){
 		return new Identifier(core.id().getNamespace(), "item/wand/cores/" + core.id().getPath());
-	}
-	
-	public static Identifier focusTexture(Item focus){
-		Identifier id = Registry.ITEM.getId(focus);
-		return new Identifier(id.getNamespace(), "item/wand/foci/" + id.getPath());
 	}
 	
 	public static Identifier focusModel(Item focus){

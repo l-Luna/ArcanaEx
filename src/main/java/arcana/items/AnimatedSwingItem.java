@@ -12,5 +12,5 @@ import net.minecraft.util.Hand;
 public interface AnimatedSwingItem{
 
 	@Environment(EnvType.CLIENT)
-	void applySwingAnimation(MatrixStack matrices, PlayerEntity player, ItemStack stack, float tickDelta, float swingProgress, float equipProgress, Hand hand, Arm arm);
+	boolean applySwingAnimation(MatrixStack matrices, PlayerEntity player, ItemStack stack, float tickDelta, float swingProgress, float equipProgress, Hand hand, Arm arm);
 }

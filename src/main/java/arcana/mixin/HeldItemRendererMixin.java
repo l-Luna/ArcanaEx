@@ -59,8 +59,8 @@ public class HeldItemRendererMixin{
 	                                  VertexConsumerProvider vertexConsumers,
 	                                  int light){
 		if(item.getItem() instanceof AnimatedSwingItem aai){
-			aai.applySwingAnimation(matrices, player, item, tickDelta, swingProgress, equipProgress, hand, arm);
-			return;
+			if(aai.applySwingAnimation(matrices, player, item, tickDelta, swingProgress, equipProgress, hand, arm))
+				return;
 		}
 		original.call(instance, matrices, arm, swingProgress);
 	}

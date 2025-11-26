@@ -1,6 +1,28 @@
 {
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "arcana:item/crimson_leech_extended"
-  }
+	"format_version": "1.21.6",
+	"credit": "Made with Blockbench",
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "arcana:item/crimson_leech_extended"
+	},
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [0, 93, 59],
+			"translation": [0, 12.5, 3],
+			"scale": [1.7, 1.7, 1]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [102, -89, 34],
+			"translation": [-0.5, 12.5, 5],
+			"scale": [1.7, 1.7, 1]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, -90, 25],
+			"scale": [2, 2, 1]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, -90, 25],
+			"scale": [2, 2, 1]
+		}
+	}
 }

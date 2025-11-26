@@ -10,6 +10,7 @@ import net.fabricmc.api.EnvironmentInterface;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;
@@ -75,7 +76,9 @@ public class CrimsonLeechItem extends Item implements Vanishable, AnimatedSwingI
 	}
 	
 	public static void handleEntityDeath(ServerWorld world, Entity killerEntity, LivingEntity killed){
-		if(killerEntity instanceof LivingEntity killer && killer.getStackInHand(Hand.MAIN_HAND).isOf(ArcanaRegistry.CRIMSON_LEECH)){
+		if(killerEntity instanceof LivingEntity killer
+				&& killer.getStackInHand(Hand.MAIN_HAND).isOf(ArcanaRegistry.CRIMSON_LEECH)
+				&& killed.getGroup() != EntityGroup.UNDEAD){
 			killer.heal(world.random.nextBetween(1, 4));
 			world.playSound(null, killed.getX(), killed.getY(), killed.getZ(), SoundEvents.ENTITY_CAT_HISS, SoundCategory.HOSTILE, 0.5f, 0.5f, 0);
 			// particles...

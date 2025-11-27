@@ -832,6 +832,10 @@
         "crimson_longbow": {
           "name": "Crimson Longbow",
           "text": "Arrows fired from a Crimson Longbow have the strange property of being capable of phasing through certain thin materials, such as iron bars or glass panes. This occurs even if the arrow is already magical (say, spectral or tipped). The Cultists seem to have designed their outposts around this, giving their Archers an undeniable advantage from a distance."
+        },
+        "crimson_leech": {
+          "name": "Crimson Leech",
+          "text": "{c}Wet. Writhing. Warm.\n{c}Threads of {i}something{r}.\nFlexible and malleable and it stains and it stinks and it snakes throughout. Bulbous growths and- tongues? No, just blades? Something between.\n{c}What a horrific weapon. It-\n{~sep}From the start. This thing resembles a kind of whip, though one made largely of largely-living tissue. How organic it {i}actually{r} is, I cannot be certain, but it seems capable of some metabolism? It can stretch and reach a distance much further than it appears it should, and can transfer some lifeforce back to the user, though it seems \"eager\" for some of its own.\nWhatever magic went into this must have been powerful, something they have neglected to show me so far. Perhaps I am lucky of that."
         }
       }
     },

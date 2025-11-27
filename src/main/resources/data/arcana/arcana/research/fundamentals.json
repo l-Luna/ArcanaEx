@@ -609,7 +609,8 @@
       "icons": [
         "minecraft:enchanted_book",
         "arcana:crimson_blade",
-        "arcana:crimson_longbow"
+        "arcana:crimson_longbow",
+        "arcana:crimson_leech"
       ],
       "meta": [
         "hidden",
@@ -653,6 +654,16 @@
             {
               "type": "text",
               "content": "research.arcana.crimson_equipment.addenda.crimson_longbow.text"
+            }
+          ]
+        },
+        {
+          "key": "arcana:crimson_equipment/crimson_leech",
+          "name": "research.arcana.crimson_equipment.addenda.crimson_leech.name",
+          "sections": [
+            {
+              "type": "text",
+              "content": "research.arcana.crimson_equipment.addenda.crimson_leech.text"
             }
           ]
         }

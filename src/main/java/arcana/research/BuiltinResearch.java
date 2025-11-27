@@ -46,6 +46,7 @@ public final class BuiltinResearch{
 	public static final Identifier projectingAddendum = arcId("crimson_equipment/projecting");
 	public static final Identifier crimsonBladeAddendum = arcId("crimson_equipment/crimson_blade");
 	public static final Identifier crimsonLongbowAddendum = arcId("crimson_equipment/crimson_longbow");
+	public static final Identifier crimsonLeechAddendum = arcId("crimson_equipment/crimson_leech");
 	
 	public static final Identifier nodeChannellingEntry = arcId("node_channelling");
 	public static final Identifier nodeChannelling2Entry = arcId("node_channelling_2");
@@ -94,6 +95,11 @@ public final class BuiltinResearch{
 		if(player.getInventory().contains(ArcanaRegistry.CRIMSON_LONGBOW.getDefaultStack()) && !researcher.isAddendumComplete(crimsonLongbowAddendum)){
 			researcher.completeEntry(Research.getEntry(crimsonEquipmentEntry));
 			researcher.completeAddendum(crimsonLongbowAddendum);
+			researcher.doSync();
+		}
+		if(player.getInventory().contains(ArcanaRegistry.CRIMSON_LEECH.getDefaultStack()) && !researcher.isAddendumComplete(crimsonLeechAddendum)){
+			researcher.completeEntry(Research.getEntry(crimsonEquipmentEntry));
+			researcher.completeAddendum(crimsonLeechAddendum);
 			researcher.doSync();
 		}
 	}

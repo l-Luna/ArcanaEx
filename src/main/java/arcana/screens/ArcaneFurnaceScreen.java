@@ -1,22 +1,33 @@
 package arcana.screens;
 
+import arcana.ArcanaRegistry;
+import arcana.ArcanaTags;
 import arcana.blocks.be.ArcaneFurnaceBlockEntity;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.Inventory;
+import net.minecraft.inventory.SimpleInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.screen.ArrayPropertyDelegate;
+import net.minecraft.screen.PropertyDelegate;
+import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.ColorHelper.Argb;
 
 import static arcana.Arcana.arcId;
 
-public class ArcaneFurnaceScreen extends HandledScreen<ArcaneFurnaceScreenHandler>{
+public class ArcaneFurnaceScreen extends HandledScreen<ArcaneFurnaceScreen.Handler>{
 	
 	private static final Identifier texture = arcId("textures/gui/container/arcane_furnace.png");
 	
-	public ArcaneFurnaceScreen(ArcaneFurnaceScreenHandler handler, PlayerInventory inventory, Text title){
+	public ArcaneFurnaceScreen(Handler handler, PlayerInventory inventory, Text title){
 		super(handler, inventory, title);
 	}
 	
@@ -64,5 +75,106 @@ public class ArcaneFurnaceScreen extends HandledScreen<ArcaneFurnaceScreenHandle
 	
 	protected void drawForeground(MatrixStack matrices, int mouseX, int mouseY){
 		// no-op - don't draw label
+	}
+	
+	public static class Handler extends ScreenHandler{
+		
+		// "main" material inventory
+		private final Inventory inventory;
+		// [burn time, max burn time, substrate amount, max substrate amount, substrate colour, progress, max progress, aspect total]
+		private final PropertyDelegate props;
+		
+		public Handler(int syncId, PlayerInventory pInv){
+			this(syncId, pInv, new SimpleInventory(1), new SimpleInventory(1), new SimpleInventory(1), new SimpleInventory(1), new ArrayPropertyDelegate(8));
+		}
+		
+		public Handler(int syncId, PlayerInventory pInv, Inventory material, Inventory fuel, Inventory substrate, Inventory husks, PropertyDelegate props){
+			super(ArcanaRegistry.ARCANE_FURNACE_SCREEN_HANDLER, syncId);
+			
+			this.props = props;
+			
+			inventory = material;
+			inventory.onOpen(pInv.player);
+			
+			// to-melt slot
+			addSlot(new Slot(material, 0, 43, 10));
+			
+			// fuel slot
+			addSlot(new Slot(fuel, 0, 31, 48){
+				public boolean canInsert(ItemStack stack){
+					return AbstractFurnaceBlockEntity.canUseAsFuel(stack);
+				}
+			});
+			
+			// substrate slot
+			addSlot(new Slot(substrate, 0, 55, 48){
+				public boolean canInsert(ItemStack stack){
+					return stack.isIn(ArcanaTags.SUBSTRATES);
+				}
+			});
+			
+			// husks slot
+			addSlot(new Slot(husks, 0, 107, 28){
+				public boolean canInsert(ItemStack stack){
+					return false;
+				}
+			});
+			
+			// player inventory slots
+			for(int row = 0; row < 3; ++row)
+				for(int col = 0; col < 9; col++)
+					addSlot(new Slot(pInv, col + row * 9 + 9, 8 + col * 18, 81 + row * 18));
+			
+			for(int idx = 0; idx < 9; idx++)
+				addSlot(new Slot(pInv, idx, 8 + idx * 18, 139));
+			
+			addProperties(props);
+		}
+		
+		public int getBurnTime(){
+			return props.get(0);
+		}
+		
+		public int getMaxBurnTime(){
+			return props.get(1);
+		}
+		
+		public int getSubstrateAmount(){
+			return props.get(2);
+		}
+		
+		public int getMaxSubstrateAmount(){
+			return props.get(3);
+		}
+		
+		public int getSubstrateColour(){
+			return props.get(4);
+		}
+		
+		public int getProgress(){
+			return props.get(5);
+		}
+		
+		public int getMaxProgress(){
+			return props.get(6);
+		}
+		
+		public int getAspectTotal(){
+			return props.get(7);
+		}
+		
+		public ItemStack transferSlot(PlayerEntity player, int index){
+			// TODO: quick move
+			return ItemStack.EMPTY;
+		}
+		
+		public boolean canUse(PlayerEntity player){
+			return inventory.canPlayerUse(player);
+		}
+		
+		public void close(PlayerEntity player){
+			super.close(player);
+			inventory.onClose(player);
+		}
 	}
 }

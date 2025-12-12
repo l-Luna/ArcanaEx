@@ -1,6 +1,6 @@
 package arcana.blocks;
 
-import arcana.screens.ArcaneCraftingScreenHandler;
+import arcana.screens.ArcaneCraftingScreen;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.screen.NamedScreenHandlerFactory;
@@ -35,7 +35,7 @@ public class ArcaneCraftingTableBlock extends WaterloggableBlock{
 	
 	public NamedScreenHandlerFactory createScreenHandlerFactory(BlockState state, World world, BlockPos pos) {
 		return new SimpleNamedScreenHandlerFactory(
-				(syncId, inventory, player) -> new ArcaneCraftingScreenHandler(syncId, inventory, ScreenHandlerContext.create(world, pos)), title
+				(syncId, inventory, player) -> new ArcaneCraftingScreen.Handler(syncId, inventory, ScreenHandlerContext.create(world, pos)), title
 		);
 	}
 }

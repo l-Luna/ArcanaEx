@@ -10,7 +10,7 @@ import arcana.aura.FluxOrigin;
 import arcana.components.Researcher;
 import arcana.research.BuiltinResearch;
 import arcana.research.Research;
-import arcana.screens.DistilleryPathfinderScreenHandler;
+import arcana.screens.DistilleryPathfinderScreen;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -152,7 +152,7 @@ public class DistilleryPathfinderBlockEntity extends BlockEntity implements Name
 	}
 	
 	public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player){
-		return new DistilleryPathfinderScreenHandler(syncId, inv, material, fuel, propertyDelegate);
+		return new DistilleryPathfinderScreen.Handler(syncId, inv, material, fuel, propertyDelegate);
 	}
 	
 	public void markDirty(){

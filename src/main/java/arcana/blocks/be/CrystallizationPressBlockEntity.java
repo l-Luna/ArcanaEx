@@ -5,7 +5,7 @@ import arcana.aspects.AspectIo;
 import arcana.aspects.AspectStack;
 import arcana.aspects.Aspects;
 import arcana.items.CrystalItem;
-import arcana.screens.CrystallizationPressScreenHandler;
+import arcana.screens.CrystallizationPressScreen;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -138,7 +138,7 @@ public class CrystallizationPressBlockEntity extends BlockEntity implements Name
 	}
 	
 	public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player){
-		return new CrystallizationPressScreenHandler(syncId, inv, quartz, output, propertyDelegate);
+		return new CrystallizationPressScreen.Handler(syncId, inv, quartz, output, propertyDelegate);
 	}
 	
 	public @Nullable AspectStack accept(AspectStack stack, World world, BlockPos pos, Direction from){

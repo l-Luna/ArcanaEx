@@ -4,7 +4,7 @@ import arcana.ReflectivelyUtilized;
 import arcana.aspects.Aspect;
 import arcana.aspects.AspectMap;
 import arcana.aspects.Aspects;
-import arcana.screens.ResearchTableScreenHandler;
+import arcana.screens.ResearchTableScreen;
 import com.unascribed.lib39.tunnel.api.C2SMessage;
 import com.unascribed.lib39.tunnel.api.NetworkContext;
 import net.minecraft.screen.ScreenHandler;
@@ -29,7 +29,7 @@ public class PkChemistryCombineAspects extends C2SMessage{
 	protected void handle(ServerPlayerEntity player){
 		// update research notes NBT
 		ScreenHandler handler = player.currentScreenHandler;
-		if(handler instanceof ResearchTableScreenHandler rtsh){
+		if(handler instanceof ResearchTableScreen.Handler rtsh){
 			var notes = rtsh.slots.get(37).getStack();
 			var nbt = notes.getNbt();
 			if(nbt != null){

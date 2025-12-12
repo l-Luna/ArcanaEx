@@ -1,7 +1,7 @@
 package arcana.blocks;
 
 import arcana.blocks.be.ResearchTableBlockEntity;
-import arcana.screens.ResearchTableScreenHandler;
+import arcana.screens.ResearchTableScreen;
 import com.unascribed.lib39.weld.api.BigBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
@@ -126,7 +126,7 @@ public class ResearchTableBlock extends BigBlock implements Waterloggable, Block
 	@Nullable
 	public NamedScreenHandlerFactory createScreenHandlerFactory(BlockState state, World world, BlockPos pos){
 		return new SimpleNamedScreenHandlerFactory(
-				(syncId, inventory, player) -> new ResearchTableScreenHandler(syncId, inventory, ScreenHandlerContext.create(world, pos)),
+				(syncId, inventory, player) -> new ResearchTableScreen.Handler(syncId, inventory, ScreenHandlerContext.create(world, pos)),
 				Text.literal("")
 		);
 	}

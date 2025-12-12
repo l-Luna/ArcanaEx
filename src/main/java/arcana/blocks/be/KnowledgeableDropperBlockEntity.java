@@ -1,7 +1,7 @@
 package arcana.blocks.be;
 
 import arcana.ArcanaRegistry;
-import arcana.screens.KnowledgeableDropperScreenHandler;
+import arcana.screens.KnowledgeableDropperScreen;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.DispenserBlockEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -37,7 +37,7 @@ public class KnowledgeableDropperBlockEntity extends DispenserBlockEntity{
 	}
 	
 	protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory){
-		return new KnowledgeableDropperScreenHandler(syncId, playerInventory, this, tomeSlot);
+		return new KnowledgeableDropperScreen.Handler(syncId, playerInventory, this, tomeSlot);
 	}
 	
 	public Inventory getTomeSlot(){

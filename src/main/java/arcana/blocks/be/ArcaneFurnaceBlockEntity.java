@@ -6,7 +6,7 @@ import arcana.aspects.AspectMap;
 import arcana.aspects.AspectStack;
 import arcana.aspects.ItemAspectRegistry;
 import arcana.blocks.ArcaneFurnaceBlock;
-import arcana.screens.ArcaneFurnaceScreenHandler;
+import arcana.screens.ArcaneFurnaceScreen;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -238,7 +238,7 @@ public class ArcaneFurnaceBlockEntity extends BlockEntity implements NamedScreen
 	
 	@Nullable
 	public ScreenHandler createMenu(int syncId, PlayerInventory pInv, PlayerEntity player){
-		return new ArcaneFurnaceScreenHandler(syncId, pInv, material, fuel, substrate, husks, propertyDelegate);
+		return new ArcaneFurnaceScreen.Handler(syncId, pInv, material, fuel, substrate, husks, propertyDelegate);
 	}
 	
 	public void markDirty(){

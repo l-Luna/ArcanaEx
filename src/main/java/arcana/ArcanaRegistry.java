@@ -284,6 +284,8 @@ public final class ArcanaRegistry{
 	
 	public static final Item WAND = new WandItem(GROUPED_WAND_SINGLE);
 	
+	public static final Item FOCUS_POUCH = new FocusPouchItem(GROUPED_WAND_SINGLE);
+	
 	// foci...
 	public static final Item FIRE_FOCUS = new FireFocusItem(GROUPED_WAND_SINGLE);
 	public static final Item PORTABLE_HOLE_FOCUS = new PortableHoleFocusItem(GROUPED_WAND_SINGLE);
@@ -524,12 +526,13 @@ public final class ArcanaRegistry{
 	public static PointOfInterestType WARDED_CAMPFIRE_POI;
 	
 	// screen handlers...
-	public static final ScreenHandlerType<ArcaneCraftingScreenHandler> ARCANE_CRAFTING_SCREEN_HANDLER = new ScreenHandlerType<>(ArcaneCraftingScreenHandler::new);
-	public static final ScreenHandlerType<ResearchTableScreenHandler> RESEARCH_TABLE_SCREEN_HANDLER = new ScreenHandlerType<>(ResearchTableScreenHandler::new);
-	public static final ScreenHandlerType<KnowledgeableDropperScreenHandler> KNOWLEDGEABLE_DROPPER_SCREEN_HANDLER = new ScreenHandlerType<>(KnowledgeableDropperScreenHandler::new);
-	public static final ScreenHandlerType<ArcaneFurnaceScreenHandler> ARCANE_FURNACE_SCREEN_HANDLER = new ScreenHandlerType<>(ArcaneFurnaceScreenHandler::new);
-	public static final ScreenHandlerType<DistilleryPathfinderScreenHandler> DISTILLERY_PATHFINDER_SCREEN_HANDLER = new ScreenHandlerType<>(DistilleryPathfinderScreenHandler::new);
-	public static final ScreenHandlerType<CrystallizationPressScreenHandler> CRYSTALLIZATION_PRESS_SCREEN_HANDLER = new ScreenHandlerType<>(CrystallizationPressScreenHandler::new);
+	public static final ScreenHandlerType<ArcaneCraftingScreen.Handler> ARCANE_CRAFTING_SCREEN_HANDLER = new ScreenHandlerType<>(ArcaneCraftingScreen.Handler::new);
+	public static final ScreenHandlerType<ResearchTableScreen.Handler> RESEARCH_TABLE_SCREEN_HANDLER = new ScreenHandlerType<>(ResearchTableScreen.Handler::new);
+	public static final ScreenHandlerType<KnowledgeableDropperScreen.Handler> KNOWLEDGEABLE_DROPPER_SCREEN_HANDLER = new ScreenHandlerType<>(KnowledgeableDropperScreen.Handler::new);
+	public static final ScreenHandlerType<ArcaneFurnaceScreen.Handler> ARCANE_FURNACE_SCREEN_HANDLER = new ScreenHandlerType<>(ArcaneFurnaceScreen.Handler::new);
+	public static final ScreenHandlerType<DistilleryPathfinderScreen.Handler> DISTILLERY_PATHFINDER_SCREEN_HANDLER = new ScreenHandlerType<>(DistilleryPathfinderScreen.Handler::new);
+	public static final ScreenHandlerType<CrystallizationPressScreen.Handler> CRYSTALLIZATION_PRESS_SCREEN_HANDLER = new ScreenHandlerType<>(CrystallizationPressScreen.Handler::new);
+	public static final ScreenHandlerType<FocusPouchScreen.Handler> FOCUS_POUCH_SCREEN_HANDLER = new ScreenHandlerType<>(FocusPouchScreen.Handler::new);
 	
 	// block entities...
 	public static BlockEntityType<CrucibleBlockEntity> CRUCIBLE_BE = FabricBlockEntityTypeBuilder.create(CrucibleBlockEntity::new, CRUCIBLE).build();
@@ -855,6 +858,8 @@ public final class ArcanaRegistry{
 		
 		register("wand", WAND);
 		
+		register("focus_pouch", FOCUS_POUCH);
+		
 		register("fire_focus", FIRE_FOCUS);
 		register("portable_hole_focus", PORTABLE_HOLE_FOCUS);
 		register("light_focus", LIGHT_FOCUS);
@@ -1129,6 +1134,8 @@ public final class ArcanaRegistry{
 		register("knowledgeable_dropper", KNOWLEDGEABLE_DROPPER_SCREEN_HANDLER);
 		register("arcane_furnace", ARCANE_FURNACE_SCREEN_HANDLER);
 		register("distillery_pathfinder", DISTILLERY_PATHFINDER_SCREEN_HANDLER);
+		register("crystallization_press", CRYSTALLIZATION_PRESS_SCREEN_HANDLER);
+		register("focus_pouch", FOCUS_POUCH_SCREEN_HANDLER);
 		
 		// block entities
 		register("crucible", CRUCIBLE_BE);

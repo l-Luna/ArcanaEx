@@ -1,6 +1,6 @@
 package arcana.integration.emi;
 
-import arcana.screens.ArcaneCraftingScreenHandler;
+import arcana.screens.ArcaneCraftingScreen;
 import dev.emi.emi.api.EmiRecipeHandler;
 import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.recipe.VanillaEmiRecipeCategories;
@@ -10,9 +10,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmiArcaneCraftingRecipeHandler implements EmiRecipeHandler<ArcaneCraftingScreenHandler>{
+public class EmiArcaneCraftingRecipeHandler implements EmiRecipeHandler<ArcaneCraftingScreen.Handler>{
 	
-	public List<Slot> getInputSources(ArcaneCraftingScreenHandler handler){
+	public List<Slot> getInputSources(ArcaneCraftingScreen.Handler handler){
 		List<Slot> slots = new ArrayList<>();
 		
 		for(int i = 1; i < 10; i++)
@@ -25,7 +25,7 @@ public class EmiArcaneCraftingRecipeHandler implements EmiRecipeHandler<ArcaneCr
 		return slots;
 	}
 	
-	public List<Slot> getCraftingSlots(ArcaneCraftingScreenHandler handler){
+	public List<Slot> getCraftingSlots(ArcaneCraftingScreen.Handler handler){
 		List<Slot> slots = new ArrayList<>();
 		
 		for(int i = 1; i < 10; i++)
@@ -34,7 +34,7 @@ public class EmiArcaneCraftingRecipeHandler implements EmiRecipeHandler<ArcaneCr
 		return slots;
 	}
 	
-	public @Nullable Slot getOutputSlot(ArcaneCraftingScreenHandler handler){
+	public @Nullable Slot getOutputSlot(ArcaneCraftingScreen.Handler handler){
 		return handler.getSlot(0);
 	}
 	

@@ -1,25 +1,37 @@
 package arcana.screens;
 
 import arcana.ArcanaRegistry;
+import arcana.blocks.ResearchTableBlock;
+import arcana.blocks.be.ResearchTableBlockEntity;
 import arcana.client.research.PuzzleRenderer;
+import arcana.items.ResearchNotesItem;
 import arcana.research.Puzzle;
 import arcana.research.Research;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.Inventory;
+import net.minecraft.inventory.SimpleInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.ScreenHandlerContext;
+import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Pair;
 
 import static arcana.Arcana.arcId;
 
-public class ResearchTableScreen extends HandledScreen<ResearchTableScreenHandler>{
+public class ResearchTableScreen extends HandledScreen<ResearchTableScreen.Handler>{
 	
 	private static final Identifier texture = arcId("textures/gui/container/research_table.png");
 	
 	public static final int bgWidth = 338, bgHeight = 241;
 	
-	public ResearchTableScreen(ResearchTableScreenHandler handler, PlayerInventory inventory, Text title){
+	public ResearchTableScreen(Handler handler, PlayerInventory inventory, Text title){
 		super(handler, inventory, title);
 	}
 	
@@ -101,5 +113,79 @@ public class ResearchTableScreen extends HandledScreen<ResearchTableScreenHandle
 				renderer.onClose();
 		}
 		super.close();
+	}
+	
+	public static class Handler extends ScreenHandler{
+		
+		private final Inventory inventory;
+		
+		public Handler(int syncId, PlayerInventory playerInv){
+			this(syncId, playerInv, ScreenHandlerContext.EMPTY);
+		}
+		
+		public Handler(int syncId, PlayerInventory inv, ScreenHandlerContext ctx){
+			super(ArcanaRegistry.RESEARCH_TABLE_SCREEN_HANDLER, syncId);
+			
+			// player inventory
+			for(int i = 0; i < 3; ++i)
+				for(int j = 0; j < 9; ++j)
+					addSlot(new Slot(inv, j + i * 9 + 9, 119 + j * 18, 181 + i * 18));
+			
+			// compact hotbar
+			for(int i = 0; i < 3; i++)
+				for(int j = 0; j < 3; j++)
+					addSlot(new Slot(inv, j + i * 3, 59 + j * 18, 181 + i * 18));
+			
+			Pair<SimpleInventory, SimpleInventory> tableInv = ctx.get((world, pos) -> {
+				BlockState state = world.getBlockState(pos);
+				if(!state.get(ResearchTableBlock.left))
+					pos = pos.offset(state.get(ResearchTableBlock.facing));
+				ResearchTableBlockEntity entity = (ResearchTableBlockEntity)world.getBlockEntity(pos);
+				return new Pair<>(entity.scribingTools, entity.note);
+			}).orElse(new Pair<>(new SimpleInventory(1), new SimpleInventory(1)));
+			
+			addSlot(new Slot(tableInv.getLeft(), 0, 74, 10){
+				public boolean canInsert(ItemStack stack){
+					return stack.getItem() == ArcanaRegistry.SCRIBING_TOOLS;
+				}
+			});
+			addSlot(new Slot(tableInv.getRight(), 0, 92, 10){
+				public boolean canInsert(ItemStack stack){
+					return stack.getItem() instanceof ResearchNotesItem;
+				}
+			});
+			
+			inventory = tableInv.getLeft();
+		}
+		
+		public ItemStack transferSlot(PlayerEntity player, int index){
+			ItemStack itemStack = ItemStack.EMPTY;
+			Slot slot = slots.get(index);
+			if(slot != null && slot.hasStack()){
+				ItemStack itemStack2 = slot.getStack();
+				itemStack = itemStack2.copy();
+				if(index >= 36){
+					if(!insertItem(itemStack2, 0, 36, true))
+						return ItemStack.EMPTY;
+				}else if(!insertItem(itemStack2, 36, 38, true))
+					return ItemStack.EMPTY;
+				
+				if(itemStack2.isEmpty())
+					slot.setStack(ItemStack.EMPTY);
+				else
+					slot.markDirty();
+				
+				if(itemStack2.getCount() == itemStack.getCount())
+					return ItemStack.EMPTY;
+				
+				slot.onTakeItem(player, itemStack2);
+			}
+			
+			return itemStack;
+		}
+		
+		public boolean canUse(PlayerEntity player){
+			return inventory.canPlayerUse(player);
+		}
 	}
 }

@@ -9,7 +9,7 @@ import arcana.components.Researcher;
 import arcana.research.BuiltinResearch;
 import arcana.research.Research;
 import arcana.research.puzzles.Chemistry;
-import arcana.screens.ResearchTableScreenHandler;
+import arcana.screens.ResearchTableScreen;
 import com.unascribed.lib39.tunnel.api.C2SMessage;
 import com.unascribed.lib39.tunnel.api.NetworkContext;
 import com.unascribed.lib39.tunnel.api.annotation.field.Optional;
@@ -40,7 +40,7 @@ public class PkChemistryClick extends C2SMessage{
 	protected void handle(ServerPlayerEntity player){
 		// update research notes NBT
 		ScreenHandler handler = player.currentScreenHandler;
-		if(handler instanceof ResearchTableScreenHandler rtsh){
+		if(handler instanceof ResearchTableScreen.Handler rtsh){
 			var notes = rtsh.slots.get(37).getStack();
 			if(!notes.isEmpty()){
 				var nbt = notes.getNbt();

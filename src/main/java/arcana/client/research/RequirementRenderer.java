@@ -24,6 +24,7 @@ public interface RequirementRenderer<T extends Requirement>{
 		renderers.put(XpRequirement.TYPE, new XpRequirementRenderer());
 		renderers.put(PuzzleRequirement.TYPE, new PuzzleRequirementRenderer());
 		renderers.put(PuzzlesCompletedRequirement.TYPE, new PuzzlesCompletedRequirementRenderer());
+		renderers.put(FociCastRequirement.TYPE, new FociCastRequirementRenderer());
 	}
 	
 	@SuppressWarnings("unchecked")

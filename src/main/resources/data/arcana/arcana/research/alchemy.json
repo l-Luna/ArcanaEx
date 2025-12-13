@@ -388,6 +388,10 @@
         {
           "type": "alchemy",
           "content": "arcana:hedge_alchemy/leather_by_hedge_alchemy"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:hedge_alchemy/rabbit_hide_by_hedge_alchemy"
         }
       ]
     },

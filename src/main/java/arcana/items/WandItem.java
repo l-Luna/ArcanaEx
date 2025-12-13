@@ -7,6 +7,7 @@ import arcana.aura.Node;
 import arcana.blocks.be.InfusionMatrixBlockEntity;
 import arcana.client.ArcanaClient;
 import arcana.components.Caster;
+import arcana.components.Researcher;
 import dev.emi.trinkets.api.SlotReference;
 import dev.emi.trinkets.api.TrinketsApi;
 import net.fabricmc.api.EnvType;
@@ -110,6 +111,7 @@ public class WandItem extends Item implements FabricItem, WarpingItem{
 			cost.multiply(aspect -> costMultiplier(aspect, wandStack, player));
 			if(aspectsFrom(wandStack).contains(cost)){
 				ActionResult result = fi.castOnBlock(context);
+				Researcher.from(player).markFocusCast(fi);
 				if(result != ActionResult.PASS && result != ActionResult.FAIL){
 					// no point charging for something that didn't work
 					updateAspects(wandStack, aspects -> aspects.take(cost));
@@ -132,6 +134,7 @@ public class WandItem extends Item implements FabricItem, WarpingItem{
 			cost.multiply(aspect -> costMultiplier(aspect, stack, user));
 			if(stored.contains(cost)){
 				ActionResult result = fi.castOnEntity(wandStack, focusStack, user, entity);
+				Researcher.from(user).markFocusCast(fi);
 				if(result != ActionResult.PASS && result != ActionResult.FAIL){
 					// no point charging for something that didn't work
 					updateAspects(wandStack, aspects -> aspects.take(cost));

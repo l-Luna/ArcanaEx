@@ -3,6 +3,7 @@ package arcana.components;
 import arcana.ArcanaRegistry;
 import arcana.aura.AuraWorld;
 import arcana.aura.NodeTypes;
+import arcana.items.FocusItem;
 import arcana.items.WarpingItem;
 import arcana.research.*;
 import arcana.util.NbtUtil;
@@ -21,6 +22,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.registry.Registry;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -45,6 +47,7 @@ public final class Researcher implements Component, AutoSyncedComponent{
 	private final Map<Identifier, ArrayList<Integer>> pinned = new HashMap<>();
 	private final Set<Identifier> completedPuzzles = new HashSet<>();
 	private final Set<Identifier> completedAddenda = new HashSet<>();
+	private final Set<Identifier> castFoci = new HashSet<>();
 	
 	// notifying of new addenda
 	// this is set to always be one resync out of date (or null if there are no syncs), to allow the client to see new addenda
@@ -106,6 +109,10 @@ public final class Researcher implements Component, AutoSyncedComponent{
 				.count();
 	}
 	
+	public int getCastFociCount(){
+		return castFoci.size();
+	}
+	
 	// checks if all requirements are complete, takes requirements if so, and syncs with client if anything did happen
 	public void tryAdvance(Entry entry, boolean onlyFree){
 		if(entryStage(entry) < entry.sections().size()){
@@ -133,7 +140,7 @@ public final class Researcher implements Component, AutoSyncedComponent{
 			stages.put(entry.id(), entryStage(entry) + 1);
 			// unlock all following stages that have no requirements, too
 			// ends up on entry.sections().size(); an entry with 1 section is on stage 0 by default and can be incremented to 1
-		}while(entryStage(entry) < entry.sections().size() && entry.sections().get(entryStage(entry)).getRequirements().size() == 0);
+		}while(entryStage(entry) < entry.sections().size() && entry.sections().get(entryStage(entry)).getRequirements().isEmpty());
 		if(isEntryComplete(entry)){
 			int warping = entry.warping();
 			if(warping > 0 && warping <= 5) // anything out of this range doesn't get displayed, so it's unfair to add
@@ -161,6 +168,10 @@ public final class Researcher implements Component, AutoSyncedComponent{
 	
 	public void completeAddendum(Identifier addendum){
 		completedAddenda.add(addendum);
+	}
+	
+	public void markFocusCast(FocusItem focus){
+		castFoci.add(Registry.ITEM.getId(focus));
 	}
 	
 	public long getLastWarpEventTime(){
@@ -287,6 +298,10 @@ public final class Researcher implements Component, AutoSyncedComponent{
 		completedAddenda.clear();
 		for(NbtElement addendum : tag.getList("addenda", NbtElement.STRING_TYPE))
 			completedAddenda.add(new Identifier(addendum.asString()));
+		
+		castFoci.clear();
+		for(NbtElement addendum : tag.getList("cast_foci", NbtElement.STRING_TYPE))
+			castFoci.add(new Identifier(addendum.asString()));
 	}
 	
 	public void writeToNbt(NbtCompound tag){
@@ -307,6 +322,7 @@ public final class Researcher implements Component, AutoSyncedComponent{
 		tag.put("puzzles", puzzlesTag);
 		
 		tag.put("addenda", completedAddenda.stream().map(x -> NbtString.of(x.toString())).collect(NbtUtil.toNbtList()));
+		tag.put("cast_foci", castFoci.stream().map(x -> NbtString.of(x.toString())).collect(NbtUtil.toNbtList()));
 	}
 	
 	public void applySyncPacket(PacketByteBuf buf){

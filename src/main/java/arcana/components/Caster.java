@@ -207,6 +207,9 @@ public class Caster implements Component, AutoSyncedComponent, ServerTickingComp
 						cost.multiply(aspect -> WandItem.costMultiplier(aspect, wand, player));
 						if(WandItem.aspectsFrom(wand).contains(cost)){
 							WandItem.updateAspects(wand, aspects -> aspects.take(cost));
+							Researcher researcher = Researcher.from(player);
+							researcher.markFocusCast(fi);
+							researcher.doSync();
 							fi.startContinuousCast(ccc);
 							if(ccc.isStopping()){
 								endState(); player.stopUsingItem(); return;

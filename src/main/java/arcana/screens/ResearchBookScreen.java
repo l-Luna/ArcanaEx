@@ -19,6 +19,7 @@ import net.minecraft.util.math.Quaternion;
 import net.minecraft.util.math.Vec3f;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,9 +48,10 @@ public class ResearchBookScreen extends Screen{
 	
 	@Nullable Screen parent;
 	
-	static int tab = 0;
-	static float zoom = .7f;
-	static float xPan = 0, yPan = 0;
+	private static boolean debug = false;
+	private static int tab = 0;
+	private static float zoom = .7f;
+	private static float xPan = 0, yPan = 0;
 	
 	public ResearchBookScreen(@NotNull Book book, @Nullable Screen parent){
 		super(Text.literal(""));
@@ -135,6 +137,20 @@ public class ResearchBookScreen extends Screen{
 		renderResearchBackground(matrices);
 		renderEntries(matrices, delta);
 		
+		if(debug){
+			matrices.push();
+			matrices.translate(0, 0, 300);
+			int gx = (int)Math.floor((mouseX / zoom - xOffset()) / 30);
+			int gy = (int)Math.floor((mouseY / zoom - yOffset()) / 30);
+			textRenderer.draw(matrices, "X: %d / Y : %d".formatted(gx, gy), scX + 2, scY + 4, 0xFFFFFF);
+
+			matrices.scale(zoom, zoom, zoom);
+			RenderSystem.setShader(GameRenderer::getPositionColorTexShader);
+			RenderSystem.setShaderTexture(0, arrowsAndBasesTexture);
+			drawTexture(matrices, (int)((gx*30 + xOffset()) + 1), (int)((gy*30 + yOffset()) + 1), 0, 78, 28, 28);
+			matrices.pop();
+		}
+		
 		RenderSystem.disableScissor();
 		
 		setZOffset(299);
@@ -208,7 +224,7 @@ public class ResearchBookScreen extends Screen{
 				RenderSystem.setShaderColor(mult, mult, mult, 1);
 				drawTexture(matrices, x + 2, y + 2, base % 4 * 26, base / 4 * 26, 26, 26);
 				
-				if(entry.icons().size() > 0){
+				if(!entry.icons().isEmpty()){
 					Icon icon = entry.icons().get((int)((time / 30) % entry.icons().size()));
 					RenderHelper.renderIcon(matrices, icon, x + 7, y + 7, getZOffset(), zoom, entry.getIntMeta("icon_frames"));
 				}
@@ -315,11 +331,21 @@ public class ResearchBookScreen extends Screen{
 						|| (style == PageStyle.pending && !entry.meta().contains("hidden"))){
 					List<Text> lines = new ArrayList<>(2);
 					lines.add(Text.translatable(entry.name()));
-					if(entry.desc() != null && !entry.desc().equals(""))
+					if(entry.desc() != null && !entry.desc().isEmpty())
 						lines.add(Text.translatable(entry.desc()).formatted(Formatting.GRAY));
 					int warping = entry.warping();
 					if(warping > 0 && warping <= 5)
 						lines.add(Text.translatable("research.book.warping." + warping).formatted(Formatting.DARK_PURPLE));
+					
+					if(debug){
+						lines.add(Text.literal(entry.id().toString()).formatted(Formatting.DARK_GRAY));
+						if(!entry.meta().isEmpty()){
+							lines.add(Text.literal("Meta:").formatted(Formatting.DARK_GRAY));
+							for(String s : entry.meta())
+								lines.add(Text.literal("- " + s).formatted(Formatting.DARK_GRAY));
+						}
+					}
+					
 					renderTooltip(matrices, lines, mouseX, mouseY);
 				}
 				break;
@@ -342,13 +368,43 @@ public class ResearchBookScreen extends Screen{
 				if(button != 2){
 					if((style = style(entry)) == PageStyle.complete || style == PageStyle.inProgress)
 						// left/right (& other) click: open page
-						MinecraftClient.getInstance().setScreen(new ResearchEntryScreen(entry, this));
+						client.setScreen(new ResearchEntryScreen(entry, this));
 				}else if(style(entry) == PageStyle.inProgress)
 					// middle click: try advance
 					ArcanaClient.sendTryAdvance(entry);
 				break;
 			}
 		}
+		
+		if(debug && hasControlDown()){
+			int gx = (int)Math.floor((mouseX / zoom - xOffset()) / 30);
+			int gy = (int)Math.floor((mouseY / zoom - yOffset()) / 30);
+			client.keyboard.setClipboard("""
+					{
+						"key": "arcana:XYZ",
+						"name": "research.arcana.XYZ.title",
+						"desc": "research.arcana.XYZ.desc",
+						"icons": [
+							"arcana:XYZ"
+						],
+						"category": "%s",
+						"parents": [
+							"arcana:ABC"
+						],
+						"x": %d,
+						"y": %d,
+						"sections": [
+							{
+								"type": "text",
+								"content": "research.arcana.XYZ.stages.1",
+								"requirements": []
+							}
+						]
+					}
+					""".formatted(categories.get(tab).id().toString(), gx, gy));
+			client.player.sendMessage(Text.literal("Copied research skeleton to clipboard"));
+		}
+		
 		return super.mouseClicked(mouseX, mouseY, button);
 	}
 	
@@ -374,6 +430,10 @@ public class ResearchBookScreen extends Screen{
 			return true;
 		if(client.options.inventoryKey.matchesKey(keyCode, scanCode)){
 			client.setScreen(null);
+			return true;
+		}
+		if(keyCode == GLFW.GLFW_KEY_F3){
+			debug ^= true;
 			return true;
 		}
 		return false;
@@ -681,17 +741,20 @@ public class ResearchBookScreen extends Screen{
 		
 		public void renderAfter(MatrixStack matrices, int mouseX, int mouseY){
 			if(hovered){
-				if(category.entries().size() > 0){
+				if(!category.entries().isEmpty()){
 					Researcher researcher = Researcher.from(client.player);
 					int sum = 0;
 					for(Entry entry : category.entries())
 						sum += researcher.entryStage(entry) >= entry.sections().size() ? 1 : 0;
 					int percent = (sum * 100) / category.entries().size();
-					ResearchBookScreen.this.renderTooltip(matrices, Text.translatable(
+					List<Text> lines = new ArrayList<>(2);
+					lines.add(Text.translatable(
 							"research.book.category_with_completion",
 							Text.translatable(category.name()),
-							Text.literal(String.valueOf(percent))),
-							mouseX, mouseY);
+							Text.literal(String.valueOf(percent))));
+					if(debug)
+						lines.add(Text.literal(category.id().toString()).formatted(Formatting.DARK_GRAY));
+					ResearchBookScreen.this.renderTooltip(matrices, lines, mouseX, mouseY);
 				}else
 					ResearchBookScreen.this.renderTooltip(matrices, Text.translatable(category.name()), mouseX, mouseY);
 			}

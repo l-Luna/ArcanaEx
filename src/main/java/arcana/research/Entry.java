@@ -7,6 +7,7 @@ import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtString;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,7 +114,7 @@ public record Entry(
 		return id().hashCode();
 	}
 	
-	public String toString(){
+	public @NotNull String toString(){
 		return id.toString();
 	}
 }

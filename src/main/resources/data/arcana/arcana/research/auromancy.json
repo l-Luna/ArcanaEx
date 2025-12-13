@@ -458,7 +458,7 @@
         },
         {
           "type": "alchemy",
-          "content": "arcana:fire_focus",
+          "content": "arcana:foci/fire_focus",
           "requirements": [
             "0*arcana:fire_focus"
           ]
@@ -466,6 +466,38 @@
         {
           "type": "text",
           "content": "research.arcana.wand_foci.stage.2"
+        }
+      ]
+    },
+    {
+      "key": "arcana:focus_pouch",
+      "name": "research.arcana.focus_pouch.title",
+      "desc": "research.arcana.focus_pouch.desc",
+      "icons": [
+        "arcana:focus_pouch"
+      ],
+      "category": "arcana:auromancy",
+      "parents": [
+        "arcana:wand_foci"
+      ],
+      "x": 2,
+      "y": -1,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.focus_pouch.stages.1",
+          "requirements": [
+            "6*arcana::xp",
+            "3*arcana::foci_cast"
+          ]
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.focus_pouch.stages.2"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:focus_pouch"
         }
       ]
     },
@@ -497,7 +529,7 @@
         },
         {
           "type": "alchemy",
-          "content": "arcana:light_focus"
+          "content": "arcana:foci/light_focus"
         }
       ]
     },
@@ -529,7 +561,7 @@
         },
         {
           "type": "alchemy",
-          "content": "arcana:portable_hole_focus"
+          "content": "arcana:foci/portable_hole_focus"
         }
       ]
     },
@@ -564,7 +596,7 @@
         },
         {
           "type": "alchemy",
-          "content": "arcana:equivalent_exchange_focus"
+          "content": "arcana:foci/equivalent_exchange_focus"
         }
       ]
     },
@@ -599,7 +631,7 @@
         },
         {
           "type": "alchemy",
-          "content": "arcana:prismatic_light_focus"
+          "content": "arcana:foci/prismatic_light_focus"
         }
       ]
     }

@@ -29,14 +29,14 @@ public class FocusPouchItem extends Item implements FabricItem{
 		return new TypedActionResult<>(ActionResult.SUCCESS, stack);
 	}
 	
-	public ArrayInventory inventoryFrom(ItemStack stack){
+	public static ArrayInventory inventoryFrom(ItemStack stack){
 		ArrayInventory inventory = new ArrayInventory(9*3);
 		inventory.readNbtList(stack.getOrCreateNbt().getList("Items", NbtElement.COMPOUND_TYPE));
 		inventory.addListener(i -> setInventory(stack, (ArrayInventory)i));
 		return inventory;
 	}
 	
-	public void setInventory(ItemStack stack, ArrayInventory inventory){
+	public static void setInventory(ItemStack stack, ArrayInventory inventory){
 		stack.getOrCreateNbt().put("Items", inventory.toNbtList());
 	}
 	

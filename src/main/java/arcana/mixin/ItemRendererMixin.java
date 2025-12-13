@@ -33,7 +33,7 @@ public class ItemRendererMixin{
 	BakedModel overrideInventoryTextures(ItemRenderer instance,
 	                                     ItemStack stack,
 	                                     World world,
-	                                     LivingEntity entity,
+	                                     @Nullable LivingEntity entity,
 	                                     int seed,
 	                                     Operation<BakedModel> original,
 										 //
@@ -47,14 +47,16 @@ public class ItemRendererMixin{
 	                                     int light,
 	                                     int overlay,
 	                                     int _seed){
-		boolean isInventory = renderMode == Mode.GUI || renderMode == Mode.GROUND || renderMode == Mode.FIXED;
-		Arm arm = renderMode == Mode.FIRST_PERSON_LEFT_HAND || renderMode == Mode.THIRD_PERSON_LEFT_HAND ? Arm.LEFT
-				: renderMode == Mode.FIRST_PERSON_RIGHT_HAND || renderMode == Mode.THIRD_PERSON_RIGHT_HAND ? Arm.RIGHT
-				: null;
-		Hand hand = entity.getMainArm() == arm ? Hand.MAIN_HAND : arm != null ? Hand.OFF_HAND : null;
-		if(!isInventory)
-			if(stack.isOf(ArcanaRegistry.CRIMSON_LEECH) && entity.handSwinging && entity.preferredHand == hand)
-				return models.getModelManager().getModel(new ModelIdentifier("arcana:crimson_leech_attacking#inventory"));
+		if(entity != null){
+			boolean isInventory = renderMode == Mode.GUI || renderMode == Mode.GROUND || renderMode == Mode.FIXED;
+			Arm arm = renderMode == Mode.FIRST_PERSON_LEFT_HAND || renderMode == Mode.THIRD_PERSON_LEFT_HAND ? Arm.LEFT
+					: renderMode == Mode.FIRST_PERSON_RIGHT_HAND || renderMode == Mode.THIRD_PERSON_RIGHT_HAND ? Arm.RIGHT
+					: null;
+			Hand hand = entity.getMainArm() == arm ? Hand.MAIN_HAND : arm != null ? Hand.OFF_HAND : null;
+			if(!isInventory)
+				if(stack.isOf(ArcanaRegistry.CRIMSON_LEECH) && entity.handSwinging && entity.preferredHand == hand)
+					return models.getModelManager().getModel(new ModelIdentifier("arcana:crimson_leech_attacking#inventory"));
+		}
 		return original.call(instance, stack, world, entity, seed);
 	}
 }

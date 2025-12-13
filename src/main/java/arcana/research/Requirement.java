@@ -51,6 +51,9 @@ public abstract class Requirement{
 		
 		factories.put(PuzzlesCompletedRequirement.TYPE, __ -> new PuzzlesCompletedRequirement());
 		deserializers.put(PuzzlesCompletedRequirement.TYPE, __ -> new PuzzlesCompletedRequirement());
+		
+		factories.put(FociCastRequirement.TYPE, __ -> new FociCastRequirement());
+		deserializers.put(FociCastRequirement.TYPE, __ -> new FociCastRequirement());
 	}
 	
 	//

@@ -29,7 +29,6 @@ import arcana.screens.*;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
@@ -47,18 +46,15 @@ import net.minecraft.client.gui.tooltip.TooltipComponent;
 import net.minecraft.client.item.BundleTooltipData;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.item.TooltipData;
-import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.CampfireBlockEntityRenderer;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 import net.minecraft.client.texture.SpriteAtlasTexture;
-import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.item.BlockItem;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -79,8 +75,9 @@ public final class ArcanaClient implements ClientModInitializer{
 				d instanceof WandAspectsTooltipData w ? new WandAspectsTooltipComponent(w.wand()) : null);
 		
 		WorldRenderEvents.LAST.register(NodeRenderer::render);
-		ClientTickEvents.END_CLIENT_TICK.register(SwapFocusScreen::tryOpen);
 		HudRenderCallback.EVENT.register(HudRenderer::renderHud);
+		HudRenderCallback.EVENT.register(FocusSwitcherRenderer::renderHud);
+		ClientTickEvents.START_CLIENT_TICK.register(FocusSwitcherRenderer::tick);
 		
 		ModelLoadingRegistry.INSTANCE.registerResourceProvider(__ -> new WandModel.Provider());
 		ModelLoadingRegistry.INSTANCE.registerModelProvider((manager, out) -> {
@@ -193,13 +190,6 @@ public final class ArcanaClient implements ClientModInitializer{
 		EntrySectionRenderer.setup();
 		RequirementRenderer.setup();
 		PuzzleRenderer.setup();
-		
-		SwapFocusScreen.swapFocus = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-				"key.arcana.swap_focus",
-				InputUtil.Type.KEYSYM,
-				GLFW.GLFW_KEY_G,
-				"category.arcana"
-		));
 		
 		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.TAINT_BUBBLE, spr -> new SimpleSpriteParticle.Factory(spr, 0.02f, 0, 50, 2f, true));
 		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.FLAME, spr -> new SimpleSpriteParticle.Factory(spr, 0, 0.06f, 30, 1, false));

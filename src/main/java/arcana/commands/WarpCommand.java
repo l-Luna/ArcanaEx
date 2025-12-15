@@ -8,7 +8,6 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import net.minecraft.command.CommandRegistryAccess;
-import net.minecraft.command.CommandSource;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.command.argument.IdentifierArgumentType;
 import net.minecraft.server.command.CommandManager;
@@ -21,7 +20,7 @@ import static net.minecraft.server.command.CommandManager.literal;
 public final class WarpCommand{
 	
 	private static final SuggestionProvider<ServerCommandSource> SUGGEST_WARP_EVENTS =
-			(context, builder) -> CommandSource.suggestIdentifiers(WarpEvents.events.keySet().stream(), builder);
+			(context, builder) -> ArcanaCommands.suggestIdentifiers(WarpEvents.events.keySet().stream(), builder);
 	
 	public static void register(CommandDispatcher<ServerCommandSource> dispatcher,
 	                            CommandRegistryAccess registry,

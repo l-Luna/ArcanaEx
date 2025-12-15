@@ -3,9 +3,7 @@ package arcana;
 import arcana.aspects.ItemAspectRegistry;
 import arcana.aura.TaintMapLoader;
 import arcana.blocks.WardedCampfireBlock;
-import arcana.commands.NodeCommand;
-import arcana.commands.ResearchCommand;
-import arcana.commands.WarpCommand;
+import arcana.commands.ArcanaCommands;
 import arcana.effects.AspectPowerStatusEffect;
 import arcana.effects.SetBonusStatusEffect;
 import arcana.enchantments.LootSwapEnchantment;
@@ -24,7 +22,6 @@ import arcana.worldgen.geodes.NodalGeodes;
 import arcana.worldgen.greatwood.GreatwoodTree;
 import arcana.worldgen.silverwood.SilverwoodTree;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.CommonLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
@@ -75,9 +72,7 @@ public final class Arcana implements ModInitializer{
 		
 		CommonLifecycleEvents.TAGS_LOADED.register((registries, client) -> aspectRegistry.applyAssociations());
 		
-		CommandRegistrationCallback.EVENT.register(NodeCommand::register);
-		CommandRegistrationCallback.EVENT.register(ResearchCommand::register);
-		CommandRegistrationCallback.EVENT.register(WarpCommand::register);
+		ArcanaCommands.register();
 		
 		ServerTickEvents.END_WORLD_TICK.register(world -> world.getPlayers().forEach(BuiltinResearch::checkTick));
 		ServerTickEvents.END_WORLD_TICK.register(world -> world.getPlayers().forEach(SetBonusStatusEffect::handleArmourSetBonus));

@@ -11,7 +11,6 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import net.minecraft.command.CommandRegistryAccess;
-import net.minecraft.command.CommandSource;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.command.argument.IdentifierArgumentType;
 import net.minecraft.server.command.CommandManager;
@@ -24,13 +23,13 @@ import static net.minecraft.server.command.CommandManager.literal;
 public final class ResearchCommand{
 	
 	private static final SuggestionProvider<ServerCommandSource> SUGGEST_ENTRIES =
-			(context, builder) -> CommandSource.suggestIdentifiers(Research.streamEntries().map(Entry::id), builder);
+			(context, builder) -> ArcanaCommands.suggestIdentifiers(Research.streamEntries().map(Entry::id), builder);
 	
 	private static final SuggestionProvider<ServerCommandSource> SUGGEST_PUZZLES =
-			(context, builder) -> CommandSource.suggestIdentifiers(Research.streamPuzzles().map(Puzzle::id), builder);
+			(context, builder) -> ArcanaCommands.suggestIdentifiers(Research.streamPuzzles().map(Puzzle::id), builder);
 	
 	private static final SuggestionProvider<ServerCommandSource> SUGGEST_ADDENDA =
-			(context, builder) -> CommandSource.suggestIdentifiers(Research.streamAddenda().map(Addendum::id), builder);
+			(context, builder) -> ArcanaCommands.suggestIdentifiers(Research.streamAddenda().map(Addendum::id), builder);
 	
 	public static void register(CommandDispatcher<ServerCommandSource> dispatcher,
 	                            CommandRegistryAccess registry,

@@ -6,7 +6,6 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import net.minecraft.command.CommandRegistryAccess;
-import net.minecraft.command.CommandSource;
 import net.minecraft.command.argument.Vec3ArgumentType;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
@@ -23,7 +22,7 @@ import static net.minecraft.server.command.CommandManager.literal;
 public final class NodeCommand{
 	
 	private static final SuggestionProvider<ServerCommandSource> SUGGEST_NODE_TYPES =
-			(context, builder) -> CommandSource.suggestIdentifiers(NodeTypes.NODE_TYPES.keySet().stream(), builder);
+			(context, builder) -> ArcanaCommands.suggestIdentifiers(NodeTypes.NODE_TYPES.keySet().stream(), builder);
 	
 	public static void register(CommandDispatcher<ServerCommandSource> dispatcher,
 	                            CommandRegistryAccess registry,

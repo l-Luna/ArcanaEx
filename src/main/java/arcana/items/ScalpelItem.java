@@ -2,7 +2,7 @@ package arcana.items;
 
 import arcana.aura.AuraWorld;
 import arcana.aura.Node;
-import arcana.entities.WispEntity;
+import arcana.entities.wisps.WispEntity;
 import arcana.network.PkShakeNode;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;

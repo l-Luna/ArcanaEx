@@ -1,7 +1,7 @@
 package arcana.mixin;
 
 import arcana.ArcanaTags;
-import arcana.entities.WispEntity;
+import arcana.entities.wisps.WispEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.entity.Entity;

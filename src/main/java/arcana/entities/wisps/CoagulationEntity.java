@@ -1,4 +1,4 @@
-package arcana.entities;
+package arcana.entities.wisps;
 
 import arcana.ArcanaRegistry;
 import net.minecraft.entity.Entity;
@@ -57,7 +57,7 @@ public class CoagulationEntity extends WispLikeEntity implements Tameable{
 		ownerId = nbt.containsUuid("OwnerId") ? nbt.getUuid("OwnerId") : null;
 	}
 	
-	Vec3d anchor(){
+	public Vec3d anchor(){
 		Entity owner = getOwner();
 		return owner != null ? owner.getPos() : getPos();
 	}

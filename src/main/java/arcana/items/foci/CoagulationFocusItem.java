@@ -1,6 +1,6 @@
 package arcana.items.foci;
 
-import arcana.entities.CoagulationEntity;
+import arcana.entities.wisps.CoagulationEntity;
 import arcana.items.FocusItem;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Vec3d;

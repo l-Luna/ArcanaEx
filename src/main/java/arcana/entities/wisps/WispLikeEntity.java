@@ -1,4 +1,4 @@
-package arcana.entities;
+package arcana.entities.wisps;
 
 import arcana.ArcanaRegistry;
 import net.minecraft.entity.Entity;
@@ -34,7 +34,7 @@ public abstract class WispLikeEntity extends PathAwareEntity{
 	
 	//
 	
-	abstract Vec3d anchor();
+	public abstract Vec3d anchor();
 	
 	//
 	

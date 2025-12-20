@@ -1,6 +1,6 @@
 package arcana.client.entity;
 
-import arcana.entities.WispLikeEntity;
+import arcana.entities.wisps.WispLikeEntity;
 import net.minecraft.client.render.LightmapTextureManager;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
@@ -18,21 +18,26 @@ import static arcana.Arcana.arcId;
 
 public class WispLikeEntityRenderer<T extends WispLikeEntity> extends EntityRenderer<T>{
 	
-	private static final Identifier texture = arcId("textures/entity/wisp.png");
-	private static final RenderLayer layer = RenderLayer.getText(texture);
-	private static final RenderLayer layerDark = RenderLayer.getTextSeeThrough(texture);
+	private Identifier texture = arcId("textures/entity/wisp.png");
+	private RenderLayer layer;
+	private RenderLayer layerDark;
 	
 	private final int rings;
 	private final float ringTime;
 	private final boolean ringDir;
 	private final float ringRad;
 	
-	public WispLikeEntityRenderer(EntityRendererFactory.Context ctx, int rings, float ringTime, boolean ringDir, float ringRad){
+	public WispLikeEntityRenderer(EntityRendererFactory.Context ctx, int rings, float ringTime, boolean ringDir, float ringRad, Identifier texture){
 		super(ctx);
 		this.rings = rings;
 		this.ringTime = ringTime;
 		this.ringDir = ringDir;
 		this.ringRad = ringRad;
+		
+		if(texture != null)
+			this.texture = texture;
+		layer = RenderLayer.getText(this.texture);
+		layerDark = RenderLayer.getTextSeeThrough(this.texture);
 	}
 	
 	public Identifier getTexture(WispLikeEntity entity){

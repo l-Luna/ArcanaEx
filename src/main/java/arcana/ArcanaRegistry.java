@@ -17,8 +17,14 @@ import arcana.effects.TaintedStatusEffect;
 import arcana.enchantments.LootSwapEnchantment;
 import arcana.enchantments.ProjectingEnchantment;
 import arcana.enchantments.WarpingCurseEnchantment;
-import arcana.entities.*;
+import arcana.entities.PrismaticOrbEntity;
+import arcana.entities.ThrownAlumentumEntity;
+import arcana.entities.ThrownTaintBottleEntity;
 import arcana.entities.crimson.*;
+import arcana.entities.wisps.CoagulationEntity;
+import arcana.entities.wisps.PureWispEntity;
+import arcana.entities.wisps.TaintedWispEntity;
+import arcana.entities.wisps.WispEntity;
 import arcana.fluids.ArcanaFluid;
 import arcana.fluids.PutrefactionFluid;
 import arcana.fluids.TaintGooFluid;
@@ -686,6 +692,22 @@ public final class ArcanaRegistry{
 			.dimensions(EntityDimensions.fixed(1.5f, 1.5f))
 			.fireImmune()
 			.build();
+	public static final EntityType<TaintedWispEntity> TAINTED_WISP = FabricEntityTypeBuilder
+			.<TaintedWispEntity>createMob()
+			.entityFactory(TaintedWispEntity::new)
+			.spawnGroup(SpawnGroup.MISC)
+			.defaultAttributes(TaintedWispEntity::createDefaultAttributes)
+			.dimensions(EntityDimensions.fixed(1.5f, 1.5f))
+			.fireImmune()
+			.build();
+	public static final EntityType<PureWispEntity> PURE_WISP = FabricEntityTypeBuilder
+			.<PureWispEntity>createMob()
+			.entityFactory(PureWispEntity::new)
+			.spawnGroup(SpawnGroup.MISC)
+			.defaultAttributes(PureWispEntity::createDefaultAttributes)
+			.dimensions(EntityDimensions.fixed(1.5f, 1.5f))
+			.fireImmune()
+			.build();
 	public static final EntityType<CoagulationEntity> COAGULATION = FabricEntityTypeBuilder
 			.<CoagulationEntity>createMob()
 			.entityFactory(CoagulationEntity::new)
@@ -1218,6 +1240,8 @@ public final class ArcanaRegistry{
 		register("prismatic_orb", PRISMATIC_ORB);
 		
 		register("wisp", WISP);
+		register("tainted_wisp", TAINTED_WISP);
+		register("pure_wisp", PURE_WISP);
 		register("coagulation", COAGULATION);
 		
 		register("crimson_knight", CRIMSON_KNIGHT);

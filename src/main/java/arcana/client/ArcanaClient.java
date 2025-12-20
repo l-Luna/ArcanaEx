@@ -175,8 +175,10 @@ public final class ArcanaClient implements ClientModInitializer{
 		EntityRendererRegistry.register(ArcanaRegistry.CRIMSON_MISSIONARY, ctx -> new CrimsonEntityRenderer<>(ctx, "missionary"));
 		EntityRendererRegistry.register(ArcanaRegistry.CRIMSON_JESTER, ctx -> new CrimsonEntityRenderer<>(ctx, "jester"));
 		EntityRendererRegistry.register(ArcanaRegistry.CRIMSON_HEAVY_KNIGHT, ctx -> new CrimsonEntityRenderer<>(ctx, "heavy_knight"));
-		EntityRendererRegistry.register(ArcanaRegistry.WISP, ctx -> new WispLikeEntityRenderer<>(ctx, 3, 21, false, 1));
-		EntityRendererRegistry.register(ArcanaRegistry.COAGULATION, ctx -> new WispLikeEntityRenderer<>(ctx, 2, 12, true, 0.5f));
+		EntityRendererRegistry.register(ArcanaRegistry.WISP, ctx -> new WispLikeEntityRenderer<>(ctx, 3, 21, false, 1, null));
+		EntityRendererRegistry.register(ArcanaRegistry.TAINTED_WISP, ctx -> new WispLikeEntityRenderer<>(ctx, 3, 6, false, 1.1f, arcId("textures/entity/tainted_wisp.png")));
+		EntityRendererRegistry.register(ArcanaRegistry.PURE_WISP, ctx -> new WispLikeEntityRenderer<>(ctx, 2, 34, false, 0.8f, arcId("textures/entity/pure_wisp.png")));
+		EntityRendererRegistry.register(ArcanaRegistry.COAGULATION, ctx -> new WispLikeEntityRenderer<>(ctx, 2, 12, true, 0.5f, null));
 		
 		for(Block block : ArcanaRegistry.blocks)
 			if(block.settings instanceof ArcanaBlockSettings abs)

@@ -1,4 +1,4 @@
-package arcana.entities;
+package arcana.entities.wisps;
 
 import arcana.ArcanaRegistry;
 import arcana.ArcanaTags;
@@ -49,10 +49,10 @@ public class WispEntity extends WispLikeEntity implements Angerable, ScalpelSlas
 	
 	public static DefaultAttributeContainer.Builder createDefaultAttributes(){
 		return MobEntity.createMobAttributes()
-				.add(EntityAttributes.GENERIC_MAX_HEALTH, 20)
+				.add(EntityAttributes.GENERIC_MAX_HEALTH, 16)
 				.add(EntityAttributes.GENERIC_FLYING_SPEED, 1)
 				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 1)
-				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4)
+				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 3)
 				.add(EntityAttributes.GENERIC_FOLLOW_RANGE, 60);
 	}
 	
@@ -60,7 +60,7 @@ public class WispEntity extends WispLikeEntity implements Angerable, ScalpelSlas
 		this.anchor = anchor;
 	}
 	
-	Vec3d anchor(){
+	public Vec3d anchor(){
 		return Vec3d.ofCenter(anchor);
 	}
 	
@@ -73,7 +73,7 @@ public class WispEntity extends WispLikeEntity implements Angerable, ScalpelSlas
 	}
 	
 	public boolean handleAttack(Entity attacker){
-		return !(attacker instanceof LivingEntity le) || !le.getMainHandStack().isIn(ArcanaTags.WISP_WEAPONS);
+		return !((attacker instanceof LivingEntity le && le.getMainHandStack().isIn(ArcanaTags.WISP_WEAPONS)) || attacker instanceof WispLikeEntity);
 	}
 	
 	public boolean canHit(){

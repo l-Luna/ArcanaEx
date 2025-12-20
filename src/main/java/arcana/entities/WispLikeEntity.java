@@ -3,6 +3,7 @@ package arcana.entities;
 import arcana.ArcanaRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MovementType;
 import net.minecraft.entity.ai.control.MoveControl;
 import net.minecraft.entity.ai.goal.Goal;
@@ -10,6 +11,9 @@ import net.minecraft.entity.ai.goal.RevengeGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.ai.pathing.BirdNavigation;
 import net.minecraft.entity.ai.pathing.EntityNavigation;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -19,6 +23,9 @@ import net.minecraft.world.World;
 import java.util.EnumSet;
 
 public abstract class WispLikeEntity extends PathAwareEntity{
+	
+	// for rendering angry wisps
+	private static final TrackedData<Boolean> ANGRY = DataTracker.registerData(WispLikeEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 	
 	protected WispLikeEntity(EntityType<? extends WispLikeEntity> entityType, World world){
 		super(entityType, world);
@@ -37,6 +44,19 @@ public abstract class WispLikeEntity extends PathAwareEntity{
 		goalSelector.add(5, new ChargeTargetGoal(this));
 		goalSelector.add(10, new FloatAroundGoal(this));
 		targetSelector.add(2, new RevengeGoal(this));
+	}
+	
+	protected void initDataTracker(){
+		super.initDataTracker();
+		dataTracker.startTracking(ANGRY, false);
+	}
+	
+	public void setAngry(boolean angry){
+		dataTracker.set(ANGRY, angry);
+	}
+	
+	public boolean angry(){
+		return dataTracker.get(ANGRY);
 	}
 	
 	public void tick(){
@@ -68,6 +88,11 @@ public abstract class WispLikeEntity extends PathAwareEntity{
 	public void move(MovementType movementType, Vec3d movement){
 		super.move(movementType, movement);
 		checkBlockCollision();
+	}
+	
+	public void setTarget(LivingEntity target){
+		super.setTarget(target);
+		setAngry(target != null);
 	}
 	
 	protected static class FloatAroundGoal extends Goal{

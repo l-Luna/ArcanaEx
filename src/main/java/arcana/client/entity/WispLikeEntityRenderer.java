@@ -67,7 +67,8 @@ public class WispLikeEntityRenderer<T extends WispLikeEntity> extends EntityRend
 			      alphaHere = MathHelper.sin(localTime * MathHelper.PI / ringTime) * finAlpha;
 			matrices.push();
 			matrices.scale(radHere, radHere, radHere);
-			quad(vc, matrices, -14, -14, 0, 0, 28, 28, alphaHere);
+			int v = entity.angry() ? 32 : 0;
+			quad(vc, matrices, -16, -16, 0, v, 32, 32, alphaHere);
 			matrices.pop();
 		}
 		
@@ -95,14 +96,14 @@ public class WispLikeEntityRenderer<T extends WispLikeEntity> extends EntityRend
 	}
 	
 	private void quad(VertexConsumer vc,
-	                         MatrixStack matrices,
+	                  MatrixStack matrices,
 	                  float x,
-	                         float y,
-	                         int texU,
-	                         int texV,
-	                         int width,
-	                         int height,
-	                         float alpha){
+	                  float y,
+	                  int texU,
+	                  int texV,
+	                  int width,
+	                  int height,
+	                  float alpha){
 		MatrixStack.Entry entry = matrices.peek();
 		Matrix4f posMat = entry.getPositionMatrix();
 		
@@ -113,12 +114,12 @@ public class WispLikeEntityRenderer<T extends WispLikeEntity> extends EntityRend
 	}
 	
 	private void vertex(VertexConsumer vc,
-	                           Matrix4f posMat,
-	                           float x,
-	                           float y,
-	                           float texU,
-	                           float texV,
-	                           float alpha){
+	                    Matrix4f posMat,
+	                    float x,
+	                    float y,
+	                    float texU,
+	                    float texV,
+	                    float alpha){
 		vc.vertex(posMat, x, y, 0)
 				.color(1, 1, 1, alpha)
 				.texture(texU, texV)

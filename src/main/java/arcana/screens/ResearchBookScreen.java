@@ -225,8 +225,25 @@ public class ResearchBookScreen extends Screen{
 				drawTexture(matrices, x + 2, y + 2, base % 4 * 26, base / 4 * 26, 26, 26);
 				
 				if(!entry.icons().isEmpty()){
-					Icon icon = entry.icons().get((int)((time / 30) % entry.icons().size()));
-					RenderHelper.renderIcon(matrices, icon, x + 7, y + 7, getZOffset(), zoom, entry.getIntMeta("icon_frames"));
+					int frames = entry.getIntMeta("icon_frames");
+					if(entry.meta().contains("stacked_icons")){
+						for(Icon icon : entry.icons())
+							RenderHelper.renderIcon(matrices, icon, x + 7, y + 7, getZOffset(), zoom, frames);
+					}else if(entry.meta().contains("detail_icons")){
+						Icon main = entry.icons().get(0);
+						RenderHelper.renderIcon(matrices, main, x + 6, y + 6, getZOffset(), zoom, frames);
+						Icon detail = entry.icons().get(1 + (int)((time / 30) % (entry.icons().size() - 1)));
+						float scale = 0.8f;
+						float offset = 9 + 16 * (1 - scale);
+						matrices.push();
+						matrices.scale(scale, scale, 1);
+						// TODO: fix irritating jitter (related to rounding in nested scaling?)
+						RenderHelper.renderIcon(matrices, detail, (int)Math.ceil((x+offset)), (int)Math.ceil((y+offset)), getZOffset()+1000, zoom*scale, frames);
+						matrices.pop();
+					}else{
+						Icon icon = entry.icons().get((int)((time / 30) % entry.icons().size()));
+						RenderHelper.renderIcon(matrices, icon, x + 7, y + 7, getZOffset(), zoom, frames);
+					}
 				}
 				
 				// render arrows

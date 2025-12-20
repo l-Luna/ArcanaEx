@@ -61,10 +61,12 @@ public class WispEntity extends WispLikeEntity implements Angerable, ScalpelSlas
 	}
 	
 	Vec3d anchor(){
-		return anchor != null ? Vec3d.ofCenter(anchor) : getPos();
+		return Vec3d.ofCenter(anchor);
 	}
 	
 	public void tick(){
+		if(anchor == null)
+			anchor = getBlockPos();
 		super.tick();
 		if(!world.isClient)
 			tickAngerLogic((ServerWorld)world, true);

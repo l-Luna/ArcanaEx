@@ -797,9 +797,9 @@
       ],
       "x": 7,
       "y": 0,
-      "meta": [
-        "detail_icons"
-      ],
+//      "meta": [
+//        "detail_icons"
+//      ],
       "sections": [
         {
           "type": "text",
@@ -834,9 +834,9 @@
       ],
       "x": 8,
       "y": 1,
-      "meta": [
-        "detail_icons"
-      ],
+//      "meta": [
+//        "detail_icons"
+//      ],
       "sections": [
         {
           "type": "text",

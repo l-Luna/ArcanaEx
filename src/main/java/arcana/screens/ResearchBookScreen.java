@@ -238,6 +238,7 @@ public class ResearchBookScreen extends Screen{
 						matrices.push();
 						matrices.scale(scale, scale, 1);
 						// TODO: fix irritating jitter (related to rounding in nested scaling?)
+						// TODO: fix rendering over tooltips
 						RenderHelper.renderIcon(matrices, detail, (int)Math.ceil((x+offset)), (int)Math.ceil((y+offset)), getZOffset()+1000, zoom*scale, frames);
 						matrices.pop();
 					}else{

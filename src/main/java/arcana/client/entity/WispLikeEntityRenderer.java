@@ -11,6 +11,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Matrix4f;
+import net.minecraft.util.math.Quaternion;
 import net.minecraft.util.math.Vec3f;
 import net.minecraft.util.math.random.Random;
 
@@ -54,15 +55,16 @@ public class WispLikeEntityRenderer<T extends WispLikeEntity> extends EntityRend
 		matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180));
 		float birthLerp = entityTime > 60 ? 1 : 1 - (float)Math.pow(2, -entityTime / 10);
 		float deathLerp = entity.deathTime > 0 ? 1 - (entity.deathTime + tickDelta) / 20f : 1;
+		float hurtLerp = entity.hurtTime > 0 ? MathHelper.clamp(entity.hurtTime - tickDelta - 1, 0, 8) / 8f : 0;
 		
-		renderInner(entity, matrices, entityTime, birthLerp, deathLerp, 0.8f, vertexConsumers.getBuffer(layer));
-		renderInner(entity, matrices, entityTime, birthLerp, deathLerp, 0.2f, vertexConsumers.getBuffer(layerDark));
+		renderInner(entity, matrices, entityTime, birthLerp, deathLerp, hurtLerp, 0.8f, vertexConsumers.getBuffer(layer));
+		renderInner(entity, matrices, entityTime, birthLerp, deathLerp, hurtLerp, 0.2f, vertexConsumers.getBuffer(layerDark));
 		
 		matrices.pop();
 		super.render(entity, yaw, tickDelta, matrices, vertexConsumers, light);
 	}
 	
-	private void renderInner(T entity, MatrixStack matrices, float entityTime, float birthLerp, float deathLerp, float alphaMul, VertexConsumer vc){
+	private void renderInner(T entity, MatrixStack matrices, float entityTime, float birthLerp, float deathLerp, float hurtLerp, float alphaMul, VertexConsumer vc){
 		float finAlpha = birthLerp * deathLerp * alphaMul;
 		for(int i = 0; i < rings; i++){
 			float localTime = (entityTime + i * (ringTime / rings)) % ringTime;
@@ -72,6 +74,8 @@ public class WispLikeEntityRenderer<T extends WispLikeEntity> extends EntityRend
 			      alphaHere = MathHelper.sin(localTime * MathHelper.PI / ringTime) * finAlpha;
 			matrices.push();
 			matrices.scale(radHere, radHere, radHere);
+			if(hurtLerp != 0)
+				matrices.multiply(Quaternion.fromEulerXyz(0, 0, -hurtLerp * MathHelper.HALF_PI / 2));
 			int v = entity.angry() ? 32 : 0;
 			quad(vc, matrices, -16, -16, 0, v, 32, 32, alphaHere);
 			matrices.pop();

@@ -1,5 +1,6 @@
 package arcana.mixin;
 
+import arcana.ArcanaRegistry;
 import arcana.ArcanaTags;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -32,5 +33,14 @@ public abstract class ItemEntityMixin extends Entity{
 	void applyItemPhysics(CallbackInfo ci){
 		if(getStack().isIn(ArcanaTags.FLOATS) && getVelocity().horizontalLengthSquared() > 1.0E-5F)
 			setVelocity(getVelocity().multiply(0.9f, 0.9f, 0.9f));
+		if(world.isClient && world.random.nextInt(12) == 0 && getStack().isOf(ArcanaRegistry.WISPY_ESSENCE))
+			world.addParticle(ArcanaRegistry.LIGHTNING,
+					false,
+					getX() + world.random.nextGaussian() / 9,
+					getY() + world.random.nextGaussian() / 9,
+					getZ() + world.random.nextGaussian() / 9,
+					0,
+					0.02,
+					0);
 	}
 }

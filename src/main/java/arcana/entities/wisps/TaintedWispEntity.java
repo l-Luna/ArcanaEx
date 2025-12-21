@@ -1,5 +1,6 @@
 package arcana.entities.wisps;
 
+import arcana.ArcanaRegistry;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
@@ -10,8 +11,12 @@ import net.minecraft.world.World;
 
 public class TaintedWispEntity extends WispEntity{
 	
-	public TaintedWispEntity(EntityType<? extends WispEntity> entityType, World world){
+	public TaintedWispEntity(EntityType<? extends TaintedWispEntity> entityType, World world){
 		super(entityType, world);
+	}
+	
+	public TaintedWispEntity(World world){
+		this(ArcanaRegistry.TAINTED_WISP, world);
 	}
 	
 	public static DefaultAttributeContainer.Builder createDefaultAttributes(){

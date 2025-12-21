@@ -2,6 +2,10 @@ package arcana.items;
 
 import arcana.aura.AuraWorld;
 import arcana.aura.Node;
+import arcana.aura.NodeType;
+import arcana.aura.NodeTypes;
+import arcana.entities.wisps.PureWispEntity;
+import arcana.entities.wisps.TaintedWispEntity;
 import arcana.entities.wisps.WispEntity;
 import arcana.network.PkShakeNode;
 import com.google.common.collect.ImmutableMultimap;
@@ -80,6 +84,7 @@ public class ScalpelItem extends Item implements AnimatedUseItem{
 			if(nodeO.isPresent()){
 				if(!world.isClient){
 					Node node = nodeO.get();
+					NodeType oldNodeType = node.getType();
 					if(type == ScalpelType.BLACK)
 						node.destroy(true); // TODO
 					else{
@@ -89,7 +94,10 @@ public class ScalpelItem extends Item implements AnimatedUseItem{
 						node.damage(degrade, rng);
 						int wisps = rng.nextBetween(2, 3);
 						for(int i = 0; i < wisps; i++){
-							WispEntity wisp = new WispEntity(world);
+							WispEntity wisp
+									= oldNodeType == NodeTypes.TAINTED ? new TaintedWispEntity(world)
+									: oldNodeType == NodeTypes.PURE ? new PureWispEntity(world)
+									: new WispEntity(world);
 							wisp.setPosition(node.asVec3d());
 							wisp.setAnchorPos(node.asBlockPos());
 							wisp.setVelocity(rng.nextFloat() * 2 - 1, rng.nextFloat() * 2 - 1, rng.nextFloat() * 2 - 1);

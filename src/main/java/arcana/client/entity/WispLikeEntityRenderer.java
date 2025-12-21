@@ -49,7 +49,7 @@ public class WispLikeEntityRenderer<T extends WispLikeEntity> extends EntityRend
 		
 		matrices.push();
 		matrices.translate(0, 0.75f, 0);
-		matrices.scale(0.1f, 0.1f, 0.1f);
+		matrices.scale(0.08f, 0.08f, 0.08f);
 		matrices.multiply(dispatcher.getRotation());
 		matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180));
 		float birthLerp = entityTime > 60 ? 1 : 1 - (float)Math.pow(2, -entityTime / 10);

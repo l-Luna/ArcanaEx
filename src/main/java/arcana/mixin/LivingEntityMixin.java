@@ -77,10 +77,9 @@ public abstract class LivingEntityMixin extends Entity{
 	
 	@Unique
 	private int effectiveJumpBoost(){
-		boolean boostFromBoots =
-				getEquippedStack(EquipmentSlot.FEET).getItem() instanceof BootsOfTheTravellerItem && !isSneaky();
+		boolean boostFromBoots = getEquippedStack(EquipmentSlot.FEET).getItem() instanceof BootsOfTheTravellerItem && isSneaky();
 		boolean boostFromAir = actuallyHasStatusEffect(ArcanaRegistry.AIR_POWER);
-		return (boostFromBoots ? 1 : 0) + (boostFromAir ? 1 : 0);
+		return (boostFromBoots ? 4 : 0) + (boostFromAir ? 1 : 0);
 	}
 	
 	@Unique

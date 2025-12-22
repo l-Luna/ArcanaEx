@@ -32,6 +32,7 @@ public class KnowledgeableDropperScreen extends HandledScreen<KnowledgeableDropp
 	protected void init(){
 		super.init();
 		titleX = (backgroundWidth - textRenderer.getWidth(title)) / 2;
+		titleY -= 2;
 	}
 	
 	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta){
@@ -47,6 +48,10 @@ public class KnowledgeableDropperScreen extends HandledScreen<KnowledgeableDropp
 		int x = (width - backgroundWidth) / 2;
 		int y = (height - backgroundHeight) / 2;
 		drawTexture(matrices, x, y, 0, 0, backgroundWidth, backgroundHeight);
+	}
+	
+	protected void drawForeground(MatrixStack matrices, int mouseX, int mouseY){
+		textRenderer.draw(matrices, title, titleX, titleY, 0xC0C0C0);
 	}
 	
 	public static class Handler extends ScreenHandler{

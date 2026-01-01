@@ -193,6 +193,9 @@ public final class ArcanaRegistry{
 	public static final Item SCRIBING_TOOLS = new Item(new Settings().group(Tab.MAIN).maxDamage(200));
 	public static final Item GOGGLES_OF_REVEALING = new GogglesOfRevealingItem(new Settings().group(Tab.MAIN).maxCount(1));
 	public static final Item MONOCLE_OF_REVEALING = new TrinketItem(GROUPED_SINGLE);
+	public static final Item INTROSPECTIVE_LENS = new Item(GROUPED_SINGLE);
+	public static final Item REVELATORY_LENS = new Item(GROUPED_SINGLE);
+	public static final Item FLUX_LENS = new Item(GROUPED_SINGLE);
 	
 	public static final Item ARCANUM = new ResearchBookItem(GROUPED_SINGLE, arcId("arcanum"));
 	public static final Item CRIMSON_RITES = new ResearchBookItem(GROUPED_SINGLE, arcId("crimson_rites"));
@@ -260,6 +263,15 @@ public final class ArcanaRegistry{
 	public static final Item SILVERLEAF_BOOTS = new ArmorItem(ArcanaArmourMaterials.SILVERLEAF, EquipmentSlot.FEET, new Settings().group(Tab.EQUIPMENT));
 	
 	public static final Item WISPY_ESSENCE = new Item(GROUPED_RES);
+	public static final Item TWISTED_ESSENCE = new Item(GROUPED_RES);
+	public static final Item MOTILE = new MotileItem(new Settings().group(Tab.RESOURCES).rarity(Rarity.UNCOMMON));
+	public static final Item MOTILE_PIECE = new MotileItem(new Settings().group(Tab.RESOURCES).rarity(Rarity.UNCOMMON));
+	
+	public static final Item SWORD_OF_THE_ZEPHYR = new SwordItem(ArcanaToolMaterials.PRIMAL, 3, -2.4f, new Settings().group(Tab.EQUIPMENT).rarity(Rarity.UNCOMMON));
+	public static final Item SHOVEL_OF_THE_EARTHMOVER = new EarthmoverShovelItem(ArcanaToolMaterials.PRIMAL, 1.5f, -3, new Settings().group(Tab.EQUIPMENT).rarity(Rarity.UNCOMMON));
+	public static final Item PICKAXE_OF_THE_CORE = new PickaxeItem(ArcanaToolMaterials.PRIMAL, 1, -2.8f, new Settings().group(Tab.EQUIPMENT).rarity(Rarity.UNCOMMON));
+	public static final Item AXE_OF_THE_STREAM = new AxeItem(ArcanaToolMaterials.PRIMAL, 5.5f, -3, new Settings().group(Tab.EQUIPMENT).rarity(Rarity.UNCOMMON));
+	public static final Item HOE_OF_THE_CYCLE = new HoeItem(ArcanaToolMaterials.PRIMAL, -2, -1, new Settings().group(Tab.EQUIPMENT).rarity(Rarity.UNCOMMON));
 	
 	public static final Item ARCANIUM_SCALPEL = new ScalpelItem(new Settings().group(Tab.EQUIPMENT).maxDamage(100), ScalpelItem.ScalpelType.ROSE);
 	public static final Item SILVERLEAF_SCALPEL = new ScalpelItem(new Settings().group(Tab.EQUIPMENT).maxDamage(100), ScalpelItem.ScalpelType.SILVER);
@@ -294,13 +306,17 @@ public final class ArcanaRegistry{
 	
 	// foci...
 	public static final Item FIRE_FOCUS = new FireFocusItem(GROUPED_WAND_SINGLE);
+	public static final Item SOLAR_FLARE_FOCUS = new SolarFlareFocusItem(GROUPED_WAND_SINGLE);
+	public static final Item FETCH_FOCUS = new FetchFocusItem(GROUPED_WAND_SINGLE);
 	public static final Item PORTABLE_HOLE_FOCUS = new PortableHoleFocusItem(GROUPED_WAND_SINGLE);
 	public static final Item LIGHT_FOCUS = new LightFocusItem(GROUPED_WAND_SINGLE);
 	public static final Item PRISMATIC_LIGHT_FOCUS = new PrismaticLightFocusItem(GROUPED_WAND_SINGLE);
+	public static final Item LIGHTNING_FOCUS = new LightningFocusItem(GROUPED_WAND_SINGLE);
 	public static final Item EQUIVALENT_EXCHANGE_FOCUS = new EquivalentExchangeFocusItem(GROUPED_WAND_SINGLE);
 	public static final Item COAGULATION_FOCUS = new CoagulationFocusItem(GROUPED_WAND_SINGLE);
 	public static final Item CRYSTAL_CAPACITOR_FOCUS = new CrystalCapacitorFocusItem(new Settings().group(Tab.WANDS).maxCount(1).maxDamage(6));
-	public static final Item WARD_FOCUS = new WardFocusItem(GROUPED_WAND_SINGLE);
+	public static final Item WARD_FOCUS = new WardFocusItem(new Settings().group(Tab.WANDS).maxCount(1).rarity(Rarity.UNCOMMON));
+	public static final Item CONSUME_REBUKE_FOCUS = new ConsumeRebukeFocus(GROUPED_WAND_SINGLE);
 	
 	// caps...
 	public static final CapItem IRON_WAND_CAP = new CapItem(GROUPED_WAND, capProperties().capacity(5).complexity(3));
@@ -784,6 +800,9 @@ public final class ArcanaRegistry{
 		register("scribing_tools", SCRIBING_TOOLS);
 		register("goggles_of_revealing", GOGGLES_OF_REVEALING);
 		register("monocle_of_revealing", MONOCLE_OF_REVEALING);
+		register("introspective_lens", INTROSPECTIVE_LENS);
+		register("revelatory_lens", REVELATORY_LENS);
+		register("flux_lens", FLUX_LENS);
 		
 		register("arcanum", ARCANUM);
 		register("crimson_rites", CRIMSON_RITES);
@@ -847,6 +866,15 @@ public final class ArcanaRegistry{
 		register("silverleaf_boots", SILVERLEAF_BOOTS);
 		
 		register("wispy_essence", WISPY_ESSENCE);
+		register("twisted_essence", TWISTED_ESSENCE);
+		register("motile", MOTILE);
+		register("motile_piece", MOTILE_PIECE);
+		
+		register("sword_of_the_zephyr", SWORD_OF_THE_ZEPHYR);
+		register("shovel_of_the_earthmover", SHOVEL_OF_THE_EARTHMOVER);
+		register("pickaxe_of_the_core", PICKAXE_OF_THE_CORE);
+		register("axe_of_the_stream", AXE_OF_THE_STREAM);
+		register("hoe_of_the_cycle", HOE_OF_THE_CYCLE);
 		
 		register("arcanium_scalpel", ARCANIUM_SCALPEL);
 		register("silverleaf_scalpel", SILVERLEAF_SCALPEL);
@@ -883,13 +911,17 @@ public final class ArcanaRegistry{
 		register("focus_pouch", FOCUS_POUCH);
 		
 		register("fire_focus", FIRE_FOCUS);
+		register("solar_flare_focus", SOLAR_FLARE_FOCUS);
+		register("fetch_focus", FETCH_FOCUS);
 		register("portable_hole_focus", PORTABLE_HOLE_FOCUS);
 		register("light_focus", LIGHT_FOCUS);
 		register("prismatic_light_focus", PRISMATIC_LIGHT_FOCUS);
+		register("lightning_focus", LIGHTNING_FOCUS);
 		register("equivalent_exchange_focus", EQUIVALENT_EXCHANGE_FOCUS);
 		register("coagulation_focus", COAGULATION_FOCUS);
 		register("crystal_capacitor_focus", CRYSTAL_CAPACITOR_FOCUS);
 		register("ward_focus", WARD_FOCUS);
+		register("consume_rebuke_focus", CONSUME_REBUKE_FOCUS);
 		
 		register("iron_wand_cap", IRON_WAND_CAP);
 		register("gold_wand_cap", GOLD_WAND_CAP);

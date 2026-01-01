@@ -11,7 +11,8 @@ public enum ArcanaToolMaterials implements ToolMaterial{
 	ARCANIUM(MiningLevels.IRON, 655, 13, 2.5f, 25, () -> Ingredient.ofItems(ArcanaRegistry.ARCANIUM_INGOT)),
 	VOID_METAL(MiningLevels.DIAMOND, 312, 9, 3.5f, 6, () -> Ingredient.ofItems(ArcanaRegistry.VOID_METAL_INGOT)),
 	SILVERLEAF(MiningLevels.DIAMOND, 1100, 7, 2.5f, 27, () -> Ingredient.ofItems(ArcanaRegistry.SILVERLEAF_AMALGAMATE)),
-	CRIMSON(MiningLevels.IRON, 400, 7, 2.5f, 1, () -> Ingredient.ofItems(ArcanaRegistry.ALCHEMICAL_IRON))
+	CRIMSON(MiningLevels.IRON, 400, 7, 2.5f, 1, () -> Ingredient.ofItems(ArcanaRegistry.ALCHEMICAL_IRON)),
+	PRIMAL(MiningLevels.NETHERITE, 2727, 13, 3.5f, 10, () -> Ingredient.ofItems(ArcanaRegistry.ARCANIUM_INGOT)),
 	;
 	
 	private final int miningLevel;

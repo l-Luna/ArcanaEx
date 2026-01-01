@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "arcana:item/shovel_of_the_earthmover"
+  }
+}

@@ -22,6 +22,7 @@
     "ItemEntityMixin",
     "ItemStackMixin",
     "LivingEntityMixin",
+    "MiningToolItemAccessor",
     "PlayerEntityMixin",
     "RecipeManagerMixin",
     "StatusEffectUtilMixin",

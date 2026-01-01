@@ -1,0 +1,9 @@
+{
+  "values": [
+    "#minecraft:mineable/shovel",
+    "minecraft:stone",
+    "minecraft:cobblestone",
+    "minecraft:deepslate",
+    "minecraft:cobbled_deepslate"
+  ]
+}

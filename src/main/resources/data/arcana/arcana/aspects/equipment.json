@@ -76,5 +76,32 @@
     "4*metal",
     "3*senses",
     "taint"
+  ],
+
+  "arcana:sword_of_the_zephyr": [
+    "12*metal",
+    "8*magic",
+    "8*air"
+  ],
+  "arcana:shovel_of_the_earthmover": [
+    "12*metal",
+    "8*magic",
+    "8*earth"
+  ],
+  "arcana:pickaxe_of_the_core": [
+    "12*metal",
+    "8*magic",
+    "8*fire"
+  ],
+  "arcana:axe_of_the_stream": [
+    "12*metal",
+    "8*magic",
+    "8*water"
+  ],
+  "arcana:hoe_of_the_cycle": [
+    "12*metal",
+    "8*magic",
+    "6*order",
+    "6*entropy"
   ]
 }

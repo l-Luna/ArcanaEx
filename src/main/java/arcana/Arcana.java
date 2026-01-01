@@ -21,6 +21,7 @@ import arcana.worldgen.SurfaceNodeFeature;
 import arcana.worldgen.geodes.NodalGeodes;
 import arcana.worldgen.greatwood.GreatwoodTree;
 import arcana.worldgen.silverwood.SilverwoodTree;
+import com.unascribed.lib39.dessicant.api.DessicantControl;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.CommonLifecycleEvents;
@@ -51,6 +52,9 @@ public final class Arcana implements ModInitializer{
 	@Override
 	public void onInitialize(){
 		logger.info("Loading Arcana");
+		
+		// for dessicant tips
+		DessicantControl.optIn(modid);
 		
 		ArcanaRegistry.setup();
 		

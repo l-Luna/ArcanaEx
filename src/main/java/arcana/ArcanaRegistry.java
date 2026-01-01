@@ -599,6 +599,7 @@ public final class ArcanaRegistry{
 			.put(Items.MAGMA_CREAM, Items.NETHER_WART)
 			.put(Items.BONE_MEAL, Items.KELP)
 			.put(Items.EMERALD, Items.DIAMOND)
+			.put(WISPY_ESSENCE, TWISTED_ESSENCE)
 			.build();
 	public static final Map<Item, Item> PURIFYING_SWAPS = Map.of(
 			Items.RAW_IRON, ALCHEMICAL_IRON,

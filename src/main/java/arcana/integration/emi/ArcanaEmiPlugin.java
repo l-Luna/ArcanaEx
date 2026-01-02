@@ -32,11 +32,14 @@ import net.minecraft.util.registry.Registry;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import static arcana.Arcana.arcId;
 
 public final class ArcanaEmiPlugin implements EmiPlugin{
+	
+	public static final Random RNG = new Random();
 	
 	public static final EmiRecipeCategory ITEMS_BY_ASPECTS = new EmiRecipeCategory(arcId("items_by_aspects"), new AspectEmiStack(Aspects.ENERGY));
 	public static final EmiRecipeCategory ASPECTS_BY_ITEMS = new EmiRecipeCategory(arcId("aspects_by_items"), new AspectEmiStack(Aspects.LIGHT));
@@ -116,6 +119,7 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 		
 		registry.addRecipe(new EmiWandRecipe(arcId("wand")));
 		registry.addRecipe(new EmiVoidPuttyRepairRecipe(arcId("void_putty_repair")));
+		registry.addRecipe(new EmiVoidPuttyAnvilRepairRecipe(arcId("/void_putty_anvil_repair")));
 		
 		EmiStack basicWand = EmiStack.of(WandItem.basicWand());
 		registry.addRecipe(EmiWorldInteractionRecipe.builder()

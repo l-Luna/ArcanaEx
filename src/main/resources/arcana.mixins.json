@@ -9,6 +9,7 @@
     "AbstractBlockStateMixin",
     "AbstractFurnaceBlockEntityMixin",
     "ActiveTargetGoalMixin",
+    "AnvilScreenHandlerMixin",
     "BlockEntityAccessor",
     "BowItemMixin",
     "CampfireBlockMixin",

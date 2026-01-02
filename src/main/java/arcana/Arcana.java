@@ -9,10 +9,7 @@ import arcana.effects.SetBonusStatusEffect;
 import arcana.enchantments.LootSwapEnchantment;
 import arcana.entities.ThrownTaintBottleEntity;
 import arcana.items.CrimsonLeechItem;
-import arcana.recipes.AlchemyRecipe;
-import arcana.recipes.InfusionRecipe;
-import arcana.recipes.ShapedArcaneCraftingRecipe;
-import arcana.recipes.WandRecipe;
+import arcana.recipes.*;
 import arcana.research.BuiltinResearch;
 import arcana.research.Research;
 import arcana.research.ResearchLoader;
@@ -36,6 +33,7 @@ import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.Position;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,7 +56,9 @@ public final class Arcana implements ModInitializer{
 		
 		ArcanaRegistry.setup();
 		
-		WandRecipe.setup();
+		Registry.register(Registry.RECIPE_SERIALIZER, arcId("wand"), WandRecipe.SERIALIZER);
+		Registry.register(Registry.RECIPE_SERIALIZER, arcId("void_putty_repair"), VoidPuttyRepairRecipe.SERIALIZER);
+		
 		ShapedArcaneCraftingRecipe.setup();
 		AlchemyRecipe.setup();
 		InfusionRecipe.setup();

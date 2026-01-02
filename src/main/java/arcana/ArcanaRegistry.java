@@ -300,6 +300,8 @@ public final class ArcanaRegistry{
 	public static final Item SYNTHETIC_SCAFFOLDING = new Item(GROUPED);
 	public static final Item FORMLESS_FOAM = new Item(GROUPED);
 	
+	public static final Item VOID_PUTTY = new Item(GROUPED);
+	
 	public static final Item WAND = new WandItem(GROUPED_WAND_SINGLE);
 	
 	public static final Item FOCUS_POUCH = new FocusPouchItem(GROUPED_WAND_SINGLE);
@@ -906,6 +908,9 @@ public final class ArcanaRegistry{
 		register("formless_foam", FORMLESS_FOAM);
 		ArcaneFurnaceBlock.substrateTimes.put(SYNTHETIC_SCAFFOLDING, new ArcaneFurnaceBlock.SubstrateData(15, 0x43FC48));
 		ArcaneFurnaceBlock.substrateTimes.put(FORMLESS_FOAM, new ArcaneFurnaceBlock.SubstrateData(40, 0x2FD8C2));
+		
+		register("void_putty", VOID_PUTTY);
+		ArcaneFurnaceBlock.substrateTimes.put(VOID_PUTTY, new ArcaneFurnaceBlock.SubstrateData(200, 0x852797));
 		
 		register("wand", WAND);
 		

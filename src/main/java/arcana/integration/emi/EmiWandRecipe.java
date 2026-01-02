@@ -49,7 +49,7 @@ public final class EmiWandRecipe extends EmiPatternCraftingRecipe{
 					rng -> EmiStack.of(getCap(rng)),
 					unique,
 					x, y);
-		}else if(slot == 4){
+		}else if(slot == 4)
 			return new GeneratedSlotWidget(
 					rng -> {
 						getCap(rng); // sync up the ingredient and output cores
@@ -57,8 +57,7 @@ public final class EmiWandRecipe extends EmiPatternCraftingRecipe{
 					},
 					unique,
 					x, y);
-		}else
-			return new SlotWidget(EmiStack.EMPTY, x, y);
+		return new SlotWidget(EmiStack.EMPTY, x, y);
 	}
 	
 	public SlotWidget getOutputWidget(int x, int y){

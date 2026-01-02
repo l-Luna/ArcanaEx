@@ -115,6 +115,7 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 		Aspects.getOrderedAspects().stream().map(EmiAspectCrystallizationRecipe::new).forEach(registry::addRecipe);
 		
 		registry.addRecipe(new EmiWandRecipe(arcId("wand")));
+		registry.addRecipe(new EmiVoidPuttyRepairRecipe(arcId("void_putty_repair")));
 		
 		EmiStack basicWand = EmiStack.of(WandItem.basicWand());
 		registry.addRecipe(EmiWorldInteractionRecipe.builder()

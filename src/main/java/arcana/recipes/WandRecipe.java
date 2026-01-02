@@ -5,16 +5,15 @@ import arcana.items.Core;
 import arcana.items.WandItem;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.*;
+import net.minecraft.recipe.RecipeSerializer;
+import net.minecraft.recipe.SpecialCraftingRecipe;
+import net.minecraft.recipe.SpecialRecipeSerializer;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
-
-import static arcana.Arcana.arcId;
 
 public class WandRecipe extends SpecialCraftingRecipe{
 	
-	private static final RecipeSerializer<WandRecipe> SERIALIZER = new SpecialRecipeSerializer<>(WandRecipe::new);
+	public static final RecipeSerializer<WandRecipe> SERIALIZER = new SpecialRecipeSerializer<>(WandRecipe::new);
 	
 	public WandRecipe(Identifier id){
 		super(id);
@@ -51,9 +50,5 @@ public class WandRecipe extends SpecialCraftingRecipe{
 	
 	public RecipeSerializer<?> getSerializer(){
 		return SERIALIZER;
-	}
-	
-	public static void setup(){
-		Registry.register(Registry.RECIPE_SERIALIZER, arcId("wand"), SERIALIZER);
 	}
 }

@@ -17,7 +17,7 @@ public class ItemStackMixin{
 	@Inject(at = @At("RETURN"), method = "getTooltipData", cancellable = true)
 	private void applyAspectsTooltipData(CallbackInfoReturnable<Optional<TooltipData>> cir){
 		var aspects = ItemAspectRegistry.get((ItemStack)(Object)this);
-		if(aspects.size() > 0)
+		if(!aspects.isEmpty())
 			cir.setReturnValue(Optional.of(new ItemAspectsTooltipData(aspects.asStacks(), cir.getReturnValue().orElse(null))));
 	}
 }

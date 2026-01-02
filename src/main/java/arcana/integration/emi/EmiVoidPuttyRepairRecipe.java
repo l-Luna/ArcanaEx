@@ -17,11 +17,17 @@ import java.util.Random;
 
 public class EmiVoidPuttyRepairRecipe extends EmiPatternCraftingRecipe{
 	
-	public static final List<Item> REPAIRABLES = Registry.ITEM.stream().filter(VoidPuttyRepairRecipe::isRepairable).toList();
-	public static final List<EmiIngredient> REPAIRABLES_INGREDIENTS = REPAIRABLES.stream().map(EmiStack::of).map(EmiIngredient.class::cast).toList();
+	public static List<Item> REPAIRABLES;
+	public static List<EmiIngredient> REPAIRABLES_INGREDIENTS;
+	
+	private static void initRepairables(){
+		REPAIRABLES = Registry.ITEM.stream().filter(VoidPuttyRepairRecipe::isRepairable).toList();
+		REPAIRABLES_INGREDIENTS = REPAIRABLES.stream().map(EmiStack::of).map(EmiIngredient.class::cast).toList();
+	}
 	
 	public EmiVoidPuttyRepairRecipe(Identifier id){
 		super(List.of(EmiStack.of(ArcanaRegistry.VOID_PUTTY)), EmiStack.EMPTY, id, true);
+		initRepairables();
 	}
 	
 	public SlotWidget getInputWidget(int slot, int x, int y){

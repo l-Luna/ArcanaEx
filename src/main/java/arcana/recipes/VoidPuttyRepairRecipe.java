@@ -4,6 +4,7 @@ import arcana.ArcanaRegistry;
 import arcana.ArcanaTags;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolItem;
@@ -55,7 +56,11 @@ public class VoidPuttyRepairRecipe extends SpecialCraftingRecipe{
 	}
 	
 	public static boolean isRepairable(Item item){
-		return item.getMaxDamage() > 0 && (item.getRegistryEntry().isIn(ArcanaTags.VOID_PUTTY_REPAIR_WHITELIST) || item instanceof ToolItem tool && !tool.getMaterial().getRepairIngredient().isEmpty());
+		if(item.getMaxDamage() <= 0)
+			return false;
+		return item.getRegistryEntry().isIn(ArcanaTags.VOID_PUTTY_REPAIR_WHITELIST)
+				|| item instanceof ToolItem tool && !tool.getMaterial().getRepairIngredient().isEmpty()
+				|| item instanceof ArmorItem armor && !armor.getMaterial().getRepairIngredient().isEmpty();
 	}
 	
 	private static Stream<ItemStack> stream(Inventory i){

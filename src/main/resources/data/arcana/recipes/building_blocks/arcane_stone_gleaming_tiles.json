@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "T": {
+      "item": "arcana:arcane_stone_tiles"
+    },
+    "G": {
+      "item": "arcana:gleaming_lamplight"
+    }
+  },
+  "pattern": [
+    "TG",
+    "GT"
+  ],
+  "result": {
+    "item": "arcana:arcane_stone_gleaming_tiles",
+    "count": 4
+  }
+}

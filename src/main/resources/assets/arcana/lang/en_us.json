@@ -387,6 +387,9 @@
     "silverleaf_amalgamate_block": "Solidified Silverleaf Amalgamate",
     "arcane_stone": "Arcane Stone",
     "arcane_stone_bricks": "Arcane Stone Bricks",
+    "arcane_stone_tiles": "Arcane Stone Tiles",
+    "arcane_stone_gleaming_tiles": "Gleaming Arcane Stone Tiles",
+    "arcane_stone_inscribed_tiles": "Inscribed Arcane Stone Tiles",
 
     "arcane_stone_slab": "Arcane Stone Slab",
     "arcane_stone_stairs": "Arcane Stone Stairs",
@@ -399,6 +402,12 @@
     "arcane_stone_bricks_pressure_plate": "Arcane Stone Brick Pressure Plate",
     "arcane_stone_bricks_button": "Arcane Stone Brick Button",
     "arcane_stone_bricks_wall": "Arcane Stone Brick Wall",
+
+    "arcane_stone_tiles_slab": "Arcane Stone Tile Slab",
+    "arcane_stone_tiles_stairs": "Arcane Stone Tile Stairs",
+    "arcane_stone_tiles_pressure_plate": "Arcane Stone Tile Pressure Plate",
+    "arcane_stone_tiles_button": "Arcane Stone Tile Button",
+    "arcane_stone_tiles_wall": "Arcane Stone Tile Wall",
 
     "silverwood_sapling": "Silverwood Sapling",
     "silverwood_log": "Silverwood Log",
@@ -490,6 +499,9 @@
     "crimson_lantern": "Crimson Lantern",
     "chain_wall": "Chain Wall",
     "metal_ladder": "Metal Ladder",
+
+    "gleaming_lamplight": "Gleaming Lamplight",
+    "chiseled_gleaming_lamplight": "Chiseled Gleaming Lamplight",
 
     "symbol": "Control Symbol: {}",
 

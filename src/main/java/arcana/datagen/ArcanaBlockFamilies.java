@@ -30,6 +30,16 @@ public class ArcanaBlockFamilies{
 			.noGenerateRecipes()
 			.build();
 	
+	public static final BlockFamily ARCANE_STONE_TILES = BlockFamilies.register(ArcanaRegistry.ARCANE_STONE_TILES)
+			.button(ARCANE_STONE_TILES_BUTTON)
+			.pressurePlate(ARCANE_STONE_TILES_PRESSURE_PLATE)
+			.slab(ARCANE_STONE_TILES_SLAB)
+			.stairs(ARCANE_STONE_TILES_STAIRS)
+			.wall(ARCANE_STONE_TILES_WALL)
+			.noGenerateModels()
+			.noGenerateRecipes()
+			.build();
+	
 	public static final BlockFamily SILVERWOOD = BlockFamilies.register(SILVERWOOD_PLANKS)
 			.button(SILVERWOOD_BUTTON)
 			.fence(SILVERWOOD_FENCE)
@@ -93,5 +103,13 @@ public class ArcanaBlockFamilies{
 			.build();
 	
 	// we handle generating the models and recipes
-	public static final List<BlockFamily> ALL = List.of(ARCANE_STONE, ARCANE_STONE_BRICKS, SILVERWOOD, GREATWOOD, TAINTWOOD, HOLLOWED_WOOD);
+	public static final List<BlockFamily> ALL = List.of(
+			ARCANE_STONE,
+			ARCANE_STONE_BRICKS,
+			ARCANE_STONE_TILES,
+			SILVERWOOD,
+			GREATWOOD,
+			TAINTWOOD,
+			HOLLOWED_WOOD
+	);
 }

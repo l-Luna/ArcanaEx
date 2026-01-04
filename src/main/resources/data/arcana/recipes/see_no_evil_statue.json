@@ -1,0 +1,26 @@
+{
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "G": {
+      "item": "arcana:greatwood_planks"
+    },
+    "C": {
+      "item": "arcana:crystals/senses"
+    },
+    "X": {
+      "tag": "c:glass_blocks"
+    }
+  },
+  "pattern": [
+    " G ",
+    "CGX",
+    "GGG"
+  ],
+  "result": {
+    "item": "arcana:see_no_evil_statue"
+  },
+  "aspects": [
+    "5*air",
+    "5*order"
+  ]
+}

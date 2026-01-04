@@ -38,6 +38,7 @@ public class ArcanaRecipeProvider extends FabricRecipeProvider{
 			generateFamily(exporter, family);
 		
 		offerStonecuttingRecipe(exporter, ARCANE_STONE_BRICKS, ARCANE_STONE);
+		offerStonecuttingRecipe(exporter, ARCANE_STONE_TILES, ARCANE_STONE);
 		
 		offerStonecuttingRecipe(exporter, ARCANE_STONE_SLAB, ARCANE_STONE, 2);
 		offerStonecuttingRecipe(exporter, ARCANE_STONE_STAIRS, ARCANE_STONE);
@@ -46,6 +47,10 @@ public class ArcanaRecipeProvider extends FabricRecipeProvider{
 		offerStonecuttingRecipe(exporter, ARCANE_STONE_BRICKS_SLAB, ARCANE_STONE_BRICKS, 2);
 		offerStonecuttingRecipe(exporter, ARCANE_STONE_BRICKS_STAIRS, ARCANE_STONE_BRICKS);
 		offerStonecuttingRecipe(exporter, ARCANE_STONE_BRICKS_WALL, ARCANE_STONE_BRICKS);
+		
+		offerStonecuttingRecipe(exporter, ARCANE_STONE_TILES_SLAB, ARCANE_STONE_TILES, 2);
+		offerStonecuttingRecipe(exporter, ARCANE_STONE_TILES_STAIRS, ARCANE_STONE_TILES);
+		offerStonecuttingRecipe(exporter, ARCANE_STONE_TILES_WALL, ARCANE_STONE_TILES);
 		
 		offerReversibleCompactingRecipesWithReverseRecipeGroup(exporter, THAUMIUM_INGOT, THAUMIUM_BLOCK, "thaumium_ingot_from_thaumium_block", "thaumium_ingot");
 		offerReversibleCompactingRecipesWithCompactingRecipeGroup(exporter, THAUMIUM_NUGGET, THAUMIUM_INGOT, "thaumium_ingot_from_nuggets", "thaumium_ingot");

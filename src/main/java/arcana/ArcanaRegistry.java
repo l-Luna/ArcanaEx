@@ -423,6 +423,9 @@ public final class ArcanaRegistry{
 	
 	public static final Block ARCANE_STONE = new Block(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3, 7));
 	public static final Block ARCANE_STONE_BRICKS = new Block(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3.5f, 7));
+	public static final Block ARCANE_STONE_TILES = new Block(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3.5f, 7));
+	public static final Block ARCANE_STONE_GLEAMING_TILES = new Block(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3.5f, 7).luminance(8));
+	public static final Block ARCANE_STONE_INSCRIBED_TILES = new Block(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3.5f, 7));
 	
 	public static final Block ARCANE_STONE_SLAB = new SlabBlock(of(Material.STONE).requiresTool(PICKAXE_MINEABLE).strength(3, 7).sounds(BlockSoundGroup.WOOD));
 	public static final Block ARCANE_STONE_STAIRS = new StairsBlock(ARCANE_STONE.getDefaultState(), of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(2));
@@ -435,6 +438,12 @@ public final class ArcanaRegistry{
 	public static final Block ARCANE_STONE_BRICKS_PRESSURE_PLATE = new PressurePlateBlock(PressurePlateBlock.ActivationRule.MOBS, of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(.5f));
 	public static final Block ARCANE_STONE_BRICKS_BUTTON = new StoneButtonBlock(of(Material.STONE).dropsSelf().noCollision().strength(.5f));
 	public static final Block ARCANE_STONE_BRICKS_WALL = new WallBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(2));
+	
+	public static final Block ARCANE_STONE_TILES_SLAB = new SlabBlock(of(Material.STONE).requiresTool(PICKAXE_MINEABLE).strength(3, 7).sounds(BlockSoundGroup.WOOD));
+	public static final Block ARCANE_STONE_TILES_STAIRS = new StairsBlock(ARCANE_STONE_TILES.getDefaultState(), of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(2));
+	public static final Block ARCANE_STONE_TILES_PRESSURE_PLATE = new PressurePlateBlock(PressurePlateBlock.ActivationRule.MOBS, of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(.5f));
+	public static final Block ARCANE_STONE_TILES_BUTTON = new StoneButtonBlock(of(Material.STONE).dropsSelf().noCollision().strength(.5f));
+	public static final Block ARCANE_STONE_TILES_WALL = new WallBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(2));
 	
 	public static final Block SILVERWOOD_SAPLING = new SaplingBlock(new SilverwoodSaplingGenerator(), of(Material.PLANT).dropsSelf().renderLayer(CUTOUT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
 	public static final Block SILVERWOOD_LOG = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
@@ -519,6 +528,9 @@ public final class ArcanaRegistry{
 	public static final Block CRIMSON_LANTERN = new CrimsonLanternBlock(of(Material.METAL).renderLayer(CUTOUT).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3.5f).sounds(BlockSoundGroup.LANTERN).luminance(__ -> 12).nonOpaque());
 	public static final Block CHAIN_WALL = new PaneBlock(of(Material.METAL, MapColor.CLEAR).renderLayer(CUTOUT).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(2.5f).sounds(BlockSoundGroup.METAL).nonOpaque());
 	public static final Block METAL_LADDER = new LadderBlock(of(Material.WOOD).renderLayer(CUTOUT).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(2.5f).sounds(BlockSoundGroup.LADDER).nonOpaque());
+	
+	public static final Block GLEAMING_LAMPLIGHT = new Block(of(Material.GLASS).dropsSelf().usesTool(PICKAXE_MINEABLE).strength(2, 7).luminance(15));
+	public static final Block CHISELED_GLEAMING_LAMPLIGHT = new Block(of(Material.GLASS).dropsSelf().usesTool(PICKAXE_MINEABLE).strength(2, 7).luminance(15));
 	
 	public static final Block LIGHT_BLOCK = new LightFocusBlock(of(Material.DECORATION).dropsNothing().breakInstantly().ticksRandomly().luminance(state -> 7 + state.get(LightFocusBlock.life)));
 	public static final Block TAINT_GOO = new FluidBlock(STILL_TAINT_GOO, FabricBlockSettings.copy(Blocks.WATER));
@@ -1034,6 +1046,9 @@ public final class ArcanaRegistry{
 		
 		register("arcane_stone", ARCANE_STONE);
 		register("arcane_stone_bricks", ARCANE_STONE_BRICKS);
+		register("arcane_stone_tiles", ARCANE_STONE_TILES);
+		register("arcane_stone_gleaming_tiles", ARCANE_STONE_GLEAMING_TILES);
+		register("arcane_stone_inscribed_tiles", ARCANE_STONE_INSCRIBED_TILES);
 		
 		register("arcane_stone_slab", ARCANE_STONE_SLAB);
 		register("arcane_stone_stairs", ARCANE_STONE_STAIRS);
@@ -1046,6 +1061,12 @@ public final class ArcanaRegistry{
 		register("arcane_stone_bricks_pressure_plate", ARCANE_STONE_BRICKS_PRESSURE_PLATE);
 		register("arcane_stone_bricks_button", ARCANE_STONE_BRICKS_BUTTON);
 		register("arcane_stone_bricks_wall", ARCANE_STONE_BRICKS_WALL);
+		
+		register("arcane_stone_tiles_slab", ARCANE_STONE_TILES_SLAB);
+		register("arcane_stone_tiles_stairs", ARCANE_STONE_TILES_STAIRS);
+		register("arcane_stone_tiles_pressure_plate", ARCANE_STONE_TILES_PRESSURE_PLATE);
+		register("arcane_stone_tiles_button", ARCANE_STONE_TILES_BUTTON);
+		register("arcane_stone_tiles_wall", ARCANE_STONE_TILES_WALL);
 		
 		register("silverwood_sapling", SILVERWOOD_SAPLING);
 		register("silverwood_log", SILVERWOOD_LOG);
@@ -1141,6 +1162,9 @@ public final class ArcanaRegistry{
 		register("crimson_lantern", CRIMSON_LANTERN);
 		register("chain_wall", CHAIN_WALL);
 		register("metal_ladder", METAL_LADDER);
+		
+		register("gleaming_lamplight", GLEAMING_LAMPLIGHT);
+		register("chiseled_gleaming_lamplight", CHISELED_GLEAMING_LAMPLIGHT);
 		
 		for(Aspect primal : Aspects.hasCluster){
 			CrystalClusterBlock clusterBlock = new CrystalClusterBlock(

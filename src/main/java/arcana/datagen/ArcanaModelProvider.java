@@ -66,6 +66,10 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		blockGen.registerSimpleCubeAll(ARCANE_STONE_INSCRIBED_TILES);
 		blockGen.registerSimpleCubeAll(GLEAMING_LAMPLIGHT);
 		blockGen.registerSimpleCubeAll(CHISELED_GLEAMING_LAMPLIGHT);
+		blockGen.registerSimpleCubeAll(GLEAMING_SILVERWOOD_PLANKS);
+		blockGen.registerSimpleCubeAll(SOLAR_GLEAMING_SILVERWOOD_PLANKS);
+		blockGen.registerSimpleCubeAll(GLEAMING_GREATWOOD_PLANKS);
+		blockGen.registerSimpleCubeAll(SOLAR_GLEAMING_GREATWOOD_PLANKS);
 		
 		registerCross(SILVERWOOD_SAPLING, blockGen);
 		registerCross(GREATWOOD_SAPLING, blockGen);

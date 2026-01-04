@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "P": {
+      "item": "arcana:greatwood_planks"
+    },
+    "G": {
+      "item": "arcana:gleaming_lamplight"
+    }
+  },
+  "pattern": [
+    " P ",
+    "PGP",
+    " P "
+  ],
+  "result": {
+    "item": "arcana:gleaming_greatwood_planks",
+    "count": 4
+  }
+}

@@ -430,6 +430,9 @@
     "silverwood_sign": "Silverwood Sign",
     "silverwood_wall_sign": "Silverwood Sign",
 
+    "gleaming_silverwood_planks": "Gleaming Silverwood Planks",
+    "solar_gleaming_silverwood_planks": "Solar Gleaming Silverwood Planks",
+
     "greatwood_sapling": "Greatwood Sapling",
     "greatwood_log": "Greatwood Log",
     "greatwood_leaves": "Greatwood Leaves",
@@ -450,6 +453,9 @@
     "greatwood_trapdoor": "Greatwood Trapdoor",
     "greatwood_sign": "Greatwood Sign",
     "greatwood_wall_sign": "Greatwood Sign",
+
+    "gleaming_greatwood_planks": "Gleaming Greatwood Planks",
+    "solar_gleaming_greatwood_planks": "Solar Gleaming Greatwood Planks",
 
     "taintwood_log": "Taintwood Log",
     "taintwood_planks": "Taintwood Planks",
@@ -501,7 +507,7 @@
     "metal_ladder": "Metal Ladder",
 
     "gleaming_lamplight": "Gleaming Lamplight",
-    "chiseled_gleaming_lamplight": "Chiseled Gleaming Lamplight",
+    "chiseled_gleaming_lamplight": "Solar Gleaming Lamplight",
 
     "symbol": "Control Symbol: {}",
 

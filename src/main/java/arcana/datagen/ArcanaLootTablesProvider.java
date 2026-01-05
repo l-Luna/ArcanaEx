@@ -53,6 +53,14 @@ public class ArcanaLootTablesProvider extends FabricBlockLootTableProvider{
 		
 		addDrop(GREATWOOD_SLAB, BlockLootTableGenerator::slabDrops);
 		
+		addPottedPlantDrop(POTTED_SILVERWOOD_SAPLING);
+		addPottedPlantDrop(POTTED_GREATWOOD_SAPLING);
+		addPottedPlantDrop(POTTED_VISHROOM);
+		addPottedPlantDrop(POTTED_CORDISPORA);
+		addPottedPlantDrop(POTTED_SNOWDROP);
+		addPottedPlantDrop(POTTED_FIREWHEEL);
+		addPottedPlantDrop(POTTED_LILIUM);
+		
 		Aspects.clusters.forEach((aspect, cluster) -> {
 			var drop = Aspects.crystals.get(aspect);
 			addDrop(cluster,

@@ -511,8 +511,17 @@
 
     "symbol": "Control Symbol: {}",
 
+    "light_block": "Light Block",
     "taint_goo": "Taint Goo",
     "putrefaction": "Putrefaction",
+
+    "potted_silverwood_sapling": "Potted Silverwood Sapling",
+    "potted_greatwood_sapling": "Potted Greatwood Sapling",
+    "potted_vishroom": "Potted Vishroom",
+    "potted_cordispora": "Potted Cordispora",
+    "potted_snowdrop": "Potted Snowdrop",
+    "potted_firewheel": "Potted Firewheel",
+    "potted_lilium": "Potted Lilium",
 
     "tainted_rock": "Tainted Rock",
     "tainted_andesite": "Tainted Andesite",

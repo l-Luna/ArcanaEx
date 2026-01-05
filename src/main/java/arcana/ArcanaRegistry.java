@@ -542,6 +542,14 @@ public final class ArcanaRegistry{
 	public static final Block TAINT_GOO = new FluidBlock(STILL_TAINT_GOO, FabricBlockSettings.copy(Blocks.WATER));
 	public static final Block PUTREFACTION = new FluidBlock(STILL_PUTREFACTION, FabricBlockSettings.copy(Blocks.WATER));
 	
+	public static final Block POTTED_SILVERWOOD_SAPLING = new FlowerPotBlock(SILVERWOOD_SAPLING, of(Material.DECORATION).renderLayer(CUTOUT).breakInstantly().nonOpaque());
+	public static final Block POTTED_GREATWOOD_SAPLING = new FlowerPotBlock(GREATWOOD_SAPLING, of(Material.DECORATION).renderLayer(CUTOUT).breakInstantly().nonOpaque());
+	public static final Block POTTED_VISHROOM = new FlowerPotBlock(VISHROOM, of(Material.DECORATION).renderLayer(CUTOUT).breakInstantly().nonOpaque());
+	public static final Block POTTED_CORDISPORA = new FlowerPotBlock(CORDISPORA, of(Material.DECORATION).renderLayer(CUTOUT).breakInstantly().nonOpaque());
+	public static final Block POTTED_SNOWDROP = new FlowerPotBlock(SNOWDROP, of(Material.DECORATION).renderLayer(CUTOUT).breakInstantly().nonOpaque());
+	public static final Block POTTED_FIREWHEEL = new FlowerPotBlock(FIREWHEEL, of(Material.DECORATION).renderLayer(CUTOUT).breakInstantly().nonOpaque());
+	public static final Block POTTED_LILIUM = new FlowerPotBlock(LILIUM, of(Material.DECORATION).renderLayer(CUTOUT).breakInstantly().nonOpaque());
+	
 	// natural tainted blocks
 	public static final Block TAINTED_ROCK = new TaintedBlock(of(Material.STONE, MapColor.PURPLE).group(Tab.TAINTED).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(1.6f, 6));
 	public static final Block TAINTED_ANDESITE = new TaintedBlock(of(Material.STONE, MapColor.PURPLE).group(Tab.TAINTED).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(1.6f, 6));
@@ -1202,6 +1210,14 @@ public final class ArcanaRegistry{
 		register("light_block", LIGHT_BLOCK, false);
 		register("taint_goo", TAINT_GOO, false);
 		register("putrefaction", PUTREFACTION, false);
+		
+		register("potted_greatwood_sampling", POTTED_GREATWOOD_SAPLING, false);
+		register("potted_silverwood_sapling", POTTED_SILVERWOOD_SAPLING, false);
+		register("potted_vishroom", POTTED_VISHROOM, false);
+		register("potted_cordispora", POTTED_CORDISPORA, false);
+		register("potted_snowdrop", POTTED_SNOWDROP, false);
+		register("potted_firewheel", POTTED_FIREWHEEL, false);
+		register("potted_lilium", POTTED_LILIUM, false);
 		
 		register("tainted_rock", TAINTED_ROCK);
 		register("tainted_andesite", TAINTED_ANDESITE);

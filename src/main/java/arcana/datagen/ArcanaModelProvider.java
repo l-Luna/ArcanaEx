@@ -71,6 +71,7 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		blockGen.registerSimpleCubeAll(GLEAMING_GREATWOOD_PLANKS);
 		blockGen.registerSimpleCubeAll(SOLAR_GLEAMING_GREATWOOD_PLANKS);
 		
+		// TODO: cleanup; these are mostly no-ops now
 		registerCross(SILVERWOOD_SAPLING, blockGen);
 		registerCross(GREATWOOD_SAPLING, blockGen);
 		registerCross(VISHROOM, blockGen);
@@ -78,6 +79,14 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		registerCross(SNOWDROP, blockGen);
 		registerCross(FIREWHEEL, blockGen);
 		registerCross(LILIUM, blockGen);
+		
+		blockGen.registerFlowerPotPlant(SILVERWOOD_SAPLING, POTTED_SILVERWOOD_SAPLING, BlockStateModelGenerator.TintType.NOT_TINTED);
+		blockGen.registerFlowerPotPlant(GREATWOOD_SAPLING, POTTED_GREATWOOD_SAPLING, BlockStateModelGenerator.TintType.NOT_TINTED);
+		blockGen.registerFlowerPotPlant(VISHROOM, POTTED_VISHROOM, BlockStateModelGenerator.TintType.NOT_TINTED);
+		blockGen.registerFlowerPotPlant(CORDISPORA, POTTED_CORDISPORA, BlockStateModelGenerator.TintType.NOT_TINTED);
+		blockGen.registerFlowerPotPlant(SNOWDROP, POTTED_SNOWDROP, BlockStateModelGenerator.TintType.NOT_TINTED);
+		blockGen.registerFlowerPotPlant(FIREWHEEL, POTTED_FIREWHEEL, BlockStateModelGenerator.TintType.NOT_TINTED);
+		blockGen.registerFlowerPotPlant(LILIUM, POTTED_LILIUM, BlockStateModelGenerator.TintType.NOT_TINTED);
 		
 		blockGen.registerLog(SILVERWOOD_LOG).log(SILVERWOOD_LOG).wood(SILVERWOOD_WOOD);
 		blockGen.registerLog(STRIPPED_SILVERWOOD_LOG).log(STRIPPED_SILVERWOOD_LOG).wood(STRIPPED_SILVERWOOD_WOOD);
@@ -158,7 +167,7 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 	}
 	
 	private void registerCross(Block block, BlockStateModelGenerator blockGen){
-		blockGen.registerTintableCross(block, BlockStateModelGenerator.TintType.NOT_TINTED);
+		//blockGen.registerTintableCross(block, BlockStateModelGenerator.TintType.NOT_TINTED);
 		noAutoGen.add(block.asItem());
 	}
 	

@@ -16,6 +16,7 @@ import arcana.effects.SetBonusStatusEffect;
 import arcana.effects.TaintedStatusEffect;
 import arcana.enchantments.LootSwapEnchantment;
 import arcana.enchantments.ProjectingEnchantment;
+import arcana.enchantments.RunicShieldingEnchantment;
 import arcana.enchantments.WarpingCurseEnchantment;
 import arcana.entities.PrismaticOrbEntity;
 import arcana.entities.ThrownAlumentumEntity;
@@ -281,6 +282,9 @@ public final class ArcanaRegistry{
 	public static final Item GOLD_RING = new RingItem(new Settings().group(Tab.EQUIPMENT).maxCount(1), 2, 0);
 	public static final Item ARCANIUM_RING = new RingItem(new Settings().group(Tab.EQUIPMENT).maxCount(1), 3, 0);
 	public static final Item ADORNED_RING = new RingItem(new Settings().group(Tab.EQUIPMENT).maxCount(1), 1, 5);
+	public static final Item AMULET_OF_RUNIC_SHIELDING = new NecklaceItem(new Settings().group(Tab.EQUIPMENT).maxCount(1));
+	public static final Item AMULET_OF_UNBURDENED_TRAVEL = new NecklaceItem(new Settings().group(Tab.EQUIPMENT).maxCount(1));
+	public static final Item AMULET_OF_DEAFENING_SHIELDING = new NecklaceItem(new Settings().group(Tab.EQUIPMENT).maxCount(1));
 	
 	public static final Item CRIMSON_BLADE = new SwordItem(ArcanaToolMaterials.CRIMSON, 3, -2.4f, new Settings().group(Tab.EQUIPMENT));
 	public static final Item CRIMSON_LONGBOW = new CrimsonLongbowItem(new Settings().group(Tab.EQUIPMENT).maxDamage(564));
@@ -639,6 +643,7 @@ public final class ArcanaRegistry{
 	public static Enchantment PROJECTING = new ProjectingEnchantment();
 	public static LootSwapEnchantment TRANSMUTATIVE = new LootSwapEnchantment(EnchantmentTarget.WEAPON, TRANSMUTATIVE_SWAPS, 1, 1.0f);
 	public static LootSwapEnchantment PURIFYING = new LootSwapEnchantment(EnchantmentTarget.DIGGER, PURIFYING_SWAPS, 3, 0.2f);
+	public static Enchantment RUNIC_SHIELDING = new RunicShieldingEnchantment();
 	
 	// features...
 	// TODO: move elsewhere? e.g. to each feature's class
@@ -913,6 +918,9 @@ public final class ArcanaRegistry{
 		register("gold_ring", GOLD_RING);
 		register("arcanium_ring", ARCANIUM_RING);
 		register("adorned_ring", ADORNED_RING);
+		register("amulet_of_runic_shielding", AMULET_OF_RUNIC_SHIELDING);
+		register("amulet_of_unburdened_travel", AMULET_OF_UNBURDENED_TRAVEL);
+		register("amulet_of_deafening_shielding", AMULET_OF_DEAFENING_SHIELDING);
 		
 		register("crimson_blade", CRIMSON_BLADE);
 		register("crimson_longbow", CRIMSON_LONGBOW);
@@ -1278,6 +1286,7 @@ public final class ArcanaRegistry{
 		register("projecting", PROJECTING);
 		register("transmutative", TRANSMUTATIVE);
 		register("purifying", PURIFYING);
+		register("runic_shielding", RUNIC_SHIELDING);
 		
 		// features
 		register("surface_node", SURFACE_NODE_FEATURE);

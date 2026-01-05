@@ -20,20 +20,19 @@ import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.item.TooltipData;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.StackReference;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.screen.slot.Slot;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Pair;
-import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.*;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -174,6 +173,24 @@ public class WandItem extends Item implements FabricItem, WarpingItem{
 	
 	public Optional<TooltipData> getTooltipData(ItemStack stack){
 		return Optional.of(new WandAspectsTooltipData(stack));
+	}
+	
+	public boolean onClicked(ItemStack wandStack, ItemStack otherStack, Slot slot, ClickType clickType, PlayerEntity player, StackReference ref){
+		if(clickType == ClickType.RIGHT){
+			ItemStack focus = focusFrom(wandStack);
+			if(otherStack.isEmpty()){
+				if(!focus.isEmpty()){
+					ref.set(focus);
+					putFocus(wandStack, ItemStack.EMPTY);
+					return true;
+				}
+			}else if(otherStack.getItem() instanceof FocusItem && focus.isEmpty()){
+				putFocus(wandStack, otherStack);
+				ref.set(ItemStack.EMPTY);
+				return true;
+			}
+		}
+		return super.onClicked(wandStack, otherStack, slot, clickType, player, ref);
 	}
 	
 	@Environment(EnvType.CLIENT) // access The Player and Text

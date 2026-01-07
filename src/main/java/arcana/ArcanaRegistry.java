@@ -285,6 +285,7 @@ public final class ArcanaRegistry{
 	public static final Item ARCANIUM_RING = new RingItem(new Settings().group(Tab.EQUIPMENT).maxCount(1), 3, 0);
 	public static final Item ADORNED_RING = new RingItem(new Settings().group(Tab.EQUIPMENT).maxCount(1), 1, 5);
 	public static final Item RING_OF_THE_SURGING_BARRIER = new RingItem(new Settings().group(Tab.EQUIPMENT).maxCount(1).rarity(Rarity.UNCOMMON), 1, 0);
+	public static final Item RING_OF_TWIN_HEARTBEATS = new TwinHeartbeatRingItem(new Settings().group(Tab.EQUIPMENT).maxCount(1).rarity(Rarity.UNCOMMON));
 	public static final Item AMULET_OF_RUNIC_SHIELDING = new ShieldingTrinketItem(new Settings().group(Tab.EQUIPMENT).maxCount(1), 2);
 	public static final Item AMULET_OF_UNBURDENED_TRAVEL = new ShieldingTrinketItem(new Settings().group(Tab.EQUIPMENT).maxCount(1), 4);
 	public static final Item AMULET_OF_DEAFENING_SHIELDING = new ShieldingTrinketItem(new Settings().group(Tab.EQUIPMENT).maxCount(1), 1);
@@ -922,6 +923,7 @@ public final class ArcanaRegistry{
 		register("arcanium_ring", ARCANIUM_RING);
 		register("adorned_ring", ADORNED_RING);
 		register("ring_of_the_surging_barrier", RING_OF_THE_SURGING_BARRIER);
+		register("ring_of_twin_heartbeats", RING_OF_TWIN_HEARTBEATS);
 		register("amulet_of_runic_shielding", AMULET_OF_RUNIC_SHIELDING);
 		register("amulet_of_unburdened_travel", AMULET_OF_UNBURDENED_TRAVEL);
 		register("amulet_of_deafening_shielding", AMULET_OF_DEAFENING_SHIELDING);

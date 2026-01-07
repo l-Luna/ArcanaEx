@@ -85,8 +85,9 @@ public class RunicShielding implements Component, AutoSyncedComponent, ServerTic
 		float frac = MathHelper.clamp(amount / player.getHealth(), 0, 1);
 		float chance = MathHelper.sqrt(frac);
 		if(player.getRandom().nextFloat() <= chance){
+			boolean hasHeartTrinket = InventoryUtil.hasTrinket(player, ArcanaRegistry.RING_OF_TWIN_HEARTBEATS);
 			halfPoints -= 2;
-			rechargeTimer = -10 * 20;
+			rechargeTimer = (hasHeartTrinket ? -17 : -10) * 20;
 			lastActivateTime = player.world.getTime();
 			player.timeUntilRegen = 20;
 			((LivingEntityAccessor)player).arcana$setLastDamageTaken(amount);
@@ -116,13 +117,15 @@ public class RunicShielding implements Component, AutoSyncedComponent, ServerTic
 			if(player.world.getTime() % 4 == 0 && InventoryUtil.hasTrinket(player, ArcanaRegistry.RING_OF_THE_SURGING_BARRIER)){
 				ItemStack bestWand = InventoryUtil.streamInventory(player.getInventory())
 						.filter(x -> x.getItem() instanceof WandItem)
-						.min(Comparator.comparingInt(x -> WandItem.aspectsFrom(x).get(Aspects.ORDER)))
+						.max(Comparator.comparingInt(x -> WandItem.aspectsFrom(x).get(Aspects.ORDER)))
 						.orElse(null);
-				if(bestWand != null && WandItem.aspectsFrom(bestWand).get(Aspects.ORDER) > 1){
+				if(bestWand != null && WandItem.aspectsFrom(bestWand).get(Aspects.ORDER) > 0){
 					WandItem.updateAspects(bestWand, x -> x.take(Aspects.ORDER, 1));
 					rechargeTimer += 6;
 				}
 			}
+			if(rechargeTimer > 0 && player.world.getTime() % 2 == 0 && InventoryUtil.hasTrinket(player, ArcanaRegistry.RING_OF_TWIN_HEARTBEATS))
+				rechargeTimer += 1;
 			if(rechargeTimer >= MAX_RECHARGE_TIMER){
 				halfPoints++;
 				rechargeTimer = 0;

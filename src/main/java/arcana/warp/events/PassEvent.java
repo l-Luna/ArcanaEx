@@ -21,4 +21,8 @@ public class PassEvent extends WarpEvent{
 	public int minWarp(){
 		return 1;
 	}
+	
+	public boolean applicableTo(PlayerEntity player, boolean hasSignificantWarp){
+		return true;
+	}
 }

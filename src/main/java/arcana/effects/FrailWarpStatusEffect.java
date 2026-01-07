@@ -20,7 +20,7 @@ public class FrailWarpStatusEffect extends ArcanaStatusEffect{
 		if(entity instanceof PlayerEntity player
 				&& !player.isDead()
 				&& !player.getAbilities().invulnerable
-				&& RunicShielding.from(player).getHalfPoints() == 0)
+				&& RunicShielding.from(player).getHalfPoints() < 2)
 			player.damage(DamageSource.WITHER, (player.getHealth() + player.getAbsorptionAmount()) * 2);
 	}
 }

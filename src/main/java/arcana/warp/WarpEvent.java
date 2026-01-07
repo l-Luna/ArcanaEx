@@ -23,8 +23,9 @@ public abstract class WarpEvent{
 	// "precursor" events are harmless, but followed by more significant events
 	public abstract boolean isPrecursor();
 	public abstract int minWarp();
+	public abstract boolean applicableTo(PlayerEntity player, boolean hasSignificantWarp);
 	
 	public Identifier id(){
-		return WarpEvents.events.inverse().get(this);
+		return WarpEvents.EVENTS.inverse().get(this);
 	}
 }

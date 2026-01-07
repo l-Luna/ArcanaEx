@@ -20,7 +20,7 @@ import static net.minecraft.server.command.CommandManager.literal;
 public final class WarpCommand{
 	
 	private static final SuggestionProvider<ServerCommandSource> SUGGEST_WARP_EVENTS =
-			(context, builder) -> ArcanaCommands.suggestIdentifiers(WarpEvents.events.keySet().stream(), builder);
+			(context, builder) -> ArcanaCommands.suggestIdentifiers(WarpEvents.EVENTS.keySet().stream(), builder);
 	
 	public static void register(CommandDispatcher<ServerCommandSource> dispatcher,
 	                            CommandRegistryAccess registry,
@@ -101,7 +101,7 @@ public final class WarpCommand{
 	private static int performTriggerSpecific(CommandContext<ServerCommandSource> context) throws CommandSyntaxException{
 		var player = EntityArgumentType.getPlayer(context, "player");
 		var id = IdentifierArgumentType.getIdentifier(context, "event");
-		WarpEvents.triggerEvent(player, WarpEvents.events.get(id));
+		WarpEvents.triggerEvent(player, WarpEvents.EVENTS.get(id));
 		context.getSource().sendMessage(Text.translatable("message.arcana.command.warp.trigger.specific", id, player.getDisplayName()));
 		return 1;
 	}

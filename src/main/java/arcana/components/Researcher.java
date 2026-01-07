@@ -268,7 +268,7 @@ public final class Researcher implements Component, AutoSyncedComponent{
 		}
 		// find bonus warp by eldritch nodes
 		Box nodeBox = new Box(player.getPos().add(4, 4, 4), player.getPos().subtract(4, 4, 4));
-		total += AuraWorld.from(player.world)
+		total += (int)AuraWorld.from(player.world)
 				.getNodesInBounds(nodeBox)
 				.stream()
 				.filter(x -> x.getType() == NodeTypes.ELDRITCH)

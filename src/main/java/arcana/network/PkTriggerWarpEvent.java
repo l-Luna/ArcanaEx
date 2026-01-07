@@ -29,6 +29,6 @@ public class PkTriggerWarpEvent extends S2CMessage{
 	
 	@Environment(EnvType.CLIENT)
 	protected void handle(MinecraftClient client, ClientPlayerEntity player){
-		WarpEvents.events.get(eventId).performOnClient(player, hadPrecursor);
+		WarpEvents.EVENTS.get(eventId).performOnClient(player, hadPrecursor);
 	}
 }

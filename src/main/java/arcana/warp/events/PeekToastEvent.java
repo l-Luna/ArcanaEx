@@ -30,6 +30,10 @@ public class PeekToastEvent extends WarpEvent{
 		return 1;
 	}
 	
+	public boolean applicableTo(PlayerEntity player, boolean hasSignificantWarp){
+		return true;
+	}
+	
 	@Environment(EnvType.CLIENT)
 	private static class PeekToast implements Toast{
 		

@@ -715,7 +715,8 @@
     "warp": {
       "nausea": "You don't feel so good...",
       "peek": "What was that?",
-      "pass": "Something passes over you..."
+      "pass": "Something passes over you...",
+      "frail": "Your strength gives out..."
     },
     "research_toast": "Research Unlocked!",
     "addendum_toast": "Addendum Unlocked!"

@@ -2,7 +2,7 @@ package arcana.warp;
 
 import arcana.components.Researcher;
 import arcana.network.PkTriggerWarpEvent;
-import arcana.warp.events.NauseaEvent;
+import arcana.warp.events.FrailEvent;
 import arcana.warp.events.PassEvent;
 import arcana.warp.events.PeekToastEvent;
 import com.google.common.collect.BiMap;
@@ -20,13 +20,13 @@ import static arcana.Arcana.arcId;
 
 public final class WarpEvents{
 
-	public static final BiMap<Identifier, WarpEvent> events = HashBiMap.create();
+	public static final BiMap<Identifier, WarpEvent> EVENTS = HashBiMap.create();
 	
 	public static void setup(){
-		events.put(arcId("peek_toast"), new PeekToastEvent());
+		EVENTS.put(arcId("peek_toast"), new PeekToastEvent());
 		
-		events.put(arcId("nausea"), new NauseaEvent());
-		events.put(arcId("pass"), new PassEvent());
+		EVENTS.put(arcId("pass"), new PassEvent());
+		EVENTS.put(arcId("frail"), new FrailEvent());
 		
 		ServerTickEvents.END_WORLD_TICK.register(WarpEvents::tickWarp);
 	}
@@ -35,14 +35,14 @@ public final class WarpEvents{
 		for(ServerPlayerEntity player : world.getPlayers()){
 			Researcher researcher = Researcher.from(player);
 			long elapsed = world.getTime() - researcher.getLastWarpEventTime();
+			// TODO: scale frequency with warp amount
 			if((elapsed >= 20 * 60 * 12) || (researcher.wasLastWarpEventPrecursor() && elapsed >= 20 * 18))
 				triggerEligible(player);
 		}
 	}
 	
 	public static void triggerEligible(PlayerEntity player){
-		Researcher researcher = Researcher.from(player);
-		WarpEvent event = eligible(researcher.getEffectiveWarp(), researcher.wasLastWarpEventPrecursor(), player.world.random);
+		WarpEvent event = eligible(player);
 		if(event != null)
 			triggerEvent(player, event);
 	}
@@ -55,13 +55,18 @@ public final class WarpEvents{
 		researcher.setLastWarpEvent(player.world.getTime(), event.isPrecursor());
 	}
 	
-	public static WarpEvent eligible(int warp, boolean hadPrecursor, Random random){
-		List<WarpEvent> choices = events.values().stream()
+	public static WarpEvent eligible(PlayerEntity player){
+		Researcher researcher = Researcher.from(player);
+		int significantWarp = Researcher.bonusWarp(player);
+		int warp = researcher.getWarp() + significantWarp;
+		boolean hadPrecursor = researcher.wasLastWarpEventPrecursor();
+		Random random = player.world.random;
+		List<WarpEvent> choices = EVENTS.values().stream()
 				.filter(x -> x.minWarp() <= warp)
+				.filter(x -> x.applicableTo(player, significantWarp > 0))
 				.filter(x -> (hadPrecursor || !x.requiresPrecursor()) && (!x.isPrecursor() || !hadPrecursor || random.nextBoolean()))
 				.toList();
-		// TODO: select based on items and prefer more severe ones if precursor is present
-		if(choices.size() == 0)
+		if(choices.isEmpty())
 			return null;
 		return choices.get(random.nextInt(choices.size()));
 	}

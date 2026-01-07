@@ -120,7 +120,7 @@ public class RunicShielding implements Component, AutoSyncedComponent, ServerTic
 						.orElse(null);
 				if(bestWand != null && WandItem.aspectsFrom(bestWand).get(Aspects.ORDER) > 1){
 					WandItem.updateAspects(bestWand, x -> x.take(Aspects.ORDER, 1));
-					rechargeTimer += 4;
+					rechargeTimer += 6;
 				}
 			}
 			if(rechargeTimer >= MAX_RECHARGE_TIMER){

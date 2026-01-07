@@ -6,6 +6,7 @@ import arcana.aura.NodeTypes;
 import arcana.items.FocusItem;
 import arcana.items.WarpingItem;
 import arcana.research.*;
+import arcana.util.InventoryUtil;
 import arcana.util.NbtUtil;
 import dev.onyxstudios.cca.api.v3.component.Component;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
@@ -257,15 +258,7 @@ public final class Researcher implements Component, AutoSyncedComponent{
 	
 	public static int bonusWarp(PlayerEntity player){
 		// get warping from items
-		int total = 0;
-		for(int i = 0; i < player.getInventory().size(); i++){
-			ItemStack stack = player.getInventory().getStack(i);
-			if(!stack.isEmpty()){
-				total += EnchantmentHelper.getLevel(ArcanaRegistry.WARPING, stack);
-				if(stack.getItem() instanceof WarpingItem wi)
-					total += wi.warping(stack, player);
-			}
-		}
+		int total = InventoryUtil.streamAllItems(player).mapToInt(x -> warpFromStack(x, player)).sum();
 		// find bonus warp by eldritch nodes
 		Box nodeBox = new Box(player.getPos().add(4, 4, 4), player.getPos().subtract(4, 4, 4));
 		total += (int)AuraWorld.from(player.world)
@@ -273,6 +266,16 @@ public final class Researcher implements Component, AutoSyncedComponent{
 				.stream()
 				.filter(x -> x.getType() == NodeTypes.ELDRITCH)
 				.count();
+		return total;
+	}
+	
+	private static int warpFromStack(ItemStack stack, PlayerEntity player){
+		int total = 0;
+		if(!stack.isEmpty()){
+			total += EnchantmentHelper.getLevel(ArcanaRegistry.WARPING, stack);
+			if(stack.getItem() instanceof WarpingItem wi)
+				total += wi.warping(stack, player);
+		}
 		return total;
 	}
 	

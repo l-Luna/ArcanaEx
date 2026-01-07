@@ -11,10 +11,7 @@ import arcana.blocks.tubes.*;
 import arcana.client.particles.AspectParticleEffect;
 import arcana.client.particles.CubeParticleEffect;
 import arcana.components.RunicShielding;
-import arcana.effects.ArcanaStatusEffect;
-import arcana.effects.AspectPowerStatusEffect;
-import arcana.effects.SetBonusStatusEffect;
-import arcana.effects.TaintedStatusEffect;
+import arcana.effects.*;
 import arcana.enchantments.LootSwapEnchantment;
 import arcana.enchantments.ProjectingEnchantment;
 import arcana.enchantments.RunicShieldingEnchantment;
@@ -167,8 +164,9 @@ public final class ArcanaRegistry{
 	
 	// status effects...
 	public static final StatusEffect TAINTED = new TaintedStatusEffect();
-	public static final StatusEffect ARCANE_AURA = new SetBonusStatusEffect();
 	public static final StatusEffect ARCANE_DISCHARGE = new ArcanaStatusEffect(StatusEffectCategory.BENEFICIAL, 0xF881D6);
+	
+	public static final StatusEffect ARCANE_AURA = new SetBonusStatusEffect();
 	
 	public static final StatusEffect AIR_POWER = new AspectPowerStatusEffect(Aspects.AIR)
 			.addAttributeModifier(EntityAttributes.GENERIC_MOVEMENT_SPEED, "63c5f0ac-285e-42b7-9744-32d527655214", .1f, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
@@ -181,6 +179,8 @@ public final class ArcanaRegistry{
 			.addAttributeModifier(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, "6aef6e54-29b8-4cfc-a219-2fdcf22cc557", .1f, EntityAttributeModifier.Operation.ADDITION);
 	public static final StatusEffect ENTROPY_POWER = new AspectPowerStatusEffect(Aspects.ENTROPY)
 			.addAttributeModifier(EntityAttributes.GENERIC_ATTACK_DAMAGE, "acf64683-f1b5-4518-bd64-5ffb72918ab6", .1f, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+	
+	public static final StatusEffect WARP_FRAIL = new FrailWarpStatusEffect();
 	
 	public static final List<StatusEffect> ASPECT_EFFECTS = List.of(
 			ArcanaRegistry.AIR_POWER,
@@ -1358,14 +1358,15 @@ public final class ArcanaRegistry{
 		
 		// status effects
 		register("tainted", TAINTED);
-		register("arcane_aura", ARCANE_AURA);
 		register("arcane_discharge", ARCANE_DISCHARGE);
+		register("arcane_aura", ARCANE_AURA);
 		register("air_power", AIR_POWER);
 		register("fire_power", FIRE_POWER);
 		register("water_power", WATER_POWER);
 		register("earth_power", EARTH_POWER);
 		register("order_power", ORDER_POWER);
 		register("entropy_power", ENTROPY_POWER);
+		register("warp_frail", WARP_FRAIL);
 		
 		// loot pool entry types
 		register("tag_gift", TagGiftEntry.TYPE);

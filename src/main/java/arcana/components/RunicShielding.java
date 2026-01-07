@@ -84,7 +84,7 @@ public class RunicShielding implements Component, AutoSyncedComponent, ServerTic
 			return false;
 		float frac = MathHelper.clamp(amount / player.getHealth(), 0, 1);
 		float chance = MathHelper.sqrt(frac);
-		if(player.getRandom().nextFloat() <= chance){
+		if(player.getRandom().nextFloat() <= chance || player.hasStatusEffect(ArcanaRegistry.WARP_FRAIL)){
 			boolean hasHeartTrinket = InventoryUtil.hasTrinket(player, ArcanaRegistry.RING_OF_TWIN_HEARTBEATS);
 			halfPoints -= 2;
 			rechargeTimer = (hasHeartTrinket ? -17 : -10) * 20;

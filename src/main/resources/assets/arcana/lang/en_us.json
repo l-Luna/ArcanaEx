@@ -620,8 +620,9 @@
   // Status Effects
   "effect.arcana": {
     "tainted": "Tainted",
-    "arcane_aura": "Arcane Aura",
     "arcane_discharge": "Arcane Discharge",
+
+    "arcane_aura": "Arcane Aura",
 
     "air_power": "Aer Power",
     "fire_power": "Ignis Power",
@@ -629,6 +630,8 @@
     "earth_power": "Terra Power",
     "order_power": "Ordo Power",
     "entropy_power": "Perditio Power",
+
+    "warp_frail": "Frail",
 
     "set_bonus": "Set Bonus"
   },

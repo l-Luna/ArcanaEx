@@ -39,3 +39,5 @@ accessible field net/minecraft/entity/ai/goal/BowAttackGoal movingToLeft Z
 accessible field net/minecraft/entity/ai/goal/BowAttackGoal backward Z
 accessible field net/minecraft/entity/ai/goal/BowAttackGoal cooldown I
 accessible field net/minecraft/entity/ai/goal/BowAttackGoal attackInterval I
+
+accessible class net/minecraft/client/gui/hud/InGameHud$HeartType

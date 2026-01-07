@@ -1,6 +1,9 @@
 package arcana.mixin;
 
+import arcana.ArcanaRegistry;
 import arcana.client.RunicShieldingRenderer;
+import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
@@ -20,5 +23,12 @@ public class InGameHudMixin{
 		if(player.getArmor() > 0)
 			y -= 10;
 		RunicShieldingRenderer.renderShielding(matrices, x, y, player);
+	}
+	
+	@WrapMethod(method = "renderHealthBar")
+	void applyFrailEffect(MatrixStack matrices, PlayerEntity player, int x, int y, int lines, int regeneratingHeartIndex, float maxHealth, int lastHealth, int health, int absorption, boolean blinking, Operation<Void> original){
+		if(player.hasStatusEffect(ArcanaRegistry.WARP_FRAIL))
+			lastHealth = health = 0;
+		original.call(matrices, player, x, y, lines, regeneratingHeartIndex, maxHealth, lastHealth, health, absorption, blinking);
 	}
 }

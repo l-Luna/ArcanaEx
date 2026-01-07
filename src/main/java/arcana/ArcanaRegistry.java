@@ -10,6 +10,7 @@ import arcana.blocks.tainted.TaintedSnowyBlock;
 import arcana.blocks.tubes.*;
 import arcana.client.particles.AspectParticleEffect;
 import arcana.client.particles.CubeParticleEffect;
+import arcana.components.RunicShielding;
 import arcana.effects.ArcanaStatusEffect;
 import arcana.effects.AspectPowerStatusEffect;
 import arcana.effects.SetBonusStatusEffect;
@@ -69,6 +70,7 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.*;
+import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
@@ -278,13 +280,14 @@ public final class ArcanaRegistry{
 	public static final Item SILVERLEAF_SCALPEL = new ScalpelItem(new Settings().group(Tab.EQUIPMENT).maxDamage(100), ScalpelItem.ScalpelType.SILVER);
 	public static final Item VOID_METAL_SCALPEL = new ScalpelItem(new Settings().group(Tab.EQUIPMENT).maxDamage(100), ScalpelItem.ScalpelType.BLACK);
 	
-	public static final Item EMERALD_NECKLACE = new NecklaceItem(new Settings().group(Tab.EQUIPMENT).maxCount(1));
+	public static final Item EMERALD_NECKLACE = new TrinketItem(new Settings().group(Tab.EQUIPMENT).maxCount(1));
 	public static final Item GOLD_RING = new RingItem(new Settings().group(Tab.EQUIPMENT).maxCount(1), 2, 0);
 	public static final Item ARCANIUM_RING = new RingItem(new Settings().group(Tab.EQUIPMENT).maxCount(1), 3, 0);
 	public static final Item ADORNED_RING = new RingItem(new Settings().group(Tab.EQUIPMENT).maxCount(1), 1, 5);
-	public static final Item AMULET_OF_RUNIC_SHIELDING = new NecklaceItem(new Settings().group(Tab.EQUIPMENT).maxCount(1));
-	public static final Item AMULET_OF_UNBURDENED_TRAVEL = new NecklaceItem(new Settings().group(Tab.EQUIPMENT).maxCount(1));
-	public static final Item AMULET_OF_DEAFENING_SHIELDING = new NecklaceItem(new Settings().group(Tab.EQUIPMENT).maxCount(1));
+	public static final Item RING_OF_THE_SURGING_BARRIER = new RingItem(new Settings().group(Tab.EQUIPMENT).maxCount(1).rarity(Rarity.UNCOMMON), 1, 0);
+	public static final Item AMULET_OF_RUNIC_SHIELDING = new ShieldingTrinketItem(new Settings().group(Tab.EQUIPMENT).maxCount(1), 2);
+	public static final Item AMULET_OF_UNBURDENED_TRAVEL = new ShieldingTrinketItem(new Settings().group(Tab.EQUIPMENT).maxCount(1), 4);
+	public static final Item AMULET_OF_DEAFENING_SHIELDING = new ShieldingTrinketItem(new Settings().group(Tab.EQUIPMENT).maxCount(1), 1);
 	
 	public static final Item CRIMSON_BLADE = new SwordItem(ArcanaToolMaterials.CRIMSON, 3, -2.4f, new Settings().group(Tab.EQUIPMENT));
 	public static final Item CRIMSON_LONGBOW = new CrimsonLongbowItem(new Settings().group(Tab.EQUIPMENT).maxDamage(564));
@@ -918,6 +921,7 @@ public final class ArcanaRegistry{
 		register("gold_ring", GOLD_RING);
 		register("arcanium_ring", ARCANIUM_RING);
 		register("adorned_ring", ADORNED_RING);
+		register("ring_of_the_surging_barrier", RING_OF_THE_SURGING_BARRIER);
 		register("amulet_of_runic_shielding", AMULET_OF_RUNIC_SHIELDING);
 		register("amulet_of_unburdened_travel", AMULET_OF_UNBURDENED_TRAVEL);
 		register("amulet_of_deafening_shielding", AMULET_OF_DEAFENING_SHIELDING);
@@ -1219,7 +1223,7 @@ public final class ArcanaRegistry{
 		register("taint_goo", TAINT_GOO, false);
 		register("putrefaction", PUTREFACTION, false);
 		
-		register("potted_greatwood_sampling", POTTED_GREATWOOD_SAPLING, false);
+		register("potted_greatwood_sapling", POTTED_GREATWOOD_SAPLING, false);
 		register("potted_silverwood_sapling", POTTED_SILVERWOOD_SAPLING, false);
 		register("potted_vishroom", POTTED_VISHROOM, false);
 		register("potted_cordispora", POTTED_CORDISPORA, false);
@@ -1363,6 +1367,10 @@ public final class ArcanaRegistry{
 		
 		// loot pool entry types
 		register("tag_gift", TagGiftEntry.TYPE);
+		
+		// entity attributes
+		// TODO: move elsewhere?
+		register("max_shielding", RunicShielding.MAX_SHIELDING);
 	}
 	
 	private static void register(String name, Item item){
@@ -1447,19 +1455,23 @@ public final class ArcanaRegistry{
 		Registry.register(Registry.LOOT_POOL_ENTRY_TYPE, arcId(name), type);
 	}
 	
+	private static void register(String name, Structure structure, StructurePlacement placement){
+		RegistryKey<Structure> structureKey = RegistryKey.of(Registry.STRUCTURE_KEY, arcId(name));
+		RegistryEntry<Structure> structureEntry = BuiltinRegistries.add(BuiltinRegistries.STRUCTURE, structureKey, structure);
+		RegistryKey<StructureSet> setKey = RegistryKey.of(Registry.STRUCTURE_SET_KEY, arcId(name));
+		BuiltinRegistries.add(BuiltinRegistries.STRUCTURE_SET, setKey, new StructureSet(structureEntry, placement));
+	}
+	
+	private static void register(String name, EntityAttribute attribute){
+		Registry.register(Registry.ATTRIBUTE, arcId(name), attribute);
+	}
+	
 	private static void registerCapOnly(Cap cap){
 		Cap.caps.put(cap.id(), cap);
 	}
 	
 	private static void registerCoreOnly(Core core){
 		Core.cores.put(core.id(), core);
-	}
-	
-	private static void register(String name, Structure structure, StructurePlacement placement){
-		RegistryKey<Structure> structureKey = RegistryKey.of(Registry.STRUCTURE_KEY, arcId(name));
-		RegistryEntry<Structure> structureEntry = BuiltinRegistries.add(BuiltinRegistries.STRUCTURE, structureKey, structure);
-		RegistryKey<StructureSet> setKey = RegistryKey.of(Registry.STRUCTURE_SET_KEY, arcId(name));
-		BuiltinRegistries.add(BuiltinRegistries.STRUCTURE_SET, setKey, new StructureSet(structureEntry, placement));
 	}
 	
 	private static Structure.Config createStructureConfig(TagKey<Biome> biomeTag, Map<SpawnGroup, StructureSpawns> spawns, GenerationStep.Feature featureStep, StructureTerrainAdaptation terrainAdaptation){

@@ -243,8 +243,8 @@
     "gold_ring": "Gold Ring",
     "arcanium_ring": "Arcanium Ring",
     "adorned_ring": "Adorned Ring",
+    "ring_of_the_surging_barrier": "Ring of the Surging Barrier",
     "amulet_of_runic_shielding": "Amulet of Runic Shielding",
-    "amulet_of_runic_shielding.tip": ["§4WIP§r"],
     "amulet_of_unburdened_travel": "Amulet of Unburdened Travel",
     "amulet_of_unburdened_travel.tip": ["§4WIP§r"],
     "amulet_of_deafening_shielding": "Amulet of Deafening Shielding",
@@ -721,7 +721,17 @@
     "hungry_node": "{} was consumed by a hungry node",
     "hungry_node.player": "{} was thrown into a hungry node by {}"
   },
-  
+
+  // Entity Attributes
+  "attribute.name.generic.arcana": {
+    "max_shielding": "Max Runic Shielding"
+  },
+
+  // Subtitles
+  "subtitles.arcana": {
+    "runic_shielding_hit": "Runic shielding activates"
+  },
+
   // Research UI
   "research": {
     "entry": {

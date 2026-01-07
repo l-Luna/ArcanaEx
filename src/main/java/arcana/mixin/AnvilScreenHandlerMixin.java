@@ -2,6 +2,9 @@ package arcana.mixin;
 
 import arcana.ArcanaRegistry;
 import arcana.recipes.VoidPuttyRepairRecipe;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
@@ -27,7 +30,7 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler{
 	}
 	
 	@Inject(method = "updateResult", at = @At("HEAD"), cancellable = true)
-	void updateResult(CallbackInfo ci){
+	void addAnvilRecipes(CallbackInfo ci){
 		ItemStack tool = input.getStack(0);
 		ItemStack material = input.getStack(1);
 		if(VoidPuttyRepairRecipe.isRepairable(tool) && material.isOf(ArcanaRegistry.VOID_PUTTY)){
@@ -38,6 +41,13 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler{
 			output.setStack(0, newOutput);
 			ci.cancel();
 		}
+	}
+	
+	@WrapOperation(method = "updateResult", at = @At(value = "INVOKE", target = "Lnet/minecraft/enchantment/Enchantment;getMaxLevel()I"))
+	int capRunicShieldingLevel(Enchantment enchantment, Operation<Integer> original){
+		if(enchantment == ArcanaRegistry.RUNIC_SHIELDING)
+			return 1;
+		return original.call(enchantment);
 	}
 	
 	@Inject(method = "canTakeOutput", at = @At("HEAD"), cancellable = true)

@@ -71,7 +71,8 @@
       "arcana:researcher",
       "arcana:caster",
       "arcana:kd_item",
-      "arcana:ca_arrow"
+      "arcana:ca_arrow",
+      "arcana:runic_shielding_user"
     ]
   }
 }

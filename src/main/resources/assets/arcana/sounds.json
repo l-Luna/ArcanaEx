@@ -1,0 +1,8 @@
+{
+  "runic_shielding_hit": {
+    "subtitle": "subtitles.arcana.runic_shielding_hit",
+    "sounds": [
+      "arcana:runic_shielding_hit"
+    ]
+  }
+}

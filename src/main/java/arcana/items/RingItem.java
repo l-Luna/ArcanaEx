@@ -26,7 +26,7 @@ import static net.minecraft.entity.attribute.EntityAttributeModifier.Operation.A
 
 public class RingItem extends TrinketItem implements VisDiscountingItem{
 	
-	// 1 base defense
+	// 1 base defence
 	private static final UUID defenseUuid = UUID.fromString("c5804818-530d-11ed-bdc3-0242ac120002");
 	private static final UUID projectingUuid = UUID.fromString("6c2b1412-530f-11ed-bdc3-0242ac120002");
 	

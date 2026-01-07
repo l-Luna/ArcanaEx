@@ -3,7 +3,6 @@ package arcana.recipes;
 import arcana.ArcanaRegistry;
 import arcana.ArcanaTags;
 import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -15,8 +14,7 @@ import net.minecraft.recipe.SpecialRecipeSerializer;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
+import static arcana.util.InventoryUtil.streamInventory;
 
 // inspired by:
 // https://github.com/DaFuqs/Spectrum/blob/1.20.1-aria-for-painters/src/main/java/de/dafuqs/spectrum/recipe/crafting/dynamic/RepairAnythingRecipe.java
@@ -32,13 +30,13 @@ public class VoidPuttyRepairRecipe extends SpecialCraftingRecipe{
 	}
 	
 	public boolean matches(CraftingInventory inventory, World world){
-		return stream(inventory).filter(VOID_PUTTY).count() == 1 &&
-				stream(inventory).filter(VoidPuttyRepairRecipe::isRepairable).count() == 1;
+		return streamInventory(inventory).filter(VOID_PUTTY).count() == 1 &&
+				streamInventory(inventory).filter(VoidPuttyRepairRecipe::isRepairable).count() == 1;
 	}
 	
 	@SuppressWarnings("OptionalGetWithoutIsPresent")
 	public ItemStack craft(CraftingInventory inventory){
-		ItemStack newStack = stream(inventory).filter(VoidPuttyRepairRecipe::isRepairable).findAny().get().copy();
+		ItemStack newStack = streamInventory(inventory).filter(VoidPuttyRepairRecipe::isRepairable).findAny().get().copy();
 		newStack.setDamage(0);
 		return newStack;
 	}
@@ -61,9 +59,5 @@ public class VoidPuttyRepairRecipe extends SpecialCraftingRecipe{
 		return item.getRegistryEntry().isIn(ArcanaTags.VOID_PUTTY_REPAIR_WHITELIST)
 				|| item instanceof ToolItem tool && !tool.getMaterial().getRepairIngredient().isEmpty()
 				|| item instanceof ArmorItem armor && !armor.getMaterial().getRepairIngredient().isEmpty();
-	}
-	
-	private static Stream<ItemStack> stream(Inventory i){
-		return IntStream.range(0, i.size()).mapToObj(i::getStack);
 	}
 }

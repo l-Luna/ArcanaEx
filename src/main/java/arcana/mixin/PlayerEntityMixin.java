@@ -1,6 +1,7 @@
 package arcana.mixin;
 
 import arcana.blocks.WardedCampfireBlock;
+import arcana.components.RunicShielding;
 import arcana.items.BootsOfTheTravellerItem;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
@@ -39,14 +40,16 @@ public abstract class PlayerEntityMixin extends LivingEntity{
 		}
 	}
 	
-	// also see: ClientPlayerEntityMixin
 	@WrapMethod(method = "damage")
 	private boolean applyDamage(DamageSource source, float amount, Operation<Boolean> original){
 		if(source.isFromFalling()){
-			if(amount > 0 && amount <= effectiveFallDamageReduction())
+			int reduction = effectiveFallDamageReduction();
+			if(amount > 0 && amount <= reduction)
 				return false;
-			return original.call(source, amount - effectiveFallDamageReduction());
+			amount -= reduction;
 		}
+		if(RunicShielding.from((PlayerEntity)(Object)this).handleDamage(source, amount))
+			return false;
 		return original.call(source, amount);
 	}
 	

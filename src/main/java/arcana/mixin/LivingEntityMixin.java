@@ -1,6 +1,7 @@
 package arcana.mixin;
 
 import arcana.ArcanaRegistry;
+import arcana.components.RunicShielding;
 import arcana.duck.ArcanaFluidEntity;
 import arcana.fluids.ArcanaFluid;
 import arcana.items.BootsOfTheTravellerItem;
@@ -11,6 +12,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.LadderBlock;
 import net.minecraft.block.TrapdoorBlock;
 import net.minecraft.entity.*;
+import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -185,5 +187,14 @@ public abstract class LivingEntityMixin extends Entity{
 			if(ladderState.isOf(ArcanaRegistry.METAL_LADDER) && ladderState.get(LadderBlock.FACING) == state.get(TrapdoorBlock.FACING))
 				cir.setReturnValue(true);
 		}
+	}
+	
+	// add default value for runic shielding attribute (see reach-entity-attributes)
+	
+	@Inject(
+			method = "createLivingAttributes()Lnet/minecraft/entity/attribute/DefaultAttributeContainer$Builder;",
+			require = 1, allow = 1, at = @At("RETURN"))
+	private static void addAttributes(final CallbackInfoReturnable<DefaultAttributeContainer.Builder> info){
+		info.getReturnValue().add(RunicShielding.MAX_SHIELDING);
 	}
 }

@@ -19,6 +19,7 @@ public class ComponentInit implements EntityComponentInitializer, WorldComponent
 	public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry){
 		registry.registerForPlayers(Researcher.KEY, Researcher::new, RespawnCopyStrategy.ALWAYS_COPY);
 		registry.registerForPlayers(Caster.KEY, Caster::new, RespawnCopyStrategy.ALWAYS_COPY);
+		registry.registerForPlayers(RunicShielding.KEY, RunicShielding::new, RespawnCopyStrategy.LOSSLESS_ONLY);
 		registry.registerFor(ItemEntity.class, KdItem.KEY, __ -> new KdItem());
 		registry.registerFor(ArrowEntity.class, CaArrow.KEY, __ -> new CaArrow());
 	}

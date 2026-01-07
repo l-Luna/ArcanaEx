@@ -77,6 +77,7 @@ public final class ArcanaClient implements ClientModInitializer{
 		WorldRenderEvents.LAST.register(NodeRenderer::render);
 		HudRenderCallback.EVENT.register(HudRenderer::renderHud);
 		HudRenderCallback.EVENT.register(FocusSwitcherRenderer::renderHud);
+		HudRenderCallback.EVENT.register(RunicShieldingRenderer::renderOverlay);
 		ClientTickEvents.START_CLIENT_TICK.register(FocusSwitcherRenderer::tick);
 		
 		ModelLoadingRegistry.INSTANCE.registerResourceProvider(__ -> new WandModel.Provider());
@@ -89,13 +90,14 @@ public final class ArcanaClient implements ClientModInitializer{
 		ClientSpriteRegistryCallback.event(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE).register((atlasTexture, registry) -> {
 			registry.register(miscWhite);
 			
+			registry.register(RunicShieldingRenderer.iconsTexture);
+			registry.register(RunicShieldingRenderer.overlayTexture);
+			
 			registry.register(WardedJarBlockEntityRenderer.topTexture);
 			registry.register(WardedJarBlockEntityRenderer.sideTexture);
 			registry.register(WardedJarBlockEntityRenderer.bottomTexture);
-			
 			registry.register(MysticMistBlockEntityRenderer.RAIN);
 			registry.register(MysticMistBlockEntityRenderer.SNOW);
-			
 			registry.register(EssentiaValveBlockEntityRenderer.GEAR_TEX);
 			
 			for(ArcanaFluid fluid : ArcanaRegistry.stillFluids){

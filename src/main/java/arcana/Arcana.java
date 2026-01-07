@@ -54,6 +54,7 @@ public final class Arcana implements ModInitializer{
 		// for dessicant tips
 		DessicantControl.optIn(modid);
 		
+		ArcanaSounds.setup();
 		ArcanaRegistry.setup();
 		
 		Registry.register(Registry.RECIPE_SERIALIZER, arcId("wand"), WandRecipe.SERIALIZER);

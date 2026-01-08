@@ -590,7 +590,8 @@
         "aspect": "{}% {} discount"
       }
     },
-    "radius": "Radius: {}"
+    "radius": "Radius: {}",
+    "fragile": "Fragile"
   },
 
   // Enchantments

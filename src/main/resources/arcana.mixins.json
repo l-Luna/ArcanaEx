@@ -22,6 +22,7 @@
     "HorizontalConnectingBlockMixin",
     "InventoryChangedCriterionMixin",
     "ItemEntityMixin",
+    "ItemMixin",
     "ItemStackMixin",
     "LivingEntityAccessor",
     "LivingEntityMixin",

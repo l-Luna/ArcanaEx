@@ -2,11 +2,15 @@ package arcana.mixin;
 
 import arcana.ArcanaRegistry;
 import arcana.ArcanaTags;
+import arcana.duck.ArcanaItem;
+import arcana.items.FragileComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldEvents;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -31,9 +35,10 @@ public abstract class ItemEntityMixin extends Entity{
 	
 	@Inject(method = "tick", at = @At("TAIL"))
 	void applyItemPhysics(CallbackInfo ci){
-		if(getStack().isIn(ArcanaTags.FLOATS) && getVelocity().horizontalLengthSquared() > 1.0E-5F)
+		ItemStack stack = getStack();
+		if(stack.isIn(ArcanaTags.FLOATS) && getVelocity().horizontalLengthSquared() > 1.0E-5F)
 			setVelocity(getVelocity().multiply(0.9f, 0.9f, 0.9f));
-		if(world.isClient && world.random.nextInt(12) == 0 && getStack().isOf(ArcanaRegistry.WISPY_ESSENCE))
+		if(world.isClient && world.random.nextInt(12) == 0 && stack.isOf(ArcanaRegistry.WISPY_ESSENCE))
 			world.addParticle(ArcanaRegistry.LIGHTNING,
 					false,
 					getX() + world.random.nextGaussian() / 9,
@@ -42,5 +47,15 @@ public abstract class ItemEntityMixin extends Entity{
 					0,
 					0.02,
 					0);
+		FragileComponent c = ((ArcanaItem)stack.getItem()).arcana$getFragileComponent();
+		if(!world.isClient && c != null && (horizontalCollision || verticalCollision)){
+			world.syncWorldEvent(WorldEvents.INSTANT_SPLASH_POTION_SPLASHED, getBlockPos(), c.colour());
+			if(c.effect() != null)
+				// see PotionEntity
+				for(LivingEntity entity : world.getNonSpectatingEntities(LivingEntity.class, getBoundingBox().expand(4, 2, 4)))
+					if(entity.isAffectedBySplashPotions())
+						c.effect().applyInstantEffect(this, null, entity, 0, 1);
+			discard();
+		}
 	}
 }

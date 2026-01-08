@@ -74,6 +74,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.fluid.FlowableFluid;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.*;
@@ -269,7 +270,7 @@ public final class ArcanaRegistry{
 	public static final Item TWISTED_ESSENCE = new Item(GROUPED_RES);
 	public static final Item BEJEWELED_BEET = new Item(new Settings().group(Tab.RESOURCES).food(new FoodComponent.Builder().hunger(5).saturationModifier(1).build()));
 	public static final Item SPIRAL_SUGAR = new Item(GROUPED_RES);
-	public static final Item BLOODLET_RUBY = new Item(GROUPED_RES);
+	public static final Item BLOODLET_RUBY = new Item(new ArcanaItemSettings().fragile(0xBC0826, StatusEffects.INSTANT_HEALTH).group(Tab.RESOURCES));
 	public static final Item MOTILE = new MotileItem(new Settings().group(Tab.RESOURCES).rarity(Rarity.UNCOMMON));
 	public static final Item MOTILE_PIECE = new MotileItem(new Settings().group(Tab.RESOURCES).rarity(Rarity.UNCOMMON));
 	
@@ -1033,7 +1034,7 @@ public final class ArcanaRegistry{
 			register("crystals/" + shortName, crystalItem);
 			Aspects.crystals.put(aspect, crystalItem);
 			
-			PhialItem phialItem = new PhialItem(new Settings().group(Tab.PHIALS), aspect);
+			PhialItem phialItem = new PhialItem(new ArcanaItemSettings().fragile(aspect.colour()).group(Tab.PHIALS), aspect);
 			register("phials/" + shortName, phialItem);
 			Aspects.phials.put(aspect, phialItem);
 			

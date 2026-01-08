@@ -18,6 +18,7 @@ import arcana.client.research.EntrySectionRenderer;
 import arcana.client.research.PuzzleRenderer;
 import arcana.client.research.RequirementRenderer;
 import arcana.components.Researcher;
+import arcana.duck.ArcanaItem;
 import arcana.fluids.ArcanaFluid;
 import arcana.network.PkModifyPins;
 import arcana.network.PkTryAdvance;
@@ -29,6 +30,7 @@ import arcana.screens.*;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
@@ -53,6 +55,7 @@ import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.item.BlockItem;
+import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 
@@ -73,6 +76,10 @@ public final class ArcanaClient implements ClientModInitializer{
 						: null);
 		TooltipComponentCallback.EVENT.register(d ->
 				d instanceof WandAspectsTooltipData w ? new WandAspectsTooltipComponent(w.wand()) : null);
+		ItemTooltipCallback.EVENT.register(arcId("early"), (stack, ctx, lines) -> {
+			if(((ArcanaItem)stack.getItem()).arcana$getFragileComponent() != null)
+				lines.add(1, Text.translatable("tooltip.arcana.fragile").formatted(Formatting.GRAY));
+		});
 		
 		WorldRenderEvents.LAST.register(NodeRenderer::render);
 		HudRenderCallback.EVENT.register(HudRenderer::renderHud);

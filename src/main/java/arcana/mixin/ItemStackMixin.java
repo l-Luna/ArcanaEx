@@ -10,6 +10,7 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.item.TooltipData;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EquipmentSlot;
@@ -28,9 +29,11 @@ public class ItemStackMixin{
 	@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 	@ModifyReturnValue(method = "getTooltipData", at = @At("RETURN"))
 	private Optional<TooltipData> applyAspectsTooltipData(Optional<TooltipData> original){
-		AspectMap aspects = ItemAspectRegistry.get((ItemStack)(Object)this);
-		if(!aspects.isEmpty())
-			return Optional.of(new ItemAspectsTooltipData(aspects.asStacks(), original.orElse(null)));
+		if(Screen.hasShiftDown()){
+			AspectMap aspects = ItemAspectRegistry.get((ItemStack)(Object)this);
+			if(!aspects.isEmpty())
+				return Optional.of(new ItemAspectsTooltipData(aspects.asStacks(), original.orElse(null)));
+		}
 		return original;
 	}
 	

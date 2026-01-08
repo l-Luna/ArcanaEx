@@ -267,6 +267,9 @@ public final class ArcanaRegistry{
 	
 	public static final Item WISPY_ESSENCE = new Item(GROUPED_RES);
 	public static final Item TWISTED_ESSENCE = new Item(GROUPED_RES);
+	public static final Item BEJEWELED_BEET = new Item(new Settings().group(Tab.RESOURCES).food(new FoodComponent.Builder().hunger(5).saturationModifier(1).build()));
+	public static final Item SPIRAL_SUGAR = new Item(GROUPED_RES);
+	public static final Item BLOODLET_RUBY = new Item(GROUPED_RES);
 	public static final Item MOTILE = new MotileItem(new Settings().group(Tab.RESOURCES).rarity(Rarity.UNCOMMON));
 	public static final Item MOTILE_PIECE = new MotileItem(new Settings().group(Tab.RESOURCES).rarity(Rarity.UNCOMMON));
 	
@@ -534,6 +537,9 @@ public final class ArcanaRegistry{
 	public static final Block SNOWDROP = new SizedPlantBlock(of(Material.PLANT).dropsSelf().renderLayer(CUTOUT).sounds(BlockSoundGroup.GRASS).noCollision().breakInstantly().offsetType(AbstractBlock.OffsetType.XZ), 13, 14);
 	public static final Block FIREWHEEL = new SizedPlantBlock(of(Material.PLANT).dropsSelf().renderLayer(CUTOUT).sounds(BlockSoundGroup.GRASS).noCollision().breakInstantly().offsetType(AbstractBlock.OffsetType.XZ), 10, 15);
 	public static final Block LILIUM = new SizedPlantBlock(of(Material.PLANT).dropsSelf().renderLayer(CUTOUT).sounds(BlockSoundGroup.GRASS).noCollision().breakInstantly().offsetType(AbstractBlock.OffsetType.XZ), 6, 15);
+	
+	public static final Block BEJEWELED_BEETS_BLOCK = new BejeweledBeetsBlock(of(Material.PLANT).renderLayer(CUTOUT).nonOpaque().noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP));
+	public static final Item BEJEWELED_BEET_SEEDS = new AliasedBlockItem(BEJEWELED_BEETS_BLOCK, GROUPED_RES);
 	
 	public static final WoodenStatueBlock SPEAK_NO_EVIL_STATUE = new WoodenStatueBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD).nonOpaque(), WoodenStatueBlock.Type.speak);
 	public static final WoodenStatueBlock SEE_NO_EVIL_STATUE = new WoodenStatueBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD).nonOpaque(), WoodenStatueBlock.Type.see);
@@ -905,6 +911,10 @@ public final class ArcanaRegistry{
 		
 		register("wispy_essence", WISPY_ESSENCE);
 		register("twisted_essence", TWISTED_ESSENCE);
+		register("bejeweled_beet_seeds", BEJEWELED_BEET_SEEDS);
+		register("bejeweled_beet", BEJEWELED_BEET);
+		register("spiral_sugar", SPIRAL_SUGAR);
+		register("bloodlet_ruby", BLOODLET_RUBY);
 		register("motile", MOTILE);
 		register("motile_piece", MOTILE_PIECE);
 		
@@ -1185,6 +1195,8 @@ public final class ArcanaRegistry{
 		register("snowdrop", SNOWDROP);
 		register("firewheel", FIREWHEEL);
 		register("lilium", LILIUM);
+		
+		register("bejeweled_beets", BEJEWELED_BEETS_BLOCK, false);
 		
 		register("speak_no_evil_statue", SPEAK_NO_EVIL_STATUE, false);
 		register("speak_no_evil_statue", new BigBlockItem(SPEAK_NO_EVIL_STATUE, GROUPED));

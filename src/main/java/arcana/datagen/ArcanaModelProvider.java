@@ -88,6 +88,8 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		blockGen.registerFlowerPotPlant(FIREWHEEL, POTTED_FIREWHEEL, BlockStateModelGenerator.TintType.NOT_TINTED);
 		blockGen.registerFlowerPotPlant(LILIUM, POTTED_LILIUM, BlockStateModelGenerator.TintType.NOT_TINTED);
 		
+		blockGen.registerCrop(BEJEWELED_BEETS_BLOCK, Properties.AGE_3, 0, 1, 2, 3);
+		
 		blockGen.registerLog(SILVERWOOD_LOG).log(SILVERWOOD_LOG).wood(SILVERWOOD_WOOD);
 		blockGen.registerLog(STRIPPED_SILVERWOOD_LOG).log(STRIPPED_SILVERWOOD_LOG).wood(STRIPPED_SILVERWOOD_WOOD);
 		blockGen.registerLog(GREATWOOD_LOG).log(GREATWOOD_LOG).wood(GREATWOOD_WOOD);
@@ -139,6 +141,7 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		noAutoGen.add(CRIMSON_LANTERN.asItem());
 		noAutoGen.add(CHAIN_WALL.asItem());
 		noAutoGen.add(METAL_LADDER.asItem());
+		noAutoGen.add(BEJEWELED_BEET_SEEDS);
 		
 		itemGen.register(NITOR.asItem(), Models.GENERATED);
 		itemGen.register(THAUMIC_HALO.asItem(), Models.GENERATED);

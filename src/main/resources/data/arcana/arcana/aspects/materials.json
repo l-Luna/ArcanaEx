@@ -233,7 +233,7 @@
   // fix weird feedback loop
   "arcana:arcanium_ingot": [
     "3*magic",
-    "metal"
+    "3*metal"
   ],
   "arcana:arcanium_block": [
     "27*magic",
@@ -262,5 +262,18 @@
   "arcana:void_metal_nugget": [
     "metal",
     "void"
+  ],
+  "arcana:thaumium_ingot": [
+    "3*metal",
+    "magic"
+  ],
+  "arcana:thaumium_nugget": [
+    "metal"
+  ],
+  "arcana:bloodlet_ruby": [
+    "30*life",
+    "6*crystal",
+    "4*greed",
+    "4*ice"
   ]
 }

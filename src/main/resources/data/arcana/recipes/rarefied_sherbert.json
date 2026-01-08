@@ -1,0 +1,14 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "arcana:spiral_sugar"
+  },
+  "aspects": [
+    "20*air",
+    "8*senses",
+    "2*flight"
+  ],
+  "result": {
+    "item": "arcana:rarefied_sherbert"
+  }
+}

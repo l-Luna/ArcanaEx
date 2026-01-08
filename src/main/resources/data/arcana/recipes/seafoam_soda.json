@@ -1,0 +1,14 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "arcana:spiral_sugar"
+  },
+  "aspects": [
+    "20*water",
+    "8*senses",
+    "2*movement"
+  ],
+  "result": {
+    "item": "arcana:seafoam_soda"
+  }
+}

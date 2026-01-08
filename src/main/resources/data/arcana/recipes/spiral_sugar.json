@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "arcana:bejeweled_beet"
+    },
+    {
+      "item": "arcana:bejeweled_beet"
+    },
+    {
+      "item": "arcana:bejeweled_beet"
+    }
+  ],
+  "result": {
+    "item": "arcana:spiral_sugar"
+  }
+}

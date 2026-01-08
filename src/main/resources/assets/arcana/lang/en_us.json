@@ -51,7 +51,8 @@
     "putrefaction": "Putrefaction",
     "raw_tainted_blocks": "Raw Tainted Blocks",
 
-    "magical_plants": "Magical Plants"
+    "magical_plants": "Magical Plants",
+    "raw_meat": "Raw Meats"
   },
 
   "tag.c": {
@@ -225,6 +226,10 @@
 
     "wispy_essence": "Wispy Essence",
     "twisted_essence": "Twisted Essence",
+    "bejeweled_beet_seeds": "Bejeweled Beet Seeds",
+    "bejeweled_beet": "Bejeweled Beet",
+    "spiral_sugar": "Spiral Sugar",
+    "bloodlet_ruby": "Bloodlet Ruby",
     "motile": "Motile",
     "motile_piece": "Fragment of Motile",
 
@@ -496,6 +501,8 @@
     "snowdrop": "Snowdrop",
     "firewheel": "Firewheel",
     "lilium": "Lilium",
+
+    "bejeweled_beets": "Bejeweled Beets",
 
     "clusters.air": "Aer Cluster",
     "clusters.fire": "Ignis Cluster",

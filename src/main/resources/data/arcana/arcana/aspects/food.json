@@ -170,5 +170,25 @@
     "5*flesh",
     "magic",
     "flight"
+  ],
+
+  "arcana:bejeweled_beet_seeds": [
+    "2*plant",
+    "life",
+    "exchange",
+    "crystal"
+  ],
+  "arcana:bejeweled_beet": [
+    "4*life",
+    "4*crystal",
+    "3*plant",
+    "3*fire",
+    "magic"
+  ],
+  "arcana:spiral_sugar": [
+    "3*senses",
+    "crystal",
+    "air",
+    "magic"
   ]
 }

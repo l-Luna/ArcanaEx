@@ -1,0 +1,38 @@
+{
+  "type": "arcana:infusion",
+  "central": {
+    "item": "arcana:emerald_necklace"
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:enchanted_book",
+      "matches": "enchanted_with minecraft:protection"
+    },
+    {
+      "item": "minecraft:shield"
+    },
+    {
+      "item": "minecraft:enchanted_book",
+      "matches": "enchanted_with minecraft:fire_protection"
+    },
+    {
+      "item": "minecraft:enchanted_book",
+      "matches": "enchanted_with minecraft:projectile_protection"
+    },
+    {
+      "item": "arcana:bloodlet_ruby"
+    },
+    {
+      "item": "minecraft:enchanted_book",
+      "matches": "enchanted_with minecraft:blast_protection"
+    }
+  ],
+  "aspects": [
+    "100*armour",
+    "27*sloth"
+  ],
+  "instability": 1,
+  "result": {
+    "item": "arcana:amulet_of_runic_shielding"
+  }
+}

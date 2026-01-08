@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/crop",
+  "textures": {
+    "crop": "arcana:block/bejeweled_beets_stage2"
+  }
+}

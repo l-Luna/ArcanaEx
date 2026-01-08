@@ -1,0 +1,14 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "arcana:bejeweled_beet"
+  },
+  "aspects": [
+    "60*life",
+    "10*greed",
+    "10*ice"
+  ],
+  "result": {
+    "item": "arcana:bloodlet_ruby"
+  }
+}

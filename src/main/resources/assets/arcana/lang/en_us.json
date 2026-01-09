@@ -628,11 +628,16 @@
 
   // Status Effects
   "effect.arcana": {
+    // debuffs
+    "warp_frail": "Frail",
     "tainted": "Tainted",
-    "arcane_discharge": "Arcane Discharge",
 
+    // set bonuses
+    "set_bonus": "Set Bonus",
     "arcane_aura": "Arcane Aura",
 
+    // item buffs
+    "arcane_discharge": "Arcane Discharge",
     "air_power": "Aer Power",
     "fire_power": "Ignis Power",
     "water_power": "Aqua Power",
@@ -640,9 +645,8 @@
     "order_power": "Ordo Power",
     "entropy_power": "Perditio Power",
 
-    "warp_frail": "Frail",
-
-    "set_bonus": "Set Bonus"
+    // misc
+    "pressure": "Pressure"
   },
 
   // Wand components

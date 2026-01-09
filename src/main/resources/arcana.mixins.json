@@ -33,6 +33,7 @@
     "StructureTemplateMixin"
   ],
   "client": [
+    "AbstractInventoryScreenMixin",
     "ClientPlayerEntityMixin",
     "DebugHudMixin",
     "GameRendererMixin",

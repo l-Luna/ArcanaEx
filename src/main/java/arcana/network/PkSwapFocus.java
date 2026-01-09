@@ -32,6 +32,7 @@ public class PkSwapFocus extends C2SMessage{
 		super(Networking.context);
 		this.hand = hand;
 		this.focusIdx = focusIdx;
+		this.pouchIdx = pouchIdx;
 	}
 	
 	protected void handle(ServerPlayerEntity player){

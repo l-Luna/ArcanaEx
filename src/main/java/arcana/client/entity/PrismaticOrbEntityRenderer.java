@@ -41,7 +41,7 @@ public class PrismaticOrbEntityRenderer extends EntityRenderer<PrismaticOrbEntit
 		ms.push();
 		ms.translate(-0.0625, -0.0625, -0.0625);
 		float time = entity.age + dt;
-		Sprite whiteSprite = atlas.apply(ArcanaClient.miscWhite);
+		Sprite whiteSprite = atlas.apply(ArcanaClient.WHITE_TEX);
 		// 6 orbs following paths that look like rotating around the diagonal of a sphere,
 		// with either dimension's frequency scaled, and the object's size scaled
 		for(int xf = 1; xf < 4; xf++)

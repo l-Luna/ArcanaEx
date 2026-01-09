@@ -165,10 +165,11 @@ public final class ArcanaRegistry{
 	
 	// status effects...
 	public static final StatusEffect TAINTED = new TaintedStatusEffect();
-	public static final StatusEffect ARCANE_DISCHARGE = new ArcanaStatusEffect(StatusEffectCategory.BENEFICIAL, 0xF881D6);
+	public static final StatusEffect WARP_FRAIL = new FrailWarpStatusEffect();
 	
 	public static final StatusEffect ARCANE_AURA = new SetBonusStatusEffect();
 	
+	public static final StatusEffect ARCANE_DISCHARGE = new ArcanaStatusEffect(StatusEffectCategory.BENEFICIAL, 0xF881D6);
 	public static final StatusEffect AIR_POWER = new AspectPowerStatusEffect(Aspects.AIR)
 			.addAttributeModifier(EntityAttributes.GENERIC_MOVEMENT_SPEED, "63c5f0ac-285e-42b7-9744-32d527655214", .1f, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
 	public static final StatusEffect FIRE_POWER = new AspectPowerStatusEffect(Aspects.FIRE);
@@ -181,16 +182,7 @@ public final class ArcanaRegistry{
 	public static final StatusEffect ENTROPY_POWER = new AspectPowerStatusEffect(Aspects.ENTROPY)
 			.addAttributeModifier(EntityAttributes.GENERIC_ATTACK_DAMAGE, "acf64683-f1b5-4518-bd64-5ffb72918ab6", .1f, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
 	
-	public static final StatusEffect WARP_FRAIL = new FrailWarpStatusEffect();
-	
-	public static final List<StatusEffect> ASPECT_EFFECTS = List.of(
-			ArcanaRegistry.AIR_POWER,
-			ArcanaRegistry.FIRE_POWER,
-			ArcanaRegistry.WATER_POWER,
-			ArcanaRegistry.EARTH_POWER,
-			ArcanaRegistry.ORDER_POWER,
-			ArcanaRegistry.ENTROPY_POWER
-	);
+	public static final StatusEffect PRESSURE = new PressureStatusEffect();
 	
 	// items...
 	public static final Item SCRIBBLED_NOTES = new ScribbledNotesItem(GROUPED_SINGLE);
@@ -1371,15 +1363,16 @@ public final class ArcanaRegistry{
 		
 		// status effects
 		register("tainted", TAINTED);
-		register("arcane_discharge", ARCANE_DISCHARGE);
+		register("warp_frail", WARP_FRAIL);
 		register("arcane_aura", ARCANE_AURA);
+		register("arcane_discharge", ARCANE_DISCHARGE);
 		register("air_power", AIR_POWER);
 		register("fire_power", FIRE_POWER);
 		register("water_power", WATER_POWER);
 		register("earth_power", EARTH_POWER);
 		register("order_power", ORDER_POWER);
 		register("entropy_power", ENTROPY_POWER);
-		register("warp_frail", WARP_FRAIL);
+		register("pressure", PRESSURE);
 		
 		// loot pool entry types
 		register("tag_gift", TagGiftEntry.TYPE);

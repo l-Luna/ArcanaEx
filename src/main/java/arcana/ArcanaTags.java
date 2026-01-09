@@ -3,6 +3,7 @@ package arcana;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BannerPattern;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.tag.TagKey;
@@ -46,6 +47,10 @@ public final class ArcanaTags{
 	
 	public static final TagKey<BannerPattern> ELDRITCH_BANNER_PATTERNS = TagKey.of(Registry.BANNER_PATTERN_KEY, arcId("pattern_item/eldritch"));
 	
+	// status effect tags are under mob_effects
+	public static final TagKey<StatusEffect> ASPECT_CANDY_EFFECTS = TagKey.of(Registry.MOB_EFFECT_KEY, arcId("aspect_candy_effects"));
+	public static final TagKey<StatusEffect> BYPASSES_PRESSURE = TagKey.of(Registry.MOB_EFFECT_KEY, arcId("bypasses_pressure"));
+	
 	public static List<Item> itemsIn(TagKey<Item> tag){
 		return Registry.ITEM.streamTagsAndEntries()
 				.filter(x -> x.getFirst().equals(tag))
@@ -56,5 +61,13 @@ public final class ArcanaTags{
 	
 	public static @Nullable Item randomItemIn(TagKey<Item> tag, Random rng){
 		return Registry.ITEM.getEntryList(tag).map(entries -> entries.get(rng.nextInt(entries.size())).value()).orElse(null);
+	}
+	
+	public static boolean isOf(StatusEffect effect, TagKey<StatusEffect> tag){
+		return isOf(effect, tag, Registry.STATUS_EFFECT);
+	}
+	
+	public static <T> boolean isOf(T value, TagKey<T> tag, Registry<T> registry){
+		return registry.getEntry(registry.getRawId(value)).get().isIn(tag);
 	}
 }

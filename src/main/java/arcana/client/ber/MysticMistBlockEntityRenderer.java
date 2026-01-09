@@ -80,7 +80,7 @@ public class MysticMistBlockEntityRenderer implements BlockEntityRenderer<Mystic
 		BufferBuilder vc = Tessellator.getInstance().getBuffer();
 		vc.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL);
 		
-		Sprite whiteSprite = atlas.apply(ArcanaClient.miscWhite);
+		Sprite whiteSprite = atlas.apply(ArcanaClient.WHITE_TEX);
 		for(int x = 0; x < lim; x++)
 			for(int z = 0; z < lim; z++){
 				if(p.sample((x + diff) * .3, 0, (z + diff) * .3) >= 0.13){

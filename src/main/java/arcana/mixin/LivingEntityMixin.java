@@ -3,6 +3,7 @@ package arcana.mixin;
 import arcana.ArcanaRegistry;
 import arcana.components.RunicShielding;
 import arcana.duck.ArcanaFluidEntity;
+import arcana.effects.PressureStatusEffect;
 import arcana.fluids.ArcanaFluid;
 import arcana.items.BootsOfTheTravellerItem;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
@@ -48,14 +49,25 @@ public abstract class LivingEntityMixin extends Entity{
 	@Final
 	private Map<StatusEffect, StatusEffectInstance> activeStatusEffects;
 	
+	// TODO: swap with WrapMethod
+	
 	@Inject(method = "hasStatusEffect", at = @At("HEAD"), cancellable = true)
 	private void hasStatusEffect(StatusEffect effect, CallbackInfoReturnable<Boolean> cir){
-		if(effect == StatusEffects.JUMP_BOOST && effectiveJumpBoost() > 0)
+		if(effect == StatusEffects.JUMP_BOOST && effectiveJumpBoost() > 0){
 			cir.setReturnValue(true);
-		if(effect == StatusEffects.FIRE_RESISTANCE && shouldHaveFireImmunity())
+			return;
+		}
+		if(effect == StatusEffects.FIRE_RESISTANCE && shouldHaveFireImmunity()){
 			cir.setReturnValue(true);
-		if(effect == StatusEffects.WATER_BREATHING && shouldHaveWaterBreathing())
+			return;
+		}
+		if(effect == StatusEffects.WATER_BREATHING && shouldHaveWaterBreathing()){
 			cir.setReturnValue(true);
+			return;
+		}
+		
+		if(PressureStatusEffect.suppresses((LivingEntity)(Object)this, effect))
+			cir.setReturnValue(false);
 	}
 	
 	@Inject(method = "getStatusEffect", at = @At("HEAD"), cancellable = true)
@@ -69,6 +81,9 @@ public abstract class LivingEntityMixin extends Entity{
 			cir.setReturnValue(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE));
 		if(shouldHaveWaterBreathing() && effect == StatusEffects.WATER_BREATHING && !activeStatusEffects.containsKey(StatusEffects.WATER_BREATHING))
 			cir.setReturnValue(new StatusEffectInstance(StatusEffects.WATER_BREATHING));
+		
+		if(PressureStatusEffect.suppresses((LivingEntity)(Object)this, effect))
+			cir.setReturnValue(null);
 	}
 	
 	@Inject(method = "canWalkOnFluid", at = @At("HEAD"), cancellable = true)

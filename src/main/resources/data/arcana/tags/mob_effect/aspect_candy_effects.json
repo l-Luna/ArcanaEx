@@ -1,0 +1,10 @@
+{
+  "values": [
+    "arcana:air_power",
+    "arcana:fire_power",
+    "arcana:water_power",
+    "arcana:earth_power",
+    "arcana:order_power",
+    "arcana:entropy_power"
+  ]
+}

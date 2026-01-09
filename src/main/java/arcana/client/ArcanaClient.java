@@ -67,7 +67,10 @@ import static arcana.Arcana.arcId;
 
 public final class ArcanaClient implements ClientModInitializer{
 	
-	public static final Identifier miscWhite = arcId("misc/white");
+	public static final Identifier WHITE_TEX = arcId("misc/white");
+	
+	public static final Identifier SUPPRESSED_EFFECT_TEX = arcId("gui/suppressed_effect");
+	public static final Identifier SUPPRESSED_EFFECT_TEX_PATH = arcId("textures/gui/suppressed_effect.png");
 	
 	public void onInitializeClient(){
 		TooltipComponentCallback.EVENT.register(data ->
@@ -95,7 +98,8 @@ public final class ArcanaClient implements ClientModInitializer{
 			out.accept(new ModelIdentifier(arcId("crimson_leech_attacking"), "inventory"));
 		});
 		ClientSpriteRegistryCallback.event(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE).register((atlasTexture, registry) -> {
-			registry.register(miscWhite);
+			registry.register(WHITE_TEX);
+			registry.register(SUPPRESSED_EFFECT_TEX);
 			
 			registry.register(RunicShieldingRenderer.iconsTexture);
 			registry.register(RunicShieldingRenderer.overlayTexture);

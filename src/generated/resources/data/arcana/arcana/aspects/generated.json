@@ -20,6 +20,24 @@
   "arcana:clusters/water": [
     "4*arcana:water"
   ],
+  "arcana:crystal_blocks/air": [
+    "4*arcana:air"
+  ],
+  "arcana:crystal_blocks/earth": [
+    "4*arcana:earth"
+  ],
+  "arcana:crystal_blocks/entropy": [
+    "4*arcana:entropy"
+  ],
+  "arcana:crystal_blocks/fire": [
+    "4*arcana:fire"
+  ],
+  "arcana:crystal_blocks/order": [
+    "4*arcana:order"
+  ],
+  "arcana:crystal_blocks/water": [
+    "4*arcana:water"
+  ],
   "arcana:crystals/air": [
     "arcana:air"
   ],

@@ -17,14 +17,10 @@ import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import static arcana.Arcana.arcId;
 import static arcana.ArcanaRegistry.*;
 
 public final class ArcanaModelProvider extends FabricModelProvider{
-	
-	private static final Model symbolModel = new Model(Optional.of(arcId("block/locomotive_symbols/parent")), Optional.empty(), TextureKey.TEXTURE);
 	
 	private final List<Item> noAutoGen = new ArrayList<>();
 	
@@ -119,6 +115,8 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 					}))
 			);
 		}
+		
+		Aspects.crystalBlocks.values().forEach(blockGen::registerSimpleCubeAll);
 	}
 	
 	public void generateItemModels(ItemModelGenerator itemGen){

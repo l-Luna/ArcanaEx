@@ -62,6 +62,8 @@ public class AspectsProvider implements DataProvider{
 		
 		for(CrystalClusterBlock cluster : Aspects.clusters.values())
 			assign(cluster, cluster.getAspect(), 4);
+		
+		Aspects.crystalBlocks.forEach((aspect, block) -> assign(block, aspect, 4));
 	}
 	
 	public final void assign(ItemConvertible item, AspectMap aspects){

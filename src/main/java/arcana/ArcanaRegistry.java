@@ -1205,7 +1205,19 @@ public final class ArcanaRegistry{
 		register("gleaming_lamplight", GLEAMING_LAMPLIGHT);
 		register("chiseled_gleaming_lamplight", CHISELED_GLEAMING_LAMPLIGHT);
 		
-		for(Aspect primal : Aspects.hasCluster){
+		for(Aspect aspect : Aspects.hasCluster){
+			var shortName = aspect.id().getPath();
+			if(Aspects.primals.contains(aspect)){
+				Block crystalBlock = new Block(of(Material.AMETHYST, MapColor.WHITE)
+						.dropsSelf()
+						.usesTool(PICKAXE_MINEABLE)
+						.sounds(BlockSoundGroup.AMETHYST_CLUSTER)
+						.strength(0.9f)
+						.luminance(3));
+				register("crystal_blocks/" + shortName, crystalBlock);
+				Aspects.crystalBlocks.put(aspect, crystalBlock);
+			}
+			
 			CrystalClusterBlock clusterBlock = new CrystalClusterBlock(
 					of(Material.GLASS)
 							.renderLayer(CUTOUT)
@@ -1216,14 +1228,13 @@ public final class ArcanaRegistry{
 							.sounds(BlockSoundGroup.AMETHYST_CLUSTER)
 							.strength(1.5f)
 							.luminance(5),
-					primal);
-			var shortName = primal.id().getPath();
+					aspect);
 			register("clusters/" + shortName, clusterBlock);
-			Aspects.clusters.put(primal, clusterBlock);
+			Aspects.clusters.put(aspect, clusterBlock);
 			
-			ClusterSeedItem seed = new ClusterSeedItem(clusterBlock, GROUPED, primal);
+			ClusterSeedItem seed = new ClusterSeedItem(clusterBlock, GROUPED, aspect);
 			register("cluster_seeds/" + shortName, seed);
-			Aspects.clusterSeeds.put(primal, seed);
+			Aspects.clusterSeeds.put(aspect, seed);
 		}
 		
 		register("light_block", LIGHT_BLOCK, false);

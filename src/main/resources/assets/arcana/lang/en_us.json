@@ -505,6 +505,13 @@
 
     "bejeweled_beets": "Bejeweled Beets",
 
+    "crystal_blocks.air": "Aer Crystal Block",
+    "crystal_blocks.fire": "Ignis Crystal Block",
+    "crystal_blocks.water": "Aqua Crystal Block",
+    "crystal_blocks.earth": "Terra Crystal Block",
+    "crystal_blocks.order": "Ordo Crystal Block",
+    "crystal_blocks.entropy": "Perditio Crystal Block",
+
     "clusters.air": "Aer Cluster",
     "clusters.fire": "Ignis Cluster",
     "clusters.water": "Aqua Cluster",

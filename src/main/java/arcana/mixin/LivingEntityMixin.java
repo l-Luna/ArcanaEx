@@ -73,14 +73,21 @@ public abstract class LivingEntityMixin extends Entity{
 	@Inject(method = "getStatusEffect", at = @At("HEAD"), cancellable = true)
 	private void getStatusEffect(StatusEffect effect, CallbackInfoReturnable<StatusEffectInstance> cir){
 		int boost = effectiveJumpBoost();
-		if(boost > 0 && effect == StatusEffects.JUMP_BOOST)
+		if(boost > 0 && effect == StatusEffects.JUMP_BOOST){
 			// use existing higher jump boost if present
-			if(!activeStatusEffects.containsKey(StatusEffects.JUMP_BOOST))
+			if(!activeStatusEffects.containsKey(StatusEffects.JUMP_BOOST)){
 				cir.setReturnValue(new StatusEffectInstance(StatusEffects.JUMP_BOOST, 0, boost - 1));
-		if(shouldHaveFireImmunity() && effect == StatusEffects.FIRE_RESISTANCE && !activeStatusEffects.containsKey(StatusEffects.FIRE_RESISTANCE))
+				return;
+			}
+		}
+		if(shouldHaveFireImmunity() && effect == StatusEffects.FIRE_RESISTANCE && !activeStatusEffects.containsKey(StatusEffects.FIRE_RESISTANCE)){
 			cir.setReturnValue(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE));
-		if(shouldHaveWaterBreathing() && effect == StatusEffects.WATER_BREATHING && !activeStatusEffects.containsKey(StatusEffects.WATER_BREATHING))
+			return;
+		}
+		if(shouldHaveWaterBreathing() && effect == StatusEffects.WATER_BREATHING && !activeStatusEffects.containsKey(StatusEffects.WATER_BREATHING)){
 			cir.setReturnValue(new StatusEffectInstance(StatusEffects.WATER_BREATHING));
+			return;
+		}
 		
 		if(PressureStatusEffect.suppresses((LivingEntity)(Object)this, effect))
 			cir.setReturnValue(null);

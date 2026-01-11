@@ -1208,14 +1208,19 @@ public final class ArcanaRegistry{
 		for(Aspect aspect : Aspects.hasCluster){
 			var shortName = aspect.id().getPath();
 			if(Aspects.primals.contains(aspect)){
-				Block crystalBlock = new Block(of(Material.AMETHYST, MapColor.WHITE)
+				FabricBlockSettings settings = of(Material.AMETHYST, MapColor.WHITE)
 						.dropsSelf()
 						.usesTool(PICKAXE_MINEABLE)
 						.sounds(BlockSoundGroup.AMETHYST_CLUSTER)
 						.strength(0.9f)
-						.luminance(3));
+						.luminance(3);
+				Block crystalBlock = new Block(settings);
 				register("crystal_blocks/" + shortName, crystalBlock);
 				Aspects.crystalBlocks.put(aspect, crystalBlock);
+				
+				Block pillarBlock = new CrystalPillarBlock(settings);
+				register("crystal_pillars/" + shortName, pillarBlock);
+				Aspects.crystalPillars.put(aspect, pillarBlock);
 			}
 			
 			CrystalClusterBlock clusterBlock = new CrystalClusterBlock(

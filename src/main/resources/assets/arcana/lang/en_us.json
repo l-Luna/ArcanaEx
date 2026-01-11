@@ -512,6 +512,13 @@
     "crystal_blocks.order": "Ordo Crystal Block",
     "crystal_blocks.entropy": "Perditio Crystal Block",
 
+    "crystal_pillars.air": "Aer Crystal Pillar",
+    "crystal_pillars.fire": "Ignis Crystal Pillar",
+    "crystal_pillars.water": "Aqua Crystal Pillar",
+    "crystal_pillars.earth": "Terra Crystal Pillar",
+    "crystal_pillars.order": "Ordo Crystal Pillar",
+    "crystal_pillars.entropy": "Perditio Crystal Pillar",
+
     "clusters.air": "Aer Cluster",
     "clusters.fire": "Ignis Cluster",
     "clusters.water": "Aqua Cluster",

@@ -1,0 +1,6 @@
+{
+  "parent": "arcana:block/crystal_pillar",
+  "textures": {
+    "texture": "arcana:block/crystal_blocks/entropy"
+  }
+}

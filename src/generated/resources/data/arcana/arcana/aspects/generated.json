@@ -38,6 +38,24 @@
   "arcana:crystal_blocks/water": [
     "4*arcana:water"
   ],
+  "arcana:crystal_pillars/air": [
+    "3*arcana:air"
+  ],
+  "arcana:crystal_pillars/earth": [
+    "3*arcana:earth"
+  ],
+  "arcana:crystal_pillars/entropy": [
+    "3*arcana:entropy"
+  ],
+  "arcana:crystal_pillars/fire": [
+    "3*arcana:fire"
+  ],
+  "arcana:crystal_pillars/order": [
+    "3*arcana:order"
+  ],
+  "arcana:crystal_pillars/water": [
+    "3*arcana:water"
+  ],
   "arcana:crystals/air": [
     "arcana:air"
   ],

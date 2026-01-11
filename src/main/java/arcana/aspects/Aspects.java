@@ -20,6 +20,7 @@ public final class Aspects{
 	public static final Map<Aspect, CrystalItem> crystals = new HashMap<>();
 	public static final Map<Aspect, CrystalClusterBlock> clusters = new HashMap<>();
 	public static final Map<Aspect, Block> crystalBlocks = new HashMap<>();
+	public static final Map<Aspect, Block> crystalPillars = new HashMap<>();
 	public static final Map<Aspect, ClusterSeedItem> clusterSeeds = new HashMap<>();
 	public static final Map<Aspect, PhialItem> phials = new HashMap<>(); // excluding empty phial
 	static final List<Aspect> orderedAspects = new ArrayList<>();

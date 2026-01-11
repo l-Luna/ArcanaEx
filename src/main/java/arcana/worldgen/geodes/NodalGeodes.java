@@ -40,9 +40,8 @@ public class NodalGeodes{
 	
 	public static final ConfiguredFeature<NodalGeodeFeatureConfig, ?> AIR_GEODE = aspectGeode(
 			Aspects.AIR,
-			BlockStateProvider.of(Blocks.SMOOTH_QUARTZ),
+			BlockStateProvider.of(Blocks.CALCITE),
 			BlockStateProvider.of(Blocks.SMOOTH_SANDSTONE),
-			BlockStateProvider.of(Blocks.SMOOTH_RED_SANDSTONE),
 			BlockStateProvider.of(Blocks.GLOWSTONE)
 	);
 	
@@ -50,23 +49,20 @@ public class NodalGeodes{
 			Aspects.FIRE,
 			BlockStateProvider.of(Blocks.BASALT),
 			BlockStateProvider.of(Blocks.BLACKSTONE),
-			BlockStateProvider.of(Blocks.MAGMA_BLOCK),
 			BlockStateProvider.of(Blocks.OBSIDIAN)
 	);
 	
 	public static final ConfiguredFeature<NodalGeodeFeatureConfig, ?> WATER_GEODE = aspectGeode(
 			Aspects.WATER,
+			BlockStateProvider.of(Blocks.CLAY),
 			BlockStateProvider.of(Blocks.MUD),
-			BlockStateProvider.of(Blocks.PRISMARINE),
-			BlockStateProvider.of(Blocks.PACKED_ICE),
-			BlockStateProvider.of(Blocks.BLUE_ICE)
+			BlockStateProvider.of(Blocks.PRISMARINE)
 	);
 	
 	public static final ConfiguredFeature<NodalGeodeFeatureConfig, ?> EARTH_GEODE = aspectGeode(
 			Aspects.EARTH,
 			BlockStateProvider.of(Blocks.TUFF),
 			BlockStateProvider.of(Blocks.BLACKSTONE),
-			BlockStateProvider.of(Blocks.SMOOTH_BASALT),
 			BlockStateProvider.of(Blocks.OBSIDIAN)
 	);
 	
@@ -74,8 +70,7 @@ public class NodalGeodes{
 			Aspects.ORDER,
 			BlockStateProvider.of(Blocks.DEEPSLATE_TILES),
 			BlockStateProvider.of(Blocks.POLISHED_DEEPSLATE),
-			BlockStateProvider.of(Blocks.SMOOTH_QUARTZ),
-			BlockStateProvider.of(Blocks.CHISELED_QUARTZ_BLOCK)
+			BlockStateProvider.of(Blocks.SMOOTH_QUARTZ)
 	);
 	
 	public static final ConfiguredFeature<NodalGeodeFeatureConfig, ?> ENTROPY_GEODE = aspectGeode(
@@ -84,11 +79,6 @@ public class NodalGeodes{
 			new NoiseBlockStateProvider(0, new DoublePerlinNoiseSampler.NoiseParameters(1, 2, 3), 1, List.of(
 					Blocks.COBBLESTONE.getDefaultState(),
 					Blocks.MOSSY_COBBLESTONE.getDefaultState()
-			)),
-			new NoiseBlockStateProvider(0, new DoublePerlinNoiseSampler.NoiseParameters(1, 2, 3), 1, List.of(
-					Blocks.ANDESITE.getDefaultState(),
-					Blocks.GRANITE.getDefaultState(),
-					Blocks.DIORITE.getDefaultState()
 			)),
 			new NoiseBlockStateProvider(0, new DoublePerlinNoiseSampler.NoiseParameters(1, 2, 3), 1, List.of(
 					Blocks.ANDESITE.getDefaultState(),
@@ -161,9 +151,9 @@ public class NodalGeodes{
 			Aspect aspect,
 			BlockStateProvider outer,
 			BlockStateProvider middle,
-			BlockStateProvider inner,
 			BlockStateProvider innerAlt
 	){
+		BlockStateProvider inner = BlockStateProvider.of(Aspects.crystalBlocks.get(aspect));
 		return new ConfiguredFeature<>(
 				NODAL_GEODE_FEATURE,
 				new NodalGeodeFeatureConfig(

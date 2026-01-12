@@ -42,6 +42,7 @@
     "InGameHudMixin",
     "ItemRendererMixin",
     "JsonUnbakedModelAccessor",
+    "ModelElementDeserializerMixin",
     "ParticleManagerMixin",
     "ScreenMixin"
   ],

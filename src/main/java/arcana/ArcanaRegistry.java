@@ -131,7 +131,6 @@ import static net.minecraft.tag.BlockTags.*;
 public final class ArcanaRegistry{
 	
 	public static class Tab{
-		// tfw "illegal forward reference"
 		public static final ItemGroup ARCANA = FabricItemGroupBuilder.build(
 				arcId("group"),
 				() -> new ItemStack(ARCANUM)
@@ -533,6 +532,8 @@ public final class ArcanaRegistry{
 	
 	public static final Block BEJEWELED_BEETS_BLOCK = new BejeweledBeetsBlock(of(Material.PLANT).renderLayer(CUTOUT).nonOpaque().noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP));
 	public static final Item BEJEWELED_BEET_SEEDS = new AliasedBlockItem(BEJEWELED_BEETS_BLOCK, GROUPED_RES);
+	
+	public static final Block VOID_GROWTH = new Block(of(Material.PLANT).renderLayer(CUTOUT).nonOpaque().noCollision().breakInstantly().sounds(BlockSoundGroup.FROGSPAWN));
 	
 	public static final WoodenStatueBlock SPEAK_NO_EVIL_STATUE = new WoodenStatueBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD).nonOpaque(), WoodenStatueBlock.Type.speak);
 	public static final WoodenStatueBlock SEE_NO_EVIL_STATUE = new WoodenStatueBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD).nonOpaque(), WoodenStatueBlock.Type.see);
@@ -1190,6 +1191,7 @@ public final class ArcanaRegistry{
 		register("lilium", LILIUM);
 		
 		register("bejeweled_beets", BEJEWELED_BEETS_BLOCK, false);
+		register("void_growth", VOID_GROWTH, false);
 		
 		register("speak_no_evil_statue", SPEAK_NO_EVIL_STATUE, false);
 		register("speak_no_evil_statue", new BigBlockItem(SPEAK_NO_EVIL_STATUE, GROUPED));

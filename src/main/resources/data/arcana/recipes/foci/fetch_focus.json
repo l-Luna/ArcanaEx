@@ -1,0 +1,15 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "minecraft:ender_pearl"
+  },
+  "aspects": [
+    "20*mining",
+    "12*movement",
+    "5*void",
+    "3*magic"
+  ],
+  "result": {
+    "item": "arcana:fetch_focus"
+  }
+}

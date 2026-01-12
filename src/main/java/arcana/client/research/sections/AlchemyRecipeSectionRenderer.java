@@ -67,10 +67,12 @@ public class AlchemyRecipeSectionRenderer extends AbstractRecipeSectionRenderer<
 		Map<AspectStack, Pair<Integer, Integer>> ret = new HashMap<>();
 		stacks.sort(Comparator.comparingInt(AspectStack::amount).reversed());
 		int rows = (int)Math.ceil(stacks.size() / 3f);
+		int vspacing = rows < 3 ? 19 : 18;
+		int vpadding = rows < 3 ? 48 : 35;
 		for(int row = 0; row < rows; row++){
 			int aspectsOnRow = Math.min(3, stacks.size() - row * 3);
 			int x = tlX + (48 - aspectsOnRow * 19) / 2;
-			int y = tlY + (48 - rows * 19) / 2 + row * 19;
+			int y = tlY + (vpadding - rows * vspacing) / 2 + row * vspacing;
 			for(int i = 0; i < aspectsOnRow; i++){
 				var idx = row * 3 + i;
 				if(idx < stacks.size())

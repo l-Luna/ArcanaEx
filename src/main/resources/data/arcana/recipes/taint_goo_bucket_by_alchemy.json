@@ -1,0 +1,13 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "tag": "c:water_buckets"
+  },
+  "aspects": [
+    "33*taint",
+    "23*slime"
+  ],
+  "result": {
+    "item": "arcana:taint_goo_bucket"
+  }
+}

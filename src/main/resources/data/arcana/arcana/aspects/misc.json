@@ -62,6 +62,12 @@
     "8*taint",
     "5*metal"
   ],
+  "arcana:putrefaction_bucket": [
+    "13*weapon",
+    "7*undead",
+    "5*metal",
+    "envy"
+  ],
   "minecraft:turtle_egg": [
     "3*life",
     "water",

@@ -35,6 +35,7 @@
   "client": [
     "AbstractInventoryScreenMixin",
     "ClientPlayerEntityMixin",
+    "ClientRecipeBookMixin",
     "DebugHudMixin",
     "GameRendererMixin",
     "HeldItemRendererMixin",

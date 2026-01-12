@@ -1,6 +1,6 @@
 {
 	"credit": "Made by Voxet",
-	"parent": "wand",
+	"parent": "item/generated",
 	"texture_size": [30, 20],
 	"elements": [
 		{

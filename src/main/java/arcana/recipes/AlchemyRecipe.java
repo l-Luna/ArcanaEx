@@ -19,7 +19,7 @@ import java.util.OptionalInt;
 import static arcana.Arcana.arcId;
 import static arcana.Arcana.maybeArcId;
 
-public class AlchemyRecipe implements Recipe<AlchemyInventory>, AspectRecipe{
+public class AlchemyRecipe implements Recipe<AlchemyInventory>, AspectRecipe, ArcanaRecipe{
 	
 	public static RecipeType<AlchemyRecipe> TYPE;
 	public static Serializer SERIALIZER;

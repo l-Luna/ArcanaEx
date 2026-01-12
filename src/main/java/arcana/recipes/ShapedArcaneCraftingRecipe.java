@@ -17,7 +17,7 @@ import java.util.Optional;
 
 import static arcana.Arcana.arcId;
 
-public class ShapedArcaneCraftingRecipe extends ShapedRecipe implements ArcaneCraftingRecipe, RenamableRecipe{
+public class ShapedArcaneCraftingRecipe extends ShapedRecipe implements ArcaneCraftingRecipe, RenamableRecipe, ArcanaRecipe{
 	
 	public static RecipeType<ShapedArcaneCraftingRecipe> TYPE;
 	public static Serializer SERIALIZER;
@@ -61,6 +61,8 @@ public class ShapedArcaneCraftingRecipe extends ShapedRecipe implements ArcaneCr
 	public Optional<String> getTranslationKey(){
 		return Optional.ofNullable(translationKey);
 	}
+	
+	// FIXME: fits
 	
 	public static class Serializer extends ShapedRecipe.Serializer{
 		

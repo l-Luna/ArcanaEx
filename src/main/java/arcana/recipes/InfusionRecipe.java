@@ -18,7 +18,7 @@ import java.util.List;
 
 import static arcana.Arcana.arcId;
 
-public class InfusionRecipe implements Recipe<InfusionInventory>{
+public class InfusionRecipe implements Recipe<InfusionInventory>, ArcanaRecipe{
 	
 	public static RecipeType<InfusionRecipe> TYPE;
 	public static Serializer SERIALIZER;

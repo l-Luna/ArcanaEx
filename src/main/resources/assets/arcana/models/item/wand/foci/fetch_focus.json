@@ -1,0 +1,164 @@
+{
+	"format_version": "1.21.11",
+	"credit": "Made by Falkor",
+	"texture_size": [16, 32],
+	"textures": {
+		"1": "arcana:item/wand/foci/portable_hole_focus",
+		"particle": "arcana:item/wand/foci/portable_hole_focus"
+	},
+	"elements": [
+		{
+			"name": "Focus Centre",
+			"from": [6.8, 17.5, 6.8],
+			"to": [9.2, 19.9, 9.2],
+			"rotation": {"angle": 0, "axis": "y", "origin": [15, 23, 15]},
+			"faces": {
+				"north": {"uv": [0, 8, 8, 16], "texture": "#1"},
+				"east": {"uv": [0, 8, 8, 16], "texture": "#1"},
+				"south": {"uv": [0, 8, 8, 16], "texture": "#1"},
+				"west": {"uv": [0, 8, 8, 16], "texture": "#1"},
+				"up": {"uv": [0, 0, 8, 8], "texture": "#1"},
+				"down": {"uv": [0, 0, 8, 8], "texture": "#1"}
+			}
+		},
+		{
+			"name": "Frill",
+			"from": [7, 17.95, 9.2],
+			"to": [9, 19.45, 11.2],
+			"rotation": {"angle": -45, "axis": "y", "origin": [8, 18.7, 10.2]},
+			"faces": {
+				"north": {"uv": [0, 8, 8, 16], "texture": "#1"},
+				"east": {"uv": [0, 8, 8, 16], "texture": "#1"},
+				"south": {"uv": [0, 8, 8, 16], "texture": "#1"},
+				"west": {"uv": [0, 8, 8, 16], "texture": "#1"},
+				"up": {"uv": [0, 8, 8, 16], "texture": "#1"},
+				"down": {"uv": [0, 0, 8, 8], "texture": "#1"}
+			}
+		},
+		{
+			"name": "Frill",
+			"from": [9, 17.95, 7.2],
+			"to": [11, 19.45, 9.2],
+			"rotation": {"angle": -45, "axis": "y", "origin": [10, 18.7, 8.2]},
+			"faces": {
+				"north": {"uv": [0, 8, 8, 16], "texture": "#1"},
+				"east": {"uv": [0, 8, 8, 16], "texture": "#1"},
+				"south": {"uv": [0, 8, 8, 16], "texture": "#1"},
+				"west": {"uv": [0, 8, 8, 16], "texture": "#1"},
+				"up": {"uv": [0, 8, 8, 16], "texture": "#1"},
+				"down": {"uv": [0, 0, 8, 8], "texture": "#1"}
+			}
+		},
+		{
+			"name": "Frill",
+			"from": [7, 17.95, 5.2],
+			"to": [9, 19.45, 7.2],
+			"rotation": {"angle": -45, "axis": "y", "origin": [8, 18.7, 6.2]},
+			"faces": {
+				"north": {"uv": [0, 8, 8, 16], "texture": "#1"},
+				"east": {"uv": [0, 8, 8, 16], "texture": "#1"},
+				"south": {"uv": [0, 8, 8, 16], "texture": "#1"},
+				"west": {"uv": [0, 8, 8, 16], "texture": "#1"},
+				"up": {"uv": [0, 8, 8, 16], "texture": "#1"},
+				"down": {"uv": [0, 0, 8, 8], "texture": "#1"}
+			}
+		},
+		{
+			"name": "Frill",
+			"from": [5, 17.95, 7.2],
+			"to": [7, 19.45, 9.2],
+			"rotation": {"angle": -45, "axis": "y", "origin": [6, 18.7, 8.2]},
+			"faces": {
+				"north": {"uv": [0, 8, 8, 16], "texture": "#1"},
+				"east": {"uv": [0, 8, 8, 16], "texture": "#1"},
+				"south": {"uv": [0, 8, 8, 16], "texture": "#1"},
+				"west": {"uv": [0, 8, 8, 16], "texture": "#1"},
+				"up": {"uv": [0, 8, 8, 16], "texture": "#1"},
+				"down": {"uv": [0, 0, 8, 8], "texture": "#1"}
+			}
+		},
+		{
+			"name": "Base",
+			"from": [5.95, 18.4, 5.95],
+			"to": [10.05, 19, 10.05],
+			"rotation": {"angle": 0, "axis": "y", "origin": [15, 23, 15]},
+			"faces": {
+				"north": {"uv": [0, 0, 4, 4], "texture": "#1"},
+				"east": {"uv": [0, 0, 4, 4], "texture": "#1"},
+				"south": {"uv": [0, 0, 4, 4], "texture": "#1"},
+				"west": {"uv": [0, 0, 4, 4], "texture": "#1"},
+				"up": {"uv": [0, 0, 4, 4], "texture": "#1"},
+				"down": {"uv": [0, 0, 4, 4], "texture": "#1"}
+			}
+		},
+		{
+			"name": "Gem",
+			"from": [7.25, 16.25, 7.5],
+			"to": [8.75, 16.75, 8.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [15.75, 23.75, 18.25]},
+			"faces": {
+				"north": {"uv": [0, 12, 2, 13], "texture": "#1"},
+				"east": {"uv": [0, 12, 2, 13], "texture": "#1"},
+				"south": {"uv": [0, 12, 2, 13], "texture": "#1"},
+				"west": {"uv": [0, 12, 2, 13], "texture": "#1"},
+				"up": {"uv": [0, 12, 2, 13], "texture": "#1"},
+				"down": {"uv": [0, 12, 2, 13], "texture": "#1"}
+			}
+		},
+		{
+			"name": "Gem",
+			"from": [7.5, 16.25, 7.25],
+			"to": [8.5, 16.75, 8.75],
+			"rotation": {"angle": 0, "axis": "y", "origin": [16.5, 23.5, 17.75]},
+			"faces": {
+				"north": {"uv": [0, 12, 2, 13], "texture": "#1"},
+				"east": {"uv": [0, 12, 2, 13], "texture": "#1"},
+				"south": {"uv": [0, 12, 2, 13], "texture": "#1"},
+				"west": {"uv": [0, 12, 2, 13], "texture": "#1"},
+				"up": {"uv": [0, 12, 2, 13], "texture": "#1"},
+				"down": {"uv": [0, 12, 2, 13], "texture": "#1"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"translation": [0, 0.25, 0]
+		},
+		"firstperson_righthand": {
+			"translation": [0, 1.25, 0],
+			"scale": [0.75, 0.75, 0.75]
+		},
+		"firstperson_lefthand": {
+			"translation": [0, 1.25, 0],
+			"scale": [0.75, 0.75, 0.75]
+		},
+		"gui": {
+			"rotation": [0, 0, -45]
+		},
+		"fixed": {
+			"translation": [0, 0, -0.75]
+		}
+	},
+	"groups": [
+		{
+			"name": "Focus",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [
+				0,
+				{
+					"name": "Frills",
+					"origin": [8, 8, 8],
+					"color": 0,
+					"children": [1, 2, 3, 4, 5]
+				},
+				{
+					"name": "Top Notch",
+					"origin": [15.75, 21.75, 18.25],
+					"color": 0,
+					"children": [6, 7]
+				}
+			]
+		}
+	]
+}

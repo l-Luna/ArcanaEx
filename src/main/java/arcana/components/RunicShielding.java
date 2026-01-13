@@ -79,7 +79,7 @@ public class RunicShielding implements Component, AutoSyncedComponent, ServerTic
 				|| player.isDead()
 				|| (source.isFire() && player.hasStatusEffect(StatusEffects.FIRE_RESISTANCE))
 				|| (player.timeUntilRegen > 10 && amount <= ((LivingEntityAccessor)player).arcana$getLastDamageTaken()))
-			return true;
+			return false;
 		if(halfPoints <= 1 || source.isOutOfWorld())
 			return false;
 		float frac = MathHelper.clamp(amount / player.getHealth(), 0, 1);

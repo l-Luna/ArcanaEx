@@ -41,6 +41,7 @@ import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.color.block.BlockColorProvider;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.color.world.FoliageColors;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
@@ -59,7 +60,6 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -73,6 +73,8 @@ public final class ArcanaClient implements ClientModInitializer{
 	
 	public static final Identifier SUPPRESSED_EFFECT_TEX = arcId("gui/suppressed_effect");
 	public static final Identifier SUPPRESSED_EFFECT_TEX_PATH = arcId("textures/gui/suppressed_effect.png");
+	
+	private static final int[] BALANCED_CRYSTAL_GRADIENT = new int[]{ 0xebd4b9, 0xedf2c2, 0xbcebc7, 0x6fdff2, 0xc7b9ed, 0xedb9e6, 0xf0c4c0 };
 	
 	public void onInitializeClient(){
 		TooltipComponentCallback.EVENT.register(data ->
@@ -133,15 +135,12 @@ public final class ArcanaClient implements ClientModInitializer{
 				(state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.getFoliageColor(world, pos) : FoliageColors.getDefaultColor(),
 				ArcanaRegistry.GREATWOOD_LEAVES
 		);
-		ColorProviderRegistry.BLOCK.register(
-				(state, world, pos, tintIndex) -> {
-					if(pos != null){
-						return 0xFF000000 | MathUtil.dyeGradient(MathHelper.abs(pos.getX() + pos.getZ()) / 27f);
-					}
-					return -1;
-				},
-				ArcanaRegistry.BALANCED_CRYSTAL
-		);
+		BlockColorProvider balancedCrystalColourer = (state, world, pos, tintIndex) -> {
+			if(pos != null)
+				return 0xFF000000 | MathUtil.interpGradient((float)(Math.abs(pos.getX() + pos.getZ() + 3*Math.sin((pos.getX() - pos.getZ()) / 6f)) / 4f), BALANCED_CRYSTAL_GRADIENT);
+			return -1;
+		};
+		ColorProviderRegistry.BLOCK.register(balancedCrystalColourer, ArcanaRegistry.BALANCED_CRYSTAL);
 		
 		ColorProviderRegistry.ITEM.register(
 				(stack, tintIndex) -> {

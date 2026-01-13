@@ -1,7 +1,20 @@
 {
   "variants": {
-    "": {
-      "model": "arcana:block/balanced_crystal"
-    }
+    "": [
+      {
+        "model": "arcana:block/balanced_crystal"
+      },
+      {
+        "model": "arcana:block/balanced_crystal_mirrored"
+      },
+      {
+        "model": "arcana:block/balanced_crystal",
+        "y": 180
+      },
+      {
+        "model": "arcana:block/balanced_crystal_mirrored",
+        "y": 180
+      }
+    ]
   }
 }

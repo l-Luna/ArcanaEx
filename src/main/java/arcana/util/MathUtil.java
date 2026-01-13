@@ -1,12 +1,14 @@
 package arcana.util;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ColorHelper.Argb;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
+
+import java.util.Arrays;
 
 public final class MathUtil{
 
@@ -38,17 +40,23 @@ public final class MathUtil{
 		return new BlockPos(pos.getX() & 0b1111, pos.getY(), pos.getZ() & 0b1111);
 	}
 	
+	public static int interpColours(int colA, int colB, float delta){
+		return MathHelper.packRgb(
+				(Argb.getRed(colA) * (1 - delta) + Argb.getRed(colB) * delta) / 255f,
+				(Argb.getGreen(colA) * (1 - delta) + Argb.getGreen(colB) * delta) / 255f,
+				(Argb.getBlue(colA) * (1 - delta) + Argb.getBlue(colB) * delta) / 255f
+		);
+	}
+	
+	private static final int[] DYE_COLOURS = Arrays.stream(DyeColor.values()).mapToInt(DyeColor::getFireworkColor).toArray();
 	public static int dyeGradient(float f){
-		// from SheepWoolFeatureRenderer
+		return interpGradient(f, DYE_COLOURS);
+	}
+	
+	public static int interpGradient(float f, int[] colours){
+		// mangled from SheepWoolFeatureRenderer
 		int which = (int)f;
-		float where = f - which;
-		int dyes = DyeColor.values().length;
-		int dyeA = which % dyes, dyeB = (which + 1) % dyes;
-		float[] colA = SheepEntity.getRgbColor(DyeColor.byId(dyeA));
-		float[] colB = SheepEntity.getRgbColor(DyeColor.byId(dyeB));
-		float r = colA[0] * (1 - where) + colB[0] * where;
-		float g = colA[1] * (1 - where) + colB[1] * where;
-		float b = colA[2] * (1 - where) + colB[2] * where;
-		return MathHelper.packRgb(r, g, b);
+		int colA = which % colours.length, colB = (which + 1) % colours.length;
+		return interpColours(colours[colA], colours[colB], f - which);
 	}
 }

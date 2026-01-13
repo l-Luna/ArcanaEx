@@ -57,7 +57,7 @@ public class CrucibleBlockEntity extends BlockEntity{
 					if(thrower != null)
 						research = Researcher.from(thrower).getAllResearch();
 				}else{
-					var source = KdItem.getSource(item);
+					BlockPos source = KdItem.getSource(item);
 					if(source != null){
 						BlockEntity be = world.getBlockEntity(source);
 						if(be instanceof KnowledgeableDropperBlockEntity kdbe)
@@ -102,7 +102,7 @@ public class CrucibleBlockEntity extends BlockEntity{
 				}
 				if(melt){
 					List<AspectStack> itemAspects = ItemAspectRegistry.get(stack).asStacks();
-					if(itemAspects.size() > 0){
+					if(!itemAspects.isEmpty()){
 						item.remove(Entity.RemovalReason.KILLED);
 						world.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, 1.0F);
 						markDirty();
@@ -144,11 +144,11 @@ public class CrucibleBlockEntity extends BlockEntity{
 		aspects = AspectMap.fromNbt(nbt.getCompound("aspects"));
 	}
 	
-	public Packet<ClientPlayPacketListener> toUpdatePacket() {
+	public Packet<ClientPlayPacketListener> toUpdatePacket(){
 		return BlockEntityUpdateS2CPacket.create(this);
 	}
 	
-	public NbtCompound toInitialChunkDataNbt() {
+	public NbtCompound toInitialChunkDataNbt(){
 		return createNbt();
 	}
 }

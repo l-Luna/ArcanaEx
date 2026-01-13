@@ -27,6 +27,7 @@ import arcana.research.Entry;
 import arcana.research.Pin;
 import arcana.research.Research;
 import arcana.screens.*;
+import arcana.util.MathUtil;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -58,6 +59,7 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.MathHelper;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -130,6 +132,15 @@ public final class ArcanaClient implements ClientModInitializer{
 		ColorProviderRegistry.BLOCK.register(
 				(state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.getFoliageColor(world, pos) : FoliageColors.getDefaultColor(),
 				ArcanaRegistry.GREATWOOD_LEAVES
+		);
+		ColorProviderRegistry.BLOCK.register(
+				(state, world, pos, tintIndex) -> {
+					if(pos != null){
+						return 0xFF000000 | MathUtil.dyeGradient(MathHelper.abs(pos.getX() + pos.getZ()) / 27f);
+					}
+					return -1;
+				},
+				ArcanaRegistry.BALANCED_CRYSTAL
 		);
 		
 		ColorProviderRegistry.ITEM.register(

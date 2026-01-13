@@ -426,5 +426,10 @@
     "4*earth",
     "2*crystal",
     "2*metal"
+  ],
+  "arcana:balanced_crystal": [
+    "1*exchange",
+    "1*magic",
+    "1*crystal"
   ]
 }

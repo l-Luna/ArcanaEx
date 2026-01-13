@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "O": {
+      "item": "arcana:crystals/order"
+    },
+    "E": {
+      "item": "arcana:crystals/entropy"
+    }
+  },
+  "pattern": [
+    "OE",
+    "EO"
+  ],
+  "result": {
+    "item": "arcana:balanced_crystal"
+  }
+}

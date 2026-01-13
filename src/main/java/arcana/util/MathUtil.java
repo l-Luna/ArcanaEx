@@ -1,6 +1,8 @@
 package arcana.util;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.passive.SheepEntity;
+import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -34,5 +36,19 @@ public final class MathUtil{
 	
 	public static BlockPos toChunkOffset(BlockPos pos){
 		return new BlockPos(pos.getX() & 0b1111, pos.getY(), pos.getZ() & 0b1111);
+	}
+	
+	public static int dyeGradient(float f){
+		// from SheepWoolFeatureRenderer
+		int which = (int)f;
+		float where = f - which;
+		int dyes = DyeColor.values().length;
+		int dyeA = which % dyes, dyeB = (which + 1) % dyes;
+		float[] colA = SheepEntity.getRgbColor(DyeColor.byId(dyeA));
+		float[] colB = SheepEntity.getRgbColor(DyeColor.byId(dyeB));
+		float r = colA[0] * (1 - where) + colB[0] * where;
+		float g = colA[1] * (1 - where) + colB[1] * where;
+		float b = colA[2] * (1 - where) + colB[2] * where;
+		return MathHelper.packRgb(r, g, b);
 	}
 }

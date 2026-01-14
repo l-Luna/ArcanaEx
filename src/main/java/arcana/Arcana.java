@@ -14,6 +14,7 @@ import arcana.research.BuiltinResearch;
 import arcana.research.Research;
 import arcana.research.ResearchLoader;
 import arcana.warp.WarpEvents;
+import arcana.worldgen.HangingNodeFeature;
 import arcana.worldgen.SurfaceNodeFeature;
 import arcana.worldgen.geodes.NodalGeodes;
 import arcana.worldgen.greatwood.GreatwoodTree;
@@ -68,6 +69,7 @@ public final class Arcana implements ModInitializer{
 		
 		SurfaceNodeFeature.addToWorldgen();
 		NodalGeodes.addToWorldgen();
+		HangingNodeFeature.addToWorldgen();
 		SilverwoodTree.addToWorldgen();
 		GreatwoodTree.addToWorldgen();
 		

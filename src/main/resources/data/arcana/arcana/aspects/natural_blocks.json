@@ -431,5 +431,10 @@
     "1*exchange",
     "1*magic",
     "1*crystal"
+  ],
+  "arcana:balanced_crystal_pillar": [
+    "1*exchange",
+    "1*magic",
+    "1*crystal"
   ]
 }

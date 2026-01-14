@@ -35,6 +35,7 @@ import arcana.items.creative.TaintConverterItem;
 import arcana.items.foci.*;
 import arcana.screens.*;
 import arcana.util.TagGiftEntry;
+import arcana.worldgen.HangingNodeFeature;
 import arcana.worldgen.SurfaceNodeFeature;
 import arcana.worldgen.geodes.NodalGeodes;
 import arcana.worldgen.greatwood.GreatwoodFoliagePlacer;
@@ -105,13 +106,13 @@ import net.minecraft.world.gen.YOffset;
 import net.minecraft.world.gen.chunk.placement.RandomSpreadStructurePlacement;
 import net.minecraft.world.gen.chunk.placement.SpreadType;
 import net.minecraft.world.gen.chunk.placement.StructurePlacement;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.PlacedFeature;
+import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.foliage.FoliagePlacerType;
 import net.minecraft.world.gen.heightprovider.ConstantHeightProvider;
+import net.minecraft.world.gen.placementmodifier.BiomePlacementModifier;
 import net.minecraft.world.gen.placementmodifier.HeightmapPlacementModifier;
+import net.minecraft.world.gen.placementmodifier.RarityFilterPlacementModifier;
+import net.minecraft.world.gen.placementmodifier.SquarePlacementModifier;
 import net.minecraft.world.gen.structure.JigsawStructure;
 import net.minecraft.world.gen.structure.Structure;
 import net.minecraft.world.gen.trunk.TrunkPlacerType;
@@ -499,6 +500,7 @@ public final class ArcanaRegistry{
 	public static final Block SOLAR_GLEAMING_GREATWOOD_PLANKS = new Block(of(Material.WOOD).dropsSelf().strength(2, 3).sounds(BlockSoundGroup.WOOD));
 	
 	public static final Block BALANCED_CRYSTAL = new Block(of(Material.AMETHYST, MapColor.WHITE).dropsSelf().usesTool(PICKAXE_MINEABLE).sounds(BlockSoundGroup.AMETHYST_CLUSTER).strength(0.9f).luminance(3));
+	public static final Block BALANCED_CRYSTAL_PILLAR = new CrystalPillarBlock(of(Material.AMETHYST, MapColor.WHITE).dropsSelf().usesTool(PICKAXE_MINEABLE).sounds(BlockSoundGroup.AMETHYST_CLUSTER).strength(0.9f).luminance(3));
 	
 	public static final Block TAINTWOOD_LOG = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.FUNGUS));
 	public static final Block TAINTWOOD_PLANKS = new Block(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.FUNGUS));
@@ -658,6 +660,18 @@ public final class ArcanaRegistry{
 	public static PlacedFeature SURFACE_NODE_PLACED_FEATURE = new PlacedFeature(
 			RegistryEntry.of(SURFACE_NODE_CONF_FEATURE),
 			List.of(HeightmapPlacementModifier.of(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES))
+	);
+	
+	public static Feature<DefaultFeatureConfig> HANGING_NODE_FEATURE = new HangingNodeFeature();
+	public static ConfiguredFeature<?, ?> HANGING_NODE_CONF_FEATURE = new ConfiguredFeature<>(HANGING_NODE_FEATURE, DefaultFeatureConfig.INSTANCE);
+	public static PlacedFeature HANGING_NODE_PLACED_FEATURE = new PlacedFeature(
+			RegistryEntry.of(HANGING_NODE_CONF_FEATURE),
+			List.of(
+					PlacedFeatures.BOTTOM_TO_TOP_RANGE,
+					RarityFilterPlacementModifier.of(3),
+					SquarePlacementModifier.of(),
+					BiomePlacementModifier.of()
+			)
 	);
 	
 	// structures
@@ -1210,6 +1224,7 @@ public final class ArcanaRegistry{
 		register("chiseled_gleaming_lamplight", CHISELED_GLEAMING_LAMPLIGHT);
 		
 		register("balanced_crystal", BALANCED_CRYSTAL);
+		register("balanced_crystal_pillar", BALANCED_CRYSTAL_PILLAR);
 		
 		for(Aspect aspect : Aspects.hasCluster){
 			var shortName = aspect.id().getPath();
@@ -1339,6 +1354,10 @@ public final class ArcanaRegistry{
 		register("order_geode", NodalGeodes.PLACED_ORDER_GEODE);
 		register("entropy_geode", NodalGeodes.ENTROPY_GEODE);
 		register("entropy_geode", NodalGeodes.PLACED_ENTROPY_GEODE);
+		
+		register("hanging_node", HANGING_NODE_FEATURE);
+		register("hanging_node", HANGING_NODE_CONF_FEATURE);
+		register("hanging_node", HANGING_NODE_PLACED_FEATURE);
 		
 		register("silverwood_foliage", SilverwoodFoliagePlacer.TYPE);
 		register("silverwood_trunk", SilverwoodTrunkPlacer.TYPE);

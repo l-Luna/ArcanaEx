@@ -3,20 +3,24 @@ package arcana.util;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
 import java.util.function.BiPredicate;
 
 public final class SearchUtil{
 	
-	public static void randomSearch(World world, BlockPos pos, int radius, int rolls, BiPredicate<BlockPos, BlockState> attempt){
-		Random rng = world.random;
+	public static void randomSearch(BlockView world, Random rng, BlockPos pos, int radius, int rolls, BiPredicate<BlockPos, BlockState> attempt){
 		for(int i = 0; i < rolls; i++){
 			BlockPos there = pos.add(rng.nextBetween(-radius, radius), rng.nextBetween(-radius, radius), rng.nextBetween(-radius, radius));
 			BlockState state = world.getBlockState(there);
 			if(attempt.test(there, state))
 				return;
 		}
+	}
+	
+	public static void randomSearch(World world, BlockPos pos, int radius, int rolls, BiPredicate<BlockPos, BlockState> attempt){
+		randomSearch(world, world.random, pos, radius, rolls, attempt);
 	}
 	
 	public static void vRandomSearch(World world, BlockPos pos, int radius, int vspace, int rolls, BiPredicate<BlockPos, BlockState> attempt){

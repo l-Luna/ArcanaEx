@@ -38,6 +38,7 @@ public class CrimsonEntity extends HostileEntity implements IAnimatable{
 		initEquipment(world.getRandom(), difficulty);
 		updateEnchantments(random, difficulty);
 		setLeftHanded(true);
+		setEquipmentDropChance(EquipmentSlot.MAINHAND, 0.25f);
 		return i;
 	}
 	

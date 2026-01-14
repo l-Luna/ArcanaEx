@@ -12,6 +12,8 @@
     "AnvilScreenHandlerMixin",
     "BlockEntityAccessor",
     "BowItemMixin",
+    "BrewingRecipeRegistryMixin",
+    "BrewingStandBlockEntityMixin",
     "CampfireBlockMixin",
     "CookingRecipeSerializerMixin",
     "EnchantmentHelperMixin",

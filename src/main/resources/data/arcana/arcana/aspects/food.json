@@ -190,5 +190,11 @@
     "crystal",
     "air",
     "magic"
+  ],
+  "arcana:silverleaf_brew": [
+    "8*senses",
+    "8*sloth",
+    "3*aura",
+    "3*fire"
   ]
 }

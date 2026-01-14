@@ -279,6 +279,8 @@
     "gummy_cubes": "Gummy Cubes",
     "twisted_liquorice": "Twisted Liquorice",
 
+    "silverleaf_brew": "Silverleaf Brew",
+
     "shattered_husk": "Shattered Husk",
     "synthetic_scaffolding": "Synthetic Scaffolding",
     "formless_foam": "Formless Foam",
@@ -655,6 +657,7 @@
 
     // item buffs
     "arcane_discharge": "Arcane Discharge",
+    "warp_ward": "Warp Ward",
     "air_power": "Aer Power",
     "fire_power": "Ignis Power",
     "water_power": "Aqua Power",

@@ -1,5 +1,6 @@
 package arcana.warp;
 
+import arcana.ArcanaRegistry;
 import arcana.components.Researcher;
 import arcana.network.PkTriggerWarpEvent;
 import arcana.warp.events.FrailEvent;
@@ -33,6 +34,8 @@ public final class WarpEvents{
 	
 	public static void tickWarp(ServerWorld world){
 		for(ServerPlayerEntity player : world.getPlayers()){
+			if(player.hasStatusEffect(ArcanaRegistry.WARP_WARD))
+				continue;
 			Researcher researcher = Researcher.from(player);
 			long elapsed = world.getTime() - researcher.getLastWarpEventTime();
 			// TODO: scale frequency with warp amount

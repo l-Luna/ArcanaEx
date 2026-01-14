@@ -5,7 +5,6 @@ import arcana.aspects.AspectStack;
 import arcana.aspects.Aspects;
 import arcana.client.AspectRenderer;
 import arcana.client.PinkMarkerComponent;
-import dev.emi.emi.EmiPort;
 import dev.emi.emi.EmiUtil;
 import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.stack.serializer.EmiStackSerializer;
@@ -13,7 +12,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
@@ -67,10 +65,11 @@ public class AspectEmiStack extends EmiStack{
 	
 	public List<TooltipComponent> getTooltip(){
 		List<TooltipComponent> tooltips = new ArrayList<>(3);
-		tooltips.add(TooltipComponent.of(OrderedText.of(EmiPort.ordered(getName()))));
+		tooltips.add(TooltipComponent.of(getName().asOrderedText()));
 		if(MinecraftClient.getInstance().options.advancedItemTooltips)
-			tooltips.add(TooltipComponent.of(EmiPort.ordered(EmiPort.literal(stack.type().id().toString()).formatted(Formatting.DARK_GRAY))));
-		tooltips.add(TooltipComponent.of(EmiPort.ordered(EmiPort.literal(EmiUtil.getModName(stack.type().id().getNamespace()), Formatting.BLUE, Formatting.ITALIC))));
+			tooltips.add(TooltipComponent.of(Text.literal(stack.type().id().toString()).formatted(Formatting.DARK_GRAY).asOrderedText()));
+		// TODO: remove use of EmiUtil
+		tooltips.add(TooltipComponent.of(Text.literal(EmiUtil.getModName(stack.type().id().getNamespace())).formatted(Formatting.BLUE, Formatting.ITALIC).asOrderedText()));
 		tooltips.add(new PinkMarkerComponent());
 		return tooltips;
 	}

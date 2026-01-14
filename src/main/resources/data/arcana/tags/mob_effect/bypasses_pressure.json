@@ -1,6 +1,7 @@
 {
   "values": [
     "#arcana:aspect_candy_effects",
-    "#arcana:set_bonuses"
+    "#arcana:set_bonuses",
+    "arcana:warp_ward"
   ]
 }

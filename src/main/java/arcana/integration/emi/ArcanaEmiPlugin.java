@@ -24,6 +24,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.tag.TagKey;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -120,6 +121,13 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 		registry.addRecipe(new EmiWandRecipe(arcId("wand")));
 		registry.addRecipe(new EmiVoidPuttyRepairRecipe(arcId("void_putty_repair")));
 		registry.addRecipe(new EmiVoidPuttyAnvilRepairRecipe(arcId("/void_putty_anvil_repair")));
+		
+		registry.addRecipe(new EmiAltBrewingRecipe(
+				EmiStack.of(Items.POTION.getDefaultStack()),
+				EmiStack.of(ArcanaRegistry.SILVERLEAF, 8),
+				EmiStack.of(ArcanaRegistry.SILVERLEAF_BREW),
+				arcId("/brewing/silverleaf_brew")
+		));
 		
 		EmiStack basicWand = EmiStack.of(WandItem.basicWand());
 		registry.addRecipe(EmiWorldInteractionRecipe.builder()

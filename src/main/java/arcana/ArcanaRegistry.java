@@ -170,6 +170,7 @@ public final class ArcanaRegistry{
 	public static final StatusEffect ARCANE_AURA = new SetBonusStatusEffect();
 	
 	public static final StatusEffect ARCANE_DISCHARGE = new ArcanaStatusEffect(StatusEffectCategory.BENEFICIAL, 0xF881D6);
+	public static final StatusEffect WARP_WARD = new ArcanaStatusEffect(StatusEffectCategory.BENEFICIAL, 0xBFEBF8);
 	public static final StatusEffect AIR_POWER = new AspectPowerStatusEffect(Aspects.AIR)
 			.addAttributeModifier(EntityAttributes.GENERIC_MOVEMENT_SPEED, "63c5f0ac-285e-42b7-9744-32d527655214", .1f, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
 	public static final StatusEffect FIRE_POWER = new AspectPowerStatusEffect(Aspects.FIRE);
@@ -218,6 +219,13 @@ public final class ArcanaRegistry{
 	public static final Item BEDROCK_CANDY = new Item(new Settings().group(Tab.MAIN).food(aspectCandyFood(EARTH_POWER)));
 	public static final Item GUMMY_CUBES = new Item(new Settings().group(Tab.MAIN).food(aspectCandyFood(ORDER_POWER)));
 	public static final Item TWISTED_LIQUORICE = new Item(new Settings().group(Tab.MAIN).food(aspectCandyFood(ENTROPY_POWER)));
+	
+	public static final Item SILVERLEAF_BREW = new DrinkItem(new Settings().group(Tab.MAIN).maxCount(1).food(new FoodComponent.Builder()
+			.hunger(2)
+			.saturationModifier(0.25f)
+			.alwaysEdible()
+			.statusEffect(new StatusEffectInstance(WARP_WARD, 8 * 60 * 20, 0, true, true), 1)
+			.build()));
 	
 	public static final Item ARCANIUM_INGOT = new Item(GROUPED_RES);
 	public static final Item ARCANIUM_SWORD = new SwordItem(ArcanaToolMaterials.ARCANIUM, 3, -2.4f, new Settings().group(Tab.EQUIPMENT));
@@ -375,7 +383,7 @@ public final class ArcanaRegistry{
 	// other...?
 	public static final Item EMPTY_PHIAL = new PhialItem(new Settings().group(Tab.PHIALS), null);
 	public static final Item PRIMORDIAL_PEARL = new PrimordialPearlItem(new Settings().group(Tab.RESOURCES).maxCount(1).rarity(Rarity.EPIC));
-	public static final Item BROKEN_AMULET = new TrinketItem(new Settings().group(Tab.RESOURCES));
+	public static final Item BROKEN_AMULET = new TrinketItem(new Settings().group(Tab.RESOURCES).maxCount(1));
 	public static final Item CHALLENGERS_AMULET = new TrinketItem(GROUPED_SINGLE);
 	public static final Item VICTORS_MEDALLION = new TrinketItem(GROUPED_SINGLE);
 	
@@ -879,6 +887,8 @@ public final class ArcanaRegistry{
 		register("bedrock_candy", BEDROCK_CANDY);
 		register("gummy_cubes", GUMMY_CUBES);
 		register("twisted_liquorice", TWISTED_LIQUORICE);
+		
+		register("silverleaf_brew", SILVERLEAF_BREW);
 		
 		register("arcanium_ingot", ARCANIUM_INGOT);
 		register("arcanium_sword", ARCANIUM_SWORD);
@@ -1407,6 +1417,7 @@ public final class ArcanaRegistry{
 		register("warp_frail", WARP_FRAIL);
 		register("arcane_aura", ARCANE_AURA);
 		register("arcane_discharge", ARCANE_DISCHARGE);
+		register("warp_ward", WARP_WARD);
 		register("air_power", AIR_POWER);
 		register("fire_power", FIRE_POWER);
 		register("water_power", WATER_POWER);

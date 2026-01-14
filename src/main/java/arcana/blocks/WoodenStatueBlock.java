@@ -16,6 +16,8 @@ import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
+import net.minecraft.util.BlockMirror;
+import net.minecraft.util.BlockRotation;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
@@ -79,5 +81,13 @@ public class WoodenStatueBlock extends BigBlock{
 		return super.getPlacementState(ctx)
 				.with(waterlogged, fluidState.getFluid() == Fluids.WATER)
 				.with(facing, ctx.getPlayerFacing().getOpposite());
+	}
+	
+	public BlockState rotate(BlockState state, BlockRotation rotation){
+		return state.with(facing, rotation.rotate(state.get(facing)));
+	}
+	
+	public BlockState mirror(BlockState state, BlockMirror mirror){
+		return state.rotate(mirror.getRotation(state.get(facing)));
 	}
 }

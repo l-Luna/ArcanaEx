@@ -2,7 +2,6 @@ package arcana.blocks.be;
 
 import arcana.ArcanaRegistry;
 import arcana.entities.crimson.CrimsonSpawns;
-import arcana.util.SearchUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
@@ -32,7 +31,7 @@ public class CrimsonLanternBlockEntity extends BlockEntity{
 		if(world.isClient){
 			clientTick(world, pos);
 			return;
-		}else if(world.getTime() % 20 * 16 != 0)
+		}else if(world.getTime() % (20 * 16) != 0)
 			return;
 		PlayerEntity player = world.getClosestPlayer(pos.getX(), pos.getY(), pos.getZ(), 30, false);
 		if(player == null)
@@ -46,23 +45,30 @@ public class CrimsonLanternBlockEntity extends BlockEntity{
 		if(amnt > 6)
 			return;
 		
-		EntityType<?> type = spawns.toArray(EntityType<?>[]::new)[world.random.nextInt(spawns.size())];
-		SearchUtil.vRandomSearch(world, pos, 8, 8, 6, (where, what) -> {
-			if(!what.isSolidBlock(world, where))
-				return false;
-			if(!world.isAir(where.up()) || !world.isAir(where.up(2)))
-				return false;
-			Entity e = type.create((ServerWorld)world, null, null, null, where.up(), SpawnReason.SPAWNER, true, false);
-			world.spawnEntity(e);
-			world.syncWorldEvent(WorldEvents.SPAWNER_SPAWNS_MOB, where.up(), 0);
-			world.emitGameEvent(e, GameEvent.ENTITY_PLACE, where.up());
-			if(e instanceof MobEntity mob)
-				mob.playSpawnEffects();
-			return true;
-		});
+		Random rng = world.random;
+		EntityType<?> type = spawns.toArray(EntityType<?>[]::new)[rng.nextInt(spawns.size())];
+		// choosing a spawn location: find the ground under this lantern, add an X/Y offset, then check for solid ground and spawn there
+		int height;
+		for(height = 0; height < 11; height++){
+			BlockPos there = pos.down(height);
+			if(world.getBlockState(there).isSolidBlock(world, there))
+				break;
+		}
+		if(height == 11)
+			return;
+		BlockPos ground = pos.down(height);
+		for(int tries = 0; tries < 10; tries++){
+			BlockPos adj = ground.add(rng.nextBetween(-6, 6), 0, rng.nextBetween(-6, 6));
+			if(world.getBlockState(adj).isSolidBlock(world, adj)
+					&& world.getBlockState(adj.up()).isAir()
+					&& world.getBlockState(adj.up(2)).isAir()){
+				doSpawn(world, type, adj.up());
+				break;
+			}
+		}
 	}
 	
-	public void clientTick(World world, BlockPos pos){
+	private void clientTick(World world, BlockPos pos){
 		if(world.getTime() % 8 != 0 || world.getClosestPlayer(pos.getX(), pos.getY(), pos.getZ(), 30, false) == null)
 			return;
 		
@@ -72,5 +78,14 @@ public class CrimsonLanternBlockEntity extends BlockEntity{
 				z = pos.getZ() + rng.nextDouble()/2 + .25;
 		world.addParticle(ParticleTypes.SMOKE, x, y, z, 0, 0, 0);
 		world.addParticle(ArcanaRegistry.FLAME, x, y, z, 0, 0, 0);
+	}
+	
+	private static void doSpawn(World world, EntityType<?> type, BlockPos where){
+		Entity e = type.create((ServerWorld)world, null, null, null, where, SpawnReason.SPAWNER, true, false);
+		world.spawnEntity(e);
+		world.syncWorldEvent(WorldEvents.SPAWNER_SPAWNS_MOB, where, 0);
+		world.emitGameEvent(e, GameEvent.ENTITY_PLACE, where);
+		if(e instanceof MobEntity mob)
+			mob.playSpawnEffects();
 	}
 }

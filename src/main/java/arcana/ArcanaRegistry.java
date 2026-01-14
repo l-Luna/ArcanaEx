@@ -270,6 +270,7 @@ public final class ArcanaRegistry{
 	public static final Item TWISTED_ESSENCE = new Item(GROUPED_RES);
 	public static final Item BEJEWELED_BEET = new Item(new Settings().group(Tab.RESOURCES).food(new FoodComponent.Builder().hunger(5).saturationModifier(1).build()));
 	public static final Item SPIRAL_SUGAR = new Item(GROUPED_RES);
+	public static final Item ABERRANT_FLORA = new Item(GROUPED_RES);
 	public static final Item BLOODLET_RUBY = new Item(new ArcanaItemSettings().fragile(0xBC0826, StatusEffects.INSTANT_HEALTH).group(Tab.RESOURCES));
 	public static final Item MOTILE = new MotileItem(new Settings().group(Tab.RESOURCES).rarity(Rarity.UNCOMMON));
 	public static final Item MOTILE_PIECE = new MotileItem(new Settings().group(Tab.RESOURCES).rarity(Rarity.UNCOMMON));
@@ -934,6 +935,7 @@ public final class ArcanaRegistry{
 		register("bejeweled_beet_seeds", BEJEWELED_BEET_SEEDS);
 		register("bejeweled_beet", BEJEWELED_BEET);
 		register("spiral_sugar", SPIRAL_SUGAR);
+		register("aberrant_flora", ABERRANT_FLORA);
 		register("bloodlet_ruby", BLOODLET_RUBY);
 		register("motile", MOTILE);
 		register("motile_piece", MOTILE_PIECE);

@@ -23,7 +23,7 @@
     "item": "arcana:thaumic_halo"
   },
   "aspects": [
-    "60*air",
-    "60*water"
+    "40*air",
+    "40*water"
   ]
 }

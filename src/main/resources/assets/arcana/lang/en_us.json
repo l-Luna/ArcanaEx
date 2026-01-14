@@ -52,6 +52,8 @@
     "raw_tainted_blocks": "Raw Tainted Blocks",
 
     "magical_plants": "Magical Plants",
+    "magical_flowers": "Magical Flowers",
+    "magical_mushrooms": "Magical Mushrooms",
     "raw_meat": "Raw Meats"
   },
 
@@ -229,6 +231,7 @@
     "bejeweled_beet_seeds": "Bejeweled Beet Seeds",
     "bejeweled_beet": "Bejeweled Beet",
     "spiral_sugar": "Spiral Sugar",
+    "aberrant_flora": "Aberrant Flora",
     "bloodlet_ruby": "Bloodlet Ruby",
     "motile": "Motile",
     "motile_piece": "Fragment of Motile",

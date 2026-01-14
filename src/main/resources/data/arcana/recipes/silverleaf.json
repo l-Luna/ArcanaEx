@@ -1,0 +1,15 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "arcana:aberrant_flora"
+  },
+  "aspects": [
+    "24*aura",
+    "8*flesh",
+    "8*life",
+    "senses"
+  ],
+  "result": {
+    "item": "arcana:silverleaf"
+  }
+}

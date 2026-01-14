@@ -26,7 +26,7 @@ public final class ArcanaTags{
 	public static final TagKey<Block> PROJECTED_ARROW_IGNORES = TagKey.of(Registry.BLOCK_KEY, arcId("projected_arrow_ignores"));
 	public static final TagKey<Block> HALO_CONVERTIBLE_FLOWERS = TagKey.of(Registry.BLOCK_KEY, arcId("halo_convertible_flowers"));
 	public static final TagKey<Block> HALO_CONVERTIBLE_MUSHROOMS = TagKey.of(Registry.BLOCK_KEY, arcId("halo_convertible_mushrooms"));
-	public static final TagKey<Block> HALO_CONVERTED = TagKey.of(Registry.BLOCK_KEY, arcId("halo_converted"));
+	public static final TagKey<Block> HALO_CONVERTED = TagKey.of(Registry.BLOCK_KEY, arcId("magical_plants"));
 	public static final TagKey<Block> EARTHMOVER_MINEABLE = TagKey.of(Registry.BLOCK_KEY, arcId("earthmover_mineable"));
 	
 	public static final TagKey<Item> SILVERWOOD_LOGS = TagKey.of(Registry.ITEM_KEY, arcId("silverwood_logs"));

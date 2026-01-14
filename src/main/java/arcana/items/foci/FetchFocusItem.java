@@ -1,6 +1,7 @@
 package arcana.items.foci;
 
 import arcana.items.FocusItem;
+import arcana.network.PkPickupItem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.ItemEntity;
@@ -48,18 +49,17 @@ public class FetchFocusItem extends FocusItem{
 				collect(user, ie);
 			else if(target instanceof LivingEntity le){
 				boolean sneaking = user.isSneaking();
-				if(sneaking && !(le instanceof PlayerEntity) && world.getTime() % 5 == 0 && world.random.nextInt(8) == 0){
+				if(sneaking && !(le instanceof PlayerEntity) && world.getTime() % 5 == 0 && world.random.nextInt(10) == 0){
 					var slots = EquipmentSlot.values();
 					var slot = slots[world.random.nextInt(slots.length)];
 					ItemStack equipped = le.getEquippedStack(slot);
 					if(!equipped.isEmpty()){
 						le.equipStack(slot, ItemStack.EMPTY);
 						user.giveItemStack(equipped);
-						// TODO: animate items being taken
-						// (note that sendPickup only sends the ID of an item entity, which doesn't exist in this case)
+						new PkPickupItem(equipped, user.getId(), le.getEyePos()).sendToAllWatching(le);
 					}
 				}
-				le.setVelocity(le.getVelocity().add(user.getPos().subtract(le.getPos()).normalize().multiply(sneaking ? 0.05 : 0.1)));
+				le.setVelocity(le.getVelocity().add(user.getPos().subtract(le.getPos()).normalize().multiply(sneaking ? 0.01 : 0.1)));
 			}
 		}
 		if(blockRaycast != null){

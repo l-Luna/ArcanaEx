@@ -24,6 +24,7 @@ public final class Networking{
 		context.register(PkSwapFocus.class);
 		context.register(PkTriggerWarpEvent.class);
 		context.register(PkShakeNode.class);
+		context.register(PkPickupItem.class);
 		
 		ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, didJoin) -> {
 			new PkSyncResearchData().sendTo(player);

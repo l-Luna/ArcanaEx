@@ -4,6 +4,7 @@ import arcana.ArcanaRegistry;
 import arcana.aspects.AspectMap;
 import arcana.aspects.AspectStack;
 import arcana.aspects.Aspects;
+import arcana.blocks.CrimsonCampfireBlock;
 import arcana.blocks.WardedCampfireBlock;
 import arcana.items.FocusItem;
 import arcana.items.WandItem;
@@ -35,7 +36,7 @@ public class FireFocusItem extends FocusItem{
 	public AspectMap castCost(ItemStack wand, ItemStack focus, PlayerEntity user){
 		// TODO: check player reach
 		BlockState looking = user.world.getBlockState(((BlockHitResult)user.raycast(5.5, 0, false)).getBlockPos());
-		if(WardedCampfireBlock.canBeLit(looking))
+		if(WardedCampfireBlock.canBeLit(looking) || CrimsonCampfireBlock.canBeLit(looking))
 			return AspectMap.fromAspectStacks(List.of(new AspectStack(Aspects.ORDER, 20), new AspectStack(Aspects.FIRE, 20)));
 		return AspectMap.fromAspectStack(new AspectStack(Aspects.FIRE, 3));
 	}
@@ -49,7 +50,7 @@ public class FireFocusItem extends FocusItem{
 		World world = ctx.getWorld();
 		BlockPos pos = ctx.getBlockPos();
 		BlockState bs = world.getBlockState(pos);
-		if(!CampfireBlock.canBeLit(bs) && !WardedCampfireBlock.canBeLit(bs) && !CandleBlock.canBeLit(bs) && !CandleCakeBlock.canBeLit(bs)){
+		if(!CampfireBlock.canBeLit(bs) && !WardedCampfireBlock.canBeLit(bs) && !CrimsonCampfireBlock.canBeLit(bs) && !CandleBlock.canBeLit(bs) && !CandleCakeBlock.canBeLit(bs)){
 			BlockPos toLight = pos.offset(ctx.getSide());
 			if(AbstractFireBlock.canPlaceAt(world, toLight, ctx.getPlayerFacing())){
 				world.playSound(player, toLight, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1, world.getRandom().nextFloat() * .4f + .8f);

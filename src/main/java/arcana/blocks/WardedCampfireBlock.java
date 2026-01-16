@@ -16,7 +16,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraft.world.poi.PointOfInterestStorage;
-import org.jetbrains.annotations.Nullable;
 
 import static arcana.Arcana.arcId;
 
@@ -27,7 +26,6 @@ public class WardedCampfireBlock extends CampfireBlock{
 		setDefaultState(getDefaultState().with(LIT, false));
 	}
 	
-	@Nullable
 	public BlockState getPlacementState(ItemPlacementContext ctx){
 		return super.getPlacementState(ctx).with(LIT, false);
 	}

@@ -134,6 +134,7 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		noAutoGen.add(ESSENTIA_ROUTER.asItem());
 		noAutoGen.add(ESSENTIA_REDIRECT.asItem());
 		noAutoGen.add(WARDED_CAMPFIRE.asItem());
+		noAutoGen.add(CRIMSON_CAMPFIRE.asItem());
 		noAutoGen.add(RESEARCH_TABLE.asItem());
 		noAutoGen.add(THAUMIC_HALO.asItem());
 		noAutoGen.add(CRIMSON_LANTERN.asItem());

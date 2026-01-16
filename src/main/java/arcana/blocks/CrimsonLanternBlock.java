@@ -24,7 +24,7 @@ public class CrimsonLanternBlock extends LanternBlock implements BlockEntityProv
 	public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type){
 		return (w, p, s, be) -> {
 			if(be instanceof CrimsonLanternBlockEntity cl)
-				cl.tick(w, p, s);
+				cl.tick(w, p);
 		};
 	}
 }

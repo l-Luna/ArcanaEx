@@ -428,6 +428,7 @@ public final class ArcanaRegistry{
 	public static final Block CRYSTALLIZATION_PRESS = new CrystallizationPressBlock(of(Material.METAL).dropsSelf().requiresTool(PICKAXE_MINEABLE).sounds(BlockSoundGroup.ANCIENT_DEBRIS).strength(4).nonOpaque());
 	public static final Block MYSTIC_MIST = new MysticMistBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).sounds(BlockSoundGroup.METAL).strength(2.5f).nonOpaque());
 	public static final Block WARDED_CAMPFIRE = new WardedCampfireBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).renderLayer(CUTOUT).strength(2).sounds(BlockSoundGroup.WOOD).luminance(whenLit(15)).nonOpaque());
+	public static final Block CRIMSON_CAMPFIRE = new CrimsonCampfireBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).renderLayer(CUTOUT).strength(2).sounds(BlockSoundGroup.WOOD).luminance(whenLit(15)).nonOpaque());
 	
 	public static final Block ARCANIUM_BLOCK = new Block(of(Material.METAL, MapColor.PINK).group(Tab.RESOURCES).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(5, 6).sounds(BlockSoundGroup.METAL));
 	public static final Block THAUMIUM_BLOCK = new Block(of(Material.METAL, MapColor.DARK_DULL_PINK).group(Tab.RESOURCES).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(5, 6).sounds(BlockSoundGroup.METAL));
@@ -618,6 +619,7 @@ public final class ArcanaRegistry{
 	public static BlockEntityType<CrystallizationPressBlockEntity> CRYSTALLIZATION_PRESS_BE = FabricBlockEntityTypeBuilder.create(CrystallizationPressBlockEntity::new, CRYSTALLIZATION_PRESS).build();
 	public static BlockEntityType<MysticMistBlockEntity> MYSTIC_MIST_BE = FabricBlockEntityTypeBuilder.create(MysticMistBlockEntity::new, MYSTIC_MIST).build();
 	public static BlockEntityType<WardedCampfireBlockEntity> WARDED_CAMPFIRE_BE = FabricBlockEntityTypeBuilder.create(WardedCampfireBlockEntity::new, WARDED_CAMPFIRE).build();
+	public static BlockEntityType<CrimsonCampfireBlockEntity> CRIMSON_CAMPFIRE_BE = FabricBlockEntityTypeBuilder.create(CrimsonCampfireBlockEntity::new, CRIMSON_CAMPFIRE).build();
 	public static BlockEntityType<EssentiaTubeBlockEntity> ESSENTIA_TUBE_BE = FabricBlockEntityTypeBuilder.create(EssentiaTubeBlockEntity::new, ESSENTIA_TUBE, ESSENTIA_WINDOW).build();
 	public static BlockEntityType<EssentiaPumpBlockEntity> ESSENTIA_PUMP_BE = FabricBlockEntityTypeBuilder.create(EssentiaPumpBlockEntity::new, ESSENTIA_PUMP).build();
 	public static BlockEntityType<EssentiaValveBlockEntity> ESSENTIA_VALVE_BE = FabricBlockEntityTypeBuilder.create(EssentiaValveBlockEntity::new, ESSENTIA_VALVE).build();
@@ -1098,6 +1100,7 @@ public final class ArcanaRegistry{
 		register("crystallization_press", CRYSTALLIZATION_PRESS);
 		register("mystic_mist", MYSTIC_MIST);
 		register("warded_campfire", WARDED_CAMPFIRE);
+		register("crimson_campfire", CRIMSON_CAMPFIRE);
 		
 		register("arcanium_block", ARCANIUM_BLOCK);
 		register("thaumium_block", THAUMIUM_BLOCK);
@@ -1330,6 +1333,7 @@ public final class ArcanaRegistry{
 		register("crystallization_press", CRYSTALLIZATION_PRESS_BE);
 		register("mystic_mist", MYSTIC_MIST_BE);
 		register("warded_campfire", WARDED_CAMPFIRE_BE);
+		register("crimson_campfire", CRIMSON_CAMPFIRE_BE);
 		register("essentia_tube", ESSENTIA_TUBE_BE);
 		register("essentia_pump", ESSENTIA_PUMP_BE);
 		register("essentia_valve", ESSENTIA_VALVE_BE);

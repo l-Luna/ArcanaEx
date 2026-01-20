@@ -5,7 +5,7 @@ import arcana.aspects.AspectStack;
 import arcana.aspects.Aspects;
 import arcana.blocks.be.MysticMistBlockEntity;
 import arcana.client.ArcanaClient;
-import arcana.client.AspectRenderer;
+import arcana.client.AspectRenderHelper;
 import arcana.client.RenderHelper;
 import arcana.items.GogglesOfRevealingItem;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -40,7 +40,7 @@ public class MysticMistBlockEntityRenderer implements BlockEntityRenderer<Mystic
 		
 		var player = MinecraftClient.getInstance().player;
 		if(GogglesOfRevealingItem.hasRevealing(player))
-			AspectRenderer.renderAspectsInWorld(matrices, player, AspectMap.fromAspectStack(stack), entity.getPos(), new Vec3f(0, 1.8f, 0));
+			AspectRenderHelper.renderAspectsInWorld(matrices, player, AspectMap.fromAspectStack(stack), entity.getPos(), new Vec3f(0, 1.8f, 0));
 		
 		// heat effect
 		if(stack.type().equals(Aspects.FIRE)){

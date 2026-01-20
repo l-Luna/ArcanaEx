@@ -3,8 +3,8 @@ package arcana.integration.emi;
 import arcana.aspects.Aspect;
 import arcana.aspects.AspectStack;
 import arcana.aspects.Aspects;
-import arcana.client.AspectRenderer;
-import arcana.client.PinkMarkerComponent;
+import arcana.client.AspectRenderHelper;
+import arcana.client.tooltip.PinkMarkerComponent;
 import dev.emi.emi.EmiUtil;
 import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.stack.serializer.EmiStackSerializer;
@@ -44,7 +44,7 @@ public class AspectEmiStack extends EmiStack{
 	}
 	
 	public void render(MatrixStack matrices, int x, int y, float delta, int flags){
-		AspectRenderer.renderAspectStack(stack, matrices, MinecraftClient.getInstance().textRenderer, x, y, 100);
+		AspectRenderHelper.renderAspectStack(stack, matrices, MinecraftClient.getInstance().textRenderer, x, y, 100);
 	}
 	
 	public NbtCompound getNbt(){

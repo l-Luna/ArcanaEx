@@ -37,7 +37,9 @@ public final class ArcanaTags{
 	public static final TagKey<Item> SCRIBING_TOOLS = TagKey.of(Registry.ITEM_KEY, arcId("scribing_tools"));
 	public static final TagKey<Item> WISP_WEAPONS = TagKey.of(Registry.ITEM_KEY, arcId("wisp_weapons"));
 	public static final TagKey<Item> FLOATS = TagKey.of(Registry.ITEM_KEY, arcId("floats"));
+	
 	public static final TagKey<Item> VOID_PUTTY_REPAIR_WHITELIST = TagKey.of(Registry.ITEM_KEY, arcId("void_putty_repair_whitelist"));
+	public static final TagKey<Item> PLANE_PROJECTION_WHITELIST = TagKey.of(Registry.ITEM_KEY, arcId("plane_projection_whitelist"));
 	
 	public static final TagKey<Biome> SILVERWOOD_SPAWNABLE = TagKey.of(Registry.BIOME_KEY, arcId("silverwood_spawnable"));
 	public static final TagKey<Biome> GREATWOOD_SPAWNABLE = TagKey.of(Registry.BIOME_KEY, arcId("greatwood_spawnable"));

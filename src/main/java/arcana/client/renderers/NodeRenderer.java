@@ -1,8 +1,9 @@
-package arcana.client;
+package arcana.client.renderers;
 
 import arcana.aspects.Aspect;
 import arcana.aspects.Aspects;
 import arcana.aura.*;
+import arcana.client.AspectRenderHelper;
 import arcana.components.Caster;
 import arcana.items.GogglesOfRevealingItem;
 import com.mojang.blaze3d.platform.GlStateManager;
@@ -109,7 +110,7 @@ public final class NodeRenderer{
 			});
 			
 			Aspects.primals.forEach(primal -> {
-				RenderSystem.setShaderTexture(0, AspectRenderer.texture(primal));
+				RenderSystem.setShaderTexture(0, AspectRenderHelper.texture(primal));
 				buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);
 				for(Node node : allVisible)
 					drawNodeAspect(camera, node, buffer, primal, world);
@@ -120,7 +121,7 @@ public final class NodeRenderer{
 				// can't batch non-primals, so avoid these if we can
 				for(Aspect aspect : node.getAspects().aspectSet())
 					if(!Aspects.primals.contains(aspect)){
-						RenderSystem.setShaderTexture(0, AspectRenderer.texture(aspect));
+						RenderSystem.setShaderTexture(0, AspectRenderHelper.texture(aspect));
 						buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);
 						drawNodeAspect(camera, node, buffer, aspect, world);
 						BufferRenderer.drawWithShader(buffer.end());

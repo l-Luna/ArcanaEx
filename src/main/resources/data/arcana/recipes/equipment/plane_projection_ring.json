@@ -7,19 +7,22 @@
     "O": {
       "item": "arcana:crystals/order"
     },
-    "E": {
-      "item": "arcana:crystals/entropy"
+    "T": {
+      "item": "arcana:crystals/earth"
+    },
+    "P": {
+      "item": "minecraft:phantom_membrane"
     }
   },
   "pattern": [
-    " O ",
-    "OXE"
+    " P ",
+    "TXO"
   ],
   "aspects": [
-    "32*order",
-    "32*entropy"
+    "16*order",
+    "16*earth"
   ],
   "result": {
-    "item": "arcana:adorned_ring"
+    "item": "arcana:plane_projection_ring"
   }
 }

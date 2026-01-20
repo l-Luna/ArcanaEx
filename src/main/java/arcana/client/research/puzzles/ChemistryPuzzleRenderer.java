@@ -4,7 +4,7 @@ import arcana.aspects.Aspect;
 import arcana.aspects.AspectMap;
 import arcana.aspects.AspectStack;
 import arcana.aspects.Aspects;
-import arcana.client.AspectRenderer;
+import arcana.client.AspectRenderHelper;
 import arcana.client.research.PuzzleRenderer;
 import arcana.network.PkChemistryClick;
 import arcana.network.PkChemistryCombineAspects;
@@ -44,7 +44,7 @@ public class ChemistryPuzzleRenderer implements PuzzleRenderer<Chemistry>{
 		for(int i = 0; i < stacks.size(); i++){
 			var xPos = x + 9 + (i % 6) * 17;
 			var yPos = y + 33 + (i / 6) * 18;
-			AspectRenderer.renderAspectStack(stacks.get(i), matrices, xPos, yPos, 0);
+			AspectRenderHelper.renderAspectStack(stacks.get(i), matrices, xPos, yPos, 0);
 			if(within(mouseX, mouseY, xPos, yPos, 16))
 				highlight(matrices, xPos, yPos, 16);
 		}
@@ -64,9 +64,9 @@ public class ChemistryPuzzleRenderer implements PuzzleRenderer<Chemistry>{
 			DrawableHelper.drawTexture(matrices, x + 55, y + 144, 0, 30, 169, 8, 10, 256, 256);
 		// combo slot aspects and highlights
 		if(combineLeft != null)
-			AspectRenderer.renderAspect(combineLeft, matrices, x + 35, y + 141, 0);
+			AspectRenderHelper.renderAspect(combineLeft, matrices, x + 35, y + 141, 0);
 		if(combineRight != null)
-			AspectRenderer.renderAspect(combineRight, matrices, x + 67, y + 141, 0);
+			AspectRenderHelper.renderAspect(combineRight, matrices, x + 67, y + 141, 0);
 		if(within(mouseX, mouseY, x + 35, y + 141, 16))
 			highlight(matrices, x + 35, y + 141, 16);
 		if(within(mouseX, mouseY, x + 67, y + 141, 16))
@@ -87,7 +87,7 @@ public class ChemistryPuzzleRenderer implements PuzzleRenderer<Chemistry>{
 		processHexes(size, x, y, (xPos, yPos, turn, rx, ry) -> {
 			if(turn % nodeGap == 0){
 				var node = puzzle.getNodes().get(turn / nodeGap);
-				AspectRenderer.renderAspect(node, matrices, xPos + 2, yPos + 2, 1);
+				AspectRenderHelper.renderAspect(node, matrices, xPos + 2, yPos + 2, 1);
 				grid.put(new HexOffset(rx, ry), node);
 				return false;
 			}
@@ -101,7 +101,7 @@ public class ChemistryPuzzleRenderer implements PuzzleRenderer<Chemistry>{
 			String hexId = rx + "," + ry;
 			if(gridTag.contains(hexId)){
 				var aspect = Aspects.byName(gridTag.getString(hexId));
-				AspectRenderer.renderAspect(aspect, matrices, xPos + 2, yPos + 2, 0);
+				AspectRenderHelper.renderAspect(aspect, matrices, xPos + 2, yPos + 2, 0);
 				grid.put(new HexOffset(rx, ry), aspect);
 			}
 			
@@ -140,7 +140,7 @@ public class ChemistryPuzzleRenderer implements PuzzleRenderer<Chemistry>{
 		});
 		
 		if(selected != null)
-			AspectRenderer.renderAspect(selected, matrices, mouseX, mouseY, 1000);
+			AspectRenderHelper.renderAspect(selected, matrices, mouseX, mouseY, 1000);
 	}
 	
 	public boolean onClick(int button, Chemistry puzzle, NbtCompound notesTag, int screenWidth, int screenHeight, int mouseX, int mouseY){
@@ -237,19 +237,19 @@ public class ChemistryPuzzleRenderer implements PuzzleRenderer<Chemistry>{
 			var xPos = x + 9 + (i % 6) * 17;
 			var yPos = y + 33 + (i / 6) * 18;
 			if(within(mouseX, mouseY, xPos, yPos, 16)){
-				AspectRenderer.renderAspectTooltip(stacks.get(i).type(), matrices, mouseX, mouseY);
+				AspectRenderHelper.renderAspectTooltip(stacks.get(i).type(), matrices, mouseX, mouseY);
 				return;
 			}
 		}
 		
 		// bottom of sidebar
 		if(combineLeft != null && within(mouseX, mouseY, x + 35, y + 141, 16)){
-			AspectRenderer.renderAspectTooltip(combineLeft, matrices, mouseX, mouseY);
+			AspectRenderHelper.renderAspectTooltip(combineLeft, matrices, mouseX, mouseY);
 			return;
 		}
 		
 		if(combineRight != null && within(mouseX, mouseY, x + 67, y + 141, 16)){
-			AspectRenderer.renderAspectTooltip(combineRight, matrices, mouseX, mouseY);
+			AspectRenderHelper.renderAspectTooltip(combineRight, matrices, mouseX, mouseY);
 			return;
 		}
 		
@@ -260,14 +260,14 @@ public class ChemistryPuzzleRenderer implements PuzzleRenderer<Chemistry>{
 		processHexes(size, x, y, (xPos, yPos, turn, rx, ry) -> {
 			if(turn % nodeGap == 0 && within(mouseX, mouseY, xPos + 1, yPos + 2, 18, 16)){
 				var node = puzzle.getNodes().get(turn / nodeGap);
-				AspectRenderer.renderAspectTooltip(node, matrices, mouseX, mouseY);
+				AspectRenderHelper.renderAspectTooltip(node, matrices, mouseX, mouseY);
 				return true;
 			}
 			
 			String hexId = rx + "," + ry;
 			if(gridTag.contains(hexId) && within(mouseX, mouseY, xPos + 1, yPos + 2, 18, 16)){
 				var aspect = Aspects.byName(gridTag.getString(hexId));
-				AspectRenderer.renderAspectTooltip(aspect, matrices, mouseX, mouseY);
+				AspectRenderHelper.renderAspectTooltip(aspect, matrices, mouseX, mouseY);
 				return true;
 			}
 			
@@ -288,7 +288,7 @@ public class ChemistryPuzzleRenderer implements PuzzleRenderer<Chemistry>{
 		processHexes(size, x, y, (xPos, yPos, turn, rx, ry) -> {
 			if(turn % nodeGap == 0){
 				var node = puzzle.getNodes().get(turn / nodeGap);
-				AspectRenderer.renderAspect(node, matrices, xPos + 2, yPos + 2, 1);
+				AspectRenderHelper.renderAspect(node, matrices, xPos + 2, yPos + 2, 1);
 				grid.put(new HexOffset(rx, ry), node);
 				return false;
 			}
@@ -298,7 +298,7 @@ public class ChemistryPuzzleRenderer implements PuzzleRenderer<Chemistry>{
 				RenderSystem.setShaderTexture(0, overlayTex);
 				DrawableHelper.drawTexture(matrices, xPos, yPos, 0, 0, 0, 20, 20, 256, 256);
 				var aspect = Aspects.byName(gridTag.getString(hexId));
-				AspectRenderer.renderAspect(aspect, matrices, xPos + 2, yPos + 2, 0);
+				AspectRenderHelper.renderAspect(aspect, matrices, xPos + 2, yPos + 2, 0);
 				grid.put(new HexOffset(rx, ry), aspect);
 			}
 			

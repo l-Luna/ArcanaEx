@@ -3,6 +3,8 @@ package arcana.client;
 import arcana.aspects.Aspect;
 import arcana.aspects.AspectMap;
 import arcana.aspects.AspectStack;
+import arcana.client.tooltip.ItemAspectsTooltipComponent;
+import arcana.client.tooltip.PinkMarkerComponent;
 import arcana.components.Researcher;
 import arcana.research.BuiltinResearch;
 import arcana.research.Research;
@@ -25,7 +27,7 @@ import net.minecraft.util.math.Vec3f;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class AspectRenderer{
+public final class AspectRenderHelper{
 	
 	public static void renderAspectStack(AspectStack stack, MatrixStack matrices, int x, int y, int z){
 		renderAspectStack(stack, matrices, MinecraftClient.getInstance().textRenderer, x, y, z);
@@ -102,8 +104,8 @@ public final class AspectRenderer{
 			RenderSystem.enableDepthTest();
 			RenderSystem.enableBlend();
 			RenderSystem.defaultBlendFunc();
-			AspectRenderer.renderAspect(stack.type(), matrices, 0, 0, 0, 1, 1, 1, alpha);
-			AspectRenderer.renderAspectStackOverlay(stack.amount(), matrices, MinecraftClient.getInstance().textRenderer, 0, 0, 0, 0xFFFFFF | intAlpha);
+			AspectRenderHelper.renderAspect(stack.type(), matrices, 0, 0, 0, 1, 1, 1, alpha);
+			AspectRenderHelper.renderAspectStackOverlay(stack.amount(), matrices, MinecraftClient.getInstance().textRenderer, 0, 0, 0, 0xFFFFFF | intAlpha);
 			matrices.pop();
 		}
 		matrices.pop();

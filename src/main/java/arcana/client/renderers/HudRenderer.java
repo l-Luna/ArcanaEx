@@ -1,10 +1,11 @@
-package arcana.client;
+package arcana.client.renderers;
 
 import arcana.ArcanaRegistry;
 import arcana.aspects.Aspect;
 import arcana.aspects.AspectMap;
 import arcana.aspects.Aspects;
 import arcana.aura.AuraChunk;
+import arcana.client.RenderHelper;
 import arcana.items.WandItem;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
@@ -23,7 +24,7 @@ import java.util.Map;
 
 import static arcana.Arcana.arcId;
 
-public class HudRenderer{
+public final class HudRenderer{
 	
 	public static final Identifier fluxMeterFrame = arcId("textures/gui/hud/flux_meter_frame.png");
 	public static final Identifier fluxMeterFilling = arcId("textures/gui/hud/flux_chaos.png");

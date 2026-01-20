@@ -1,7 +1,7 @@
 package arcana.commands;
 
 import arcana.aura.*;
-import arcana.client.NodeRenderer;
+import arcana.client.renderers.NodeRenderer;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.SuggestionProvider;

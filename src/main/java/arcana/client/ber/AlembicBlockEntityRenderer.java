@@ -2,7 +2,7 @@ package arcana.client.ber;
 
 import arcana.aspects.AspectMap;
 import arcana.blocks.be.AlembicBlockEntity;
-import arcana.client.AspectRenderer;
+import arcana.client.AspectRenderHelper;
 import arcana.items.GogglesOfRevealingItem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -21,7 +21,7 @@ public class AlembicBlockEntityRenderer implements BlockEntityRenderer<AlembicBl
 		var player = MinecraftClient.getInstance().player;
 		if(!GogglesOfRevealingItem.hasRevealing(player) || entity.stored == null)
 			return;
-		AspectRenderer.renderAspectsInWorld(matrices, player, AspectMap.fromAspectStack(entity.stored), entity.getPos(), new Vec3f(0, 1, -0.8f));
+		AspectRenderHelper.renderAspectsInWorld(matrices, player, AspectMap.fromAspectStack(entity.stored), entity.getPos(), new Vec3f(0, 1, -0.8f));
 		
 		/*matrices.push();
 		matrices.translate(0.5, 1, 0.5);

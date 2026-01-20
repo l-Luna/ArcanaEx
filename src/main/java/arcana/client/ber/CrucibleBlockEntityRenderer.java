@@ -1,7 +1,7 @@
 package arcana.client.ber;
 
 import arcana.blocks.be.CrucibleBlockEntity;
-import arcana.client.AspectRenderer;
+import arcana.client.AspectRenderHelper;
 import arcana.items.GogglesOfRevealingItem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -20,6 +20,6 @@ public class CrucibleBlockEntityRenderer implements BlockEntityRenderer<Crucible
 		var player = MinecraftClient.getInstance().player;
 		if(!GogglesOfRevealingItem.hasRevealing(player))
 			return;
-		AspectRenderer.renderAspectsInWorld(matrices, player, entity.getAspects(), entity.getPos(), new Vec3f(0, 2, 0));
+		AspectRenderHelper.renderAspectsInWorld(matrices, player, entity.getAspects(), entity.getPos(), new Vec3f(0, 2, 0));
 	}
 }

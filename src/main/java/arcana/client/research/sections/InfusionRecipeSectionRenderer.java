@@ -1,6 +1,6 @@
 package arcana.client.research.sections;
 
-import arcana.client.AspectRenderer;
+import arcana.client.AspectRenderHelper;
 import arcana.recipes.InfusionRecipe;
 import arcana.research.sections.InfusionRecipeSection;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -57,7 +57,7 @@ public class InfusionRecipeSectionRenderer extends AbstractRecipeSectionRenderer
 			int aspectY = ulY + 86;
 			
 			for(int i = 0, length = stacks.size(); i < length; i++)
-				AspectRenderer.renderAspectStack(stacks.get(i), matrices, client().textRenderer, aspectX + i * (16 + 2 * spacing) + spacing, aspectY, 101);
+				AspectRenderHelper.renderAspectStack(stacks.get(i), matrices, client().textRenderer, aspectX + i * (16 + 2 * spacing) + spacing, aspectY, 101);
 		}
 	}
 	

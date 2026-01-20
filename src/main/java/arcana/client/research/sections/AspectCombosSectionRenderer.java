@@ -2,7 +2,7 @@ package arcana.client.research.sections;
 
 import arcana.aspects.Aspect;
 import arcana.aspects.Aspects;
-import arcana.client.AspectRenderer;
+import arcana.client.AspectRenderHelper;
 import arcana.client.research.EntrySectionRenderer;
 import arcana.research.sections.AspectCombosSection;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -24,9 +24,9 @@ public class AspectCombosSectionRenderer implements EntrySectionRenderer<AspectC
 		for(int i = pageIdx * 5; i < aspects.size() && i < (pageIdx + 1) * 5; i++){
 			Aspect aspect = aspects.get(i);
 			int dIdx = i - pageIdx * 5;
-			AspectRenderer.renderAspect(aspect.left(), matrices, x, y + 30 * dIdx, 101);
-			AspectRenderer.renderAspect(aspect.right(), matrices, x + 40, y + 30 * dIdx, 101);
-			AspectRenderer.renderAspect(aspect, matrices, x + 80, y + 30 * dIdx, 101);
+			AspectRenderHelper.renderAspect(aspect.left(), matrices, x, y + 30 * dIdx, 101);
+			AspectRenderHelper.renderAspect(aspect.right(), matrices, x + 40, y + 30 * dIdx, 101);
+			AspectRenderHelper.renderAspect(aspect, matrices, x + 80, y + 30 * dIdx, 101);
 			RenderSystem.setShaderTexture(0, overlayTexture(section));
 			drawTexture(matrices, x + 20, y + 30 * dIdx, 101, 105, 161, 12, 13, 256, 256);
 			drawTexture(matrices, x + 60, y + 30 * dIdx, 101, 118, 161, 12, 13, 256, 256);

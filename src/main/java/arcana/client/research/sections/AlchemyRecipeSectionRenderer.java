@@ -2,7 +2,7 @@ package arcana.client.research.sections;
 
 import arcana.aspects.AspectMap;
 import arcana.aspects.AspectStack;
-import arcana.client.AspectRenderer;
+import arcana.client.AspectRenderHelper;
 import arcana.recipes.AlchemyRecipe;
 import arcana.research.sections.AlchemyRecipeSection;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -38,7 +38,7 @@ public class AlchemyRecipeSectionRenderer extends AbstractRecipeSectionRenderer<
 			int aspectStartX = ulX + 12;
 			int aspectStartY = ulY + 20;
 			positionAspects(ar.getAspects(), aspectStartX, aspectStartY).forEach((stack, pos) ->
-					AspectRenderer.renderAspectStack(stack, matrices, textRenderer(), pos.getLeft(), pos.getRight(), 101));
+					AspectRenderHelper.renderAspectStack(stack, matrices, textRenderer(), pos.getLeft(), pos.getRight(), 101));
 		}
 	}
 	

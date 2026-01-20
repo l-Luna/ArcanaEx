@@ -1,6 +1,7 @@
-package arcana.client;
+package arcana.client.tooltip;
 
 import arcana.aspects.AspectStack;
+import arcana.client.AspectRenderHelper;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
 import net.minecraft.client.render.item.ItemRenderer;
@@ -27,7 +28,7 @@ public record ItemAspectsTooltipComponent(List<AspectStack> aspects, @Nullable T
 		}
 		int n = 0;
 		for(AspectStack aspect : aspects){
-			AspectRenderer.renderAspectStack(aspect, matrices, textRenderer, x + n * 19 + 1, y + 1, z);
+			AspectRenderHelper.renderAspectStack(aspect, matrices, textRenderer, x + n * 19 + 1, y + 1, z);
 			n++;
 			if(n >= 6){
 				n = 0;

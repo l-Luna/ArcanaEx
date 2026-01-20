@@ -2,7 +2,7 @@ package arcana.client.research;
 
 import arcana.aspects.Aspect;
 import arcana.aspects.Aspects;
-import arcana.client.AspectRenderer;
+import arcana.client.AspectRenderHelper;
 import arcana.research.Addendum;
 import arcana.research.Entry;
 import arcana.research.Research;
@@ -83,7 +83,7 @@ public class TextFormatter{
 		
 		public void render(MatrixStack stack, int x, int y){
 			if(aspect != null)
-				AspectRenderer.renderAspect(aspect, stack, x, y, 100, 1, 1, 1, 1);
+				AspectRenderHelper.renderAspect(aspect, stack, x, y, 100, 1, 1, 1, 1);
 		}
 		
 		public float getWidth(){

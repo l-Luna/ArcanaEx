@@ -14,9 +14,12 @@ import arcana.client.entity.PrismaticOrbEntityRenderer;
 import arcana.client.entity.ThrownAlumentumEntityRenderer;
 import arcana.client.entity.WispLikeEntityRenderer;
 import arcana.client.particles.*;
+import arcana.client.renderers.*;
 import arcana.client.research.EntrySectionRenderer;
 import arcana.client.research.PuzzleRenderer;
 import arcana.client.research.RequirementRenderer;
+import arcana.client.tooltip.ItemAspectsTooltipComponent;
+import arcana.client.tooltip.WandAspectsTooltipComponent;
 import arcana.components.Researcher;
 import arcana.duck.ArcanaItem;
 import arcana.fluids.ArcanaFluid;
@@ -89,6 +92,10 @@ public final class ArcanaClient implements ClientModInitializer{
 		});
 		
 		WorldRenderEvents.LAST.register(NodeRenderer::render);
+		WorldRenderEvents.BEFORE_BLOCK_OUTLINE.register((ctx1, hit) -> {
+			PlaneProjectionRenderer.renderPlaneProjection(ctx1, hit);
+			return true;
+		});
 		HudRenderCallback.EVENT.register(HudRenderer::renderHud);
 		HudRenderCallback.EVENT.register(FocusSwitcherRenderer::renderHud);
 		HudRenderCallback.EVENT.register(RunicShieldingRenderer::renderOverlay);

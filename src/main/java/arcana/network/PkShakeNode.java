@@ -3,7 +3,7 @@ package arcana.network;
 import arcana.ReflectivelyUtilized;
 import arcana.aura.Node;
 import arcana.aura.NodeReference;
-import arcana.client.NodeRenderer;
+import arcana.client.renderers.NodeRenderer;
 import com.unascribed.lib39.tunnel.api.NetworkContext;
 import com.unascribed.lib39.tunnel.api.S2CMessage;
 import com.unascribed.lib39.tunnel.api.annotation.field.MarshalledAs;

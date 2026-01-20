@@ -1,7 +1,7 @@
 package arcana.client.research;
 
 import arcana.aspects.Aspect;
-import arcana.client.AspectRenderer;
+import arcana.client.AspectRenderHelper;
 import arcana.client.research.sections.*;
 import arcana.research.EntrySection;
 import arcana.research.Research;
@@ -95,7 +95,7 @@ public interface EntrySectionRenderer<T extends EntrySection>{
 	}
 	
 	default void drawTooltip(MatrixStack matrices, Aspect aspect, int mouseX, int mouseY){
-		AspectRenderer.renderAspectTooltip(aspect, matrices, mouseX, mouseY);
+		AspectRenderHelper.renderAspectTooltip(aspect, matrices, mouseX, mouseY);
 	}
 	
 	default void drawTooltip(MatrixStack matrices, ItemStack stack, int mouseX, int mouseY){

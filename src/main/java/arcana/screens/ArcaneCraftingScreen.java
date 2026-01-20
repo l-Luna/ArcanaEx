@@ -4,7 +4,7 @@ import arcana.ArcanaRegistry;
 import arcana.aspects.Aspect;
 import arcana.aspects.AspectMap;
 import arcana.aspects.Aspects;
-import arcana.client.AspectRenderer;
+import arcana.client.AspectRenderHelper;
 import arcana.items.WandItem;
 import arcana.recipes.ShapedArcaneCraftingRecipe;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -88,8 +88,8 @@ public class ArcaneCraftingScreen extends HandledScreen<ArcaneCraftingScreen.Han
 				int x = (int)aspectPositions.get(aspect).x;
 				int y = (int)aspectPositions.get(aspect).y;
 				float alpha = blink ? (float)Math.abs(Math.sin((world.getTime() + delta) / 4.5f)) * 0.6f + 0.4f : 1;
-				AspectRenderer.renderAspect(aspect, matrices, x, y, 0, 1, 1, 1, alpha);
-				AspectRenderer.renderAspectStackOverlay(amount, matrices, MinecraftClient.getInstance().textRenderer, x, y, 0);
+				AspectRenderHelper.renderAspect(aspect, matrices, x, y, 0, 1, 1, 1, alpha);
+				AspectRenderHelper.renderAspectStackOverlay(amount, matrices, MinecraftClient.getInstance().textRenderer, x, y, 0);
 				matrices.pop();
 			}
 		});

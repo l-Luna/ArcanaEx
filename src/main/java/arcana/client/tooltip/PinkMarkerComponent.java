@@ -1,4 +1,4 @@
-package arcana.client;
+package arcana.client.tooltip;
 
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.tooltip.TooltipComponent;

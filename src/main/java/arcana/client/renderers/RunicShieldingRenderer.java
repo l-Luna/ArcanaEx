@@ -1,5 +1,6 @@
-package arcana.client;
+package arcana.client.renderers;
 
+import arcana.client.RenderHelper;
 import arcana.components.RunicShielding;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;

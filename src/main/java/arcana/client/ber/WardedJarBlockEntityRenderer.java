@@ -3,7 +3,7 @@ package arcana.client.ber;
 import arcana.aspects.AspectMap;
 import arcana.aspects.AspectStack;
 import arcana.blocks.be.WardedJarBlockEntity;
-import arcana.client.AspectRenderer;
+import arcana.client.AspectRenderHelper;
 import arcana.items.GogglesOfRevealingItem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
@@ -89,7 +89,7 @@ public class WardedJarBlockEntityRenderer implements BlockEntityRenderer<WardedJ
 			var player = MinecraftClient.getInstance().player;
 			if(!GogglesOfRevealingItem.hasRevealing(player))
 				return;
-			AspectRenderer.renderAspectsInWorld(matrices, player, AspectMap.fromAspectStack(stack), entity.getPos(), new Vec3f(0, 0.7f, -0.6f));
+			AspectRenderHelper.renderAspectsInWorld(matrices, player, AspectMap.fromAspectStack(stack), entity.getPos(), new Vec3f(0, 0.7f, -0.6f));
 		}
 	}
 	

@@ -2,7 +2,7 @@ package arcana.mixin;
 
 import arcana.ArcanaRegistry;
 import arcana.client.ArcanaClient;
-import arcana.client.RunicShieldingRenderer;
+import arcana.client.renderers.RunicShieldingRenderer;
 import arcana.effects.PressureStatusEffect;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;

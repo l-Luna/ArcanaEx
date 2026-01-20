@@ -1,4 +1,4 @@
-package arcana.client;
+package arcana.client.renderers;
 
 import arcana.items.WandItem;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack;
 import java.util.OptionalInt;
 
 // see https://git.sleeping.town/unascribed-mods/Yttr/src/branch/1.20.1/src/main/java/diy/y2k/yttr/client/render/ui/RifleHUDRenderer.java
-public class FocusSwitcherRenderer{
+public final class FocusSwitcherRenderer{
 	
 	private static final int openAnimationTime = 10, closeAnimationTime = 10, swapAnimationTime = 5;
 	

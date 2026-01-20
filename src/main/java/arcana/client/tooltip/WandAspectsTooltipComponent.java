@@ -1,8 +1,9 @@
-package arcana.client;
+package arcana.client.tooltip;
 
 import arcana.aspects.Aspect;
 import arcana.aspects.AspectMap;
 import arcana.aspects.Aspects;
+import arcana.client.AspectRenderHelper;
 import arcana.items.WandItem;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
@@ -28,7 +29,7 @@ public record WandAspectsTooltipComponent(ItemStack wand) implements TooltipComp
 		for(int i = 0; i < primals.size(); i++){
 			Aspect primal = primals.get(i);
 			int py = y + 1 + (i % 2 == 0 ? 7 : 0);
-			AspectRenderer.renderAspectStack(primal, aspects.get(primal), matrices, text, true, x + i * 19 + 1, py, z);
+			AspectRenderHelper.renderAspectStack(primal, aspects.get(primal), matrices, text, true, x + i * 19 + 1, py, z);
 		}
 	}
 }

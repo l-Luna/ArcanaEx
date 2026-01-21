@@ -1,13 +1,12 @@
 package arcana.entities.crimson;
 
+import arcana.ArcanaRegistry;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.World;
@@ -22,8 +21,7 @@ public class CrimsonKnightEntity extends CrimsonEntity{
 	
 	protected void initEquipment(Random random, LocalDifficulty localDifficulty){
 		super.initEquipment(random, localDifficulty);
-		
-		equipStack(EquipmentSlot.MAINHAND, new ItemStack(Items.IRON_SWORD));
+		equipStack(EquipmentSlot.MAINHAND, ArcanaRegistry.CRIMSON_BLADE.getDefaultStack());
 	}
 	
 	protected void initGoals(){

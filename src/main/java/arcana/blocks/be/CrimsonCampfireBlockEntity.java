@@ -6,6 +6,7 @@ import arcana.mixin.BlockEntityAccessor;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.CampfireBlockEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 
 public class CrimsonCampfireBlockEntity extends CampfireBlockEntity{
@@ -17,6 +18,8 @@ public class CrimsonCampfireBlockEntity extends CampfireBlockEntity{
 	
 	public static void litServerTick(World world, BlockPos pos, BlockState state, CrimsonCampfireBlockEntity campfire){
 		CampfireBlockEntity.litServerTick(world, pos, state, campfire);
+		if(world.getDifficulty() == Difficulty.PEACEFUL)
+			return;
 		if(world.getTime() % (20 * 14) != 0)
 			return;
 		CrimsonSpawns.trySpawn(world, pos, pos);

@@ -7,6 +7,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 
 public class CrimsonLanternBlockEntity extends BlockEntity{
@@ -17,6 +18,8 @@ public class CrimsonLanternBlockEntity extends BlockEntity{
 	
 	public void tick(World world, BlockPos pos){
 		// TODO: tie spawned mobs to this lantern
+		if(world.getDifficulty() == Difficulty.PEACEFUL)
+			return;
 		if(world.isClient){
 			clientTick(world, pos);
 			return;

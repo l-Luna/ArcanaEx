@@ -1,0 +1,25 @@
+{
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "X": {
+      "item": "arcana:gold_ring"
+    },
+    "G": {
+      "item": "arcana:luminiferous_glass"
+    },
+    "F": {
+      "item": "arcana:light_focus"
+    }
+  },
+  "pattern": [
+    " G ",
+    "GFG",
+    " X "
+  ],
+  "aspects": [
+    "8*air"
+  ],
+  "result": {
+    "item": "arcana:lamplight_ring"
+  }
+}

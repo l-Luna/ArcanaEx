@@ -1,6 +1,7 @@
 package arcana.blocks;
 
 import net.minecraft.block.*;
+import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
@@ -53,5 +54,9 @@ public class LightFocusBlock extends WaterloggableBlock{
 	
 	public float getAmbientOcclusionLightLevel(BlockState state, BlockView world, BlockPos pos){
 		return 1;
+	}
+	
+	public boolean canReplace(BlockState state, ItemPlacementContext context){
+		return true;
 	}
 }

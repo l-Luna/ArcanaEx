@@ -287,13 +287,14 @@ public final class ArcanaRegistry{
 	public static final Item SILVERLEAF_SCALPEL = new ScalpelItem(new Settings().group(Tab.EQUIPMENT).maxDamage(100), ScalpelItem.ScalpelType.SILVER);
 	public static final Item VOID_METAL_SCALPEL = new ScalpelItem(new Settings().group(Tab.EQUIPMENT).maxDamage(100), ScalpelItem.ScalpelType.BLACK);
 	
-	public static final Item EMERALD_NECKLACE = new TrinketItem(new Settings().group(Tab.EQUIPMENT).maxCount(1));
 	public static final Item GOLD_RING = new RingItem(new Settings().group(Tab.EQUIPMENT).maxCount(1), 2, 0);
 	public static final Item ARCANIUM_RING = new RingItem(new Settings().group(Tab.EQUIPMENT).maxCount(1), 3, 0);
 	public static final Item ADORNED_RING = new RingItem(new Settings().group(Tab.EQUIPMENT).maxCount(1), 1, 5);
+	public static final Item LAMPLIGHT_RING = new LamplightRingItem(new Settings().group(Tab.EQUIPMENT).maxCount(1));
 	public static final Item PLANE_PROJECTION_RING = new RingItem(new Settings().group(Tab.EQUIPMENT).maxCount(1), 3, 0);
 	public static final Item RING_OF_THE_SURGING_BARRIER = new RingItem(new Settings().group(Tab.EQUIPMENT).maxCount(1).rarity(Rarity.UNCOMMON), 1, 0);
 	public static final Item RING_OF_TWIN_HEARTBEATS = new TwinHeartbeatRingItem(new Settings().group(Tab.EQUIPMENT).maxCount(1).rarity(Rarity.UNCOMMON));
+	public static final Item EMERALD_NECKLACE = new TrinketItem(new Settings().group(Tab.EQUIPMENT).maxCount(1));
 	public static final Item AMULET_OF_RUNIC_SHIELDING = new ShieldingTrinketItem(new Settings().group(Tab.EQUIPMENT).maxCount(1), 2);
 	public static final Item AMULET_OF_UNBURDENED_TRAVEL = new ShieldingTrinketItem(new Settings().group(Tab.EQUIPMENT).maxCount(1), 4);
 	public static final Item AMULET_OF_DEAFENING_SHIELDING = new ShieldingTrinketItem(new Settings().group(Tab.EQUIPMENT).maxCount(1), 1);
@@ -955,13 +956,14 @@ public final class ArcanaRegistry{
 		register("silverleaf_scalpel", SILVERLEAF_SCALPEL);
 		register("void_metal_scalpel", VOID_METAL_SCALPEL);
 		
-		register("emerald_necklace", EMERALD_NECKLACE);
 		register("gold_ring", GOLD_RING);
 		register("arcanium_ring", ARCANIUM_RING);
 		register("adorned_ring", ADORNED_RING);
+		register("lamplight_ring", LAMPLIGHT_RING);
 		register("plane_projection_ring", PLANE_PROJECTION_RING);
 		register("ring_of_the_surging_barrier", RING_OF_THE_SURGING_BARRIER);
 		register("ring_of_twin_heartbeats", RING_OF_TWIN_HEARTBEATS);
+		register("emerald_necklace", EMERALD_NECKLACE);
 		register("amulet_of_runic_shielding", AMULET_OF_RUNIC_SHIELDING);
 		register("amulet_of_unburdened_travel", AMULET_OF_UNBURDENED_TRAVEL);
 		register("amulet_of_deafening_shielding", AMULET_OF_DEAFENING_SHIELDING);

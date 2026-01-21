@@ -4,11 +4,11 @@
     "X": {
       "item": "arcana:arcanium_ring"
     },
-    "O": {
-      "item": "arcana:crystals/order"
+    "F": {
+      "item": "arcana:crystals/flight"
     },
     "T": {
-      "item": "arcana:crystals/earth"
+      "item": "arcana:crystals/tool"
     },
     "P": {
       "item": "minecraft:phantom_membrane"
@@ -16,7 +16,7 @@
   },
   "pattern": [
     " P ",
-    "TXO"
+    "FXT"
   ],
   "aspects": [
     "16*order",

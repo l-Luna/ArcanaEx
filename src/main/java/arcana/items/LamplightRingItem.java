@@ -1,0 +1,42 @@
+package arcana.items;
+
+import arcana.ArcanaRegistry;
+import arcana.util.SearchUtil;
+import dev.emi.trinkets.api.SlotReference;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.fluid.Fluids;
+import net.minecraft.item.ItemStack;
+import net.minecraft.state.property.Properties;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+
+public class LamplightRingItem extends RingItem{
+	
+	public LamplightRingItem(Settings settings){
+		super(settings, 2, 0);
+	}
+	
+	public void tick(ItemStack stack, SlotReference slot, LivingEntity entity){
+		super.tick(stack, slot, entity);
+		World world = entity.world;
+		if(world.isClient)
+			return;
+		BlockPos userPos = new BlockPos(entity.getEyePos());
+		if(world.getTime() % 20 == 10)
+			proc(world, userPos);
+		if(world.getTime() % 20 * 3 == 30){
+			SearchUtil.randomSearch(world, userPos, 6, 10, (pos, __) -> proc(world, pos));
+		}
+	}
+	
+	private static boolean proc(World world, BlockPos userPos){
+		BlockState there = world.getBlockState(userPos);
+		if((there.isAir() || there.getMaterial().isReplaceable()) && world.getLightLevel(userPos) < 8){
+			boolean wet = world.getFluidState(userPos).isOf(Fluids.WATER);
+			world.setBlockState(userPos, ArcanaRegistry.LIGHT_BLOCK.getDefaultState().with(Properties.WATERLOGGED, wet));
+			return true;
+		}
+		return false;
+	}
+}

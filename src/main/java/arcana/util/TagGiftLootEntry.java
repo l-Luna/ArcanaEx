@@ -19,13 +19,13 @@ import net.minecraft.util.registry.Registry;
 import java.util.function.Consumer;
 
 // Similar to TagEntry, but one item is chosen from the tag at random
-public class TagGiftEntry extends LeafEntry{
+public class TagGiftLootEntry extends LeafEntry{
 
 	public static final LootPoolEntryType TYPE = new LootPoolEntryType(new Serializer());
 	
 	public final TagKey<Item> tag;
 	
-	protected TagGiftEntry(int weight, int quality, LootCondition[] conditions, LootFunction[] functions, TagKey<Item> tag){
+	protected TagGiftLootEntry(int weight, int quality, LootCondition[] conditions, LootFunction[] functions, TagKey<Item> tag){
 		super(weight, quality, conditions, functions);
 		this.tag = tag;
 	}
@@ -40,13 +40,13 @@ public class TagGiftEntry extends LeafEntry{
 		return TYPE;
 	}
 	
-	public static class Serializer extends LeafEntry.Serializer<TagGiftEntry>{
-		public void addEntryFields(JsonObject obj, TagGiftEntry entry, JsonSerializationContext ctx){
+	public static class Serializer extends LeafEntry.Serializer<TagGiftLootEntry>{
+		public void addEntryFields(JsonObject obj, TagGiftLootEntry entry, JsonSerializationContext ctx){
 			super.addEntryFields(obj, entry, ctx);
 			obj.addProperty("name", entry.tag.id().toString());
 		}
 		
-		protected TagGiftEntry fromJson(
+		protected TagGiftLootEntry fromJson(
 				JsonObject jsonObject,
 				JsonDeserializationContext ctx,
 				int weight,
@@ -54,7 +54,7 @@ public class TagGiftEntry extends LeafEntry{
 				LootCondition[] conditions,
 				LootFunction[] functions){
 			TagKey<Item> tag = TagKey.of(Registry.ITEM_KEY, new Identifier(JsonHelper.getString(jsonObject, "name")));
-			return new TagGiftEntry(weight, quality, conditions, functions, tag);
+			return new TagGiftLootEntry(weight, quality, conditions, functions, tag);
 		}
 	}
 }

@@ -34,7 +34,8 @@ import arcana.items.creative.NodeRemoverItem;
 import arcana.items.creative.TaintConverterItem;
 import arcana.items.foci.*;
 import arcana.screens.*;
-import arcana.util.TagGiftEntry;
+import arcana.util.RandomChanceOnceLootCondition;
+import arcana.util.TagGiftLootEntry;
 import arcana.worldgen.HangingNodeFeature;
 import arcana.worldgen.SurfaceNodeFeature;
 import arcana.worldgen.geodes.NodalGeodes;
@@ -80,6 +81,7 @@ import net.minecraft.fluid.FlowableFluid;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.*;
 import net.minecraft.item.Item.Settings;
+import net.minecraft.loot.condition.LootConditionType;
 import net.minecraft.loot.entry.LootPoolEntryType;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.DefaultParticleType;
@@ -1434,8 +1436,9 @@ public final class ArcanaRegistry{
 		register("entropy_power", ENTROPY_POWER);
 		register("pressure", PRESSURE);
 		
-		// loot pool entry types
-		register("tag_gift", TagGiftEntry.TYPE);
+		// loot pool types
+		register("tag_gift", TagGiftLootEntry.TYPE);
+		register("random_chance_once", RandomChanceOnceLootCondition.TYPE);
 		
 		// entity attributes
 		// TODO: move elsewhere?
@@ -1522,6 +1525,10 @@ public final class ArcanaRegistry{
 	
 	private static void register(String name, LootPoolEntryType type){
 		Registry.register(Registry.LOOT_POOL_ENTRY_TYPE, arcId(name), type);
+	}
+	
+	private static void register(String name, LootConditionType type){
+		Registry.register(Registry.LOOT_CONDITION_TYPE, arcId(name), type);
 	}
 	
 	private static void register(String name, Structure structure, StructurePlacement placement){

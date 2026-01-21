@@ -2,7 +2,7 @@
   "type": "arcana:arcane_crafting",
   "key": {
     "X": {
-      "item": "arcana:gold_ring"
+      "item": "arcana:arcanium_ring"
     },
     "O": {
       "item": "arcana:crystals/order"

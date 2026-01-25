@@ -46,7 +46,7 @@ public class ThrownAlumentumEntity extends Entity{
 		move(MovementType.SELF, getVelocity());
 		setVelocity(getVelocity().multiply(.98d));
 		
-		if(horizontalCollision || verticalCollision){
+		if(!world.isClient && (horizontalCollision || verticalCollision)){
 			// Explode when touching something
 			explode();
 			discard();

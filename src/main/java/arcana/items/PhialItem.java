@@ -1,7 +1,7 @@
 package arcana.items;
 
+import arcana.api.AspectIo;
 import arcana.aspects.Aspect;
-import arcana.aspects.AspectIo;
 import arcana.aspects.AspectStack;
 import arcana.aspects.Aspects;
 import net.minecraft.block.Block;

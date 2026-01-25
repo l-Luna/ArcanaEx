@@ -1,7 +1,7 @@
 package arcana.blocks.tubes;
 
 import arcana.ArcanaRegistry;
-import arcana.aspects.AspectIo;
+import arcana.api.AspectIo;
 import arcana.aspects.AspectSpeck;
 import arcana.aspects.AspectStack;
 import arcana.util.NbtUtil;

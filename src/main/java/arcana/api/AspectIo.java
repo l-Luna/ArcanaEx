@@ -1,5 +1,6 @@
-package arcana.aspects;
+package arcana.api;
 
+import arcana.aspects.AspectStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;

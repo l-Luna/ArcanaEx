@@ -1,5 +1,7 @@
 package arcana;
 
+import arcana.api.Cap;
+import arcana.api.Core;
 import arcana.aspects.Aspect;
 import arcana.aspects.Aspects;
 import arcana.blocks.*;
@@ -89,6 +91,7 @@ import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.particle.ParticleType;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.structure.StructureSet;
 import net.minecraft.structure.pool.StructurePool;
@@ -427,6 +430,8 @@ public final class ArcanaRegistry{
 	public static final Block PAVING_STONE_OF_TRAVEL = new PavingStoneOfTravelBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3, 7));
 	public static final Block PAVING_STONE_OF_WARDING = new PavingStoneOfWardingBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3.5f, 7));
 	public static final Block PEDESTAL = new PedestalBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3).nonOpaque());
+	public static final Block GREATWOOD_SCRIBING_DESK = OrientableBigBlock.create(IntProperty.of("x", 0, 1), null, null, of(Material.WOOD).dropsSelf().renderLayer(CUTOUT).usesTool(AXE_MINEABLE).nonOpaque().strength(3));
+	public static final Block SILVERWOOD_SCRIBING_DESK = OrientableBigBlock.create(IntProperty.of("x", 0, 1), null, null, of(Material.WOOD).dropsSelf().renderLayer(CUTOUT).usesTool(AXE_MINEABLE).nonOpaque().strength(3));
 	public static final Block ARCANE_LEVITATOR = new ArcaneLevitatorBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).sounds(BlockSoundGroup.WOOD).strength(2));
 	public static final BigBlock THAUMIC_HALO = new ThaumicHaloBlock(of(Material.METAL).dropsSelf().requiresTool(PICKAXE_MINEABLE).renderLayer(CUTOUT).strength(3).nonOpaque());
 	public static final Block CRYSTALLIZATION_PRESS = new CrystallizationPressBlock(of(Material.METAL).dropsSelf().requiresTool(PICKAXE_MINEABLE).sounds(BlockSoundGroup.ANCIENT_DEBRIS).strength(4).nonOpaque());
@@ -1100,9 +1105,10 @@ public final class ArcanaRegistry{
 		register("paving_stone_of_travel", PAVING_STONE_OF_TRAVEL);
 		register("paving_stone_of_warding", PAVING_STONE_OF_WARDING);
 		register("pedestal", PEDESTAL);
+		register("greatwood_scribing_desk", GREATWOOD_SCRIBING_DESK);
+		register("silverwood_scribing_desk", SILVERWOOD_SCRIBING_DESK);
 		register("arcane_levitator", ARCANE_LEVITATOR);
-		register("thaumic_halo", THAUMIC_HALO, false);
-		register("thaumic_halo", new BigBlockItem(THAUMIC_HALO, GROUPED));
+		register("thaumic_halo", THAUMIC_HALO);
 		register("crystallization_press", CRYSTALLIZATION_PRESS);
 		register("mystic_mist", MYSTIC_MIST);
 		register("warded_campfire", WARDED_CAMPFIRE);
@@ -1230,12 +1236,9 @@ public final class ArcanaRegistry{
 		register("bejeweled_beets", BEJEWELED_BEETS_BLOCK, false);
 		register("void_growth", VOID_GROWTH, false);
 		
-		register("speak_no_evil_statue", SPEAK_NO_EVIL_STATUE, false);
-		register("speak_no_evil_statue", new BigBlockItem(SPEAK_NO_EVIL_STATUE, GROUPED));
-		register("see_no_evil_statue", SEE_NO_EVIL_STATUE, false);
-		register("see_no_evil_statue", new BigBlockItem(SEE_NO_EVIL_STATUE, GROUPED));
-		register("hear_no_evil_statue", HEAR_NO_EVIL_STATUE, false);
-		register("hear_no_evil_statue", new BigBlockItem(HEAR_NO_EVIL_STATUE, GROUPED));
+		register("speak_no_evil_statue", SPEAK_NO_EVIL_STATUE);
+		register("see_no_evil_statue", SEE_NO_EVIL_STATUE);
+		register("hear_no_evil_statue", HEAR_NO_EVIL_STATUE);
 		
 		register("crimson_lantern", CRIMSON_LANTERN);
 		register("chain_wall", CHAIN_WALL);
@@ -1467,7 +1470,7 @@ public final class ArcanaRegistry{
 			Settings settings = new Settings().group(Tab.MAIN);
 			if(block.settings instanceof ArcanaBlockSettings abs && abs.getGroup() != null)
 				settings.group(abs.getGroup());
-			register(name, new BlockItem(block, settings));
+			register(name, block instanceof BigBlock bb ? new BigBlockItem(bb, settings) : new BlockItem(block, settings));
 		}
 	}
 	

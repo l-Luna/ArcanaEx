@@ -1,7 +1,7 @@
 package arcana.blocks.be;
 
 import arcana.ArcanaRegistry;
-import arcana.mixin.BlockEntityAccessor;
+import arcana.mixin.accessor.BlockEntityAccessor;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CampfireBlock;
 import net.minecraft.block.entity.CampfireBlockEntity;

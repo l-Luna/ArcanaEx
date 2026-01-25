@@ -1,10 +1,10 @@
 package arcana.blocks;
 
 import arcana.ArcanaRegistry;
+import arcana.api.ScalpelSlashable;
 import arcana.aura.AuraWorld;
 import arcana.aura.FluxOrigin;
 import arcana.blocks.be.InfusionMatrixBlockEntity;
-import arcana.items.ScalpelSlashable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;

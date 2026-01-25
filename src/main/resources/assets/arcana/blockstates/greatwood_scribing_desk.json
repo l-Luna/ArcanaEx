@@ -1,0 +1,85 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "arcana:block/greatwood_scribing_desk_right",
+        "y": 0
+      },
+      "when": {
+        "facing": "north",
+        "x": 1
+      }
+    },
+    {
+      "apply": {
+        "model": "arcana:block/greatwood_scribing_desk_right",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "x": 1
+      }
+    },
+    {
+      "apply": {
+        "model": "arcana:block/greatwood_scribing_desk_right",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "x": 1
+      }
+    },
+    {
+      "apply": {
+        "model": "arcana:block/greatwood_scribing_desk_right",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "x": 1
+      }
+    },
+
+    {
+      "apply": {
+        "model": "arcana:block/greatwood_scribing_desk_left",
+        "y": 0
+      },
+      "when": {
+        "facing": "north",
+        "x": 0
+      }
+    },
+    {
+      "apply": {
+        "model": "arcana:block/greatwood_scribing_desk_left",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "x": 0
+      }
+    },
+    {
+      "apply": {
+        "model": "arcana:block/greatwood_scribing_desk_left",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "x": 0
+      }
+    },
+    {
+      "apply": {
+        "model": "arcana:block/greatwood_scribing_desk_left",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "x": 0
+      }
+    }
+  ]
+}

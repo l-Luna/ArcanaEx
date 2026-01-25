@@ -1,7 +1,7 @@
 package arcana.recipes;
 
+import arcana.api.AspectRecipe;
 import arcana.aspects.AspectMap;
-import arcana.aspects.AspectRecipe;
 import arcana.aspects.ItemAspectRegistry;
 import com.google.gson.JsonObject;
 import net.minecraft.item.ItemStack;

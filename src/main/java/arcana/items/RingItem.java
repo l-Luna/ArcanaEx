@@ -1,6 +1,7 @@
 package arcana.items;
 
 import arcana.ArcanaRegistry;
+import arcana.api.VisDiscountingItem;
 import arcana.aspects.Aspect;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;

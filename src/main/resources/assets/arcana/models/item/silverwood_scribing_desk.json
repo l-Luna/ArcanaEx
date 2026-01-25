@@ -1,0 +1,6 @@
+{
+  "parent": "arcana:block/scribing_desk",
+  "textures": {
+    "0": "arcana:block/silverwood_planks"
+  }
+}

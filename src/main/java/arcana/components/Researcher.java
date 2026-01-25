@@ -1,10 +1,10 @@
 package arcana.components;
 
 import arcana.ArcanaRegistry;
+import arcana.api.WarpingItem;
 import arcana.aura.AuraWorld;
 import arcana.aura.NodeTypes;
 import arcana.items.FocusItem;
-import arcana.items.WarpingItem;
 import arcana.research.*;
 import arcana.util.InventoryUtil;
 import arcana.util.NbtUtil;

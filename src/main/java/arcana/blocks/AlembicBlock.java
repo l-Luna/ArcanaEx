@@ -1,6 +1,6 @@
 package arcana.blocks;
 
-import arcana.aspects.AspectIo;
+import arcana.api.AspectIo;
 import arcana.aspects.AspectStack;
 import arcana.blocks.be.AlembicBlockEntity;
 import net.minecraft.block.BlockRenderType;

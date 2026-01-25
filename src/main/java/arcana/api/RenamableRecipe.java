@@ -1,4 +1,4 @@
-package arcana.recipes;
+package arcana.api;
 
 import java.util.Optional;
 

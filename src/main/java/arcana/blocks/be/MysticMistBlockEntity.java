@@ -1,8 +1,8 @@
 package arcana.blocks.be;
 
 import arcana.ArcanaRegistry;
+import arcana.api.AspectIo;
 import arcana.aspects.Aspect;
-import arcana.aspects.AspectIo;
 import arcana.aspects.AspectStack;
 import arcana.aspects.Aspects;
 import arcana.util.SearchUtil;

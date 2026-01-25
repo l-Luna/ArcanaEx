@@ -1,0 +1,71 @@
+{
+	"format_version": "1.9.0",
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"ambientocclusion": false,
+	"textures": {
+		"0": "arcana:block/silverwood_planks",
+		"particle": "arcana:block/silverwood_planks"
+	},
+	"elements": [
+		{
+			"name": "base",
+			"from": [3, 0, 2],
+			"to": [16, 1, 11],
+			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 7]},
+			"faces": {
+				"north": {"uv": [2, 1, 16, 2], "texture": "#0"},
+				"east": {"uv": [0, 1, 14, 2], "texture": "#0"},
+				"south": {"uv": [0, 1, 16, 2], "texture": "#0"},
+				"west": {"uv": [0, 1, 16, 2], "texture": "#0"},
+				"up": {"uv": [0, 3, 16, 12], "texture": "#0"},
+				"down": {"uv": [0, 3, 16, 12], "texture": "#0"}
+			},
+			"shade": false
+		},
+		{
+			"name": "left_leg",
+			"from": [8, 1, 4],
+			"to": [13, 9, 8],
+			"rotation": {"angle": 0, "axis": "y", "origin": [9, 1, 6]},
+			"faces": {
+				"north": {"uv": [0, 0, 5, 8], "texture": "#0"},
+				"east": {"uv": [0, 0, 4, 8], "texture": "#0"},
+				"south": {"uv": [0, 0, 5, 8], "texture": "#0"},
+				"west": {"uv": [0, 0, 4, 8], "texture": "#0"},
+				"up": {"uv": [0, 0, 5, 4], "texture": "#0"},
+				"down": {"uv": [0, 0, 5, 4], "texture": "#0"}
+			},
+			"shade": false
+		},
+		{
+			"name": "top",
+			"from": [0, 9, -1],
+			"to": [16, 11, 13],
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [16, 9, 5]},
+			"faces": {
+				"north": {"uv": [8, 0, 16, 2], "texture": "#0"},
+				"east": {"uv": [0, 0, 14, 2], "texture": "#0"},
+				"south": {"uv": [0, 0, 8, 2], "texture": "#0"},
+				"west": {"uv": [0, 0, 14, 2], "texture": "#0"},
+				"up": {"uv": [0, 0, 16, 14], "texture": "#0"},
+				"down": {"uv": [0, 2, 16, 16], "texture": "#0"}
+			},
+			"shade": false
+		},
+		{
+			"from": [1, 8, 10],
+			"to": [16, 10, 12],
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [16, 8, 10]},
+			"faces": {
+				"north": {"uv": [1, 1, 16, 3], "texture": "#0"},
+				"east": {"uv": [0, 0, 2, 2], "texture": "#0"},
+				"south": {"uv": [0, 1, 15, 3], "texture": "#0"},
+				"west": {"uv": [0, 0, 2, 2], "texture": "#0"},
+				"up": {"uv": [0, 3, 15, 5], "texture": "#0"},
+				"down": {"uv": [0, 0, 15, 2], "texture": "#0"}
+			},
+			"shade": false
+		}
+	]
+}

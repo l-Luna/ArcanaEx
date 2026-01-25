@@ -1,8 +1,8 @@
 package arcana.mixin;
 
+import arcana.api.AnimatedSwingItem;
+import arcana.api.AnimatedUseItem;
 import arcana.components.Caster;
-import arcana.items.AnimatedSwingItem;
-import arcana.items.AnimatedUseItem;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.client.network.AbstractClientPlayerEntity;

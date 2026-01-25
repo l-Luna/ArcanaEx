@@ -1,11 +1,11 @@
 package arcana.client;
 
 import arcana.ArcanaRegistry;
-import arcana.items.Cap;
-import arcana.items.Core;
+import arcana.api.Cap;
+import arcana.api.Core;
 import arcana.items.FocusItem;
 import arcana.items.WandItem;
-import arcana.mixin.JsonUnbakedModelAccessor;
+import arcana.mixin.accessor.JsonUnbakedModelAccessor;
 import com.mojang.datafixers.util.Either;
 import com.mojang.datafixers.util.Pair;
 import net.fabricmc.fabric.api.client.model.ModelProviderContext;

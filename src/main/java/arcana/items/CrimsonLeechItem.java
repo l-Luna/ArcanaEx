@@ -1,6 +1,8 @@
 package arcana.items;
 
 import arcana.ArcanaRegistry;
+import arcana.api.AnimatedSwingItem;
+import arcana.api.WarpingItem;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;

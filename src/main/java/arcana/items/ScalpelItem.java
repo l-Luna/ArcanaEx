@@ -1,5 +1,7 @@
 package arcana.items;
 
+import arcana.api.AnimatedUseItem;
+import arcana.api.ScalpelSlashable;
 import arcana.aura.AuraWorld;
 import arcana.aura.Node;
 import arcana.aura.NodeType;

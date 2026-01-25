@@ -1,4 +1,4 @@
-package arcana.mixin;
+package arcana.mixin.accessor;
 
 import net.minecraft.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;

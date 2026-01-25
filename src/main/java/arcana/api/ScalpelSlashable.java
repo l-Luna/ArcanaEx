@@ -1,4 +1,4 @@
-package arcana.items;
+package arcana.api;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;

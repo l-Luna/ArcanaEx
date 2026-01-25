@@ -2,7 +2,7 @@ package arcana.blocks.be;
 
 import arcana.ArcanaRegistry;
 import arcana.entities.crimson.CrimsonSpawns;
-import arcana.mixin.BlockEntityAccessor;
+import arcana.mixin.accessor.BlockEntityAccessor;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.CampfireBlockEntity;
 import net.minecraft.util.math.BlockPos;

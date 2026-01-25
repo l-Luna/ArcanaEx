@@ -1,7 +1,7 @@
 package arcana.recipes;
 
-import arcana.items.Cap;
-import arcana.items.Core;
+import arcana.api.Cap;
+import arcana.api.Core;
 import arcana.items.WandItem;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;

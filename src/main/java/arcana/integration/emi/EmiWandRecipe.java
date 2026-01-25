@@ -1,7 +1,7 @@
 package arcana.integration.emi;
 
-import arcana.items.Cap;
-import arcana.items.Core;
+import arcana.api.Cap;
+import arcana.api.Core;
 import arcana.items.WandItem;
 import dev.emi.emi.api.recipe.EmiPatternCraftingRecipe;
 import dev.emi.emi.api.stack.EmiIngredient;

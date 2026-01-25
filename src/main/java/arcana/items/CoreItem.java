@@ -1,5 +1,6 @@
 package arcana.items;
 
+import arcana.api.Core;
 import arcana.aspects.Aspect;
 import arcana.aspects.AspectMap;
 import arcana.aspects.Aspects;

@@ -1,4 +1,4 @@
-package arcana.mixin;
+package arcana.mixin.accessor;
 
 import com.mojang.datafixers.util.Either;
 import net.minecraft.client.render.model.json.JsonUnbakedModel;

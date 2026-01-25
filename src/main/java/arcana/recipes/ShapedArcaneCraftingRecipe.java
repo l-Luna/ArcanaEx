@@ -1,5 +1,6 @@
 package arcana.recipes;
 
+import arcana.api.RenamableRecipe;
 import arcana.aspects.AspectMap;
 import arcana.aspects.ItemAspectRegistry;
 import com.google.gson.JsonObject;

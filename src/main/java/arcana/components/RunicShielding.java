@@ -4,7 +4,7 @@ import arcana.ArcanaRegistry;
 import arcana.ArcanaSounds;
 import arcana.aspects.Aspects;
 import arcana.items.WandItem;
-import arcana.mixin.LivingEntityAccessor;
+import arcana.mixin.accessor.LivingEntityAccessor;
 import arcana.util.InventoryUtil;
 import dev.onyxstudios.cca.api.v3.component.Component;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;

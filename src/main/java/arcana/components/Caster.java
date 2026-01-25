@@ -1,6 +1,7 @@
 package arcana.components;
 
 import arcana.ArcanaRegistry;
+import arcana.api.Focus;
 import arcana.aspects.Aspect;
 import arcana.aspects.AspectMap;
 import arcana.aspects.Aspects;
@@ -201,7 +202,7 @@ public class Caster implements Component, AutoSyncedComponent, ServerTickingComp
 			}
 			case CONTINUOUS_CASTING -> WandItem.updateFocus(wand, focusStack -> {
 				if(focusStack.getItem() instanceof FocusItem fi && fi.isContinuous()){
-					var ccc = new FocusItem.ContinuousCastContext(wand, focusStack, player, contFocusState, stateTimer);
+					var ccc = new Focus.ContinuousCastContext(wand, focusStack, player, contFocusState, stateTimer);
 					if(stateTimer == 0){
 						var cost = fi.castCost(wand, focusStack, player).copy();
 						cost.multiply(aspect -> WandItem.costMultiplier(aspect, wand, player));
@@ -250,8 +251,8 @@ public class Caster implements Component, AutoSyncedComponent, ServerTickingComp
 	private void reset(){
 		if(state == CasterState.CONTINUOUS_CASTING && lastWandStack != null)
 			WandItem.updateFocus(lastWandStack, focus -> {
-				if(focus.getItem() instanceof FocusItem fi && fi.isContinuous())
-					fi.endContinuousCast(new FocusItem.ContinuousCastContext(lastWandStack, focus, player, contFocusState, stateTimer));
+				if(focus.getItem() instanceof Focus fi && fi.isContinuous())
+					fi.endContinuousCast(new Focus.ContinuousCastContext(lastWandStack, focus, player, contFocusState, stateTimer));
 			});
 		
 		state = CasterState.IDLE;

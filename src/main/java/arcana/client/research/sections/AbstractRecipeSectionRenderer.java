@@ -1,7 +1,7 @@
 package arcana.client.research.sections;
 
+import arcana.api.RenamableRecipe;
 import arcana.client.research.EntrySectionRenderer;
-import arcana.recipes.RenamableRecipe;
 import arcana.research.EntrySection;
 import arcana.research.sections.AbstractRecipeSection;
 import com.mojang.blaze3d.systems.RenderSystem;

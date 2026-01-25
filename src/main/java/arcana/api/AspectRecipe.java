@@ -1,4 +1,6 @@
-package arcana.aspects;
+package arcana.api;
+
+import arcana.aspects.AspectMap;
 
 public interface AspectRecipe{
 	

@@ -1,6 +1,7 @@
 package arcana.items;
 
 import arcana.ArcanaRegistry;
+import arcana.api.*;
 import arcana.aspects.*;
 import arcana.aura.AuraWorld;
 import arcana.aura.Node;
@@ -157,7 +158,7 @@ public class WandItem extends Item implements FabricItem, WarpingItem{
 		Optional<Node> nodeO = aura.raycastNodes(user, false);
 		nodeO.ifPresent(node -> Caster.from(pe).beginDraining(node, user.getActiveHand()));
 		
-		if(focusFrom(stack).getItem() instanceof FocusItem fi && fi.isContinuous())
+		if(focusFrom(stack).getItem() instanceof Focus fi && fi.isContinuous())
 			Caster.from(pe).beginContinuousCasting(user.getActiveHand());
 	}
 	

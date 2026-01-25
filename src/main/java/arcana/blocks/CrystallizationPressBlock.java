@@ -1,7 +1,7 @@
 package arcana.blocks;
 
 import arcana.ArcanaRegistry;
-import arcana.aspects.AspectIo;
+import arcana.api.AspectIo;
 import arcana.aspects.AspectStack;
 import arcana.blocks.be.CrystallizationPressBlockEntity;
 import net.minecraft.block.Block;

@@ -1,7 +1,7 @@
 package arcana.items;
 
 import arcana.ArcanaTags;
-import arcana.mixin.MiningToolItemAccessor;
+import arcana.mixin.accessor.MiningToolItemAccessor;
 import net.minecraft.item.ShovelItem;
 import net.minecraft.item.ToolMaterial;
 

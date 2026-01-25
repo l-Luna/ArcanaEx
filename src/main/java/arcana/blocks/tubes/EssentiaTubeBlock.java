@@ -1,7 +1,7 @@
 package arcana.blocks.tubes;
 
 import arcana.ArcanaRegistry;
-import arcana.aspects.AspectIo;
+import arcana.api.AspectIo;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;

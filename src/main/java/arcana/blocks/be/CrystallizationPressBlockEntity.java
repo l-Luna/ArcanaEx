@@ -1,7 +1,7 @@
 package arcana.blocks.be;
 
 import arcana.ArcanaRegistry;
-import arcana.aspects.AspectIo;
+import arcana.api.AspectIo;
 import arcana.aspects.AspectStack;
 import arcana.aspects.Aspects;
 import arcana.items.CrystalItem;

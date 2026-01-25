@@ -1,6 +1,6 @@
 package arcana.blocks;
 
-import arcana.aspects.AspectIo;
+import arcana.api.AspectIo;
 import arcana.aspects.AspectStack;
 import arcana.blocks.be.WardedJarBlockEntity;
 import arcana.blocks.tubes.EssentiaTubeBlock;

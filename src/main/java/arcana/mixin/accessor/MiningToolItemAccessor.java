@@ -1,4 +1,4 @@
-package arcana.mixin;
+package arcana.mixin.accessor;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.MiningToolItem;

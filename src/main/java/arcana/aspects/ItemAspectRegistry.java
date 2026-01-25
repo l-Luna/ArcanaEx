@@ -1,5 +1,6 @@
 package arcana.aspects;
 
+import arcana.api.AspectRecipe;
 import com.google.common.base.Stopwatch;
 import com.google.gson.*;
 import com.mojang.logging.LogUtils;

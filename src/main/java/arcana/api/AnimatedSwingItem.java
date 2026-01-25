@@ -1,4 +1,4 @@
-package arcana.items;
+package arcana.api;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

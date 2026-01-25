@@ -2,7 +2,7 @@ package arcana.entities.wisps;
 
 import arcana.ArcanaRegistry;
 import arcana.ArcanaTags;
-import arcana.items.ScalpelSlashable;
+import arcana.api.ScalpelSlashable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;

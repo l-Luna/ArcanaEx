@@ -1,4 +1,4 @@
-package arcana.mixin;
+package arcana.mixin.warding;
 
 import arcana.aura.WardedChunk;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;

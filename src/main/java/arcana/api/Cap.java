@@ -1,4 +1,4 @@
-package arcana.items;
+package arcana.api;
 
 import arcana.ArcanaRegistry;
 import arcana.aspects.Aspect;

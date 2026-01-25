@@ -1,7 +1,7 @@
 package arcana.blocks;
 
 import arcana.ArcanaRegistry;
-import arcana.aspects.AspectIo;
+import arcana.api.AspectIo;
 import arcana.aspects.AspectStack;
 import arcana.blocks.be.ThaumicHaloBlockEntity;
 import com.unascribed.lib39.weld.api.BigBlock;

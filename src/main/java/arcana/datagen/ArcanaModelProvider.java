@@ -140,6 +140,8 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		noAutoGen.add(CRIMSON_LANTERN.asItem());
 		noAutoGen.add(CHAIN_WALL.asItem());
 		noAutoGen.add(METAL_LADDER.asItem());
+		noAutoGen.add(GREATWOOD_SCRIBING_DESK.asItem());
+		noAutoGen.add(SILVERWOOD_SCRIBING_DESK.asItem());
 		noAutoGen.add(BEJEWELED_BEET_SEEDS);
 		
 		itemGen.register(NITOR.asItem(), Models.GENERATED);

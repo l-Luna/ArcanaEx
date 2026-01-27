@@ -51,7 +51,7 @@ public class RingItem extends TrinketItem implements VisDiscountingItem{
 		return builder.build();
 	}
 	
-	public int percentOff(ItemStack stack, Aspect aspect, PlayerEntity player){
+	public int percentOff(ItemStack stack, @Nullable Aspect aspect, PlayerEntity player){
 		return percentOff;
 	}
 	

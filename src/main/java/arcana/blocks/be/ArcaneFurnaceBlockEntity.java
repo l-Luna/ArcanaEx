@@ -7,15 +7,16 @@ import arcana.aspects.AspectStack;
 import arcana.aspects.ItemAspectRegistry;
 import arcana.blocks.ArcaneFurnaceBlock;
 import arcana.screens.ArcaneFurnaceScreen;
+import arcana.util.SidedArrayInventory;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.network.Packet;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
@@ -25,6 +26,7 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -41,10 +43,12 @@ public class ArcaneFurnaceBlockEntity extends BlockEntity implements NamedScreen
 	public static final int capacity = 100;
 	public static final int maxAlembics = 4;
 	
-	public SimpleInventory material = new SimpleInventory(1),
-			fuel = new SimpleInventory(1),
-			substrate = new SimpleInventory(1),
-			husks = new SimpleInventory(1);
+	public SidedArrayInventory inventory = new SidedArrayInventory(4)
+			.withSidedSlots(Direction.SOUTH, 0)
+			.withSidedSlots(Direction.WEST, 1)
+			.withSidedSlots(Direction.EAST, 2)
+			.withSidedSlots(Direction.DOWN, 3)
+			.withNonInsertableSlots(3);
 	public AspectMap aspects = new AspectMap();
 	public int burnTime, maxBurnTime, progress, maxProgress, substrateAmount, maxSubstrateAmount, substrateColour;
 	public float substrateResidualBurn;
@@ -85,18 +89,12 @@ public class ArcaneFurnaceBlockEntity extends BlockEntity implements NamedScreen
 	
 	public ArcaneFurnaceBlockEntity(BlockPos pos, BlockState state){
 		super(ArcanaRegistry.ARCANE_FURNACE_BE, pos, state);
-		material.addListener(sender -> markDirty());
-		fuel.addListener(sender -> markDirty());
-		substrate.addListener(sender -> markDirty());
-		husks.addListener(sender -> markDirty());
+		inventory.addListener(sender -> markDirty());
 	}
 	
 	protected void writeNbt(NbtCompound nbt){
 		super.writeNbt(nbt);
-		nbt.put("material", material.getStack(0).writeNbt(new NbtCompound()));
-		nbt.put("fuel", fuel.getStack(0).writeNbt(new NbtCompound()));
-		nbt.put("substrate", substrate.getStack(0).writeNbt(new NbtCompound()));
-		nbt.put("husks", husks.getStack(0).writeNbt(new NbtCompound()));
+		nbt.put("material", inventory.toNbtList());
 		nbt.put("aspects", aspects.toNbt());
 		
 		nbt.putInt("burnTime", burnTime);
@@ -110,10 +108,7 @@ public class ArcaneFurnaceBlockEntity extends BlockEntity implements NamedScreen
 	
 	public void readNbt(NbtCompound nbt){
 		super.readNbt(nbt);
-		material.setStack(0, ItemStack.fromNbt(nbt.getCompound("material")));
-		fuel.setStack(0, ItemStack.fromNbt(nbt.getCompound("fuel")));
-		substrate.setStack(0, ItemStack.fromNbt(nbt.getCompound("substrate")));
-		husks.setStack(0, ItemStack.fromNbt(nbt.getCompound("husks")));
+		inventory.readNbtList(nbt.getList("inventory", NbtElement.COMPOUND_TYPE));
 		aspects = AspectMap.fromNbt(nbt.getCompound("aspects"));
 		
 		burnTime = nbt.getInt("burnTime");
@@ -127,8 +122,8 @@ public class ArcaneFurnaceBlockEntity extends BlockEntity implements NamedScreen
 	
 	public static void tick(World world, BlockPos pos, BlockState state, ArcaneFurnaceBlockEntity furnace){
 		// no material? no problem
-		ItemStack material = furnace.material.getStack(0);
-		ItemStack husks = furnace.husks.getStack(0);
+		ItemStack material = furnace.inventory.getStack(0);
+		ItemStack husks = furnace.inventory.getStack(3);
 		AspectMap mAspects = ItemAspectRegistry.get(material);
 		AspectMap fAspects = furnace.aspects;
 		boolean canActivate = !material.isEmpty()
@@ -144,7 +139,7 @@ public class ArcaneFurnaceBlockEntity extends BlockEntity implements NamedScreen
 			if(furnace.progress >= total){
 				material.decrement(1);
 				if(husks.isEmpty())
-					furnace.husks.setStack(0, new ItemStack(ArcanaRegistry.SHATTERED_HUSK));
+					furnace.inventory.setStack(3, new ItemStack(ArcanaRegistry.SHATTERED_HUSK));
 				else
 					husks.increment(1);
 				furnace.progress = 0;
@@ -166,8 +161,8 @@ public class ArcaneFurnaceBlockEntity extends BlockEntity implements NamedScreen
 			furnace.burnTime--;
 		// try to use new fuel...
 		if(furnace.burnTime <= 0 && canActivate){
-			ItemStack fuel = furnace.fuel.getStack(0);
-			if(!fuel.isEmpty()){
+			ItemStack fuel = furnace.inventory.getStack(1);
+			if(!fuel.isEmpty() && FuelRegistry.INSTANCE.get(fuel.getItem()) != null){
 				furnace.burnTime = furnace.maxBurnTime = FuelRegistry.INSTANCE.get(fuel.getItem());
 				fuel.decrement(1);
 			}else if(furnace.progress > 0)
@@ -176,12 +171,12 @@ public class ArcaneFurnaceBlockEntity extends BlockEntity implements NamedScreen
 		boolean isBurning = furnace.burnTime > 0;
 		// look the part!
 		if(wasBurning != isBurning){
-			state = state.with(ArcaneFurnaceBlock.on, isBurning);
+			state = state.with(ArcaneFurnaceBlock.ON, isBurning);
 			world.setBlockState(pos, state, Block.NOTIFY_ALL);
 		}
 		// substrates are similar; it's depleted with progress and not with time though
 		if(furnace.substrateAmount <= 0 && canActivate){
-			ItemStack substrate = furnace.substrate.getStack(0);
+			ItemStack substrate = furnace.inventory.getStack(2);
 			if(!substrate.isEmpty() && ArcaneFurnaceBlock.substrateTimes.containsKey(substrate.getItem())){
 				ArcaneFurnaceBlock.SubstrateData data = ArcaneFurnaceBlock.substrateTimes.get(substrate.getItem());
 				furnace.substrateAmount = furnace.maxSubstrateAmount = data.amount();
@@ -238,7 +233,7 @@ public class ArcaneFurnaceBlockEntity extends BlockEntity implements NamedScreen
 	
 	@Nullable
 	public ScreenHandler createMenu(int syncId, PlayerInventory pInv, PlayerEntity player){
-		return new ArcaneFurnaceScreen.Handler(syncId, pInv, material, fuel, substrate, husks, propertyDelegate);
+		return new ArcaneFurnaceScreen.Handler(syncId, pInv, inventory, propertyDelegate);
 	}
 	
 	public void markDirty(){

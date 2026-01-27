@@ -7,6 +7,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.particle.ParticleTypes;
@@ -25,30 +26,31 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class ArcaneFurnaceBlock extends BlockWithEntity{
+public class ArcaneFurnaceBlock extends BlockWithEntity implements InventoryProvider{
 	
 	public static final Map<Item, SubstrateData> substrateTimes = new HashMap<>();
 	
-	public static final DirectionProperty facing = HorizontalFacingBlock.FACING;
-	public static final BooleanProperty on = Properties.LIT;
+	public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
+	public static final BooleanProperty ON = Properties.LIT;
 	
 	public ArcaneFurnaceBlock(Settings settings){
 		super(settings);
-		setDefaultState(stateManager.getDefaultState().with(facing, Direction.NORTH).with(on, Boolean.FALSE));
+		setDefaultState(stateManager.getDefaultState().with(FACING, Direction.NORTH).with(ON, Boolean.FALSE));
 	}
 	
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder){
 		super.appendProperties(builder);
-		builder.add(on, facing);
+		builder.add(ON, FACING);
 	}
 	
 	public BlockState getPlacementState(ItemPlacementContext ctx){
-		return getDefaultState().with(facing, ctx.getPlayerFacing().getOpposite());
+		return getDefaultState().with(FACING, ctx.getPlayerFacing().getOpposite());
 	}
 	
 	@Nullable
@@ -78,10 +80,7 @@ public class ArcaneFurnaceBlock extends BlockWithEntity{
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved){
 		if(!state.isOf(newState.getBlock()))
 			if(world.getBlockEntity(pos) instanceof ArcaneFurnaceBlockEntity be){
-				ItemScatterer.spawn(world, pos, be.material);
-				ItemScatterer.spawn(world, pos, be.fuel);
-				ItemScatterer.spawn(world, pos, be.substrate);
-				ItemScatterer.spawn(world, pos, be.husks);
+				ItemScatterer.spawn(world, pos, be.inventory);
 				// TODO: add flux based on stored essentia
 			}
 		
@@ -89,12 +88,12 @@ public class ArcaneFurnaceBlock extends BlockWithEntity{
 	}
 	
 	public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random){
-		if(state.get(on)){
+		if(state.get(ON)){
 			double x = pos.getX() + 0.5, y = pos.getY(), z = pos.getZ() + 0.5;
 			if(random.nextDouble() < 0.1)
 				world.playSound(x, y, z, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1, 1, false);
 			
-			Direction direction = state.get(facing);
+			Direction direction = state.get(FACING);
 			Direction.Axis axis = direction.getAxis();
 			double rng = random.nextDouble() * 0.6 - 0.3;
 			double xOff = axis == Direction.Axis.X ? direction.getOffsetX() * 0.52 : rng;
@@ -103,6 +102,13 @@ public class ArcaneFurnaceBlock extends BlockWithEntity{
 			world.addParticle(ParticleTypes.SMOKE, x + xOff, y + yOff, z + zOff, 0, 0, 0);
 			world.addParticle(ParticleTypes.FLAME, x + xOff, y + yOff, z + zOff, 0, 0, 0);
 		}
+	}
+	
+	public SidedInventory getInventory(BlockState state, WorldAccess world, BlockPos pos){
+		if(world.getBlockEntity(pos) instanceof ArcaneFurnaceBlockEntity be){
+			return be.inventory.rotatedView(state.get(FACING));
+		}
+		return null;
 	}
 	
 	public record SubstrateData(int amount, int colour){}

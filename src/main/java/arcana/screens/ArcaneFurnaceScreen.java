@@ -3,6 +3,7 @@ package arcana.screens;
 import arcana.ArcanaRegistry;
 import arcana.ArcanaTags;
 import arcana.blocks.be.ArcaneFurnaceBlockEntity;
+import arcana.util.InventoryUtil;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
@@ -79,42 +80,42 @@ public class ArcaneFurnaceScreen extends HandledScreen<ArcaneFurnaceScreen.Handl
 	
 	public static class Handler extends ScreenHandler{
 		
-		// "main" material inventory
+		// main inventory
 		private final Inventory inventory;
 		// [burn time, max burn time, substrate amount, max substrate amount, substrate colour, progress, max progress, aspect total]
 		private final PropertyDelegate props;
 		
 		public Handler(int syncId, PlayerInventory pInv){
-			this(syncId, pInv, new SimpleInventory(1), new SimpleInventory(1), new SimpleInventory(1), new SimpleInventory(1), new ArrayPropertyDelegate(8));
+			this(syncId, pInv, new SimpleInventory(4), new ArrayPropertyDelegate(8));
 		}
 		
-		public Handler(int syncId, PlayerInventory pInv, Inventory material, Inventory fuel, Inventory substrate, Inventory husks, PropertyDelegate props){
+		public Handler(int syncId, PlayerInventory pInv, Inventory inventory, PropertyDelegate props){
 			super(ArcanaRegistry.ARCANE_FURNACE_SCREEN_HANDLER, syncId);
 			
 			this.props = props;
 			
-			inventory = material;
+			this.inventory = inventory;
 			inventory.onOpen(pInv.player);
 			
 			// to-melt slot
-			addSlot(new Slot(material, 0, 43, 10));
+			addSlot(new Slot(inventory, 0, 43, 10));
 			
 			// fuel slot
-			addSlot(new Slot(fuel, 0, 31, 48){
+			addSlot(new Slot(inventory, 1, 31, 48){
 				public boolean canInsert(ItemStack stack){
 					return AbstractFurnaceBlockEntity.canUseAsFuel(stack);
 				}
 			});
 			
 			// substrate slot
-			addSlot(new Slot(substrate, 0, 55, 48){
+			addSlot(new Slot(inventory, 2, 55, 48){
 				public boolean canInsert(ItemStack stack){
 					return stack.isIn(ArcanaTags.SUBSTRATES);
 				}
 			});
 			
 			// husks slot
-			addSlot(new Slot(husks, 0, 107, 28){
+			addSlot(new Slot(inventory, 3, 107, 28){
 				public boolean canInsert(ItemStack stack){
 					return false;
 				}
@@ -164,8 +165,7 @@ public class ArcaneFurnaceScreen extends HandledScreen<ArcaneFurnaceScreen.Handl
 		}
 		
 		public ItemStack transferSlot(PlayerEntity player, int index){
-			// TODO: quick move
-			return ItemStack.EMPTY;
+			return InventoryUtil.transferSlot(this, inventory, index);
 		}
 		
 		public boolean canUse(PlayerEntity player){

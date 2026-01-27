@@ -6,14 +6,15 @@ import arcana.aspects.AspectStack;
 import arcana.aspects.Aspects;
 import arcana.items.CrystalItem;
 import arcana.screens.CrystallizationPressScreen;
+import arcana.util.SidedArrayInventory;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
@@ -29,7 +30,10 @@ public class CrystallizationPressBlockEntity extends BlockEntity implements Name
 	public static final int maxQuartzLevel = 12;
 	public static final int capacity = 40;
 	
-	public SimpleInventory quartz = new SimpleInventory(1), output = new SimpleInventory(1);
+	public SidedArrayInventory inventory = new SidedArrayInventory(2)
+			.withDefaultSidedSlots(0)
+			.withSidedSlots(Direction.DOWN, 1)
+			.withNonInsertableSlots(1);
 	public AspectStack stored = null;
 	public int quartzLevel;
 	public int progress;
@@ -61,13 +65,12 @@ public class CrystallizationPressBlockEntity extends BlockEntity implements Name
 	
 	public CrystallizationPressBlockEntity(BlockPos pos, BlockState state){
 		super(ArcanaRegistry.CRYSTALLIZATION_PRESS_BE, pos, state);
-		quartz.addListener(__ -> markDirty());
-		output.addListener(__ -> markDirty());
+		inventory.addListener(__ -> markDirty());
 	}
 	
 	public static void tick(World world, BlockPos pos, BlockState state, CrystallizationPressBlockEntity press){
 		// do we have quartz (item) to consume?
-		ItemStack quartzStack = press.quartz.getStack(0);
+		ItemStack quartzStack = press.inventory.getStack(0);
 		if(press.quartzLevel <= 0 && !quartzStack.isEmpty() && quartzStack.isOf(Items.QUARTZ)){
 			quartzStack.decrement(1);
 			press.quartzLevel = maxQuartzLevel;
@@ -77,7 +80,7 @@ public class CrystallizationPressBlockEntity extends BlockEntity implements Name
 		
 		// do we have *both* essentia and quartz (substance) to consume, and space in the output?
 		AspectStack aspects = press.stored;
-		ItemStack outputStack = press.output.getStack(0);
+		ItemStack outputStack = press.inventory.getStack(1);
 		if(aspects != null
 			&& aspects.amount() >= 2
 			&& press.quartzLevel > 0
@@ -91,7 +94,7 @@ public class CrystallizationPressBlockEntity extends BlockEntity implements Name
 				press.stored = AspectStack.draw(aspects, 2).getLeft();
 				press.quartzLevel--;
 				if(outputStack.isEmpty())
-					press.output.setStack(0, new ItemStack(Aspects.crystals.get(aspects.type())));
+					press.inventory.setStack(1, new ItemStack(Aspects.crystals.get(aspects.type())));
 				else
 					outputStack.increment(1);
 			}
@@ -109,8 +112,7 @@ public class CrystallizationPressBlockEntity extends BlockEntity implements Name
 	protected void writeNbt(NbtCompound nbt){
 		super.writeNbt(nbt);
 		
-		nbt.put("quartz", quartz.getStack(0).writeNbt(new NbtCompound()));
-		nbt.put("output", output.getStack(0).writeNbt(new NbtCompound()));
+		nbt.put("quartz", inventory.toNbtList());
 		
 		if(stored != null)
 			nbt.put("stored", stored.toNbt());
@@ -122,8 +124,7 @@ public class CrystallizationPressBlockEntity extends BlockEntity implements Name
 	public void readNbt(NbtCompound nbt){
 		super.readNbt(nbt);
 		
-		quartz.setStack(0, ItemStack.fromNbt(nbt.getCompound("quartz")));
-		output.setStack(0, ItemStack.fromNbt(nbt.getCompound("output")));
+		inventory.readNbtList(nbt.getList("quartz", NbtElement.COMPOUND_TYPE));
 		
 		if(nbt.contains("stored"))
 			stored = AspectStack.fromNbt(nbt.getCompound("stored"));
@@ -138,7 +139,7 @@ public class CrystallizationPressBlockEntity extends BlockEntity implements Name
 	}
 	
 	public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player){
-		return new CrystallizationPressScreen.Handler(syncId, inv, quartz, output, propertyDelegate);
+		return new CrystallizationPressScreen.Handler(syncId, inv, inventory, propertyDelegate);
 	}
 	
 	public @Nullable AspectStack accept(AspectStack stack, World world, BlockPos pos, Direction from){

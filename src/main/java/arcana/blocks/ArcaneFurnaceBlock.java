@@ -105,9 +105,8 @@ public class ArcaneFurnaceBlock extends BlockWithEntity implements InventoryProv
 	}
 	
 	public SidedInventory getInventory(BlockState state, WorldAccess world, BlockPos pos){
-		if(world.getBlockEntity(pos) instanceof ArcaneFurnaceBlockEntity be){
+		if(world.getBlockEntity(pos) instanceof ArcaneFurnaceBlockEntity be)
 			return be.inventory.rotatedView(state.get(FACING));
-		}
 		return null;
 	}
 	

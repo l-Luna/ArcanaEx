@@ -2,6 +2,7 @@ package arcana.screens;
 
 import arcana.ArcanaRegistry;
 import arcana.blocks.be.CrystallizationPressBlockEntity;
+import arcana.util.InventoryUtil;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.render.GameRenderer;
@@ -73,28 +74,28 @@ public class CrystallizationPressScreen extends HandledScreen<CrystallizationPre
 		
 		// [quartz amount, essentia amount, essentia colour, progress]
 		private final PropertyDelegate propertyDelegate;
-		private final Inventory quartzInv;
+		private final Inventory inventory;
 		
 		public Handler(int syncId, PlayerInventory pInv){
-			this(syncId, pInv, new SimpleInventory(1), new SimpleInventory(1), new ArrayPropertyDelegate(4));
+			this(syncId, pInv, new SimpleInventory(2), new ArrayPropertyDelegate(4));
 		}
 		
-		public Handler(int syncId, PlayerInventory pInv, Inventory quartz, Inventory output, PropertyDelegate properties){
+		public Handler(int syncId, PlayerInventory pInv, Inventory inventory, PropertyDelegate properties){
 			super(ArcanaRegistry.CRYSTALLIZATION_PRESS_SCREEN_HANDLER, syncId);
 			this.propertyDelegate = properties;
-			this.quartzInv = quartz;
+			this.inventory = inventory;
 			
-			quartzInv.onOpen(pInv.player);
+			this.inventory.onOpen(pInv.player);
 			
 			// quartz slot
-			addSlot(new Slot(quartz, 0, 22, 31){
+			addSlot(new Slot(inventory, 0, 22, 31){
 				public boolean canInsert(ItemStack stack){
 					return stack.isOf(Items.QUARTZ);
 				}
 			});
 			
 			// output slot
-			addSlot(new Slot(output, 0, 137, 31){
+			addSlot(new Slot(inventory, 1, 137, 31){
 				public boolean canInsert(ItemStack stack){
 					return false;
 				}
@@ -128,17 +129,16 @@ public class CrystallizationPressScreen extends HandledScreen<CrystallizationPre
 		}
 		
 		public ItemStack transferSlot(PlayerEntity player, int index){
-			// TODO: quick move
-			return ItemStack.EMPTY;
+			return InventoryUtil.transferSlot(this, inventory, index);
 		}
 		
 		public boolean canUse(PlayerEntity player){
-			return quartzInv.canPlayerUse(player);
+			return inventory.canPlayerUse(player);
 		}
 		
 		public void close(PlayerEntity player){
 			super.close(player);
-			quartzInv.onClose(player);
+			inventory.onClose(player);
 		}
 	}
 }

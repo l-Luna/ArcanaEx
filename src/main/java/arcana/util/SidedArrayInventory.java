@@ -25,6 +25,12 @@ public class SidedArrayInventory extends ArrayInventory implements SidedInventor
 		super(items);
 	}
 	
+	public SidedArrayInventory withDefaultSidedSlots(int... slots){
+		for(Direction value : Direction.values())
+			slotsBySide.put(value, slots);
+		return this;
+	}
+	
 	public SidedArrayInventory withSidedSlots(Direction direction, int... slots){
 		slotsBySide.put(direction, slots);
 		return this;

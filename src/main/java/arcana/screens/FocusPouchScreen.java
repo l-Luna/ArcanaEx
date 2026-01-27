@@ -3,6 +3,7 @@ package arcana.screens;
 import arcana.ArcanaRegistry;
 import arcana.items.FocusItem;
 import arcana.util.ArrayInventory;
+import arcana.util.InventoryUtil;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -97,8 +98,7 @@ public class FocusPouchScreen extends HandledScreen<FocusPouchScreen.Handler>{
 		}
 		
 		public ItemStack transferSlot(PlayerEntity player, int index){
-			// TODO: quick move
-			return ItemStack.EMPTY;
+			return InventoryUtil.transferSlot(this, inventory, index);
 		}
 		
 		public boolean canUse(PlayerEntity player){

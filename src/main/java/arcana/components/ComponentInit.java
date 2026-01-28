@@ -26,6 +26,7 @@ public class ComponentInit implements EntityComponentInitializer, WorldComponent
 	
 	public void registerWorldComponentFactories(WorldComponentFactoryRegistry registry){
 		registry.register(AuraWorld.KEY, AuraWorld::new);
+		registry.register(MagicMirrorQueue.KEY, __ -> new MagicMirrorQueue());
 	}
 	
 	public void registerChunkComponentFactories(ChunkComponentFactoryRegistry registry){

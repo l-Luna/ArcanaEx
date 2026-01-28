@@ -101,6 +101,8 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		
 		blockGen.registerCooker(ARCANE_FURNACE, TexturedModel.ORIENTABLE);
 		
+		blockGen.registerNorthDefaultHorizontalRotation(MAGIC_MIRROR);
+		
 		blockGen.registerLantern(CRIMSON_LANTERN);
 		registerBars(CHAIN_WALL, blockGen);
 		
@@ -142,9 +144,11 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		noAutoGen.add(METAL_LADDER.asItem());
 		noAutoGen.add(GREATWOOD_SCRIBING_DESK.asItem());
 		noAutoGen.add(SILVERWOOD_SCRIBING_DESK.asItem());
+		noAutoGen.add(MAGIC_MIRROR.asItem());
 		noAutoGen.add(BEJEWELED_BEET_SEEDS);
 		
 		itemGen.register(NITOR.asItem(), Models.GENERATED);
+		itemGen.register(MAGIC_MIRROR.asItem(), Models.GENERATED);
 		itemGen.register(THAUMIC_HALO.asItem(), Models.GENERATED);
 		
 		for(CrystalClusterBlock value : Aspects.clusters.values()){

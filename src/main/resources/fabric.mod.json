@@ -72,7 +72,8 @@
       "arcana:caster",
       "arcana:kd_item",
       "arcana:ca_arrow",
-      "arcana:runic_shielding_user"
+      "arcana:runic_shielding_user",
+      "arcana:magic_mirror_queue"
     ]
   }
 }

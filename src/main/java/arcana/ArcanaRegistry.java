@@ -218,6 +218,8 @@ public final class ArcanaRegistry{
 			.statusEffect(new StatusEffectInstance(TAINTED, 40 * 20, 1), 1)
 			.build()));
 	
+	public static final Item PERSONAL_MAGIC_MIRROR = new PersonalMagicMirrorItem(new Settings().group(Tab.MAIN).maxCount(1));
+	
 	public static final Item RAREFIED_SHERBERT = new Item(new Settings().group(Tab.MAIN).food(aspectCandyFood(AIR_POWER)));
 	public static final Item SOBERING_SYRUP = new Item(new Settings().group(Tab.MAIN).food(aspectCandyFood(FIRE_POWER)));
 	public static final Item SEAFOAM_SODA = new Item(new Settings().group(Tab.MAIN).food(aspectCandyFood(WATER_POWER)));
@@ -437,6 +439,7 @@ public final class ArcanaRegistry{
 	public static final BigBlock THAUMIC_HALO = new ThaumicHaloBlock(of(Material.METAL).dropsSelf().requiresTool(PICKAXE_MINEABLE).renderLayer(CUTOUT).strength(3).nonOpaque());
 	public static final Block CRYSTALLIZATION_PRESS = new CrystallizationPressBlock(of(Material.METAL).dropsSelf().requiresTool(PICKAXE_MINEABLE).sounds(BlockSoundGroup.ANCIENT_DEBRIS).strength(4).nonOpaque());
 	public static final Block MYSTIC_MIST = new MysticMistBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).sounds(BlockSoundGroup.METAL).strength(2.5f).nonOpaque());
+	public static final Block MAGIC_MIRROR = new MagicMirrorBlock(of(Material.METAL).dropsSelf().usesTool(PICKAXE_MINEABLE).strength(0.7f).sounds(BlockSoundGroup.GLASS).nonOpaque().noCollision().luminance(2));
 	public static final Block WARDED_CAMPFIRE = new WardedCampfireBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).renderLayer(CUTOUT).strength(2).sounds(BlockSoundGroup.WOOD).luminance(whenLit(15)).nonOpaque());
 	public static final Block CRIMSON_CAMPFIRE = new CrimsonCampfireBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).renderLayer(CUTOUT).strength(2).sounds(BlockSoundGroup.WOOD).luminance(whenLit(15)).nonOpaque());
 	
@@ -640,6 +643,7 @@ public final class ArcanaRegistry{
 	public static BlockEntityType<CrimsonLanternBlockEntity> CRIMSON_LANTERN_BE = FabricBlockEntityTypeBuilder.create(CrimsonLanternBlockEntity::new, CRIMSON_LANTERN).build();
 	public static BlockEntityType<DistilleryPathfinderBlockEntity> DISTILLERY_PATHFINDER_BE = FabricBlockEntityTypeBuilder.create(DistilleryPathfinderBlockEntity::new, DISTILLERY_PATHFINDER).build();
 	public static BlockEntityType<ThaumicHaloBlockEntity> THAUMIC_HALO_BE = FabricBlockEntityTypeBuilder.create(ThaumicHaloBlockEntity::new, THAUMIC_HALO).build();
+	public static BlockEntityType<MagicMirrorBlockEntity> MAGIC_MIRROR_BE = FabricBlockEntityTypeBuilder.create(MagicMirrorBlockEntity::new, MAGIC_MIRROR).build();
 	
 	// enchantments...
 	public static final Map<Item, Item> TRANSMUTATIVE_SWAPS = ImmutableMap.<Item, Item>builder()
@@ -894,6 +898,8 @@ public final class ArcanaRegistry{
 		register("taint_in_a_bottle", TAINT_IN_A_BOTTLE);
 		register("drinkable_taint", DRINKABLE_TAINT);
 		
+		register("personal_magic_mirror", PERSONAL_MAGIC_MIRROR);
+		
 		register("rarefied_sherbert", RAREFIED_SHERBERT);
 		register("sobering_syrup", SOBERING_SYRUP);
 		register("seafoam_soda", SEAFOAM_SODA);
@@ -1113,6 +1119,7 @@ public final class ArcanaRegistry{
 		register("thaumic_halo", THAUMIC_HALO);
 		register("crystallization_press", CRYSTALLIZATION_PRESS);
 		register("mystic_mist", MYSTIC_MIST);
+		register("magic_mirror", MAGIC_MIRROR);
 		register("warded_campfire", WARDED_CAMPFIRE);
 		register("crimson_campfire", CRIMSON_CAMPFIRE);
 		
@@ -1355,6 +1362,7 @@ public final class ArcanaRegistry{
 		register("crimson_lantern", CRIMSON_LANTERN_BE);
 		register("distillery_pathfinder", DISTILLERY_PATHFINDER_BE);
 		register("thaumic_halo", THAUMIC_HALO_BE);
+		register("magic_mirror", MAGIC_MIRROR_BE);
 		
 		// enchantments
 		register("warping", WARPING);

@@ -184,6 +184,8 @@
     "taint_in_a_bottle": "Taint in a Bottle",
     "drinkable_taint": "Tainted Yoghurt",
 
+    "personal_magic_mirror": "Personal Magic Mirror",
+
     "arcanium_ingot": "Arcanium Ingot",
     "arcanium_axe": "Arcanium Axe",
     "arcanium_pickaxe": "Arcanium Pickaxe",
@@ -405,6 +407,7 @@
     "thaumic_halo": "Thaumic Halo",
     "crystallization_press": "Crystallization Press",
     "mystic_mist": "Mystic Mist",
+    "magic_mirror": "Magic Mirror",
     "warded_campfire": "Warded Campfire",
     "crimson_campfire": "Crimson Campfire",
 
@@ -621,6 +624,10 @@
         "all": "{}% vis discount",
         "aspect": "{}% {} discount"
       }
+    },
+    "personal_magic_mirror": {
+      "unbound": "Unbound",
+      "bound": "Bound"
     },
     "radius": "Radius: {}",
     "fragile": "Fragile"

@@ -2,6 +2,7 @@ package arcana.integration.emi;
 
 import arcana.ArcanaRegistry;
 import arcana.aspects.Aspect;
+import arcana.aspects.AspectStack;
 import arcana.aspects.Aspects;
 import arcana.aspects.ItemAspectRegistry;
 import arcana.aura.Taint;
@@ -23,7 +24,6 @@ import dev.emi.emi.config.FluidUnit;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.tag.TagKey;
 import net.minecraft.text.Text;
@@ -31,10 +31,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
 import net.minecraft.util.registry.Registry;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Random;
-import java.util.stream.Collectors;
+import java.util.*;
 
 import static arcana.Arcana.arcId;
 
@@ -76,38 +73,19 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 		for(Aspect value : Aspects.aspects.values())
 			registry.addEmiStack(new AspectEmiStack(value));
 		
-		// take all item-aspect assignments,
-		// converts {Cobblestone -> 3x Earth, Entropy} into {Earth -> 3x Cobblestone, Entropy -> Cobblestone},
-		// groups by aspects and turns those into recipes
-		// TODO: ideally, we could display tags, tag bonuses, items, and inherited aspects separately
-		ItemAspectRegistry.getAllItemAspects()
-				.entrySet()
-				.stream()
-				.flatMap(entry ->
-						entry.getValue().asStacks()
-								.stream()
-								.map(stack -> new Pair<>(stack.type(), new ItemStack(entry.getKey(), stack.amount()))))
-				.sorted(Comparator.comparingInt(x -> -x.getRight().getCount()))
-				.collect(Collectors.groupingBy(Pair::getLeft))
-				.forEach((aspect, stacks) ->
-						registry.addRecipe(new EmiItemsByAspectsRecipe(
-								stacks.stream()
-										.map(Pair::getRight)
-										.map(EmiStack::of)
-										.toList(),
-								aspect)));
-		
-		// add tags first
-		ItemAspectRegistry.getAllTagAspects().entrySet().stream()
-				.map(x -> new EmiAspectsByItemsRecipe(EmiIngredient.of(x.getKey(), 1), x.getValue().asStacks(), x.getKey().id()))
-				.forEach(registry::addRecipe);
-		
-		ItemAspectRegistry.getAllItemAspects().entrySet().stream()
-				.filter(x -> !x.getValue().isEmpty())
-				// skip items that can be grouped under a tag
-				.filter(x -> !ItemAspectRegistry.usesTagAspects(x.getKey()) || ItemAspectRegistry.hasAnyBonusAspects(x.getKey()))
-				.map(x -> new EmiAspectsByItemsRecipe(EmiStack.of(x.getKey()), x.getValue().asStacks(), Registry.ITEM.getId(x.getKey())))
-				.forEach(registry::addRecipe);
+		Map<Aspect, List<EmiItemsByAspectsRecipe.Entry>> ibaData = new HashMap<>(Aspects.aspects.size());
+		for(Aspect aspect : Aspects.aspects.values())
+			ibaData.put(aspect, new ArrayList<>());
+		ItemAspectRegistry.getAllItemAspects().forEach((item, aspects) -> {
+			for(AspectStack aspectStack : aspects)
+				ibaData.get(aspectStack.type()).add(new EmiItemsByAspectsRecipe.Entry(
+						item,
+						EmiStack.of(item.getDefaultStack()),
+						aspectStack.amount(),
+						aspectStack.amount() / (float)aspects.total()
+				));
+		});
+		ibaData.forEach((aspect, entries) -> registry.addRecipe(new EmiItemsByAspectsRecipe(entries, aspect)));
 		
 		Taint.TAINT_MAP.forEach((from, to) -> registry.addRecipe(new EmiTaintingRecipe(EmiStack.of(from.asItem()), to.asItem(), Registry.BLOCK.getId(from))));
 		Taint.UNTAINT_MAP.forEach((from, to) -> registry.addRecipe(new EmiUntaintingRecipe(EmiStack.of(from.asItem()), to.asItem(), Registry.BLOCK.getId(from))));

@@ -13,6 +13,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Vec3d;
 
+import static arcana.Arcana.arcId;
+
 public class RenderHelper{
 	
 	// coloured version of DrawableHelper::drawTexture
@@ -217,5 +219,41 @@ public class RenderHelper{
 		colVertex(cons, ms, colour, 0, 1, 1, 0, 0, 1, sprite, isFx);
 		
 		ms.pop();
+	}
+	
+	// tiny numbers
+	
+	private static final Identifier TINY_NUMBERS = arcId("textures/gui/tiny_numbers.png");
+	
+	public static void drawTinyNumbers(MatrixStack matrices, String str, int x, int y){
+		drawTinyNumbers(matrices, str, x, y, 1, 1, 1);
+	}
+	
+	public static void drawTinyNumbers(MatrixStack matrices, String str, int x, int y, float r, float g, float b){
+		RenderSystem.setShaderTexture(0, TINY_NUMBERS);
+		for(int p = 0; p < 2; p++){
+			int xx = x;
+			int yy = y - 6;
+			if(p == 0)
+				RenderSystem.setShaderColor(r*0.25f, g*0.25f, b*0.25f, 1);
+			else{
+				RenderSystem.setShaderColor(r, g, b, 1);
+				xx--;
+				yy--;
+			}
+			for(int i = 0; i < str.length(); i++){
+				char ch = str.charAt(i);
+				int j = ch - '0';
+				int u = (j % 5) * 3;
+				int v = (j / 5) * 5;
+				if(ch == '%'){
+					u = 0;
+					v = 10;
+				}
+				DrawableHelper.drawTexture(matrices, xx, yy, 300, u, v, 3, 5, 16, 16);
+				xx += 4;
+			}
+		}
+		RenderSystem.setShaderColor(1, 1, 1, 1);
 	}
 }

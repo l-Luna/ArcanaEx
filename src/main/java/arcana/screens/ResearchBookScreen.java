@@ -117,7 +117,6 @@ public class ResearchBookScreen extends Screen{
 		return ((height / 2f) * (1 / zoom)) - (yPan / 2f);
 	}
 	
-	// TODO: config
 	private int frameWidth(){
 		return width - 60;
 	}

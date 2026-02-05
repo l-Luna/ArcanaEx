@@ -58,7 +58,7 @@ public class StructureTemplateMixin{
 					World w = world.toServerWorld();
 					AuraWorld.from(w).addNode(new Node(ty, offset, ty.randomCap(world.getRandom())));
 				}else
-					Arcana.logger.error("Found node in structure with invalid node type {}", id);
+					Arcana.LOGGER.error("Found node in structure with invalid node type {}", id);
 				
 				// and remove them from the list, so it doesn't try to add them as entities anyways
 				stashedEntities.add(e);

@@ -29,9 +29,10 @@ repositories {
 	maven {
 		name = "Sleeping Town"
 		url 'https://repo.sleeping.town'
-		// just lib39
+		// just lib39 and kaleido
 		content {
 			includeGroup 'com.unascribed'
+			includeGroup 'folk.sisby'
 		}
 	}
 	maven {
@@ -105,6 +106,7 @@ dependencies {
 	modImplementation include("com.github.emilyploszaj:step-height-entity-attribute:${project.step_height_attr_version}") {
 		transitive = false
 	}
+	implementation include("folk.sisby:kaleido-config:${kaleido_version}")
 
 	modRuntimeOnly ("supercoder79:databreaker:0.2.10") {
 		exclude module : "fabric-loader"

@@ -96,7 +96,7 @@ public class NodeTypes{
 		return type;
 	}
 	
-	// TODO: config
+	// TODO: data
 	private static final float hungryCarryFraction = 0.4f;
 	
 	private static <T extends Entity> void tickHungry(Node node, World world){

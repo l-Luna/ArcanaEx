@@ -26,6 +26,7 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.CommonLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.dispenser.ProjectileDispenserBehavior;
 import net.minecraft.entity.projectile.ProjectileEntity;
@@ -41,19 +42,18 @@ import org.slf4j.LoggerFactory;
 
 public final class Arcana implements ModInitializer{
 	
-	public static final String modid = "arcana";
-	public static final Logger logger = LoggerFactory.getLogger(modid);
+	public static final String MODID = "arcana";
+	public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
+	public static final ArcanaConfig CONFIG = ArcanaConfig.createToml(FabricLoader.getInstance().getConfigDir(), "", MODID, ArcanaConfig.class);
 	
-	public static final ItemAspectRegistry aspectRegistry = new ItemAspectRegistry();
-	public static final ResearchLoader researchLoader = new ResearchLoader();
-	public static final TaintMapLoader taintMapLoader = new TaintMapLoader();
+	public static final ItemAspectRegistry ASPECT_REGISTRY = new ItemAspectRegistry();
 	
 	@Override
 	public void onInitialize(){
-		logger.info("Loading Arcana");
+		LOGGER.info("Loading Arcana");
 		
 		// for dessicant tips
-		DessicantControl.optIn(modid);
+		DessicantControl.optIn(MODID);
 		
 		ArcanaSounds.setup();
 		ArcanaRegistry.setup();
@@ -73,11 +73,11 @@ public final class Arcana implements ModInitializer{
 		SilverwoodTree.addToWorldgen();
 		GreatwoodTree.addToWorldgen();
 		
-		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(aspectRegistry);
-		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(researchLoader);
-		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(taintMapLoader);
+		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(ASPECT_REGISTRY);
+		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new ResearchLoader());
+		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new TaintMapLoader());
 		
-		CommonLifecycleEvents.TAGS_LOADED.register((registries, client) -> aspectRegistry.applyAssociations());
+		CommonLifecycleEvents.TAGS_LOADED.register((registries, client) -> ASPECT_REGISTRY.applyAssociations());
 		
 		ArcanaCommands.register();
 		
@@ -98,7 +98,7 @@ public final class Arcana implements ModInitializer{
 	}
 	
 	public static Identifier arcId(String s){
-		return new Identifier(modid, s);
+		return new Identifier(MODID, s);
 	}
 	
 	// resolves non-namespaced IDs in the arcana namespace, otherwise uses the given namespace

@@ -1,5 +1,6 @@
 package arcana.client.research.sections;
 
+import arcana.Arcana;
 import arcana.aura.AuraWorld;
 import arcana.aura.FluxOrigin;
 import arcana.client.research.EntrySectionRenderer;
@@ -44,7 +45,8 @@ public class FluxStatsSectionRenderer implements EntrySectionRenderer<FluxStatsS
 			}
 			matrices.push();
 			matrices.translate(x + 20, y + 30 * dIdx, 0);
-			matrices.scale(textScaling, textScaling, 1);
+			float scaling = Arcana.CONFIG.textScaling;
+			matrices.scale(scaling, scaling, 1);
 			textRenderer.draw(
 					matrices,
 					Text.translatable(origin.translationKey),

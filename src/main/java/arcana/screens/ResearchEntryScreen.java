@@ -38,8 +38,6 @@ public class ResearchEntryScreen extends Screen{
 	public static final int heightOffset = 10;
 	public static final int bgHeight = 181;
 	
-	public static final float textScaling = .7f;
-	
 	public final Identifier bg;
 	private final Entry entry;
 	// modified by ResearchBookScreen.PinButton

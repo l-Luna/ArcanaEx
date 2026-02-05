@@ -18,7 +18,7 @@ public class AbstractFurnaceBlockEntityMixin{
 	private static void applyCookingRecipeAmount(Recipe<?> recipe, DefaultedList<ItemStack> slots, int count, CallbackInfoReturnable<Boolean> cir){
 		ItemStack inputSlot = slots.get(0);
 		// don't mess with non-arcana recipes
-		if(!Registry.ITEM.getId(inputSlot.getItem()).getNamespace().equals(Arcana.modid))
+		if(!Registry.ITEM.getId(inputSlot.getItem()).getNamespace().equals(Arcana.MODID))
 			return;
 		ItemStack outputSlot = slots.get(2);
 		// MC's already added 1, just add remainder

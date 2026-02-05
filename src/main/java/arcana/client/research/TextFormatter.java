@@ -1,5 +1,6 @@
 package arcana.client.research;
 
+import arcana.Arcana;
 import arcana.aspects.Aspect;
 import arcana.aspects.Aspects;
 import arcana.client.AspectRenderHelper;
@@ -31,7 +32,7 @@ public class TextFormatter{
 	}
 	
 	private static float getTextWidth(){
-		return ResearchEntryScreen.pageWidth / ResearchEntryScreen.textScaling;
+		return ResearchEntryScreen.pageWidth / Arcana.CONFIG.textScaling;
 	}
 	
 	public interface Span{

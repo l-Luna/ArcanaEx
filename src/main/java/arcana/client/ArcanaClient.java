@@ -1,5 +1,6 @@
 package arcana.client;
 
+import arcana.Arcana;
 import arcana.ArcanaRegistry;
 import arcana.ReflectivelyUtilized;
 import arcana.aspects.Aspect;
@@ -18,6 +19,7 @@ import arcana.client.renderers.*;
 import arcana.client.research.EntrySectionRenderer;
 import arcana.client.research.PuzzleRenderer;
 import arcana.client.research.RequirementRenderer;
+import arcana.client.research.sections.TextSectionRenderer;
 import arcana.client.tooltip.ItemAspectsTooltipComponent;
 import arcana.client.tooltip.WandAspectsTooltipComponent;
 import arcana.components.Researcher;
@@ -80,6 +82,8 @@ public final class ArcanaClient implements ClientModInitializer{
 	private static final int[] BALANCED_CRYSTAL_GRADIENT = new int[]{ 0xebd4b9, 0xedf2c2, 0xbcebc7, 0x6fdff2, 0xc7b9ed, 0xedb9e6, 0xf0c4c0 };
 	
 	public void onInitializeClient(){
+		Arcana.CONFIG.registerCallback(config -> TextSectionRenderer.clearCache());
+		
 		TooltipComponentCallback.EVENT.register(data ->
 				data instanceof ItemAspectsTooltipData itd
 						? new ItemAspectsTooltipComponent(itd.aspects(), dataToComponent(itd.inner()))

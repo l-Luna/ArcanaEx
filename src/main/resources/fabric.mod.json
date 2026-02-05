@@ -57,7 +57,8 @@
     "geckolib3": ">=3.1.40"
   },
   "suggests": {
-    "emi": "*"
+    "emi": "*",
+    "mcqoy": "*"
   },
 
   "accessWidener": "arcana.accesswidener",

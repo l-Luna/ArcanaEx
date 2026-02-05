@@ -37,7 +37,7 @@ public class AlchemyRecipeSectionRenderer extends AbstractRecipeSectionRenderer<
 			// Display aspects
 			int aspectStartX = ulX + 12;
 			int aspectStartY = ulY + 20;
-			positionAspects(ar.getAspects(), aspectStartX, aspectStartY).forEach((stack, pos) ->
+			positionAspects(ar.getConsumedAspects(null), aspectStartX, aspectStartY).forEach((stack, pos) ->
 					AspectRenderHelper.renderAspectStack(stack, matrices, textRenderer(), pos.getLeft(), pos.getRight(), 101));
 		}
 	}
@@ -56,7 +56,7 @@ public class AlchemyRecipeSectionRenderer extends AbstractRecipeSectionRenderer<
 			// Display aspects
 			int aspectStartX = ulX + 12;
 			int aspectStartY = ulY + 20;
-			positionAspects(ar.getAspects(), aspectStartX, aspectStartY).forEach((stack, pos) ->
+			positionAspects(ar.getConsumedAspects(null), aspectStartX, aspectStartY).forEach((stack, pos) ->
 					tooltipArea(matrices, stack.type(), mouseX, mouseY, pos.getLeft(), pos.getRight()));
 		}
 	}

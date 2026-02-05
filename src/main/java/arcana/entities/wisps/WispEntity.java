@@ -73,7 +73,7 @@ public class WispEntity extends WispLikeEntity implements Angerable, ScalpelSlas
 	}
 	
 	public boolean handleAttack(Entity attacker){
-		return !((attacker instanceof LivingEntity le && le.getMainHandStack().isIn(ArcanaTags.WISP_WEAPONS)) || attacker instanceof WispLikeEntity);
+		return !((attacker instanceof LivingEntity le && le.getMainHandStack().isIn(ArcanaTags.WISP_ATTACK_WHITELIST)) || attacker instanceof WispLikeEntity);
 	}
 	
 	public boolean canHit(){

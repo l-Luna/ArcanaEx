@@ -1,0 +1,7 @@
+{
+  "parent": "emi:item/half_item",
+  "textures": {
+    "first": "arcana:item/phials/light",
+    "second": "arcana:item/phials/weather"
+  }
+}

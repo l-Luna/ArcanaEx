@@ -29,6 +29,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.random.Random;
 
 import java.util.List;
 import java.util.Map;
@@ -45,7 +46,7 @@ public class CrucibleBlockEntity extends BlockEntity{
 	}
 	
 	public void tick(){
-		if(world != null && !world.isClient() && hasWater() && isBoiling()){
+		if(world != null && !world.isClient() && isBubbling()){
 			List<ItemEntity> items = world.getEntitiesByClass(ItemEntity.class, INSIDE.getBoundingBox().offset(pos), __ -> true);
 			for(ItemEntity item : items){
 				ItemStack stack = item.getStack();
@@ -71,36 +72,35 @@ public class CrucibleBlockEntity extends BlockEntity{
 					if(optionalRecipe.isPresent()){
 						melt = false;
 						AlchemyRecipe recipe = optionalRecipe.get();
+						ItemStack result = recipe.craft(inventory);
+						aspects.take(recipe.getConsumedAspects(inventory));
 						if(stack.getCount() == 1)
 							item.remove(Entity.RemovalReason.KILLED);
 						else
 							stack.decrement(1);
-						ItemStack result = recipe.craft(inventory);
 						if(thrower != null){
 							if(!thrower.giveItemStack(result))
 								thrower.dropItem(result, false);
-						}else drop: {
+						}else{
 							ItemEntity product = new ItemEntity(world, pos.getX() + .5, pos.getY() + 1, pos.getZ() + .5, result);
-							var rng = world.random;
+							Random rng = world.random;
+							product.setVelocity(rng.nextGaussian() / 10, 0.2, rng.nextGaussian() / 10);
 							for(Direction value : Direction.shuffle(rng))
 								if(value.getAxis().isHorizontal()){
-									var offset = pos.up().offset(value);
+									BlockPos offset = pos.up().offset(value);
 									if(!world.getBlockState(offset).isSolidBlock(world, offset)){
 										product.setVelocity(value.getOffsetX() * 0.1, 0.2, value.getOffsetZ() * 0.1);
-										world.spawnEntity(product);
-										break drop;
+										break;
 									}
 								}
 							
-							product.setVelocity(rng.nextGaussian() / 10, 0.2, rng.nextGaussian() / 10);
 							world.spawnEntity(product);
 						}
-						aspects.take(recipe.getAspects());
 						markDirty();
 						world.updateListeners(pos, world.getBlockState(pos), world.getBlockState(pos), Block.NOTIFY_LISTENERS);
 					}
 				}
-				if(melt){
+				if(melt && stack.isIn(ArcanaTags.CRUCIBLE_REAGENT_BLACKLIST)){
 					List<AspectStack> itemAspects = ItemAspectRegistry.get(stack).asStacks();
 					if(!itemAspects.isEmpty()){
 						item.remove(Entity.RemovalReason.KILLED);
@@ -119,8 +119,10 @@ public class CrucibleBlockEntity extends BlockEntity{
 		return aspects;
 	}
 	
-	private boolean hasWater(){
-		return getWorld().getBlockState(getPos()).get(CrucibleBlock.FULL);
+	public boolean isBubbling(){
+		return getWorld().getBlockState(getPos()).get(CrucibleBlock.FULL)
+				&& (world.getBlockState(pos.down()).isIn(ArcanaTags.CRUCIBLE_HEATING_BLOCKS)
+				|| world.getFluidState(pos.down()).isIn(ArcanaTags.CRUCIBLE_HEATING_FLUIDS));
 	}
 	
 	public void setEmpty(){
@@ -129,11 +131,6 @@ public class CrucibleBlockEntity extends BlockEntity{
 			// TODO(balance): adjust the numbers here
 			AuraWorld.from(world).incrementFlux(aspectTotal / 2f, FluxOrigin.CRUCIBLE_EMPTYING, pos);
 		aspects.clear();
-	}
-	
-	public boolean isBoiling(){
-		return world.getBlockState(pos.down()).isIn(ArcanaTags.CRUCIBLE_HEATING_BLOCKS)
-		    || world.getFluidState(pos.down()).isIn(ArcanaTags.CRUCIBLE_HEATING_FLUIDS);
 	}
 	
 	protected void writeNbt(NbtCompound nbt){

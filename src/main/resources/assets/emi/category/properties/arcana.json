@@ -1,0 +1,28 @@
+{
+  // place all crafting categories after smithing
+  "arcana:arcane_crafting": {
+    "order": -745
+  },
+  "arcana:alchemy": {
+    "order": -744
+  },
+  "arcana:infusion": {
+    "order": -743
+  },
+  "arcana:aspect_crystallization": {
+    "order": -742
+  },
+
+  // then tainting/untainting with world interaction
+  "arcana:tainting": {
+    "order": -595
+  },
+  "arcana:untainting": {
+    "order": -594
+  },
+
+  // then aspects with tags
+  "arcana:items_by_aspects": {
+    "order": 1005
+  }
+}

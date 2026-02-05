@@ -39,7 +39,7 @@ public class EmiAlchemyRecipe implements EmiRecipe{
 	protected final OptionalInt researchStage;
 	
 	public EmiAlchemyRecipe(AlchemyRecipe recipe){
-		this(recipe.getId(), EmiIngredient.of(recipe.getIngredients().get(0)), EmiStack.of(recipe.getOutput()), recipe.getAspects(), recipe.getResearchId(), recipe.getResearchStage());
+		this(recipe.getId(), EmiIngredient.of(recipe.getIngredients().get(0)), EmiStack.of(recipe.getOutput()), recipe.getConsumedAspects(null), recipe.getResearchId(), recipe.getResearchStage());
 	}
 	
 	public EmiAlchemyRecipe(Identifier id, EmiIngredient input, EmiStack output, AspectMap aspects, @Nullable Identifier researchId, OptionalInt researchStage){

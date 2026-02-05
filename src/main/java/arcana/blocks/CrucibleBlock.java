@@ -123,7 +123,8 @@ public class CrucibleBlock extends BlockWithEntity{
 	}
 	
 	public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random rand){
-		if(state.get(FULL) && ((CrucibleBlockEntity)world.getBlockEntity(pos)).isBoiling()){
+		BlockEntity be = world.getBlockEntity(pos);
+		if(be instanceof CrucibleBlockEntity cbe && cbe.isBubbling()){
 			double x = pos.getX();
 			double y = pos.getY();
 			double z = pos.getZ();

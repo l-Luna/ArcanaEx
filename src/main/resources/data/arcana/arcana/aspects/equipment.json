@@ -1,21 +1,21 @@
 {
-  "+#arcana:helmets": [
+  "+#arcana:equipment/helmets": [
     "2*armour"
   ],
-  "+#arcana:chestplates": [
+  "+#arcana:equipment/chestplates": [
     "5*armour"
   ],
-  "+#arcana:leggings": [
+  "+#arcana:equipment/leggings": [
     "4*armour"
   ],
-  "+#arcana:boots": [
+  "+#arcana:equipment/boots": [
     "armour"
   ],
-  "+#arcana:horse_armours": [
+  "+#arcana:equipment/horse_armours": [
     "3*armour",
     "2*journey"
   ],
-  "+#arcana:rings": [
+  "+#arcana:equipment/rings": [
     "armour"
   ],
 

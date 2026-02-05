@@ -1,0 +1,9 @@
+{
+  "parent": "emi:item/quarter_item",
+  "textures": {
+    "first": "arcana:item/clusters/air",
+    "second": "arcana:item/clusters/fire",
+    "third": "arcana:item/clusters/water",
+    "fourth": "arcana:item/clusters/earth"
+  }
+}

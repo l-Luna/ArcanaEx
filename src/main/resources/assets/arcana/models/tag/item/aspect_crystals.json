@@ -1,0 +1,9 @@
+{
+  "parent": "arcana:item/radial_items",
+  "textures": {
+    "first": "arcana:item/crystals/water",
+    "second": "arcana:item/crystals/fire",
+    "third": "arcana:item/crystals/air",
+    "fourth": "arcana:item/crystals/earth"
+  }
+}

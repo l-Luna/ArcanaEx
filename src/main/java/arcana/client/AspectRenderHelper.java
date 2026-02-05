@@ -66,7 +66,10 @@ public final class AspectRenderHelper{
 		matrices.push();
 		matrices.translate(0, 0, z + 1);
 		var label = String.valueOf(amount);
-		text.drawWithShadow(matrices, label, x + 18 - text.getWidth(label), y + 9, colour);
+		if(amount < 100)
+			text.drawWithShadow(matrices, label, x + 18 - text.getWidth(label), y + 9, colour);
+		else
+			RenderHelper.drawTinyNumbers(matrices, label, x + 23 - label.length() * 5, y + 19);
 		matrices.pop();
 	}
 	

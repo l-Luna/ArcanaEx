@@ -35,11 +35,13 @@ public final class ArcanaTags{
 	public static final TagKey<Item> HOLLOWED_LOGS = TagKey.of(Registry.ITEM_KEY, arcId("hollowed_logs"));
 	public static final TagKey<Item> SUBSTRATES = TagKey.of(Registry.ITEM_KEY, arcId("substrates"));
 	public static final TagKey<Item> SCRIBING_TOOLS = TagKey.of(Registry.ITEM_KEY, arcId("scribing_tools"));
-	public static final TagKey<Item> WISP_WEAPONS = TagKey.of(Registry.ITEM_KEY, arcId("wisp_weapons"));
 	public static final TagKey<Item> FLOATS = TagKey.of(Registry.ITEM_KEY, arcId("floats"));
 	
-	public static final TagKey<Item> VOID_PUTTY_REPAIR_WHITELIST = TagKey.of(Registry.ITEM_KEY, arcId("void_putty_repair_whitelist"));
-	public static final TagKey<Item> PLANE_PROJECTION_WHITELIST = TagKey.of(Registry.ITEM_KEY, arcId("plane_projection_whitelist"));
+	public static final TagKey<Item> VOID_PUTTY_REPAIR_WHITELIST = TagKey.of(Registry.ITEM_KEY, arcId("config/void_putty_repair_whitelist"));
+	public static final TagKey<Item> PLANE_PROJECTION_WHITELIST = TagKey.of(Registry.ITEM_KEY, arcId("config/plane_projection_whitelist"));
+	public static final TagKey<Item> WISP_ATTACK_WHITELIST = TagKey.of(Registry.ITEM_KEY, arcId("config/wisp_attack_whitelist"));
+	public static final TagKey<Item> CRUCIBLE_REAGENT_BLACKLIST = TagKey.of(Registry.ITEM_KEY, arcId("config/crucible_reagent_blacklist"));
+	public static final TagKey<Item> ARCANE_FURNACE_BLACKLIST = TagKey.of(Registry.ITEM_KEY, arcId("config/arcane_furnace_blacklist"));
 	
 	public static final TagKey<Biome> SILVERWOOD_SPAWNABLE = TagKey.of(Registry.BIOME_KEY, arcId("silverwood_spawnable"));
 	public static final TagKey<Biome> GREATWOOD_SPAWNABLE = TagKey.of(Registry.BIOME_KEY, arcId("greatwood_spawnable"));

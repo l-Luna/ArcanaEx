@@ -17,14 +17,6 @@
 
   // Tags
   "tag.arcana": {
-    "helmets": "Helmets",
-    "chestplates": "Chestplates",
-    "leggings": "Leggings",
-    "boots": "Boots",
-    "horse_armours": "Horse Armours",
-    "rings": "Arcana Rings",
-    "necklaces": "Arcana Necklaces",
-
     "aspect_crystals": "Primal Crystals",
     "cluster_seeds": "Primal Cluster Seeds",
     "primal_clusters": "Primal Clusters",
@@ -38,9 +30,6 @@
 
     "substrates": "Essentia Distillation Substrates",
     "scribing_tools": "Research Tools",
-    "wisp_weapons": "Wisp Weapons",
-    "floats": "Floating Items",
-    "void_putty_repair_whitelist": "Void Putty Repairable",
 
     "mineral_gifts": "Mineral Gifts",
 
@@ -364,6 +353,7 @@
     "victors_medallion": "Medallion of the Victor",
 
     "cluster_seed": "{} Cluster Seed",
+    "cluster_seed.aura.initial_recipe": "Initial\nAuram Cluster Seed",
 
     "node_placer": "Node Placer",
     "node_remover": "Node Remover",

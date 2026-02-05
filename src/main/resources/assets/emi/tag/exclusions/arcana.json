@@ -1,0 +1,19 @@
+{
+  "item": [
+    "arcana:config/void_putty_repair_whitelist",
+    "arcana:config/plane_projection_whitelist",
+    "arcana:config/wisp_attack_whitelist",
+    "arcana:config/aspect_blacklist",
+    "arcana:config/crucible_reagent_blacklist",
+    "arcana:config/arcane_furnace_blacklist",
+
+    "arcana:equipment/helmets",
+    "arcana:equipment/chestplates",
+    "arcana:equipment/leggings",
+    "arcana:equipment/boots",
+    "arcana:equipment/horse_armours",
+    "arcana:equipment/rings",
+
+    "arcana:floats"
+  ]
+}

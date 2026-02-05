@@ -1,6 +1,7 @@
 package arcana.blocks.be;
 
 import arcana.ArcanaRegistry;
+import arcana.ArcanaTags;
 import arcana.aspects.Aspect;
 import arcana.aspects.AspectMap;
 import arcana.aspects.AspectStack;
@@ -127,6 +128,7 @@ public class ArcaneFurnaceBlockEntity extends BlockEntity implements NamedScreen
 		AspectMap mAspects = ItemAspectRegistry.get(material);
 		AspectMap fAspects = furnace.aspects;
 		boolean canActivate = !material.isEmpty()
+				&& !material.isIn(ArcanaTags.ARCANE_FURNACE_BLACKLIST)
 				&& !mAspects.isEmpty()
 				&& husks.getCount() < husks.getMaxCount()
 				&& mAspects.total() + fAspects.total() <= capacity;

@@ -32,7 +32,7 @@ public class GameRendererMixin{
 	@Inject(method = "method_18144", at = @At("HEAD"), cancellable = true)
 	private static void handleWispAttackValidity(Entity entity, CallbackInfoReturnable<Boolean> cir){
 		if(entity instanceof WispEntity)
-			cir.setReturnValue(MinecraftClient.getInstance().player.getMainHandStack().isIn(ArcanaTags.WISP_WEAPONS));
+			cir.setReturnValue(MinecraftClient.getInstance().player.getMainHandStack().isIn(ArcanaTags.WISP_ATTACK_WHITELIST));
 	}
 	
 	@WrapOperation(method = "updateTargetedEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;raycast(DFZ)Lnet/minecraft/util/hit/HitResult;"))

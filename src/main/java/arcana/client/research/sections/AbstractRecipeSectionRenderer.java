@@ -57,9 +57,14 @@ public abstract class AbstractRecipeSectionRenderer<T extends AbstractRecipeSect
 		client.getItemRenderer().renderInGui(stack, rX + 29 - 8, rY + 10 - 8);
 		client.getItemRenderer().renderGuiItemOverlay(textRenderer, stack, rX + 29 - 8, rY + 10 - 8);
 		String name = overrideName.orElse(stack.getName().getString());
-		if(name.contains(":")){
-			String[] split = name.split(":");
-			String prefix = split[0] + ":";
+		// TODO: clean up multi-line logic
+		//       ideally we could display small text above or below easily
+		boolean wasNewline = false;
+		if(name.contains(":") || (wasNewline = name.contains("\n"))){
+			String[] split = name.split("[:\n]", 2);
+			String prefix = split[0];
+			if(!wasNewline)
+				prefix += ":";
 			name = split[1].trim();
 			matrices.push();
 			int stX = x + (screenWidth - 256) / 2 + (int)(pageWidth - textRenderer.getWidth(prefix)*0.8f) / 2;

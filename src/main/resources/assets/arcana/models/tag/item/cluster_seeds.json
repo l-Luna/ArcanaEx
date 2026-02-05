@@ -1,0 +1,9 @@
+{
+  "parent": "arcana:item/radial_items",
+  "textures": {
+    "first": "arcana:item/cluster_seeds/air",
+    "second": "arcana:item/cluster_seeds/fire",
+    "third": "arcana:item/cluster_seeds/water",
+    "fourth": "arcana:item/cluster_seeds/earth"
+  }
+}

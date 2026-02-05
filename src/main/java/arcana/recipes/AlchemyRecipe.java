@@ -1,6 +1,7 @@
 package arcana.recipes;
 
 import arcana.api.AspectRecipe;
+import arcana.api.RenamableRecipe;
 import arcana.aspects.AspectMap;
 import arcana.aspects.ItemAspectRegistry;
 import com.google.gson.JsonObject;
@@ -14,12 +15,13 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Optional;
 import java.util.OptionalInt;
 
 import static arcana.Arcana.arcId;
 import static arcana.Arcana.maybeArcId;
 
-public class AlchemyRecipe implements Recipe<AlchemyInventory>, AspectRecipe, ArcanaRecipe{
+public class AlchemyRecipe implements Recipe<AlchemyInventory>, ArcanaRecipe, AspectRecipe, RenamableRecipe{
 	
 	public static RecipeType<AlchemyRecipe> TYPE;
 	public static Serializer SERIALIZER;
@@ -41,10 +43,11 @@ public class AlchemyRecipe implements Recipe<AlchemyInventory>, AspectRecipe, Ar
 		);
 	}
 	
-	public AlchemyRecipe(Identifier id, @Nullable Identifier researchId, OptionalInt researchStage, XIngredient ingredient, AspectMap aspects, ItemStack output){
+	public AlchemyRecipe(Identifier id, @Nullable Identifier researchId, OptionalInt researchStage, String translationKey, XIngredient ingredient, AspectMap aspects, ItemStack output){
 		this.id = id;
 		this.researchId = researchId;
 		this.researchStage = researchStage;
+		this.translationKey = translationKey;
 		this.ingredient = ingredient;
 		this.aspects = aspects;
 		this.output = output;
@@ -53,6 +56,7 @@ public class AlchemyRecipe implements Recipe<AlchemyInventory>, AspectRecipe, Ar
 	private final Identifier id;
 	private final @Nullable Identifier researchId;
 	private final OptionalInt researchStage;
+	private final String translationKey;
 	
 	private final XIngredient ingredient;
 	private final AspectMap aspects;
@@ -78,6 +82,10 @@ public class AlchemyRecipe implements Recipe<AlchemyInventory>, AspectRecipe, Ar
 		return DefaultedList.copyOf(basic, basic);
 	}
 	
+	public AspectMap getConsumedAspects(@Nullable AlchemyInventory inventory){
+		return aspects;
+	}
+	
 	public ItemStack getOutput(){
 		return output;
 	}
@@ -94,10 +102,6 @@ public class AlchemyRecipe implements Recipe<AlchemyInventory>, AspectRecipe, Ar
 		return TYPE;
 	}
 	
-	public AspectMap getAspects(){
-		return aspects;
-	}
-	
 	public @Nullable Identifier getResearchId(){
 		return researchId;
 	}
@@ -108,6 +112,10 @@ public class AlchemyRecipe implements Recipe<AlchemyInventory>, AspectRecipe, Ar
 	
 	public void affect(AspectMap aspects){
 		aspects.add(this.aspects);
+	}
+	
+	public Optional<String> getTranslationKey(){
+		return Optional.ofNullable(translationKey);
 	}
 	
 	public static class Serializer implements RecipeSerializer<AlchemyRecipe>{
@@ -127,7 +135,8 @@ public class AlchemyRecipe implements Recipe<AlchemyInventory>, AspectRecipe, Ar
 				}
 				researchId = maybeArcId(researchString);
 			}
-			return new AlchemyRecipe(id, researchId, researchStage, ingredient, aspects, output);
+			String name = JsonHelper.getString(json, "name", null);
+			return new AlchemyRecipe(id, researchId, researchStage, name, ingredient, aspects, output);
 		}
 		
 		public void write(PacketByteBuf buf, AlchemyRecipe recipe){
@@ -143,6 +152,9 @@ public class AlchemyRecipe implements Recipe<AlchemyInventory>, AspectRecipe, Ar
 				if(hasStage)
 					buf.writeVarInt(recipe.researchStage.getAsInt());
 			}
+			buf.writeBoolean(recipe.translationKey != null);
+			if(recipe.translationKey != null)
+				buf.writeString(recipe.translationKey);
 		}
 		
 		public AlchemyRecipe read(Identifier id, PacketByteBuf buf){
@@ -156,7 +168,10 @@ public class AlchemyRecipe implements Recipe<AlchemyInventory>, AspectRecipe, Ar
 				if(buf.readBoolean())
 					researchStage = OptionalInt.of(buf.readVarInt());
 			}
-			return new AlchemyRecipe(id, researchId, researchStage, ingredient, aspects, output);
+			String name = null;
+			if(buf.readBoolean())
+				name = buf.readString();
+			return new AlchemyRecipe(id, researchId, researchStage, name, ingredient, aspects, output);
 		}
 	}
 }

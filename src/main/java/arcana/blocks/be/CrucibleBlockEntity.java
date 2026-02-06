@@ -100,7 +100,7 @@ public class CrucibleBlockEntity extends BlockEntity{
 						world.updateListeners(pos, world.getBlockState(pos), world.getBlockState(pos), Block.NOTIFY_LISTENERS);
 					}
 				}
-				if(melt && stack.isIn(ArcanaTags.CRUCIBLE_REAGENT_BLACKLIST)){
+				if(melt && !stack.isIn(ArcanaTags.CRUCIBLE_REAGENT_BLACKLIST)){
 					List<AspectStack> itemAspects = ItemAspectRegistry.get(stack).asStacks();
 					if(!itemAspects.isEmpty()){
 						item.remove(Entity.RemovalReason.KILLED);

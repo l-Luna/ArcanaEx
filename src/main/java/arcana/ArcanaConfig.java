@@ -8,7 +8,7 @@ import folk.sisby.kaleido.lib.quiltconfig.api.annotations.FloatRange;
 public class ArcanaConfig extends WrappedConfig{
 	
 	@Comment("Whether to show \"unsettling\" warp-related visuals")
-	@Comment("These have no gameplay impact")
+	@Comment("Gameplay-related visuals are restyled")
 	@Comment("On by default")
 	public boolean unsettlingWarp = true;
 	

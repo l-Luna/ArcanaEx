@@ -3,6 +3,7 @@ package arcana.aspects;
 import com.mojang.serialization.Codec;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,6 +13,10 @@ public record Aspect(Identifier id, Aspect left, Aspect right, int colour) imple
 	
 	public MutableText name(){
 		return Text.translatable("aspect." + id.getNamespace() + "." + id.getPath());
+	}
+	
+	public MutableText desc(){
+		return Text.translatable("aspect." + id.getNamespace() + "." + id.getPath() + ".desc").formatted(Formatting.GRAY);
 	}
 	
 	public int compareTo(@NotNull Aspect o){

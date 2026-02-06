@@ -65,7 +65,8 @@ public class AspectEmiStack extends EmiStack{
 	
 	public List<TooltipComponent> getTooltip(){
 		List<TooltipComponent> tooltips = new ArrayList<>(3);
-		tooltips.add(TooltipComponent.of(getName().asOrderedText()));
+		tooltips.add(TooltipComponent.of(stack.type().name().asOrderedText()));
+		tooltips.add(TooltipComponent.of(stack.type().desc().asOrderedText()));
 		if(MinecraftClient.getInstance().options.advancedItemTooltips)
 			tooltips.add(TooltipComponent.of(Text.literal(stack.type().id().toString()).formatted(Formatting.DARK_GRAY).asOrderedText()));
 		// TODO: remove use of EmiUtil

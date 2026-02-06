@@ -121,6 +121,7 @@ public final class AspectRenderHelper{
 	public static List<TooltipComponent> tooltips(Aspect aspect){
 		List<TooltipComponent> ret = new ArrayList<>(4);
 		ret.add(fromText(aspect.name()));
+		ret.add(fromText(aspect.desc()));
 		ret.add(new PinkMarkerComponent());
 		
 		if(MinecraftClient.getInstance().options.advancedItemTooltips)

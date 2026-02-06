@@ -1,11 +1,11 @@
 package arcana.items;
 
+import arcana.ArcanaRegistry;
 import arcana.api.AnimatedUseItem;
 import arcana.api.ScalpelSlashable;
-import arcana.aura.AuraWorld;
-import arcana.aura.Node;
-import arcana.aura.NodeType;
-import arcana.aura.NodeTypes;
+import arcana.aura.*;
+import arcana.client.particles.CubeParticleEffect;
+import arcana.client.particles.CubeParticleStyle;
 import arcana.entities.wisps.PureWispEntity;
 import arcana.entities.wisps.TaintedWispEntity;
 import arcana.entities.wisps.WispEntity;
@@ -26,12 +26,14 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Arm;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3f;
@@ -83,6 +85,7 @@ public class ScalpelItem extends Item implements AnimatedUseItem{
 		// tick 23 is the actual "hit" frame
 		if(remainingUseTicks == 7 && user instanceof PlayerEntity pe){
 			Optional<Node> nodeO = AuraWorld.from(world).raycastNodes(user, false);
+			Random rng = world.random;
 			if(nodeO.isPresent()){
 				if(!world.isClient){
 					Node node = nodeO.get();
@@ -90,7 +93,6 @@ public class ScalpelItem extends Item implements AnimatedUseItem{
 					if(type == ScalpelType.BLACK)
 						node.destroy(true); // TODO
 					else{
-						Random rng = world.random;
 						new PkShakeNode(node, 40).sendToAllWatching(user);
 						boolean degrade = type == ScalpelType.ROSE || rng.nextInt(3) != 0;
 						node.damage(degrade, rng);
@@ -119,12 +121,30 @@ public class ScalpelItem extends Item implements AnimatedUseItem{
 				Box box = user.getBoundingBox().stretch(look).expand(1);
 				EntityHitResult entityHit = ProjectileUtil.raycast(user, user.getEyePos(), user.getEyePos().add(look), box, ScalpelSlashable.class::isInstance, sqReach);
 				
-				if(entityHit != null && entityHit.getEntity() instanceof ScalpelSlashable se)
+				if(entityHit != null && entityHit.getEntity() instanceof ScalpelSlashable se){
 					se.onScalpelSlash(world, pe, entityHit.getEntity().getBlockPos());
-				else if(blockHit instanceof BlockHitResult bhr
-						&& bhr.getType() != HitResult.Type.MISS
-						&& world.getBlockState(bhr.getBlockPos()).getBlock() instanceof ScalpelSlashable se)
-					se.onScalpelSlash(world, pe, bhr.getBlockPos());
+					stack.damage(1, user, e -> e.sendToolBreakStatus(e.getActiveHand()));
+				}else if(blockHit instanceof BlockHitResult bhr
+						&& bhr.getType() != HitResult.Type.MISS){
+					BlockPos pos = bhr.getBlockPos();
+					if(WardedChunk.isWarded(world, pos)){
+						if(!world.isClient){
+							ServerWorld sw = (ServerWorld)world;
+							CubeParticleStyle style;
+							if(rng.nextInt(3) == 0){
+								WardedChunk.setWarded(world, pos, false);
+								WardedChunk.sync(world, pos);
+								style = CubeParticleStyle.DISAPPEAR;
+							}else
+								style = CubeParticleStyle.SHAKE;
+							sw.spawnParticles(new CubeParticleEffect(ArcanaRegistry.WARDING_EFFECT, style), pos.getX(), pos.getY(), pos.getZ(), 0, 0, 0, 0, 0);
+							stack.damage(1, user, e -> e.sendToolBreakStatus(e.getActiveHand()));
+						}
+					}else if(world.getBlockState(pos).getBlock() instanceof ScalpelSlashable se){
+						se.onScalpelSlash(world, pe, pos);
+						stack.damage(1, user, e -> e.sendToolBreakStatus(e.getActiveHand()));
+					}
+				}
 			}
 		}
 	}

@@ -25,4 +25,8 @@ public class WardedChunk extends ChunkLayer{
 	public static boolean setWarded(World w, BlockPos pos, boolean warded){
 		return w.getChunk(pos).getComponent(KEY).setMarkedO(MathUtil.toChunkOffset(pos), warded);
 	}
+	
+	public static void sync(World w, BlockPos pos){
+		w.getChunk(pos).syncComponent(KEY);
+	}
 }

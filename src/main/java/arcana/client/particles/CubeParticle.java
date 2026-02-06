@@ -41,7 +41,8 @@ public class CubeParticle extends Particle{
 		float s = 1.01f * style.easeScale(age), o = (s - 1) / 2;
 		int alpha1 = (int)(style.easeAlpha(age) * 200);
 		int c = ColorHelper.Argb.getArgb(alpha1, (int)(red * 255), (int)(green * 255), (int)(blue * 255));
-		RenderHelper.colCuboid(buffer, new MatrixStack(), c, new Vec3d(x, y, z).subtract(camera.getPos()).subtract(o, o, o), s, sprite, true);
+		Vec3d d = new Vec3d(x, y, z).add(style.easeOffset(age, random));
+		RenderHelper.colCuboid(buffer, new MatrixStack(), c, d.subtract(camera.getPos()).subtract(o, o, o), s, sprite, true);
 		
 		Tessellator.getInstance().draw();
 		

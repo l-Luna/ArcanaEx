@@ -77,7 +77,10 @@ public final class Arcana implements ModInitializer{
 		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new ResearchLoader());
 		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new TaintMapLoader());
 		
-		CommonLifecycleEvents.TAGS_LOADED.register((registries, client) -> ASPECT_REGISTRY.applyAssociations());
+		CommonLifecycleEvents.TAGS_LOADED.register((registries, client) -> {
+			if(!client)
+				ASPECT_REGISTRY.applyAssociations();
+		});
 		
 		ArcanaCommands.register();
 		

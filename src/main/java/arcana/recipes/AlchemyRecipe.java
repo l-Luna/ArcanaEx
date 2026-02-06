@@ -86,6 +86,10 @@ public class AlchemyRecipe implements Recipe<AlchemyInventory>, ArcanaRecipe, As
 		return aspects;
 	}
 	
+	public XIngredient getIngredient(){
+		return ingredient;
+	}
+	
 	public ItemStack getOutput(){
 		return output;
 	}

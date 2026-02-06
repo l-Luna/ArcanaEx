@@ -194,10 +194,15 @@ public class WandItem extends Item implements FabricItem, WarpingItem{
 		return super.onClicked(wandStack, otherStack, slot, clickType, player, ref);
 	}
 	
-	@Environment(EnvType.CLIENT) // access The Player and Text
+	@Environment(EnvType.CLIENT)
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context){
+		appendTooltipImpl(stack, tooltip);
+	}
+	
+	@Environment(EnvType.CLIENT) // Environment doesn't guarantee behaviour when used on override
+	private void appendTooltipImpl(ItemStack stack, List<Text> tooltip){
 		ItemStack focusStack = focusFrom(stack);
-		var player = MinecraftClient.getInstance().player;
+		PlayerEntity player = MinecraftClient.getInstance().player;
 		if(focusStack.getItem() instanceof FocusItem fi){
 			tooltip.add(fi.nameForTooltip(focusStack));
 			var cost = fi.castCost(stack, focusStack, player).copy();

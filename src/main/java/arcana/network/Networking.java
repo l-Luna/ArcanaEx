@@ -25,10 +25,12 @@ public final class Networking{
 		context.register(PkTriggerWarpEvent.class);
 		context.register(PkShakeNode.class);
 		context.register(PkPickupItem.class);
+		context.register(PkSyncItemAspectData.class);
 		
 		ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, didJoin) -> {
 			new PkSyncResearchData().sendTo(player);
 			new PkSyncTaintData().sendTo(player);
+			new PkSyncItemAspectData().sendTo(player);
 		});
 	}
 	

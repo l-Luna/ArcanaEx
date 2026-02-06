@@ -10,6 +10,8 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.item.TooltipData;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -27,6 +29,7 @@ import java.util.Optional;
 public class ItemStackMixin{
 	
 	@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+	@Environment(EnvType.CLIENT)
 	@ModifyReturnValue(method = "getTooltipData", at = @At("RETURN"))
 	private Optional<TooltipData> applyAspectsTooltipData(Optional<TooltipData> original){
 		if(Screen.hasShiftDown()){

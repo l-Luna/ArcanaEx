@@ -1,12 +1,14 @@
 package arcana.aspects;
 
+import com.unascribed.lib39.tunnel.api.Marshallable;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.PacketByteBuf;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.function.Function;
 
-public record AspectMap(Map<Aspect, Integer> underlying) implements Iterable<AspectStack>{
+public record AspectMap(Map<Aspect, Integer> underlying) implements Iterable<AspectStack>, Marshallable{
 	
 	public AspectMap(){
 		this(new LinkedHashMap<>());
@@ -163,5 +165,20 @@ public record AspectMap(Map<Aspect, Integer> underlying) implements Iterable<Asp
 	@NotNull
 	public Iterator<AspectStack> iterator(){
 		return asStacks().iterator();
+	}
+	
+	public void writeToNetwork(PacketByteBuf buf){
+		buf.writeVarInt(size());
+		for(AspectStack stack : this){
+			buf.writeIdentifier(stack.type().id());
+			buf.writeVarInt(stack.amount());
+		}
+	}
+	
+	public void readFromNetwork(PacketByteBuf buf){
+		clear();
+		int count = buf.readVarInt();
+		for(int i = 0; i < count; i++)
+			add(Aspects.byName(buf.readIdentifier()), buf.readVarInt());
 	}
 }

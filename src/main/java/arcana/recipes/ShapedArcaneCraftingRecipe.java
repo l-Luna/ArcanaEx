@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Ingredient;
+import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.ShapedRecipe;
 import net.minecraft.util.Identifier;
@@ -53,6 +54,10 @@ public class ShapedArcaneCraftingRecipe extends ShapedRecipe implements ArcaneCr
 	
 	public RecipeType<?> getType(){
 		return TYPE;
+	}
+	
+	public RecipeSerializer<?> getSerializer(){
+		return SERIALIZER;
 	}
 	
 	public AspectMap aspects(){

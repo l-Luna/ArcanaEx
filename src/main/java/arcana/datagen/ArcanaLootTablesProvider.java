@@ -1,6 +1,7 @@
 package arcana.datagen;
 
 import arcana.ArcanaRegistry;
+import arcana.aspects.Aspect;
 import arcana.aspects.Aspects;
 import arcana.blocks.ArcanaBlockSettings;
 import arcana.blocks.CrystalClusterBlock;
@@ -61,6 +62,8 @@ public class ArcanaLootTablesProvider extends FabricBlockLootTableProvider{
 		addPottedPlantDrop(POTTED_FIREWHEEL);
 		addPottedPlantDrop(POTTED_LILIUM);
 		
+		addDrop(TAINTED_GRASS_BLOCK, it -> drops(it, TAINTED_SOIL));
+		
 		Aspects.clusters.forEach((aspect, cluster) -> {
 			var drop = Aspects.crystals.get(aspect);
 			addDrop(cluster,
@@ -89,6 +92,13 @@ public class ArcanaLootTablesProvider extends FabricBlockLootTableProvider{
 					)
 			);
 		});
+		
+		for(Aspect a : Aspects.primals){
+			Block block = Aspects.crystalBlocks.get(a);
+			addDrop(block, it -> drops(it, Aspects.crystals.get(a), UniformLootNumberProvider.create(0, 1)));
+			Block pillarBlock = Aspects.crystalPillars.get(a);
+			addDrop(pillarBlock, it -> drops(it, Aspects.crystals.get(a), UniformLootNumberProvider.create(0, 1)));
+		}
 	}
 	
 	public String getName(){

@@ -175,8 +175,8 @@ public class EmiItemsByAspectsRecipe extends EmiIngredientRecipe{
 			Entry entry = manager.getEntry(offset);
 			if(!getStack().isEmpty() && entry != null){
 				super.render(matrices, mouseX, mouseY, delta);
-				RenderHelper.drawTinyNumbers(matrices, String.valueOf(entry.count), x + 2, y + 26, 22 / 255f, 206 / 255f, 242 / 255f);
-				RenderHelper.drawTinyNumbers(matrices, Math.round(entry.purity * 100) + "%", x + 2, y + 32, 0.95f, 0.95f, 0.5f);
+				RenderHelper.drawTinyNumbers(matrices, String.valueOf(entry.count), x + 2, y + 26, 22 / 255f, 206 / 255f, 242 / 255f, 1);
+				RenderHelper.drawTinyNumbers(matrices, Math.round(entry.purity * 100) + "%", x + 2, y + 32, 0.95f, 0.95f, 0.5f, 1);
 			}
 		}
 		

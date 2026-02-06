@@ -19,15 +19,15 @@ public class RenderHelper{
 	
 	// coloured version of DrawableHelper::drawTexture
 	
-	public static void drawTexture(MatrixStack matrices, int x, int y, int z, float u, float v, int width, int height, float r, float g, float b){
+	public static void drawTexture(MatrixStack matrices, int x, int y, float z, float u, float v, int width, int height, float r, float g, float b){
 		drawTexture(matrices, x, y, z, u, v, width, height, 256, 256, r, g, b, 1);
 	}
 	
-	public static void drawTexture(MatrixStack matrices, int x, int y, int z, float u, float v, int width, int height, int textureWidth, int textureHeight, float r, float g, float b, float a){
+	public static void drawTexture(MatrixStack matrices, int x, int y, float z, float u, float v, int width, int height, int textureWidth, int textureHeight, float r, float g, float b, float a){
 		drawTexture(matrices, x, x + width, y, y + height, z, width, height, u, v, textureWidth, textureHeight, r, g, b, a);
 	}
 	
-	private static void drawTexture(MatrixStack matrices, int x0, int x1, int y0, int y1, int z, int regionWidth, int regionHeight, float u, float v, int textureWidth, int textureHeight, float r, float g, float b, float a){
+	private static void drawTexture(MatrixStack matrices, int x0, int x1, int y0, int y1, float z, int regionWidth, int regionHeight, float u, float v, int textureWidth, int textureHeight, float r, float g, float b, float a){
 		drawTexturedQuad(
 				matrices.peek().getPositionMatrix(),
 				x0,
@@ -46,15 +46,15 @@ public class RenderHelper{
 		);
 	}
 	
-	private static void drawTexturedQuad(Matrix4f matrix, int x0, int x1, int y0, int y1, int z, float u0, float u1, float v0, float v1, float r, float g, float b, float a){
+	private static void drawTexturedQuad(Matrix4f matrix, int x0, int x1, int y0, int y1, float z, float u0, float u1, float v0, float v1, float r, float g, float b, float a){
 		RenderSystem.enableBlend();
 		RenderSystem.setShader(GameRenderer::getPositionColorTexShader);
 		BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
 		bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR_TEXTURE);
-		bufferBuilder.vertex(matrix, (float)x0, (float)y1, (float)z).color(r, g, b, a).texture(u0, v1).next();
-		bufferBuilder.vertex(matrix, (float)x1, (float)y1, (float)z).color(r, g, b, a).texture(u1, v1).next();
-		bufferBuilder.vertex(matrix, (float)x1, (float)y0, (float)z).color(r, g, b, a).texture(u1, v0).next();
-		bufferBuilder.vertex(matrix, (float)x0, (float)y0, (float)z).color(r, g, b, a).texture(u0, v0).next();
+		bufferBuilder.vertex(matrix, (float)x0, (float)y1, z).color(r, g, b, a).texture(u0, v1).next();
+		bufferBuilder.vertex(matrix, (float)x1, (float)y1, z).color(r, g, b, a).texture(u1, v1).next();
+		bufferBuilder.vertex(matrix, (float)x1, (float)y0, z).color(r, g, b, a).texture(u1, v0).next();
+		bufferBuilder.vertex(matrix, (float)x0, (float)y0, z).color(r, g, b, a).texture(u0, v0).next();
 		BufferRenderer.drawWithShader(bufferBuilder.end());
 		RenderSystem.disableBlend();
 	}
@@ -226,18 +226,18 @@ public class RenderHelper{
 	private static final Identifier TINY_NUMBERS = arcId("textures/gui/tiny_numbers.png");
 	
 	public static void drawTinyNumbers(MatrixStack matrices, String str, int x, int y){
-		drawTinyNumbers(matrices, str, x, y, 1, 1, 1);
+		drawTinyNumbers(matrices, str, x, y, 1, 1, 1, 1);
 	}
 	
-	public static void drawTinyNumbers(MatrixStack matrices, String str, int x, int y, float r, float g, float b){
+	public static void drawTinyNumbers(MatrixStack matrices, String str, int x, int y, float r, float g, float b, float a){
 		RenderSystem.setShaderTexture(0, TINY_NUMBERS);
 		for(int p = 0; p < 2; p++){
 			int xx = x;
 			int yy = y - 6;
 			if(p == 0)
-				RenderSystem.setShaderColor(r*0.25f, g*0.25f, b*0.25f, 1);
+				RenderSystem.setShaderColor(r*0.25f, g*0.25f, b*0.25f, a);
 			else{
-				RenderSystem.setShaderColor(r, g, b, 1);
+				RenderSystem.setShaderColor(r, g, b, a);
 				xx--;
 				yy--;
 			}
@@ -250,7 +250,7 @@ public class RenderHelper{
 					u = 0;
 					v = 10;
 				}
-				DrawableHelper.drawTexture(matrices, xx, yy, 300, u, v, 3, 5, 16, 16);
+				drawTexture(matrices, xx, yy, p * 0.03f, u, v, 3, 5, 16, 16, 1, 1, 1, 1);
 				xx += 4;
 			}
 		}

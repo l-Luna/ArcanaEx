@@ -20,6 +20,6 @@ public class CrucibleBlockEntityRenderer implements BlockEntityRenderer<Crucible
 		var player = MinecraftClient.getInstance().player;
 		if(!GogglesOfRevealingItem.hasRevealing(player))
 			return;
-		AspectRenderHelper.renderAspectsInWorld(matrices, player, entity.getAspects(), entity.getPos(), new Vec3f(0, 2, 0));
+		AspectRenderHelper.renderAspectsInWorld(matrices, player, entity.getAspects(), entity.getPos(), new Vec3f(0, 1.8f, 0));
 	}
 }

@@ -19,10 +19,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Quaternion;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3f;
+import net.minecraft.util.math.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +56,7 @@ public final class AspectRenderHelper{
 	}
 	
 	public static void renderAspectStackOverlay(int amount, MatrixStack matrices, TextRenderer text, int x, int y, int z){
-		renderAspectStackOverlay(amount, matrices, text, x, y, z, 0xFFFFFF);
+		renderAspectStackOverlay(amount, matrices, text, x, y, z, 0xFFFFFFFF);
 	}
 	
 	public static void renderAspectStackOverlay(int amount, MatrixStack matrices, TextRenderer text, int x, int y, int z, int colour){
@@ -69,7 +66,15 @@ public final class AspectRenderHelper{
 		if(amount < 100)
 			text.drawWithShadow(matrices, label, x + 18 - text.getWidth(label), y + 9, colour);
 		else
-			RenderHelper.drawTinyNumbers(matrices, label, x + 23 - label.length() * 5, y + 19);
+			RenderHelper.drawTinyNumbers(matrices,
+					label,
+					x + 23 - label.length() * 5,
+					y + 19,
+					ColorHelper.Argb.getRed(colour) / 255f,
+					ColorHelper.Argb.getGreen(colour) / 255f,
+					ColorHelper.Argb.getBlue(colour) / 255f,
+					ColorHelper.Argb.getAlpha(colour) / 255f
+			);
 		matrices.pop();
 	}
 	
@@ -90,19 +95,22 @@ public final class AspectRenderHelper{
 		List<AspectStack> stacks = aspects.asStacks();
 		
 		double sqrDist = playerPos.squaredDistanceTo(pos.getX() + .5, pos.getY() + .5, pos.getZ() + .5);
-		if(sqrDist > 8 * 8){
+		if(sqrDist > 9.5 * 9.5){
 			matrices.pop();
 			return;
 		}
 		var alpha = (float)(1 - Math.sqrt(sqrDist) / 10);
 		var intAlpha = (int)(Math.max(0, alpha * 255)) << 24;
 		
-		for(int i = 0, size = stacks.size(); i < size; i++){
+		final int wrap = 5;
+		int size = stacks.size();
+		int width = Math.min(wrap, size);
+		for(int i = 0; i < size; i++){
 			AspectStack stack = stacks.get(i);
 			matrices.push();
 			var scale = 24f;
 			matrices.scale(1 / scale, 1 / scale, -1 / scale);
-			matrices.translate(16 * (size / 2d - i), 0, 0);
+			matrices.translate(16 * (width / 2d - (i % wrap)), 16 * (i / wrap), 0);
 			matrices.multiply(Quaternion.fromEulerXyz(0, 0, (float)Math.PI));
 			RenderSystem.enableDepthTest();
 			RenderSystem.enableBlend();

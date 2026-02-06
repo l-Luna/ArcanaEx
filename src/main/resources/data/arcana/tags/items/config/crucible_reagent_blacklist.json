@@ -1,6 +1,6 @@
 {
   "values": [
-    "#arcana:aspect_blacklist",
+    "#arcana:config/aspect_blacklist",
     "arcana:primordial_pearl"
   ]
 }

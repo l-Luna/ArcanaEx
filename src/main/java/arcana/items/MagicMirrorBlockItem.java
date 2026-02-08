@@ -46,11 +46,6 @@ public class MagicMirrorBlockItem extends BlockItem{
 		}
 	}
 	
-	public static @Nullable UUID getTag(ItemStack mirrorStack){
-		NbtCompound nbt = mirrorStack.getNbt();
-		return nbt != null && nbt.containsUuid("tag") ? nbt.getUuid("tag") : null;
-	}
-	
 	protected boolean postPlacement(BlockPos pos, World world, @Nullable PlayerEntity player, ItemStack stack, BlockState state){
 		if(!world.isClient && world.getBlockEntity(pos) instanceof MagicMirrorBlockEntity mm){
 			UUID tag = getTag(stack);
@@ -58,6 +53,11 @@ public class MagicMirrorBlockItem extends BlockItem{
 			return true;
 		}
 		return super.postPlacement(pos, world, player, stack, state);
+	}
+	
+	public static @Nullable UUID getTag(ItemStack mirrorStack){
+		NbtCompound nbt = mirrorStack.getNbt();
+		return nbt != null && nbt.containsUuid("tag") ? nbt.getUuid("tag") : null;
 	}
 	
 	public static ItemStack setTag(ItemStack mirrorStack, UUID uuid){

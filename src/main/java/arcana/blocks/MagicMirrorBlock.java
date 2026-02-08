@@ -1,6 +1,7 @@
 package arcana.blocks;
 
 import arcana.blocks.be.MagicMirrorBlockEntity;
+import arcana.components.MagicMirrorQueue;
 import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
@@ -9,10 +10,15 @@ import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
@@ -46,11 +52,21 @@ public class MagicMirrorBlock extends WaterloggableBlock implements BlockEntityP
 		builder.add(FACING);
 	}
 	
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit){
+		ItemStack held = player.getStackInHand(hand);
+		if(!held.isEmpty() && world.getBlockEntity(pos) instanceof MagicMirrorBlockEntity mm){
+			MagicMirrorQueue.from(world).push(mm.getTag(), mm.getId(), held);
+			player.setStackInHand(hand, ItemStack.EMPTY);
+			// TODO: SFX
+			return ActionResult.SUCCESS;
+		}
+		return super.onUse(state, world, pos, player, hand, hit);
+	}
+	
 	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos){
 		Direction dir = state.get(FACING);
 		BlockPos supportPos = pos.offset(dir.getOpposite());
-		BlockState supportState = world.getBlockState(supportPos);
-		return supportState.isSideSolidFullSquare(world, supportPos, dir);
+		return world.getBlockState(supportPos).isSideSolidFullSquare(world, supportPos, dir);
 	}
 	
 	public BlockState getPlacementState(ItemPlacementContext ctx){

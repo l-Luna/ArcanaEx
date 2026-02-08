@@ -8,22 +8,20 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static arcana.Arcana.arcId;
 
 public class MagicMirrorQueue implements Component{
 	
+	private record Entry(UUID senderId, ItemStack stack){}
+	
 	public static final ComponentKey<MagicMirrorQueue> KEY = ComponentRegistryV3.INSTANCE.getOrCreate(arcId("magic_mirror_queue"), MagicMirrorQueue.class);
 	
-	private final Map<BlockPos, List<ItemStack>> queues = new HashMap<>();
+	private final Map<UUID, List<Entry>> queues = new HashMap<>();
 	
 	//
 	
@@ -31,20 +29,24 @@ public class MagicMirrorQueue implements Component{
 		return world.getComponent(KEY);
 	}
 	
-	public void push(BlockPos targetPos, ItemStack stack){
-		queues.merge(targetPos, new ArrayList<>(List.of(stack)), (stacks, incoming) -> {
+	public void push(UUID targetTag, UUID selfId, ItemStack stack){
+		queues.merge(targetTag, new ArrayList<>(List.of(new Entry(selfId, stack))), (stacks, incoming) -> {
 			stacks.addAll(incoming);
 			return stacks;
 		});
 	}
 	
 	@Nullable
-	public ItemStack pull(BlockPos pos){
-		List<ItemStack> queue = queues.get(pos);
+	public ItemStack pull(UUID selfTag, UUID selfId){
+		List<Entry> queue = queues.get(selfTag);
 		if(queue != null && !queue.isEmpty()){
-			if(queue.size() == 1)
-				queues.remove(pos);
-			return queue.remove(0);
+			for(int i = 0; i < queue.size(); i++){
+				Entry entry = queue.get(i);
+				if(!entry.senderId.equals(selfId)){
+					queue.remove(i);
+					return entry.stack;
+				}
+			}
 		}
 		return null;
 	}
@@ -56,18 +58,20 @@ public class MagicMirrorQueue implements Component{
 		for(NbtElement queueElem : tag.getList("queues", NbtElement.COMPOUND_TYPE)){
 			if(!(queueElem instanceof NbtCompound it))
 				continue;
-			BlockPos pos = BlockPos.fromLong(it.getLong("pos"));
-			List<ItemStack> items = NbtUtil.readMutList(it, "queue", ItemStack::fromNbt);
-			queues.put(pos, items);
+			queues.put(it.getUuid("target"), NbtUtil.readMutList(it, "queue", nbt ->
+					new Entry(nbt.getUuid("sender_id"), ItemStack.fromNbt(nbt.getCompound("stack")))));
 		}
 	}
 	
 	public void writeToNbt(NbtCompound tag){
 		NbtList queues = this.queues.entrySet().stream()
 				.map(x -> NbtUtil.from(Map.of(
-						"pos", x.getKey().asLong(),
+						"target", x.getKey(),
 						"queue", x.getValue().stream()
-								.map(s -> s.writeNbt(new NbtCompound()))
+								.map(e -> NbtUtil.from(Map.of(
+										"stack", e.stack,
+										"sender_id", e.senderId
+								)))
 								.collect(NbtUtil.toNbtList())
 				)))
 				.collect(NbtUtil.toNbtList());

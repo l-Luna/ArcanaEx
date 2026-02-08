@@ -2,67 +2,66 @@ package arcana.items;
 
 import arcana.ArcanaRegistry;
 import arcana.components.MagicMirrorQueue;
-import net.minecraft.client.item.TooltipContext;
+import arcana.util.MathUtil;
+import net.minecraft.client.item.TooltipData;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.StackReference;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUsageContext;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.slot.Slot;
-import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.ClickType;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 public class PersonalMagicMirrorItem extends Item{
+	
+	public static final UUID ID = UUID.nameUUIDFromBytes(new byte[0]);
 	
 	public PersonalMagicMirrorItem(Settings settings){
 		super(settings);
 	}
 	
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context){
-		super.appendTooltip(stack, world, tooltip, context);
-		tooltip.add(Text.translatable("tooltip.arcana.personal_magic_mirror." + (getTargetPos(stack) != null ? "" : "un") + "bound").formatted(Formatting.GRAY));
+	public Optional<TooltipData> getTooltipData(ItemStack stack){
+		return Optional.of(new MagicMirrorTooltipData(MagicMirrorBlockItem.getTag(stack)));
 	}
 	
-	public ActionResult useOnBlock(ItemUsageContext ctx){
-		BlockPos pos = ctx.getBlockPos();
-		if(ctx.getWorld().getBlockState(pos).getBlock() == ArcanaRegistry.MAGIC_MIRROR){
-			setTargetPos(ctx.getStack(), pos);
-			return ActionResult.CONSUME;
+	public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected){
+		NbtCompound nbt = stack.getNbt();
+		if(!world.isClient && nbt != null && nbt.getBoolean("bundled")){
+			UUID tag = MathUtil.randomUuid(world.random);
+			MagicMirrorBlockItem.setTag(stack, tag);
+			nbt.remove("bundled");
+			if(entity instanceof PlayerEntity pe)
+				pe.giveItemStack(MagicMirrorBlockItem.setTag(new ItemStack(ArcanaRegistry.MAGIC_MIRROR), tag));
 		}
-		return super.useOnBlock(ctx);
+	}
+	
+	public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks){
+		if(isIn(group)){
+			ItemStack stack = getDefaultStack();
+			stack.getOrCreateNbt().putBoolean("bundled", true);
+			stacks.add(stack);
+		}
 	}
 	
 	public boolean onClicked(ItemStack stack, ItemStack otherStack, Slot slot, ClickType clickType, PlayerEntity player, StackReference ref){
 		if(player.world.isClient)
 			return false; // TODO: creative inventory
 		if(clickType == ClickType.RIGHT && !otherStack.isEmpty()){
-			BlockPos target = getTargetPos(stack);
-			if(target != null){
-				MagicMirrorQueue.from(player.world).push(target, otherStack);
+			UUID targetTag = MagicMirrorBlockItem.getTag(stack);
+			if(targetTag != null){
+				MagicMirrorQueue.from(player.world).push(targetTag, ID, otherStack);
 				ref.set(ItemStack.EMPTY);
+				// TODO: SFX
 				return true;
 			}
 		}
 		return super.onClicked(stack, otherStack, slot, clickType, player, ref);
-	}
-	
-	//
-	
-	@Nullable
-	private static BlockPos getTargetPos(ItemStack mirrorStack){
-		NbtCompound nbt = mirrorStack.getNbt();
-		return nbt != null && nbt.contains("target") ? BlockPos.fromLong(nbt.getLong("target")) : null;
-	}
-	
-	private static void setTargetPos(ItemStack mirrorStack, BlockPos target){
-		mirrorStack.getOrCreateNbt().putLong("target", target.asLong());
 	}
 }

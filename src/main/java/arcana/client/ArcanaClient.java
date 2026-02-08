@@ -21,10 +21,12 @@ import arcana.client.research.PuzzleRenderer;
 import arcana.client.research.RequirementRenderer;
 import arcana.client.research.sections.TextSectionRenderer;
 import arcana.client.tooltip.ItemAspectsTooltipComponent;
+import arcana.client.tooltip.MagicMirrorTooltipComponent;
 import arcana.client.tooltip.WandAspectsTooltipComponent;
 import arcana.components.Researcher;
 import arcana.duck.ArcanaItem;
 import arcana.fluids.ArcanaFluid;
+import arcana.items.MagicMirrorTooltipData;
 import arcana.network.PkModifyPins;
 import arcana.network.PkTryAdvance;
 import arcana.research.BuiltinResearch;
@@ -88,8 +90,13 @@ public final class ArcanaClient implements ClientModInitializer{
 				data instanceof ItemAspectsTooltipData itd
 						? new ItemAspectsTooltipComponent(itd.aspects(), dataToComponent(itd.inner()))
 						: null);
-		TooltipComponentCallback.EVENT.register(d ->
-				d instanceof WandAspectsTooltipData w ? new WandAspectsTooltipComponent(w.wand()) : null);
+		TooltipComponentCallback.EVENT.register(d -> {
+			if(d instanceof WandAspectsTooltipData w)
+				return new WandAspectsTooltipComponent(w.wand());
+			if(d instanceof MagicMirrorTooltipData mm)
+				return new MagicMirrorTooltipComponent(mm.tag());
+			return null;
+		});
 		ItemTooltipCallback.EVENT.register(arcId("early"), (stack, ctx, lines) -> {
 			if(((ArcanaItem)stack.getItem()).arcana$getFragileComponent() != null)
 				lines.add(1, Text.translatable("tooltip.arcana.fragile").formatted(Formatting.GRAY));

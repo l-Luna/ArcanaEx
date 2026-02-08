@@ -160,7 +160,7 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 		registry.addStackProvider(ResearchEntryScreen.class, new ResearchEntryScreenStackProvider());
 		
 		var manager = registry.getRecipeManager();
-		manager.listAllOfType(ShapedArcaneCraftingRecipe.TYPE).stream().map(EmiArcaneCraftingRecipe::new).forEach(registry::addRecipe);
+		manager.listAllOfType(ShapedArcaneCraftingRecipe.TYPE).stream().filter(ShapedArcaneCraftingRecipe.class::isInstance).map(it -> new EmiArcaneCraftingRecipe((ShapedArcaneCraftingRecipe)it)).forEach(registry::addRecipe);
 		manager.listAllOfType(AlchemyRecipe.TYPE).stream().map(EmiAlchemyRecipe::new).forEach(registry::addRecipe);
 		manager.listAllOfType(InfusionRecipe.TYPE).stream().map(EmiInfusionRecipe::new).forEach(registry::addRecipe);
 	}

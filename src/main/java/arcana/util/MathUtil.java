@@ -9,6 +9,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 
 import java.util.Arrays;
+import java.util.UUID;
 
 public final class MathUtil{
 
@@ -58,5 +59,12 @@ public final class MathUtil{
 		int which = (int)f;
 		int colA = which % colours.length, colB = (which + 1) % colours.length;
 		return interpColours(colours[colA], colours[colB], f - which);
+	}
+	
+	public static UUID randomUuid(Random rng){
+		byte[] bytes = new byte[16];
+		for(int i = 0; i < 16; i++)
+			bytes[i] = (byte)rng.nextBetween(-128, 127);
+		return UUID.nameUUIDFromBytes(bytes);
 	}
 }

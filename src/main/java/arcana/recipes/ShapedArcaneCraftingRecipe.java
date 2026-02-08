@@ -21,7 +21,7 @@ import static arcana.Arcana.arcId;
 
 public class ShapedArcaneCraftingRecipe extends ShapedRecipe implements ArcaneCraftingRecipe, RenamableRecipe, ArcanaRecipe{
 	
-	public static RecipeType<ShapedArcaneCraftingRecipe> TYPE;
+	public static RecipeType<ArcaneCraftingRecipe> TYPE;
 	public static Serializer SERIALIZER;
 	
 	public static void setup(){
@@ -67,8 +67,6 @@ public class ShapedArcaneCraftingRecipe extends ShapedRecipe implements ArcaneCr
 	public Optional<String> getTranslationKey(){
 		return Optional.ofNullable(translationKey);
 	}
-	
-	// FIXME: fits
 	
 	public static class Serializer extends ShapedRecipe.Serializer{
 		

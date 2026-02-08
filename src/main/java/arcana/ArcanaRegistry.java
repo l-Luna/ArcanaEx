@@ -439,7 +439,7 @@ public final class ArcanaRegistry{
 	public static final BigBlock THAUMIC_HALO = new ThaumicHaloBlock(of(Material.METAL).dropsSelf().requiresTool(PICKAXE_MINEABLE).renderLayer(CUTOUT).strength(3).nonOpaque());
 	public static final Block CRYSTALLIZATION_PRESS = new CrystallizationPressBlock(of(Material.METAL).dropsSelf().requiresTool(PICKAXE_MINEABLE).sounds(BlockSoundGroup.ANCIENT_DEBRIS).strength(4).nonOpaque());
 	public static final Block MYSTIC_MIST = new MysticMistBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).sounds(BlockSoundGroup.METAL).strength(2.5f).nonOpaque());
-	public static final Block MAGIC_MIRROR = new MagicMirrorBlock(of(Material.METAL).dropsSelf().usesTool(PICKAXE_MINEABLE).strength(0.7f).sounds(BlockSoundGroup.GLASS).nonOpaque().noCollision().luminance(2));
+	public static final Block MAGIC_MIRROR = new MagicMirrorBlock(of(Material.METAL).usesTool(PICKAXE_MINEABLE).strength(0.7f).sounds(BlockSoundGroup.GLASS).nonOpaque().noCollision().luminance(2));
 	public static final Block WARDED_CAMPFIRE = new WardedCampfireBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).renderLayer(CUTOUT).strength(2).sounds(BlockSoundGroup.WOOD).luminance(whenLit(15)).nonOpaque());
 	public static final Block CRIMSON_CAMPFIRE = new CrimsonCampfireBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).renderLayer(CUTOUT).strength(2).sounds(BlockSoundGroup.WOOD).luminance(whenLit(15)).nonOpaque());
 	
@@ -1119,7 +1119,8 @@ public final class ArcanaRegistry{
 		register("thaumic_halo", THAUMIC_HALO);
 		register("crystallization_press", CRYSTALLIZATION_PRESS);
 		register("mystic_mist", MYSTIC_MIST);
-		register("magic_mirror", MAGIC_MIRROR);
+		register("magic_mirror", MAGIC_MIRROR, false);
+		register("magic_mirror", new MagicMirrorBlockItem(MAGIC_MIRROR, new Settings().group(Tab.MAIN).maxCount(2)));
 		register("warded_campfire", WARDED_CAMPFIRE);
 		register("crimson_campfire", CRIMSON_CAMPFIRE);
 		

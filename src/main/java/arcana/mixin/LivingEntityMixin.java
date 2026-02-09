@@ -236,7 +236,9 @@ public abstract class LivingEntityMixin extends Entity implements ArcanaLivingEn
 		info.getReturnValue().add(RunicShielding.MAX_SHIELDING);
 	}
 	
-	// reduce damage cooldown on putrefaction & track death
+	// putrefaction: mark on death, reduce iframes, drop with fortune 1, and drop as a player kill
+	// TODO: handle looting/player kills properly (see RandomChanceWithLootingLootCondition)
+	//       (add a dummy LivingEntity to the context that EnchantmentHelper.getLooting responds to?)
 	
 	@Inject(method = "onDeath", at = @At("HEAD"))
 	void onDeath(DamageSource source, CallbackInfo ci){
@@ -254,5 +256,22 @@ public abstract class LivingEntityMixin extends Entity implements ArcanaLivingEn
 	void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir){
 		if(source == ArcanaDamageSources.PUTREFACTION)
 			timeUntilRegen = 18;
+	}
+	
+	@ModifyExpressionValue(method = "drop",
+	                       at = @At(value = "INVOKE",
+	                                target = "Lnet/minecraft/enchantment/EnchantmentHelper;getLooting(Lnet/minecraft/entity/LivingEntity;)I"))
+	int getLootingForDrops(int original, DamageSource source){
+		if(source == ArcanaDamageSources.PUTREFACTION)
+			original++;
+		return original;
+	}
+	
+	@ModifyExpressionValue(method = "drop",
+	                       at = @At(value = "FIELD",
+	                                target = "Lnet/minecraft/entity/LivingEntity;playerHitTimer:I",
+	                                opcode = Opcodes.GETFIELD))
+	int uu(int original, DamageSource source){
+		return source == ArcanaDamageSources.PUTREFACTION ? 1 : original;
 	}
 }

@@ -16,16 +16,21 @@ public final class Networking{
 	public static void setup(){
 		context.register(PkSyncResearchData.class);
 		context.register(PkSyncTaintData.class);
+		context.register(PkSyncItemAspectData.class);
+		
 		context.register(PkTryAdvance.class);
 		context.register(PkModifyPins.class);
 		context.register(PkGetNote.class);
+		
 		context.register(PkChemistryClick.class);
 		context.register(PkChemistryCombineAspects.class);
+		
 		context.register(PkSwapFocus.class);
+		context.register(PkEntityStatusEx.class);
 		context.register(PkTriggerWarpEvent.class);
+		
 		context.register(PkShakeNode.class);
 		context.register(PkPickupItem.class);
-		context.register(PkSyncItemAspectData.class);
 		
 		ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, didJoin) -> {
 			new PkSyncResearchData().sendTo(player);

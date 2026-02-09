@@ -1,11 +1,14 @@
 package arcana.mixin;
 
+import arcana.ArcanaDamageSources;
 import arcana.ArcanaRegistry;
 import arcana.components.RunicShielding;
 import arcana.duck.ArcanaFluidEntity;
+import arcana.duck.ArcanaLivingEntity;
 import arcana.effects.PressureStatusEffect;
 import arcana.fluids.ArcanaFluid;
 import arcana.items.BootsOfTheTravellerItem;
+import arcana.network.PkEntityStatusEx;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
@@ -14,6 +17,7 @@ import net.minecraft.block.LadderBlock;
 import net.minecraft.block.TrapdoorBlock;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -23,6 +27,7 @@ import net.minecraft.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -35,7 +40,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.Map;
 
 @Mixin(LivingEntity.class)
-public abstract class LivingEntityMixin extends Entity{
+public abstract class LivingEntityMixin extends Entity implements ArcanaLivingEntity{
+	
+	@Unique
+	private boolean diedToPutrefaction;
 	
 	public LivingEntityMixin(EntityType<?> type, World world){
 		super(type, world);
@@ -48,6 +56,14 @@ public abstract class LivingEntityMixin extends Entity{
 	@Shadow
 	@Final
 	private Map<StatusEffect, StatusEffectInstance> activeStatusEffects;
+	
+	public boolean arcana$diedToPutrefaction(){
+		return diedToPutrefaction;
+	}
+	
+	public void arcana$markDiedToPutrefaction(){
+		diedToPutrefaction = true;
+	}
 	
 	// TODO: swap with WrapMethod
 	
@@ -218,5 +234,25 @@ public abstract class LivingEntityMixin extends Entity{
 			require = 1, allow = 1, at = @At("RETURN"))
 	private static void addAttributes(final CallbackInfoReturnable<DefaultAttributeContainer.Builder> info){
 		info.getReturnValue().add(RunicShielding.MAX_SHIELDING);
+	}
+	
+	// reduce damage cooldown on putrefaction & track death
+	
+	@Inject(method = "onDeath", at = @At("HEAD"))
+	void onDeath(DamageSource source, CallbackInfo ci){
+		if(source == ArcanaDamageSources.PUTREFACTION){
+			diedToPutrefaction = true;
+			PkEntityStatusEx.sendStatus(this, PkEntityStatusEx.STATUS_DIED_TO_PUTREFACTION);
+		}
+	}
+	
+	@Inject(method = "damage",
+	        at = @At(value = "FIELD",
+	                 target = "Lnet/minecraft/entity/LivingEntity;timeUntilRegen:I",
+	                 opcode = Opcodes.PUTFIELD,
+	                 shift = At.Shift.AFTER))
+	void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir){
+		if(source == ArcanaDamageSources.PUTREFACTION)
+			timeUntilRegen = 18;
 	}
 }

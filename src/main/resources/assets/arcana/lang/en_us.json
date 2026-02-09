@@ -804,7 +804,10 @@
   // Damage Sources
   "death.attack.arcana": {
     "hungry_node": "{} was consumed by a hungry node",
-    "hungry_node.player": "{} was thrown into a hungry node by {}"
+    "hungry_node.player": "{} was thrown into a hungry node by {}",
+
+    "putrefaction": "{} was dissolved",
+    "putrefaction.player": "{} was destined for dissolution by {}"
   },
 
   // Entity Attributes

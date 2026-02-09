@@ -1,10 +1,10 @@
 package arcana.fluids;
 
+import arcana.ArcanaDamageSources;
 import arcana.ArcanaRegistry;
 import arcana.ArcanaTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.Item;
@@ -43,7 +43,7 @@ public class PutrefactionFluid extends ArcanaFluid{
 	}
 	
 	public void onEntityInteractTick(Entity entity){
-		entity.damage(DamageSource.WITHER, 2);
+		entity.damage(ArcanaDamageSources.PUTREFACTION, 2);
 	}
 	
 	public float getEntityPushStrength(Entity entity){

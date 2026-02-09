@@ -44,6 +44,7 @@
     "HeldItemRendererMixin",
     "InGameHudMixin",
     "ItemRendererMixin",
+    "LivingEntityRendererMixin",
     "ModelElementDeserializerMixin",
     "ScreenMixin",
     "accessor.JsonUnbakedModelAccessor",

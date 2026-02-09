@@ -74,7 +74,6 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -858,9 +857,6 @@ public final class ArcanaRegistry{
 	// entity groups... don't need registering
 	@SuppressWarnings("InstantiationOfUtilityClass") // no, it's just an identity token
 	public static final EntityGroup CRIMSON_GROUP = new EntityGroup();
-	
-	// damage sources... also don't need it
-	public static final DamageSource HUNGRY_NODE_DAMAGE = new DamageSource("arcana.hungry_node");
 	
 	public static final List<Item> items = new ArrayList<>();
 	public static final List<Block> blocks = new ArrayList<>();

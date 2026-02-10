@@ -12,6 +12,7 @@
     "2*machine",
     "envy"
   ],
+  "name": "item.arcana.putrefaction_bucket.recipe",
   "result": {
     "item": "arcana:putrefaction_bucket"
   }

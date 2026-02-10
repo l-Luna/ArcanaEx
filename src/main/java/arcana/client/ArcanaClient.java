@@ -45,6 +45,8 @@ import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry
 import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler;
 import net.fabricmc.fabric.api.client.rendering.v1.*;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
+import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
@@ -64,13 +66,18 @@ import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.item.BlockItem;
+import net.minecraft.resource.ResourceManager;
+import net.minecraft.resource.ResourceType;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.profiler.Profiler;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
 
 import static arcana.Arcana.arcId;
 
@@ -143,6 +150,16 @@ public final class ArcanaClient implements ClientModInitializer{
 		});
 		CoreShaderRegistrationCallback.EVENT.register(context -> {
 			context.register(arcId("particle_turbulent"), ArcanaShaders.FX, shader -> ArcanaShaders.fxTurbulent = shader);
+		});
+		ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(new IdentifiableResourceReloadListener(){
+			public Identifier getFabricId(){
+				return arcId("clear_cache");
+			}
+			public CompletableFuture<Void> reload(Synchronizer synchronizer, ResourceManager manager, Profiler prepareProfiler, Profiler applyProfiler, Executor prepareExecutor, Executor applyExecutor){
+				synchronizer.whenPrepared(null);
+				TextSectionRenderer.clearCache();
+				return CompletableFuture.completedFuture(null);
+			}
 		});
 		
 		ColorProviderRegistry.BLOCK.register(

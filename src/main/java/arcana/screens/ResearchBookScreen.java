@@ -16,6 +16,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Quaternion;
+import net.minecraft.util.math.Vec2f;
 import net.minecraft.util.math.Vec3f;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -214,14 +215,14 @@ public class ResearchBookScreen extends Screen{
 				RenderSystem.setShader(GameRenderer::getPositionColorTexShader);
 				RenderSystem.setShaderTexture(0, arrowsAndBasesTexture);
 				
-				int base = base(entry);
+				Vec2f baseUv = baseUv(entry);
 				float mult = 1f;
 				if(style == PageStyle.inProgress)
 					mult = (float)abs(sin(time / 5f) * 0.75f) + .25f;
 				else if(style == PageStyle.pending)
 					mult = 0.2f;
 				RenderSystem.setShaderColor(mult, mult, mult, 1);
-				drawTexture(matrices, x + 2, y + 2, base % 4 * 26, base / 4 * 26, 26, 26);
+				drawTexture(matrices, x + 2, y + 2, (int)baseUv.x, (int)baseUv.y, 26, 26);
 				
 				if(!entry.icons().isEmpty()){
 					int frames = entry.getIntMeta("icon_frames");
@@ -356,11 +357,8 @@ public class ResearchBookScreen extends Screen{
 					
 					if(debug){
 						lines.add(Text.literal(entry.id().toString()).formatted(Formatting.DARK_GRAY));
-						if(!entry.meta().isEmpty()){
-							lines.add(Text.literal("Meta:").formatted(Formatting.DARK_GRAY));
-							for(String s : entry.meta())
-								lines.add(Text.literal("- " + s).formatted(Formatting.DARK_GRAY));
-						}
+						for(String s : entry.meta())
+							lines.add(Text.literal("- " + s).formatted(Formatting.DARK_GRAY));
 					}
 					
 					renderTooltip(matrices, lines, mouseX, mouseY);
@@ -518,24 +516,29 @@ public class ResearchBookScreen extends Screen{
 	}
 	
 	
-	private int base(Entry entry){
-		int base = 8;
+	private Vec2f baseUv(Entry entry){
+		int u = 0, v = 52;
+		
+		if(entry.meta().contains("tmp_base"))
+			return new Vec2f(29, 80);
+		
 		if(entry.meta().contains("purple_base"))
-			base = 0;
+			v = 0;
 		else if(entry.meta().contains("yellow_base"))
-			base = 4;
+			v = 26;
 		else if(entry.meta().contains("no_base"))
-			return 12;
+			v = 230;
 		
 		if(entry.meta().contains("round_base"))
-			return base + 1;
+			u = 26;
 		else if(entry.meta().contains("square_base"))
-			return base + 2;
+			u = 52;
 		else if(entry.meta().contains("hexagon_base"))
-			return base + 3;
+			u = 78;
 		else if(entry.meta().contains("spiky_base"))
-			return base;
-		return base + 2;
+			u = 0;
+		
+		return new Vec2f(u, v);
 	}
 	
 	public enum PageStyle{

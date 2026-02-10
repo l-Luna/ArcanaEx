@@ -205,7 +205,9 @@
     "cheaters_arcanum.desc": "For the lazy",
 
     "taint_goo_bucket": "Bucket of Taint Goo",
+    "taint_goo_bucket.recipe": "Bucket of\nTaint Goo",
     "putrefaction_bucket": "Bucket of Putrefaction",
+    "putrefaction_bucket.recipe": "Bucket of\nPutrefaction",
     "flux_meter": "Flux Meter",
     "taint_in_a_bottle": "Taint in a Bottle",
     "drinkable_taint": "Tainted Yoghurt",
@@ -1221,7 +1223,7 @@
     "light_focus.stage.2": "This focus creates light sources using stored aer and ignis, fused to make lux.\nThese light sources are temporary, losing brightness over time until they fade away entirely, making them sadly unsuitable for anything permanent. Perhaps some invisible nitor could suit that role? But they don't require any space or special considerations on-the-go, so I consider this a success.\nInitially, a light source is as bright as glowstone - brighter than a torch - and dims until it is unable to repel monsters, before vanishing, and can also be broken by hand. They can be placed underwater without issue.",
 
     "portable_hole_focus": "Wand Focus: Portable Hole",
-    "portable_hole_focus.desc": "Knock knock",
+    "portable_hole_focus.desc": "Quietly poking my nose-",
     "portable_hole_focus.stage.1": "The ender pearl and chorus fruit have a curious ability to warp space.\nThese naturally occurring materials do it in a raw, unfocused form; with some careful manipulation, and the added power of the wand's vis, something much safer and more powerful should be possible.",
     "portable_hole_focus.stage.2": "I don't really understand how this works.\nI went into this expecting to create a teleportation focus, but rather than moving me through space, this focus changes the space around me. When used against a surface, the focus temporarily phases it, and everything behind it, out of existence, allowing me to pass through walls and into caves.\nThe focus creates 3x3 tunnels that can reach at least {c3}12{r} blocks in length, and even further with a higher difficulty wand, but end when they reach a full square of air. They can be oriented in any direction, including vertically.\nAny block can be phased out, including containers, and blocks that support other blocks. Such systems remain fully stable; for all intents and purposes, those blocks still exist, except for entities to look and pass through. Space is warped, but matter is untouched.\nAs a more demanding wand focus, this requires a higher complexity than what an iron wand cap can provide alone.\nI would do well to research the structure of space in more detail. Some other time.",
 
@@ -1306,9 +1308,6 @@
     "alchemical_glass.stage.2": "The first fruits of my work come in the form of Hardened Glass. Stronger - resisting explosions and less prone to accidents - yet more resilient - dropping itself in one piece when broken.\nI do have questions about what other properties I can give to glass this way... how about making it even more conductive to light and vis?",
     "alchemical_glass.stage.3": "As-is, glass isn't much more opaque than empty space. No, the interesting part is when you allow it to capture light and vis.\nLuminiferous Glass, while appearing transparent, has a huge amount of photons and lux captured within. On the outside, this manifests as a bright glow, on par with Glowstone. In the future, a material like this will be useful to use as a component in magical devices.\nNow, I wonder if it's possible to make glass conductive to not just energy, but matter. Would it simply fall through the crucible? Is it even a well-formed question?",
     "alchemical_glass.stage.4": "...apparently, yes, this is fully possible.\nStatic Glass is usually solid, but becomes like a gas in the presence of a crouching player - allowing their passage (or fall) - before reforming into a solid.\nThis has a couple of potential applications in home decor. Artifice? Perhaps, if I can trigger it mechanically.",
-
-    "aspect_candy": "Aspect Candy",
-    "aspect_candy.desc": "Chemist's Cuisine",
 
     "essentia_distillation": {
       "title": "Essentia Distillation",
@@ -1401,6 +1400,141 @@
         "title": "forces of time.",
         "text": "the world is ancient. every living creature has an enormous lineage; every civilisation had their own predecessors, and among {i}their{r} predecessors were historians trying to understand the Beginning.\nyou are still quite early in your journey, but it is no well-kept secret that our reality has had a turbulent past. civilisations rose and fell not just by eachothers' hands, but by the whims of a shifting- changing- melding- twisting kind of Magic. entirely random at a first glance, its progression becomes clear with more knowledge - and yet more worrisome.\nfollowing this path forward, we find a dead future. a reality that not only loses its magic, but one that loses {u}life{r} itself, one where no intelligent beings could speak and thrive. tracing it back into the past, a strange picture of the Beginning starts to emerge; but one yet contradictory and vague.\nyou must make it your duty to discover the past, to complete these blanks, and - through our shared achievements - perhaps avert the calamitous future that awaits."
       }
+    },
+
+    // Temps
+
+    "warded_campfire": {
+      "title": "Warded Campfire",
+      "text": "My long voyages into the wild could do with some extra comfort. The heat of a campfire is always a welcome feeling, but I'm sure I can make it better.\nA Warded Campfire provides additional comfort and protection on-the-go. Alongside the usual functions, while nearby:\n- Monsters will not target me (except for revenge).\n- All food is more filling.\n- The night passes twice as quickly.\nThe campfire only provides benefits when lit, which requires casting Wand Focus: Flame at a higher vis cost."
+    },
+
+    "fluid_forming": {
+      "title": "Fluid Forming",
+      "text": "Stabilizing vis suspended in fluid is... difficult. My best attempt came away with nothing but this to show: a disgusting, putrid-smelling solvent capable of breaking down most living (and many non-living) materials.\nNeedless to say, Putrefaction deals rapid damage to anything caught in it. The remains that drop from them are occasionally more valuable, and sometimes altered entirely."
+    },
+
+    "multiplying_taint": {
+      "title": "Multiplying Taint",
+      "text": "Liquifying larger quantities of tainted goo is not much more difficult than individual bottles."
+    },
+
+    "bloodlet_ruby": {
+      "title": "Bloodlet Ruby",
+      "text": "In a dream? In a trance? A shrill voice, spoken so softly-{~sep}Someone gave me this recipe. If I see her again, I should give my thanks."
+    },
+
+    "bejeweled_beets": {
+      "title": "Bejeweled Beets",
+      "text": "A magically-enhanced crop, useful as food or a source of sugar. It grows particularly slowly."
+    },
+
+    "aspect_candy": {
+      "title": "Aspect Candy",
+      "desc": "Chemist's Cuisine",
+      "text": "Using the unnaturally sweet sugars of the bejeweled beets, I can create an assortment of magical sweets, each of which impart a different positive effect on me.\nTheir buffs are all mutually exclusive - eating one will cancel the previous one - and sit well in my stomach in even the most stressful of situations."
+    },
+
+    "runic_shielding": {
+      "title": "Runic Shielding",
+      "text": "Certain trinkets grant me a {i}Runic Shield{r}, a protective barrier that attempts to deflect damage.\nThe Runic Shielding bar appears above my health and armour, and shows a number of orbs that regenerate over time; each point of Runic Shielding is half of an orb. When I am about to take damage, my shield my absorb the damage instead, consuming an orb. The chance of triggering depends on how much damage the attack would deal, compared to my health; if a blow would be fatal, it will always activate.\nOne orb is one full attack of damage, so it is more effective against heavier attacks and much less so against repetitive small hits. The shield's regeneration slows down temporarily after activation."
+    },
+
+    "runic_shielding_enchantment": {
+      "title": "Infusion Enchantment: Runic Shielding",
+      "text": "Each level of the Runic Shielding enchantment grants one point of shielding.\nProper infusion enchanting doesn't exist yet, so this will do."
+    },
+
+    "active_runic_shielding": {
+      "title": "Active Runic Shielding",
+      "text": "The Runic Shield's natural regeneration is quite slow, too much so to rely on regularly in combat. Taking a more active approach could make it significantly more reliable.\nWhile the Ring of the Surging Barrier is equipped, Terra vis will be drained from held wands to recharge my Runic Shield."
+    },
+
+    "organic_runic_shielding": {
+      "title": "Organic Runic Shielding",
+      "text": "Warm, rhythmic, pulsating, soft... the twin atria act in unison, unending, almost stronger than my own.{~sep}While the Ring of Twin Heartbeats is equipped, the Runic Shield regenerates faster."
+    },
+
+    "boots_of_the_traveller": {
+      "title": "Boots of the Traveller",
+      "desc": "These boots are made for hiking",
+      "text": "{i}Oh my God,{r} why is my walking speed so slow in this game. Oh {i}Christ{r} why can't I get anywhere. It's my personal agony.\nThe Boots of the Traveller increase my walking speed and allow stepping up entire blocks, and jumping significantly higher when holding shift."
+    },
+
+    "boots_of_the_sailor": {
+      "title": "Boots of the Sailor",
+      "desc": "These boots are made for swimming",
+      "text": "The Boots of the Sailor inherit the behaviour of the Traveller's, as well as allowing me to walk on water."
+    },
+
+    "aura_tampering": {
+      "title": "Aura Tampering",
+      "text": "Aura given physical form, given physical weakness.{~sep}Using a crystal as a blade, I can create specialised scalpels to interact with vis directly. By hold-right-clicking, I can slash at magical objects in the world.\nSlashing at a node destabilises and weakens it, demoting it to a weaker type (or destroying it entirely) and producing {i}wisps{r}, chaotic floating creatures made of vis. Their characteristics may depend on the node they were created from, and are invulnerable to anything but scalpels.\nSlashing at magical blocks, or blocks touched by magic, will typically damage or destabilise them."
+    },
+
+    "node_rejuvenation": {
+      "title": "Node Rejuvenation",
+      "text": "Enhancing my nodes was already of interest, and doubly so now that I can go around stabbing them to pieces. My solution to this is similarly crude, though; just dump energy into the aura and hope it gets picked up by nodes, and doesn't cause too many side-effects to the nearby ecosystem.\nThe Thaumic Halo accepts Praecantatio or Auram essentia to boost nearby nodes; Auram is more efficient."
+    },
+
+    "silverleaf": {
+      "title": "Silverleaf",
+      "desc": "Immaculate Bloom",
+      "text": "Rediscovering this ancient flora has unlocked understanding of some of the notes.{~sep}By combining a handful of magical plants, I can create an enchanted plant with natural aura fixating properties. Its touch repels taint, and its flavour brings calming to the mind.\nI just need to find a way to cultivate it..."
+    },
+
+    "self_reflection": {
+      "title": "Self-Reflection",
+      "desc": "Seeing through my eyes",
+      "text": "The more I learn, the more my knowledge weighs on my mind. The more I experiment, the more horrors cement themselves in my memory. The more I study, the more mistakes I make.\nI would do well to keep an eye on the state of my mind."
+    },
+
+    "magic_mirrors": {
+      "title": "Magic Mirrors",
+      "text": "Using pairs of enchanted mirrors, I can send items across great distances. Magic Mirrors are always created in pairs, forever linked; right clicking on a placed mirror with an item will send it flying out of the other end.\nI can shrink mirrors down to a size more appropriate for on-the-go use. A Personal Magic Mirror can have items sent from the inventory, by right clicking on them with a stack in my cursor, and items they receive are placed directly into my inventory when carried."
+    },
+
+    "mirrored_amulet": {
+      "title": "Mirrored Amulet",
+      "text": "In amulet form, a mirror retains its prior functionality, as well as a defensive addition: if I die, my items will be sent to the linked mirror, rather than scattered on the floor. The amulet itself is left behind though, as it cannot fit through itself."
+    },
+
+    "lamplight_ring": {
+      "title": "Lamplight Ring",
+      "desc": "8,000+ lumens",
+      "text": "Is it such a crime to want to see clearly?\nWhile equipped, the Lamplight Ring places lights around me as I travel."
+    },
+
+    "plane_projection_ring": {
+      "title": "Plane-Projection Ring",
+      "desc": "Hands guided by angels",
+      "text": "While equipped, the Plane-Projection Ring allows me to place blocks in mid-air. When I look at the air with a block in my hand, a visual guide appears showing me where it will be placed. Usually these blocks will be placed {i}just{r} out of reach, but sneaking will instead have them placed directly in front of me."
+    },
+
+    "fetch_focus": {
+      "title": "Wand Focus: Fetch",
+      "desc": "-in places I shouldn't be",
+      "text": "The Fetch focus allows me to grab items and pull mobs from a great distance. When sneaking, items can be snatched from the hands and mouths of creatures."
+    },
+
+    "ward_focus": {
+      "title": "Wand Focus: Ward",
+      "text": "An immensely powerful focus, Ward allows me to apply a protective enchantment to blocks that prevents them from being mined or destroyed. Warding can be removed using the same focus, or certain destructive magic."
+    },
+
+    "crystal_capacitor_focus": {
+      "title": "Wand Focus: Crystal Capacitor",
+      "text": "Not all foci are sturdy, meant to last. A Crystal Capacitor is nothing more than some vis crystals strung together, cracking and evaporating on each use to recharge the wand's vis."
+    },
+
+    "coagulation_focus": {
+      "title": "Wand Focus: Coagulation",
+      "text": "An immensely powerful focus that weaves together a fragment of the aura to create a {i}Coagulation{r}, a wisp-like entity.\n\nThe summoned Coagulation follows me and attacks on my behalf. It can pass through blocks, but can be hit by ordinary attacks."
+    },
+
+    "void_metal": {
+      "title": "Void Metal",
+      "text": " \n \n \n{b}{w}{c}{c4}oh you curious soul, desperate for ill-gotten gains{r}\n{b}{w}{c}{c4}it will be a while still before you can see my face. until then, take this blessing{r}"
     }
   }
 }

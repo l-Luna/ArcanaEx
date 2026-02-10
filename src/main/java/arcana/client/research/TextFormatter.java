@@ -429,7 +429,7 @@ public class TextFormatter{
 			if(!(renderer instanceof EmptyGlyphRenderer)){
 				float boldOffset = style.isBold() ? glyph.getBoldOffset() : 0;
 				float shadowOffset = style.isShadow() ? glyph.getShadowOffset() : 0;
-				float wavyOffset = style.isWavy() ? MathHelper.sin(x * 2 + (MinecraftClient.getInstance().getTickDelta() + MinecraftClient.getInstance().world.getTime()) / 2f) * 1.1f : 0;
+				float wavyOffset = style.isWavy() ? MathHelper.sin(x * -0.1f + (MinecraftClient.getInstance().getTickDelta() + MinecraftClient.getInstance().world.getTime() % 100000) / 8f) * 0.8f : 0;
 				if(style.isShadow()){
 					renderer.draw(style.isItalics(), x + shadowOffset, y + shadowOffset + wavyOffset, stack.peek().getPositionMatrix(), consumer, red * .25f, green * .25f, blue * .25f, .25f, 0xf000f0);
 					if(style.isBold())

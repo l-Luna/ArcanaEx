@@ -1,0 +1,522 @@
+{
+  "entries": [
+    {
+      "key": "arcana:tmp/void_metal",
+      "name": "research.arcana.void_metal.title",
+      "icons": [
+        "arcana:void_metal_ingot"
+      ],
+      "category": "arcana:crimson_rites",
+      "parents": [
+        "~arcana:crimson_initiation"
+      ],
+      "meta": [
+        "untitled",
+        "tmp_base"
+      ],
+      "x": -4,
+      "y": 4,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.void_metal.text"
+        }
+      ]
+    },
+
+    {
+      "key": "arcana:tmp/warded_campfire",
+      "name": "research.arcana.warded_campfire.title",
+      "icons": [
+        "arcana:warded_campfire"
+      ],
+      "category": "arcana:artifice",
+      "parents": [
+        "&arcana:artifice_root"
+      ],
+      "meta": [
+        "tmp_base"
+      ],
+      "x": 3,
+      "y": 0,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.warded_campfire.text"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:warded_campfire"
+        }
+      ]
+    },
+
+    {
+      "key": "arcana:tmp/fluid_forming",
+      "name": "research.arcana.fluid_forming.title",
+      "icons": [
+        "arcana:putrefaction_bucket"
+      ],
+      "category": "arcana:alchemy",
+      "parents": [
+        "&arcana:alchemy_root"
+      ],
+      "meta": [
+        "tmp_base"
+      ],
+      "x": -3,
+      "y": 0,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.fluid_forming.text"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:putrefaction_bucket_by_alchemy"
+        }
+      ]
+    },
+
+    {
+      "key": "arcana:tmp/multiplying_taint",
+      "name": "research.arcana.multiplying_taint.title",
+      "icons": [
+        "arcana:taint_goo_bucket"
+      ],
+      "category": "arcana:alchemy",
+      "parents": [
+        "&arcana:tmp/fluid_forming",
+        "&arcana:taint_in_a_bottle"
+      ],
+      "meta": [
+        "tmp_base"
+      ],
+      "x": -6,
+      "y": 0,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.multiplying_taint.text"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:taint_goo_bucket_by_alchemy"
+        }
+      ]
+    },
+
+    {
+      "key": "arcana:tmp/bejeweled_beets",
+      "name": "research.arcana.bejeweled_beets.title",
+      "icons": [
+        "arcana:bejeweled_beet"
+      ],
+      "category": "arcana:alchemy",
+      "parents": [
+        "&arcana:hedge_alchemy"
+      ],
+      "meta": [
+        "tmp_base"
+      ],
+      "x": -3,
+      "y": -5,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.bejeweled_beets.text"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:bejeweled_beet_seeds"
+        },
+        {
+          "type": "crafting",
+          "content": "arcana:spiral_sugar"
+        },
+        {
+          "type": "crafting",
+          "content": "arcana:sugar_from_spiral_sugar"
+        }
+      ]
+    },
+
+    {
+      "key": "arcana:tmp/aspect_candy",
+      "name": "research.arcana.aspect_candy.title",
+      "desc": "research.arcana.aspect_candy.desc",
+      "icons": [
+        "arcana:rarefied_sherbert",
+        "arcana:sobering_syrup",
+        "arcana:seafoam_soda",
+        "arcana:bedrock_candy",
+        "arcana:gummy_cubes",
+        "arcana:twisted_liquorice"
+      ],
+      "category": "arcana:alchemy",
+      "parents": [
+        "&arcana:tmp/bejeweled_beets"
+      ],
+      "meta": [
+        "tmp_base"
+      ],
+      "x": -5,
+      "y": -5,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.aspect_candy.text"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:rarefied_sherbert"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:sobering_syrup"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:seafoam_soda"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:bedrock_candy"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:gummy_cubes"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:twisted_liquorice"
+        }
+      ]
+    },
+    {
+      "key": "arcana:tmp/bloodlet_ruby",
+      "name": "research.arcana.bloodlet_ruby.title",
+      "icons": [
+        "arcana:bloodlet_ruby"
+      ],
+      "category": "arcana:alchemy",
+      "parents": [
+        "&arcana:tmp/bejeweled_beets"
+      ],
+      "meta": [
+        "tmp_base"
+      ],
+      "x": -2,
+      "y": -6,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.bloodlet_ruby.text"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:bloodlet_ruby"
+        }
+      ]
+    },
+    {
+      "key": "arcana:tmp/silverleaf",
+      "name": "research.arcana.silverleaf.title",
+      "desc": "research.arcana.silverleaf.desc",
+      "icons": [
+        "arcana:silverleaf"
+      ],
+      "category": "arcana:alchemy",
+      "parents": [
+        "&arcana:tmp/bejeweled_beets"
+      ],
+      "x": -2,
+      "y": -7,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.silverleaf.text"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:aberrant_flora"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:silverleaf"
+        }
+      ]
+    },
+
+    {
+      "key": "arcana:tmp/aura_tampering",
+      "name": "research.arcana.aura_tampering.title",
+      "icons": [
+        "arcana:arcanium_scalpel"
+      ],
+      "category": "arcana:auromancy",
+      "parents": [
+        "&arcana:auromancy_root",
+        "arcana:aura_crystallization"
+      ],
+      "meta": [
+        "tmp_base"
+      ],
+      "x": 0,
+      "y": 2,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.aura_tampering.text"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:equipment/arcanium_scalpel"
+        }
+      ]
+    },
+
+    {
+      "key": "arcana:tmp/node_rejuvenation",
+      "name": "research.arcana.node_rejuvenation.title",
+      "icons": [
+        "arcana:thaumic_halo"
+      ],
+      "category": "arcana:auromancy",
+      "parents": [
+        "&arcana:tmp/aura_tampering"
+      ],
+      "meta": [
+        "tmp_base"
+      ],
+      "x": -1,
+      "y": 3,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.node_rejuvenation.text"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:thaumic_halo"
+        }
+      ]
+    },
+
+    {
+      "key": "arcana:tmp/coagulation_focus",
+      "name": "research.arcana.coagulation_focus.title",
+      "icons": [
+        "arcana:coagulation_focus"
+      ],
+      "category": "arcana:auromancy",
+      "parents": [
+        "&arcana:tmp/aura_tampering"
+      ],
+      "meta": [
+        "tmp_base"
+      ],
+      "x": 1,
+      "y": 3,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.coagulation_focus.text"
+        },
+        {
+          "type": "infusion",
+          "content": "arcana:foci/coagulation_focus"
+        }
+      ]
+    },
+
+    {
+      "key": "arcana:tmp/lamplight_ring",
+      "name": "research.arcana.lamplight_ring.title",
+      "desc": "research.arcana.lamplight_ring.desc",
+      "icons": [
+        "arcana:lamplight_ring"
+      ],
+      "category": "arcana:artifice",
+      "parents": [
+        "&arcana:adorned_ring"
+      ],
+      "meta": [
+        "tmp_base"
+      ],
+      "x": 2,
+      "y": -5,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.lamplight_ring.text"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:equipment/lamplight_ring"
+        }
+      ]
+    },
+
+    {
+      "key": "arcana:tmp/plane_projection_ring",
+      "name": "research.arcana.plane_projection_ring.title",
+      "desc": "research.arcana.plane_projection_ring.desc",
+      "icons": [
+        "arcana:plane_projection_ring"
+      ],
+      "category": "arcana:artifice",
+      "parents": [
+        "&arcana:adorned_ring"
+      ],
+      "meta": [
+        "tmp_base"
+      ],
+      "x": 4,
+      "y": -3,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.plane_projection_ring.text"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:equipment/plane_projection_ring"
+        }
+      ]
+    },
+
+    {
+      "key": "arcana:tmp/magic_mirrors",
+      "name": "research.arcana.magic_mirrors.title",
+      "icons": [
+        "arcana:magic_mirror",
+        "arcana:personal_magic_mirror"
+      ],
+      "category": "arcana:artifice",
+      "parents": [
+        "&/arcana:artifice_root"
+      ],
+      "meta": [
+        "tmp_base"
+      ],
+      "x": -2,
+      "y": 3,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.magic_mirrors.text"
+        }
+        // TODO
+      ]
+    },
+
+    {
+      "key": "arcana:tmp/fetch_focus",
+      "name": "research.arcana.fetch_focus.title",
+      "desc": "research.arcana.fetch_focus.desc",
+      "icons": [
+        "arcana:fetch_focus"
+      ],
+      "category": "arcana:auromancy",
+      "parents": [
+        "&arcana:portable_hole_focus"
+      ],
+      "meta": [
+        "tmp_base"
+      ],
+      "x": 4,
+      "y": 3,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.fetch_focus.text"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:foci/fetch_focus"
+        }
+      ]
+    },
+
+    {
+      "key": "arcana:tmp/crystal_capacitor_focus",
+      "name": "research.arcana.crystal_capacitor_focus.title",
+      "icons": [
+        "arcana:crystal_capacitor_focus"
+      ],
+      "category": "arcana:auromancy",
+      "parents": [
+        "&arcana:wand_foci"
+      ],
+      "meta": [
+        "tmp_base"
+      ],
+      "x": 3,
+      "y": -4,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.crystal_capacitor_focus.text"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:crystal_capacitor_focus"
+        }
+      ]
+    },
+
+    {
+      "key": "arcana:ward_focus",
+      "name": "research.arcana.ward_focus.title",
+      "icons": [
+        "arcana:ward_focus"
+      ],
+      "category": "arcana:auromancy",
+      "parents": [
+        "&arcana:light_focus"
+      ],
+      "meta": [
+        "tmp_base"
+      ],
+      "x": 7,
+      "y": -3,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.ward_focus.text"
+        },
+        {
+          "type": "infusion",
+          "content": "arcana:foci/ward_focus"
+        }
+      ]
+    },
+
+    {
+      "key": "arcana:tmp/self_reflection",
+      "name": "research.arcana.self_reflection.title",
+      "desc": "research.arcana.self_reflection.desc",
+      "icons": [
+        "arcana:textures/item/self_reflection_mirror.png"
+      ],
+      "category": "arcana:fundamentals",
+      "parents": [
+        "&arcana:flux_meter"
+      ],
+      "meta": [
+        "tmp_base"
+      ],
+      "x": 7,
+      "y": 0,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.self_reflection.text"
+        }
+        // TODO
+      ]
+    }
+
+  ]
+}

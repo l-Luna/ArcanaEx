@@ -271,7 +271,7 @@ public abstract class LivingEntityMixin extends Entity implements ArcanaLivingEn
 	                       at = @At(value = "FIELD",
 	                                target = "Lnet/minecraft/entity/LivingEntity;playerHitTimer:I",
 	                                opcode = Opcodes.GETFIELD))
-	int uu(int original, DamageSource source){
+	int wasFromPlayer(int original, DamageSource source){
 		return source == ArcanaDamageSources.PUTREFACTION ? 1 : original;
 	}
 }

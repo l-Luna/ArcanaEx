@@ -517,7 +517,7 @@ public class ResearchBookScreen extends Screen{
 	
 	
 	private Vec2f baseUv(Entry entry){
-		int u = 0, v = 52;
+		int u = 52, v = 52;
 		
 		if(entry.meta().contains("tmp_base"))
 			return new Vec2f(29, 80);

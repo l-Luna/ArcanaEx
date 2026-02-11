@@ -230,6 +230,9 @@
       "parents": [
         "&arcana:tmp/bejeweled_beets"
       ],
+      "meta": [
+        "tmp_base"
+      ],
       "x": -2,
       "y": -7,
       "sections": [
@@ -311,13 +314,14 @@
       ],
       "category": "arcana:auromancy",
       "parents": [
-        "&arcana:tmp/aura_tampering"
+        "&arcana:tmp/aura_tampering",
+        "&arcana:wand_foci"
       ],
       "meta": [
         "tmp_base"
       ],
-      "x": 1,
-      "y": 3,
+      "x": 2,
+      "y": 2,
       "sections": [
         {
           "type": "text",
@@ -516,7 +520,242 @@
         }
         // TODO
       ]
-    }
+    },
 
+    {
+      "key": "arcana:tmp/study_of_infusion",
+      "name": "research.arcana.study_of_infusion.title",
+      "icons": [
+        "arcana:infusion_matrix"
+      ],
+      "category": "arcana:artifice",
+      "parents": [
+        "~arcana:essentia_distillation"
+      ],
+      "meta": [
+        "spiky_base",
+        "yellow_base"
+      ],
+      "x": -9,
+      "y": 3,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.study_of_infusion.text"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:infusion_matrix"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:infusion_pillar"
+        }
+      ]
+    },
+
+    {
+      "key": "arcana:tmp/runic_shielding",
+      "name": "research.arcana.runic_shielding.title",
+      "icons": [
+        "arcana:research/runic_shielding.png"
+      ],
+      "category": "arcana:artifice",
+      "parents": [
+        "&arcana:tmp/study_of_infusion"
+      ],
+      "meta": [
+        "round_base"
+      ],
+      "x": -9,
+      "y": 1,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.runic_shielding.text"
+        }
+      ]
+    },
+    {
+      "key": "arcana:tmp/amulet_of_runic_shielding",
+      "name": "research.arcana.amulet_of_runic_shielding.title",
+      "icons": [
+        "arcana:amulet_of_runic_shielding"
+      ],
+      "category": "arcana:artifice",
+      "parents": [
+        "&arcana:tmp/runic_shielding"
+      ],
+      "meta": [
+        "tmp_base"
+      ],
+      "x": -9,
+      "y": -2,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.amulet_of_runic_shielding.text"
+        },
+        {
+          "type": "infusion",
+          "content": "arcana:amulet_of_runic_shielding"
+        }
+      ]
+    },
+    {
+      "key": "arcana:tmp/active_runic_shielding",
+      "name": "research.arcana.active_runic_shielding.title",
+      "icons": [
+        "arcana:ring_of_the_surging_barrier"
+      ],
+      "category": "arcana:artifice",
+      "parents": [
+        "&arcana:tmp/runic_shielding"
+      ],
+      "meta": [
+        "tmp_base"
+      ],
+      "x": -11,
+      "y": -1,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.active_runic_shielding.text"
+        },
+        {
+          "type": "infusion",
+          "content": "arcana:ring_of_the_surging_barrier"
+        }
+      ]
+    },
+    {
+      "key": "arcana:tmp/organic_runic_shielding",
+      "name": "research.arcana.organic_runic_shielding.title",
+      "icons": [
+        "arcana:ring_of_twin_heartbeats"
+      ],
+      "category": "arcana:artifice",
+      "parents": [
+        "&arcana:tmp/active_runic_shielding"
+      ],
+      "meta": [
+        "tmp_base"
+      ],
+      "x": -11,
+      "y": -3,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.organic_runic_shielding.text"
+        },
+        {
+          "type": "infusion",
+          "content": "arcana:ring_of_twin_heartbeats"
+        }
+      ]
+    },
+    {
+      "key": "arcana:tmp/runic_shielding_enchantment",
+      "name": "research.arcana.runic_shielding_enchantment.title",
+      "icons": [
+        "minecraft:enchanted_book"
+      ],
+      "category": "arcana:artifice",
+      "parents": [
+        "&arcana:tmp/runic_shielding"
+      ],
+      "meta": [
+        "tmp_base"
+      ],
+      "x": -7,
+      "y": -1,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.runic_shielding_enchantment.text"
+        }
+        // TODO
+      ]
+    },
+
+    {
+      "key": "arcana:tmp/mirrored_amulet",
+      "name": "research.arcana.mirrored_amulet.title",
+      "icons": [
+        "arcana:item/mirrored_amulet.png"
+      ],
+      "category": "arcana:artifice",
+      "parents": [
+        "&arcana:tmp/study_of_infusion",
+        "&arcana:tmp/magic_mirrors"
+      ],
+      "meta": [
+        "tmp_base"
+      ],
+      "x": -6,
+      "y": 3,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.mirrored_amulet.text"
+        }
+        // TODO
+      ]
+    },
+
+    {
+      "key": "arcana:tmp/boots_of_the_traveller",
+      "name": "research.arcana.boots_of_the_traveller.title",
+      "desc": "research.arcana.boots_of_the_traveller.desc",
+      "icons": [
+        "arcana:boots_of_the_traveller"
+      ],
+      "category": "arcana:artifice",
+      "parents": [
+        "&arcana:tmp/study_of_infusion"
+      ],
+      "meta": [
+        "tmp_base"
+      ],
+      "x": -10,
+      "y": 4,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.boots_of_the_traveller.text"
+        },
+        {
+          "type": "infusion",
+          "content": "arcana:boots_of_the_traveller"
+        }
+      ]
+    },
+    {
+      "key": "arcana:tmp/boots_of_the_sailor",
+      "name": "research.arcana.boots_of_the_sailor.title",
+      "desc": "research.arcana.boots_of_the_sailor.desc",
+      "icons": [
+        "arcana:boots_of_the_sailor"
+      ],
+      "category": "arcana:artifice",
+      "parents": [
+        "&/arcana:tmp/boots_of_the_traveller"
+      ],
+      "meta": [
+        "tmp_base"
+      ],
+      "x": -11,
+      "y": 5,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.boots_of_the_sailor.text"
+        },
+        {
+          "type": "infusion",
+          "content": "arcana:boots_of_the_sailor"
+        }
+      ]
+    }
   ]
 }

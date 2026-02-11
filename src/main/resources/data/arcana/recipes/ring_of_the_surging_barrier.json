@@ -23,6 +23,7 @@
     "8*aura"
   ],
   "instability": 2,
+  "name": "item.arcana.ring_of_the_surging_barrier.recipe",
   "result": {
     "item": "arcana:ring_of_the_surging_barrier"
   }

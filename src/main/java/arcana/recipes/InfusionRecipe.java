@@ -1,5 +1,6 @@
 package arcana.recipes;
 
+import arcana.api.RenamableRecipe;
 import arcana.aspects.AspectMap;
 import arcana.aspects.ItemAspectRegistry;
 import com.google.gson.JsonElement;
@@ -12,13 +13,15 @@ import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static arcana.Arcana.arcId;
 
-public class InfusionRecipe implements Recipe<InfusionInventory>, ArcanaRecipe{
+public class InfusionRecipe implements Recipe<InfusionInventory>, ArcanaRecipe, RenamableRecipe{
 	
 	public static RecipeType<InfusionRecipe> TYPE;
 	public static Serializer SERIALIZER;
@@ -29,6 +32,7 @@ public class InfusionRecipe implements Recipe<InfusionInventory>, ArcanaRecipe{
 	Ingredient centralIngredient;
 	AspectMap aspects;
 	int instability;
+	@Nullable String name;
 	// node aspects...
 	
 	public static void setup(){
@@ -48,13 +52,14 @@ public class InfusionRecipe implements Recipe<InfusionInventory>, ArcanaRecipe{
 		);
 	}
 	
-	public InfusionRecipe(Identifier id, ItemStack result, List<XIngredient> outerIngredients, Ingredient centralIngredient, AspectMap aspects, int instability){
+	public InfusionRecipe(Identifier id, ItemStack result, List<XIngredient> outerIngredients, Ingredient centralIngredient, AspectMap aspects, int instability, @Nullable String name){
 		this.id = id;
 		this.result = result;
 		this.outerIngredients = outerIngredients;
 		this.centralIngredient = centralIngredient;
 		this.aspects = aspects;
 		this.instability = instability;
+		this.name = name;
 	}
 	
 	public boolean matches(InfusionInventory inventory, World world){
@@ -126,6 +131,10 @@ public class InfusionRecipe implements Recipe<InfusionInventory>, ArcanaRecipe{
 		return TYPE;
 	}
 	
+	public Optional<String> getTranslationKey(){
+		return Optional.ofNullable(name);
+	}
+	
 	public static class Serializer implements RecipeSerializer<InfusionRecipe>{
 		
 		public InfusionRecipe read(Identifier id, JsonObject json){
@@ -134,12 +143,15 @@ public class InfusionRecipe implements Recipe<InfusionInventory>, ArcanaRecipe{
 			List<XIngredient> outers = new ArrayList<>();
 			for(JsonElement ingredients : JsonHelper.getArray(json, "ingredients"))
 				outers.add(XIngredient.fromJson(ingredients));
-			var aspects = ItemAspectRegistry.parseAspectStackList(id, JsonHelper.getArray(json, "aspects")).orElseGet(AspectMap::new);
+			AspectMap aspects = ItemAspectRegistry.parseAspectStackList(id, JsonHelper.getArray(json, "aspects")).orElseGet(AspectMap::new);
 			int instability = JsonHelper.getInt(json, "instability", 1);
-			return new InfusionRecipe(id, result, outers, central, aspects, instability);
+			String name = JsonHelper.getString(json, "name", null);
+			return new InfusionRecipe(id, result, outers, central, aspects, instability, name);
 		}
 		
 		public void write(PacketByteBuf buf, InfusionRecipe recipe){
+			if(recipe.name != null)
+				buf.writeString(recipe.name);
 			buf.writeItemStack(recipe.result);
 			buf.writeVarInt(recipe.outerIngredients.size());
 			for(XIngredient ingredient : recipe.outerIngredients)
@@ -147,15 +159,19 @@ public class InfusionRecipe implements Recipe<InfusionInventory>, ArcanaRecipe{
 			recipe.centralIngredient.write(buf);
 			buf.writeNbt(recipe.aspects.toNbt());
 			buf.writeVarInt(recipe.instability);
+			buf.writeBoolean(recipe.name != null);
 		}
 		
 		public InfusionRecipe read(Identifier id, PacketByteBuf buf){
+			String name = null;
+			if(buf.readBoolean())
+				name = buf.readString();
 			var result = buf.readItemStack();
 			int size = buf.readVarInt();
 			List<XIngredient> outer = new ArrayList<>(size);
 			for(int i = 0; i < size; i++)
 				outer.add(XIngredient.read(buf));
-			return new InfusionRecipe(id, result, outer, Ingredient.fromPacket(buf), AspectMap.fromNbt(buf.readNbt()), buf.readVarInt());
+			return new InfusionRecipe(id, result, outer, Ingredient.fromPacket(buf), AspectMap.fromNbt(buf.readNbt()), buf.readVarInt(), name);
 		}
 	}
 }

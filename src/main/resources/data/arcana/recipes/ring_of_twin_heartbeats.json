@@ -23,6 +23,7 @@
     "27*envy"
   ],
   "instability": 4,
+  "name": "item.arcana.ring_of_twin_heartbeats.recipe",
   "result": {
     "item": "arcana:ring_of_twin_heartbeats"
   }

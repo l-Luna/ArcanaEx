@@ -285,12 +285,15 @@
     "claw_ring": "Diamond-Tipped Claw Ring",
     "plane_projection_ring": "Plane-Projection Ring",
     "ring_of_the_surging_barrier": "Ring of the Surging Barrier",
+    "ring_of_the_surging_barrier.recipe": "Ring of the\nSurging Barrier",
     "ruby_claw_ring": "Ruby-Tipped Feral Claw Ring",
     "ring_of_twin_heartbeats": "Ring of Twin Heartbeats",
+    "ring_of_twin_heartbeats.recipe": "Ring of\nTwin Heartbeats",
     "ring_of_twin_heartbeats.tip": ["§o\"rapid, irregular beating of the atria\"§r"],
     "ring_of_the_voidgazer": "Ring of the Void-Gazer",
     "ring_of_the_voidgazer.tip": ["§o\"seeing light without light entering the eye\"§r"],
     "amulet_of_runic_shielding": "Amulet of Runic Shielding",
+    "amulet_of_runic_shielding.recipe": "Amulet of\nRunic Shielding",
     "amulet_of_unburdened_travel": "Amulet of Unburdened Travel",
     "amulet_of_unburdened_travel.tip": ["§4WIP§r"],
     "amulet_of_deafening_shielding": "Amulet of Deafening Shielding",
@@ -1437,12 +1440,17 @@
 
     "runic_shielding": {
       "title": "Runic Shielding",
-      "text": "Certain trinkets grant me a {i}Runic Shield{r}, a protective barrier that attempts to deflect damage.\nThe Runic Shielding bar appears above my health and armour, and shows a number of orbs that regenerate over time; each point of Runic Shielding is half of an orb. When I am about to take damage, my shield my absorb the damage instead, consuming an orb. The chance of triggering depends on how much damage the attack would deal, compared to my health; if a blow would be fatal, it will always activate.\nOne orb is one full attack of damage, so it is more effective against heavier attacks and much less so against repetitive small hits. The shield's regeneration slows down temporarily after activation."
+      "text": "Certain trinkets grant me a {i}Runic Shield{r}, a protective barrier that attempts to deflect damage.\nThe Runic Shielding bar appears above my health and armour, and shows a number of orbs that regenerate over time;. When I am about to take damage, my shield my absorb the damage instead, consuming a point. The chance of triggering depends on how much damage the attack would deal, compared to my health; if a blow would be fatal, it will always activate.\nOne orb is one full attack of damage, so it is more effective against heavier attacks and much less so against repetitive small hits. The shield's regeneration slows down temporarily after activation."
+    },
+
+    "amulet_of_runic_shielding": {
+      "title": "Amulet of Runic Shielding",
+      "text": "The Amulet of Runic Shielding straightforwardly provides two points of runic shielding. "
     },
 
     "runic_shielding_enchantment": {
       "title": "Infusion Enchantment: Runic Shielding",
-      "text": "Each level of the Runic Shielding enchantment grants one point of shielding.\nProper infusion enchanting doesn't exist yet, so this will do."
+      "text": "Each level of the Runic Shielding enchantment grants half a point of Runic Shielding. Half-points provided this way add up, so two pieces with Runic Shielding I provide one full point. The maximum level is III.\n(Proper infusion enchanting doesn't exist yet, so this will do.)"
     },
 
     "active_runic_shielding": {
@@ -1535,6 +1543,11 @@
     "void_metal": {
       "title": "Void Metal",
       "text": " \n \n \n{b}{w}{c}{c4}oh you curious soul, desperate for ill-gotten gains{r}\n{b}{w}{c}{c4}it will be a while still before you can see my face. until then, take this blessing{r}"
+    },
+
+    "study_of_infusion": {
+      "title": "Study of Infusion",
+      "text": "With ill-gotten knowledge, I find a new field open ahead of me.{~sep}Infusion is a technique for crafting powerful items by fusing the properties of items and essentia into one. The process involves a lot of force; harmful side-effects and instability must be managed throughout the duration of the process, or risk failing entirely.\nAn Infusion Altar requires an Infusion Matrix, 4 Infusion Pillars diagonally around it, a pedestal two blocks below it, and a number of pedestals and jars placed around it. The placement of extra pedestals and jars is free, though symmetric layouts reduce instability.\nAn infusion recipe requires a particular item to be placed in the central pedestal, other items to be placed in nearby ones, and a certain amount of essentia in jars. The typical essentia use of an infusion is very high, in comparison to any alchemy recipes I've done thus far. An infusion is started by tapping the matrix with my wand."
     }
   }
 }

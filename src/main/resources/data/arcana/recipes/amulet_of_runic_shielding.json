@@ -32,6 +32,7 @@
     "27*sloth"
   ],
   "instability": 1,
+  "name": "item.arcana.amulet_of_runic_shielding.recipe",
   "result": {
     "item": "arcana:amulet_of_runic_shielding"
   }

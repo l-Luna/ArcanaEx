@@ -410,8 +410,15 @@
         {
           "type": "text",
           "content": "research.arcana.magic_mirrors.text"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:magic_mirror"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:personal_magic_mirror"
         }
-        // TODO
       ]
     },
 

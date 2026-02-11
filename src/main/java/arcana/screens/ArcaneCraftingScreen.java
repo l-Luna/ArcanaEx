@@ -1,6 +1,7 @@
 package arcana.screens;
 
 import arcana.ArcanaRegistry;
+import arcana.api.ContextCraftedItem;
 import arcana.aspects.Aspect;
 import arcana.aspects.AspectMap;
 import arcana.aspects.Aspects;
@@ -19,6 +20,7 @@ import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.inventory.CraftingResultInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.s2c.play.ScreenHandlerSlotUpdateS2CPacket;
 import net.minecraft.recipe.Recipe;
@@ -234,7 +236,12 @@ public class ArcaneCraftingScreen extends HandledScreen<ArcaneCraftingScreen.Han
 				itemStack = itemStack2.copy();
 				if(index == 0){
 					// shift click from crafting
-					context.run((world, pos) -> itemStack2.getItem().onCraft(itemStack2, world, player));
+					context.run((world, pos) -> {
+						Item item = itemStack2.getItem();
+						item.onCraft(itemStack2, world, player);
+						if(item instanceof ContextCraftedItem cci)
+							cci.onCraft(itemStack2, input, world, player);
+					});
 					if(!this.insertItem(itemStack2, 11, 47, true))
 						return ItemStack.EMPTY;
 					
@@ -301,6 +308,8 @@ public class ArcaneCraftingScreen extends HandledScreen<ArcaneCraftingScreen.Han
 				// take aspects before taking items
 				// need to allow for *arcane* crafting too
 				this.onCrafted(stack);
+				if(stack.getItem() instanceof ContextCraftedItem cci)
+					cci.onCraft(stack, input, player.world, player);
 				DefaultedList<ItemStack> remains;
 				if(arcaneCrafting.isPresent())
 					remains = player.world.getRecipeManager().getRemainingStacks(ShapedArcaneCraftingRecipe.TYPE, input, player.world);

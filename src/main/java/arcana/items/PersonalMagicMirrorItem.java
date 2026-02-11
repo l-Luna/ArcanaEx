@@ -1,12 +1,14 @@
 package arcana.items;
 
 import arcana.ArcanaRegistry;
+import arcana.api.ContextCraftedItem;
 import arcana.components.MagicMirrorQueue;
 import arcana.util.MathUtil;
 import net.minecraft.client.item.TooltipData;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.StackReference;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -21,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 import java.util.UUID;
 
-public class PersonalMagicMirrorItem extends Item{
+public class PersonalMagicMirrorItem extends Item implements ContextCraftedItem{
 	
 	public PersonalMagicMirrorItem(Settings settings){
 		super(settings);
@@ -90,5 +92,15 @@ public class PersonalMagicMirrorItem extends Item{
 	public static ItemStack setId(ItemStack mirrorStack, UUID uuid){
 		mirrorStack.getOrCreateNbt().putUuid("id", uuid);
 		return mirrorStack;
+	}
+	
+	public void onCraft(ItemStack stack, Inventory context, World world, PlayerEntity player){
+		for(int i = 0; i < context.size(); i++){
+			ItemStack there = context.getStack(i);
+			if(there.getItem() instanceof MagicMirrorBlockItem){
+				MagicMirrorBlockItem.setTag(stack, MagicMirrorBlockItem.getTag(there));
+				break;
+			}
+		}
 	}
 }

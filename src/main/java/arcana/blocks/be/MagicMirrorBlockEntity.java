@@ -53,11 +53,13 @@ public class MagicMirrorBlockEntity extends BlockEntity{
 	
 	protected void writeNbt(NbtCompound nbt){
 		nbt.putUuid("tag", tag);
-		nbt.putUuid("id", id);
+		if(id != null)
+			nbt.putUuid("id", id);
 	}
 	
 	public void readNbt(NbtCompound nbt){
 		tag = nbt.getUuid("tag");
-		id = nbt.getUuid("id");
+		if(nbt.containsUuid("id"))
+			id = nbt.getUuid("id");
 	}
 }

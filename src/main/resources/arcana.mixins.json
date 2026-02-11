@@ -27,6 +27,7 @@
     "StatusEffectUtilMixin",
     "StructureTemplateMixin",
     "accessor.BlockEntityAccessor",
+    "accessor.EntityAccessor",
     "accessor.LivingEntityAccessor",
     "accessor.MiningToolItemAccessor",
     "brewing.BrewingRecipeRegistryMixin",

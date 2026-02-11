@@ -4,6 +4,7 @@ import arcana.ArcanaRegistry;
 import arcana.ArcanaSounds;
 import arcana.aspects.Aspects;
 import arcana.items.WandItem;
+import arcana.mixin.accessor.EntityAccessor;
 import arcana.mixin.accessor.LivingEntityAccessor;
 import arcana.util.InventoryUtil;
 import dev.onyxstudios.cca.api.v3.component.Component;
@@ -105,6 +106,8 @@ public class RunicShielding implements Component, AutoSyncedComponent, ServerTic
 	}
 	
 	public void serverTick(){
+		if(((EntityAccessor)player).arcana$isFirstUpdate())
+			return;
 		int maxHalfPoints = getMaxShielding(player) * 2;
 		if(halfPoints < 0 || halfPoints > maxHalfPoints){
 			halfPoints = MathHelper.clamp(halfPoints, 0, maxHalfPoints);

@@ -756,6 +756,31 @@
           "content": "arcana:boots_of_the_sailor"
         }
       ]
+    },
+
+    {
+      "key": "arcana:tmp/fluid_foaming",
+      "name": "research.arcana.fluid_foaming.title",
+      "icons": [
+        "arcana:formless_foam"
+      ],
+      "category": "arcana:alchemy",
+      "parents": [
+        "&/arcana:substrate_synthesis"
+      ],
+      "x": 10,
+      "y": -2,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.fluid_foaming.text"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:formless_foam"
+        }
+      ]
     }
+
   ]
 }

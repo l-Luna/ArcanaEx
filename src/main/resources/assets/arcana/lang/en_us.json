@@ -1548,6 +1548,11 @@
     "study_of_infusion": {
       "title": "Study of Infusion",
       "text": "With ill-gotten knowledge, I find a new field open ahead of me.{~sep}Infusion is a technique for crafting powerful items by fusing the properties of items and essentia into one. The process involves a lot of force; harmful side-effects and instability must be managed throughout the duration of the process, or risk failing entirely.\nAn Infusion Altar requires an Infusion Matrix, 4 Infusion Pillars diagonally around it, a pedestal two blocks below it, and a number of pedestals and jars placed around it. The placement of extra pedestals and jars is free, though symmetric layouts reduce instability.\nAn infusion recipe requires a particular item to be placed in the central pedestal, other items to be placed in nearby ones, and a certain amount of essentia in jars. The typical essentia use of an infusion is very high, in comparison to any alchemy recipes I've done thus far. An infusion is started by tapping the matrix with my wand."
+    },
+
+    "fluid_foaming": {
+      "title": "Fluid Foaming",
+      "text": "A better, more permeable substrate comes in liquid form, better at permeating through complex structures."
     }
   }
 }

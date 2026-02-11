@@ -38,6 +38,10 @@ public class MagicMirrorBlockItem extends BlockItem{
 		}
 	}
 	
+	public void onCraft(ItemStack stack, World world, PlayerEntity player){
+		setTag(stack, MathUtil.randomUuid(world.random));
+	}
+	
 	public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks){
 		if(isIn(group)){
 			ItemStack stack = getDefaultStack();

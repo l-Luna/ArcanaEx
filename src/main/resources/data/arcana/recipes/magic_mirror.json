@@ -1,0 +1,30 @@
+{
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "S": {
+      "item": "arcana:silverleaf"
+    },
+    "G": {
+      "tag": "c:gold_ingots"
+    },
+    "A": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "E": {
+      "item": "minecraft:ender_pearl"
+    }
+  },
+  "pattern": [
+    "GEG",
+    " S ",
+    "GAG"
+  ],
+  "result": {
+    "item": "arcana:magic_mirror",
+    "count": 2
+  },
+  "aspects": [
+    "12*water",
+    "12*air"
+  ]
+}

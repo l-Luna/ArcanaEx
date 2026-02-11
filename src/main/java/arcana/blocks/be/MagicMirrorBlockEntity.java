@@ -26,8 +26,10 @@ public class MagicMirrorBlockEntity extends BlockEntity{
 	public void tick(World world, BlockPos pos, BlockState state){
 		if(world.isClient)
 			return;
-		if(id == null)
+		if(id == null){
 			id = MathUtil.randomUuid(world.random);
+			markDirty();
+		}
 		ItemStack next = MagicMirrorQueue.from(world).pull(tag, id);
 		if(next == null)
 			return;
@@ -54,12 +56,12 @@ public class MagicMirrorBlockEntity extends BlockEntity{
 	protected void writeNbt(NbtCompound nbt){
 		nbt.putUuid("tag", tag);
 		if(id != null)
-			nbt.putUuid("id", id);
+			nbt.putUuid("m_id", id);
 	}
 	
 	public void readNbt(NbtCompound nbt){
 		tag = nbt.getUuid("tag");
-		if(nbt.containsUuid("id"))
-			id = nbt.getUuid("id");
+		if(nbt.containsUuid("m_id"))
+			id = nbt.getUuid("m_id");
 	}
 }

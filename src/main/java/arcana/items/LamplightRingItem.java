@@ -18,6 +18,8 @@ public class LamplightRingItem extends RingItem{
 	}
 	
 	public void tick(ItemStack stack, SlotReference slot, LivingEntity entity){
+		if(entity.isSpectator())
+			return;
 		super.tick(stack, slot, entity);
 		World world = entity.world;
 		if(world.isClient)
@@ -25,9 +27,8 @@ public class LamplightRingItem extends RingItem{
 		BlockPos userPos = new BlockPos(entity.getEyePos());
 		if(world.getTime() % 20 == 10)
 			proc(world, userPos);
-		if(world.getTime() % 20 * 3 == 30){
+		if(world.getTime() % 20 * 3 == 30)
 			SearchUtil.randomSearch(world, userPos, 6, 10, (pos, __) -> proc(world, pos));
-		}
 	}
 	
 	private static boolean proc(World world, BlockPos userPos){

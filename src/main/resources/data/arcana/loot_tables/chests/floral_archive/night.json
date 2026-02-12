@@ -1,0 +1,188 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    // common pool (x2-4):
+    // tinted glass (7-11), candles (1-3), red mushroom (11-37), brown mushroom (11-37), glow berries (5-7), soul torch (14-28), clock
+    {
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 4,
+        "min": 2
+      },
+      "bonus_rolls": 0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:clock"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:tinted_glass",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 7,
+                "min": 11
+              },
+              "function": "minecraft:set_count"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:candle",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 1,
+                "min": 3
+              },
+              "function": "minecraft:set_count"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:red_mushroom",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 3,
+                "min": 18
+              },
+              "function": "minecraft:set_count"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:brown_mushroom",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 3,
+                "min": 18
+              },
+              "function": "minecraft:set_count"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:glow_berries",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 5,
+                "min": 7
+              },
+              "function": "minecraft:set_count"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:soul_torch",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 7,
+                "min": 14
+              },
+              "function": "minecraft:set_count"
+            }
+          ]
+        }
+      ]
+    },
+
+    // uncommon pool (x1-2 stacks, 3-8):
+    // tenebris crystal, sloth crystal, corpus crystal, victus crystal, terra crystal, permutatio crystal
+    {
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 2,
+        "min": 1
+      },
+      "bonus_rolls": 0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "arcana:crystals/void"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "arcana:crystals/sloth"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "arcana:crystals/flesh"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "arcana:crystals/life"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "arcana:crystals/earth"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "arcana:crystals/exchange"
+        }
+      ],
+      "functions": [
+        {
+          "add": false,
+          "count": {
+            "type": "minecraft:uniform",
+            "max": 3,
+            "min": 8
+          },
+          "function": "minecraft:set_count"
+        }
+      ]
+    },
+
+    // rare pool (50%):
+    // vishroom, cordispora, floral mixture, mycelium
+    {
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 1,
+        "min": 0
+      },
+      "bonus_rolls": 0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "arcana:vishroom"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "arcana:cordispora"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "arcana:aberrant_flora"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:mycelium"
+        }
+      ]
+    }
+  ]
+}

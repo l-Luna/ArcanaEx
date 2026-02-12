@@ -1,0 +1,128 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    // common pool (x2-4):
+    // nitor, glowstone dust (6-11), redstone lamp, torch (14-28), clock, sunflower
+    {
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 4,
+        "min": 2
+      },
+      "bonus_rolls": 0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "arcana:nitor"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:glowstone_dust",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 6,
+                "min": 11
+              },
+              "function": "minecraft:set_count"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:redstone_lamp"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:torch",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 14,
+                "min": 28
+              },
+              "function": "minecraft:set_count"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:clock"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:sunflower"
+        }
+      ]
+    },
+
+    // uncommon pool (x1-2 stacks, 2-6):
+    // victus crystal, herba crystal, lux crystal, terra crystal
+    {
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 2,
+        "min": 1
+      },
+      "bonus_rolls": 0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "arcana:crystals/life"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "arcana:crystals/plant"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "arcana:crystals/light"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "arcana:crystals/earth"
+        }
+      ],
+      "functions": [
+        {
+          "add": false,
+          "count": {
+            "type": "minecraft:uniform",
+            "max": 2,
+            "min": 6
+          },
+          "function": "minecraft:set_count"
+        }
+      ]
+    },
+
+    // rare pool (50%):
+    // bejeweled beet seeds, floral mixture, snowdrop
+    {
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 1,
+        "min": 0
+      },
+      "bonus_rolls": 0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "arcana:bejeweled_beet_seeds"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "arcana:aberrant_flora"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "arcana:snowdrop"
+        }
+      ]
+    }
+  ]
+}

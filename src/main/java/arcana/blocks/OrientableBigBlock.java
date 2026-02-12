@@ -8,6 +8,7 @@ import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.Direction;
 import org.jetbrains.annotations.Nullable;
 
@@ -96,5 +97,9 @@ public class OrientableBigBlock extends BigBlock{
 	
 	public int getZSize(BlockState state){
 		return state.get(FACING).getAxis() == Direction.Axis.X ? super.getXSize(state) : super.getZSize(state);
+	}
+	
+	public BlockState rotate(BlockState state, BlockRotation rotation){
+		return state.with(FACING, rotation.rotate(state.get(FACING)));
 	}
 }

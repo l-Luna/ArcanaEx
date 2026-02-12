@@ -65,6 +65,7 @@ import net.fabricmc.fabric.api.object.builder.v1.world.poi.PointOfInterestHelper
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
+import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBiomeTags;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.block.entity.BlockEntityType;
@@ -113,6 +114,7 @@ import net.minecraft.world.gen.chunk.placement.StructurePlacement;
 import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.foliage.FoliagePlacerType;
 import net.minecraft.world.gen.heightprovider.ConstantHeightProvider;
+import net.minecraft.world.gen.heightprovider.UniformHeightProvider;
 import net.minecraft.world.gen.placementmodifier.BiomePlacementModifier;
 import net.minecraft.world.gen.placementmodifier.HeightmapPlacementModifier;
 import net.minecraft.world.gen.placementmodifier.RarityFilterPlacementModifier;
@@ -728,7 +730,7 @@ public final class ArcanaRegistry{
 			new StructurePool(
 					new Identifier("arcana:crimson_camp"),
 					new Identifier("empty"),
-					ImmutableList.of(Pair.of(StructurePoolElement.ofLegacySingle("arcana:crimson_camp"), 1)),
+					ImmutableList.of(Pair.of(StructurePoolElement.ofSingle("arcana:crimson_camp"), 1)),
 					StructurePool.Projection.RIGID
 			)
 	);
@@ -748,6 +750,30 @@ public final class ArcanaRegistry{
 	);
 	
 	public static final StructurePlacement CRIMSON_CAMP_PLACEMENT = new RandomSpreadStructurePlacement(38, 12, SpreadType.LINEAR, 1356);
+	
+	public static final RegistryEntry<StructurePool> FLORAL_ARCHIVE_STRUCTURE_POOL = StructurePools.register(
+			new StructurePool(
+					new Identifier("arcana:floral_archive"),
+					new Identifier("empty"),
+					ImmutableList.of(Pair.of(StructurePoolElement.ofSingle("arcana:floral_archive"), 1)),
+					StructurePool.Projection.RIGID
+			)
+	);
+	
+	public static final Structure FLORAL_ARCHIVE = new JigsawStructure(
+			createStructureConfig(
+					ConventionalBiomeTags.CAVES,
+					Map.of(),
+					GenerationStep.Feature.UNDERGROUND_STRUCTURES,
+					StructureTerrainAdaptation.BURY
+			),
+			FLORAL_ARCHIVE_STRUCTURE_POOL,
+			1,
+			UniformHeightProvider.create(YOffset.aboveBottom(10), YOffset.aboveBottom(60)),
+			false
+	);
+	
+	public static final StructurePlacement FLORAL_ARCHIVE_PLACEMENT = new RandomSpreadStructurePlacement(18, 4, SpreadType.TRIANGULAR, 856294);
 	
 	// particle types...
 	public static DefaultParticleType TAINT_BUBBLE = FabricParticleTypes.simple();
@@ -1403,6 +1429,7 @@ public final class ArcanaRegistry{
 		// structures
 		register("crimson_outpost", CRIMSON_OUTPOST, CRIMSON_OUTPOST_PLACEMENT);
 		register("crimson_camp", CRIMSON_CAMP, CRIMSON_CAMP_PLACEMENT);
+		register("floral_archive", FLORAL_ARCHIVE, FLORAL_ARCHIVE_PLACEMENT);
 		
 		// particle types
 		register("taint_bubble", TAINT_BUBBLE);

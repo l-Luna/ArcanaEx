@@ -142,7 +142,9 @@ public final class AuraWorld implements Component, ServerTickingComponent, AutoS
 			fluxStatsNbt.putFloat(entry.getKey().name(), entry.getValue());
 		tag.put("fluxStats", fluxStatsNbt);
 		
-		tag.put("pendingNodes", pendingNodes.stream().map(Node::toNbt).collect(NbtUtil.toNbtList()));
+		synchronized(this){
+			tag.put("pendingNodes", pendingNodes.stream().map(Node::toNbt).collect(NbtUtil.toNbtList()));
+		}
 	}
 	
 	public void readFromNbt(NbtCompound tag){
@@ -155,7 +157,9 @@ public final class AuraWorld implements Component, ServerTickingComponent, AutoS
 				logger.error("Invalid flux origin with name \"{}\", ignoring.", key);
 			}
 		
-		pendingNodes = NbtUtil.readMutList(tag, "pendingNodes", Node::fromNbt);
+		synchronized(this){
+			pendingNodes = NbtUtil.readMutList(tag, "pendingNodes", Node::fromNbt);
+		}
 	}
 	
 	public void sync(){
@@ -166,13 +170,15 @@ public final class AuraWorld implements Component, ServerTickingComponent, AutoS
 	
 	public void serverTick(){
 		// bring in pending nodes as soon as possible
-		for(int i = pendingNodes.size() - 1; i >= 0; i--){
-			Node node = pendingNodes.get(i);
-			AuraChunk there = AuraChunk.from(world, node.asBlockPos());
-			if(there != null){
-				pendingNodes.remove(i);
-				there.addNode(node);
-				sync();
+		synchronized(this){
+			for(int i = pendingNodes.size() - 1; i >= 0; i--){
+				Node node = pendingNodes.get(i);
+				AuraChunk there = AuraChunk.from(world, node.asBlockPos());
+				if(there != null){
+					pendingNodes.remove(i);
+					there.addNode(node);
+					sync();
+				}
 			}
 		}
 		

@@ -150,6 +150,7 @@ public class InfusionRecipe implements Recipe<InfusionInventory>, ArcanaRecipe, 
 		}
 		
 		public void write(PacketByteBuf buf, InfusionRecipe recipe){
+			buf.writeBoolean(recipe.name != null);
 			if(recipe.name != null)
 				buf.writeString(recipe.name);
 			buf.writeItemStack(recipe.result);
@@ -159,7 +160,6 @@ public class InfusionRecipe implements Recipe<InfusionInventory>, ArcanaRecipe, 
 			recipe.centralIngredient.write(buf);
 			buf.writeNbt(recipe.aspects.toNbt());
 			buf.writeVarInt(recipe.instability);
-			buf.writeBoolean(recipe.name != null);
 		}
 		
 		public InfusionRecipe read(Identifier id, PacketByteBuf buf){

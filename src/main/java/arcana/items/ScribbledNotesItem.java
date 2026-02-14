@@ -23,9 +23,8 @@ public class ScribbledNotesItem extends Item{
 			ItemStack newStack = new ItemStack(ArcanaRegistry.ARCANUM);
 			user.setStackInHand(hand, newStack);
 			return TypedActionResult.success(newStack);
-		}else{
+		}else if(world.isClient)
 			DirectResearchEntryItem.openEntry(arcId("scribbled_notes"));
-			return TypedActionResult.success(stack);
-		}
+		return TypedActionResult.success(stack);
 	}
 }

@@ -470,7 +470,7 @@ public class ResearchBookScreen extends Screen{
 		if(r.entryStage(entry) > 0)
 			return PageStyle.inProgress;
 		// if it has no parents *and* the "root" tag, it's available to do and in progress.
-		if(entry.meta().contains("root") && entry.parents().size() == 0)
+		if(entry.meta().contains("root") && entry.parents().isEmpty())
 			return PageStyle.inProgress;
 		// if it does not have the "hidden" tag:
 		if(!entry.meta().contains("hidden")){
@@ -478,8 +478,8 @@ public class ResearchBookScreen extends Screen{
 			// if all of its parents are complete, it is available to do and in progress.
 			if(parentStyles.stream().allMatch(PageStyle.complete::equals))
 				return PageStyle.inProgress;
-			// if at least one of its parents are in progress, it's pending.
-			if(parentStyles.stream().anyMatch(PageStyle.inProgress::equals))
+			// if at least one of its parents are in progress/completed, it's pending.
+			if(parentStyles.stream().anyMatch(other -> PageStyle.inProgress.equals(other) || PageStyle.complete.equals(other)))
 				return PageStyle.pending;
 		}
 		// otherwise, its invisible
@@ -499,7 +499,7 @@ public class ResearchBookScreen extends Screen{
 		if(r.entryStage(entry) > 0)
 			return PageStyle.inProgress;
 		// if it has no parents *and* the "root" tag, its available to do and in progress.
-		if(entry.meta().contains("root") && entry.parents().size() == 0)
+		if(entry.meta().contains("root") && entry.parents().isEmpty())
 			return PageStyle.inProgress;
 		// if it does not have the "hidden" tag:
 		if(!entry.meta().contains("hidden")){
@@ -507,8 +507,8 @@ public class ResearchBookScreen extends Screen{
 			// if all of its parents are complete, it is available to do and in progress.
 			if(parentStyles.stream().allMatch(PageStyle.complete::equals))
 				return PageStyle.inProgress;
-			// if at least one of its parents are in progress, its pending.
-			if(parentStyles.stream().anyMatch(PageStyle.inProgress::equals))
+			// if at least one of its parents are in progress/completed, it's pending.
+			if(parentStyles.stream().anyMatch(other -> PageStyle.inProgress.equals(other) || PageStyle.complete.equals(other)))
 				return PageStyle.pending;
 		}
 		// otherwise, its invisible

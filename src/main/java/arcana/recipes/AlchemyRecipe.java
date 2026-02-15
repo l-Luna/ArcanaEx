@@ -106,6 +106,10 @@ public class AlchemyRecipe implements Recipe<AlchemyInventory>, ArcanaRecipe, As
 		return TYPE;
 	}
 	
+	public boolean isIgnoredInRecipeBook(){
+		return true;
+	}
+	
 	public @Nullable Identifier getResearchId(){
 		return researchId;
 	}

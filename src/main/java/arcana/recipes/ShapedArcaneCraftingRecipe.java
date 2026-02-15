@@ -68,6 +68,10 @@ public class ShapedArcaneCraftingRecipe extends ShapedRecipe implements ArcaneCr
 		return Optional.ofNullable(translationKey);
 	}
 	
+	public boolean isIgnoredInRecipeBook(){
+		return true;
+	}
+	
 	public static class Serializer extends ShapedRecipe.Serializer{
 		
 		public ShapedRecipe read(Identifier id, JsonObject json){

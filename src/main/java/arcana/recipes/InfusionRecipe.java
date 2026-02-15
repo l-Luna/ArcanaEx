@@ -135,6 +135,10 @@ public class InfusionRecipe implements Recipe<InfusionInventory>, ArcanaRecipe, 
 		return Optional.ofNullable(name);
 	}
 	
+	public boolean isIgnoredInRecipeBook(){
+		return true;
+	}
+	
 	public static class Serializer implements RecipeSerializer<InfusionRecipe>{
 		
 		public InfusionRecipe read(Identifier id, JsonObject json){

@@ -11,10 +11,10 @@
       "tag": "arcana:silverwood_logs"
     },
     "S": {
-      "item": "arcana:crystals/sloth"
+      "item": "arcana:crystals/earth"
     },
     "R": {
-      "item": "arcana:crystals/armour"
+      "item": "arcana:crystals/order"
     }
   },
   "pattern": [

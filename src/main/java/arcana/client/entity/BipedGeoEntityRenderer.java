@@ -65,8 +65,12 @@ public class BipedGeoEntityRenderer<T extends LivingEntity & IAnimatable> extend
 		
 		// TODO: other arm poses
 		base.rightArmPose = base.leftArmPose = BipedEntityModel.ArmPose.EMPTY;
-		if(animatable instanceof MobEntity me && me.isAttacking() && me.getMainHandStack().getItem() instanceof BowItem)
-			base.leftArmPose = BipedEntityModel.ArmPose.BOW_AND_ARROW;
+		if(animatable instanceof MobEntity me){
+			if(me.isAttacking() && me.getMainHandStack().getItem() instanceof BowItem)
+				base.leftArmPose = BipedEntityModel.ArmPose.BOW_AND_ARROW;
+			else if(!me.getMainHandStack().isEmpty())
+				base.leftArmPose = BipedEntityModel.ArmPose.ITEM;
+		}
 		base.handSwingProgress = animatable.getHandSwingProgress(delta);
 		
 		base.setAngles(animatable,
@@ -90,18 +94,15 @@ public class BipedGeoEntityRenderer<T extends LivingEntity & IAnimatable> extend
 				matrices.push();
 				
 				IBone bone = modelProvider.getBone(leftArmBone);
-				RenderUtils.prepMatrixForBone(matrices, (GeoBone)bone);
-				//RenderUtils.translateAndRotateMatrixForBone(matrices, bone);
-//				base.setArmAngle(isLeft ? Arm.LEFT : Arm.RIGHT, matrices);
-//				matrices.translate(-bone.getPositionX() / 16f, bone.getPositionY() / 16f, bone.getPositionZ() / 16f);
+				RenderUtils.translateAndRotateMatrixForBone(matrices, (GeoBone)bone);
 				
-				matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(180));
+				matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(-90));
 				matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180));
-				matrices.translate((isLeft ? 1f : -1) / 2f, -0.8, -0.1);
+				matrices.translate((isLeft ? 1f : -1) / 16f, 0.125, 0.625);
 				
 				MinecraftClient.getInstance().getItemRenderer().renderItem(animatable,
 						stack,
-						isLeft ? ModelTransformation.Mode.THIRD_PERSON_LEFT_HAND : ModelTransformation.Mode.THIRD_PERSON_RIGHT_HAND,
+						/*isLeft ? ModelTransformation.Mode.THIRD_PERSON_LEFT_HAND :*/ ModelTransformation.Mode.THIRD_PERSON_RIGHT_HAND,
 						false,
 						matrices,
 						getCurrentRTB(),
@@ -109,7 +110,7 @@ public class BipedGeoEntityRenderer<T extends LivingEntity & IAnimatable> extend
 						packedLight,
 						LivingEntityRenderer.getOverlay(animatable, 0),
 						animatable.getId());
-				// stop weird shit showing up
+				// avoids graphical issues
 				getCurrentRTB().getBuffer(RenderLayer.getEntityTranslucent(getTextureLocation(animatable)));
 				
 				matrices.pop();

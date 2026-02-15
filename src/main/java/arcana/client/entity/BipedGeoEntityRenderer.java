@@ -96,9 +96,10 @@ public class BipedGeoEntityRenderer<T extends LivingEntity & IAnimatable> extend
 				IBone bone = modelProvider.getBone(leftArmBone);
 				RenderUtils.translateAndRotateMatrixForBone(matrices, (GeoBone)bone);
 				
-				matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(-90));
+				matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90));
 				matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180));
-				matrices.translate((isLeft ? 1f : -1) / 16f, 0.125, 0.625);
+				matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(180));
+				matrices.translate((isLeft ? -1 : 1) / 16f, 0.125, -0.625);
 				
 				MinecraftClient.getInstance().getItemRenderer().renderItem(animatable,
 						stack,

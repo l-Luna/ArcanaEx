@@ -1,12 +1,20 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "item": "arcana:arcanum"
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "B": {
+      "item": "minecraft:book"
     },
-    {
-      "item": "minecraft:ender_eye"
+    "G": {
+      "tag": "c:glass_panes"
+    },
+    "C": {
+      "tag": "arcana:aspect_crystals"
     }
+  },
+  "pattern": [
+    " G ",
+    "CBC",
+    " G "
   ],
   "result": {
     "item": "arcana:tome_of_sharing"

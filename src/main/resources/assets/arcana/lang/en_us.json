@@ -833,7 +833,7 @@
       "unpin": "Ctrl-click to unpin",
       "get_note": [
         "Click to get research note",
-        "Requires scribing tools and paper"
+        "Requires paper"
       ],
       "addendum": "Addendum: {i}{}{r}",
       "cant_solve": "???",

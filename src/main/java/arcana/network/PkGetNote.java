@@ -55,7 +55,6 @@ public class PkGetNote extends C2SMessage{
 	}
 	
 	public static boolean canGetNote(PlayerEntity player){
-		return player.getInventory().contains(ArcanaTags.SCRIBING_TOOLS)
-				&& player.getInventory().contains(new ItemStack(Items.PAPER));
+		return player.getInventory().contains(new ItemStack(Items.PAPER));
 	}
 }

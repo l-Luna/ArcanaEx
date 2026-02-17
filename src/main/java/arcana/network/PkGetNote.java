@@ -1,7 +1,6 @@
 package arcana.network;
 
 import arcana.ArcanaRegistry;
-import arcana.ArcanaTags;
 import arcana.ReflectivelyUtilized;
 import arcana.research.Puzzle;
 import arcana.research.Research;
@@ -45,13 +44,6 @@ public class PkGetNote extends C2SMessage{
 		}
 		
 		player.getInventory().remove(x -> x.isOf(Items.PAPER), 1, player.playerScreenHandler.getCraftingInput());
-		for(int i = 0; i < player.getInventory().size(); i++){
-			ItemStack stack = player.getInventory().getStack(i);
-			if(stack.isIn(ArcanaTags.SCRIBING_TOOLS)){
-				stack.damage(1, player, __ -> {});
-				break;
-			}
-		}
 	}
 	
 	public static boolean canGetNote(PlayerEntity player){

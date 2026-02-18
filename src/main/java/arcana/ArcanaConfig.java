@@ -17,4 +17,8 @@ public class ArcanaConfig extends WrappedConfig{
 	@Comment("Relative to your GUI scale; 1 is vanilla text size")
 	@Comment("0.7 by default")
 	public float textScaling = 0.7f;
+	
+	@Comment("Always show an outline around the hovered position in research books")
+	@Comment("Off by default")
+	public boolean alwaysShowResearchBookCursor = false;
 }

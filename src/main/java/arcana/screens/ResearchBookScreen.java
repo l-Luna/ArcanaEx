@@ -1,5 +1,6 @@
 package arcana.screens;
 
+import arcana.Arcana;
 import arcana.client.ArcanaClient;
 import arcana.client.RenderHelper;
 import arcana.components.Researcher;
@@ -137,13 +138,15 @@ public class ResearchBookScreen extends Screen{
 		renderResearchBackground(matrices);
 		renderEntries(matrices, delta);
 		
+		int gx = (int)Math.floor((mouseX / zoom - xOffset()) / 30);
+		int gy = (int)Math.floor((mouseY / zoom - yOffset()) / 30);
 		if(debug){
 			matrices.push();
 			matrices.translate(0, 0, 300);
-			int gx = (int)Math.floor((mouseX / zoom - xOffset()) / 30);
-			int gy = (int)Math.floor((mouseY / zoom - yOffset()) / 30);
 			textRenderer.draw(matrices, "X: %d / Y : %d".formatted(gx, gy), scX + 2, scY + 4, 0xFFFFFF);
-
+		}
+		
+		if(debug || Arcana.CONFIG.alwaysShowResearchBookCursor){
 			matrices.scale(zoom, zoom, zoom);
 			RenderSystem.setShader(GameRenderer::getPositionColorTexShader);
 			RenderSystem.setShaderTexture(0, arrowsAndBasesTexture);

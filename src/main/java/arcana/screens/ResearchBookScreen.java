@@ -388,12 +388,12 @@ public class ResearchBookScreen extends Screen{
 			for(Entry entry : categories.get(tab).entries()){
 				PageStyle style;
 				if(hovering(entry, (int)mouseX, (int)mouseY)){
-					if(button != 2){
+					if(button == 0){
 						if((style = style(entry)) == PageStyle.complete || style == PageStyle.inProgress)
 							// left/right (& other) click: open page
 							client.setScreen(new ResearchEntryScreen(entry, this));
 						return true;
-					}else if(style(entry) == PageStyle.inProgress){
+					}else if(button == 2 && style(entry) == PageStyle.inProgress){
 						// middle click: try advance
 						ArcanaClient.sendTryAdvance(entry);
 						return true;

@@ -11,7 +11,7 @@
     {
       "key": "arcana:fundamentals",
       "in": "arcana:arcanum",
-      "icon": "arcana:aspects/light",
+      "icon": "arcana:aspects/magic",
       "name": "research.arcana.category.fundamentals",
       "bg": "arcana:research/bg_fundamentals.png"
     },

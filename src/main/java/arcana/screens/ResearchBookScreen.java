@@ -744,26 +744,25 @@ public class ResearchBookScreen extends Screen{
 		Category category;
 		
 		public CategoryButton(int x, int y, int categoryIdx, Category category){
-			super(x, y, 16, 16, Text.literal(""), button -> {
-				/*if(MinecraftClient.getInstance().currentScreen instanceof ResearchBookScreen rbs)
-					rbs.ca*/
-				tab = categoryIdx;
-			});
+			super(x, y, 16, 16, Text.literal(""), button -> tab = categoryIdx);
 			this.categoryIdx = categoryIdx;
 			this.category = category;
 			visible = true;
 		}
 		
 		public void render(MatrixStack matrices, int mouseX, int mouseY, float delta){
+			hovered = mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
 			if(visible){
-				int drawX = x - (categoryIdx == tab ? 6 : (hovered) ? 4 : 0);
-				RenderHelper.renderIcon(matrices, category.icon(), drawX, y, getZOffset());
-				hovered = mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
+				int xOffset = categoryIdx == tab ? 6 : (hovered) ? 4 : 0;
+				int renderX = x - xOffset;
+				RenderSystem.setShaderTexture(0, texture);
+				drawTexture(matrices, renderX - 11, y - 1, 0, 158, 34 - (6 - xOffset), 18);
+				RenderHelper.renderIcon(matrices, category.icon(), renderX, y, getZOffset());
 			}
 		}
 		
 		public void renderAfter(MatrixStack matrices, int mouseX, int mouseY){
-			if(hovered){
+			if(hovered && visible){
 				if(!category.entries().isEmpty()){
 					Researcher researcher = Researcher.from(client.player);
 					int sum = 0;
@@ -815,6 +814,7 @@ public class ResearchBookScreen extends Screen{
 		}
 		
 		public void render(MatrixStack matrices, int mouseX, int mouseY, float delta){
+			hovered = mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
 			if(visible){
 				int xOffset = hovered ? 3 : 0;
 				RenderSystem.setShaderTexture(0, texture);
@@ -824,9 +824,8 @@ public class ResearchBookScreen extends Screen{
 		}
 		
 		public void renderAfter(MatrixStack matrices, int mouseX, int mouseY){
-			hovered = mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
 			if(pin.icon().stack() != null)
-				if(hovered){
+				if(hovered && visible){
 					var stack = pin.icon().stack();
 					List<Text> tooltips = new ArrayList<>(getTooltipFromItem(stack));
 					tooltips.add(Text.translatable("research.entry.unpin").formatted(Formatting.AQUA));

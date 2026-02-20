@@ -48,6 +48,8 @@ public class ResearchBookScreen extends Screen{
 	List<PinButton> pinButtons = new ArrayList<>();
 	Arrows arrows = new Arrows();
 	
+	boolean wasDragging = false;
+	
 	@Nullable Screen parent;
 	
 	private static boolean debug = false;
@@ -380,57 +382,78 @@ public class ResearchBookScreen extends Screen{
 	}
 	
 	public boolean mouseClicked(double mouseX, double mouseY, int button){
-		for(Entry entry : categories.get(tab).entries()){
-			PageStyle style;
-			if(hovering(entry, (int)mouseX, (int)mouseY)){
-				if(button != 2){
-					if((style = style(entry)) == PageStyle.complete || style == PageStyle.inProgress)
-						// left/right (& other) click: open page
-						client.setScreen(new ResearchEntryScreen(entry, this));
-				}else if(style(entry) == PageStyle.inProgress)
-					// middle click: try advance
-					ArcanaClient.sendTryAdvance(entry);
-				break;
-			}
-		}
-		
-		if(debug && hasControlDown()){
-			int gx = (int)Math.floor((mouseX / zoom - xOffset()) / 30);
-			int gy = (int)Math.floor((mouseY / zoom - yOffset()) / 30);
-			client.keyboard.setClipboard("""
-					{
-						"key": "arcana:XYZ",
-						"name": "research.arcana.XYZ.title",
-						"desc": "research.arcana.XYZ.desc",
-						"icons": [
-							"arcana:XYZ"
-						],
-						"category": "%s",
-						"parents": [
-							"arcana:ABC"
-						],
-						"x": %d,
-						"y": %d,
-						"sections": [
-							{
-								"type": "text",
-								"content": "research.arcana.XYZ.stages.1",
-								"requirements": []
-							}
-						]
+		int scrx = (width - frameWidth()) / 2 + 16, scry = (height - frameHeight()) / 2 + 17;
+		int visibleWidth = frameWidth() - 32, visibleHeight = frameHeight() - 34;
+		if(mouseX >= scrx && mouseX <= scrx + visibleWidth && mouseY >= scry && mouseY <= scry + visibleHeight){
+			for(Entry entry : categories.get(tab).entries()){
+				PageStyle style;
+				if(hovering(entry, (int)mouseX, (int)mouseY)){
+					if(button != 2){
+						if((style = style(entry)) == PageStyle.complete || style == PageStyle.inProgress)
+							// left/right (& other) click: open page
+							client.setScreen(new ResearchEntryScreen(entry, this));
+						return true;
+					}else if(style(entry) == PageStyle.inProgress){
+						// middle click: try advance
+						ArcanaClient.sendTryAdvance(entry);
+						return true;
 					}
-					""".formatted(categories.get(tab).id().toString(), gx, gy));
-			client.player.sendMessage(Text.literal("Copied research skeleton to clipboard"));
+					break;
+				}
+			}
+			
+			if(debug && hasControlDown()){
+				int gx = (int)Math.floor((mouseX / zoom - xOffset()) / 30);
+				int gy = (int)Math.floor((mouseY / zoom - yOffset()) / 30);
+				client.keyboard.setClipboard("""
+						{
+							"key": "arcana:XYZ",
+							"name": "research.arcana.XYZ.title",
+							"desc": "research.arcana.XYZ.desc",
+							"icons": [
+								"arcana:XYZ"
+							],
+							"category": "%s",
+							"parents": [
+								"arcana:ABC"
+							],
+							"x": %d,
+							"y": %d,
+							"sections": [
+								{
+									"type": "text",
+									"content": "research.arcana.XYZ.stages.1",
+									"requirements": []
+								}
+							]
+						}
+						""".formatted(categories.get(tab).id().toString(), gx, gy));
+				client.player.sendMessage(Text.literal("Copied research skeleton to clipboard"));
+				return true;
+			}
+			
+			if(button == 0){
+				wasDragging = true;
+				return true;
+			}
 		}
 		
 		return super.mouseClicked(mouseX, mouseY, button);
 	}
 	
+	public boolean mouseReleased(double mouseX, double mouseY, int button){
+		if(button == 0)
+			wasDragging = false;
+		return super.mouseReleased(mouseX, mouseY, button);
+	}
+	
 	public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY){
-		xPan += (deltaX * ZOOM_MULTIPLIER) / zoom;
-		yPan -= (deltaY * ZOOM_MULTIPLIER) / zoom;
-		xPan = clamp(xPan, -MAX_PAN, MAX_PAN);
-		yPan = clamp(yPan, -MAX_PAN, MAX_PAN);
+		if(wasDragging){
+			xPan += (deltaX * ZOOM_MULTIPLIER) / zoom;
+			yPan -= (deltaY * ZOOM_MULTIPLIER) / zoom;
+			xPan = clamp(xPan, -MAX_PAN, MAX_PAN);
+			yPan = clamp(yPan, -MAX_PAN, MAX_PAN);
+		}
 		return super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
 	}
 	

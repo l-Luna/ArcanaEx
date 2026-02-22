@@ -351,7 +351,7 @@ public class ResearchBookScreen extends Screen{
 			if(hovering(entry, mouseX, mouseY)){
 				PageStyle style = style(entry);
 				if(style == PageStyle.complete || style == PageStyle.inProgress
-						|| (style == PageStyle.pending && !entry.meta().contains("hidden"))){
+						|| (style == PageStyle.pending && !entry.meta().contains("hidden") && !wasDragging)){
 					List<Text> lines = new ArrayList<>(2);
 					lines.add(Text.translatable(entry.name()));
 					if(entry.desc() != null && !entry.desc().isEmpty())
@@ -389,10 +389,12 @@ public class ResearchBookScreen extends Screen{
 				PageStyle style;
 				if(hovering(entry, (int)mouseX, (int)mouseY)){
 					if(button == 0){
-						if((style = style(entry)) == PageStyle.complete || style == PageStyle.inProgress)
+						if((style = style(entry)) == PageStyle.complete || style == PageStyle.inProgress){
 							// left/right (& other) click: open page
 							client.setScreen(new ResearchEntryScreen(entry, this));
-						return true;
+							return true;
+						}
+						break;
 					}else if(button == 2 && style(entry) == PageStyle.inProgress){
 						// middle click: try advance
 						ArcanaClient.sendTryAdvance(entry);

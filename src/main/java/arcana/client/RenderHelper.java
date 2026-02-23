@@ -1,12 +1,19 @@
 package arcana.client;
 
 import arcana.research.Icon;
+import arcana.util.TintingVertexConsumerProvider;
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.render.*;
+import net.minecraft.client.render.item.ItemRenderer;
+import net.minecraft.client.render.model.BakedModel;
+import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.texture.Sprite;
+import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.ColorHelper;
 import net.minecraft.util.math.MathHelper;
@@ -120,6 +127,10 @@ public class RenderHelper{
 	}
 	
 	public static void renderIcon(MatrixStack matrices, Icon icon, int x, int y, int zOffset, float itemZoom, int frames){
+		renderIcon(matrices, icon, x, y, zOffset, itemZoom, frames, 1, 1, 1, 1);
+	}
+	
+	public static void renderIcon(MatrixStack matrices, Icon icon, int x, int y, int zOffset, float itemZoom, int frames, float r, float g, float b, float a){
 		if(icon.texture() != null){
 			var tex = icon.texture();
 			if(!tex.getPath().endsWith(".png"))
@@ -135,8 +146,9 @@ public class RenderHelper{
 			var matrices2 = RenderSystem.getModelViewStack();
 			matrices2.push();
 			matrices2.scale(itemZoom, itemZoom, 1);
-			var renderer = MinecraftClient.getInstance().getItemRenderer();
-			renderer.renderGuiItemIcon(icon.stack(), x, y);
+			ItemRenderer renderer = MinecraftClient.getInstance().getItemRenderer();
+			ItemStack stack = icon.stack();
+			renderGuiItemModel(renderer, stack, x, y, renderer.getModel(stack, null, null, 0), r, g, b, a);
 			renderer.renderGuiItemOverlay(MinecraftClient.getInstance().textRenderer, icon.stack(), x, y);
 			matrices2.pop();
 			RenderSystem.applyModelViewMatrix();
@@ -255,5 +267,45 @@ public class RenderHelper{
 			}
 		}
 		RenderSystem.setShaderColor(1, 1, 1, 1);
+	}
+	
+	// coloured version of ItemRenderer::renderGuiItemMode
+	
+	private static void renderGuiItemModel(ItemRenderer self, ItemStack stack, int x, int y, BakedModel model, float r, float g, float b, float a){
+//		self.textureManager.getTexture(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE).setFilter(false, false);
+		RenderSystem.setShaderTexture(0, SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE);
+		RenderSystem.enableBlend();
+		RenderSystem.blendFunc(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA);
+		RenderSystem.setShaderColor(r, g, b, a);
+		MatrixStack matrices = RenderSystem.getModelViewStack();
+		matrices.push();
+		matrices.translate(x, y, 100 + self.zOffset);
+		matrices.translate(8, 8, 0);
+		matrices.scale(1, -1, 1);
+		matrices.scale(16, 16, 16);
+		RenderSystem.applyModelViewMatrix();
+		MatrixStack matrixStack2 = new MatrixStack();
+		VertexConsumerProvider.Immediate immediate = MinecraftClient.getInstance().getBufferBuilders().getEntityVertexConsumers();
+		boolean unlit = !model.isSideLit();
+		if(unlit)
+			DiffuseLighting.disableGuiDepthLighting();
+		
+		self.renderItem(
+				stack,
+				ModelTransformation.Mode.GUI,
+				false,
+				matrixStack2,
+				new TintingVertexConsumerProvider(immediate, r, g, b, a),
+				LightmapTextureManager.MAX_LIGHT_COORDINATE,
+				OverlayTexture.DEFAULT_UV,
+				model
+		);
+		immediate.draw();
+		RenderSystem.enableDepthTest();
+		if(unlit)
+			DiffuseLighting.enableGuiDepthLighting();
+		
+		matrices.pop();
+		RenderSystem.applyModelViewMatrix();
 	}
 }

@@ -25,7 +25,6 @@ import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import static arcana.Arcana.arcId;
 import static java.lang.Math.*;
@@ -196,7 +195,7 @@ public class ResearchBookScreen extends Screen{
 		var time = MinecraftClient.getInstance().world.getTime() + delta;
 		for(Entry entry : categories.get(tab).entries()){
 			PageStyle style = style(entry);
-			if(style != PageStyle.none){
+			if(style != PageStyle.NONE){
 				int x = (int)(entry.x() * 30 + xOffset());
 				int y = (int)(entry.y() * 30 + yOffset());
 				
@@ -222,9 +221,9 @@ public class ResearchBookScreen extends Screen{
 				
 				Vec2f baseUv = baseUv(entry);
 				float mult = 1f;
-				if(style == PageStyle.inProgress)
+				if(style == PageStyle.IN_PROGRESS)
 					mult = (float)abs(sin(time / 5f) * 0.75f) + .25f;
-				else if(style == PageStyle.pending)
+				else if(style == PageStyle.PENDING)
 					mult = 0.2f;
 				RenderSystem.setShaderColor(mult, mult, mult, 1);
 				drawTexture(matrices, x + 2, y + 2, (int)baseUv.x, (int)baseUv.y, 26, 26);
@@ -248,7 +247,8 @@ public class ResearchBookScreen extends Screen{
 						matrices.pop();
 					}else{
 						Icon icon = entry.icons().get((int)((time / 30) % entry.icons().size()));
-						RenderHelper.renderIcon(matrices, icon, x + 7, y + 7, getZOffset(), zoom, frames);
+						float u = style == PageStyle.PENDING ? 0.2f : 1f;
+						RenderHelper.renderIcon(matrices, icon, x + 7, y + 7, getZOffset(), zoom, frames, u, u, u, 1);
 					}
 				}
 				
@@ -257,11 +257,11 @@ public class ResearchBookScreen extends Screen{
 				RenderSystem.setShader(GameRenderer::getPositionTexShader);
 				RenderSystem.setShaderTexture(0, arrowsAndBasesTexture);
 				for(Parent parent : entry.parents()){
-					RenderSystem.setShaderColor(1, 1, 1, 1);
+					RenderSystem.setShaderColor(1, 1, 1, style == PageStyle.PENDING ? 0.2f : 1);
 					Entry pEntry = Research.getEntry(parent.id());
-					if(pEntry != null && parent.show() && pEntry.category().equals(entry.category()) && style(pEntry) != PageStyle.none){
+					if(pEntry != null && parent.show() && pEntry.category().equals(entry.category()) && style(pEntry) != PageStyle.NONE){
 						if(!parent.hasArrowhead())
-							RenderSystem.setShaderColor(1, 1, 1, .6f);
+							RenderSystem.setShaderColor(1, 1, 1, style == PageStyle.PENDING ? 0.2f : 0.6f);
 						int xdiff = entry.x() - pEntry.x();
 						int ydiff = entry.y() - pEntry.y();
 						if(xdiff == 0){
@@ -350,8 +350,8 @@ public class ResearchBookScreen extends Screen{
 		for(Entry entry : categories.get(tab).entries()){
 			if(hovering(entry, mouseX, mouseY)){
 				PageStyle style = style(entry);
-				if(style == PageStyle.complete || style == PageStyle.inProgress
-						|| (style == PageStyle.pending && !entry.meta().contains("hidden") && !wasDragging)){
+				if(style == PageStyle.COMPLETE || style == PageStyle.IN_PROGRESS
+						|| (style == PageStyle.PENDING && !entry.meta().contains("hidden") && !wasDragging)){
 					List<Text> lines = new ArrayList<>(2);
 					lines.add(Text.translatable(entry.name()));
 					if(entry.desc() != null && !entry.desc().isEmpty())
@@ -389,13 +389,13 @@ public class ResearchBookScreen extends Screen{
 				PageStyle style;
 				if(hovering(entry, (int)mouseX, (int)mouseY)){
 					if(button == 0){
-						if((style = style(entry)) == PageStyle.complete || style == PageStyle.inProgress){
+						if((style = style(entry)) == PageStyle.COMPLETE || style == PageStyle.IN_PROGRESS){
 							// left/right (& other) click: open page
 							client.setScreen(new ResearchEntryScreen(entry, this));
 							return true;
 						}
 						break;
-					}else if(button == 2 && style(entry) == PageStyle.inProgress){
+					}else if(button == 2 && style(entry) == PageStyle.IN_PROGRESS){
 						// middle click: try advance
 						ArcanaClient.sendTryAdvance(entry);
 						return true;
@@ -489,58 +489,61 @@ public class ResearchBookScreen extends Screen{
 	public PageStyle style(Entry entry){
 		// locked entries are always locked
 		if(entry.meta().contains("locked"))
-			return PageStyle.pending;
+			return PageStyle.PENDING;
 		// if the page is at full progress, it's complete.
 		Researcher r = Researcher.from(MinecraftClient.getInstance().player);
 		if(r.entryStage(entry) >= entry.sections().size())
-			return PageStyle.complete;
+			return PageStyle.COMPLETE;
 		// if its progress is greater than zero, then it's in progress.
 		if(r.entryStage(entry) > 0)
-			return PageStyle.inProgress;
+			return PageStyle.IN_PROGRESS;
 		// if it has no parents *and* the "root" tag, it's available to do and in progress.
 		if(entry.meta().contains("root") && entry.parents().isEmpty())
-			return PageStyle.inProgress;
+			return PageStyle.IN_PROGRESS;
 		// if it does not have the "hidden" tag:
 		if(!entry.meta().contains("hidden")){
 			List<PageStyle> parentStyles = entry.parents().stream().map(parent -> Pair.of(Research.getEntry(parent.id()), parent)).map(p -> parentStyle(p.getFirst(), p.getSecond())).toList();
 			// if all of its parents are complete, it is available to do and in progress.
-			if(parentStyles.stream().allMatch(PageStyle.complete::equals))
-				return PageStyle.inProgress;
+			if(parentStyles.stream().allMatch(PageStyle.COMPLETE::equals))
+				return PageStyle.IN_PROGRESS;
 			// if at least one of its parents are in progress/completed, it's pending.
-			if(parentStyles.stream().anyMatch(other -> PageStyle.inProgress.equals(other) || PageStyle.complete.equals(other)))
-				return PageStyle.pending;
+			if(parentStyles.stream().anyMatch(other -> PageStyle.IN_PROGRESS.equals(other) || PageStyle.COMPLETE.equals(other)))
+				return PageStyle.PENDING;
 		}
 		// otherwise, its invisible
-		return PageStyle.none;
+		return PageStyle.NONE;
 	}
 	
 	public PageStyle parentStyle(Entry entry, Parent parent){
-		// if the parent is greater than required, consider it complete
-		Objects.requireNonNull(entry, "Tried to get the stage of a parent entry that doesn't exist: " + parent.id().toString() + " (from " + parent.asString() + ")");
+		if(entry == null){
+			Arcana.LOGGER.warn("Tried to get the stage of a parent entry that doesn't exist: {} (from {})", parent.id().toString(), parent.asString());
+			return PageStyle.PENDING;
+		}
 		Researcher r = Researcher.from(MinecraftClient.getInstance().player);
+		// if the parent is greater than required, consider it complete
 		if(parent.stage() == -1){
 			if(r.entryStage(entry) >= entry.sections().size())
-				return PageStyle.complete;
+				return PageStyle.COMPLETE;
 		}else if(r.entryStage(entry) >= parent.stage())
-			return PageStyle.complete;
+			return PageStyle.COMPLETE;
 		// if its progress is greater than zero, then its in progress.
 		if(r.entryStage(entry) > 0)
-			return PageStyle.inProgress;
+			return PageStyle.IN_PROGRESS;
 		// if it has no parents *and* the "root" tag, its available to do and in progress.
 		if(entry.meta().contains("root") && entry.parents().isEmpty())
-			return PageStyle.inProgress;
+			return PageStyle.IN_PROGRESS;
 		// if it does not have the "hidden" tag:
 		if(!entry.meta().contains("hidden")){
 			List<PageStyle> parentStyles = entry.parents().stream().map(p -> Pair.of(Research.getEntry(p.id()), p)).map(p -> parentStyle(p.getFirst(), p.getSecond())).toList();
 			// if all of its parents are complete, it is available to do and in progress.
-			if(parentStyles.stream().allMatch(PageStyle.complete::equals))
-				return PageStyle.inProgress;
+			if(parentStyles.stream().allMatch(PageStyle.COMPLETE::equals))
+				return PageStyle.IN_PROGRESS;
 			// if at least one of its parents are in progress/completed, it's pending.
-			if(parentStyles.stream().anyMatch(other -> PageStyle.inProgress.equals(other) || PageStyle.complete.equals(other)))
-				return PageStyle.pending;
+			if(parentStyles.stream().anyMatch(other -> PageStyle.IN_PROGRESS.equals(other) || PageStyle.COMPLETE.equals(other)))
+				return PageStyle.PENDING;
 		}
 		// otherwise, its invisible
-		return PageStyle.none;
+		return PageStyle.NONE;
 	}
 	
 	
@@ -570,10 +573,10 @@ public class ResearchBookScreen extends Screen{
 	}
 	
 	public enum PageStyle{
-		complete,
-		inProgress,
-		pending,
-		none
+		COMPLETE,
+		IN_PROGRESS,
+		PENDING,
+		NONE
 	}
 	
 	private final /* non-static */ class Arrows{

@@ -1,6 +1,7 @@
 package arcana.worldgen;
 
 import arcana.aspects.Aspect;
+import arcana.aspects.AspectMap;
 import arcana.aspects.Aspects;
 import arcana.aura.AuraWorld;
 import arcana.aura.Node;
@@ -74,7 +75,10 @@ public class SurfaceNodeFeature extends Feature<DefaultFeatureConfig>{
 		NodeType type = randomType(rng);
 		AuraWorld aura = AuraWorld.from(world);
 		BlockPos nodePos = type != NodeTypes.HUNGRY ? pos.up(5) : pos.up(rng.nextBetween(-2, 2));
-		aura.addNode(new Node(type, new Vec3d(nodePos.getX() + rng.nextDouble(), nodePos.getY() + rng.nextDouble(), nodePos.getZ() + rng.nextDouble()), type.randomCap(rng)));
+		AspectMap cap = type.randomCap(rng);
+		Node node = new Node(type, new Vec3d(nodePos.getX() + rng.nextDouble(), nodePos.getY() + rng.nextDouble(), nodePos.getZ() + rng.nextDouble()), cap);
+		node.getAspects().add(cap);
+		aura.addNode(node);
 		if(type == NodeTypes.TAINTED)
 			aura.incrementFlux(rng.nextBetween(7, 12), null, nodePos);
 	}

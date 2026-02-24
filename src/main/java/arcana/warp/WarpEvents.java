@@ -34,7 +34,7 @@ public final class WarpEvents{
 	
 	public static void tickWarp(ServerWorld world){
 		for(ServerPlayerEntity player : world.getPlayers()){
-			if(player.hasStatusEffect(ArcanaRegistry.WARP_WARD))
+			if(player.isSpectator() || player.hasStatusEffect(ArcanaRegistry.WARP_WARD))
 				continue;
 			Researcher researcher = Researcher.from(player);
 			long elapsed = world.getTime() - researcher.getLastWarpEventTime();

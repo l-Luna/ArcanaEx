@@ -57,6 +57,8 @@ public final class Researcher implements Component, AutoSyncedComponent{
 	private long lastWarpEventTime = -1;
 	private boolean wasPrecursor = false;
 	
+	private boolean firstSync = true;
+	
 	public Researcher(PlayerEntity player){
 		this.player = player;
 	}
@@ -334,14 +336,18 @@ public final class Researcher implements Component, AutoSyncedComponent{
 
 		AutoSyncedComponent.super.applySyncPacket(buf);
 		
-		Set<Identifier> newAddenda = completedAddenda.stream()
-				.filter(x -> !oldAddenda.contains(x))
-				.collect(Collectors.toSet());
-		Set<Identifier> newEntries = stages.entrySet().stream()
-				.filter(x -> x.getValue() > oldStages.getOrDefault(x.getKey(), -1))
-				.map(Map.Entry::getKey)
-				.collect(Collectors.toSet());
-		postResearchUpdate(player, newAddenda, newEntries);
+		if(!firstSync){
+			Set<Identifier> newAddenda = completedAddenda.stream()
+					.filter(x -> !oldAddenda.contains(x))
+					.collect(Collectors.toSet());
+			Set<Identifier> newEntries = stages.entrySet().stream()
+					.filter(x -> x.getValue() > oldStages.getOrDefault(x.getKey(), -1))
+					.map(Map.Entry::getKey)
+					.collect(Collectors.toSet());
+			postResearchUpdate(player, newAddenda, newEntries);
+		}
+		
+		firstSync = false;
 	}
 	
 	private void postResearchUpdate(PlayerEntity player, Set<Identifier> newAddenda, Set<Identifier> newEntries){

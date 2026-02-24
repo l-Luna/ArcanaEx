@@ -40,6 +40,7 @@ import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
 import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler;
@@ -150,6 +151,7 @@ public final class ArcanaClient implements ClientModInitializer{
 		CoreShaderRegistrationCallback.EVENT.register(context -> {
 			context.register(arcId("particle_turbulent"), ArcanaShaders.FX, shader -> ArcanaShaders.fxTurbulent = shader);
 		});
+		
 		ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(new IdentifiableResourceReloadListener(){
 			public Identifier getFabricId(){
 				return arcId("clear_cache");
@@ -159,6 +161,10 @@ public final class ArcanaClient implements ClientModInitializer{
 				TextSectionRenderer.clearCache();
 				return CompletableFuture.completedFuture(null);
 			}
+		});
+		// a strange event, but it's close enough
+		ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> {
+			ResearchBookScreen.resetNewEntries();
 		});
 		
 		ColorProviderRegistry.BLOCK.register(

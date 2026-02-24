@@ -4,6 +4,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,5 +58,9 @@ public record Category(
 	
 	public int hashCode(){
 		return id().hashCode();
+	}
+	
+	public @NotNull String toString(){
+		return id().toString();
 	}
 }

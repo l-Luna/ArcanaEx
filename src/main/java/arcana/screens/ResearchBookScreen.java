@@ -86,6 +86,11 @@ public class ResearchBookScreen extends Screen{
 		unreadAddendaEntries.add(newEntry);
 	}
 	
+	public static void resetNewEntries(){
+		unreadEntries.clear();
+		unreadAddendaEntries.clear();
+	}
+	
 	protected void init(){
 		super.init();
 		int passed = 0;

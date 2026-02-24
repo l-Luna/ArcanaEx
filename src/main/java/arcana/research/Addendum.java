@@ -3,6 +3,7 @@ package arcana.research;
 import arcana.util.NbtUtil;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -30,5 +31,17 @@ public record Addendum(
 		List<EntrySection> sections = NbtUtil.readList(compound, "sections", EntrySection::deserialize);
 		List<Requirement> autoUnlockReqs = NbtUtil.readList(compound, "autoUnlockReqs", Requirement::deserialize);
 		return new Addendum(owner, id, name, sections, autoUnlockReqs);
+	}
+	
+	public boolean equals(Object obj){
+		return obj instanceof Addendum other && other.id().equals(id());
+	}
+	
+	public int hashCode(){
+		return id().hashCode();
+	}
+	
+	public @NotNull String toString(){
+		return id().toString();
 	}
 }

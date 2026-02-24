@@ -21,13 +21,9 @@ import net.minecraft.util.math.Quaternion;
 import net.minecraft.util.math.Vec2f;
 import net.minecraft.util.math.Vec3f;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static arcana.Arcana.arcId;
 import static java.lang.Math.*;
@@ -43,29 +39,32 @@ public class ResearchBookScreen extends Screen{
 	private static final int MAX_PAN = 512;
 	private static final int ZOOM_MULTIPLIER = 2;
 	
-	Book book;
-	List<Category> categories;
-	Identifier texture;
-	List<TooltipButton> buttons = new ArrayList<>();
-	List<PinButton> pinButtons = new ArrayList<>();
-	Arrows arrows = new Arrows();
-	
-	boolean wasDragging = false;
-	
-	@Nullable Screen parent;
-	
-	private static final Set<Identifier> unreadEntries = new HashSet<>(), unreadAddendaEntries = new HashSet<>();
-	private final Set<Identifier> progressableEntries = new HashSet<>();
-	
 	private static boolean debug = false;
 	private static int tab = 0;
 	private static float zoom = .7f;
 	private static float xPan = 0, yPan = 0;
 	
-	public ResearchBookScreen(@NotNull Book book, @Nullable Screen parent){
+	// fix nullability warnings
+	@NotNull
+	private final MinecraftClient client = MinecraftClient.getInstance();
+	@NotNull
+	private final PlayerEntity player = Objects.requireNonNull(client.player);
+	
+	private final Book book;
+	private final List<Category> categories;
+	private final Identifier texture;
+	private final List<TooltipButton> buttons = new ArrayList<>();
+	private final List<PinButton> pinButtons = new ArrayList<>();
+	private final Arrows arrows = new Arrows();
+	private boolean wasDragging = false;
+	
+	private static final Set<Entry> unreadEntries = new HashSet<>(), unreadAddendaEntries = new HashSet<>();
+	private final Set<Entry> progressableEntries = new HashSet<>();
+	private final Map<Category, Integer> categoryIcons = new HashMap<>();
+	
+	public ResearchBookScreen(@NotNull Book book){
 		super(Text.literal(""));
 		this.book = book;
-		this.parent = parent;
 		categories = book.categories();
 		if(tab >= categories.size())
 			tab = categories.size() - 1;
@@ -74,14 +73,14 @@ public class ResearchBookScreen extends Screen{
 		texture = new Identifier(book.id().getNamespace(), BOOK_PREFIX + book.id().getPath() + BOOK_SUFFIX);
 	}
 	
-	public static void notifyNewEntries(Set<Identifier> newEntries){
+	public static void notifyNewEntries(Set<Entry> newEntries){
 		unreadEntries.addAll(newEntries);
 		if(MinecraftClient.getInstance().currentScreen instanceof ResearchEntryScreen entryScreen)
-			unreadEntries.remove(entryScreen.getEntry().id());
+			unreadEntries.remove(entryScreen.getEntry());
 	}
 	
-	public static void notifyNewAddendaEntry(Identifier newEntry){
-		if(MinecraftClient.getInstance().currentScreen instanceof ResearchEntryScreen entryScreen && entryScreen.getEntry().id().equals(newEntry))
+	public static void notifyNewAddendaEntry(Entry newEntry){
+		if(MinecraftClient.getInstance().currentScreen instanceof ResearchEntryScreen entryScreen && entryScreen.getEntry().equals(newEntry))
 			return;
 		unreadAddendaEntries.add(newEntry);
 	}
@@ -97,7 +96,7 @@ public class ResearchBookScreen extends Screen{
 		for(int i = 0; i < categories.size(); i++){
 			Category category = categories.get(i);
 			Entry required = Research.getEntry(category.requirement());
-			if(required == null || Researcher.from(client.player).entryStage(required) == required.sections().size()){
+			if(required == null || Researcher.from(player).entryStage(required) == required.sections().size()){
 				CategoryButton categoryButton = new CategoryButton((width - frameWidth()) / 2 - 12, 16 + ((height - frameHeight()) / 2) + 20 * passed, i, category);
 				addDrawableChild(categoryButton);
 				buttons.add(categoryButton);
@@ -115,7 +114,7 @@ public class ResearchBookScreen extends Screen{
 			remove(button);
 		}
 		pinButtons.clear();
-		var pins = Researcher.from(client.player).getPinned();
+		var pins = Researcher.from(player).getPinned();
 		int i = 0;
 		for(var entryPins : pins.entrySet()){
 			Entry entry = Research.getEntry(entryPins.getKey());
@@ -138,17 +137,24 @@ public class ResearchBookScreen extends Screen{
 	
 	public void refreshProgressable(){
 		progressableEntries.clear();
-		PlayerEntity player = client.player;
+		categoryIcons.clear();
 		Researcher researcher = Researcher.from(player);
 		// don't incorrectly mark entries as progressable when opening the book for the first time
 		if(!researcher.isEntryComplete(Research.getEntry(BuiltinResearch.rootEntry)))
 			return;
 		for(Category category : categories){
+			int iconU = -1;
 			for(Entry entry : category.entries()){
 				int section = researcher.entryStage(entry);
 				if(section < entry.sections().size() && entry.sections().get(section).getRequirements().stream().allMatch(x -> x.satisfiedBy(player)))
-					progressableEntries.add(entry.id());
+					progressableEntries.add(entry);
+				if(researcher.canAccess(entry)){
+					int entryIconU = pickIconU(entry);
+					if(entryIconU != -1 && (entryIconU < iconU || iconU == -1))
+						iconU = entryIconU;
+				}
 			}
+			categoryIcons.put(category, iconU);
 		}
 	}
 	
@@ -232,7 +238,7 @@ public class ResearchBookScreen extends Screen{
 	private void renderEntries(MatrixStack matrices, float delta){
 		matrices.push();
 		matrices.scale(zoom, zoom, 1);
-		var time = MinecraftClient.getInstance().world.getTime() + delta;
+		float time = client.world.getTime() + delta;
 		for(Entry entry : categories.get(tab).entries()){
 			PageStyle style = style(entry);
 			if(style != PageStyle.NONE){
@@ -270,15 +276,11 @@ public class ResearchBookScreen extends Screen{
 				RenderSystem.setShaderColor(1, 1, 1, 1);
 				
 				// render icons
-				int iconU = -1;
-				if(unreadAddendaEntries.contains(entry.id()))
-					iconU = 0;
-				else if(progressableEntries.contains(entry.id()) && style == PageStyle.IN_PROGRESS)
-					iconU = 9;
-				else if(unreadEntries.contains(entry.id()))
-					iconU = 18;
-				if(iconU >= 0)
-					RenderHelper.drawTexture(matrices, x + 20, y, 0, iconU, 107, 9, 9, 1, 1, 1);
+				if(style != PageStyle.PENDING){
+					int iconU = pickIconU(entry);
+					if(iconU >= 0)
+						RenderHelper.drawTexture(matrices, x + 20, y, 0, iconU, 107, 9, 9, 1, 1, 1);
+				}
 				
 				if(!entry.icons().isEmpty()){
 					int frames = entry.getIntMeta("icon_frames");
@@ -383,6 +385,17 @@ public class ResearchBookScreen extends Screen{
 		matrices.pop();
 	}
 	
+	private int pickIconU(Entry entry){
+		int iconU = -1;
+		if(unreadAddendaEntries.contains(entry))
+			iconU = 0;
+		else if(progressableEntries.contains(entry))
+			iconU = 9;
+		else if(unreadEntries.contains(entry))
+			iconU = 18;
+		return iconU;
+	}
+	
 	private void renderFrame(MatrixStack matrices){
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 		RenderSystem.setShaderTexture(0, texture);
@@ -444,8 +457,8 @@ public class ResearchBookScreen extends Screen{
 						if((style = style(entry)) == PageStyle.COMPLETE || style == PageStyle.IN_PROGRESS){
 							// left/right (& other) click: open page
 							client.setScreen(new ResearchEntryScreen(entry, this));
-							unreadEntries.remove(entry.id());
-							unreadAddendaEntries.remove(entry.id());
+							unreadEntries.remove(entry);
+							unreadAddendaEntries.remove(entry);
 							return true;
 						}
 						break;
@@ -484,7 +497,7 @@ public class ResearchBookScreen extends Screen{
 							]
 						}
 						""".formatted(categories.get(tab).id().toString(), gx, gy));
-				client.player.sendMessage(Text.literal("Copied research skeleton to clipboard"));
+				player.sendMessage(Text.literal("Copied research skeleton to clipboard"));
 				return true;
 			}
 			
@@ -505,8 +518,8 @@ public class ResearchBookScreen extends Screen{
 	
 	public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY){
 		if(wasDragging){
-			xPan += (deltaX * ZOOM_MULTIPLIER) / zoom;
-			yPan -= (deltaY * ZOOM_MULTIPLIER) / zoom;
+			xPan += ((float)deltaX * ZOOM_MULTIPLIER) / zoom;
+			yPan -= ((float)deltaY * ZOOM_MULTIPLIER) / zoom;
 			xPan = clamp(xPan, -MAX_PAN, MAX_PAN);
 			yPan = clamp(yPan, -MAX_PAN, MAX_PAN);
 		}
@@ -545,7 +558,7 @@ public class ResearchBookScreen extends Screen{
 		if(entry.meta().contains("locked"))
 			return PageStyle.PENDING;
 		// if the page is at full progress, it's complete.
-		Researcher r = Researcher.from(MinecraftClient.getInstance().player);
+		Researcher r = Researcher.from(player);
 		if(r.entryStage(entry) >= entry.sections().size())
 			return PageStyle.COMPLETE;
 		// if its progress is greater than zero, then it's in progress.
@@ -573,7 +586,7 @@ public class ResearchBookScreen extends Screen{
 			Arcana.LOGGER.warn("Tried to get the stage of a parent entry that doesn't exist: {} (from {})", parent.id().toString(), parent.asString());
 			return PageStyle.PENDING;
 		}
-		Researcher r = Researcher.from(MinecraftClient.getInstance().player);
+		Researcher r = Researcher.from(player);
 		// if the parent is greater than required, consider it complete
 		if(parent.stage() == -1){
 			if(r.entryStage(entry) >= entry.sections().size())
@@ -617,6 +630,8 @@ public class ResearchBookScreen extends Screen{
 		if(entry.meta().contains("round_base"))
 			u = 26;
 		else if(entry.meta().contains("square_base"))
+			// reassigning default value
+			//noinspection DataFlowIssue
 			u = 52;
 		else if(entry.meta().contains("hexagon_base"))
 			u = 78;
@@ -840,13 +855,18 @@ public class ResearchBookScreen extends Screen{
 				RenderSystem.setShaderTexture(0, texture);
 				drawTexture(matrices, renderX - 11, y - 1, 0, 158, 34 - (6 - xOffset), 18);
 				RenderHelper.renderIcon(matrices, category.icon(), renderX, y, getZOffset());
+				int iconU = categoryIcons.getOrDefault(category, -1);
+				if(iconU != -1){
+					RenderSystem.setShaderTexture(0, ICONS_TEX);
+					RenderHelper.drawTexture(matrices, renderX - 7, y, 0, iconU, 107, 9, 9, 1, 1, 1);
+				}
 			}
 		}
 		
 		public void renderAfter(MatrixStack matrices, int mouseX, int mouseY){
 			if(hovered && visible){
 				if(!category.entries().isEmpty()){
-					Researcher researcher = Researcher.from(client.player);
+					Researcher researcher = Researcher.from(player);
 					int sum = 0;
 					for(Entry entry : category.entries())
 						sum += researcher.entryStage(entry) >= entry.sections().size() ? 1 : 0;
@@ -873,24 +893,23 @@ public class ResearchBookScreen extends Screen{
 			super(x, y, 18, 18, Text.literal(""), b -> {
 				if(hasControlDown()){
 					// unpin
-					Researcher from = Researcher.from(MinecraftClient.getInstance().player);
+					Researcher from = Researcher.from(player);
 					List<Integer> pinned = from.getPinned().get(pin.entry().id());
 					if(pinned != null){
 						from.removePinned(pin.entry().id(), pin.stage());
 						ArcanaClient.sendModifyPins(pin, false);
 					}
 					// and remove this button
-					ResearchBookScreen thisScreen = (ResearchBookScreen)client.getInstance().currentScreen;
-					thisScreen.refreshPins();
+					ResearchBookScreen.this.refreshPins();
 				}else{
 					Entry entry = pin.entry();
-					if(Researcher.from(MinecraftClient.getInstance().player).entryStage(entry) >= pin.stage()){
-						ResearchEntryScreen in = new ResearchEntryScreen(entry, MinecraftClient.getInstance().currentScreen);
+					if(Researcher.from(player).entryStage(entry) >= pin.stage()){
+						ResearchEntryScreen in = new ResearchEntryScreen(entry, client.currentScreen);
 						int stageIndex = in.indexOfStage(pin.stage());
 						in.idx = stageIndex % 2 == 0 ? stageIndex : stageIndex - 1;
-						MinecraftClient.getInstance().setScreen(in);
-						unreadEntries.remove(entry.id());
-						unreadAddendaEntries.remove(entry.id());
+						client.setScreen(in);
+						unreadEntries.remove(entry);
+						unreadAddendaEntries.remove(entry);
 					}
 				}
 			});

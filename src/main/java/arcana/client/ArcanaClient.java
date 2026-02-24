@@ -29,10 +29,7 @@ import arcana.fluids.ArcanaFluid;
 import arcana.items.MagicMirrorTooltipData;
 import arcana.network.PkModifyPins;
 import arcana.network.PkTryAdvance;
-import arcana.research.BuiltinResearch;
-import arcana.research.Entry;
-import arcana.research.Pin;
-import arcana.research.Research;
+import arcana.research.*;
 import arcana.screens.*;
 import arcana.util.MathUtil;
 import net.fabricmc.api.ClientModInitializer;
@@ -279,7 +276,7 @@ public final class ArcanaClient implements ClientModInitializer{
 	
 	@ReflectivelyUtilized // by ResearchBookItem::use
 	public static void openBook(Identifier bookId){
-		MinecraftClient.getInstance().execute(() -> MinecraftClient.getInstance().setScreen(new ResearchBookScreen(Research.getBook(bookId), null)));
+		MinecraftClient.getInstance().execute(() -> MinecraftClient.getInstance().setScreen(new ResearchBookScreen(Research.getBook(bookId))));
 	}
 	
 	@ReflectivelyUtilized // by DirectResearchEntryItem::use
@@ -288,7 +285,7 @@ public final class ArcanaClient implements ClientModInitializer{
 	}
 	
 	@ReflectivelyUtilized // by Researcher::applySyncPacket
-	public static void postResearchUpdate(Set<Identifier> newAddenda, Set<Identifier> newEntries){
+	public static void postResearchUpdate(Set<Addendum> newAddenda, Set<Entry> newEntries){
 		MinecraftClient client = MinecraftClient.getInstance();
 		Screen screen = client.currentScreen;
 		if(screen instanceof ResearchEntryScreen entryScreen)
@@ -300,18 +297,16 @@ public final class ArcanaClient implements ClientModInitializer{
 		
 		Researcher researcher = Researcher.from(client.player);
 		if(researcher.isEntryComplete(Research.getEntry(BuiltinResearch.rootEntry))){
-			for(Identifier addendumId : newAddenda){
-				Entry owner = Research.getAddendum(addendumId).owner();
-				ResearchBookScreen.notifyNewAddendaEntry(owner.id());
+			for(Addendum addendum : newAddenda){
+				Entry owner = addendum.owner();
+				ResearchBookScreen.notifyNewAddendaEntry(owner);
 				if(researcher.isEntryComplete(owner))
 					MinecraftClient.getInstance().getToastManager().add(new ResearchUnlockedToast(owner, true));
 			}
 			
-			for(Identifier entryId : newEntries){
-				Entry entry = Research.getEntry(entryId);
+			for(Entry entry : newEntries)
 				if(entry.meta().contains("notify"))
 					MinecraftClient.getInstance().getToastManager().add(new ResearchUnlockedToast(entry, false));
-			}
 		}
 	}
 	

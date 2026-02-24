@@ -100,6 +100,12 @@ public final class Researcher implements Component, AutoSyncedComponent{
 		return entryStage(entry) >= entry.sections().size();
 	}
 	
+	public boolean canAccess(Entry entry){
+		// TODO: check parents, or mark accessibility more explicitly than stages.contains
+		// since 0 is the default value already
+		return stages.containsKey(entry.id());
+	}
+	
 	public int getCompletedVisiblePuzzleCount(){
 		return (int)completedPuzzles.stream()
 				.map(Research::getPuzzle)
@@ -337,12 +343,14 @@ public final class Researcher implements Component, AutoSyncedComponent{
 		AutoSyncedComponent.super.applySyncPacket(buf);
 		
 		if(!firstSync){
-			Set<Identifier> newAddenda = completedAddenda.stream()
+			Set<Addendum> newAddenda = completedAddenda.stream()
 					.filter(x -> !oldAddenda.contains(x))
+					.map(Research::getAddendum)
 					.collect(Collectors.toSet());
-			Set<Identifier> newEntries = stages.entrySet().stream()
+			Set<Entry> newEntries = stages.entrySet().stream()
 					.filter(x -> x.getValue() > oldStages.getOrDefault(x.getKey(), -1))
 					.map(Map.Entry::getKey)
+					.map(Research::getEntry)
 					.collect(Collectors.toSet());
 			postResearchUpdate(player, newAddenda, newEntries);
 		}
@@ -350,7 +358,7 @@ public final class Researcher implements Component, AutoSyncedComponent{
 		firstSync = false;
 	}
 	
-	private void postResearchUpdate(PlayerEntity player, Set<Identifier> newAddenda, Set<Identifier> newEntries){
+	private void postResearchUpdate(PlayerEntity player, Set<Addendum> newAddenda, Set<Entry> newEntries){
 		if(player.world.isClient){
 			try{
 				Class.forName("arcana.client.ArcanaClient").getMethod("postResearchUpdate", Set.class, Set.class).invoke(null, newAddenda, newEntries);

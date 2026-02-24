@@ -287,6 +287,8 @@ public final class ArcanaClient implements ClientModInitializer{
 		Screen screen = client.currentScreen;
 		if(screen instanceof ResearchEntryScreen entryScreen)
 			entryScreen.updateButtons();
+		else if(screen instanceof ResearchBookScreen bookScreen)
+			bookScreen.refreshProgressable();
 		
 		ResearchBookScreen.notifyNewEntries(newEntries);
 		

@@ -63,7 +63,7 @@ public final class Research{
 	public static Stream<Pair<Entry, Parent>> streamChildrenOf(Entry parent){
 		return streamEntries()
 				.map(x -> new Pair<>(x, x.parents().stream().filter(p -> p.id().equals(parent.id())).toList()))
-				.filter(x -> x.getRight().size() > 0)
+				.filter(x -> !x.getRight().isEmpty())
 				.map(x -> new Pair<>(x.getLeft(), x.getRight().get(0)));
 	}
 }

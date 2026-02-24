@@ -13,6 +13,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
@@ -53,12 +54,13 @@ public class ResearchBookScreen extends Screen{
 	
 	@Nullable Screen parent;
 	
+	private static final Set<Identifier> unreadEntries = new HashSet<>(), unreadAddendaEntries = new HashSet<>();
+	private final Set<Identifier> progressableEntries = new HashSet<>();
+	
 	private static boolean debug = false;
 	private static int tab = 0;
 	private static float zoom = .7f;
 	private static float xPan = 0, yPan = 0;
-	
-	private static final Set<Identifier> unreadEntries = new HashSet<>(), unreadAddendaEntries = new HashSet<>();
 	
 	public ResearchBookScreen(@NotNull Book book, @Nullable Screen parent){
 		super(Text.literal(""));
@@ -99,6 +101,7 @@ public class ResearchBookScreen extends Screen{
 		}
 		
 		refreshPins();
+		refreshProgressable();
 	}
 	
 	protected void refreshPins(){
@@ -124,6 +127,22 @@ public class ResearchBookScreen extends Screen{
 						}
 					}
 				}
+			}
+		}
+	}
+	
+	public void refreshProgressable(){
+		progressableEntries.clear();
+		PlayerEntity player = client.player;
+		Researcher researcher = Researcher.from(player);
+		// don't incorrectly mark entries as progressable when opening the book for the first time
+		if(!researcher.isEntryComplete(Research.getEntry(BuiltinResearch.rootEntry)))
+			return;
+		for(Category category : categories){
+			for(Entry entry : category.entries()){
+				int section = researcher.entryStage(entry);
+				if(section < entry.sections().size() && entry.sections().get(section).getRequirements().stream().allMatch(x -> x.satisfiedBy(player)))
+					progressableEntries.add(entry.id());
 			}
 		}
 	}
@@ -243,11 +262,14 @@ public class ResearchBookScreen extends Screen{
 					mult = 0.2f;
 				RenderSystem.setShaderColor(mult, mult, mult, 1);
 				drawTexture(matrices, x + 2, y + 2, (int)baseUv.x, (int)baseUv.y, 26, 26);
+				RenderSystem.setShaderColor(1, 1, 1, 1);
 				
 				// render icons
 				int iconU = -1;
 				if(unreadAddendaEntries.contains(entry.id()))
 					iconU = 0;
+				else if(progressableEntries.contains(entry.id()) && style == PageStyle.IN_PROGRESS)
+					iconU = 9;
 				else if(unreadEntries.contains(entry.id()))
 					iconU = 18;
 				if(iconU >= 0)

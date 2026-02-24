@@ -53,6 +53,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.color.block.BlockColorProvider;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.color.world.FoliageColors;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.gui.tooltip.BundleTooltipComponent;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
@@ -73,8 +74,6 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.profiler.Profiler;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
@@ -282,38 +281,29 @@ public final class ArcanaClient implements ClientModInitializer{
 		MinecraftClient.getInstance().execute(() -> MinecraftClient.getInstance().setScreen(new ResearchEntryScreen(Research.getEntry(entryId), null)));
 	}
 	
-	// TODO ugly
-	private static Set<Identifier> notifyIfComplete;
-	
 	@ReflectivelyUtilized // by Researcher::applySyncPacket
-	public static void preResearchUpdate(){
-		var researcher = Researcher.from(MinecraftClient.getInstance().player);
-		// don't trigger on every world load
-		var root = Research.getEntry(BuiltinResearch.rootEntry);
-		if(root != null && researcher.isEntryComplete(root)){
-			notifyIfComplete = new HashSet<>(BuiltinResearch.infoResearch);
-			notifyIfComplete.removeIf(x -> researcher.isEntryComplete(Research.getEntry(x)));
-		}else
-			notifyIfComplete = Collections.emptySet();
-	}
-	
-	@ReflectivelyUtilized // by Researcher::applySyncPacket
-	public static void postResearchUpdate(Set<Identifier> newAddenda){
-		var client = MinecraftClient.getInstance();
-		if(client.currentScreen instanceof ResearchEntryScreen entryScreen)
+	public static void postResearchUpdate(Set<Identifier> newAddenda, Set<Identifier> newEntries){
+		MinecraftClient client = MinecraftClient.getInstance();
+		Screen screen = client.currentScreen;
+		if(screen instanceof ResearchEntryScreen entryScreen)
 			entryScreen.updateButtons();
-		var researcher = Researcher.from(MinecraftClient.getInstance().player);
-		if(researcher.isEntryComplete(Research.getEntry(BuiltinResearch.rootEntry)))
-			for(Identifier identifier : notifyIfComplete){
-				var entry = Research.getEntry(identifier);
-				if(researcher.isEntryComplete(entry))
+		
+		ResearchBookScreen.notifyNewEntries(newEntries);
+		
+		Researcher researcher = Researcher.from(client.player);
+		if(researcher.isEntryComplete(Research.getEntry(BuiltinResearch.rootEntry))){
+			for(Identifier addendumId : newAddenda){
+				Entry owner = Research.getAddendum(addendumId).owner();
+				ResearchBookScreen.notifyNewAddendaEntry(owner.id());
+				if(researcher.isEntryComplete(owner))
+					MinecraftClient.getInstance().getToastManager().add(new ResearchUnlockedToast(owner, true));
+			}
+			
+			for(Identifier entryId : newEntries){
+				Entry entry = Research.getEntry(entryId);
+				if(entry.meta().contains("notify"))
 					MinecraftClient.getInstance().getToastManager().add(new ResearchUnlockedToast(entry, false));
 			}
-		
-		for(Identifier addendum : newAddenda){
-			Entry owner = Research.getAddendum(addendum).owner();
-			if(researcher.isEntryComplete(owner))
-				MinecraftClient.getInstance().getToastManager().add(new ResearchUnlockedToast(owner, true));
 		}
 	}
 	

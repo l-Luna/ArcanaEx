@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static arcana.screens.ResearchBookScreen.bookPrefix;
+import static arcana.screens.ResearchBookScreen.BOOK_PREFIX;
 
 public class ResearchEntryScreen extends Screen{
 	
@@ -53,7 +53,7 @@ public class ResearchEntryScreen extends Screen{
 		this.entry = entry;
 		this.parent = parent;
 		Identifier bookKey = entry.category().book().id();
-		bg = new Identifier(bookKey.getNamespace(), bookPrefix + bookKey.getPath() + suffix);
+		bg = new Identifier(bookKey.getNamespace(), BOOK_PREFIX + bookKey.getPath() + suffix);
 		client = MinecraftClient.getInstance(); // needs to be set early for pin button
 	}
 	

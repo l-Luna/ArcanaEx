@@ -12,8 +12,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Box;
 
-import java.util.List;
-
 import static arcana.Arcana.arcId;
 
 public final class BuiltinResearch{
@@ -55,17 +53,6 @@ public final class BuiltinResearch{
 	public static final Identifier researchMasteryEntry = arcId("research_mastery");
 	
 	public static final Identifier arcaniumSetBonusAddendum = arcId("magical_metallurgy/set_bonus");
-	
-	public static final List<Identifier> infoResearch = List.of(
-			silverwoodEntry,
-			greatwoodEntry,
-			primordialPearlEntry,
-			hungryNodesEntry,
-			eldritchNodesEntry,
-			nodalGeodesEntry,
-			fluxEntry,
-			crimsonEquipmentEntry
-	);
 	
 	public static void checkInventory(PlayerEntity player){
 		Researcher researcher = Researcher.from(player);

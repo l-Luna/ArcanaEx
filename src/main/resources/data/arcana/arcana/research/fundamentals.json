@@ -456,7 +456,8 @@
       "meta": [
         "hidden",
         "hexagon_base",
-        "purple_base"
+        "purple_base",
+        "notify"
       ],
       "x": -7,
       "y": 0,
@@ -481,7 +482,8 @@
       "meta": [
         "hidden",
         "hexagon_base",
-        "purple_base"
+        "purple_base",
+        "notify"
       ],
       "x": -7,
       "y": 1,
@@ -507,7 +509,8 @@
         "hidden",
         "hexagon_base",
         "purple_base",
-        "icon_frames:13"
+        "icon_frames:13",
+        "notify"
       ],
       "x": -6,
       "y": 0,
@@ -533,7 +536,8 @@
         "hidden",
         "hexagon_base",
         "purple_base",
-        "icon_frames:10"
+        "icon_frames:10",
+        "notify"
       ],
       "x": -6,
       "y": 1,
@@ -554,7 +558,8 @@
       "meta": [
         "hidden",
         "hexagon_base",
-        "purple_base"
+        "purple_base",
+        "notify"
       ],
       "icons": [
         "arcana:clusters/air",
@@ -585,6 +590,7 @@
         "hidden",
         "hexagon_base",
         "purple_base",
+        "notify",
         "warping:2"
       ],
       "icons": [
@@ -615,7 +621,8 @@
       "meta": [
         "hidden",
         "hexagon_base",
-        "purple_base"
+        "purple_base",
+        "notify"
       ],
       "category": "arcana:fundamentals",
       "x": -8,

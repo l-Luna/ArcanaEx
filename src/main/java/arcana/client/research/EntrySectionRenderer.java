@@ -20,7 +20,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static arcana.screens.ResearchBookScreen.bookPrefix;
+import static arcana.screens.ResearchBookScreen.BOOK_PREFIX;
 
 public interface EntrySectionRenderer<T extends EntrySection>{
 
@@ -81,7 +81,7 @@ public interface EntrySectionRenderer<T extends EntrySection>{
 	
 	static Identifier overlayTexture(EntrySection section){
 		var bookId = Research.getEntry(section.getIn()).category().book().id();
-		return new Identifier(bookId.getNamespace(), bookPrefix + bookId.getPath() + ResearchEntryScreen.overlaySuffix);
+		return new Identifier(bookId.getNamespace(), BOOK_PREFIX + bookId.getPath() + ResearchEntryScreen.overlaySuffix);
 	}
 	
 	default void tooltipArea(MatrixStack matrices, ItemStack stack, int mouseX, int mouseY, int areaX, int areaY){

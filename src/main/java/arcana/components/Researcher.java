@@ -50,10 +50,6 @@ public final class Researcher implements Component, AutoSyncedComponent{
 	private final Set<Identifier> completedAddenda = new HashSet<>();
 	private final Set<Identifier> castFoci = new HashSet<>();
 	
-	// notifying of new addenda
-	// this is set to always be one resync out of date (or null if there are no syncs), to allow the client to see new addenda
-	private Set<Identifier> oldAddenda;
-	
 	// warp level
 	private int warp;
 	
@@ -125,7 +121,10 @@ public final class Researcher implements Component, AutoSyncedComponent{
 				}else if(entryStage(pEntry) < parent.stage())
 					return; // not enough progress on that parent
 			}
-			var sections = entry.sections().get(entryStage(entry));
+			// mark this entry as having some progress for unread indicators
+			if(!stages.containsKey(entry.id()))
+				stages.put(entry.id(), 0);
+			EntrySection sections = entry.sections().get(entryStage(entry));
 			List<Requirement> reqs = sections.getRequirements();
 			if(onlyFree ? reqs.isEmpty() : reqs.stream().allMatch(x -> x.satisfiedBy(player))){
 				reqs.forEach(x -> x.takeFrom(player));
@@ -329,31 +328,26 @@ public final class Researcher implements Component, AutoSyncedComponent{
 	}
 	
 	public void applySyncPacket(PacketByteBuf buf){
-		preResearchUpdate(player);
+		// make a list of all new entries and addenda, and pass those to the client
+		Set<Identifier> oldAddenda = new HashSet<>(completedAddenda);
+		Map<Identifier, Integer> oldStages = new HashMap<>(stages);
+
 		AutoSyncedComponent.super.applySyncPacket(buf);
-		postResearchUpdate(player);
-		oldAddenda = new HashSet<>(completedAddenda);
+		
+		Set<Identifier> newAddenda = completedAddenda.stream()
+				.filter(x -> !oldAddenda.contains(x))
+				.collect(Collectors.toSet());
+		Set<Identifier> newEntries = stages.entrySet().stream()
+				.filter(x -> x.getValue() > oldStages.getOrDefault(x.getKey(), -1))
+				.map(Map.Entry::getKey)
+				.collect(Collectors.toSet());
+		postResearchUpdate(player, newAddenda, newEntries);
 	}
 	
-	private static void preResearchUpdate(PlayerEntity player){
-		if(player.world.isClient)
-			try{
-				Class.forName("arcana.client.ArcanaClient").getMethod("preResearchUpdate").invoke(null);
-			}catch(Exception e){
-				e.printStackTrace();
-			}
-	}
-	
-	private void postResearchUpdate(PlayerEntity player){
+	private void postResearchUpdate(PlayerEntity player, Set<Identifier> newAddenda, Set<Identifier> newEntries){
 		if(player.world.isClient){
-			Set<Identifier> newAddenda;
-			if(oldAddenda != null){
-				newAddenda = new HashSet<>(completedAddenda);
-				newAddenda.removeAll(oldAddenda);
-			}else
-				newAddenda = Set.of();
 			try{
-				Class.forName("arcana.client.ArcanaClient").getMethod("postResearchUpdate", Set.class).invoke(null, newAddenda);
+				Class.forName("arcana.client.ArcanaClient").getMethod("postResearchUpdate", Set.class, Set.class).invoke(null, newAddenda, newEntries);
 			}catch(Exception e){
 				e.printStackTrace();
 			}

@@ -24,7 +24,9 @@ import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static arcana.Arcana.arcId;
 import static java.lang.Math.*;
@@ -32,10 +34,10 @@ import static net.minecraft.util.math.MathHelper.clamp;
 
 public class ResearchBookScreen extends Screen{
 	
-	public static final String bookPrefix = "textures/gui/research/";
+	public static final String BOOK_PREFIX = "textures/gui/research/";
+	public static final String BOOK_SUFFIX = "_book.png";
 	
-	private static final String bookSuffix = "_book.png";
-	private static final Identifier arrowsAndBasesTexture = arcId("textures/gui/research/research_bases.png");
+	private static final Identifier ICONS_TEX = arcId("textures/gui/research/research_bases.png");
 	
 	private static final int MAX_PAN = 512;
 	private static final int ZOOM_MULTIPLIER = 2;
@@ -56,6 +58,8 @@ public class ResearchBookScreen extends Screen{
 	private static float zoom = .7f;
 	private static float xPan = 0, yPan = 0;
 	
+	private static final Set<Identifier> unreadEntries = new HashSet<>(), unreadAddendaEntries = new HashSet<>();
+	
 	public ResearchBookScreen(@NotNull Book book, @Nullable Screen parent){
 		super(Text.literal(""));
 		this.book = book;
@@ -65,7 +69,19 @@ public class ResearchBookScreen extends Screen{
 			tab = categories.size() - 1;
 		if(tab < 0)
 			tab = 0;
-		texture = new Identifier(book.id().getNamespace(), bookPrefix + book.id().getPath() + bookSuffix);
+		texture = new Identifier(book.id().getNamespace(), BOOK_PREFIX + book.id().getPath() + BOOK_SUFFIX);
+	}
+	
+	public static void notifyNewEntries(Set<Identifier> newEntries){
+		unreadEntries.addAll(newEntries);
+		if(MinecraftClient.getInstance().currentScreen instanceof ResearchEntryScreen entryScreen)
+			unreadEntries.remove(entryScreen.getEntry().id());
+	}
+	
+	public static void notifyNewAddendaEntry(Identifier newEntry){
+		if(MinecraftClient.getInstance().currentScreen instanceof ResearchEntryScreen entryScreen && entryScreen.getEntry().id().equals(newEntry))
+			return;
+		unreadAddendaEntries.add(newEntry);
 	}
 	
 	protected void init(){
@@ -150,7 +166,7 @@ public class ResearchBookScreen extends Screen{
 		if(debug || Arcana.CONFIG.alwaysShowResearchBookCursor){
 			matrices.scale(zoom, zoom, zoom);
 			RenderSystem.setShader(GameRenderer::getPositionColorTexShader);
-			RenderSystem.setShaderTexture(0, arrowsAndBasesTexture);
+			RenderSystem.setShaderTexture(0, ICONS_TEX);
 			drawTexture(matrices, (int)((gx*30 + xOffset()) + 1), (int)((gy*30 + yOffset()) + 1), 0, 78, 28, 28);
 			matrices.pop();
 		}
@@ -217,7 +233,7 @@ public class ResearchBookScreen extends Screen{
 				
 				// render base
 				RenderSystem.setShader(GameRenderer::getPositionColorTexShader);
-				RenderSystem.setShaderTexture(0, arrowsAndBasesTexture);
+				RenderSystem.setShaderTexture(0, ICONS_TEX);
 				
 				Vec2f baseUv = baseUv(entry);
 				float mult = 1f;
@@ -227,6 +243,15 @@ public class ResearchBookScreen extends Screen{
 					mult = 0.2f;
 				RenderSystem.setShaderColor(mult, mult, mult, 1);
 				drawTexture(matrices, x + 2, y + 2, (int)baseUv.x, (int)baseUv.y, 26, 26);
+				
+				// render icons
+				int iconU = -1;
+				if(unreadAddendaEntries.contains(entry.id()))
+					iconU = 0;
+				else if(unreadEntries.contains(entry.id()))
+					iconU = 18;
+				if(iconU >= 0)
+					RenderHelper.drawTexture(matrices, x + 20, y, 0, iconU, 107, 9, 9, 1, 1, 1);
 				
 				if(!entry.icons().isEmpty()){
 					int frames = entry.getIntMeta("icon_frames");
@@ -255,7 +280,7 @@ public class ResearchBookScreen extends Screen{
 				// render arrows
 				RenderSystem.enableBlend();
 				RenderSystem.setShader(GameRenderer::getPositionTexShader);
-				RenderSystem.setShaderTexture(0, arrowsAndBasesTexture);
+				RenderSystem.setShaderTexture(0, ICONS_TEX);
 				for(Parent parent : entry.parents()){
 					RenderSystem.setShaderColor(1, 1, 1, style == PageStyle.PENDING ? 0.2f : 1);
 					Entry pEntry = Research.getEntry(parent.id());
@@ -392,6 +417,8 @@ public class ResearchBookScreen extends Screen{
 						if((style = style(entry)) == PageStyle.COMPLETE || style == PageStyle.IN_PROGRESS){
 							// left/right (& other) click: open page
 							client.setScreen(new ResearchEntryScreen(entry, this));
+							unreadEntries.remove(entry.id());
+							unreadAddendaEntries.remove(entry.id());
 							return true;
 						}
 						break;
@@ -835,6 +862,8 @@ public class ResearchBookScreen extends Screen{
 						int stageIndex = in.indexOfStage(pin.stage());
 						in.idx = stageIndex % 2 == 0 ? stageIndex : stageIndex - 1;
 						MinecraftClient.getInstance().setScreen(in);
+						unreadEntries.remove(entry.id());
+						unreadAddendaEntries.remove(entry.id());
 					}
 				}
 			});

@@ -1,0 +1,23 @@
+{
+  "minecraft:gunpowder": "minecraft:blaze_powder",
+  "minecraft:string": "minecraft:cobweb",
+  "minecraft:quartz": "minecraft:flint",
+  "minecraft:stick": "minecraft:dead_bush",
+  "minecraft:redstone": "minecraft:glowstone_dust",
+  "minecraft:glowstone_dust": "minecraft:redstone",
+  "minecraft:snowball": "minecraft:ice",
+  "minecraft:rotten_flesh": "minecraft:leather",
+  "minecraft:spider_eye": "minecraft:fermented_spider_eye",
+
+  "minecraft:chicken": "minecraft:rabbit",
+  "minecraft:rabbit": "minecraft:chicken",
+  "minecraft:mutton": "minecraft:beef",
+  "minecraft:beef": "minecraft:mutton",
+
+  "minecraft:gold_nugget": "minecraft:iron_nugget",
+  "minecraft:magma_cream": "minecraft:nether_wart",
+  "minecraft:bone_meal": "minecraft:kelp",
+  "minecraft:emerald": "minecraft:diamond",
+
+  "arcana:wispy_essence": "arcana:twisted_essence"
+}

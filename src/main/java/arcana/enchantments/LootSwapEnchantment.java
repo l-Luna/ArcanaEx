@@ -1,5 +1,6 @@
 package arcana.enchantments;
 
+import arcana.util.RegistryMapping;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentTarget;
@@ -7,6 +8,7 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -16,13 +18,17 @@ import java.util.function.Consumer;
 
 public class LootSwapEnchantment extends Enchantment{
 	
-	public final Map<Item, Item> swaps;
+	public static final RegistryMapping<Item>
+			PURIFYING_MAP = new RegistryMapping<>(Registry.ITEM),
+			TRANSMUTATIVE_MAP = new RegistryMapping<>(Registry.ITEM);
+	
+	public final RegistryMapping<Item> swaps;
 	public final float baseChance;
 	
 	private final int maxLevel;
 	
-	public LootSwapEnchantment(EnchantmentTarget type, Map<Item, Item> swaps, int maxLevel, float baseChance){
-		super(Rarity.VERY_RARE, type, new EquipmentSlot[]{EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND});
+	public LootSwapEnchantment(EnchantmentTarget type, RegistryMapping<Item> swaps, int maxLevel, float baseChance){
+		super(Rarity.VERY_RARE, type, new EquipmentSlot[]{ EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
 		this.swaps = swaps;
 		this.maxLevel = maxLevel;
 		this.baseChance = baseChance;
@@ -71,7 +77,7 @@ public class LootSwapEnchantment extends Enchantment{
 	}
 	
 	public static void processStack(LootSwapEnchantment enchantment, Random rng, int level, ItemStack in, Consumer<ItemStack> out){
-		Item targetItem = enchantment.swaps.get(in.getItem());
+		Item targetItem = enchantment.swaps.apply(in.getItem()).orElse(null);
 		float chance = level * enchantment.baseChance;
 		if(targetItem != null){
 			if(chance >= 1)

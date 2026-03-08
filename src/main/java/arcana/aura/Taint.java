@@ -1,5 +1,6 @@
 package arcana.aura;
 
+import arcana.util.RegistryMapping;
 import arcana.util.SearchUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -8,51 +9,26 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.state.property.Property;
-import net.minecraft.tag.TagKey;
-import net.minecraft.util.Pair;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class Taint{
 	
-	// taint mapping
-	
-	public static final Map<Block, Block> TAINT_MAP = new HashMap<>();
-	public static final List<Pair<TagKey<Block>, Block>> TAINT_TAGS = new ArrayList<>();
-	public static final Map<Block, Block> UNTAINT_MAP = new HashMap<>();
-	public static final List<Pair<TagKey<Block>, Block>> UNTAINT_TAGS = new ArrayList<>();
-	
-	public static void resetMappings(){
-		TAINT_MAP.clear();
-		TAINT_TAGS.clear();
-		UNTAINT_MAP.clear();
-		UNTAINT_TAGS.clear();
-	}
+	public static final RegistryMapping<Block>
+			TAINT_MAP = new RegistryMapping<>(Registry.BLOCK),
+			UNTAINT_MAP = new RegistryMapping<>(Registry.BLOCK);
 	
 	// use a separate method to name the ? as T
 	private static <T extends Comparable<T>> BlockState preserve(BlockState newState, BlockState fromState, Property<T> prop){
 		return newState.with(prop, fromState.get(prop));
 	}
 	
-	private static BlockState tfState(BlockState state, Map<Block, Block> blockMaps, List<Pair<TagKey<Block>, Block>> blockTags){
-		BlockState transformed = null;
+	private static BlockState tfState(BlockState state, RegistryMapping<Block> mapping){
 		Block block = state.getBlock();
-		if(blockMaps.containsKey(block))
-			transformed = blockMaps.get(block).getDefaultState();
-		else
-			for(Pair<TagKey<Block>, Block> pair : blockTags)
-				if(state.isIn(pair.getLeft())){
-					transformed = pair.getRight().getDefaultState();
-					break;
-				}
-		
+		BlockState transformed = mapping.apply(block).map(Block::getDefaultState).orElse(null);
 		if(transformed != null)
 			for(Property<?> prop : state.getProperties())
 				if(transformed.getProperties().contains(prop))
@@ -60,27 +36,27 @@ public class Taint{
 		return transformed;
 	}
 	
-	private static boolean tfSingleBlock(World world, BlockPos pos, Map<Block, Block> blockMaps, List<Pair<TagKey<Block>, Block>> blockTags){
-		BlockState tainted = tfState(world.getBlockState(pos), blockMaps, blockTags);
+	private static boolean tfSingleBlock(World world, BlockPos pos, RegistryMapping<Block> mapping){
+		BlockState tainted = tfState(world.getBlockState(pos), mapping);
 		if(tainted != null)
 			world.setBlockState(pos, tainted, Block.FORCE_STATE | Block.NOTIFY_LISTENERS);
 		return tainted != null;
 	}
 	
-	private static boolean tfBlock(World world, BlockPos pos, Map<Block, Block> blockMaps, List<Pair<TagKey<Block>, Block>> blockTags){
+	private static boolean tfBlock(World world, BlockPos pos, RegistryMapping<Block> mapping){
 		BlockState block = world.getBlockState(pos);
-		boolean result = tfSingleBlock(world, pos, blockMaps, blockTags);
+		boolean result = tfSingleBlock(world, pos, mapping);
 		if(result && block.getProperties().contains(Properties.DOUBLE_BLOCK_HALF))
-			tfSingleBlock(world, block.get(Properties.DOUBLE_BLOCK_HALF) == DoubleBlockHalf.LOWER ? pos.up() : pos.down(), blockMaps, blockTags);
+			tfSingleBlock(world, block.get(Properties.DOUBLE_BLOCK_HALF) == DoubleBlockHalf.LOWER ? pos.up() : pos.down(), mapping);
 		return result;
 	}
 	
 	public static boolean taintBlock(World world, BlockPos pos){
-		return tfBlock(world, pos, TAINT_MAP, TAINT_TAGS);
+		return tfBlock(world, pos, TAINT_MAP);
 	}
 	
 	public static boolean untaintBlock(World world, BlockPos pos){
-		return tfBlock(world, pos, UNTAINT_MAP, UNTAINT_TAGS);
+		return tfBlock(world, pos, UNTAINT_MAP);
 	}
 	
 	// tainted block behaviour

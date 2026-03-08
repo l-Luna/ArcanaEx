@@ -15,7 +15,7 @@ public final class Networking{
 	
 	public static void setup(){
 		context.register(PkSyncResearchData.class);
-		context.register(PkSyncTaintData.class);
+		context.register(PkSyncRegistryMapping.class);
 		context.register(PkSyncItemAspectData.class);
 		
 		context.register(PkTryAdvance.class);
@@ -34,7 +34,8 @@ public final class Networking{
 		
 		ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, didJoin) -> {
 			new PkSyncResearchData().sendTo(player);
-			new PkSyncTaintData().sendTo(player);
+			for(byte i = 0; i < 4; i++)
+				new PkSyncRegistryMapping(i).sendTo(player);
 			new PkSyncItemAspectData().sendTo(player);
 		});
 	}

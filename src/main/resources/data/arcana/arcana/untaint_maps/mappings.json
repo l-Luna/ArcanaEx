@@ -1,0 +1,27 @@
+{
+  // untainting for blocks
+  "arcana:tainted_soil": "minecraft:dirt",
+  "arcana:tainted_grass_block": "minecraft:grass_block",
+  "arcana:tainted_andesite": "minecraft:andesite",
+  "arcana:tainted_diorite": "minecraft:diorite",
+  "arcana:tainted_granite": "minecraft:granite",
+  "arcana:tainted_sand": "minecraft:sand",
+  "arcana:tainted_sandstone": "minecraft:sandstone",
+  "arcana:tainted_gravel": "minecraft:gravel",
+  "arcana:tainted_snow_block": "minecraft:snow_block",
+
+  // untainting for tags
+  "arcana:tainted_rock": "minecraft:stone",
+  "arcana:tainted_hollowed_ore": "arcana:hollowed_ore",
+  "arcana:taintwood_log": "arcana:hollowed_log",
+  "arcana:taintwood_planks": "arcana:hollowed_planks",
+  "arcana:taintwood_wood": "arcana:hollowed_wood",
+  "arcana:taintwood_slab": "arcana:hollowed_slab",
+  "arcana:taintwood_stairs": "arcana:hollowed_stairs",
+  "arcana:taintwood_fence": "arcana:hollowed_fence",
+  "arcana:taintwood_fence_gate": "arcana:hollowed_fence_gate",
+  "arcana:taintwood_pressure_plate": "arcana:hollowed_pressure_plate",
+  "arcana:taintwood_button": "arcana:hollowed_button",
+  "arcana:taintwood_door": "arcana:hollowed_door",
+  "arcana:taintwood_trapdoor": "arcana:hollowed_trapdoor"
+}

@@ -21,14 +21,11 @@ import dev.emi.emi.api.recipe.VanillaEmiRecipeCategories;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.config.FluidUnit;
-import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Items;
-import net.minecraft.tag.TagKey;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.Pair;
 import net.minecraft.util.registry.Registry;
 
 import java.util.*;
@@ -87,12 +84,18 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 		});
 		ibaData.forEach((aspect, entries) -> registry.addRecipe(new EmiItemsByAspectsRecipe(entries, aspect)));
 		
-		Taint.TAINT_MAP.forEach((from, to) -> registry.addRecipe(new EmiTaintingRecipe(EmiStack.of(from.asItem()), to.asItem(), Registry.BLOCK.getId(from))));
-		Taint.UNTAINT_MAP.forEach((from, to) -> registry.addRecipe(new EmiUntaintingRecipe(EmiStack.of(from.asItem()), to.asItem(), Registry.BLOCK.getId(from))));
-		for(Pair<TagKey<Block>, Block> pair : Taint.TAINT_TAGS)
-			registry.addRecipe(new EmiTaintingRecipe(EmiIngredient.of(pair.getLeft()), pair.getRight().asItem(), pair.getLeft().id()));
-		for(Pair<TagKey<Block>, Block> pair : Taint.UNTAINT_TAGS)
-			registry.addRecipe(new EmiUntaintingRecipe(EmiIngredient.of(pair.getLeft()), pair.getRight().asItem(), pair.getLeft().id()));
+		Taint.TAINT_MAP.getEntryMap().forEach((from, to) -> {
+			registry.addRecipe(new EmiTaintingRecipe(EmiStack.of(from.asItem()), to.asItem(), Registry.BLOCK.getId(from)));
+		});
+		Taint.UNTAINT_MAP.getEntryMap().forEach((from, to) -> {
+			registry.addRecipe(new EmiUntaintingRecipe(EmiStack.of(from.asItem()), to.asItem(), Registry.BLOCK.getId(from)));
+		});
+		Taint.TAINT_MAP.getTagMap().forEach((key, block) -> {
+			registry.addRecipe(new EmiTaintingRecipe(EmiIngredient.of(key), block.asItem(), key.id()));
+		});
+		Taint.UNTAINT_MAP.getTagMap().forEach((key, block) -> {
+			registry.addRecipe(new EmiUntaintingRecipe(EmiIngredient.of(key), block.asItem(), key.id()));
+		});
 		
 		Aspects.getOrderedAspects().stream().map(EmiAspectCrystallizationRecipe::new).forEach(registry::addRecipe);
 		

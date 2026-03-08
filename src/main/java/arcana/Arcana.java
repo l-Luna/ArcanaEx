@@ -1,17 +1,19 @@
 package arcana;
 
 import arcana.aspects.ItemAspectRegistry;
-import arcana.aura.TaintMapLoader;
+import arcana.aura.Taint;
 import arcana.blocks.WardedCampfireBlock;
 import arcana.commands.ArcanaCommands;
 import arcana.effects.AspectPowerStatusEffect;
 import arcana.effects.SetBonusStatusEffect;
+import arcana.enchantments.LootSwapEnchantment;
 import arcana.entities.ThrownTaintBottleEntity;
 import arcana.items.CrimsonLeechItem;
 import arcana.recipes.*;
 import arcana.research.BuiltinResearch;
 import arcana.research.Research;
 import arcana.research.ResearchLoader;
+import arcana.util.RegistryMappingLoader;
 import arcana.warp.WarpEvents;
 import arcana.worldgen.HangingNodeFeature;
 import arcana.worldgen.SurfaceNodeFeature;
@@ -71,9 +73,13 @@ public final class Arcana implements ModInitializer{
 		SilverwoodTree.addToWorldgen();
 		GreatwoodTree.addToWorldgen();
 		
-		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(ASPECT_REGISTRY);
-		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new ResearchLoader());
-		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new TaintMapLoader());
+		ResourceManagerHelper serverResources = ResourceManagerHelper.get(ResourceType.SERVER_DATA);
+		serverResources.registerReloadListener(ASPECT_REGISTRY);
+		serverResources.registerReloadListener(new ResearchLoader());
+		serverResources.registerReloadListener(new RegistryMappingLoader<>("taint_maps", Taint.TAINT_MAP));
+		serverResources.registerReloadListener(new RegistryMappingLoader<>("untaint_maps", Taint.UNTAINT_MAP));
+		serverResources.registerReloadListener(new RegistryMappingLoader<>("purifying_maps", LootSwapEnchantment.PURIFYING_MAP));
+		serverResources.registerReloadListener(new RegistryMappingLoader<>("transmutative_maps", LootSwapEnchantment.TRANSMUTATIVE_MAP));
 		
 		CommonLifecycleEvents.TAGS_LOADED.register((registries, client) -> {
 			if(!client)

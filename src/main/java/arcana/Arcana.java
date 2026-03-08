@@ -6,7 +6,6 @@ import arcana.blocks.WardedCampfireBlock;
 import arcana.commands.ArcanaCommands;
 import arcana.effects.AspectPowerStatusEffect;
 import arcana.effects.SetBonusStatusEffect;
-import arcana.enchantments.LootSwapEnchantment;
 import arcana.entities.ThrownTaintBottleEntity;
 import arcana.items.CrimsonLeechItem;
 import arcana.recipes.*;
@@ -24,7 +23,6 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.CommonLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
-import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.DispenserBlock;
@@ -89,8 +87,6 @@ public final class Arcana implements ModInitializer{
 		ServerTickEvents.END_WORLD_TICK.register(world -> world.getPlayers().forEach(AspectPowerStatusEffect::handleExclusivity));
 		ServerTickEvents.END_WORLD_TICK.register(WardedCampfireBlock::handleTime);
 		ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register(CrimsonLeechItem::handleEntityDeath);
-		
-		LootTableEvents.MODIFY.register(LootSwapEnchantment::modifyLootTable);
 		
 		DispenserBlock.registerBehavior(ArcanaRegistry.TAINT_IN_A_BOTTLE, new ProjectileDispenserBehavior(){
 			protected ProjectileEntity createProjectile(World world, Position position, ItemStack stack){

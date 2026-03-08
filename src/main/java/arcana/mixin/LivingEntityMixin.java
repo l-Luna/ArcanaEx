@@ -6,6 +6,7 @@ import arcana.components.RunicShielding;
 import arcana.duck.ArcanaFluidEntity;
 import arcana.duck.ArcanaLivingEntity;
 import arcana.effects.PressureStatusEffect;
+import arcana.enchantments.LootSwapEnchantment;
 import arcana.fluids.ArcanaFluid;
 import arcana.items.BootsOfTheTravellerItem;
 import arcana.network.PkEntityStatusEx;
@@ -23,6 +24,8 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemStack;
+import net.minecraft.loot.context.LootContext;
+import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -34,10 +37,12 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Map;
+import java.util.function.Consumer;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity implements ArcanaLivingEntity{
@@ -273,5 +278,17 @@ public abstract class LivingEntityMixin extends Entity implements ArcanaLivingEn
 	                                opcode = Opcodes.GETFIELD))
 	int wasFromPlayer(int original, DamageSource source){
 		return source == ArcanaDamageSources.PUTREFACTION ? 1 : original;
+	}
+	
+	// loot swap enchantments
+	
+	@ModifyArg(method = "dropLoot",
+	           at = @At(value = "INVOKE",
+	                    target = "Lnet/minecraft/loot/LootTable;generateLoot(Lnet/minecraft/loot/context/LootContext;Ljava/util/function/Consumer;)V"),
+	           index = 1)
+	Consumer<ItemStack> applyLootSwaps(LootContext ctx, Consumer<ItemStack> lootConsumer){
+		return ctx.get(LootContextParameters.KILLER_ENTITY) instanceof LivingEntity le
+				? LootSwapEnchantment.applyLootSwaps(lootConsumer, le.getMainHandStack(), ctx.getRandom())
+				: lootConsumer;
 	}
 }

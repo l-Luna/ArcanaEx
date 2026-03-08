@@ -6,6 +6,7 @@
   "mixins": [
     "AbstractBlockMixin",
     "AbstractBlockMixin$AbstractBlockMixin_Early",
+    "AbstractBlockMixin$AbstractBlockMixin_Late",
     "AbstractFurnaceBlockEntityMixin",
     "ActiveTargetGoalMixin",
     "AnvilScreenHandlerMixin",

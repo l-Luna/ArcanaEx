@@ -1,6 +1,6 @@
 package arcana.enchantments;
 
-import arcana.items.RingItem;
+import dev.emi.trinkets.api.TrinketItem;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.EquipmentSlot;
@@ -33,6 +33,6 @@ public class WarpingCurseEnchantment extends Enchantment{
 	}
 	
 	public boolean isAcceptableItem(ItemStack stack){
-		return super.isAcceptableItem(stack) || stack.getItem() instanceof RingItem;
+		return super.isAcceptableItem(stack) || stack.getItem() instanceof TrinketItem;
 	}
 }

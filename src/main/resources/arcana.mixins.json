@@ -27,14 +27,13 @@
     "RecipeManagerMixin",
     "StatusEffectUtilMixin",
     "StructureTemplateMixin",
+    "TrinketMixin",
     "accessor.BlockEntityAccessor",
     "accessor.EntityAccessor",
     "accessor.LivingEntityAccessor",
     "accessor.MiningToolItemAccessor",
     "brewing.BrewingRecipeRegistryMixin",
     "brewing.BrewingStandBlockEntityMixin",
-    "lectern.LecternBlockEntityMixin",
-    "lectern.LecternBlockMixin",
     "warding.AbstractBlockStateMixin",
     "warding.ExplosionMixin"
   ],
@@ -50,7 +49,6 @@
     "ModelElementDeserializerMixin",
     "ScreenMixin",
     "accessor.JsonUnbakedModelAccessor",
-    "lectern.LecternBlockEntityRendererMixin",
     "warding.DebugHudMixin",
     "warding.ParticleManagerMixin"
   ],

@@ -1,6 +1,6 @@
 package arcana.enchantments;
 
-import arcana.items.RingItem;
+import arcana.ArcanaTags;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.EquipmentSlot;
@@ -25,7 +25,7 @@ public class ProjectingEnchantment extends Enchantment{
 	}
 	
 	public boolean isAcceptableItem(ItemStack stack){
-		return stack.getItem() instanceof RingItem;
+		return stack.isIn(ArcanaTags.PROJECTING_LEVEL_1);
 	}
 	
 	public int getMaxLevel(){
@@ -38,5 +38,12 @@ public class ProjectingEnchantment extends Enchantment{
 	
 	public int getMaxPower(int level){
 		return getMinPower(level) + 50;
+	}
+	
+	public static int maxLevelFor(ItemStack stack){
+		return stack.isIn(ArcanaTags.PROJECTING_LEVEL_3) ? 3 :
+				stack.isIn(ArcanaTags.PROJECTING_LEVEL_2) ? 2 :
+				stack.isIn(ArcanaTags.PROJECTING_LEVEL_1) ? 1 :
+				0;
 	}
 }

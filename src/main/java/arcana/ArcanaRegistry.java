@@ -292,14 +292,14 @@ public final class ArcanaRegistry{
 	public static final Item SILVERLEAF_SCALPEL = new ScalpelItem(new Settings().group(Tab.EQUIPMENT).maxDamage(100), ScalpelItem.ScalpelType.SILVER);
 	public static final Item VOID_METAL_SCALPEL = new ScalpelItem(new Settings().group(Tab.EQUIPMENT).maxDamage(100), ScalpelItem.ScalpelType.BLACK);
 	
-	public static final Item GOLD_RING = new RingItem(new Settings().group(Tab.EQUIPMENT).maxCount(1), 2, 0);
-	public static final Item ARCANIUM_RING = new RingItem(new Settings().group(Tab.EQUIPMENT).maxCount(1), 3, 0);
-	public static final Item ADORNED_RING = new RingItem(new Settings().group(Tab.EQUIPMENT).maxCount(1), 1, 5);
-	public static final Item LAMPLIGHT_RING = new LamplightRingItem(new Settings().group(Tab.EQUIPMENT).maxCount(1));
-	public static final Item PLANE_PROJECTION_RING = new RingItem(new Settings().group(Tab.EQUIPMENT).maxCount(1), 3, 0);
-	public static final Item RING_OF_THE_SURGING_BARRIER = new RingItem(new Settings().group(Tab.EQUIPMENT).maxCount(1).rarity(Rarity.UNCOMMON), 1, 0);
-	public static final Item RING_OF_TWIN_HEARTBEATS = new TwinHeartbeatRingItem(new Settings().group(Tab.EQUIPMENT).maxCount(1).rarity(Rarity.UNCOMMON));
-	public static final Item RING_OF_THE_VOIDGAZER = new VoidgazerRingItem(new Settings().group(Tab.EQUIPMENT).maxCount(1).rarity(Rarity.UNCOMMON));
+	public static final Item GOLD_RING = new TrinketItem(new Settings().group(Tab.EQUIPMENT).maxCount(1));
+	public static final Item ARCANIUM_RING = new TrinketItem(new Settings().group(Tab.EQUIPMENT).maxCount(1));
+	public static final Item ADORNED_RING = new VisDiscountTrinketItem(new Settings().group(Tab.EQUIPMENT).maxCount(1), 5);
+	public static final Item LAMPLIGHT_RING = new LamplightTrinketItem(new Settings().group(Tab.EQUIPMENT).maxCount(1));
+	public static final Item PLANE_PROJECTION_RING = new TrinketItem(new Settings().group(Tab.EQUIPMENT).maxCount(1));
+	public static final Item RING_OF_THE_SURGING_BARRIER = new TrinketItem(new Settings().group(Tab.EQUIPMENT).maxCount(1).rarity(Rarity.UNCOMMON));
+	public static final Item RING_OF_TWIN_HEARTBEATS = new WarpingTrinketItem(new Settings().group(Tab.EQUIPMENT).maxCount(1).rarity(Rarity.UNCOMMON));
+	public static final Item RING_OF_THE_VOIDGAZER = new WarpBasedDiscountTrinketItem(new Settings().group(Tab.EQUIPMENT).maxCount(1).rarity(Rarity.UNCOMMON));
 	public static final Item EMERALD_NECKLACE = new TrinketItem(new Settings().group(Tab.EQUIPMENT).maxCount(1));
 	public static final Item AMULET_OF_RUNIC_SHIELDING = new ShieldingTrinketItem(new Settings().group(Tab.EQUIPMENT).maxCount(1), 2);
 	public static final Item AMULET_OF_UNBURDENED_TRAVEL = new ShieldingTrinketItem(new Settings().group(Tab.EQUIPMENT).maxCount(1), 4);

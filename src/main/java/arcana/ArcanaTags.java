@@ -43,6 +43,10 @@ public final class ArcanaTags{
 	public static final TagKey<Item> CRUCIBLE_REAGENT_BLACKLIST = TagKey.of(Registry.ITEM_KEY, arcId("config/crucible_reagent_blacklist"));
 	public static final TagKey<Item> ARCANE_FURNACE_BLACKLIST = TagKey.of(Registry.ITEM_KEY, arcId("config/arcane_furnace_blacklist"));
 	
+	public static final TagKey<Item> PROJECTING_LEVEL_1 = TagKey.of(Registry.ITEM_KEY, arcId("config/max_projecting_level/1"));
+	public static final TagKey<Item> PROJECTING_LEVEL_2 = TagKey.of(Registry.ITEM_KEY, arcId("config/max_projecting_level/2"));
+	public static final TagKey<Item> PROJECTING_LEVEL_3 = TagKey.of(Registry.ITEM_KEY, arcId("config/max_projecting_level/3"));
+	
 	public static final TagKey<Biome> SILVERWOOD_SPAWNABLE = TagKey.of(Registry.BIOME_KEY, arcId("silverwood_spawnable"));
 	public static final TagKey<Biome> GREATWOOD_SPAWNABLE = TagKey.of(Registry.BIOME_KEY, arcId("greatwood_spawnable"));
 	

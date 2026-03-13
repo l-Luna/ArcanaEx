@@ -1,9 +1,11 @@
 package arcana.items;
 
 import arcana.ArcanaRegistry;
+import arcana.api.VisDiscountingItem;
 import arcana.api.WarpingItem;
 import arcana.aspects.Aspect;
 import arcana.components.Researcher;
+import dev.emi.trinkets.api.TrinketItem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -17,10 +19,10 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class VoidgazerRingItem extends RingItem implements WarpingItem{
+public class WarpBasedDiscountTrinketItem extends TrinketItem implements WarpingItem, VisDiscountingItem{
 	
-	public VoidgazerRingItem(Settings settings){
-		super(settings, 0, 0);
+	public WarpBasedDiscountTrinketItem(Settings settings){
+		super(settings);
 	}
 	
 	public int warping(ItemStack stack, PlayerEntity player){

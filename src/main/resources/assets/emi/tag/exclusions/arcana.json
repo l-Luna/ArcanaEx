@@ -6,6 +6,9 @@
     "arcana:config/aspect_blacklist",
     "arcana:config/crucible_reagent_blacklist",
     "arcana:config/arcane_furnace_blacklist",
+    "arcana:config/max_projecting_level/1",
+    "arcana:config/max_projecting_level/2",
+    "arcana:config/max_projecting_level/3",
 
     "arcana:equipment/helmets",
     "arcana:equipment/chestplates",

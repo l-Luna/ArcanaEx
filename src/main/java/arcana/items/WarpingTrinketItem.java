@@ -2,6 +2,7 @@ package arcana.items;
 
 import arcana.ArcanaRegistry;
 import arcana.api.WarpingItem;
+import dev.emi.trinkets.api.TrinketItem;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -11,10 +12,10 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class TwinHeartbeatRingItem extends RingItem implements WarpingItem{
+public class WarpingTrinketItem extends TrinketItem implements WarpingItem{
 	
-	public TwinHeartbeatRingItem(Settings settings){
-		super(settings, 0, 0);
+	public WarpingTrinketItem(Settings settings){
+		super(settings);
 	}
 	
 	public int warping(ItemStack stack, PlayerEntity player){

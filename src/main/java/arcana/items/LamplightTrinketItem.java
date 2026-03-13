@@ -3,6 +3,7 @@ package arcana.items;
 import arcana.ArcanaRegistry;
 import arcana.util.SearchUtil;
 import dev.emi.trinkets.api.SlotReference;
+import dev.emi.trinkets.api.TrinketItem;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.fluid.Fluids;
@@ -11,10 +12,10 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class LamplightRingItem extends RingItem{
+public class LamplightTrinketItem extends TrinketItem{
 	
-	public LamplightRingItem(Settings settings){
-		super(settings, 2, 0);
+	public LamplightTrinketItem(Settings settings){
+		super(settings);
 	}
 	
 	public void tick(ItemStack stack, SlotReference slot, LivingEntity entity){

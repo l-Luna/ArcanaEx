@@ -54,6 +54,8 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 	private int cooldown = 0;
 	private int instability = 0;
 	
+	private long lastCraftStartEndTime = -1;
+	
 	// we don't have access to the world or the recipe manager when loading NBT, so we hold it here and deref on first tick
 	private Identifier lastRecipe = null;
 	
@@ -158,6 +160,7 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 				takenEssentia = new AspectMap();
 				takenItems = new ArrayList<>();
 				cooldown = instability = 0;
+				lastCraftStartEndTime = world.getTime();
 			});
 		}
 	}
@@ -175,6 +178,7 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 	private void finishCrafting(PedestalBlockEntity pedestal){
 		// TODO: use craft() in activate() to calculate/preserve enchantment levels, durability...
 		pedestal.setStack(curRecipe.getOutput());
+		lastCraftStartEndTime = world.getTime();
 		reset();
 	}
 	
@@ -205,6 +209,10 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 	
 	public InfusionState getCurrentState(){
 		return curState;
+	}
+	
+	public long getLastCraftStartEndTime(){
+		return lastCraftStartEndTime;
 	}
 	
 	public boolean isActivated(){

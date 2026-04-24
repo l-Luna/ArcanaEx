@@ -34,10 +34,17 @@ public class InfusionMatrixBlockEntityRenderer implements BlockEntityRenderer<In
 		
 		BlockModelRenderer.enableBrightnessCache();
 		matrices.push();
+		boolean crafting = entity.getCurrentRecipe() != null;
 		if(entity.isActivated()){
-			var time = entity.getWorld().getTime();
-			var ySpeed = entity.getCurrentRecipe() != null ? 9 : 2.5;
-			matrices.translate(0, Math.sin(Math.toRadians((time + tickDelta) * ySpeed)) / 4.5f, 0);
+			long time = entity.getWorld().getTime();
+			long eventTime = entity.getLastCraftStartEndTime();
+			float transDelta = eventTime == -1 || time - eventTime >= 15 ? 1 : ((float)(time - eventTime) + tickDelta) / 15f;
+			
+			double normalY = Math.sin(Math.toRadians((time + tickDelta) * 2.5)) / 4.5f;
+			double craftingY = Math.sin(Math.toRadians((time + tickDelta) * 9)) / 3.5f;
+			double lerpedY = crafting ? MathHelper.lerp(transDelta, normalY, craftingY) : MathHelper.lerp(transDelta, craftingY, normalY);
+			
+			matrices.translate(0, lerpedY, 0);
 			matrices.translate(.5, .8, .5);
 			matrices.multiply(Quaternion.fromEulerXyz(0, (float)Math.toRadians(time + tickDelta), (float)Math.toRadians((time + tickDelta) / 4)));
 			matrices.multiply(Quaternion.fromEulerYxz(0, MathHelper.HALF_PI / 2f, MathHelper.HALF_PI / 2f));
@@ -49,9 +56,7 @@ public class InfusionMatrixBlockEntityRenderer implements BlockEntityRenderer<In
 		BakedModelManager modelManager = MinecraftClient.getInstance().getBakedModelManager();
 		BlockRenderManager renderManager = MinecraftClient.getInstance().getBlockRenderManager();
 		
-		InfusionMatrixBlockEntity.InfusionState infusionState = entity.getCurrentState();
-		
-		BakedModel model = modelManager.getModel(new ModelIdentifier(infusionState != InfusionMatrixBlockEntity.InfusionState.IDLE ? arcId("infusion_matrix_active") : arcId("infusion_matrix"), ""));
+		BakedModel model = modelManager.getModel(new ModelIdentifier(crafting ? arcId("infusion_matrix_active") : arcId("infusion_matrix"), ""));
 		VertexConsumer buffer = vertexConsumers.getBuffer(TexturedRenderLayers.getEntitySolid());
 		renderManager.getModelRenderer().render(entity.getWorld(), model, state, entity.getPos(), matrices, buffer, false, Random.create(), state.getRenderingSeed(entity.getPos()), overlay);
 		

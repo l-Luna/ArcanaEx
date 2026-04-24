@@ -49,17 +49,13 @@ public class InfusionMatrixBlockEntityRenderer implements BlockEntityRenderer<In
 		BakedModelManager modelManager = MinecraftClient.getInstance().getBakedModelManager();
 		BlockRenderManager renderManager = MinecraftClient.getInstance().getBlockRenderManager();
 		
-		InfusionMatrixBlockEntity.InfusionPhase phase = entity.currentPhase();
+		InfusionMatrixBlockEntity.InfusionState infusionState = entity.getCurrentState();
 		
-		BakedModel model = modelManager.getModel(new ModelIdentifier(phase != null ? arcId("infusion_matrix_active") : arcId("infusion_matrix"), ""));
+		BakedModel model = modelManager.getModel(new ModelIdentifier(infusionState != InfusionMatrixBlockEntity.InfusionState.IDLE ? arcId("infusion_matrix_active") : arcId("infusion_matrix"), ""));
 		VertexConsumer buffer = vertexConsumers.getBuffer(TexturedRenderLayers.getEntitySolid());
 		renderManager.getModelRenderer().render(entity.getWorld(), model, state, entity.getPos(), matrices, buffer, false, Random.create(), state.getRenderingSeed(entity.getPos()), overlay);
 		
 		matrices.pop();
 		BlockModelRenderer.disableBrightnessCache();
-		
-		/*
-		if(phase != null)
-			phase.render(entity, matrices, vertexConsumers, tickDelta, entity.getStateForPhase(phase));*/
 	}
 }

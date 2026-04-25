@@ -1,0 +1,82 @@
+{
+	"format_version": "1.9.0",
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"texture_size": [128, 128],
+	"textures": {
+		"0": "arcana:block/infusion_pillar",
+		"particle": "arcana:block/infusion_pillar"
+	},
+	"elements": [
+		{
+			"name": "ClawEndRotationPoint",
+			"from": [4.49972, -2.5, 5.22984],
+			"to": [11.49972, 2.5, 10.22984],
+			"rotation": {"angle": 0, "axis": "x", "origin": [7.99972, -0.17674, 7.74972]},
+			"faces": {
+				"north": {"uv": [1.5, 7.25, 0.625, 6.625], "rotation": 180, "texture": "#0"},
+				"east": {"uv": [0, 7.25, 0.625, 7.875], "rotation": 90, "texture": "#0"},
+				"south": {"uv": [2.375, 6.625, 1.5, 7.25], "texture": "#0"},
+				"west": {"uv": [1.5, 7.25, 2.125, 7.875], "rotation": 270, "texture": "#0"},
+				"up": {"uv": [2.125, 7.25, 3, 7.875], "texture": "#0"},
+				"down": {"uv": [0.625, 7.25, 1.5, 7.875], "rotation": 180, "texture": "#0"}
+			}
+		},
+		{
+			"name": "ClawEndMain",
+			"from": [6.49972, 0, -6.27016],
+			"to": [9.49972, 4, 13.72984],
+			"rotation": {"angle": 0, "axis": "x", "origin": [7.99972, -0.17674, 7.74972]},
+			"faces": {
+				"north": {"uv": [9.625, 0.5, 9.25, 0], "rotation": 180, "texture": "#0"},
+				"east": {"uv": [8.75, 0.5, 9.25, 3], "rotation": 90, "texture": "#0"},
+				"south": {"uv": [10, 0, 9.625, 0.5], "texture": "#0"},
+				"west": {"uv": [9.625, 0.5, 10.125, 3], "rotation": 270, "texture": "#0"},
+				"up": {"uv": [10.125, 0.5, 10.5, 3], "texture": "#0"},
+				"down": {"uv": [9.25, 0.5, 9.625, 3], "rotation": 180, "texture": "#0"}
+			}
+		},
+		{
+			"name": "ClawEndRing1",
+			"from": [5.49972, 0, 8.72984],
+			"to": [10.49972, 5, 10.72984],
+			"rotation": {"angle": 0, "axis": "x", "origin": [7.99972, -0.17674, 7.74972]},
+			"faces": {
+				"north": {"uv": [9, 4.125, 8.375, 3.5], "rotation": 180, "texture": "#0"},
+				"east": {"uv": [7.75, 4.125, 8.375, 4.375], "rotation": 90, "texture": "#0"},
+				"south": {"uv": [9.625, 3.5, 9, 4.125], "texture": "#0"},
+				"west": {"uv": [9, 4.125, 9.625, 4.375], "rotation": 270, "texture": "#0"},
+				"up": {"uv": [9.625, 4.125, 10.25, 4.375], "texture": "#0"},
+				"down": {"uv": [8.375, 4.125, 9, 4.375], "rotation": 180, "texture": "#0"}
+			}
+		},
+		{
+			"name": "ClawEndRing2",
+			"from": [5.49972, 0, 4.72984],
+			"to": [10.49972, 5, 6.72984],
+			"rotation": {"angle": 0, "axis": "x", "origin": [7.99972, -0.17674, 7.74972]},
+			"faces": {
+				"north": {"uv": [9, 4.125, 8.375, 3.5], "rotation": 180, "texture": "#0"},
+				"east": {"uv": [7.75, 4.125, 8.375, 4.375], "rotation": 90, "texture": "#0"},
+				"south": {"uv": [9.625, 3.5, 9, 4.125], "texture": "#0"},
+				"west": {"uv": [9, 4.125, 9.625, 4.375], "rotation": 270, "texture": "#0"},
+				"up": {"uv": [9.625, 4.125, 10.25, 4.375], "texture": "#0"},
+				"down": {"uv": [8.375, 4.125, 9, 4.375], "rotation": 180, "texture": "#0"}
+			}
+		},
+		{
+			"name": "ClawEnder",
+			"from": [6.99972, 0.5, -14.92702],
+			"to": [8.99972, 3.5, -5.92702],
+			"rotation": {"angle": 0, "axis": "x", "origin": [7.99972, -0.17674, 7.74972]},
+			"faces": {
+				"north": {"uv": [11.125, 0.375, 10.875, 0], "rotation": 180, "texture": "#0"},
+				"east": {"uv": [10.5, 0.375, 10.875, 1.5], "rotation": 90, "texture": "#0"},
+				"south": {"uv": [11.375, 0, 11.125, 0.375], "texture": "#0"},
+				"west": {"uv": [11.125, 0.375, 11.5, 1.5], "rotation": 270, "texture": "#0"},
+				"up": {"uv": [11.5, 0.375, 11.75, 1.5], "texture": "#0"},
+				"down": {"uv": [10.875, 0.375, 11.125, 1.5], "rotation": 180, "texture": "#0"}
+			}
+		}
+	]
+}

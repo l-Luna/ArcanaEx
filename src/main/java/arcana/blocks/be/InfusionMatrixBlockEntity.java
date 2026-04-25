@@ -52,7 +52,7 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 	private AspectMap takenEssentia;
 	private List<ItemStack> takenItems;
 	private int cooldown = 0;
-	private int instability = 0;
+	private float instability = 0;
 	
 	private long lastCraftStartEndTime = -1;
 	
@@ -79,8 +79,13 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 			return;
 		}
 		
-		if(!structureValid()){
+		if(!structureValid(true)){
 			activated = false;
+			for(Direction direction : Direction.Type.HORIZONTAL){
+				BlockPos pillarPos = pos.down(2).offset(direction).offset(direction.rotateYClockwise());
+				if(world.getBlockEntity(pillarPos) instanceof InfusionPillarBlockEntity pillar)
+					pillar.setMatrixPosition(null);
+			}
 			reset();
 		}
 		
@@ -111,12 +116,14 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 		}
 	}
 	
-	private boolean structureValid(){
+	private boolean structureValid(boolean strict){
 		boolean valid = true;
 		BlockPos down = pos.down(2);
-		for(Direction direction : Direction.Type.HORIZONTAL)
-			if(!(world.getBlockEntity(down.offset(direction).offset(direction.rotateYClockwise())) instanceof InfusionPillarBlockEntity))
+		for(Direction direction : Direction.Type.HORIZONTAL){
+			BlockPos pillarPos = down.offset(direction).offset(direction.rotateYClockwise());
+			if(!(world.getBlockEntity(pillarPos) instanceof InfusionPillarBlockEntity pillar) || (strict && !Objects.equals(pillar.getMatrixPosition(), pos)))
 				valid = false;
+		}
 		
 		BlockEntity pedestal = world.getBlockEntity(down);
 		if(!(pedestal instanceof PedestalBlockEntity))
@@ -126,8 +133,12 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 	
 	public void activate(PlayerEntity player){
 		if(!activated){
-			if(structureValid()){
-				// TODO: setup infusion pillars...
+			if(structureValid(false)){
+				for(Direction direction : Direction.Type.HORIZONTAL){
+					BlockPos pillarPos = pos.down(2).offset(direction).offset(direction.rotateYClockwise());
+					if(world.getBlockEntity(pillarPos) instanceof InfusionPillarBlockEntity pillar)
+						pillar.setMatrixPosition(pos);
+				}
 				activated = true;
 			}
 			return;
@@ -159,7 +170,8 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 				
 				takenEssentia = new AspectMap();
 				takenItems = new ArrayList<>();
-				cooldown = instability = 0;
+				cooldown = 0;
+				instability = 0;
 				lastCraftStartEndTime = world.getTime();
 			});
 		}
@@ -172,7 +184,8 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 		takenEssentia = null;
 		takenItems = null;
 		curRecipe = null;
-		cooldown = instability = 0;
+		cooldown = 0;
+		instability = 0;
 	}
 	
 	private void finishCrafting(PedestalBlockEntity pedestal){
@@ -211,6 +224,10 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 		return curState;
 	}
 	
+	public float getInstability(){
+		return instability;
+	}
+	
 	public long getLastCraftStartEndTime(){
 		return lastCraftStartEndTime;
 	}
@@ -227,7 +244,7 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 			nbt.putString("currentRecipe", curRecipe.getId().toString());
 			nbt.putString("state", curState.name());
 			nbt.putInt("cooldown", cooldown);
-			nbt.putInt("instability", instability);
+			nbt.putFloat("instability", instability);
 			nbt.put("takenEssentia", takenEssentia.toNbt());
 			nbt.put("takenItems", takenItems.stream().map(x -> x.writeNbt(new NbtCompound())).collect(NbtUtil.toNbtList()));
 		}
@@ -241,7 +258,7 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 			lastRecipe = new Identifier(nbt.getString("currentRecipe"));
 			curState = InfusionState.valueOf(nbt.getString("state"));
 			cooldown = nbt.getInt("cooldown");
-			instability = nbt.getInt("instability");
+			instability = nbt.getFloat("instability");
 			takenEssentia = AspectMap.fromNbt(nbt.getCompound("takenEssentia"));
 			takenItems = NbtUtil.readMutList(nbt, "takenItems", ItemStack::fromNbt);
 		}

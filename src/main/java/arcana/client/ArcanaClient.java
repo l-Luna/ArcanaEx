@@ -118,8 +118,9 @@ public final class ArcanaClient implements ClientModInitializer{
 		
 		ModelLoadingRegistry.INSTANCE.registerResourceProvider(__ -> new WandModel.Provider());
 		ModelLoadingRegistry.INSTANCE.registerModelProvider((manager, out) -> {
-			out.accept(new ModelIdentifier(arcId("infusion_pillar_base"), ""));
-			out.accept(new ModelIdentifier(arcId("infusion_pillar_upper"), ""));
+			out.accept(InfusionPillarBlockEntityRenderer.BASE_ID);
+			out.accept(InfusionPillarBlockEntityRenderer.UPPER_ID);
+			out.accept(InfusionPillarBlockEntityRenderer.PEAK_ID);
 			out.accept(new ModelIdentifier(arcId("infusion_matrix_active"), ""));
 			out.accept(new ModelIdentifier(arcId("crimson_leech_attacking"), "inventory"));
 		});
@@ -332,5 +333,13 @@ public final class ArcanaClient implements ClientModInitializer{
 		if(aspect.equals(Aspects.ENTROPY))
 			return Formatting.DARK_GRAY;
 		return Formatting.WHITE;
+	}
+	
+	public static float osc(int period){
+		// TODO: use client time instead of world time to fix issues when lagging/on servers/out of worlds; fix jittering when paused
+		MinecraftClient client = MinecraftClient.getInstance();
+		if(client.world == null)
+			return 0;
+		return MathUtil.osc(client.world, period, client.getTickDelta());
 	}
 }

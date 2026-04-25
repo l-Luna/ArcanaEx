@@ -2,6 +2,7 @@ package arcana.client.ber;
 
 import arcana.ArcanaRegistry;
 import arcana.blocks.be.InfusionMatrixBlockEntity;
+import arcana.client.ArcanaClient;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.TexturedRenderLayers;
@@ -40,8 +41,8 @@ public class InfusionMatrixBlockEntityRenderer implements BlockEntityRenderer<In
 			long eventTime = entity.getLastCraftStartEndTime();
 			float transDelta = eventTime == -1 || time - eventTime >= 15 ? 1 : ((float)(time - eventTime) + tickDelta) / 15f;
 			
-			double normalY = Math.sin(Math.toRadians((time + tickDelta) * 2.5)) / 4.5f;
-			double craftingY = Math.sin(Math.toRadians((time + tickDelta) * 9)) / 3.5f;
+			double normalY = ArcanaClient.osc(40) / 4.5f;
+			double craftingY = ArcanaClient.osc(25) / 3.5f;
 			double lerpedY = crafting ? MathHelper.lerp(transDelta, normalY, craftingY) : MathHelper.lerp(transDelta, craftingY, normalY);
 			
 			matrices.translate(0, lerpedY, 0);

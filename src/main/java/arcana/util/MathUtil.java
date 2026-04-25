@@ -7,6 +7,7 @@ import net.minecraft.util.math.ColorHelper.Argb;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.world.World;
 
 import java.util.Arrays;
 import java.util.UUID;
@@ -66,5 +67,9 @@ public final class MathUtil{
 		for(int i = 0; i < 16; i++)
 			bytes[i] = (byte)rng.nextBetween(-128, 127);
 		return UUID.nameUUIDFromBytes(bytes);
+	}
+	
+	public static float osc(World world, int period, float tickDelta){
+		return MathHelper.sin(MathHelper.TAU * (world.getTime() % period + tickDelta) / period);
 	}
 }

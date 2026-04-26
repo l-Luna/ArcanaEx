@@ -1,4 +1,4 @@
-package arcana.blocks;
+package arcana.blocks.deco;
 
 import com.unascribed.lib39.weld.api.BigBlock;
 import net.minecraft.block.Block;
@@ -29,28 +29,28 @@ import java.util.List;
 public class WoodenStatueBlock extends BigBlock{
 	
 	public enum Type{
-		speak,
-		see,
-		hear
+		SPEAK,
+		SEE,
+		HEAR
 	}
 	
-	public static final IntProperty y = IntProperty.of("y", 0, 1);
-	public static final DirectionProperty facing = Properties.HORIZONTAL_FACING;
-	public static final BooleanProperty waterlogged = Properties.WATERLOGGED;
+	public static final IntProperty Y = IntProperty.of("y", 0, 1);
+	public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
+	public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 	
-	protected static final VoxelShape topShape = Block.createCuboidShape(1, 0, 1, 15, 7, 15);
-	protected static final VoxelShape bottomShape = Block.createCuboidShape(1, 0, 1, 15, 16, 15);
+	protected static final VoxelShape TOP_SHAPE = Block.createCuboidShape(1, 0, 1, 15, 7, 15);
+	protected static final VoxelShape BOTTOM_SHAPE = Block.createCuboidShape(1, 0, 1, 15, 16, 15);
 	
 	public final Type type;
 	
 	public WoodenStatueBlock(Settings settings, Type type){
-		super(null, y, null, settings);
+		super(null, Y, null, settings);
 		this.type = type;
 	}
 	
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder){
 		super.appendProperties(builder);
-		builder.add(y, facing, waterlogged);
+		builder.add(Y, FACING, WATERLOGGED);
 	}
 	
 	public MutableText getName(){
@@ -67,27 +67,27 @@ public class WoodenStatueBlock extends BigBlock{
 	}
 	
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context){
-		if(state.get(y) == 1)
-			return topShape;
-		return bottomShape;
+		if(state.get(Y) == 1)
+			return TOP_SHAPE;
+		return BOTTOM_SHAPE;
 	}
 	
 	public FluidState getFluidState(BlockState state){
-		return state.get(waterlogged) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
+		return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
 	}
 	
 	public BlockState getPlacementState(ItemPlacementContext ctx){
 		FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
 		return super.getPlacementState(ctx)
-				.with(waterlogged, fluidState.getFluid() == Fluids.WATER)
-				.with(facing, ctx.getPlayerFacing().getOpposite());
+				.with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER)
+				.with(FACING, ctx.getPlayerFacing().getOpposite());
 	}
 	
 	public BlockState rotate(BlockState state, BlockRotation rotation){
-		return state.with(facing, rotation.rotate(state.get(facing)));
+		return state.with(FACING, rotation.rotate(state.get(FACING)));
 	}
 	
 	public BlockState mirror(BlockState state, BlockMirror mirror){
-		return state.rotate(mirror.getRotation(state.get(facing)));
+		return state.rotate(mirror.getRotation(state.get(FACING)));
 	}
 }

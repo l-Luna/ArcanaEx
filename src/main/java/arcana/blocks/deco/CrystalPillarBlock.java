@@ -1,4 +1,4 @@
-package arcana.blocks;
+package arcana.blocks.deco;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

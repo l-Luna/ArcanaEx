@@ -6,6 +6,10 @@ import arcana.aspects.Aspect;
 import arcana.aspects.Aspects;
 import arcana.blocks.*;
 import arcana.blocks.be.*;
+import arcana.blocks.deco.CrystalPillarBlock;
+import arcana.blocks.deco.NitorBlock;
+import arcana.blocks.deco.StoneVaseBlock;
+import arcana.blocks.deco.WoodenStatueBlock;
 import arcana.blocks.tainted.TaintedBlock;
 import arcana.blocks.tainted.TaintedFallingBlock;
 import arcana.blocks.tainted.TaintedSnowyBlock;
@@ -562,9 +566,10 @@ public final class ArcanaRegistry{
 	
 	public static final Block VOID_GROWTH = new Block(of(Material.PLANT).renderLayer(CUTOUT).nonOpaque().noCollision().breakInstantly().sounds(BlockSoundGroup.FROGSPAWN));
 	
-	public static final WoodenStatueBlock SPEAK_NO_EVIL_STATUE = new WoodenStatueBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD).nonOpaque(), WoodenStatueBlock.Type.speak);
-	public static final WoodenStatueBlock SEE_NO_EVIL_STATUE = new WoodenStatueBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD).nonOpaque(), WoodenStatueBlock.Type.see);
-	public static final WoodenStatueBlock HEAR_NO_EVIL_STATUE = new WoodenStatueBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD).nonOpaque(), WoodenStatueBlock.Type.hear);
+	public static final WoodenStatueBlock SPEAK_NO_EVIL_STATUE = new WoodenStatueBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD).nonOpaque(), WoodenStatueBlock.Type.SPEAK);
+	public static final WoodenStatueBlock SEE_NO_EVIL_STATUE = new WoodenStatueBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD).nonOpaque(), WoodenStatueBlock.Type.SEE);
+	public static final WoodenStatueBlock HEAR_NO_EVIL_STATUE = new WoodenStatueBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD).nonOpaque(), WoodenStatueBlock.Type.HEAR);
+	public static final StoneVaseBlock STONE_VASE = new StoneVaseBlock(of(Material.STONE).dropsSelf().usesTool(PICKAXE_MINEABLE).strength(2).nonOpaque());
 	
 	public static final Block CRIMSON_LANTERN = new CrimsonLanternBlock(of(Material.METAL).renderLayer(CUTOUT).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3.5f).sounds(BlockSoundGroup.LANTERN).luminance(__ -> 12).nonOpaque());
 	public static final Block CHAIN_WALL = new PaneBlock(of(Material.METAL, MapColor.CLEAR).renderLayer(CUTOUT).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(2.5f).sounds(BlockSoundGroup.METAL).nonOpaque());
@@ -1244,6 +1249,7 @@ public final class ArcanaRegistry{
 		register("speak_no_evil_statue", SPEAK_NO_EVIL_STATUE);
 		register("see_no_evil_statue", SEE_NO_EVIL_STATUE);
 		register("hear_no_evil_statue", HEAR_NO_EVIL_STATUE);
+		register("stone_vase", STONE_VASE);
 		
 		register("crimson_lantern", CRIMSON_LANTERN);
 		register("chain_wall", CHAIN_WALL);

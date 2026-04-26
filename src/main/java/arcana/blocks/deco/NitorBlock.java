@@ -1,4 +1,4 @@
-package arcana.blocks;
+package arcana.blocks.deco;
 
 import arcana.ArcanaRegistry;
 import net.minecraft.block.Block;

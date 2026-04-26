@@ -55,11 +55,15 @@
         },
         {
           "type": "crafting",
-          "content": "arcana:arcane_stone_bricks"
+          "content": "arcana:building_blocks/arcane_stone_bricks"
         },
         {
           "type": "arcane_crafting",
           "content": "arcana:pedestal"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:stone_vase"
         }
       ]
     },

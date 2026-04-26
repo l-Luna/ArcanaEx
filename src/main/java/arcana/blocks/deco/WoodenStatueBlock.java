@@ -25,6 +25,7 @@ import net.minecraft.world.BlockView;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Locale;
 
 public class WoodenStatueBlock extends BigBlock{
 	
@@ -63,7 +64,7 @@ public class WoodenStatueBlock extends BigBlock{
 	
 	public void appendTooltip(ItemStack stack, @Nullable BlockView world, List<Text> tooltip, TooltipContext options){
 		super.appendTooltip(stack, world, tooltip, options);
-		tooltip.add(Text.translatable("block.arcana." + type.name() + "_no_evil").formatted(Formatting.GRAY));
+		tooltip.add(Text.translatable("block.arcana." + type.name().toLowerCase(Locale.ROOT) + "_no_evil").formatted(Formatting.GRAY));
 	}
 	
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context){

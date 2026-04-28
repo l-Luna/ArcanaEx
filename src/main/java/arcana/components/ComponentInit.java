@@ -2,7 +2,7 @@ package arcana.components;
 
 import arcana.aura.AuraChunk;
 import arcana.aura.AuraWorld;
-import arcana.aura.TaintChunk;
+import arcana.aura.InfestedChunk;
 import arcana.aura.WardedChunk;
 import dev.onyxstudios.cca.api.v3.chunk.ChunkComponentFactoryRegistry;
 import dev.onyxstudios.cca.api.v3.chunk.ChunkComponentInitializer;
@@ -31,7 +31,7 @@ public class ComponentInit implements EntityComponentInitializer, WorldComponent
 	
 	public void registerChunkComponentFactories(ChunkComponentFactoryRegistry registry){
 		registry.register(AuraChunk.KEY, AuraChunk::new);
-		registry.register(TaintChunk.KEY, TaintChunk::new);
+		registry.register(InfestedChunk.KEY, InfestedChunk::new);
 		registry.register(WardedChunk.KEY, WardedChunk::new);
 	}
 }

@@ -20,16 +20,21 @@ public class CubeParticle extends Particle{
 	
 	private final Sprite sprite;
 	private final CubeParticleStyle style;
+	private final float effectR, effectB, effectG;
 	
-	protected CubeParticle(ClientWorld world, double x, double y, double z, Sprite sprite, CubeParticleStyle style){
+	protected CubeParticle(ClientWorld world, double x, double y, double z, Sprite sprite, CubeParticleStyle style, float effectR, float effectG, float effectB){
 		super(world, x, y, z);
 		this.sprite = sprite;
 		this.style = style;
+		this.effectR = effectR;
+		this.effectB = effectG;
+		this.effectG = effectG;
 		maxAge = style.maxLife();
 	}
 	
 	public void buildGeometry(VertexConsumer vc, Camera camera, float tickDelta){
 		RenderSystem.setShader(ArcanaShaders::getFxTurbulentShader);
+		RenderSystem.getShader().getUniformOrDefault("TurbulenceColor").set(effectR, effectG, effectB);
 		
 		BufferBuilder buffer = Tessellator.getInstance().getBuffer();
 		RenderSystem.enableBlend();
@@ -56,9 +61,13 @@ public class CubeParticle extends Particle{
 	public static final class Factory implements ParticleFactory<CubeParticleEffect>{
 		
 		private final SpriteProvider sprite;
+		private final float effectR, effectG, effectB;
 		
-		public Factory(SpriteProvider sprite){
+		public Factory(SpriteProvider sprite, float effectR, float effectG, float effectB){
 			this.sprite = sprite;
+			this.effectR = effectR;
+			this.effectG = effectG;
+			this.effectB = effectB;
 		}
 		
 		public @NotNull Particle createParticle(CubeParticleEffect parameters,
@@ -69,7 +78,7 @@ public class CubeParticle extends Particle{
 		                                        double velocityX,
 		                                        double velocityY,
 		                                        double velocityZ){
-			return new CubeParticle(world, x, y, z, sprite.getSprite(world.random), parameters.style());
+			return new CubeParticle(world, x, y, z, sprite.getSprite(world.random), parameters.style(), effectR, effectG, effectB);
 		}
 	}
 }

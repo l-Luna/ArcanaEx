@@ -10,6 +10,7 @@ uniform float FogStart;
 uniform float FogEnd;
 uniform vec4 FogColor;
 uniform float GameTime;
+uniform vec3 TurbulenceColor;
 
 in float vertexDistance;
 in vec2 texCoord0;
@@ -25,7 +26,7 @@ void main() {
 	float mod = psrddnoise(localUV * scale, vec2(scale), GameTime*20*60, g, gg);
     mod = psrddnoise(localUV * 2 * mod, vec2(scale), GameTime*20*60, g, gg);
     vec4 texCol = texture(Sampler0, texCoord0);
-    vec3 mixed = mix(texCol.rgb, vec3(1.0, 1.0, 1.0), mod);
+    vec3 mixed = mix(texCol.rgb, TurbulenceColor, clamp(mod/2, 0, 1));
     vec4 color = vec4(mixed.r, mixed.g, mixed.b, texCol.a) * vertexColor * ColorModulator;
     fragColor = linear_fog(color, vertexDistance, FogStart, FogEnd, FogColor);
 }

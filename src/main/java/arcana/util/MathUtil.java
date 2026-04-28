@@ -10,6 +10,7 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 
 import java.util.Arrays;
+import java.util.BitSet;
 import java.util.UUID;
 
 public final class MathUtil{
@@ -71,5 +72,22 @@ public final class MathUtil{
 	
 	public static float osc(World world, int period, float tickDelta){
 		return MathHelper.sin(MathHelper.TAU * (world.getTime() % period + tickDelta) / period);
+	}
+	
+	public static int indexOfNthBit(BitSet bits, int n){
+		long[] words = bits.toLongArray();
+		for(int wi = 0; wi < words.length; wi++){
+			long word = words[wi];
+			int bc = Long.bitCount(word);
+			if(n < bc){
+				while(n > 0){
+					word &= ~Long.lowestOneBit(word);
+					n--;
+				}
+				return wi*64 + Long.numberOfTrailingZeros(word);
+			}
+			n -= bc;
+		}
+		return -1;
 	}
 }

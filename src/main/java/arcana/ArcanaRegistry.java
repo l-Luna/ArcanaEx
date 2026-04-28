@@ -10,9 +10,6 @@ import arcana.blocks.deco.CrystalPillarBlock;
 import arcana.blocks.deco.NitorBlock;
 import arcana.blocks.deco.StoneVaseBlock;
 import arcana.blocks.deco.WoodenStatueBlock;
-import arcana.blocks.tainted.TaintedBlock;
-import arcana.blocks.tainted.TaintedFallingBlock;
-import arcana.blocks.tainted.TaintedSnowyBlock;
 import arcana.blocks.tubes.*;
 import arcana.client.particles.AspectParticleEffect;
 import arcana.client.particles.CubeParticleEffect;
@@ -591,22 +588,22 @@ public final class ArcanaRegistry{
 	public static final Block POTTED_LILIUM = new FlowerPotBlock(LILIUM, of(Material.DECORATION).renderLayer(CUTOUT).breakInstantly().nonOpaque());
 	
 	// natural tainted blocks
-	public static final Block TAINTED_ROCK = new TaintedBlock(of(Material.STONE, MapColor.PURPLE).group(Tab.TAINTED).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(1.6f, 6));
-	public static final Block TAINTED_ANDESITE = new TaintedBlock(of(Material.STONE, MapColor.PURPLE).group(Tab.TAINTED).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(1.6f, 6));
-	public static final Block TAINTED_DIORITE = new TaintedBlock(of(Material.STONE, MapColor.PURPLE).group(Tab.TAINTED).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(1.6f, 6));
-	public static final Block TAINTED_GRANITE = new TaintedBlock(of(Material.STONE, MapColor.PURPLE).group(Tab.TAINTED).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(1.6f, 6));
+	public static final Block TAINTED_ROCK = new Block(of(Material.STONE, MapColor.PURPLE).group(Tab.TAINTED).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(1.6f, 6));
+	public static final Block TAINTED_ANDESITE = new Block(of(Material.STONE, MapColor.PURPLE).group(Tab.TAINTED).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(1.6f, 6));
+	public static final Block TAINTED_DIORITE = new Block(of(Material.STONE, MapColor.PURPLE).group(Tab.TAINTED).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(1.6f, 6));
+	public static final Block TAINTED_GRANITE = new Block(of(Material.STONE, MapColor.PURPLE).group(Tab.TAINTED).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(1.6f, 6));
 	
-	public static final Block TAINTED_SOIL = new TaintedBlock(of(Material.SOIL, MapColor.PURPLE).group(Tab.TAINTED).dropsSelf().usesTool(SHOVEL_MINEABLE).strength(0.5f).sounds(BlockSoundGroup.GRAVEL));
-	public static final Block TAINTED_GRASS_BLOCK = new TaintedSnowyBlock(of(Material.SOLID_ORGANIC, MapColor.PURPLE).group(Tab.TAINTED).usesTool(SHOVEL_MINEABLE).strength(0.6f).sounds(BlockSoundGroup.GRASS));
-	public static final Block TAINTED_SAND = new TaintedFallingBlock(of(Material.AGGREGATE, MapColor.PURPLE).group(Tab.TAINTED).usesTool(SHOVEL_MINEABLE).strength(0.5f).sounds(BlockSoundGroup.SAND));
-	public static final Block TAINTED_SANDSTONE = new TaintedBlock(of(Material.STONE, MapColor.PURPLE).group(Tab.TAINTED).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(0.8f));
-	public static final Block TAINTED_GRAVEL = new TaintedFallingBlock(of(Material.AGGREGATE, MapColor.PURPLE).group(Tab.TAINTED).usesTool(SHOVEL_MINEABLE).strength(0.7f).sounds(BlockSoundGroup.GRAVEL));
-	public static final Block TAINTED_SNOW_BLOCK = new TaintedFallingBlock(of(Material.SNOW_BLOCK, MapColor.PURPLE).group(Tab.TAINTED).requiresTool(SHOVEL_MINEABLE).strength(0.2f).sounds(BlockSoundGroup.SNOW));
+	public static final Block TAINTED_SOIL = new Block(of(Material.SOIL, MapColor.PURPLE).group(Tab.TAINTED).dropsSelf().usesTool(SHOVEL_MINEABLE).strength(0.5f).sounds(BlockSoundGroup.GRAVEL));
+	public static final Block TAINTED_GRASS_BLOCK = new SnowyBlock(of(Material.SOLID_ORGANIC, MapColor.PURPLE).group(Tab.TAINTED).usesTool(SHOVEL_MINEABLE).strength(0.6f).sounds(BlockSoundGroup.GRASS));
+	public static final Block TAINTED_SAND = new FallingBlock(of(Material.AGGREGATE, MapColor.PURPLE).group(Tab.TAINTED).usesTool(SHOVEL_MINEABLE).strength(0.5f).sounds(BlockSoundGroup.SAND));
+	public static final Block TAINTED_SANDSTONE = new Block(of(Material.STONE, MapColor.PURPLE).group(Tab.TAINTED).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(0.8f));
+	public static final Block TAINTED_GRAVEL = new FallingBlock(of(Material.AGGREGATE, MapColor.PURPLE).group(Tab.TAINTED).usesTool(SHOVEL_MINEABLE).strength(0.7f).sounds(BlockSoundGroup.GRAVEL));
+	public static final Block TAINTED_SNOW_BLOCK = new FallingBlock(of(Material.SNOW_BLOCK, MapColor.PURPLE).group(Tab.TAINTED).requiresTool(SHOVEL_MINEABLE).strength(0.2f).sounds(BlockSoundGroup.SNOW));
 	
-	public static final Block TAINTED_HOLLOWED_ORE = new TaintedBlock(of(Material.STONE, MapColor.PURPLE).group(Tab.TAINTED).requiresTool(PICKAXE_MINEABLE).strength(1.8f, 6));
+	public static final Block TAINTED_HOLLOWED_ORE = new Block(of(Material.STONE, MapColor.PURPLE).group(Tab.TAINTED).requiresTool(PICKAXE_MINEABLE).strength(1.8f, 6));
 	
 	// unique tainted blocks
-	public static final Block TAINT_CRUST = new TaintedBlock(of(Material.SOLID_ORGANIC, MapColor.PURPLE).group(Tab.TAINTED).requiresTool(HOE_MINEABLE).strength(0.7f).sounds(BlockSoundGroup.SLIME));
+	public static final Block TAINT_CRUST = new Block(of(Material.SOLID_ORGANIC, MapColor.PURPLE).group(Tab.TAINTED).requiresTool(HOE_MINEABLE).strength(0.7f).sounds(BlockSoundGroup.SLIME));
 	
 	// dead/damaged/untainted blocks
 	public static final Block HOLLOWED_ORE = new Block(of(Material.STONE).group(Tab.TAINTED).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(1.8f));
@@ -759,6 +756,7 @@ public final class ArcanaRegistry{
 	public static DefaultParticleType LIGHTNING = FabricParticleTypes.simple();
 	
 	public static ParticleType<CubeParticleEffect> WARDING_EFFECT = FabricParticleTypes.complex(CubeParticleEffect.PARAMETERS_FACTORY);
+	public static ParticleType<CubeParticleEffect> INFESTED_EFFECT = FabricParticleTypes.complex(CubeParticleEffect.PARAMETERS_FACTORY);
 	
 	public static ParticleType<BlockStateParticleEffect> HUNGRY_NODE_DISC = FabricParticleTypes.complex(BlockStateParticleEffect.PARAMETERS_FACTORY);
 	public static ParticleType<BlockStateParticleEffect> HUNGRY_NODE_BLOCK = FabricParticleTypes.complex(BlockStateParticleEffect.PARAMETERS_FACTORY);
@@ -1416,6 +1414,7 @@ public final class ArcanaRegistry{
 		register("lightning", LIGHTNING);
 		
 		register("warding_effect", WARDING_EFFECT);
+		register("infested_effect", INFESTED_EFFECT);
 		
 		register("hungry_node_disc", HUNGRY_NODE_DISC);
 		register("hungry_node_block", HUNGRY_NODE_BLOCK);

@@ -1,5 +1,6 @@
 package arcana.aura;
 
+import arcana.Arcana;
 import arcana.ArcanaDamageSources;
 import arcana.ArcanaRegistry;
 import arcana.aspects.ItemAspectRegistry;
@@ -184,12 +185,11 @@ public class NodeTypes{
 	}
 	
 	private static void tickTainted(Node node, World world){
-		// TODO: flux origin?
-		if(world.random.nextInt(90) == 0)
+		if(world.random.nextInt(Arcana.CONFIG.taintConfig.taintedNodeFluxInvChance) == 0)
 			AuraWorld.from(world).incrementFlux(world.random.nextBetween(1, 4), null, new BlockPos(node));
 		
-		if(world.random.nextInt(300) == 0)
-			SearchUtil.randomSearch(world, node.asBlockPos(), 7, 12, (pos, state) -> Taint.taintBlock(world, pos));
+		if(world.random.nextInt(Arcana.CONFIG.taintConfig.taintedNodeInfestInvChance) == 0)
+			SearchUtil.randomSearch(world, node.asBlockPos(), 7, 12, (pos, state) -> !state.isAir() && InfestedChunk.from(world, pos).setInfested(pos, true));
 	}
 	
 	private static boolean empty(BlockState state){

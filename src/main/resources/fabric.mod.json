@@ -67,7 +67,7 @@
     "cardinal-components": [
       "arcana:aura_world",
       "arcana:aura_chunk",
-      "arcana:taint_chunk",
+      "arcana:infested_chunk",
       "arcana:warded_chunk",
       "arcana:researcher",
       "arcana:caster",

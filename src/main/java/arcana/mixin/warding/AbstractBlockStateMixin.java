@@ -1,5 +1,6 @@
 package arcana.mixin.warding;
 
+import arcana.aura.InfestedChunk;
 import arcana.aura.WardedChunk;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.BlockState;
@@ -23,7 +24,9 @@ public class AbstractBlockStateMixin{
 	
 	@Inject(method = "onStateReplaced", at = @At("HEAD"))
 	void removeWardingOnBreak(World world, BlockPos pos, BlockState state, boolean moved, CallbackInfo ci){
-		if(WardedChunk.isWarded(world, pos) && state.isAir())
+		if(state.isAir()){
 			WardedChunk.setWarded(world, pos, false);
+			InfestedChunk.setInfested(world, pos, false);
+		}
 	}
 }

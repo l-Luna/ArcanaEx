@@ -1,5 +1,7 @@
 package arcana.aura;
 
+import arcana.Arcana;
+import arcana.ArcanaConfig;
 import arcana.util.NbtUtil;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import com.mojang.logging.LogUtils;
@@ -187,19 +189,20 @@ public final class AuraWorld implements Component, ServerTickingComponent, AutoS
 		// - a completely unpolluted chunk requires a much larger difference to become polluted, and picks up significantly more initially
 		// - flux spreading should be tick order independent
 		// that means we cannot mutate the aura chunks as we iterate, and instead want a difference buffer applied after all computation
+		ArcanaConfig.TaintConfig config = Arcana.CONFIG.taintConfig;
 		
 		Long2FloatMap diff = new Long2FloatOpenHashMap(world.getChunkManager().getLoadedChunkCount());
 		Set<WorldChunk> chunks = ((LoadedChunksCache)world).fabric_getLoadedChunks();
 		for(Chunk chunk : chunks){
 			AuraChunk here = AuraChunk.from(chunk);
 			var pos = chunk.getPos();
-			if(here.flux() > 20 && world.random.nextInt(5) == 0){
+			if(here.flux() > config.fluxSpreadThreshold && world.random.nextInt(5) == 0){
 				ChunkPos towards = world.random.nextBoolean()
 						? new ChunkPos(pos.x + (world.random.nextBoolean() ? 1 : -1), pos.z)
 						: new ChunkPos(pos.x, pos.z + (world.random.nextBoolean() ? 1 : -1));
 				AuraChunk there = AuraChunk.from(world, towards);
 				// if we pass the arbitrary threshold...
-				if(there != null && there.flux() > 0 && here.flux() > there.flux() + 12){
+				if(there != null && here.flux() > there.flux() + config.fluxSpreadRelativeThreshold){
 					// pass along 1/10 of the difference, floored to the nearest 0.01
 					float passRaw = (here.flux() - there.flux()) / 10;
 					float pass = (int)(passRaw * 100) / 100f;
@@ -214,7 +217,7 @@ public final class AuraWorld implements Component, ServerTickingComponent, AutoS
 			AuraChunk there = AuraChunk.from(world, pos);
 			float flux = there.flux() + diff.get(l);
 			there.setFlux(flux);
-			if(flux > 80)
+			if(flux > config.taintedNodeSpawnCost)
 				trySpawnTaintedNode(pos, there);
 		}
 	}
@@ -228,7 +231,7 @@ public final class AuraWorld implements Component, ServerTickingComponent, AutoS
 			}
 		
 		if(valid){
-			there.setFlux(there.flux() - 80);
+			there.setFlux(there.flux() - Arcana.CONFIG.taintConfig.taintedNodeSpawnCost);
 			Random rng = world.random;
 			int x = rng.nextInt(15), z = rng.nextInt(15), y = there.chunk().sampleHeightmap(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, x, z);
 			addNode(new Node(NodeTypes.TAINTED, new Vec3d(pos.getStartX() + x + rng.nextFloat(), y + 4 + rng.nextFloat() * 6, pos.getStartZ() + z + rng.nextFloat()), NodeTypes.TAINTED.randomCap(rng)));

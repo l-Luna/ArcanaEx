@@ -1,5 +1,6 @@
 package arcana.mixin.warding;
 
+import arcana.aura.InfestedChunk;
 import arcana.aura.WardedChunk;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.DebugHud;
@@ -31,6 +32,8 @@ public class DebugHudMixin{
 			BlockPos pos = ((BlockHitResult)blockHit).getBlockPos();
 			if(WardedChunk.isWarded(client.world, pos))
 				info.getReturnValue().add("[Arcana] Warded block");
+			if(InfestedChunk.isInfested(client.world, pos))
+				info.getReturnValue().add("[Arcana] Infested block");
 		}
 	}
 }

@@ -259,7 +259,8 @@ public final class ArcanaClient implements ClientModInitializer{
 		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.FLAME, spr -> new SimpleSpriteParticle.Factory(spr, 0, 0.06f, 30, 1, false));
 		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.LIGHTNING, spr -> new SimpleSpriteParticle.Factory(spr, 0, 0.04f, 40, 1, true));
 		
-		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.WARDING_EFFECT, CubeParticle.Factory::new);
+		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.WARDING_EFFECT, u -> new CubeParticle.Factory(u, 1, 1, 1));
+		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.INFESTED_EFFECT, u -> new CubeParticle.Factory(u, 0.1f, 0.1f, 0.1f));
 		
 		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.HUNGRY_NODE_DISC, new HungryNodeDiscParticle.Factory());
 		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.HUNGRY_NODE_BLOCK, new HungryNodeBlockParticle.Factory());

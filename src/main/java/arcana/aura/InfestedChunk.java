@@ -68,6 +68,8 @@ public class InfestedChunk extends ChunkLayer implements ServerTickingComponent{
 			if(offset != null){
 				BlockPos pos = offset.add(chunk.getPos().getStartPos());
 				SearchUtil.randomSearch(world, pos, 1, 3, (there, state) -> {
+					if(state.isAir())
+						return false;
 					if(!isInfested(there)){
 						setInfested(there, true);
 						from.setFlux(from.flux() - config.infestCost);

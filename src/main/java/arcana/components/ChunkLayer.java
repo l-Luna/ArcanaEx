@@ -99,7 +99,7 @@ public abstract class ChunkLayer implements Component, AutoSyncedComponent{
 				break;
 			idx -= count[ci];
 		}
-		return fromSliceOffsetIndex(MathUtil.indexOfNthBit(markedBlocks[ci], idx)).up(chunk.getBottomY());
+		return fromSliceOffsetIndex(MathUtil.indexOfNthBit(markedBlocks[ci], idx)).up(chunk.getBottomY() + ci*16);
 	}
 	
 	//

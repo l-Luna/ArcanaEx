@@ -403,8 +403,10 @@ public final class ArcanaRegistry{
 	public static final Item NODE_PLACER = new NodePlacerItem(GROUPED_CREATIVE_SINGLE);
 	public static final Item NODE_REMOVER = new NodeRemoverItem(GROUPED_CREATIVE_SINGLE);
 	public static final Item FLUX_SPONGE = new FluxSpongeItem(GROUPED_CREATIVE_SINGLE);
-	public static final Item TAINT_INJECTOR = new TaintConverterItem(GROUPED_CREATIVE_SINGLE, true);
-	public static final Item TAINT_ERASER = new TaintConverterItem(GROUPED_CREATIVE_SINGLE, false);
+	public static final Item TAINT_INJECTOR = new TaintConverterItem(GROUPED_CREATIVE_SINGLE, true, true);
+	public static final Item TAINT_ERASER = new TaintConverterItem(GROUPED_CREATIVE_SINGLE, false, true);
+	public static final Item INFESTATION_INJECTOR = new TaintConverterItem(GROUPED_CREATIVE_SINGLE, true, false);
+	public static final Item INFESTATION_ERASER = new TaintConverterItem(GROUPED_CREATIVE_SINGLE, false, false);
 	
 	// blocks...
 	public static final Block ARCANE_CRAFTING_TABLE = new ArcaneCraftingTableBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).sounds(BlockSoundGroup.WOOD).strength(3).nonOpaque());
@@ -1067,6 +1069,8 @@ public final class ArcanaRegistry{
 		register("flux_sponge", FLUX_SPONGE);
 		register("taint_injector", TAINT_INJECTOR);
 		register("taint_eraser", TAINT_ERASER);
+		register("infestation_injector", INFESTATION_INJECTOR);
+		register("infestation_eraser", INFESTATION_ERASER);
 		
 		for(Aspect aspect : Aspects.getOrderedAspects()){
 			var shortName = aspect.id().getPath();

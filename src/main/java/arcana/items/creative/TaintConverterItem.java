@@ -1,6 +1,10 @@
 package arcana.items.creative;
 
+import arcana.ArcanaRegistry;
+import arcana.aura.InfestedChunk;
 import arcana.aura.Taint;
+import arcana.client.particles.CubeParticleEffect;
+import arcana.client.particles.CubeParticleStyle;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -19,11 +23,12 @@ import java.util.List;
 
 public class TaintConverterItem extends Item{
 	
-	private final boolean fwd;
+	private final boolean fwd, physical;
 	
-	public TaintConverterItem(Settings settings, boolean fwd){
+	public TaintConverterItem(Settings settings, boolean fwd, boolean physical){
 		super(settings);
 		this.fwd = fwd;
+		this.physical = physical;
 	}
 	
 	public ActionResult useOnBlock(ItemUsageContext context){
@@ -35,11 +40,15 @@ public class TaintConverterItem extends Item{
 			cycleRadius(stack, player);
 		else{
 			int r = radiusFor(stack);
-			for(BlockPos pos : BlockPos.iterate(here.add(-r, -r, -r), here.add(r, r, r)))
-				if(fwd)
+			for(BlockPos pos : BlockPos.iterate(here.add(-r, -r, -r), here.add(r, r, r))){
+				if(!physical){
+					if(!world.isAir(pos) && InfestedChunk.setInfested(world, pos, fwd))
+						world.addParticle(new CubeParticleEffect(ArcanaRegistry.INFESTED_EFFECT, fwd ? CubeParticleStyle.APPEAR : CubeParticleStyle.DISAPPEAR), pos.getX(), pos.getY(), pos.getZ(), 0, 0, 0);
+				}else if(fwd)
 					Taint.taintBlock(world, pos);
 				else
 					Taint.untaintBlock(world, pos);
+			}
 		}
 		return ActionResult.SUCCESS;
 	}

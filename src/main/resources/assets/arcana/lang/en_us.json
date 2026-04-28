@@ -401,7 +401,9 @@
     "node_remover": "Node Remover",
     "flux_sponge": "Flux Sponge",
     "taint_injector": "Taint Injector",
-    "taint_eraser": "Taint Eraser"
+    "taint_eraser": "Taint Eraser",
+    "infestation_injector": "Infestation Injector",
+    "infestation_eraser": "Infestation Eraser"
   },
 
   // Blocks

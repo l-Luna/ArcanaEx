@@ -9,9 +9,13 @@ import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistryV3;
 import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.WorldChunk;
+
+import java.util.EnumSet;
 
 import static arcana.Arcana.arcId;
 
@@ -26,15 +30,42 @@ public class InfestedChunk extends ChunkLayer implements ServerTickingComponent{
 	}
 	
 	public static InfestedChunk from(World world, BlockPos pos){
+		if(!world.isChunkLoaded(pos.getX() >> 4, pos.getZ() >> 4))
+			return null;
 		return world.getChunk(pos).getComponent(KEY);
 	}
 	
 	public static boolean isInfested(World world, BlockPos pos){
-		return InfestedChunk.from(world, pos).isInfested(pos);
+		InfestedChunk from = InfestedChunk.from(world, pos);
+		return from != null && from.isInfested(pos);
 	}
 	
 	public static boolean setInfested(World world, BlockPos pos, boolean infested){
-		return InfestedChunk.from(world, pos).setInfested(pos, infested);
+		InfestedChunk from = InfestedChunk.from(world, pos);
+		return from != null && from.setInfested(pos, infested);
+	}
+	
+	public static float infestationDensity(World world, Vec3d position){
+		Vec3d in = position.subtract(position.multiply(1/16d).floorAlongAxes(EnumSet.allOf(Direction.Axis.class)).multiply(16))
+				.subtract(8, 8, 8)
+				.multiply(1 / 16d);
+		double acc = 0;
+		for(int xD = 0; xD < 2; xD++){
+			for(int yD = 0; yD < 2; yD++){
+				for(int zD = 0; zD < 2; zD++){
+					// where 0 = near, 1 = far
+					InfestedChunk there = from(world, new BlockPos(position).add(16 * xD * Math.signum(in.x), 0, 16 * zD * Math.signum(in.z)));
+					if(there == null)
+						continue;
+					double contribution =
+							(xD*Math.abs(in.x) + (1 - xD)*(1 - Math.abs(in.x))) *
+							(yD*Math.abs(in.y) + (1 - yD)*(1 - Math.abs(in.y))) *
+							(zD*Math.abs(in.z) + (1 - zD)*(1 - Math.abs(in.z)));
+					acc += contribution * there.infestationDensity((int)(position.y + 16 * yD * Math.signum(in.y)));
+				}
+			}
+		}
+		return (float)acc;
 	}
 	
 	public boolean isInfested(BlockPos pos){
@@ -46,6 +77,10 @@ public class InfestedChunk extends ChunkLayer implements ServerTickingComponent{
 		if(changed)
 			markDirty();
 		return changed;
+	}
+	
+	public float infestationDensity(int sectionHeight){
+		return countO((sectionHeight - chunk.getBottomY()) / 16) / (float)(16*16*16);
 	}
 	
 	public void markDirty(){

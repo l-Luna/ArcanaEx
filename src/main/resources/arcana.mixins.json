@@ -43,6 +43,7 @@
     "AbstractInventoryScreenMixin",
     "ClientPlayerEntityMixin",
     "ClientRecipeBookMixin",
+    "ClientWorldMixin",
     "GameRendererMixin",
     "HeldItemRendererMixin",
     "InGameHudMixin",

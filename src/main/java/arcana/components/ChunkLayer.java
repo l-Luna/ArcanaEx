@@ -102,6 +102,12 @@ public abstract class ChunkLayer implements Component, AutoSyncedComponent{
 		return fromSliceOffsetIndex(MathUtil.indexOfNthBit(markedBlocks[ci], idx)).up(chunk.getBottomY() + ci*16);
 	}
 	
+	protected int countO(int sectionIdx){
+		if(sectionIdx < 0 || sectionIdx >= count.length)
+			return 0;
+		return count[sectionIdx];
+	}
+	
 	//
 	
 	public void writeToNbt(NbtCompound tag){

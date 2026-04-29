@@ -189,7 +189,7 @@ public class NodeTypes{
 			AuraWorld.from(world).incrementFlux(world.random.nextBetween(1, 4), null, new BlockPos(node));
 		
 		if(world.random.nextInt(Arcana.CONFIG.taintConfig.taintedNodeInfestInvChance) == 0)
-			SearchUtil.randomSearch(world, node.asBlockPos(), 7, 12, (pos, state) -> !state.isAir() && InfestedChunk.from(world, pos).setInfested(pos, true));
+			SearchUtil.randomSearch(world, node.asBlockPos(), 7, 12, (pos, state) -> !state.isAir() && InfestedChunk.setInfested(world, pos, true));
 	}
 	
 	private static boolean empty(BlockState state){

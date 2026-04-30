@@ -32,7 +32,7 @@ public class InfestedChunk extends ChunkLayer implements ServerTickingComponent{
 	public static InfestedChunk from(World world, BlockPos pos){
 		if(!world.isChunkLoaded(pos.getX() >> 4, pos.getZ() >> 4))
 			return null;
-		return world.getChunk(pos).getComponent(KEY);
+		return KEY.getNullable(world.getChunk(pos));
 	}
 	
 	public static boolean isInfested(World world, BlockPos pos){

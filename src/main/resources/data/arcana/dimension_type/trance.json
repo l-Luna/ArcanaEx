@@ -1,0 +1,21 @@
+{
+  "fixed_time": 0,
+  "has_skylight": false,
+  "has_ceiling": true,
+  "natural": false,
+  "coordinate_scale": 1,
+  "bed_works": false,
+  "respawn_anchor_works": false,
+  "min_y": 0,
+  "height": 256,
+  "logical_height": 256,
+  "infiniburn": "#minecraft:infiniburn_end",
+  "ultrawarm": false,
+  // TODO: custom effects
+  "effects": "minecraft:overworld",
+  "ambient_light": 0.5,
+  "piglin_safe": true,
+  "has_raids": false,
+  "monster_spawn_light_level": 0,
+  "monster_spawn_block_light_limit": 0
+}

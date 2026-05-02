@@ -756,6 +756,7 @@ public final class ArcanaRegistry{
 	public static DefaultParticleType TAINT_BUBBLE = FabricParticleTypes.simple();
 	public static DefaultParticleType FLAME = FabricParticleTypes.simple();
 	public static DefaultParticleType LIGHTNING = FabricParticleTypes.simple();
+	public static DefaultParticleType TAINT_SPORE = FabricParticleTypes.simple();
 	
 	public static ParticleType<CubeParticleEffect> WARDING_EFFECT = FabricParticleTypes.complex(CubeParticleEffect.PARAMETERS_FACTORY);
 	public static ParticleType<CubeParticleEffect> INFESTED_EFFECT = FabricParticleTypes.complex(CubeParticleEffect.PARAMETERS_FACTORY);
@@ -1416,6 +1417,7 @@ public final class ArcanaRegistry{
 		register("taint_bubble", TAINT_BUBBLE);
 		register("flame", FLAME);
 		register("lightning", LIGHTNING);
+		register("taint_spore", TAINT_SPORE);
 		
 		register("warding_effect", WARDING_EFFECT);
 		register("infested_effect", INFESTED_EFFECT);

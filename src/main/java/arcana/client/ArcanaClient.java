@@ -255,9 +255,10 @@ public final class ArcanaClient implements ClientModInitializer{
 		RequirementRenderer.setup();
 		PuzzleRenderer.setup();
 		
-		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.TAINT_BUBBLE, spr -> new SimpleSpriteParticle.Factory(spr, 0.02f, 0, 50, 2f, true));
-		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.FLAME, spr -> new SimpleSpriteParticle.Factory(spr, 0, 0.06f, 30, 1, false));
-		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.LIGHTNING, spr -> new SimpleSpriteParticle.Factory(spr, 0, 0.04f, 40, 1, true));
+		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.TAINT_BUBBLE, spr -> new SimpleSpriteParticle.Factory(spr, 0.02f, 0).lifetime(50).scale(2).randomAngle());
+		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.FLAME, spr -> new SimpleSpriteParticle.Factory(spr, 0, 0.06f));
+		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.LIGHTNING, spr -> new SimpleSpriteParticle.Factory(spr, 0, 0.04f).lifetime(40).randomAngle());
+		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.TAINT_SPORE, spr -> new SimpleSpriteParticle.Factory(spr, 0, 0.04f).lifetime(16, 80).collidable(false).scale(0.2f, 0.8f).tint(0.8f, 0, 0.9f));
 		
 		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.WARDING_EFFECT, u -> new CubeParticle.Factory(u, 1, 1, 1));
 		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.INFESTED_EFFECT, u -> new CubeParticle.Factory(u, 0.1f, 0.1f, 0.1f));

@@ -41,6 +41,7 @@
   ],
   "client": [
     "AbstractInventoryScreenMixin",
+    "BackgroundRendererMixin",
     "ClientPlayerEntityMixin",
     "ClientRecipeBookMixin",
     "ClientWorldMixin",

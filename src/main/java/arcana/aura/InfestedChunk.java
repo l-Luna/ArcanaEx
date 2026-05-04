@@ -65,7 +65,7 @@ public class InfestedChunk extends ChunkLayer implements ServerTickingComponent{
 				}
 			}
 		}
-		return (float)acc;
+		return (float)Math.sqrt(acc);
 	}
 	
 	public boolean isInfested(BlockPos pos){

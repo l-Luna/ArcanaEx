@@ -12,12 +12,12 @@ public final class ZoneEffects{
 
 	public static Vec3d applyZoneSkyColour(Vec3d original, World world, Vec3d pos){
 		float infestedDensity = InfestedChunk.infestationDensity(world, pos);
-		return original.lerp(new Vec3d(1, 0, 1), infestedDensity);
+		return original.lerp(new Vec3d(1, 0.4, 1), infestedDensity);
 	}
 	
 	public static Vec3d applyZoneFogColour(Vec3d original, World world, Vec3d pos){
 		float infestedDensity = InfestedChunk.infestationDensity(world, pos);
-		return original.lerp(new Vec3d(0.8, 0, 0.8), infestedDensity);
+		return original.lerp(new Vec3d(0.1, 0, 0.1), infestedDensity);
 	}
 	
 	public static float applyZoneFogDensity(World world, Vec3d pos){

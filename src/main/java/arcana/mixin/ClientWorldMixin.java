@@ -1,7 +1,6 @@
 package arcana.mixin;
 
-import arcana.ArcanaRegistry;
-import arcana.aura.InfestedChunk;
+import arcana.client.ZoneEffects;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.block.Block;
 import net.minecraft.client.world.ClientWorld;
@@ -23,8 +22,7 @@ public class ClientWorldMixin{
 	                       at = @At(value = "INVOKE",
 	                                target = "Lnet/minecraft/util/CubicSampler;sampleColor(Lnet/minecraft/util/math/Vec3d;Lnet/minecraft/util/CubicSampler$RgbFetcher;)Lnet/minecraft/util/math/Vec3d;"))
 	Vec3d getSkyColor(Vec3d original, Vec3d cameraPos, float tickDelta){
-		float infestedDensity = InfestedChunk.infestationDensity((World)(Object)this, cameraPos);
-		return original.lerp(new Vec3d(1, 0, 1), infestedDensity);
+		return ZoneEffects.applyZoneSkyColour(original, (World)(Object)this, cameraPos);
 	}
 	
 	@ModifyExpressionValue(method = "randomBlockDisplayTick",
@@ -38,10 +36,6 @@ public class ClientWorldMixin{
 	                                                     Random random,
 	                                                     @Nullable Block block,
 	                                                     BlockPos.Mutable pos){
-		// `pos` has been updated to the correct position earlier in the method
-		float density = InfestedChunk.infestationDensity((World)(Object)this, Vec3d.ofCenter(pos));
-		if(random.nextFloat() <= density)
-			return Optional.of(new BiomeParticleConfig(ArcanaRegistry.TAINT_SPORE, 0.03f));
-		return original;
+		return ZoneEffects.applyZoneAmbientParticles((World)(Object)this, Vec3d.ofCenter(pos)).or(() -> original);
 	}
 }

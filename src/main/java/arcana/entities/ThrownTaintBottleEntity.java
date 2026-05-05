@@ -4,6 +4,7 @@ import arcana.ArcanaRegistry;
 import arcana.aspects.Aspects;
 import arcana.aura.AuraWorld;
 import arcana.aura.FluxOrigin;
+import arcana.aura.InfestedChunk;
 import arcana.aura.Taint;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -52,7 +53,9 @@ public class ThrownTaintBottleEntity extends ThrownItemEntity{
 			for(int tries = 0; tries < 12 && tainted < 6; tries++){
 				pos.set(getBlockPos()).move(rng.nextInt(5) - 2, rng.nextInt(3) - 1, rng.nextInt(5) - 2);
 				// don't check for pure node protection, the player has made their choice
-				if(Taint.taintBlock(world, pos))
+				boolean didTaint = Taint.taintBlock(world, pos);
+				boolean didInfest = InfestedChunk.setInfested(world, pos, true);
+				if(didTaint || didInfest)
 					tainted++;
 			}
 			

@@ -18,7 +18,7 @@ public class CheatersArcanumItem extends ResearchBookItem{
 	
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand){
 		if(!world.isClient){ // a waiver of responsibility
-			var from = Researcher.from(user);
+			Researcher from = Researcher.from(user);
 			Research.streamEntries().forEach(from::completeEntry);
 			Research.streamAddenda().forEach(from::completeAddendum);
 			from.doSync();

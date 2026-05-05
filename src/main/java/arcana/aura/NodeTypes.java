@@ -181,7 +181,7 @@ public class NodeTypes{
 			AuraWorld.from(world).incrementFlux(-world.random.nextBetween(3, 8), null, new BlockPos(node));
 		
 		if(world.random.nextInt(80) == 0)
-			SearchUtil.randomSearch(world, node.asBlockPos(), 5, 3, (pos, state) -> Taint.untaintBlock(world, pos));
+			SearchUtil.randomSearch(world, node.asBlockPos(), 5, 3, (pos, state) -> InfestedChunk.setInfested(world, pos, false) || Taint.untaintBlock(world, pos));
 	}
 	
 	private static void tickTainted(Node node, World world){

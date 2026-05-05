@@ -1,4 +1,4 @@
-package arcana.mixin;
+package arcana.mixin.zones;
 
 import arcana.client.ZoneEffects;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
@@ -19,14 +19,14 @@ public class BackgroundRendererMixin{
 	                       at = @At(value = "INVOKE",
 	                                target = "Lnet/minecraft/util/CubicSampler;sampleColor(Lnet/minecraft/util/math/Vec3d;Lnet/minecraft/util/CubicSampler$RgbFetcher;)Lnet/minecraft/util/math/Vec3d;"))
 	private static Vec3d applyZoneFogColour(Vec3d original, Camera camera, float tickDelta, ClientWorld world, int viewDistance, float skyDarkness){
-		return ZoneEffects.applyZoneFogColour(original, world, camera.getPos());
+		return ZoneEffects.fogColour(original, world, camera.getPos());
 	}
 	
 	@Inject(method = "applyFog",
 	        at = @At("TAIL"))
 	private static void applyZoneFogDensity(Camera camera, BackgroundRenderer.FogType fogType, float viewDistance, boolean thickFog, float tickDelta, CallbackInfo ci){
 		if(camera.getFocusedEntity() != null){
-			float density = ZoneEffects.applyZoneFogDensity(camera.getFocusedEntity().world, camera.getPos());
+			float density = ZoneEffects.fogDensity(camera.getFocusedEntity().world, camera.getPos());
 			RenderSystem.setShaderFogStart(RenderSystem.getShaderFogStart() * density);
 			RenderSystem.setShaderFogEnd(RenderSystem.getShaderFogEnd() * density);
 		}

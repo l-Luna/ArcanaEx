@@ -1,4 +1,4 @@
-package arcana.mixin;
+package arcana.mixin.zones;
 
 import arcana.client.ZoneEffects;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
@@ -22,7 +22,7 @@ public class ClientWorldMixin{
 	                       at = @At(value = "INVOKE",
 	                                target = "Lnet/minecraft/util/CubicSampler;sampleColor(Lnet/minecraft/util/math/Vec3d;Lnet/minecraft/util/CubicSampler$RgbFetcher;)Lnet/minecraft/util/math/Vec3d;"))
 	Vec3d getSkyColor(Vec3d original, Vec3d cameraPos, float tickDelta){
-		return ZoneEffects.applyZoneSkyColour(original, (World)(Object)this, cameraPos);
+		return ZoneEffects.skyColour(original, (World)(Object)this, cameraPos);
 	}
 	
 	@ModifyExpressionValue(method = "randomBlockDisplayTick",
@@ -36,6 +36,6 @@ public class ClientWorldMixin{
 	                                                     Random random,
 	                                                     @Nullable Block block,
 	                                                     BlockPos.Mutable pos){
-		return ZoneEffects.applyZoneAmbientParticles((World)(Object)this, Vec3d.ofCenter(pos)).or(() -> original);
+		return ZoneEffects.ambientParticles((World)(Object)this, Vec3d.ofCenter(pos)).or(() -> original);
 	}
 }

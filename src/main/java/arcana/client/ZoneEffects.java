@@ -10,22 +10,29 @@ import java.util.Optional;
 
 public final class ZoneEffects{
 
-	public static Vec3d applyZoneSkyColour(Vec3d original, World world, Vec3d pos){
+	// TODO: cache density per tick/frame
+	
+	public static Vec3d skyColour(Vec3d original, World world, Vec3d pos){
 		float infestedDensity = InfestedChunk.infestationDensity(world, pos);
 		return original.lerp(new Vec3d(1, 0.4, 1), infestedDensity);
 	}
 	
-	public static Vec3d applyZoneFogColour(Vec3d original, World world, Vec3d pos){
+	public static Vec3d fogColour(Vec3d original, World world, Vec3d pos){
 		float infestedDensity = InfestedChunk.infestationDensity(world, pos);
 		return original.lerp(new Vec3d(0.1, 0, 0.1), infestedDensity);
 	}
 	
-	public static float applyZoneFogDensity(World world, Vec3d pos){
+	public static float fogDensity(World world, Vec3d pos){
 		float infestedDensity = InfestedChunk.infestationDensity(world, pos);
 		return (1 - infestedDensity) * 0.9f + 0.1f;
 	}
 	
-	public static Optional<BiomeParticleConfig> applyZoneAmbientParticles(World world, Vec3d pos){
+	public static float lightModifier(World world, Vec3d pos){
+		float infestedDensity = InfestedChunk.infestationDensity(world, pos);
+		return infestedDensity * -0.15f;
+	}
+	
+	public static Optional<BiomeParticleConfig> ambientParticles(World world, Vec3d pos){
 		float density = InfestedChunk.infestationDensity(world, pos);
 		if(world.random.nextFloat() <= density)
 			return Optional.of(new BiomeParticleConfig(ArcanaRegistry.TAINT_SPORE, 0.03f));

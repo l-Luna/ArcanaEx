@@ -41,10 +41,8 @@
   ],
   "client": [
     "AbstractInventoryScreenMixin",
-    "BackgroundRendererMixin",
     "ClientPlayerEntityMixin",
     "ClientRecipeBookMixin",
-    "ClientWorldMixin",
     "GameRendererMixin",
     "HeldItemRendererMixin",
     "InGameHudMixin",
@@ -54,7 +52,10 @@
     "ScreenMixin",
     "accessor.JsonUnbakedModelAccessor",
     "warding.DebugHudMixin",
-    "warding.ParticleManagerMixin"
+    "warding.ParticleManagerMixin",
+    "zones.BackgroundRendererMixin",
+    "zones.ClientWorldMixin",
+    "zones.LightmapTextureManagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

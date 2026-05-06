@@ -4,6 +4,7 @@ import arcana.duck.ProjectedBlockHitResult;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.*;
 import org.jetbrains.annotations.NotNull;
@@ -11,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 public final class PlaneProjectionRenderer{
 	
 	public static void renderPlaneProjection(WorldRenderContext ctx, HitResult hit){
-		if(!(hit instanceof ProjectedBlockHitResult pbhr))
+		if(!(hit instanceof ProjectedBlockHitResult pbhr) || !(ctx.camera().getFocusedEntity() instanceof PlayerEntity pe && !pe.isSpectator()))
 			return;
 		
 		VertexConsumer vc = ctx.consumers().getBuffer(RenderLayer.getLines());

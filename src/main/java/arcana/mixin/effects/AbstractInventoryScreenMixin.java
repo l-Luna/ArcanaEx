@@ -1,4 +1,4 @@
-package arcana.mixin;
+package arcana.mixin.effects;
 
 import arcana.client.ArcanaClient;
 import arcana.effects.PressureStatusEffect;

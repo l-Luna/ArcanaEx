@@ -1,4 +1,4 @@
-package arcana.mixin;
+package arcana.mixin.recipes;
 
 import arcana.Arcana;
 import net.minecraft.block.entity.AbstractFurnaceBlockEntity;

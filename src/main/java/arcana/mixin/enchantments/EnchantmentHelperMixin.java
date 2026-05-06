@@ -1,4 +1,4 @@
-package arcana.mixin;
+package arcana.mixin.enchantments;
 
 import arcana.ArcanaRegistry;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;

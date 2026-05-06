@@ -1,4 +1,4 @@
-package arcana.mixin;
+package arcana.mixin.effects;
 
 import arcana.effects.SetBonusStatusEffect;
 import net.fabricmc.api.EnvType;

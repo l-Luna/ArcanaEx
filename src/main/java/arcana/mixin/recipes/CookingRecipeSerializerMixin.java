@@ -1,4 +1,4 @@
-package arcana.mixin;
+package arcana.mixin.recipes;
 
 import com.google.gson.JsonObject;
 import net.minecraft.recipe.AbstractCookingRecipe;

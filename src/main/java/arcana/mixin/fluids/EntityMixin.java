@@ -1,4 +1,4 @@
-package arcana.mixin;
+package arcana.mixin.fluids;
 
 import arcana.ArcanaRegistry;
 import arcana.duck.ArcanaFluidEntity;

@@ -1,4 +1,4 @@
-package arcana.mixin;
+package arcana.mixin.recipes;
 
 import arcana.recipes.ArcanaRecipe;
 import net.minecraft.client.recipebook.ClientRecipeBook;

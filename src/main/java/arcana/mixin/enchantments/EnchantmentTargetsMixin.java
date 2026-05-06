@@ -1,4 +1,4 @@
-package arcana.mixin;
+package arcana.mixin.enchantments;
 
 import arcana.items.ScalpelItem;
 import net.minecraft.item.Item;

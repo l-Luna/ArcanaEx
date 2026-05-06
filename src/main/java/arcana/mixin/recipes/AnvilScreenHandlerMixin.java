@@ -1,4 +1,4 @@
-package arcana.mixin;
+package arcana.mixin.recipes;
 
 import arcana.ArcanaRegistry;
 import arcana.recipes.VoidPuttyRepairRecipe;

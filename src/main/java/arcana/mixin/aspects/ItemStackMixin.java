@@ -1,4 +1,4 @@
-package arcana.mixin;
+package arcana.mixin.aspects;
 
 import arcana.ArcanaRegistry;
 import arcana.aspects.AspectMap;

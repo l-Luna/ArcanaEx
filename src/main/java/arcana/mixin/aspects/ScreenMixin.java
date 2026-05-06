@@ -1,4 +1,4 @@
-package arcana.mixin;
+package arcana.mixin.aspects;
 
 import arcana.client.tooltip.PinkMarkerComponent;
 import net.minecraft.client.gui.screen.Screen;

@@ -1,4 +1,4 @@
-package arcana.mixin.brewing;
+package arcana.mixin.recipes;
 
 import arcana.ArcanaRegistry;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;

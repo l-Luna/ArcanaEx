@@ -4,64 +4,92 @@ import arcana.ReflectivelyUtilized;
 import arcana.items.FocusItem;
 import arcana.items.FocusPouchItem;
 import arcana.items.WandItem;
+import arcana.util.ArrayInventory;
 import com.unascribed.lib39.tunnel.api.C2SMessage;
 import com.unascribed.lib39.tunnel.api.NetworkContext;
-import com.unascribed.lib39.tunnel.api.annotation.field.MarshalledAs;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventory;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.StackReference;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.Hand;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PkSwapFocus extends C2SMessage{
 	
-	Hand hand;
-	
-	// would be varint, but -1 is valid
-	@MarshalledAs("int32")
-	int focusIdx;
-	@MarshalledAs("int32")
-	int pouchIdx;
+	boolean fwd;
 	
 	@ReflectivelyUtilized
 	public PkSwapFocus(NetworkContext ctx){
 		super(ctx);
 	}
 	
-	public PkSwapFocus(Hand hand, int focusIdx, int pouchIdx){
+	public PkSwapFocus(boolean fwd){
 		super(Networking.context);
-		this.hand = hand;
-		this.focusIdx = focusIdx;
-		this.pouchIdx = pouchIdx;
+		this.fwd = fwd;
 	}
 	
 	protected void handle(ServerPlayerEntity player){
-		ItemStack wandStack = player.getStackInHand(hand);
-		if(wandStack.getItem() instanceof WandItem){
-			Inventory target = player.getInventory();
-			if(pouchIdx >= 0){
-				ItemStack pouchStack = player.getInventory().getStack(pouchIdx);
-				if(pouchStack.getItem() instanceof FocusPouchItem)
-					target = FocusPouchItem.inventoryFrom(pouchStack);
-			}
-			insertStack(WandItem.focusFrom(wandStack), target, player);
-			WandItem.putFocus(wandStack, ItemStack.EMPTY);
-			if(focusIdx >= 0){
-				ItemStack candFocusStack = target.getStack(focusIdx);
-				if(candFocusStack.getItem() instanceof FocusItem){
-					WandItem.putFocus(wandStack, candFocusStack);
-					target.setStack(focusIdx, ItemStack.EMPTY);
-				}
+		ItemStack wandStack;
+		ItemStack mainHand = player.getMainHandStack(), offHand = player.getOffHandStack();
+		if((!((wandStack = mainHand).getItem() instanceof WandItem) && !((wandStack = offHand).getItem() instanceof WandItem)))
+			return;
+		
+		go(player, fwd, wandStack);
+	}
+	
+	public static void go(PlayerEntity player, boolean fwd, ItemStack wandStack){
+		List<StackReference> storage = new ArrayList<>();
+		List<StackReference> quickAccess = new ArrayList<>();
+		gatherFoci(player, storage, quickAccess);
+		if(!quickAccess.isEmpty()){
+			// TODO: focus pouch hotbar swapping
+		}else if(!storage.isEmpty()){
+			// TODO: and this is kind of silly
+			ItemStack old = WandItem.focusFrom(wandStack);
+			int last = storage.size() - 1;
+			if(fwd){
+				WandItem.putFocus(wandStack, storage.get(0).get());
+				for(int i = 0; i < last; i++)
+					storage.get(i).set(storage.get(i + 1).get());
+				storage.get(last).set(old);
+			}else{
+				WandItem.putFocus(wandStack, storage.get(last).get());
+				for(int i = last; i > 0; i--)
+					storage.get(i).set(storage.get(i - 1).get());
+				storage.get(0).set(old);
 			}
 		}
 	}
 	
-	private static void insertStack(ItemStack stack, Inventory inventory, PlayerEntity player){
-		for(int i = 0; i < inventory.size(); i++)
-			if(inventory.getStack(i).isEmpty()){
-				inventory.setStack(i, stack);
-				return;
+	public static void gatherFoci(PlayerEntity player, List<StackReference> storage, List<StackReference> quickAccess){
+		PlayerInventory playerInv = player.getInventory();
+		for(int i = 0; i < playerInv.size(); i++){
+			ItemStack stack = playerInv.getStack(i);
+			if(stack.getItem() instanceof FocusItem)
+				storage.add(StackReference.of(playerInv, i));
+			else if(stack.getItem() instanceof FocusPouchItem){
+				ArrayInventory pouchInv = FocusPouchItem.inventoryFrom(stack);
+				for(int j = 0; j < pouchInv.size(); j++){
+					int finalIdx = j;
+					if(!pouchInv.getStack(j).isEmpty()){
+						List<StackReference> target = j < 9 ? quickAccess : storage;
+						// TODO: generify? `ItemStackInventorySlotReference` is a bit wordy
+						target.add(new StackReference(){
+							public ItemStack get(){
+								return pouchInv.getStack(finalIdx);
+							}
+							
+							public boolean set(ItemStack newStack){
+								pouchInv.setStack(finalIdx, newStack);
+								FocusPouchItem.setInventory(stack, pouchInv);
+								return true;
+							}
+						});
+					}
+				}
 			}
-		player.giveItemStack(stack);
+		}
 	}
 }

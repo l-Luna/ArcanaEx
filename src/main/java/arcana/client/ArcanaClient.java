@@ -111,8 +111,8 @@ public final class ArcanaClient implements ClientModInitializer{
 			PlaneProjectionRenderer.renderPlaneProjection(ctx1, hit);
 			return true;
 		});
-		HudRenderCallback.EVENT.register(HudRenderer::renderHud);
 		HudRenderCallback.EVENT.register(FocusSwitcherRenderer::renderHud);
+		HudRenderCallback.EVENT.register(HudRenderer::renderHud);
 		HudRenderCallback.EVENT.register(RunicShieldingRenderer::renderOverlay);
 		ClientTickEvents.START_CLIENT_TICK.register(FocusSwitcherRenderer::tick);
 		

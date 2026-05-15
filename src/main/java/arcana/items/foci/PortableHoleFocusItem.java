@@ -52,7 +52,8 @@ public class PortableHoleFocusItem extends FocusItem{
 					BlockState state = world.getBlockState(local);
 					if(!state.isAir())
 						didPhase = true;
-					world.phaseBlock(local, 100, 20 * z);
+					if(state.getHardness(world, local) != -1)
+						world.phaseBlock(local, 100, 20 * z);
 				}
 			}
 			

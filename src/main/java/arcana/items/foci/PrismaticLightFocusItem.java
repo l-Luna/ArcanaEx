@@ -16,7 +16,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
 import java.util.UUID;
 
 public class PrismaticLightFocusItem extends FocusItem{
@@ -29,8 +28,8 @@ public class PrismaticLightFocusItem extends FocusItem{
 		return player.getEyePos().add(MathUtil.facingToVec(player).multiply(2));
 	}
 	
-	public AspectMap centiCastCost(@Nullable ItemStack wand, ItemStack focus, PlayerEntity user){
-		return AspectMap.fromAspectStacks(List.of(new AspectStack(Aspects.FIRE, 7), new AspectStack(Aspects.AIR, 7)));
+	public AspectMap deciCastCost(@Nullable ItemStack wand, ItemStack focus, PlayerEntity user){
+		return AspectMap.fromAspectStacks(new AspectStack(Aspects.FIRE, 7), new AspectStack(Aspects.AIR, 7));
 	}
 	
 	public boolean isContinuous(){

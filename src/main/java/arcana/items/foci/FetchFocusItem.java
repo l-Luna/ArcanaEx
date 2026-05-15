@@ -1,5 +1,8 @@
 package arcana.items.foci;
 
+import arcana.aspects.AspectMap;
+import arcana.aspects.AspectStack;
+import arcana.aspects.Aspects;
 import arcana.items.FocusItem;
 import arcana.network.PkPickupItem;
 import net.minecraft.entity.Entity;
@@ -17,11 +20,16 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 public class FetchFocusItem extends FocusItem{
 	
 	public FetchFocusItem(Settings settings){
 		super(settings);
+	}
+	
+	public AspectMap deciCastCost(@Nullable ItemStack wand, ItemStack focus, PlayerEntity user){
+		return AspectMap.fromAspectStacks(new AspectStack(Aspects.AIR, 5));
 	}
 	
 	public boolean isContinuous(){
@@ -31,6 +39,12 @@ public class FetchFocusItem extends FocusItem{
 	public void tickContinuousCast(ContinuousCastContext ccc){
 		PlayerEntity user = ccc.user;
 		World world = user.world;
+		
+		if(world.getTime() % 10 == 0 && !ccc.requestDrainDeci(AspectMap.fromAspectStacks(new AspectStack(Aspects.AIR, 2)))){
+			ccc.stop();
+			return;
+		}
+		
 		Vec3d from = user.getEyePos();
 		Vec3d to = from.add(user.getRotationVector().multiply(40));
 		BlockHitResult blockRaycast = world.raycast(new RaycastContext(from, to, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, user));

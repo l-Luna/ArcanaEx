@@ -25,19 +25,17 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 
-import java.util.List;
-
 public class FireFocusItem extends FocusItem{
 	
 	public FireFocusItem(Settings settings){
 		super(settings);
 	}
 	
-	public AspectMap centiCastCost(ItemStack wand, ItemStack focus, PlayerEntity user){
+	public AspectMap deciCastCost(ItemStack wand, ItemStack focus, PlayerEntity user){
 		// TODO: check player reach
 		BlockState looking = user.world.getBlockState(((BlockHitResult)user.raycast(5.5, 0, false)).getBlockPos());
 		if(WardedCampfireBlock.canBeLit(looking) || CrimsonCampfireBlock.canBeLit(looking))
-			return AspectMap.fromAspectStacks(List.of(new AspectStack(Aspects.ORDER, 100), new AspectStack(Aspects.FIRE, 100)));
+			return AspectMap.fromAspectStacks(new AspectStack(Aspects.ORDER, 100), new AspectStack(Aspects.FIRE, 100));
 		return AspectMap.fromAspectStack(new AspectStack(Aspects.FIRE, 3));
 	}
 	

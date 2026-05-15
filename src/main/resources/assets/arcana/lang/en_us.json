@@ -652,7 +652,8 @@
     "wand": {
       "focus_cost": {
         "total": "Cost: {}",
-        "individual": "{}x {} "
+        "individual": "{}x {} ",
+        "empty": "N/A"
       },
       "discount": {
         "all": "{}% vis discount",

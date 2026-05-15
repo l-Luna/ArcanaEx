@@ -149,17 +149,17 @@ public record AspectMap(Map<Aspect, Integer> underlying) implements Iterable<Asp
 		return new AspectMap(map);
 	}
 	
-	public static AspectMap fromAspectStacks(List<AspectStack> stacks){
+	public static AspectMap fromAspectStacks(AspectStack... stacks){
 		if(stacks == null)
 			return new AspectMap();
-		AspectMap map = new AspectMap(new LinkedHashMap<>(stacks.size()));
+		AspectMap map = new AspectMap(new LinkedHashMap<>(stacks.length));
 		for(AspectStack stack : stacks)
 			map.add(stack);
 		return map;
 	}
 	
 	public static AspectMap fromAspectStack(AspectStack stack){
-		return fromAspectStacks(List.of(stack));
+		return fromAspectStacks(stack);
 	}
 	
 	public AspectMap copy(){

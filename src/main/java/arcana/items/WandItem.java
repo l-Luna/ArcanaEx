@@ -240,7 +240,9 @@ public class WandItem extends Item implements FabricItem, WarpingItem{
 		for(Aspect aspect : map.underlying().aspectSet())
 			costs.append(Text.translatable("tooltip.arcana.wand.focus_cost.individual", map.get(aspect), aspect.name())
 					.formatted(ArcanaClient.colourForPrimal(aspect)));
-		return Text.translatable("tooltip.arcana.wand.focus_cost.total", costs);
+		if(map.underlying().isEmpty())
+			costs.append(Text.translatable("tooltip.arcana.wand.focus_cost.empty").formatted(Formatting.GRAY));
+		return Text.translatable("tooltip.arcana.wand.focus_cost.total", costs).formatted(Formatting.GRAY);
 	}
 	
 	public boolean allowNbtUpdateAnimation(PlayerEntity player, Hand hand, ItemStack oldStack, ItemStack newStack){

@@ -1,7 +1,7 @@
 package arcana.api;
 
+import arcana.aspects.Aspect;
 import arcana.aspects.AspectMap;
-import arcana.aspects.AspectStack;
 import arcana.aspects.ScaledAspectMap;
 import arcana.items.WandItem;
 import net.minecraft.entity.LivingEntity;
@@ -20,10 +20,10 @@ public interface Focus{
 	// TODO: could be enforced better?
 	
 	default ScaledAspectMap castCost(@Nullable ItemStack wand, ItemStack focus, PlayerEntity user){
-		return new ScaledAspectMap(centiCastCost(wand, focus, user), 0.1f);
+		return new ScaledAspectMap(deciCastCost(wand, focus, user), 0.1f);
 	}
 	
-	AspectMap centiCastCost(@Nullable ItemStack wand, ItemStack focus, PlayerEntity user);
+	AspectMap deciCastCost(@Nullable ItemStack wand, ItemStack focus, PlayerEntity user);
 	
 	default ActionResult castOnBlock(ItemUsageContext ctx){
 		return ActionResult.PASS;
@@ -58,7 +58,11 @@ public interface Focus{
 			this.castTime = castTime;
 		}
 		
-		public boolean requestDrain(AspectMap required){
+		public boolean requestDrainDeci(AspectMap required){
+			return requestDrain(new ScaledAspectMap(required, 0.1f));
+		}
+		
+		public boolean requestDrain(ScaledAspectMap required){
 			if(WandItem.aspectsFrom(wand).contains(required)){
 				WandItem.updateAspects(wand, stored -> stored.take(required));
 				return true;
@@ -66,10 +70,14 @@ public interface Focus{
 			return false;
 		}
 		
-		public void recharge(AspectMap added){
+		public void rechargeDeci(AspectMap added){
+			recharge(new ScaledAspectMap(added, 0.1f));
+		}
+		
+		public void recharge(ScaledAspectMap added){
 			WandItem.updateAspects(wand, stored -> {
-				for(AspectStack stack : added.asStacks())
-					stored.addCapped(stack, WandItem.capacity(wand));
+				for(Aspect aspect : added.underlying().aspectSet())
+					stored.addCapped(aspect, added.get(aspect), WandItem.capacity(wand));
 			});
 		}
 		

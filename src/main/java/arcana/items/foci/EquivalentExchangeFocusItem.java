@@ -23,7 +23,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
 import java.util.Map;
 
 public class EquivalentExchangeFocusItem extends FocusItem{
@@ -41,11 +40,16 @@ public class EquivalentExchangeFocusItem extends FocusItem{
 		super(settings);
 	}
 	
-	public AspectMap centiCastCost(@Nullable ItemStack wand, ItemStack focus, PlayerEntity user){
-		// (0.1 order, 0.1 entropy) * mining level, min 1
-		BlockState looking = user.world.getBlockState(((BlockHitResult)user.raycast(5.5, 0, false)).getBlockPos());
-		int amount = Math.max(1, MiningLevelManager.getRequiredMiningLevel(looking));
-		return AspectMap.fromAspectStacks(List.of(new AspectStack(Aspects.ORDER, amount), new AspectStack(Aspects.ENTROPY, amount)));
+	public AspectMap deciCastCost(@Nullable ItemStack wand, ItemStack focus, PlayerEntity user){
+		// (0.7 order, 0.7 entropy) * mining level + (0.1, 0.1)
+		// "requires a tool" increases the mining level to 1
+		BlockPos pos = ((BlockHitResult)user.raycast(5.5, 0, false)).getBlockPos();
+		BlockState looking = user.world.getBlockState(pos);
+		int amount = Math.max(looking.isToolRequired() ? 1 : 0, MiningLevelManager.getRequiredMiningLevel(looking) + 1) * 7 + 1;
+		// for display purposes
+		if(looking.getHardness(user.world, pos) == -1)
+			amount = 100000;
+		return AspectMap.fromAspectStacks(new AspectStack(Aspects.ORDER, amount), new AspectStack(Aspects.ENTROPY, amount));
 	}
 	
 	public ActionResult castOnBlock(ItemUsageContext ctx){
@@ -63,7 +67,7 @@ public class EquivalentExchangeFocusItem extends FocusItem{
 			
 			if(toPlace.canPlaceAt(world, pos)){
 				BlockState old = world.getBlockState(pos);
-				if(!toPlace.equals(old)){
+				if(old.getHardness(world, pos) != -1 && !toPlace.equals(old)){
 					if(ctx.getWorld() instanceof ServerWorld){
 						boolean changed = false;
 						for(ItemStack stack : old.getDroppedStacks(swapContext(ctx, old)))

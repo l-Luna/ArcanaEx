@@ -6,11 +6,19 @@ import arcana.aspects.AspectMap;
 import arcana.aspects.Aspects;
 import arcana.items.FocusItem;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.sound.SoundEvents;
+import org.jetbrains.annotations.Nullable;
 
 public class CrystalCapacitorFocusItem extends FocusItem{
 	
 	public CrystalCapacitorFocusItem(Settings settings){
 		super(settings);
+	}
+	
+	public AspectMap deciCastCost(@Nullable ItemStack wand, ItemStack focus, PlayerEntity user){
+		return new AspectMap();
 	}
 	
 	public boolean isContinuous(){
@@ -22,8 +30,9 @@ public class CrystalCapacitorFocusItem extends FocusItem{
 			ccc.stop();
 			AspectMap recharge = new AspectMap();
 			for(Aspect primal : Aspects.primals)
-				recharge.add(primal, ccc.user.world.random.nextBetween(5, 8));
-			ccc.recharge(recharge);
+				recharge.add(primal, ccc.user.world.random.nextBetween(50, 88));
+			ccc.user.playSound(SoundEvents.BLOCK_AMETHYST_BLOCK_BREAK, 0.7f, 1.2f);
+			ccc.rechargeDeci(recharge);
 			ccc.user.addStatusEffect(new StatusEffectInstance(ArcanaRegistry.ARCANE_DISCHARGE, 30, 0, true, true));
 			ccc.focus.damage(1, ccc.user, p -> p.sendToolBreakStatus(ccc.user.getActiveHand()));
 		}

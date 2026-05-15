@@ -5,6 +5,7 @@ import arcana.api.Focus;
 import arcana.aspects.Aspect;
 import arcana.aspects.AspectMap;
 import arcana.aspects.Aspects;
+import arcana.aspects.ScaledAspectMap;
 import arcana.aura.AuraWorld;
 import arcana.aura.Node;
 import arcana.aura.NodeReference;
@@ -148,7 +149,8 @@ public class Caster implements Component, AutoSyncedComponent, ServerTickingComp
 				
 				// re-randomise time and draw the next aspect (if not -1)
 				Random rng = world().random;
-				AspectMap wandAspects = WandItem.aspectsFrom(wand), nodeAspects = node.getAspects();
+				ScaledAspectMap wandAspects = WandItem.aspectsFrom(wand);
+				AspectMap nodeAspects = node.getAspects();
 				if(!nodeAspects.contains(drainTargetAspect)){
 					// if in a stuck state, reroll until we aren't
 					chooseDrainAspect(node, wand).ifPresent(value -> drainTargetAspect = value);
@@ -161,11 +163,11 @@ public class Caster implements Component, AutoSyncedComponent, ServerTickingComp
 						int aspectDrainAmount = 3 + rng.nextInt(3);
 						int wandCapacity = WandItem.capacity(wand);
 						
-						int capacityLeft = wandCapacity - wandAspects.get(drainTargetAspect);
+						float capacityLeft = wandCapacity - wandAspects.get(drainTargetAspect);
 						if(capacityLeft < 0)
 							capacityLeft = 0;
-						int realDrainAmount = Math.min(Math.min(nodeAspects.get(drainTargetAspect), aspectDrainAmount), capacityLeft);
-						nodeAspects.take(drainTargetAspect, realDrainAmount);
+						float realDrainAmount = Math.min(Math.min(nodeAspects.get(drainTargetAspect), aspectDrainAmount), capacityLeft);
+						nodeAspects.take(drainTargetAspect, (int)Math.ceil(realDrainAmount));
 						WandItem.updateAspects(wand, map -> map.addCapped(drainTargetAspect, realDrainAmount, wandCapacity));
 						// if the node is out of aspects to draw, stay in this state on the old aspect
 						chooseDrainAspect(node, wand).ifPresent(value -> drainTargetAspect = value);
@@ -204,7 +206,7 @@ public class Caster implements Component, AutoSyncedComponent, ServerTickingComp
 				if(focusStack.getItem() instanceof FocusItem fi && fi.isContinuous()){
 					var ccc = new Focus.ContinuousCastContext(wand, focusStack, player, contFocusState, stateTimer);
 					if(stateTimer == 0){
-						var cost = fi.castCost(wand, focusStack, player).copy();
+						var cost = fi.castCost(wand, focusStack, player);
 						cost.multiply(aspect -> WandItem.costMultiplier(aspect, wand, player));
 						if(WandItem.aspectsFrom(wand).contains(cost)){
 							WandItem.updateAspects(wand, aspects -> aspects.take(cost));
@@ -232,7 +234,7 @@ public class Caster implements Component, AutoSyncedComponent, ServerTickingComp
 	//
  
 	private Optional<Aspect> chooseDrainAspect(Node from, ItemStack wand){
-		AspectMap wandAspects = WandItem.aspectsFrom(wand);
+		ScaledAspectMap wandAspects = WandItem.aspectsFrom(wand);
 		List<Aspect> candidateAspects = new ArrayList<>(from.getAspects().aspectSet());
 		candidateAspects.removeIf(x -> !Aspects.primals.contains(x));
 		candidateAspects.removeIf(x -> wandAspects.get(x) >= WandItem.capacity(wand));

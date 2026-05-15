@@ -1,8 +1,8 @@
 package arcana.client.tooltip;
 
 import arcana.aspects.Aspect;
-import arcana.aspects.AspectMap;
 import arcana.aspects.Aspects;
+import arcana.aspects.ScaledAspectMap;
 import arcana.client.AspectRenderHelper;
 import arcana.items.WandItem;
 import net.minecraft.client.font.TextRenderer;
@@ -24,7 +24,7 @@ public record WandAspectsTooltipComponent(ItemStack wand) implements TooltipComp
 	}
 	
 	public void drawItems(TextRenderer text, int x, int y, MatrixStack matrices, ItemRenderer itemRenderer, int z){
-		AspectMap aspects = WandItem.aspectsFrom(wand);
+		ScaledAspectMap aspects = WandItem.aspectsFrom(wand);
 		List<Aspect> primals = Aspects.primals;
 		for(int i = 0; i < primals.size(); i++){
 			Aspect primal = primals.get(i);

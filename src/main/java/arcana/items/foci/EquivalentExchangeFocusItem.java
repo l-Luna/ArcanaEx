@@ -41,8 +41,8 @@ public class EquivalentExchangeFocusItem extends FocusItem{
 		super(settings);
 	}
 	
-	public AspectMap castCost(@Nullable ItemStack wand, ItemStack focus, PlayerEntity user){
-		// (1 order, 1 entropy) * mining level, min 1
+	public AspectMap centiCastCost(@Nullable ItemStack wand, ItemStack focus, PlayerEntity user){
+		// (0.1 order, 0.1 entropy) * mining level, min 1
 		BlockState looking = user.world.getBlockState(((BlockHitResult)user.raycast(5.5, 0, false)).getBlockPos());
 		int amount = Math.max(1, MiningLevelManager.getRequiredMiningLevel(looking));
 		return AspectMap.fromAspectStacks(List.of(new AspectStack(Aspects.ORDER, amount), new AspectStack(Aspects.ENTROPY, amount)));

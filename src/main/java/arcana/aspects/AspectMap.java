@@ -8,6 +8,10 @@ import org.jetbrains.annotations.NotNull;
 import java.util.*;
 import java.util.function.Function;
 
+/**
+ * Represents a quantity of aspects. The physical meaning of aspects is left undefined and varies
+ * (e.g. essentia in a jar, impure essentia in a crucible, vis in a node).
+ */
 public record AspectMap(Map<Aspect, Integer> underlying) implements Iterable<AspectStack>, Marshallable{
 	
 	public AspectMap(){

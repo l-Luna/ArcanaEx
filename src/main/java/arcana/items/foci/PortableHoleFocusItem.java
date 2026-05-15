@@ -24,8 +24,8 @@ public class PortableHoleFocusItem extends FocusItem{
 		super(settings);
 	}
 	
-	public AspectMap castCost(@Nullable ItemStack wand, ItemStack focus, PlayerEntity user){
-		return AspectMap.fromAspectStacks(List.of(new AspectStack(Aspects.ENTROPY, 6), new AspectStack(Aspects.ORDER, 2)));
+	public AspectMap centiCastCost(@Nullable ItemStack wand, ItemStack focus, PlayerEntity user){
+		return AspectMap.fromAspectStacks(List.of(new AspectStack(Aspects.ENTROPY, 100), new AspectStack(Aspects.ORDER, 55)));
 	}
 	
 	public ActionResult castOnBlock(ItemUsageContext ctx){

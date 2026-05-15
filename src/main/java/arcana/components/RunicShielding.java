@@ -120,7 +120,7 @@ public class RunicShielding implements Component, AutoSyncedComponent, ServerTic
 			if(player.world.getTime() % 6 == 0 && InventoryUtil.hasTrinket(player, ArcanaRegistry.RING_OF_THE_SURGING_BARRIER)){
 				ItemStack bestWand = InventoryUtil.streamInventory(player.getInventory())
 						.filter(x -> x.getItem() instanceof WandItem)
-						.max(Comparator.comparingInt(x -> WandItem.aspectsFrom(x).get(Aspects.EARTH)))
+						.max(Comparator.comparing(x -> WandItem.aspectsFrom(x).get(Aspects.EARTH)))
 						.orElse(null);
 				if(bestWand != null && WandItem.aspectsFrom(bestWand).get(Aspects.EARTH) > 0){
 					WandItem.updateAspects(bestWand, x -> x.take(Aspects.EARTH, 1));

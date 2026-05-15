@@ -24,8 +24,8 @@ public class LightFocusItem extends FocusItem{
 		super(settings);
 	}
 	
-	public AspectMap castCost(@Nullable ItemStack wand, ItemStack focus, PlayerEntity user){
-		return AspectMap.fromAspectStacks(List.of(new AspectStack(Aspects.AIR, 3), new AspectStack(Aspects.FIRE, 3)));
+	public AspectMap centiCastCost(@Nullable ItemStack wand, ItemStack focus, PlayerEntity user){
+		return AspectMap.fromAspectStacks(List.of(new AspectStack(Aspects.AIR, 2), new AspectStack(Aspects.FIRE, 2)));
 	}
 	
 	public ActionResult castOnBlock(ItemUsageContext ctx){

@@ -29,8 +29,8 @@ public class PrismaticLightFocusItem extends FocusItem{
 		return player.getEyePos().add(MathUtil.facingToVec(player).multiply(2));
 	}
 	
-	public AspectMap castCost(@Nullable ItemStack wand, ItemStack focus, PlayerEntity user){
-		return AspectMap.fromAspectStacks(List.of(new AspectStack(Aspects.FIRE, 4), new AspectStack(Aspects.AIR, 1)));
+	public AspectMap centiCastCost(@Nullable ItemStack wand, ItemStack focus, PlayerEntity user){
+		return AspectMap.fromAspectStacks(List.of(new AspectStack(Aspects.FIRE, 7), new AspectStack(Aspects.AIR, 7)));
 	}
 	
 	public boolean isContinuous(){

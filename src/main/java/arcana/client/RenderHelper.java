@@ -261,6 +261,9 @@ public class RenderHelper{
 				if(ch == '%'){
 					u = 0;
 					v = 10;
+				}else if(ch == '.'){
+					u = 3;
+					v = 10;
 				}
 				drawTexture(matrices, xx, yy, p * 0.03f, u, v, 3, 5, 16, 16, 1, 1, 1, 1);
 				xx += 4;

@@ -33,11 +33,11 @@ public class FireFocusItem extends FocusItem{
 		super(settings);
 	}
 	
-	public AspectMap castCost(ItemStack wand, ItemStack focus, PlayerEntity user){
+	public AspectMap centiCastCost(ItemStack wand, ItemStack focus, PlayerEntity user){
 		// TODO: check player reach
 		BlockState looking = user.world.getBlockState(((BlockHitResult)user.raycast(5.5, 0, false)).getBlockPos());
 		if(WardedCampfireBlock.canBeLit(looking) || CrimsonCampfireBlock.canBeLit(looking))
-			return AspectMap.fromAspectStacks(List.of(new AspectStack(Aspects.ORDER, 20), new AspectStack(Aspects.FIRE, 20)));
+			return AspectMap.fromAspectStacks(List.of(new AspectStack(Aspects.ORDER, 100), new AspectStack(Aspects.FIRE, 100)));
 		return AspectMap.fromAspectStack(new AspectStack(Aspects.FIRE, 3));
 	}
 	

@@ -5,6 +5,7 @@ import arcana.api.ContextCraftedItem;
 import arcana.aspects.Aspect;
 import arcana.aspects.AspectMap;
 import arcana.aspects.Aspects;
+import arcana.aspects.ScaledAspectMap;
 import arcana.client.AspectRenderHelper;
 import arcana.items.WandItem;
 import arcana.recipes.ShapedArcaneCraftingRecipe;
@@ -80,7 +81,7 @@ public class ArcaneCraftingScreen extends HandledScreen<ArcaneCraftingScreen.Han
 		ClientWorld world = MinecraftClient.getInstance().world;
 		ItemStack wand = handler.wand.getStack(0);
 		world.getRecipeManager().getFirstMatch(ShapedArcaneCraftingRecipe.TYPE, handler.input, world).ifPresent(recipe -> {
-			AspectMap stored = wand.getItem() instanceof WandItem ? WandItem.aspectsFrom(wand) : new AspectMap();
+			ScaledAspectMap stored = wand.getItem() instanceof WandItem ? WandItem.aspectsFrom(wand) : new ScaledAspectMap(new AspectMap(), 1);
 			for(Aspect aspect : recipe.aspects().aspectSet()){
 				int amount = recipe.aspects().get(aspect);
 				amount *= WandItem.costMultiplier(aspect, wand, client.player);
@@ -164,8 +165,8 @@ public class ArcaneCraftingScreen extends HandledScreen<ArcaneCraftingScreen.Han
 					// ArcaneCraftingScreen will display the missing aspects for us
 					ItemStack wandStack = wandInv.getStack(0);
 					if(wandStack.getItem() instanceof WandItem){
-						AspectMap stored = WandItem.aspectsFrom(wandStack);
-						var toTake = recipe.aspects().copy();
+						ScaledAspectMap stored = WandItem.aspectsFrom(wandStack);
+						AspectMap toTake = recipe.aspects().copy();
 						toTake.multiply(aspect -> WandItem.costMultiplier(aspect, wandStack, player));
 						if(stored.contains(toTake) && result.shouldCraftRecipe(world, serverPlayer, recipe))
 							itemStack.set(recipe.craft(craftInv));

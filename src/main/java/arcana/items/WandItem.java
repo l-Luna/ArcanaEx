@@ -107,7 +107,7 @@ public class WandItem extends Item implements FabricItem, WarpingItem{
 				if(world.getBlockEntity(pos) instanceof InfusionMatrixBlockEntity e)
 					e.activate(player);
 		}else if(focusStack.getItem() instanceof FocusItem fi){
-			AspectMap cost = fi.castCost(wandStack, focusStack, player).copy();
+			ScaledAspectMap cost = fi.castCost(wandStack, focusStack, player);
 			cost.multiply(aspect -> costMultiplier(aspect, wandStack, player));
 			if(aspectsFrom(wandStack).contains(cost)){
 				ActionResult result = fi.castOnBlock(context);
@@ -128,9 +128,9 @@ public class WandItem extends Item implements FabricItem, WarpingItem{
 		// creative mode "helpfully" copies the stack before use on entities, so we get the real thing here
 		ItemStack wandStack = user.getStackInHand(hand);
 		ItemStack focusStack = focusFrom(wandStack);
-		AspectMap stored = aspectsFrom(wandStack);
+		ScaledAspectMap stored = aspectsFrom(wandStack);
 		if(focusStack.getItem() instanceof FocusItem fi){
-			var cost = fi.castCost(wandStack, focusStack, user).copy();
+			var cost = fi.castCost(wandStack, focusStack, user);
 			cost.multiply(aspect -> costMultiplier(aspect, stack, user));
 			if(stored.contains(cost)){
 				ActionResult result = fi.castOnEntity(wandStack, focusStack, user, entity);
@@ -205,7 +205,7 @@ public class WandItem extends Item implements FabricItem, WarpingItem{
 		PlayerEntity player = MinecraftClient.getInstance().player;
 		if(focusStack.getItem() instanceof FocusItem fi){
 			tooltip.add(fi.nameForTooltip(focusStack));
-			var cost = fi.castCost(stack, focusStack, player).copy();
+			ScaledAspectMap cost = fi.castCost(stack, focusStack, player);
 			cost.multiply(aspect -> costMultiplier(aspect, stack, player));
 			tooltip.add(costText(cost));
 		}
@@ -235,11 +235,11 @@ public class WandItem extends Item implements FabricItem, WarpingItem{
 	}
 	
 	@Environment(EnvType.CLIENT)
-	public static Text costText(AspectMap map){
+	public static Text costText(ScaledAspectMap map){
 		MutableText costs = Text.literal("");
-		for(AspectStack stack : map.asStacks())
-			costs.append(Text.translatable("tooltip.arcana.wand.focus_cost.individual", stack.amount(), stack.type().name())
-					.formatted(ArcanaClient.colourForPrimal(stack.type())));
+		for(Aspect aspect : map.underlying().aspectSet())
+			costs.append(Text.translatable("tooltip.arcana.wand.focus_cost.individual", map.get(aspect), aspect.name())
+					.formatted(ArcanaClient.colourForPrimal(aspect)));
 		return Text.translatable("tooltip.arcana.wand.focus_cost.total", costs);
 	}
 	
@@ -262,18 +262,14 @@ public class WandItem extends Item implements FabricItem, WarpingItem{
 	
 	// TODO: NBT-backed aspect map?
 	
-	public static AspectMap aspectsFrom(ItemStack stack){
-		return AspectMap.fromNbt(stack.getSubNbt("aspects"));
+	public static ScaledAspectMap aspectsFrom(ItemStack stack){
+		return new ScaledAspectMap(AspectMap.fromNbt(stack.getSubNbt("aspects")), 0.1f);
 	}
 	
-	public static void putAspects(ItemStack stack, AspectMap aspects){
-		stack.getOrCreateNbt().put("aspects", aspects.toNbt());
-	}
-	
-	public static void updateAspects(ItemStack stack, Consumer<AspectMap> updater){
-		var map = aspectsFrom(stack);
+	public static void updateAspects(ItemStack stack, Consumer<ScaledAspectMap> updater){
+		ScaledAspectMap map = aspectsFrom(stack);
 		updater.accept(map);
-		putAspects(stack, map);
+		stack.getOrCreateNbt().put("aspects", map.underlying().toNbt());
 	}
 	
 	public static Cap capFrom(ItemStack stack){

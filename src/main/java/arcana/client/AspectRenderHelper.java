@@ -34,7 +34,7 @@ public final class AspectRenderHelper{
 		renderAspectStack(stack.type(), stack.amount(), matrices, text, false, x, y, z);
 	}
 	
-	public static void renderAspectStack(Aspect aspect, int amount, MatrixStack matrices, TextRenderer text, boolean alwaysDrawLabel, int x, int y, int z){
+	public static void renderAspectStack(Aspect aspect, float amount, MatrixStack matrices, TextRenderer text, boolean alwaysDrawLabel, int x, int y, int z){
 		renderAspect(aspect, matrices, x, y, z, 1, 1, 1, 1);
 		if(alwaysDrawLabel || amount > 1)
 			renderAspectStackOverlay(amount, matrices, text, x, y, z);
@@ -55,14 +55,14 @@ public final class AspectRenderHelper{
 		return new Identifier(aspect.id().getNamespace(), "textures/aspects/%s.png".formatted(aspect.id().getPath()));
 	}
 	
-	public static void renderAspectStackOverlay(int amount, MatrixStack matrices, TextRenderer text, int x, int y, int z){
+	public static void renderAspectStackOverlay(float amount, MatrixStack matrices, TextRenderer text, int x, int y, int z){
 		renderAspectStackOverlay(amount, matrices, text, x, y, z, 0xFFFFFFFF);
 	}
 	
-	public static void renderAspectStackOverlay(int amount, MatrixStack matrices, TextRenderer text, int x, int y, int z, int colour){
+	public static void renderAspectStackOverlay(float amount, MatrixStack matrices, TextRenderer text, int x, int y, int z, int colour){
 		matrices.push();
 		matrices.translate(0, 0, z + 1);
-		var label = String.valueOf(amount);
+		String label = amount != (int)amount ? String.format("%.1f", amount) : String.valueOf((int)amount);
 		if(amount < 100)
 			text.drawWithShadow(matrices, label, x + 18 - text.getWidth(label), y + 9, colour);
 		else

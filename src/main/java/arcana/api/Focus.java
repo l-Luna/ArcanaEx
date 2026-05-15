@@ -2,6 +2,7 @@ package arcana.api;
 
 import arcana.aspects.AspectMap;
 import arcana.aspects.AspectStack;
+import arcana.aspects.ScaledAspectMap;
 import arcana.items.WandItem;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -16,9 +17,13 @@ import org.jetbrains.annotations.Nullable;
  */
 public interface Focus{
 	
-	default AspectMap castCost(@Nullable ItemStack wand, ItemStack focus, PlayerEntity user){
-		return new AspectMap();
+	// TODO: could be enforced better?
+	
+	default ScaledAspectMap castCost(@Nullable ItemStack wand, ItemStack focus, PlayerEntity user){
+		return new ScaledAspectMap(centiCastCost(wand, focus, user), 0.1f);
 	}
+	
+	AspectMap centiCastCost(@Nullable ItemStack wand, ItemStack focus, PlayerEntity user);
 	
 	default ActionResult castOnBlock(ItemUsageContext ctx){
 		return ActionResult.PASS;

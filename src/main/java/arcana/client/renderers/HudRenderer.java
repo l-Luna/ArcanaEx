@@ -2,8 +2,8 @@ package arcana.client.renderers;
 
 import arcana.ArcanaRegistry;
 import arcana.aspects.Aspect;
-import arcana.aspects.AspectMap;
 import arcana.aspects.Aspects;
+import arcana.aspects.ScaledAspectMap;
 import arcana.aura.AuraChunk;
 import arcana.client.RenderHelper;
 import arcana.items.WandItem;
@@ -47,7 +47,7 @@ public final class HudRenderer{
 			matrices.push();
 			ItemStack wandStack;
 			if((wandStack = mainHand).getItem() instanceof WandItem || (wandStack = offHand).getItem() instanceof WandItem){
-				AspectMap aspectStacks = WandItem.aspectsFrom(wandStack);
+				ScaledAspectMap aspectStacks = WandItem.aspectsFrom(wandStack);
 				Identifier coreId = WandItem.coreFrom(wandStack).id();
 				Identifier coreTexId = new Identifier(coreId.getNamespace(), "textures/gui/hud/wand_bases/" + coreId.getPath() + ".png");
 				

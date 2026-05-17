@@ -9,7 +9,11 @@ import arcana.effects.SetBonusStatusEffect;
 import arcana.enchantments.LootSwapEnchantment;
 import arcana.entities.ThrownTaintBottleEntity;
 import arcana.items.CrimsonLeechItem;
-import arcana.recipes.*;
+import arcana.recipes.alchemy.AlchemyRecipe;
+import arcana.recipes.arcane_crafting.ShapedArcaneCraftingRecipe;
+import arcana.recipes.crafting.VoidPuttyRepairRecipe;
+import arcana.recipes.crafting.WandRecipe;
+import arcana.recipes.infusion.SimpleInfusionRecipe;
 import arcana.research.BuiltinResearch;
 import arcana.research.Research;
 import arcana.research.ResearchLoader;
@@ -63,7 +67,7 @@ public final class Arcana implements ModInitializer{
 		
 		ShapedArcaneCraftingRecipe.setup();
 		AlchemyRecipe.setup();
-		InfusionRecipe.setup();
+		SimpleInfusionRecipe.setup();
 		Research.setup();
 		WarpEvents.setup();
 		

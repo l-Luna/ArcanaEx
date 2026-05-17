@@ -41,14 +41,18 @@ public class EquivalentExchangeFocusItem extends FocusItem{
 	}
 	
 	public AspectMap deciCastCost(@Nullable ItemStack wand, ItemStack focus, PlayerEntity user){
-		// (0.7 order, 0.7 entropy) * mining level + (0.1, 0.1)
-		// "requires a tool" increases the mining level to 1
-		BlockPos pos = ((BlockHitResult)user.raycast(5.5, 0, false)).getBlockPos();
-		BlockState looking = user.world.getBlockState(pos);
-		int amount = Math.max(looking.isToolRequired() ? 1 : 0, MiningLevelManager.getRequiredMiningLevel(looking) + 1) * 7 + 1;
-		// for display purposes
-		if(looking.getHardness(user.world, pos) == -1)
-			amount = 100000;
+		int amount = 1;
+		// TODO: move cost calculation to casting code
+		if(user != null && user.world != null){
+			// (0.7 order, 0.7 entropy) * mining level + (0.1, 0.1)
+			// "requires a tool" increases the mining level to 1
+			BlockPos pos = ((BlockHitResult)user.raycast(5.5, 0, false)).getBlockPos();
+			BlockState looking = user.world.getBlockState(pos);
+			amount = Math.max(looking.isToolRequired() ? 1 : 0, MiningLevelManager.getRequiredMiningLevel(looking) + 1) * 7 + 1;
+			// for display purposes
+			if(looking.getHardness(user.world, pos) == -1)
+				amount = 100000;
+		}
 		return AspectMap.fromAspectStacks(new AspectStack(Aspects.ORDER, amount), new AspectStack(Aspects.ENTROPY, amount));
 	}
 	

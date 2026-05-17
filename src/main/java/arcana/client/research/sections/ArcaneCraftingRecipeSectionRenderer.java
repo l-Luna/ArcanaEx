@@ -1,7 +1,7 @@
 package arcana.client.research.sections;
 
 import arcana.client.AspectRenderHelper;
-import arcana.recipes.ShapedArcaneCraftingRecipe;
+import arcana.recipes.arcane_crafting.ShapedArcaneCraftingRecipe;
 import arcana.research.sections.ArcaneCraftingRecipeSection;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.util.math.MatrixStack;

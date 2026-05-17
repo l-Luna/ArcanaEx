@@ -2,7 +2,7 @@ package arcana.integration.emi;
 
 import arcana.aspects.AspectMap;
 import arcana.aspects.AspectStack;
-import arcana.recipes.InfusionRecipe;
+import arcana.recipes.infusion.SimpleInfusionRecipe;
 import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.render.EmiTexture;
@@ -31,7 +31,7 @@ public class EmiInfusionRecipe implements EmiRecipe{
 	protected final AspectMap aspects;
 	protected final int instability;
 	
-	public EmiInfusionRecipe(InfusionRecipe recipe){
+	public EmiInfusionRecipe(SimpleInfusionRecipe recipe){
 		id = recipe.getId();
 		outers = recipe.outerIngredients().stream().map(EmiXIngredient::of).toList();
 		central = EmiIngredient.of(recipe.centralIngredient());

@@ -1,7 +1,7 @@
 package arcana.integration.emi;
 
 import arcana.ArcanaRegistry;
-import arcana.recipes.VoidPuttyRepairRecipe;
+import arcana.recipes.crafting.VoidPuttyRepairRecipe;
 import dev.emi.emi.api.recipe.EmiPatternCraftingRecipe;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;

@@ -3,12 +3,12 @@ package arcana.blocks.be;
 import arcana.ArcanaRegistry;
 import arcana.aspects.Aspect;
 import arcana.aspects.AspectMap;
-import arcana.aspects.AspectStack;
 import arcana.client.particles.AspectParticleEffect;
 import arcana.components.Researcher;
-import arcana.recipes.InfusionInventory;
-import arcana.recipes.InfusionRecipe;
-import arcana.recipes.XIngredient;
+import arcana.recipes.infusion.BakedInfusionRecipe;
+import arcana.recipes.infusion.InfusionInventory;
+import arcana.recipes.infusion.InfusionRecipe;
+import arcana.recipes.infusion.SimpleInfusionRecipe;
 import arcana.research.BuiltinResearch;
 import arcana.util.NbtUtil;
 import net.minecraft.block.Block;
@@ -28,7 +28,6 @@ import net.minecraft.util.math.random.Random;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -49,8 +48,10 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 	
 	private InfusionRecipe curRecipe;
 	private InfusionState curState = IDLE;
-	private AspectMap takenEssentia;
-	private List<ItemStack> takenItems;
+	private AspectMap remainingEssentia;
+	private List<ItemStack> remainingItems;
+	private int instabilityRate = 0;
+	private ItemStack result = null;
 	private int cooldown = 0;
 	private float instability = 0;
 	
@@ -66,7 +67,7 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 	public void tick(){
 		assert world != null;
 		if(lastRecipe != null){
-			curRecipe = (InfusionRecipe)world.getRecipeManager().get(lastRecipe).orElse(null);
+			curRecipe = (SimpleInfusionRecipe)world.getRecipeManager().get(lastRecipe).orElse(null);
 			BlockState state = world.getBlockState(pos);
 			world.updateListeners(pos, state, state, Block.NOTIFY_LISTENERS);
 			lastRecipe = null;
@@ -97,7 +98,7 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 		
 		if(curRecipe != null){
 			markDirty();
-			instability += 2 + curRecipe.instability();
+			instability += 2 + instabilityRate;
 			switch(curState){
 				case IDLE -> curState = TAKING_ESSENTIA;
 				case TAKING_ESSENTIA -> {
@@ -160,7 +161,7 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 					.forEach(aspects::add);
 			
 			InfusionInventory inv = new InfusionInventory(centre, outers, aspects);
-			world.getRecipeManager().getFirstMatch(InfusionRecipe.TYPE, inv, world).ifPresent(recipe -> {
+			world.getRecipeManager().getFirstMatch(SimpleInfusionRecipe.TYPE, inv, world).ifPresent(recipe -> {
 				curRecipe = recipe;
 				Researcher researcher = Researcher.from(player);
 				if(!researcher.isPuzzleComplete(BuiltinResearch.infusionMilestonePuzzle)){
@@ -168,8 +169,11 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 					researcher.doSync();
 				}
 				
-				takenEssentia = new AspectMap();
-				takenItems = new ArrayList<>();
+				BakedInfusionRecipe requirements = recipe.craftInfusion(inv);
+				result = requirements.result();
+				remainingEssentia = requirements.aspects();
+				remainingItems = requirements.outerStacks();
+				instabilityRate = requirements.instability();
 				cooldown = 0;
 				instability = 0;
 				lastCraftStartEndTime = world.getTime();
@@ -181,16 +185,17 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 		if(curRecipe != null)
 			markDirty();
 		curState = IDLE;
-		takenEssentia = null;
-		takenItems = null;
+		remainingEssentia = null;
+		remainingItems = null;
+		result = null;
+		instabilityRate = 0;
 		curRecipe = null;
 		cooldown = 0;
 		instability = 0;
 	}
 	
 	private void finishCrafting(PedestalBlockEntity pedestal){
-		// TODO: use craft() in activate() to calculate/preserve enchantment levels, durability...
-		pedestal.setStack(curRecipe.getOutput());
+		pedestal.setStack(result);
 		lastCraftStartEndTime = world.getTime();
 		reset();
 	}
@@ -242,11 +247,13 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 		
 		if(curRecipe != null){
 			nbt.putString("currentRecipe", curRecipe.getId().toString());
+			nbt.put("remainingEssentia", remainingEssentia.toNbt());
+			nbt.put("remainingItems", remainingItems.stream().map(x -> x.writeNbt(new NbtCompound())).collect(NbtUtil.toNbtList()));
+			nbt.put("result", result.writeNbt(new NbtCompound()));
+			nbt.putInt("instabilityRate", instabilityRate);
 			nbt.putString("state", curState.name());
 			nbt.putInt("cooldown", cooldown);
 			nbt.putFloat("instability", instability);
-			nbt.put("takenEssentia", takenEssentia.toNbt());
-			nbt.put("takenItems", takenItems.stream().map(x -> x.writeNbt(new NbtCompound())).collect(NbtUtil.toNbtList()));
 		}
 	}
 	
@@ -259,8 +266,10 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 			curState = InfusionState.valueOf(nbt.getString("state"));
 			cooldown = nbt.getInt("cooldown");
 			instability = nbt.getFloat("instability");
-			takenEssentia = AspectMap.fromNbt(nbt.getCompound("takenEssentia"));
-			takenItems = NbtUtil.readMutList(nbt, "takenItems", ItemStack::fromNbt);
+			instabilityRate = nbt.getInt("instabilityRate");
+			remainingEssentia = AspectMap.fromNbt(nbt.getCompound("remainingEssentia"));
+			remainingItems = NbtUtil.readMutList(nbt, "remainingItems", ItemStack::fromNbt);
+			result = ItemStack.fromNbt(nbt.getCompound("result"));
 		}
 	}
 	
@@ -274,80 +283,51 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 	
 	public boolean tickItems(){
 		InfusionRecipe recipe = getCurrentRecipe();
-		if(recipe != null){
-			XIngredient next = nextIngredient(takenItems, recipe);
-			if(next != null){
-				var matching = inRange(pos1 -> world.getBlockEntity(pos1) instanceof PedestalBlockEntity p ? p : null)
-						.filter(x -> next.test(x.getStack()))
-						.findFirst();
-				if(matching.isPresent()){
-					var pedestal = matching.get();
-					var stack = pedestal.getStack();
-					var pPos = pedestal.getPos();
-					if(world.getTime() % 2 == 0){
-						Random rng = world.getRandom();
-						double sx = pPos.getX() + rng.nextGaussian() / 8;
-						double sy = pPos.getY() + rng.nextGaussian() / 8;
-						double sz = pPos.getZ() + rng.nextGaussian() / 8;
-						world.addParticle(
-								new ItemStackParticleEffect(ArcanaRegistry.INFUSION_ITEM, stack),
-								sx + .5, sy + 1.5, sz + .5,
-								(pos.getX() - sx) / 10d,
-								(pos.getY() - sy - 2) / 10d,
-								(pos.getZ() - sz) / 10d
-						);
-					}
-					if(cooldown > 0){
-						cooldown--;
-						return true;
-					}
-					takenItems.add(stack);
-					pedestal.setStack(ItemStack.EMPTY);
-					cooldown = 60;
+		if(recipe != null && !remainingItems.isEmpty()){
+			ItemStack next = remainingItems.get(0);
+			Optional<PedestalBlockEntity> matching = inRange(pos1 -> world.getBlockEntity(pos1) instanceof PedestalBlockEntity p ? p : null)
+					.filter(x -> next.equals(x.getStack()))
+					.findFirst();
+			if(matching.isPresent()){
+				var pedestal = matching.get();
+				var stack = pedestal.getStack();
+				var pPos = pedestal.getPos();
+				if(world.getTime() % 2 == 0){
+					Random rng = world.getRandom();
+					double sx = pPos.getX() + rng.nextGaussian() / 8;
+					double sy = pPos.getY() + rng.nextGaussian() / 8;
+					double sz = pPos.getZ() + rng.nextGaussian() / 8;
+					world.addParticle(
+							new ItemStackParticleEffect(ArcanaRegistry.INFUSION_ITEM, stack),
+							sx + .5, sy + 1.5, sz + .5,
+							(pos.getX() - sx) / 10d,
+							(pos.getY() - sy - 2) / 10d,
+							(pos.getZ() - sz) / 10d
+					);
 				}
-				return true;
-			}else
-				return false;
+				if(cooldown > 0){
+					cooldown--;
+					return true;
+				}
+				remainingItems.remove(stack);
+				pedestal.setStack(ItemStack.EMPTY);
+				cooldown = 60;
+			}
+			return true;
 		}
 		return false;
-	}
-	
-	@Nullable
-	private static XIngredient nextIngredient(List<ItemStack> absorbed, InfusionRecipe recipe){
-		absorbed = new ArrayList<>(absorbed);
-		// similar to recipe matching
-		XIngredient next = null;
-		ingredients:
-		for(XIngredient ingredient : recipe.outerIngredients()){
-			for(int i = 0; i < absorbed.size(); i++)
-				if(ingredient.test(absorbed.get(i))){
-					absorbed.remove(i);
-					continue ingredients;
-				}
-			next = ingredient;
-			break;
-		}
-		return next;
 	}
 	
 	public boolean tickEssentia(){
 		if(world.getTime() % 2 != 0)
 			return true;
 		InfusionRecipe recipe = getCurrentRecipe();
-		if(recipe != null){
-			Aspect next = null;
-			for(AspectStack stack : recipe.aspects())
-				if(takenEssentia.get(stack.type()) < stack.amount()){
-					next = stack.type();
-					break;
-				}
-			if(next == null)
-				return false; // nothing else to absorb
-			Aspect tmpNext = next;
+		if(remainingEssentia != null && !remainingEssentia.isEmpty() && recipe != null){
+			Aspect next = remainingEssentia.aspectByIndex(0);
 			Optional<WardedJarBlockEntity> first = inRange(world::getBlockEntity)
 					.filter(WardedJarBlockEntity.class::isInstance)
 					.map(WardedJarBlockEntity.class::cast)
-					.filter(x -> x.getStored() != null && x.getStored().type().equals(tmpNext))
+					.filter(x -> x.getStored() != null && x.getStored().type().equals(next))
 					.findFirst();
 			if(first.isEmpty())
 				return true; // we can't find any jars with the aspect we need
@@ -366,7 +346,7 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 			);
 			if(world.getTime() % 4 == 0){
 				jar.draw(1);
-				takenEssentia.add(next, 1);
+				remainingEssentia.take(next, 1);
 			}
 			return true;
 		}

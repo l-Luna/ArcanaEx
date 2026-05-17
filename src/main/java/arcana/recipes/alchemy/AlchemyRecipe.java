@@ -1,9 +1,11 @@
-package arcana.recipes;
+package arcana.recipes.alchemy;
 
 import arcana.api.AspectRecipe;
 import arcana.api.RenamableRecipe;
 import arcana.aspects.AspectMap;
 import arcana.aspects.ItemAspectRegistry;
+import arcana.recipes.ArcanaRecipe;
+import arcana.recipes.XIngredient;
 import com.google.gson.JsonObject;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;

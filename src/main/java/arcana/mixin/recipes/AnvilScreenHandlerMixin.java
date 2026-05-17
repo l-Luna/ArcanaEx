@@ -1,7 +1,7 @@
 package arcana.mixin.recipes;
 
 import arcana.ArcanaRegistry;
-import arcana.recipes.VoidPuttyRepairRecipe;
+import arcana.recipes.crafting.VoidPuttyRepairRecipe;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.enchantment.Enchantment;

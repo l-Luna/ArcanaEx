@@ -4,7 +4,7 @@ import arcana.aspects.Aspect;
 import arcana.aspects.AspectMap;
 import arcana.aspects.AspectStack;
 import arcana.aspects.Aspects;
-import arcana.recipes.ShapedArcaneCraftingRecipe;
+import arcana.recipes.arcane_crafting.ShapedArcaneCraftingRecipe;
 import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.render.EmiTexture;

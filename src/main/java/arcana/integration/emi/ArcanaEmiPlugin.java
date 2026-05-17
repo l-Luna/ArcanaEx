@@ -7,9 +7,9 @@ import arcana.aspects.Aspects;
 import arcana.aspects.ItemAspectRegistry;
 import arcana.aura.Taint;
 import arcana.items.WandItem;
-import arcana.recipes.AlchemyRecipe;
-import arcana.recipes.InfusionRecipe;
-import arcana.recipes.ShapedArcaneCraftingRecipe;
+import arcana.recipes.alchemy.AlchemyRecipe;
+import arcana.recipes.arcane_crafting.ShapedArcaneCraftingRecipe;
+import arcana.recipes.infusion.SimpleInfusionRecipe;
 import arcana.screens.ResearchEntryScreen;
 import dev.emi.emi.api.EmiInitRegistry;
 import dev.emi.emi.api.EmiPlugin;
@@ -24,6 +24,7 @@ import dev.emi.emi.config.FluidUnit;
 import net.minecraft.block.Blocks;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Items;
+import net.minecraft.recipe.RecipeManager;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -162,9 +163,9 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 		registry.addRecipeHandler(ArcanaRegistry.ARCANE_CRAFTING_SCREEN_HANDLER, new EmiArcaneCraftingRecipeHandler());
 		registry.addStackProvider(ResearchEntryScreen.class, new ResearchEntryScreenStackProvider());
 		
-		var manager = registry.getRecipeManager();
+		RecipeManager manager = registry.getRecipeManager();
 		manager.listAllOfType(ShapedArcaneCraftingRecipe.TYPE).stream().filter(ShapedArcaneCraftingRecipe.class::isInstance).map(it -> new EmiArcaneCraftingRecipe((ShapedArcaneCraftingRecipe)it)).forEach(registry::addRecipe);
 		manager.listAllOfType(AlchemyRecipe.TYPE).stream().map(EmiAlchemyRecipe::new).forEach(registry::addRecipe);
-		manager.listAllOfType(InfusionRecipe.TYPE).stream().map(EmiInfusionRecipe::new).forEach(registry::addRecipe);
+		manager.listAllOfType(SimpleInfusionRecipe.TYPE).stream().filter(SimpleInfusionRecipe.class::isInstance).map(recipe -> new EmiInfusionRecipe((SimpleInfusionRecipe)recipe)).forEach(registry::addRecipe);
 	}
 }

@@ -1,7 +1,7 @@
 package arcana.client.research.sections;
 
 import arcana.client.AspectRenderHelper;
-import arcana.recipes.InfusionRecipe;
+import arcana.recipes.infusion.SimpleInfusionRecipe;
 import arcana.research.sections.InfusionRecipeSection;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.util.math.MatrixStack;
@@ -23,7 +23,7 @@ public class InfusionRecipeSectionRenderer extends AbstractRecipeSectionRenderer
 	                            int mouseX,
 	                            int mouseY,
 	                            boolean right){
-		if(recipe instanceof InfusionRecipe ir){
+		if(recipe instanceof SimpleInfusionRecipe ir){
 			int x = right ? pageX + rightXOffset : pageX;
 			int ulX = x + (screenWidth - 256 + pageWidth) / 2 - 25;
 			int ulY = pageY + (screenHeight - bgHeight + pageHeight) / 2 - 10 - heightOffset - 14;
@@ -70,7 +70,7 @@ public class InfusionRecipeSectionRenderer extends AbstractRecipeSectionRenderer
 	                                    int mouseX,
 	                                    int mouseY,
 	                                    boolean right){
-		if(recipe instanceof InfusionRecipe ir){
+		if(recipe instanceof SimpleInfusionRecipe ir){
 			int x = right ? pageX + rightXOffset : pageX;
 			int ulX = x + (screenWidth - 256 + pageWidth) / 2 - 25;
 			int ulY = pageY + (screenHeight - bgHeight + pageHeight) / 2 - 10 - heightOffset - 14;

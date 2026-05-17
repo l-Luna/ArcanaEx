@@ -8,7 +8,7 @@ import arcana.aspects.Aspects;
 import arcana.aspects.ScaledAspectMap;
 import arcana.client.AspectRenderHelper;
 import arcana.items.WandItem;
-import arcana.recipes.ShapedArcaneCraftingRecipe;
+import arcana.recipes.arcane_crafting.ShapedArcaneCraftingRecipe;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;

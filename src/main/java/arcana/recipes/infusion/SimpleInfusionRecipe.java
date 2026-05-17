@@ -1,13 +1,18 @@
-package arcana.recipes;
+package arcana.recipes.infusion;
 
 import arcana.api.RenamableRecipe;
 import arcana.aspects.AspectMap;
 import arcana.aspects.ItemAspectRegistry;
+import arcana.recipes.ArcanaRecipe;
+import arcana.recipes.XIngredient;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.recipe.*;
+import net.minecraft.recipe.Ingredient;
+import net.minecraft.recipe.RecipeSerializer;
+import net.minecraft.recipe.RecipeType;
+import net.minecraft.recipe.ShapedRecipe;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
@@ -21,19 +26,18 @@ import java.util.Optional;
 
 import static arcana.Arcana.arcId;
 
-public class InfusionRecipe implements Recipe<InfusionInventory>, ArcanaRecipe, RenamableRecipe{
+public class SimpleInfusionRecipe implements InfusionRecipe, ArcanaRecipe, RenamableRecipe{
 	
 	public static RecipeType<InfusionRecipe> TYPE;
 	public static Serializer SERIALIZER;
 	
-	Identifier id;
-	ItemStack result;
-	List<XIngredient> outerIngredients;
-	Ingredient centralIngredient;
-	AspectMap aspects;
-	int instability;
-	@Nullable String name;
-	// node aspects...
+	private final Identifier id;
+	private final ItemStack result;
+	private final List<XIngredient> outerIngredients;
+	private final Ingredient centralIngredient;
+	private final AspectMap aspects;
+	private final int instability;
+	private final @Nullable String name;
 	
 	public static void setup(){
 		TYPE = Registry.register(
@@ -52,7 +56,7 @@ public class InfusionRecipe implements Recipe<InfusionInventory>, ArcanaRecipe, 
 		);
 	}
 	
-	public InfusionRecipe(Identifier id, ItemStack result, List<XIngredient> outerIngredients, Ingredient centralIngredient, AspectMap aspects, int instability, @Nullable String name){
+	public SimpleInfusionRecipe(Identifier id, ItemStack result, List<XIngredient> outerIngredients, Ingredient centralIngredient, AspectMap aspects, int instability, @Nullable String name){
 		this.id = id;
 		this.result = result;
 		this.outerIngredients = outerIngredients;
@@ -82,6 +86,25 @@ public class InfusionRecipe implements Recipe<InfusionInventory>, ArcanaRecipe, 
 		}
 		// check aspects
 		return inventory.aspects.contains(aspects);
+	}
+	
+	public BakedInfusionRecipe craftInfusion(InfusionInventory inventory){
+		// resolve ingredients to specific items
+		List<ItemStack> available = new ArrayList<>(inventory.outerStacks);
+		List<ItemStack> used = new ArrayList<>(outerIngredients.size());
+		ingredient:
+		for(XIngredient ingredient : outerIngredients){
+			// safe to remove in this loop, since we break immediately
+			for(int i = 0; i < available.size(); i++){
+				ItemStack stack = available.get(i);
+				if(ingredient.test(stack)){
+					available.remove(stack);
+					used.add(stack);
+					continue ingredient;
+				}
+			}
+		}
+		return new BakedInfusionRecipe(result.copy(), used, aspects.copy(), instability);
 	}
 	
 	public ItemStack craft(InfusionInventory inventory){
@@ -139,9 +162,9 @@ public class InfusionRecipe implements Recipe<InfusionInventory>, ArcanaRecipe, 
 		return true;
 	}
 	
-	public static class Serializer implements RecipeSerializer<InfusionRecipe>{
+	public static class Serializer implements RecipeSerializer<SimpleInfusionRecipe>{
 		
-		public InfusionRecipe read(Identifier id, JsonObject json){
+		public SimpleInfusionRecipe read(Identifier id, JsonObject json){
 			ItemStack result = ShapedRecipe.outputFromJson(JsonHelper.getObject(json, "result"));
 			Ingredient central = Ingredient.fromJson(JsonHelper.getObject(json, "central"));
 			List<XIngredient> outers = new ArrayList<>();
@@ -150,10 +173,10 @@ public class InfusionRecipe implements Recipe<InfusionInventory>, ArcanaRecipe, 
 			AspectMap aspects = ItemAspectRegistry.parseAspectStackList(id, JsonHelper.getArray(json, "aspects")).orElseGet(AspectMap::new);
 			int instability = JsonHelper.getInt(json, "instability", 1);
 			String name = JsonHelper.getString(json, "name", null);
-			return new InfusionRecipe(id, result, outers, central, aspects, instability, name);
+			return new SimpleInfusionRecipe(id, result, outers, central, aspects, instability, name);
 		}
 		
-		public void write(PacketByteBuf buf, InfusionRecipe recipe){
+		public void write(PacketByteBuf buf, SimpleInfusionRecipe recipe){
 			buf.writeBoolean(recipe.name != null);
 			if(recipe.name != null)
 				buf.writeString(recipe.name);
@@ -166,7 +189,7 @@ public class InfusionRecipe implements Recipe<InfusionInventory>, ArcanaRecipe, 
 			buf.writeVarInt(recipe.instability);
 		}
 		
-		public InfusionRecipe read(Identifier id, PacketByteBuf buf){
+		public SimpleInfusionRecipe read(Identifier id, PacketByteBuf buf){
 			String name = null;
 			if(buf.readBoolean())
 				name = buf.readString();
@@ -175,7 +198,7 @@ public class InfusionRecipe implements Recipe<InfusionInventory>, ArcanaRecipe, 
 			List<XIngredient> outer = new ArrayList<>(size);
 			for(int i = 0; i < size; i++)
 				outer.add(XIngredient.read(buf));
-			return new InfusionRecipe(id, result, outer, Ingredient.fromPacket(buf), AspectMap.fromNbt(buf.readNbt()), buf.readVarInt(), name);
+			return new SimpleInfusionRecipe(id, result, outer, Ingredient.fromPacket(buf), AspectMap.fromNbt(buf.readNbt()), buf.readVarInt(), name);
 		}
 	}
 }

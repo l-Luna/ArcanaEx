@@ -1,4 +1,4 @@
-package arcana.recipes;
+package arcana.recipes.alchemy;
 
 import arcana.aspects.AspectMap;
 import arcana.blocks.be.CrucibleBlockEntity;

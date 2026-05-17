@@ -2,7 +2,7 @@ package arcana.integration.emi;
 
 import arcana.aspects.AspectMap;
 import arcana.components.Researcher;
-import arcana.recipes.AlchemyRecipe;
+import arcana.recipes.alchemy.AlchemyRecipe;
 import arcana.research.Entry;
 import arcana.research.Research;
 import dev.emi.emi.api.recipe.EmiRecipe;

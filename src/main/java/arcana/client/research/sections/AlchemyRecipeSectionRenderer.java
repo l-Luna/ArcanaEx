@@ -3,7 +3,7 @@ package arcana.client.research.sections;
 import arcana.aspects.AspectMap;
 import arcana.aspects.AspectStack;
 import arcana.client.AspectRenderHelper;
-import arcana.recipes.AlchemyRecipe;
+import arcana.recipes.alchemy.AlchemyRecipe;
 import arcana.research.sections.AlchemyRecipeSection;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.util.math.MatrixStack;

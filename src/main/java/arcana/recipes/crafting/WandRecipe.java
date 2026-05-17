@@ -1,4 +1,4 @@
-package arcana.recipes;
+package arcana.recipes.crafting;
 
 import arcana.api.Cap;
 import arcana.api.Core;

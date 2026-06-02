@@ -17,7 +17,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -66,34 +65,23 @@ public class SimpleInfusionRecipe implements InfusionRecipe, ArcanaRecipe, Renam
 		this.name = name;
 	}
 	
-	public boolean matches(InfusionInventory inventory, World world){
-		// check centre
-		if(!centralIngredient.test(inventory.centre))
-			return false;
-		// check others
-		List<ItemStack> copy = new ArrayList<>(inventory.outerStacks);
-		ingredient:
-		for(XIngredient ingredient : outerIngredients){
-			// safe to remove in this loop, since we break immediately
-			for(int i = 0; i < copy.size(); i++){
-				ItemStack stack = copy.get(i);
-				if(ingredient.test(stack)){
-					copy.remove(stack);
-					continue ingredient;
-				}
-			}
-			return false;
-		}
-		// check aspects
-		return inventory.aspects.contains(aspects);
+	public BakedInfusionRecipe craftInfusion(InfusionInventory inventory){
+		// check main ingredients
+		if(!(centralIngredient.test(inventory.centre) && inventory.aspects.contains(aspects)))
+			return null;
+		// resolve outer ingredients to specific items
+		List<ItemStack> used = matchIngredients(inventory, outerIngredients);
+		if(used == null)
+			return null;
+		return new BakedInfusionRecipe(result.copy(), used, aspects.copy(), instability);
 	}
 	
-	public BakedInfusionRecipe craftInfusion(InfusionInventory inventory){
-		// resolve ingredients to specific items
+	@Nullable
+	protected static List<ItemStack> matchIngredients(InfusionInventory inventory, List<XIngredient> ingredients){
 		List<ItemStack> available = new ArrayList<>(inventory.outerStacks);
-		List<ItemStack> used = new ArrayList<>(outerIngredients.size());
+		List<ItemStack> used = new ArrayList<>(ingredients.size());
 		ingredient:
-		for(XIngredient ingredient : outerIngredients){
+		for(XIngredient ingredient : ingredients){
 			// safe to remove in this loop, since we break immediately
 			for(int i = 0; i < available.size(); i++){
 				ItemStack stack = available.get(i);
@@ -103,16 +91,14 @@ public class SimpleInfusionRecipe implements InfusionRecipe, ArcanaRecipe, Renam
 					continue ingredient;
 				}
 			}
+			// `ingredient` isn't present, so we can't match
+			return null;
 		}
-		return new BakedInfusionRecipe(result.copy(), used, aspects.copy(), instability);
+		return used;
 	}
 	
 	public ItemStack craft(InfusionInventory inventory){
 		return result;
-	}
-	
-	public boolean fits(int width, int height){
-		return true;
 	}
 	
 	public ItemStack getOutput(){
@@ -158,10 +144,6 @@ public class SimpleInfusionRecipe implements InfusionRecipe, ArcanaRecipe, Renam
 		return Optional.ofNullable(name);
 	}
 	
-	public boolean isIgnoredInRecipeBook(){
-		return true;
-	}
-	
 	public static class Serializer implements RecipeSerializer<SimpleInfusionRecipe>{
 		
 		public SimpleInfusionRecipe read(Identifier id, JsonObject json){
@@ -193,7 +175,7 @@ public class SimpleInfusionRecipe implements InfusionRecipe, ArcanaRecipe, Renam
 			String name = null;
 			if(buf.readBoolean())
 				name = buf.readString();
-			var result = buf.readItemStack();
+			ItemStack result = buf.readItemStack();
 			int size = buf.readVarInt();
 			List<XIngredient> outer = new ArrayList<>(size);
 			for(int i = 0; i < size; i++)

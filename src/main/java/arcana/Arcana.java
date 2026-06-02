@@ -13,6 +13,7 @@ import arcana.recipes.alchemy.AlchemyRecipe;
 import arcana.recipes.arcane_crafting.ShapedArcaneCraftingRecipe;
 import arcana.recipes.crafting.VoidPuttyRepairRecipe;
 import arcana.recipes.crafting.WandRecipe;
+import arcana.recipes.infusion.InfusionEnchantmentRecipe;
 import arcana.recipes.infusion.SimpleInfusionRecipe;
 import arcana.research.BuiltinResearch;
 import arcana.research.Research;
@@ -68,6 +69,7 @@ public final class Arcana implements ModInitializer{
 		ShapedArcaneCraftingRecipe.setup();
 		AlchemyRecipe.setup();
 		SimpleInfusionRecipe.setup();
+		InfusionEnchantmentRecipe.setup();
 		Research.setup();
 		WarpEvents.setup();
 		

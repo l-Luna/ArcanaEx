@@ -1,0 +1,20 @@
+{
+  "type": "arcana:infusion_enchantment",
+  "enchantment": "arcana:projecting",
+  "preview": {
+    "item": "arcana:arcanium_ring"
+  },
+  "base_ingredients": [
+    {
+      "item": "minecraft:phantom_membrane"
+    },
+    {
+      "item": "arcana:crystals/air"
+    }
+  ],
+  "base_aspects": [
+    "25*void",
+    "25*tool"
+  ],
+  "name": "enchantment.arcana.projecting.recipe"
+}

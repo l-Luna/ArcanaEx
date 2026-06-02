@@ -23,7 +23,8 @@ public class WardedChunk extends ChunkLayer{
 	public static boolean isWarded(World w, BlockPos pos){
 		if(!w.isChunkLoaded(pos.getX() >> 4, pos.getZ() >> 4))
 			return false;
-		return w.getChunk(pos).getComponent(KEY).isMarkedO(MathUtil.toChunkOffset(pos));
+		WardedChunk there = KEY.getNullable(w.getChunk(pos));
+		return there != null && there.isMarkedO(MathUtil.toChunkOffset(pos));
 	}
 	
 	public static boolean setWarded(World w, BlockPos pos, boolean warded){

@@ -72,14 +72,17 @@ public class EmiInfusionEnchantmentRecipe extends AbstractEmiInfusionRecipe{
 	public void addWidgets(WidgetHolder widgets){
 		widgets.add(new DynamicWidgets(this, widgets, (group, key) -> {
 			int reps = (int)(key % enchantment.getMaxLevel()) + 1;
+			ItemStack input = previewCental.copy();
 			ItemStack output = previewCental.copy();
+			if(reps > 1)
+				EnchantmentHelper.set(Map.of(enchantment, reps - 1), input);
 			EnchantmentHelper.set(Map.of(enchantment, reps), output);
 			List<EmiIngredient> outers = new ArrayList<>(baseOuters.size() * reps);
 			for(int i = 0; i < reps; i++)
 				outers.addAll(baseOuters);
 			AspectMap aspects = baseAspects.copy();
 			aspects.multiply(__ -> (float)reps);
-			addBaseWidgets(group, EmiStack.of(previewCental), outers, baseInstability + reps, aspects, EmiStack.of(output));
+			addBaseWidgets(group, EmiStack.of(input), outers, baseInstability + reps, aspects, EmiStack.of(output));
 		}));
 	}
 }

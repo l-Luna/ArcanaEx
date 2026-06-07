@@ -8,7 +8,7 @@ import net.minecraft.util.Identifier;
 
 import java.util.List;
 
-public class EmiAspectsByItemsRecipe extends GenericEmiConversionRecipe{
+public class EmiAspectsByItemsRecipe extends AbstractEmiConversionRecipe{
 	
 	public EmiAspectsByItemsRecipe(EmiIngredient item, List<AspectStack> aspects, Identifier baseId){
 		super(item, aspects.stream().map(x -> (EmiStack)new AspectEmiStack(x)).toList(), baseId);

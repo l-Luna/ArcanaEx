@@ -17,7 +17,7 @@ import java.util.function.BiConsumer;
  * Allows dynamically generating groups of widgets, for recipes with no set item count.
  * Note that slot widgets nested inside will not have identical behaviour to top-level ones.
  */
-public class DynamicWrapperGroupWidget extends Widget{
+public class DynamicWidgets extends Widget{
 	
 	private static final int INCREMENT = 800;
 	
@@ -26,7 +26,7 @@ public class DynamicWrapperGroupWidget extends Widget{
 	
 	private long lastGenerated = -1;
 	
-	public DynamicWrapperGroupWidget(EmiRecipe recipe, WidgetHolder holder, BiConsumer<WidgetGroup, Long> generator){
+	public DynamicWidgets(EmiRecipe recipe, WidgetHolder holder, BiConsumer<WidgetGroup, Long> generator){
 		this.generator = generator;
 		// TODO: positioning a dynamic section inside a non-dynamic recipe?
 		inner = new WidgetGroup(recipe, 0, 0, holder.getWidth(), holder.getHeight());

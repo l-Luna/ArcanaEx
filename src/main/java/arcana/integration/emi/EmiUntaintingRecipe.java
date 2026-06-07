@@ -9,7 +9,7 @@ import net.minecraft.util.Identifier;
 
 import java.util.List;
 
-public class EmiUntaintingRecipe extends GenericEmiConversionRecipe{
+public class EmiUntaintingRecipe extends AbstractEmiConversionRecipe{
 	
 	private static final EmiTexture ARROW = new EmiTexture(ArcanaEmiPlugin.WIDGETS, 0, 16, 25, 16);
 	

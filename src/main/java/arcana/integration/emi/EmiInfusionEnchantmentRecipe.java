@@ -70,7 +70,7 @@ public class EmiInfusionEnchantmentRecipe extends AbstractEmiInfusionRecipe{
 	}
 	
 	public void addWidgets(WidgetHolder widgets){
-		widgets.add(new DynamicWrapperGroupWidget(this, widgets, (group, key) -> {
+		widgets.add(new DynamicWidgets(this, widgets, (group, key) -> {
 			int reps = (int)(key % enchantment.getMaxLevel()) + 1;
 			ItemStack output = previewCental.copy();
 			EnchantmentHelper.set(Map.of(enchantment, reps), output);

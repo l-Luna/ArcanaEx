@@ -13,13 +13,13 @@ import java.util.List;
 
 import static arcana.Arcana.arcId;
 
-public abstract class GenericEmiConversionRecipe implements EmiRecipe{
+public abstract class AbstractEmiConversionRecipe implements EmiRecipe{
 	
 	private final EmiIngredient item;
 	private final List<EmiStack> outputs;
 	private final Identifier baseId;
 	
-	public GenericEmiConversionRecipe(EmiIngredient item, List<EmiStack> outputs, Identifier baseId){
+	public AbstractEmiConversionRecipe(EmiIngredient item, List<EmiStack> outputs, Identifier baseId){
 		this.item = item;
 		this.outputs = outputs;
 		this.baseId = baseId;

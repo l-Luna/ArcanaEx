@@ -9,6 +9,8 @@ import arcana.aura.Taint;
 import arcana.items.WandItem;
 import arcana.recipes.alchemy.AlchemyRecipe;
 import arcana.recipes.arcane_crafting.ShapedArcaneCraftingRecipe;
+import arcana.recipes.infusion.InfusionEnchantmentRecipe;
+import arcana.recipes.infusion.InfusionRecipe;
 import arcana.recipes.infusion.SimpleInfusionRecipe;
 import arcana.screens.ResearchEntryScreen;
 import dev.emi.emi.api.EmiInitRegistry;
@@ -166,6 +168,11 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 		RecipeManager manager = registry.getRecipeManager();
 		manager.listAllOfType(ShapedArcaneCraftingRecipe.TYPE).stream().filter(ShapedArcaneCraftingRecipe.class::isInstance).map(it -> new EmiArcaneCraftingRecipe((ShapedArcaneCraftingRecipe)it)).forEach(registry::addRecipe);
 		manager.listAllOfType(AlchemyRecipe.TYPE).stream().map(EmiAlchemyRecipe::new).forEach(registry::addRecipe);
-		manager.listAllOfType(SimpleInfusionRecipe.TYPE).stream().filter(SimpleInfusionRecipe.class::isInstance).map(recipe -> new EmiInfusionRecipe((SimpleInfusionRecipe)recipe)).forEach(registry::addRecipe);
+		for(InfusionRecipe recipe : manager.listAllOfType(SimpleInfusionRecipe.TYPE)){
+			if(recipe instanceof SimpleInfusionRecipe simple)
+				registry.addRecipe(new EmiInfusionRecipe(simple));
+			else if(recipe instanceof InfusionEnchantmentRecipe infEnchantment)
+				registry.addRecipe(new EmiInfusionEnchantmentRecipe(infEnchantment));
+		}
 	}
 }

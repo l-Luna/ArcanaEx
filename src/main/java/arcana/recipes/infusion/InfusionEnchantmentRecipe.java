@@ -93,6 +93,26 @@ public class InfusionEnchantmentRecipe implements InfusionRecipe, ArcanaRecipe, 
 		return id;
 	}
 	
+	public Enchantment getEnchantment(){
+		return enchantment;
+	}
+	
+	public List<XIngredient> getBaseIngredients(){
+		return baseIngredients;
+	}
+	
+	public AspectMap getBaseAspects(){
+		return baseAspects;
+	}
+	
+	public int getBaseInstability(){
+		return baseInstability;
+	}
+	
+	public ItemStack getPreviewStack(){
+		return preview;
+	}
+	
 	public RecipeSerializer<?> getSerializer(){
 		return null;
 	}
@@ -113,7 +133,6 @@ public class InfusionEnchantmentRecipe implements InfusionRecipe, ArcanaRecipe, 
 			int instability = JsonHelper.getInt(json, "base_instability", 0);
 			String name = JsonHelper.getString(json, "name", null);
 			
-			EnchantmentHelper.set(Map.of(enchantment, 1), preview);
 			return new InfusionEnchantmentRecipe(enchantment, baseIngredients, baseAspects, preview, id, instability, name);
 		}
 		

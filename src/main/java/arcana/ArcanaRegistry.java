@@ -46,6 +46,7 @@ import arcana.worldgen.greatwood.GreatwoodFoliagePlacer;
 import arcana.worldgen.greatwood.GreatwoodSaplingGenerator;
 import arcana.worldgen.greatwood.GreatwoodTree;
 import arcana.worldgen.greatwood.GreatwoodTrunkPlacer;
+import arcana.worldgen.mushroom.StructureMushroomFeature;
 import arcana.worldgen.silverwood.SilverwoodFoliagePlacer;
 import arcana.worldgen.silverwood.SilverwoodSaplingGenerator;
 import arcana.worldgen.silverwood.SilverwoodTree;
@@ -559,6 +560,11 @@ public final class ArcanaRegistry{
 	public static final Block SNOWDROP = new SizedPlantBlock(of(Material.PLANT).dropsSelf().renderLayer(CUTOUT).sounds(BlockSoundGroup.GRASS).noCollision().breakInstantly().offsetType(AbstractBlock.OffsetType.XZ), 13, 14);
 	public static final Block FIREWHEEL = new SizedPlantBlock(of(Material.PLANT).dropsSelf().renderLayer(CUTOUT).sounds(BlockSoundGroup.GRASS).noCollision().breakInstantly().offsetType(AbstractBlock.OffsetType.XZ), 10, 15);
 	public static final Block LILIUM = new SizedPlantBlock(of(Material.PLANT).dropsSelf().renderLayer(CUTOUT).sounds(BlockSoundGroup.GRASS).noCollision().breakInstantly().offsetType(AbstractBlock.OffsetType.XZ), 6, 15);
+	
+	public static final Block HUGE_VISHROOM_STEM = new MushroomBlock(of(Material.WOOD, MapColor.WHITE_GRAY).strength(0.2F).sounds(BlockSoundGroup.WOOD));
+	public static final Block HUGE_VISHROOM_CAP = new MushroomBlock(of(Material.WOOD, MapColor.GREEN).strength(0.2F).sounds(BlockSoundGroup.WOOD));
+	public static final Block HUGE_CORDISPORA_STEM = new MushroomBlock(of(Material.WOOD, MapColor.WHITE_GRAY).strength(0.2F).sounds(BlockSoundGroup.WOOD));
+	public static final Block HUGE_CORDISPORA_CAP = new MushroomBlock(of(Material.WOOD, MapColor.PINK).strength(0.2F).sounds(BlockSoundGroup.WOOD));
 	
 	public static final Block BEJEWELED_BEETS_BLOCK = new BejeweledBeetsBlock(of(Material.PLANT).renderLayer(CUTOUT).nonOpaque().noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP));
 	public static final Item BEJEWELED_BEET_SEEDS = new AliasedBlockItem(BEJEWELED_BEETS_BLOCK, GROUPED_RES);
@@ -1246,6 +1252,11 @@ public final class ArcanaRegistry{
 		register("firewheel", FIREWHEEL);
 		register("lilium", LILIUM);
 		
+		register("huge_vishroom_stem", HUGE_VISHROOM_STEM);
+		register("huge_vishroom_cap", HUGE_VISHROOM_CAP);
+		register("huge_cordispora_stem", HUGE_CORDISPORA_STEM);
+		register("huge_cordispora_cap", HUGE_CORDISPORA_CAP);
+		
 		register("bejeweled_beets", BEJEWELED_BEETS_BLOCK, false);
 		register("void_growth", VOID_GROWTH, false);
 		
@@ -1407,6 +1418,9 @@ public final class ArcanaRegistry{
 		register("greatwood_trunk", GreatwoodTrunkPlacer.TYPE);
 		register("greatwood_tree", GreatwoodTree.GREATWOOD_TREE);
 		register("greatwood_tree", GreatwoodTree.SCATTERED_GREATWOOD_TREE);
+		
+		// features, but we actually use json properly
+		register("structure_mushroom", new StructureMushroomFeature());
 		
 		// structures
 		register("crimson_outpost", CRIMSON_OUTPOST, CRIMSON_OUTPOST_PLACEMENT);

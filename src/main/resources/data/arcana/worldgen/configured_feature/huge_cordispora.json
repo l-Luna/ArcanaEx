@@ -1,0 +1,19 @@
+{
+  "type": "arcana:structure_mushroom",
+  "config": {
+    "stem_provider": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "arcana:huge_cordispora_stem"
+      }
+    },
+    "cap_structure_id": "arcana:huge_cordispora_cap",
+    "stem_height": {
+      "type": "minecraft:biased_to_bottom",
+      "value": {
+        "min_inclusive": 4,
+        "max_inclusive": 8
+      }
+    }
+  }
+}

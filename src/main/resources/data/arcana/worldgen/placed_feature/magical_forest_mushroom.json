@@ -1,12 +1,35 @@
 {
-  "feature": "minecraft:mushroom_island_vegetation",
+  "feature": "arcana:magical_forest_mushroom",
   "placement": [
     {
       "type": "minecraft:in_square"
     },
     {
       "type": "minecraft:heightmap",
-      "heightmap": "MOTION_BLOCKING"
+      "heightmap": "OCEAN_FLOOR_WG"
+    },
+    {
+      "type": "minecraft:surface_water_depth_filter",
+      "max_water_depth": 1
+    },
+    // check the block below for valid bases...
+    {
+      "type": "minecraft:random_offset",
+      "xz_spread": 0,
+      "y_spread": -1
+    },
+    {
+      "type": "minecraft:block_predicate_filter",
+      "predicate": {
+        "type": "minecraft:matching_blocks",
+        "blocks": "#arcana:worldgen/huge_mushroom_bases"
+      }
+    },
+    // then move up again to place the actual mushroom
+    {
+      "type": "minecraft:random_offset",
+      "xz_spread": 0,
+      "y_spread": 1
     },
     {
       "type": "minecraft:biome"

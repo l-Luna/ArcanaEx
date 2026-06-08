@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "up": "arcana:block/huge_vishroom_stem_top",
+    "down": "arcana:block/huge_vishroom_stem_top",
+    "east": "arcana:block/huge_vishroom_stem",
+    "north": "arcana:block/huge_vishroom_stem",
+    "south": "arcana:block/huge_vishroom_stem",
+    "west": "arcana:block/huge_vishroom_stem",
+    "particle": "arcana:block/huge_vishroom_stem_top"
+  }
+}

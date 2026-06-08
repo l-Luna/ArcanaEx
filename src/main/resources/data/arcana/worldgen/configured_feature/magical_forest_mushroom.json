@@ -1,13 +1,39 @@
 {
-  "type": "minecraft:random_boolean_selector",
+  "type": "minecraft:random_selector",
   "config": {
-    "feature_false": {
+    "default": {
       "feature": "minecraft:huge_brown_mushroom",
       "placement": []
     },
-    "feature_true": {
-      "feature": "minecraft:huge_red_mushroom",
-      "placement": []
-    }
+    "features": [
+      {
+        "chance": 0.25,
+        "feature": {
+          "feature": "minecraft:huge_brown_mushroom",
+          "placement": []
+        }
+      },
+      {
+        "chance": 0.25,
+        "feature": {
+          "feature": "minecraft:huge_red_mushroom",
+          "placement": []
+        }
+      },
+      {
+        "chance": 0.25,
+        "feature": {
+          "feature": "arcana:huge_cordispora",
+          "placement": []
+        }
+      },
+      {
+        "chance": 0.25,
+        "feature": {
+          "feature": "arcana:huge_vishroom",
+          "placement": []
+        }
+      }
+    ]
   }
 }

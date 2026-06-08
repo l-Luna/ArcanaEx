@@ -29,6 +29,8 @@ public final class ArcanaTags{
 	public static final TagKey<Block> HALO_CONVERTED = TagKey.of(Registry.BLOCK_KEY, arcId("magical_plants"));
 	public static final TagKey<Block> EARTHMOVER_MINEABLE = TagKey.of(Registry.BLOCK_KEY, arcId("earthmover_mineable"));
 	
+	public static final TagKey<Block> HUGE_MUSHROOM_REPLACEABLES = TagKey.of(Registry.BLOCK_KEY, arcId("worldgen/huge_mushroom_replaceables"));
+	
 	public static final TagKey<Item> SILVERWOOD_LOGS = TagKey.of(Registry.ITEM_KEY, arcId("silverwood_logs"));
 	public static final TagKey<Item> GREATWOOD_LOGS = TagKey.of(Registry.ITEM_KEY, arcId("greatwood_logs"));
 	public static final TagKey<Item> TAINTWOOD_LOGS = TagKey.of(Registry.ITEM_KEY, arcId("taintwood_logs"));

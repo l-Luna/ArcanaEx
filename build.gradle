@@ -49,6 +49,10 @@ repositories {
 		name = 'GeckoLib'
 		url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
 	}
+	repositories {
+		// Terrablender
+		maven { url = 'https://maven.minecraftforge.net/' }
+	}
 }
 
 loom {
@@ -84,6 +88,7 @@ dependencies {
 	modImplementation "com.terraformersmc:modmenu:4.0.6"
 	modImplementation "dev.emi:emi-fabric:${emi_version}"
 	modImplementation 'software.bernie.geckolib:geckolib-fabric-1.19:3.1.40'
+	modImplementation "com.github.glitchfiend:TerraBlender-fabric:${terrablender_version}"
 
 	for(String cc_module : ["base", "world", "entity", "chunk"])
 		modImplementation include("dev.onyxstudios.cardinal-components-api:cardinal-components-${cc_module}:${cardinal_comp_version}") {

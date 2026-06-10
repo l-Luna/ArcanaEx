@@ -55,6 +55,12 @@ loom {
 			vmArg "-Dfabric-api.datagen.modid=arcana"
 			vmArg "-Dfabric-api.datagen.output-dir=${file("src/generated/resources")}"
 		}
+
+		clientCompat {
+			inherit client
+			configName = "Minecraft Client w/ Compat"
+			runDir = "run-compat"
+		}
 	}
 }
 

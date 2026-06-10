@@ -32,4 +32,5 @@ bin/
 
 run/
 run-server/
+run-compat/
 /src/generated/resources/.cache/

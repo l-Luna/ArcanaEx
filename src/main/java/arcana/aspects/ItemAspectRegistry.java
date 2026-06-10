@@ -236,6 +236,8 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 	}
 	
 	private AspectMap generate(Item item){
+		if(item == Items.AIR)
+			return new AspectMap();
 		if(generating.contains(item)){
 			// counts as nothing to itself
 			logger.warn("Encountered cycle picking aspects for {}", Registry.ITEM.getId(item));
@@ -245,7 +247,7 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 		// consider every recipe that produces this
 		List<AspectMap> choices = new ArrayList<>();
 		for(Recipe<?> recipe : recipes.values()){
-			if(recipe.getOutput().getItem().equals(item)){
+			if(recipe.getOutput().getItem().equals(item) && recipe.getOutput().getCount() > 0){
 				AspectMap collected = new AspectMap();
 				List<Ingredient> ingredients = recipe.getIngredients();
 				if(ingredientProviders.containsKey(recipe.getClass())){

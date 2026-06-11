@@ -1,0 +1,12 @@
+{
+  "feature": "arcana:surface_node",
+  "placement": [
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:heightmap",
+      "heightmap": "MOTION_BLOCKING_NO_LEAVES"
+    }
+  ]
+}

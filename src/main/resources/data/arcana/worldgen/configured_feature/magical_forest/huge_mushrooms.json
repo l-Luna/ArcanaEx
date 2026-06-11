@@ -23,14 +23,14 @@
       {
         "chance": 0.25,
         "feature": {
-          "feature": "arcana:huge_cordispora",
+          "feature": "arcana:magical_forest/huge_cordispora",
           "placement": []
         }
       },
       {
         "chance": 0.25,
         "feature": {
-          "feature": "arcana:huge_vishroom",
+          "feature": "arcana:magical_forest/huge_vishroom",
           "placement": []
         }
       }

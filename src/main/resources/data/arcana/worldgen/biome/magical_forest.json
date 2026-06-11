@@ -72,7 +72,7 @@
       "minecraft:disk_sand",
       "minecraft:disk_clay",
       "minecraft:disk_gravel",
-      "arcana:magical_forest_podzol_patch"
+      "arcana:magical_forest/podzol_patch"
     ],
     [],
     [
@@ -82,16 +82,16 @@
     [
       "minecraft:glow_lichen",
       "minecraft:flower_forest_flowers",
-      "minecraft:trees_flower_forest",
-      "arcana:magical_forest_mushroom",
+      "arcana:magical_forest/trees",
+      "arcana:magical_forest/huge_mushrooms",
       "minecraft:flower_flower_forest",
       "minecraft:patch_grass_badlands",
       "minecraft:brown_mushroom_normal",
       "minecraft:red_mushroom_normal",
       "minecraft:patch_sugar_cane",
       "minecraft:patch_pumpkin",
-      "arcana:cordispora_patch",
-      "arcana:vishroom_patch"
+      "arcana:magical_forest/cordispora_patch",
+      "arcana:magical_forest/vishroom_patch"
     ],
     [
       "minecraft:freeze_top_layer"

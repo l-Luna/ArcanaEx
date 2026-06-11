@@ -41,15 +41,13 @@ import arcana.util.RandomChanceOnceLootCondition;
 import arcana.util.TagGiftLootEntry;
 import arcana.worldgen.HangingNodeFeature;
 import arcana.worldgen.SurfaceNodeFeature;
-import arcana.worldgen.geodes.NodalGeodes;
+import arcana.worldgen.geodes.NodalGeodeFeature;
 import arcana.worldgen.greatwood.GreatwoodFoliagePlacer;
 import arcana.worldgen.greatwood.GreatwoodSaplingGenerator;
-import arcana.worldgen.greatwood.GreatwoodTree;
 import arcana.worldgen.greatwood.GreatwoodTrunkPlacer;
 import arcana.worldgen.mushroom.StructureMushroomFeature;
 import arcana.worldgen.silverwood.SilverwoodFoliagePlacer;
 import arcana.worldgen.silverwood.SilverwoodSaplingGenerator;
-import arcana.worldgen.silverwood.SilverwoodTree;
 import arcana.worldgen.silverwood.SilverwoodTrunkPlacer;
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
@@ -1391,36 +1389,18 @@ public final class ArcanaRegistry{
 		register("surface_node", SURFACE_NODE_CONF_FEATURE);
 		register("surface_node", SURFACE_NODE_PLACED_FEATURE);
 		
-		register("nodal_geode", NodalGeodes.NODAL_GEODE_FEATURE);
-		register("air_geode", NodalGeodes.AIR_GEODE);
-		register("air_geode", NodalGeodes.PLACED_AIR_GEODE);
-		register("fire_geode", NodalGeodes.FIRE_GEODE);
-		register("fire_geode", NodalGeodes.PLACED_FIRE_GEODE);
-		register("water_geode", NodalGeodes.WATER_GEODE);
-		register("water_geode", NodalGeodes.PLACED_WATER_GEODE);
-		register("earth_geode", NodalGeodes.EARTH_GEODE);
-		register("earth_geode", NodalGeodes.PLACED_EARTH_GEODE);
-		register("order_geode", NodalGeodes.ORDER_GEODE);
-		register("order_geode", NodalGeodes.PLACED_ORDER_GEODE);
-		register("entropy_geode", NodalGeodes.ENTROPY_GEODE);
-		register("entropy_geode", NodalGeodes.PLACED_ENTROPY_GEODE);
-		
 		register("hanging_node", HANGING_NODE_FEATURE);
 		register("hanging_node", HANGING_NODE_CONF_FEATURE);
 		register("hanging_node", HANGING_NODE_PLACED_FEATURE);
 		
+		// features, but we actually use JSON properly
+		register("nodal_geode", new NodalGeodeFeature());
+		register("structure_mushroom", new StructureMushroomFeature());
+		
 		register("silverwood_foliage", SilverwoodFoliagePlacer.TYPE);
 		register("silverwood_trunk", SilverwoodTrunkPlacer.TYPE);
-		register("silverwood_tree", SilverwoodTree.SILVERWOOD_TREE);
-		register("silverwood_tree", SilverwoodTree.SCATTERED_SILVERWOOD_TREE);
-		
 		register("greatwood_foliage", GreatwoodFoliagePlacer.TYPE);
 		register("greatwood_trunk", GreatwoodTrunkPlacer.TYPE);
-		register("greatwood_tree", GreatwoodTree.GREATWOOD_TREE);
-		register("greatwood_tree", GreatwoodTree.SCATTERED_GREATWOOD_TREE);
-		
-		// features, but we actually use json properly
-		register("structure_mushroom", new StructureMushroomFeature());
 		
 		// structures
 		register("crimson_outpost", CRIMSON_OUTPOST, CRIMSON_OUTPOST_PLACEMENT);

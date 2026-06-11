@@ -110,14 +110,10 @@ import net.minecraft.world.gen.YOffset;
 import net.minecraft.world.gen.chunk.placement.RandomSpreadStructurePlacement;
 import net.minecraft.world.gen.chunk.placement.SpreadType;
 import net.minecraft.world.gen.chunk.placement.StructurePlacement;
-import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.foliage.FoliagePlacerType;
 import net.minecraft.world.gen.heightprovider.ConstantHeightProvider;
 import net.minecraft.world.gen.heightprovider.UniformHeightProvider;
-import net.minecraft.world.gen.placementmodifier.BiomePlacementModifier;
-import net.minecraft.world.gen.placementmodifier.HeightmapPlacementModifier;
-import net.minecraft.world.gen.placementmodifier.RarityFilterPlacementModifier;
-import net.minecraft.world.gen.placementmodifier.SquarePlacementModifier;
 import net.minecraft.world.gen.structure.JigsawStructure;
 import net.minecraft.world.gen.structure.Structure;
 import net.minecraft.world.gen.trunk.TrunkPlacerType;
@@ -659,27 +655,6 @@ public final class ArcanaRegistry{
 	public static LootSwapEnchantment TRANSMUTATIVE = new LootSwapEnchantment(EnchantmentTarget.WEAPON, LootSwapEnchantment.TRANSMUTATIVE_MAP, 1, 1.0f);
 	public static LootSwapEnchantment PURIFYING = new LootSwapEnchantment(EnchantmentTarget.DIGGER, LootSwapEnchantment.PURIFYING_MAP, 3, 0.2f);
 	public static Enchantment RUNIC_SHIELDING = new RunicShieldingEnchantment();
-	
-	// features...
-	// TODO: move elsewhere? e.g. to each feature's class
-	public static Feature<DefaultFeatureConfig> SURFACE_NODE_FEATURE = new SurfaceNodeFeature();
-	public static ConfiguredFeature<?, ?> SURFACE_NODE_CONF_FEATURE = new ConfiguredFeature<>(SURFACE_NODE_FEATURE, DefaultFeatureConfig.INSTANCE);
-	public static PlacedFeature SURFACE_NODE_PLACED_FEATURE = new PlacedFeature(
-			RegistryEntry.of(SURFACE_NODE_CONF_FEATURE),
-			List.of(HeightmapPlacementModifier.of(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES))
-	);
-	
-	public static Feature<DefaultFeatureConfig> HANGING_NODE_FEATURE = new HangingNodeFeature();
-	public static ConfiguredFeature<?, ?> HANGING_NODE_CONF_FEATURE = new ConfiguredFeature<>(HANGING_NODE_FEATURE, DefaultFeatureConfig.INSTANCE);
-	public static PlacedFeature HANGING_NODE_PLACED_FEATURE = new PlacedFeature(
-			RegistryEntry.of(HANGING_NODE_CONF_FEATURE),
-			List.of(
-					PlacedFeatures.BOTTOM_TO_TOP_RANGE,
-					RarityFilterPlacementModifier.of(3),
-					SquarePlacementModifier.of(),
-					BiomePlacementModifier.of()
-			)
-	);
 	
 	// structures
 	public static final RegistryEntry<StructurePool> CRIMSON_OUTPOST_STRUCTURE_POOL = StructurePools.register(
@@ -1385,15 +1360,8 @@ public final class ArcanaRegistry{
 		register("runic_shielding", RUNIC_SHIELDING);
 		
 		// features
-		register("surface_node", SURFACE_NODE_FEATURE);
-		register("surface_node", SURFACE_NODE_CONF_FEATURE);
-		register("surface_node", SURFACE_NODE_PLACED_FEATURE);
-		
-		register("hanging_node", HANGING_NODE_FEATURE);
-		register("hanging_node", HANGING_NODE_CONF_FEATURE);
-		register("hanging_node", HANGING_NODE_PLACED_FEATURE);
-		
-		// features, but we actually use JSON properly
+		register("hanging_node", new HangingNodeFeature());
+		register("surface_node", new SurfaceNodeFeature());
 		register("nodal_geode", new NodalGeodeFeature());
 		register("structure_mushroom", new StructureMushroomFeature());
 		
@@ -1505,14 +1473,6 @@ public final class ArcanaRegistry{
 	
 	private static void register(String name, Feature<?> feature){
 		Registry.register(Registry.FEATURE, arcId(name), feature);
-	}
-	
-	private static void register(String name, ConfiguredFeature<?, ?> feature){
-		Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, arcId(name), feature);
-	}
-	
-	private static void register(String name, PlacedFeature feature){
-		Registry.register(BuiltinRegistries.PLACED_FEATURE, arcId(name), feature);
 	}
 	
 	private static void register(String name, FoliagePlacerType<?> foliagePlacer){

@@ -8,8 +8,6 @@ import arcana.aura.Node;
 import arcana.aura.NodeType;
 import arcana.aura.NodeTypes;
 import arcana.blocks.CrystalClusterBlock;
-import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
-import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.tag.FluidTags;
@@ -17,18 +15,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.util.FeatureContext;
 
 import java.util.List;
-
-import static arcana.Arcana.arcId;
 
 public class SurfaceNodeFeature extends Feature<DefaultFeatureConfig>{
 	
@@ -38,14 +31,6 @@ public class SurfaceNodeFeature extends Feature<DefaultFeatureConfig>{
 	
 	public SurfaceNodeFeature(){
 		super(DefaultFeatureConfig.CODEC);
-	}
-	
-	public static void addToWorldgen(){
-		BiomeModifications.addFeature(
-				BiomeSelectors.foundInOverworld(),
-				GenerationStep.Feature.VEGETAL_DECORATION,
-				RegistryKey.of(Registry.PLACED_FEATURE_KEY, arcId("surface_node"))
-		);
 	}
 	
 	public boolean generate(FeatureContext<DefaultFeatureConfig> context){

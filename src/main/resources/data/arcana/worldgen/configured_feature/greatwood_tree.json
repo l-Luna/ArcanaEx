@@ -1,0 +1,40 @@
+{
+  "type": "minecraft:tree",
+  "config": {
+    "trunk_provider": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "arcana:greatwood_log"
+      }
+    },
+    "trunk_placer": {
+      "type": "arcana:greatwood_trunk",
+      "base_height": 4,
+      "height_rand_a": 2,
+      "height_rand_b": 0
+    },
+    "foliage_provider": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "arcana:greatwood_leaves"
+      }
+    },
+    "foliage_placer": {
+      "type": "arcana:greatwood_foliage",
+      "radius": 2,
+      "offset": 0,
+      "height": 15
+    },
+    "dirt_provider": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "minecraft:dirt"
+      }
+    },
+    "minimum_size": {
+      "type": "minecraft:two_layers_feature_size"
+    },
+    "decorators": [],
+    "ignore_vines": true
+  }
+}

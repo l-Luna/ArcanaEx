@@ -10,8 +10,8 @@ public class NodalGeodeFeatureConfig implements FeatureConfig{
 
 	public static final Codec<NodalGeodeFeatureConfig> CODEC = RecordCodecBuilder.create(
 			i -> i.group(
-					GeodeFeatureConfig.CODEC.fieldOf("geodeConfig").forGetter(x -> x.geodeConfig),
-					Aspect.CODEC.fieldOf("primaryAspect").forGetter(x -> x.primaryAspect)
+					GeodeFeatureConfig.CODEC.fieldOf("geode_config").forGetter(x -> x.geodeConfig),
+					Aspect.CODEC.fieldOf("primary_aspect").forGetter(x -> x.primaryAspect)
 			).apply(i, NodalGeodeFeatureConfig::new)
 	);
 	

@@ -2,32 +2,17 @@ package arcana.worldgen;
 
 import arcana.ArcanaRegistry;
 import arcana.util.SearchUtil;
-import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
-import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.util.FeatureContext;
-
-import static arcana.Arcana.arcId;
 
 public class HangingNodeFeature extends Feature<DefaultFeatureConfig>{
 	
 	public HangingNodeFeature(){
 		super(DefaultFeatureConfig.CODEC);
-	}
-	
-	public static void addToWorldgen(){
-		BiomeModifications.addFeature(
-				BiomeSelectors.foundInTheNether(),
-				GenerationStep.Feature.VEGETAL_DECORATION,
-				RegistryKey.of(Registry.PLACED_FEATURE_KEY, arcId("hanging_node"))
-		);
 	}
 	
 	public boolean generate(FeatureContext<DefaultFeatureConfig> context){

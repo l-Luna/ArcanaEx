@@ -20,11 +20,7 @@ import arcana.research.Research;
 import arcana.research.ResearchLoader;
 import arcana.util.RegistryMappingLoader;
 import arcana.warp.WarpEvents;
-import arcana.worldgen.HangingNodeFeature;
-import arcana.worldgen.SurfaceNodeFeature;
-import arcana.worldgen.geodes.NodalGeodes;
-import arcana.worldgen.greatwood.GreatwoodTree;
-import arcana.worldgen.silverwood.SilverwoodTree;
+import arcana.worldgen.ArcanaFeatures;
 import com.unascribed.lib39.dessicant.api.DessicantControl;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
@@ -73,11 +69,7 @@ public final class Arcana implements ModInitializer{
 		Research.setup();
 		WarpEvents.setup();
 		
-		SurfaceNodeFeature.addToWorldgen();
-		NodalGeodes.addToWorldgen();
-		HangingNodeFeature.addToWorldgen();
-		SilverwoodTree.addToWorldgen();
-		GreatwoodTree.addToWorldgen();
+		ArcanaFeatures.addToWorldgen();
 		
 		ResourceManagerHelper serverResources = ResourceManagerHelper.get(ResourceType.SERVER_DATA);
 		serverResources.registerReloadListener(ASPECT_REGISTRY);

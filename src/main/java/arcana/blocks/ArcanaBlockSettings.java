@@ -1,39 +1,40 @@
 package arcana.blocks;
 
+import arcana.ArcanaRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.MapColor;
-import net.minecraft.block.Material;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.tag.TagKey;
+import net.minecraft.registry.tag.TagKey;
 
+// TODO: use AW instead
 public class ArcanaBlockSettings extends FabricBlockSettings{
 	
 	private boolean dropsSelf = false;
 	private BlockLayer renderLayer = null;
 	private TagKey<Block> toolTag = null;
-	private ItemGroup group = null;
+	private ArcanaRegistry.Tab group = null;
 	
-	protected ArcanaBlockSettings(Material material, MapColor color){
-		super(material, color);
+	protected ArcanaBlockSettings(MapColor color){
+		super();
+		((AbstractBlock.Settings)this).mapColor(color);
 	}
 	
-	protected ArcanaBlockSettings(AbstractBlock.Settings settings){
+	/*protected ArcanaBlockSettings(AbstractBlock.Settings settings){
 		super(settings);
 		if(settings instanceof ArcanaBlockSettings abs){
 			dropsSelf = abs.dropsSelf;
 			renderLayer = abs.renderLayer;
 			toolTag = abs.toolTag;
 		}
-	}
+	}*/
 	
 	public static ArcanaBlockSettings of(Material material){
-		return new ArcanaBlockSettings(material, material.getColor());
+		return new ArcanaBlockSettings(MapColor.CYAN /*material.getColor()*/);
 	}
 	
 	public static ArcanaBlockSettings of(Material material, MapColor color){
-		return new ArcanaBlockSettings(material, color);
+		return new ArcanaBlockSettings(color);
 	}
 	
 	//
@@ -59,7 +60,7 @@ public class ArcanaBlockSettings extends FabricBlockSettings{
 		return this;
 	}
 	
-	public ArcanaBlockSettings group(ItemGroup group){
+	public ArcanaBlockSettings group(ArcanaRegistry.Tab group){
 		this.group = group;
 		return this;
 	}
@@ -78,7 +79,7 @@ public class ArcanaBlockSettings extends FabricBlockSettings{
 		return toolTag;
 	}
 	
-	public ItemGroup getGroup(){
+	public ArcanaRegistry.Tab getGroup(){
 		return group;
 	}
 	

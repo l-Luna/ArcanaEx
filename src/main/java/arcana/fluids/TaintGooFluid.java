@@ -5,13 +5,15 @@ import arcana.ArcanaTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.Item;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.tag.FluidTags;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.state.property.Properties;
-import net.minecraft.tag.FluidTags;
-import net.minecraft.tag.TagKey;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
@@ -62,15 +64,16 @@ public class TaintGooFluid extends ArcanaFluid{
 	}
 	
 	public void onEntityInteractTick(Entity entity){
-		if(entity instanceof LivingEntity lem && (lem.world.getTime() % 80 == 0 || !lem.hasStatusEffect(ArcanaRegistry.TAINTED)))
-			lem.addStatusEffect(new StatusEffectInstance(ArcanaRegistry.TAINTED, 5 * 20));
+		RegistryEntry<StatusEffect> e = RegistryEntry.of(ArcanaRegistry.TAINTED);
+		if(entity instanceof LivingEntity lem && (lem.getWorld().getTime() % 80 == 0 || !lem.hasStatusEffect(e)))
+			lem.addStatusEffect(new StatusEffectInstance(e, 5 * 20));
 	}
 	
-	protected boolean isInfinite(){
+	protected boolean isInfinite(World world){
 		return false;
 	}
 	
-	protected int getFlowSpeed(WorldView world){
+	protected int getMaxFlowDistance(WorldView world){
 		return 2;
 	}
 	

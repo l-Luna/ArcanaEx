@@ -5,11 +5,6 @@ import dev.emi.trinkets.api.TrinketsApi;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
-import net.minecraft.item.ArmorMaterial;
-import net.minecraft.item.Items;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import org.jetbrains.annotations.Nullable;
 
 public class GogglesOfRevealingItem extends ArmorItem{
@@ -24,7 +19,7 @@ public class GogglesOfRevealingItem extends ArmorItem{
 			|| TrinketsApi.getTrinketComponent(player).map(x -> x.isEquipped(ArcanaRegistry.MONOCLE_OF_REVEALING)).orElse(false);
 	}
 	
-	public static class Material implements ArmorMaterial{
+	/*public static class Material implements ArmorMaterial{
 		
 		public static Material instance = new Material();
 		
@@ -59,5 +54,5 @@ public class GogglesOfRevealingItem extends ArmorItem{
 		public float getKnockbackResistance(){
 			return 0;
 		}
-	}
+	}*/
 }

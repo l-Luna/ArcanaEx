@@ -15,7 +15,7 @@ import net.minecraft.world.World;
 
 public class FocusPouchItem extends Item implements FabricItem{
 	
-	public FocusPouchItem(Settings settings){
+	public FocusPouchItem(Item.Settings settings){
 		super(settings);
 	}
 	
@@ -40,7 +40,7 @@ public class FocusPouchItem extends Item implements FabricItem{
 		stack.getOrCreateNbt().put("Items", inventory.toNbtList());
 	}
 	
-	public boolean allowNbtUpdateAnimation(PlayerEntity player, Hand hand, ItemStack oldStack, ItemStack newStack){
+	public boolean allowComponentsUpdateAnimation(PlayerEntity player, Hand hand, ItemStack oldStack, ItemStack newStack){
 		return false;
 	}
 }

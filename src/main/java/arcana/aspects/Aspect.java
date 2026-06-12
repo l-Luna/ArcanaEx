@@ -1,6 +1,9 @@
 package arcana.aspects;
 
 import com.mojang.serialization.Codec;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -10,6 +13,9 @@ import org.jetbrains.annotations.NotNull;
 public record Aspect(Identifier id, Aspect left, Aspect right, int colour) implements Comparable<Aspect>{
 
 	public static final Codec<Aspect> CODEC = Identifier.CODEC.xmap(Aspects::byName, Aspect::id);
+	
+	// TODO: cache aspect indices?
+	public static final PacketCodec<ByteBuf, Aspect> PACKET_CODEC = PacketCodecs.indexed(Aspects.orderedAspects::get, Aspects.orderedAspects::indexOf);
 	
 	public MutableText name(){
 		return Text.translatable("aspect." + id.getNamespace() + "." + id.getPath());

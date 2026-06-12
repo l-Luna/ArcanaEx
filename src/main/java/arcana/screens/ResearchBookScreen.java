@@ -8,6 +8,7 @@ import arcana.research.*;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -396,19 +397,17 @@ public class ResearchBookScreen extends Screen{
 		return iconU;
 	}
 	
-	private void renderFrame(MatrixStack matrices){
-		RenderSystem.setShader(GameRenderer::getPositionTexShader);
-		RenderSystem.setShaderTexture(0, texture);
+	private void renderFrame(DrawContext ctx){
 		RenderSystem.setShaderColor(1, 1, 1, 1);
 		RenderSystem.enableBlend();
 		int fWidth = frameWidth(), fHeight = frameHeight();
 		int x = (width - fWidth) / 2, y = (height - fHeight) / 2;
-		RenderHelper.drawStretchableBox(matrices, x, y, 0, 0, fWidth, fHeight, 69, 140);
+		RenderHelper.drawStretchableBox(ctx, texture, x, y, 0, 0, fWidth, fHeight, 69, 140);
 		// decorations
-		drawTexture(matrices, (x + (fWidth / 2)) - 36, y, 140, 0, 72, 17);
-		drawTexture(matrices, (x + (fWidth / 2)) - 36, (y + fHeight) - 18, 140, 17, 72, 18);
-		drawTexture(matrices, x, (y + (fHeight / 2)) - 35, 140, 35, 17, 70);
-		drawTexture(matrices, x + fWidth - 17, (y + (fHeight / 2)) - 35, 157, 35, 17, 70);
+		ctx.drawTexture(texture, (x + (fWidth / 2)) - 36, y, 140, 0, 72, 17);
+		ctx.drawTexture(texture, (x + (fWidth / 2)) - 36, (y + fHeight) - 18, 140, 17, 72, 18);
+		ctx.drawTexture(texture, x, (y + (fHeight / 2)) - 35, 140, 35, 17, 70);
+		ctx.drawTexture(texture, x + fWidth - 17, (y + (fHeight / 2)) - 35, 157, 35, 17, 70);
 	}
 	
 	private void renderEntryTooltip(MatrixStack matrices, int mouseX, int mouseY){

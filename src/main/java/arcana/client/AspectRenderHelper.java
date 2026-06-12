@@ -11,62 +11,63 @@ import arcana.research.Research;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.tooltip.HoveredTooltipPositioner;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
-import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.*;
+import org.joml.Vector3f;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public final class AspectRenderHelper{
 	
-	public static void renderAspectStack(AspectStack stack, MatrixStack matrices, int x, int y, int z){
-		renderAspectStack(stack, matrices, MinecraftClient.getInstance().textRenderer, x, y, z);
+	public static void renderAspectStack(AspectStack stack, DrawContext ctx, int x, int y, int z){
+		renderAspectStack(stack, ctx, MinecraftClient.getInstance().textRenderer, x, y, z);
 	}
 	
-	public static void renderAspectStack(AspectStack stack, MatrixStack matrices, TextRenderer text, int x, int y, int z){
-		renderAspectStack(stack.type(), stack.amount(), matrices, text, false, x, y, z);
+	public static void renderAspectStack(AspectStack stack, DrawContext ctx, TextRenderer text, int x, int y, int z){
+		renderAspectStack(stack.type(), stack.amount(), ctx, text, false, x, y, z);
 	}
 	
-	public static void renderAspectStack(Aspect aspect, float amount, MatrixStack matrices, TextRenderer text, boolean alwaysDrawLabel, int x, int y, int z){
-		renderAspect(aspect, matrices, x, y, z, 1, 1, 1, 1);
+	public static void renderAspectStack(Aspect aspect, float amount, DrawContext ctx, TextRenderer text, boolean alwaysDrawLabel, int x, int y, int z){
+		renderAspect(aspect, ctx, x, y, z, 1, 1, 1, 1);
 		if(alwaysDrawLabel || amount > 1)
-			renderAspectStackOverlay(amount, matrices, text, x, y, z);
+			renderAspectStackOverlay(amount, ctx, text, x, y, z);
 	}
 	
 	public static void renderAspect(Aspect aspect, MatrixStack matrices, int x, int y, int z){
 		renderAspect(aspect, matrices, x, y, z, 1, 1, 1, 1);
 	}
 	
-	public static void renderAspect(Aspect aspect, MatrixStack matrices, int x, int y, int z, float r, float g, float b, float a){
-		RenderSystem.setShader(GameRenderer::getPositionColorTexShader);
+	public static void renderAspect(Aspect aspect, DrawContext ctx, int x, int y, int z, float r, float g, float b, float a){
 		RenderSystem.setShaderColor(1, 1, 1, 1);
 		RenderSystem.setShaderTexture(0, texture(aspect));
-		RenderHelper.drawTexture(matrices, x, y, z, 0, 0, 16, 16, 16, 16, r, g, b, a);
+		RenderHelper.drawTexture(ctx, x, y, z, 0, 0, 16, 16, 16, 16, r, g, b, a);
 	}
 	
 	public static Identifier texture(Aspect aspect){
-		return new Identifier(aspect.id().getNamespace(), "textures/aspects/%s.png".formatted(aspect.id().getPath()));
+		return Identifier.of(aspect.id().getNamespace(), "textures/aspects/%s.png".formatted(aspect.id().getPath()));
 	}
 	
-	public static void renderAspectStackOverlay(float amount, MatrixStack matrices, TextRenderer text, int x, int y, int z){
-		renderAspectStackOverlay(amount, matrices, text, x, y, z, 0xFFFFFFFF);
+	public static void renderAspectStackOverlay(float amount, DrawContext ctx, TextRenderer text, int x, int y, int z){
+		renderAspectStackOverlay(amount, ctx, text, x, y, z, 0xFFFFFFFF);
 	}
 	
-	public static void renderAspectStackOverlay(float amount, MatrixStack matrices, TextRenderer text, int x, int y, int z, int colour){
-		matrices.push();
-		matrices.translate(0, 0, z + 1);
+	public static void renderAspectStackOverlay(float amount, DrawContext ctx, TextRenderer text, int x, int y, int z, int colour){
+		ctx.getMatrices().push();
+		ctx.getMatrices().translate(0, 0, z + 1);
 		String label = amount != (int)amount ? String.format("%.1f", amount) : String.valueOf((int)amount);
 		if(amount < 100)
-			text.drawWithShadow(matrices, label, x + 18 - text.getWidth(label), y + 9, colour);
+			ctx.drawTextWithShadow(text, label, x + 18 - text.getWidth(label), y + 9, colour);
 		else
-			RenderHelper.drawTinyNumbers(matrices,
+			RenderHelper.drawTinyNumbers(ctx,
 					label,
 					x + 23 - label.length() * 5,
 					y + 19,
@@ -75,22 +76,22 @@ public final class AspectRenderHelper{
 					ColorHelper.Argb.getBlue(colour) / 255f,
 					ColorHelper.Argb.getAlpha(colour) / 255f
 			);
-		matrices.pop();
+		ctx.getMatrices().pop();
 	}
 	
-	public static void renderAspectsInWorld(MatrixStack matrices, PlayerEntity player, AspectMap aspects, BlockPos pos, Vec3f offset){
+	public static void renderAspectsInWorld(MatrixStack matrices, PlayerEntity player, AspectMap aspects, BlockPos pos, Vector3f offset){
 		if(player == null)
 			return;
-		Vec3d playerPos = player.getLerpedPos(MinecraftClient.getInstance().getTickDelta());
+		Vec3d playerPos = player.getLerpedPos(MinecraftClient.getInstance().getRenderTickCounter().getTickDelta(true));
 		
 		matrices.push();
 		// apply centering before rotation
 		matrices.translate(0.5, 0, 0.5);
 		double diffX = pos.getX() - playerPos.getX() + 0.5, diffZ = pos.getZ() - playerPos.getZ() + 0.5;
 		float angle = (float)Math.atan2(diffX, diffZ);
-		matrices.multiply(Quaternion.fromEulerXyz(new Vec3f(0, angle, 0)));
+		matrices.multiply(RotationAxis.POSITIVE_Y.rotation(angle));
 		// but block-specific offset after
-		matrices.translate(offset.getX(), offset.getY(), offset.getZ());
+		matrices.translate(offset.x(), offset.y(), offset.z());
 		
 		List<AspectStack> stacks = aspects.asStacks();
 		
@@ -111,7 +112,7 @@ public final class AspectRenderHelper{
 			var scale = 24f;
 			matrices.scale(1 / scale, 1 / scale, -1 / scale);
 			matrices.translate(16 * (width / 2d - (i % wrap)), 16 * (i / wrap), 0);
-			matrices.multiply(Quaternion.fromEulerXyz(0, 0, (float)Math.PI));
+			matrices.multiply(RotationAxis.POSITIVE_Z.rotation(MathHelper.PI));
 			RenderSystem.enableDepthTest();
 			RenderSystem.enableBlend();
 			RenderSystem.defaultBlendFunc();
@@ -122,8 +123,8 @@ public final class AspectRenderHelper{
 		matrices.pop();
 	}
 	
-	public static void renderAspectTooltip(Aspect aspect, MatrixStack matrices, int x, int y){
-		MinecraftClient.getInstance().currentScreen.renderTooltipFromComponents(matrices, tooltips(aspect), x, y);
+	public static void renderAspectTooltip(Aspect aspect, DrawContext ctx, int x, int y){
+		ctx.drawTooltip(MinecraftClient.getInstance().textRenderer, tooltips(aspect), x, y, HoveredTooltipPositioner.INSTANCE);
 	}
 	
 	public static List<TooltipComponent> tooltips(Aspect aspect){

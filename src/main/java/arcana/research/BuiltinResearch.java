@@ -18,8 +18,6 @@ public final class BuiltinResearch{
 	
 	public static final Identifier rootEntry = arcId("root");
 	
-	public static final Identifier fluxEntry = arcId("flux");
-	
 	public static final Identifier researchTutorialEntry = arcId("research");
 	public static final Identifier researchTutorialPuzzle = arcId("chemistry_intro_puzzle");
 	
@@ -66,10 +64,7 @@ public final class BuiltinResearch{
 			researcher.completePuzzle(wandMilestonePuzzle);
 			researcher.doSync();
 		}
-		if(player.getInventory().containsAny(stack -> {
-			Integer level = EnchantmentHelper.get(stack).get(ArcanaRegistry.PROJECTING);
-			return level != null && level > 0;
-		}) && !researcher.isAddendumComplete(projectingAddendum)){
+		if(player.getInventory().containsAny(stack -> EnchantmentHelper.getLevel(ArcanaRegistry.PROJECTING, stack) > 0) && !researcher.isAddendumComplete(projectingAddendum)){
 			researcher.completeEntry(Research.getEntry(crimsonEquipmentEntry));
 			researcher.completeAddendum(projectingAddendum);
 			researcher.doSync();
@@ -92,7 +87,7 @@ public final class BuiltinResearch{
 	}
 	
 	public static void checkTick(PlayerEntity player){
-		AuraWorld aura = AuraWorld.from(player.world);
+		AuraWorld aura = AuraWorld.from(player.getWorld());
 		Box nodeBox = new Box(player.getPos().add(6, 6, 6), player.getPos().subtract(6, 6, 6));
 		for(Node node : aura.getNodesInBounds(nodeBox)){
 			if(node.getType() == NodeTypes.ELDRITCH)
@@ -104,15 +99,15 @@ public final class BuiltinResearch{
 		}
 		
 		Researcher researcher = Researcher.from(player);
-		if(player.getPos().y < player.world.getBottomY() + 20 && !researcher.isPuzzleComplete(lowestDepthsPuzzle)){
+		if(player.getPos().y < player.getWorld().getBottomY() + 20 && !researcher.isPuzzleComplete(lowestDepthsPuzzle)){
 			researcher.completePuzzle(lowestDepthsPuzzle);
 			researcher.doSync();
 		}
-		if(player.getPos().y > player.world.getTopY() - 30 && !researcher.isPuzzleComplete(highestReachPuzzle)){
+		if(player.getPos().y > player.getWorld().getTopY() - 30 && !researcher.isPuzzleComplete(highestReachPuzzle)){
 			researcher.completePuzzle(highestReachPuzzle);
 			researcher.doSync();
 		}
-		AuraChunk auraHere = AuraChunk.from(player.world, player.getBlockPos());
+		AuraChunk auraHere = AuraChunk.from(player.getWorld(), player.getBlockPos());
 		if(auraHere != null && auraHere.flux() > 40 && !researcher.isPuzzleComplete(fluxPuzzle)){
 			researcher.completePuzzle(fluxPuzzle);
 			researcher.doSync();

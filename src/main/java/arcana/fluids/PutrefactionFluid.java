@@ -9,8 +9,8 @@ import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.Item;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.state.property.Properties;
-import net.minecraft.tag.TagKey;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
@@ -58,11 +58,11 @@ public class PutrefactionFluid extends ArcanaFluid{
 		return 0.1f;
 	}
 	
-	protected boolean isInfinite(){
+	protected boolean isInfinite(World world){
 		return false;
 	}
 	
-	protected int getFlowSpeed(WorldView world){
+	protected int getMaxFlowDistance(WorldView world){
 		return 4;
 	}
 	

@@ -15,10 +15,6 @@ import arcana.client.particles.AspectParticleEffect;
 import arcana.client.particles.CubeParticleEffect;
 import arcana.components.RunicShielding;
 import arcana.effects.*;
-import arcana.enchantments.LootSwapEnchantment;
-import arcana.enchantments.ProjectingEnchantment;
-import arcana.enchantments.RunicShieldingEnchantment;
-import arcana.enchantments.WarpingCurseEnchantment;
 import arcana.entities.PrismaticOrbEntity;
 import arcana.entities.ThrownAlumentumEntity;
 import arcana.entities.ThrownTaintBottleEntity;
@@ -43,35 +39,28 @@ import arcana.worldgen.HangingNodeFeature;
 import arcana.worldgen.SurfaceNodeFeature;
 import arcana.worldgen.geodes.NodalGeodeFeature;
 import arcana.worldgen.greatwood.GreatwoodFoliagePlacer;
-import arcana.worldgen.greatwood.GreatwoodSaplingGenerator;
 import arcana.worldgen.greatwood.GreatwoodTrunkPlacer;
 import arcana.worldgen.mushroom.StructureMushroomFeature;
 import arcana.worldgen.silverwood.SilverwoodFoliagePlacer;
-import arcana.worldgen.silverwood.SilverwoodSaplingGenerator;
 import arcana.worldgen.silverwood.SilverwoodTrunkPlacer;
-import com.google.common.collect.ImmutableList;
-import com.mojang.datafixers.util.Pair;
-import com.unascribed.lib39.fractal.api.ItemSubGroup;
 import com.unascribed.lib39.weld.api.BigBlock;
 import com.unascribed.lib39.weld.api.BigBlockItem;
 import dev.emi.trinkets.api.TrinketItem;
-import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
-import net.fabricmc.fabric.api.object.builder.v1.sign.SignTypeRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.world.poi.PointOfInterestHelper;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
-import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBiomeTags;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentTarget;
-import net.minecraft.entity.*;
-import net.minecraft.entity.attribute.EntityAttribute;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.FoodComponent;
+import net.minecraft.entity.EntityDimensions;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffect;
@@ -81,45 +70,33 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.fluid.FlowableFluid;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.*;
-import net.minecraft.item.Item.Settings;
-import net.minecraft.loot.condition.LootConditionType;
-import net.minecraft.loot.entry.LootPoolEntryType;
 import net.minecraft.particle.BlockStateParticleEffect;
-import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.particle.ParticleType;
+import net.minecraft.particle.SimpleParticleType;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.resource.featuretoggle.FeatureSet;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
-import net.minecraft.structure.StructureSet;
-import net.minecraft.structure.pool.StructurePool;
-import net.minecraft.structure.pool.StructurePoolElement;
-import net.minecraft.structure.pool.StructurePools;
-import net.minecraft.tag.TagKey;
-import net.minecraft.util.Identifier;
+import net.minecraft.util.ColorCode;
 import net.minecraft.util.Rarity;
-import net.minecraft.util.SignType;
-import net.minecraft.util.registry.*;
-import net.minecraft.world.Heightmap;
-import net.minecraft.world.StructureSpawns;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.GenerationStep;
-import net.minecraft.world.gen.StructureTerrainAdaptation;
-import net.minecraft.world.gen.YOffset;
 import net.minecraft.world.gen.chunk.placement.RandomSpreadStructurePlacement;
 import net.minecraft.world.gen.chunk.placement.SpreadType;
 import net.minecraft.world.gen.chunk.placement.StructurePlacement;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.foliage.FoliagePlacerType;
-import net.minecraft.world.gen.heightprovider.ConstantHeightProvider;
-import net.minecraft.world.gen.heightprovider.UniformHeightProvider;
-import net.minecraft.world.gen.structure.JigsawStructure;
-import net.minecraft.world.gen.structure.Structure;
 import net.minecraft.world.gen.trunk.TrunkPlacerType;
 import net.minecraft.world.poi.PointOfInterestType;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.function.ToIntFunction;
 
 import static arcana.Arcana.arcId;
@@ -128,34 +105,30 @@ import static arcana.blocks.ArcanaBlockSettings.BlockLayer.TRANSLUCENT;
 import static arcana.blocks.ArcanaBlockSettings.of;
 import static arcana.items.CapItem.capProperties;
 import static arcana.items.CoreItem.coreProperties;
-import static net.minecraft.tag.BlockTags.*;
+import static net.minecraft.registry.tag.BlockTags.*;
 
 public final class ArcanaRegistry{
 	
-	public static class Tab{
-		public static final ItemGroup ARCANA = FabricItemGroupBuilder.build(
-				arcId("group"),
-				() -> new ItemStack(ARCANUM)
-		);
-		public static final ItemSubGroup MAIN = ItemSubGroup.create(ARCANA, arcId("main"));
-		public static final ItemSubGroup RESOURCES = ItemSubGroup.create(ARCANA, arcId("resources"));
-		public static final ItemSubGroup EQUIPMENT = ItemSubGroup.create(ARCANA, arcId("equipment"));
-		public static final ItemSubGroup WANDS = ItemSubGroup.create(ARCANA, arcId("wands"));
-		public static final ItemSubGroup CRYSTALS = ItemSubGroup.create(ARCANA, arcId("crystals"));
-		public static final ItemSubGroup PHIALS = ItemSubGroup.create(ARCANA, arcId("phials"));
-		public static final ItemSubGroup TAINTED = ItemSubGroup.create(ARCANA, arcId("tainted"));
-		public static final ItemSubGroup CREATIVE = ItemSubGroup.create(ARCANA, arcId("creative"));
+	public enum Tab{
+		MAIN,
+		RESOURCES,
+		EQUIPMENT,
+		WANDS,
+		CRYSTALS,
+		PHIALS,
+		TAINTED,
+		CREATIVE
 	}
 	
-	private static final Settings GROUPED = new Settings().group(Tab.MAIN);
-	private static final Settings GROUPED_SINGLE = new Settings().group(Tab.MAIN).maxCount(1);
+	private static final ArcanaItemSettings GROUPED = new ArcanaItemSettings().group(Tab.MAIN);
+	private static final ArcanaItemSettings GROUPED_SINGLE = new ArcanaItemSettings().group(Tab.MAIN).maxCount(1);
 	
-	private static final Settings GROUPED_RES = new Settings().group(Tab.RESOURCES);
+	private static final ArcanaItemSettings GROUPED_RES = new ArcanaItemSettings().group(Tab.RESOURCES);
 	
-	private static final Settings GROUPED_WAND = new Settings().group(Tab.WANDS);
-	private static final Settings GROUPED_WAND_SINGLE = new Settings().group(Tab.WANDS).maxCount(1);
+	private static final ArcanaItemSettings GROUPED_WAND = new ArcanaItemSettings().group(Tab.WANDS);
+	private static final ArcanaItemSettings GROUPED_WAND_SINGLE = new ArcanaItemSettings().group(Tab.WANDS).maxCount(1);
 	
-	private static final Settings GROUPED_CREATIVE_SINGLE = new Settings().group(Tab.CREATIVE).maxCount(1).rarity(Rarity.EPIC);
+	private static final ArcanaItemSettings GROUPED_CREATIVE_SINGLE = new ArcanaItemSettings().group(Tab.CREATIVE).maxCount(1).rarity(Rarity.EPIC);
 	
 	// fluids...
 	public static final FlowableFluid STILL_TAINT_GOO = new TaintGooFluid(true);
@@ -173,23 +146,23 @@ public final class ArcanaRegistry{
 	public static final StatusEffect ARCANE_DISCHARGE = new ArcanaStatusEffect(StatusEffectCategory.BENEFICIAL, 0xF881D6);
 	public static final StatusEffect WARP_WARD = new ArcanaStatusEffect(StatusEffectCategory.BENEFICIAL, 0xBFEBF8);
 	public static final StatusEffect AIR_POWER = new AspectPowerStatusEffect(Aspects.AIR)
-			.addAttributeModifier(EntityAttributes.GENERIC_MOVEMENT_SPEED, "63c5f0ac-285e-42b7-9744-32d527655214", .1f, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+			.addAttributeModifier(EntityAttributes.GENERIC_MOVEMENT_SPEED, arcId("air_power/movement_speed"), .1f, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
 	public static final StatusEffect FIRE_POWER = new AspectPowerStatusEffect(Aspects.FIRE);
 	public static final StatusEffect WATER_POWER = new AspectPowerStatusEffect(Aspects.WATER);
 	public static final StatusEffect EARTH_POWER = new AspectPowerStatusEffect(Aspects.EARTH)
-			.addAttributeModifier(EntityAttributes.GENERIC_ATTACK_SPEED, "fa52fb6d-66c8-4e3a-9afd-dcc8de1114b5", .1f, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+			.addAttributeModifier(EntityAttributes.GENERIC_ATTACK_SPEED, arcId("earth_power/attack_speed"), .1f, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
 	public static final StatusEffect ORDER_POWER = new AspectPowerStatusEffect(Aspects.ORDER)
-			.addAttributeModifier(EntityAttributes.GENERIC_ARMOR, "518d94ba-0c3c-4706-89c6-ed2c47437e53", 2, EntityAttributeModifier.Operation.ADDITION)
-			.addAttributeModifier(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, "6aef6e54-29b8-4cfc-a219-2fdcf22cc557", .1f, EntityAttributeModifier.Operation.ADDITION);
+			.addAttributeModifier(EntityAttributes.GENERIC_ARMOR, arcId("order_power/armor"), 2, EntityAttributeModifier.Operation.ADD_VALUE)
+			.addAttributeModifier(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, arcId("ordo_power/knockback_resistance"), .1f, EntityAttributeModifier.Operation.ADD_VALUE);
 	public static final StatusEffect ENTROPY_POWER = new AspectPowerStatusEffect(Aspects.ENTROPY)
-			.addAttributeModifier(EntityAttributes.GENERIC_ATTACK_DAMAGE, "acf64683-f1b5-4518-bd64-5ffb72918ab6", .1f, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+			.addAttributeModifier(EntityAttributes.GENERIC_ATTACK_DAMAGE, arcId("entropy_power/attack_damage"), .1f, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
 	
 	public static final StatusEffect PRESSURE = new PressureStatusEffect();
 	
 	// items...
 	public static final Item SCRIBBLED_NOTES = new ScribbledNotesItem(GROUPED_SINGLE);
-	public static final Item SCRIBING_TOOLS = new Item(new Settings().group(Tab.MAIN).maxDamage(200));
-	public static final Item GOGGLES_OF_REVEALING = new GogglesOfRevealingItem(new Settings().group(Tab.MAIN).maxCount(1));
+	public static final Item SCRIBING_TOOLS = new Item(new ArcanaItemSettings().group(Tab.MAIN).maxDamage(200));
+	public static final Item GOGGLES_OF_REVEALING = new GogglesOfRevealingItem(new ArcanaItemSettings().group(Tab.MAIN).maxCount(1));
 	public static final Item MONOCLE_OF_REVEALING = new TrinketItem(GROUPED_SINGLE);
 	public static final Item INTROSPECTIVE_LENS = new Item(GROUPED_SINGLE);
 	public static final Item REVELATORY_LENS = new Item(GROUPED_SINGLE);
@@ -200,46 +173,46 @@ public final class ArcanaRegistry{
 	public static final Item TOME_OF_SHARING = new TomeOfSharingItem(GROUPED_SINGLE);
 	public static final Item CHEATERS_ARCANUM = new CheatersArcanumItem(GROUPED_CREATIVE_SINGLE);
 	
-	public static final Item RESEARCH_NOTES = new ResearchNotesItem(new Settings().maxCount(1), false);
-	public static final Item COMPLETE_RESEARCH_NOTES = new ResearchNotesItem(new Settings().maxCount(1), true);
+	public static final Item RESEARCH_NOTES = new ResearchNotesItem(new ArcanaItemSettings().maxCount(1), false);
+	public static final Item COMPLETE_RESEARCH_NOTES = new ResearchNotesItem(new ArcanaItemSettings().maxCount(1), true);
 	
-	public static final Item TAINT_GOO_BUCKET = new BucketItem(STILL_TAINT_GOO, new Settings().group(Tab.MAIN).maxCount(1).recipeRemainder(Items.BUCKET));
-	public static final Item PUTREFACTION_BUCKET = new BucketItem(STILL_PUTREFACTION, new Settings().group(Tab.MAIN).maxCount(1).recipeRemainder(Items.BUCKET));
+	public static final Item TAINT_GOO_BUCKET = new BucketItem(STILL_TAINT_GOO, new ArcanaItemSettings().group(Tab.MAIN).maxCount(1).recipeRemainder(Items.BUCKET));
+	public static final Item PUTREFACTION_BUCKET = new BucketItem(STILL_PUTREFACTION, new ArcanaItemSettings().group(Tab.MAIN).maxCount(1).recipeRemainder(Items.BUCKET));
 	
 	public static final Item FLUX_METER = new Item(GROUPED_SINGLE);
 	public static final Item TAINT_IN_A_BOTTLE = new TaintInABottleItem(GROUPED);
-	public static final Item DRINKABLE_TAINT = new DrinkableTaintItem(new Settings().group(Tab.MAIN).maxCount(1).food(new FoodComponent.Builder()
-			.hunger(4)
+	public static final Item DRINKABLE_TAINT = new DrinkableTaintItem(new ArcanaItemSettings().group(Tab.MAIN).maxCount(1).food(new FoodComponent.Builder()
+			.nutrition(4)
 			.saturationModifier(1.1f)
-			.statusEffect(new StatusEffectInstance(TAINTED, 40 * 20, 1), 1)
+			.statusEffect(new StatusEffectInstance(RegistryEntry.of(TAINTED), 40 * 20, 1), 1)
 			.build()));
 	
-	public static final Item PERSONAL_MAGIC_MIRROR = new PersonalMagicMirrorItem(new Settings().group(Tab.MAIN).maxCount(1));
+	public static final Item PERSONAL_MAGIC_MIRROR = new PersonalMagicMirrorItem(new ArcanaItemSettings().group(Tab.MAIN).maxCount(1));
 	
-	public static final Item RAREFIED_SHERBERT = new Item(new Settings().group(Tab.MAIN).food(aspectCandyFood(AIR_POWER)));
-	public static final Item SOBERING_SYRUP = new Item(new Settings().group(Tab.MAIN).food(aspectCandyFood(FIRE_POWER)));
-	public static final Item SEAFOAM_SODA = new Item(new Settings().group(Tab.MAIN).food(aspectCandyFood(WATER_POWER)));
-	public static final Item BEDROCK_CANDY = new Item(new Settings().group(Tab.MAIN).food(aspectCandyFood(EARTH_POWER)));
-	public static final Item GUMMY_CUBES = new Item(new Settings().group(Tab.MAIN).food(aspectCandyFood(ORDER_POWER)));
-	public static final Item TWISTED_LIQUORICE = new Item(new Settings().group(Tab.MAIN).food(aspectCandyFood(ENTROPY_POWER)));
+	public static final Item RAREFIED_SHERBERT = new Item(new ArcanaItemSettings().group(Tab.MAIN).food(aspectCandyFood(AIR_POWER)));
+	public static final Item SOBERING_SYRUP = new Item(new ArcanaItemSettings().group(Tab.MAIN).food(aspectCandyFood(FIRE_POWER)));
+	public static final Item SEAFOAM_SODA = new Item(new ArcanaItemSettings().group(Tab.MAIN).food(aspectCandyFood(WATER_POWER)));
+	public static final Item BEDROCK_CANDY = new Item(new ArcanaItemSettings().group(Tab.MAIN).food(aspectCandyFood(EARTH_POWER)));
+	public static final Item GUMMY_CUBES = new Item(new ArcanaItemSettings().group(Tab.MAIN).food(aspectCandyFood(ORDER_POWER)));
+	public static final Item TWISTED_LIQUORICE = new Item(new ArcanaItemSettings().group(Tab.MAIN).food(aspectCandyFood(ENTROPY_POWER)));
 	
-	public static final Item SILVERLEAF_BREW = new DrinkItem(new Settings().group(Tab.MAIN).maxCount(1).food(new FoodComponent.Builder()
-			.hunger(2)
+	public static final Item SILVERLEAF_BREW = new DrinkItem(new ArcanaItemSettings().group(Tab.MAIN).maxCount(1).food(new FoodComponent.Builder()
+			.nutrition(2)
 			.saturationModifier(0.25f)
 			.alwaysEdible()
-			.statusEffect(new StatusEffectInstance(WARP_WARD, 8 * 60 * 20, 0, true, true), 1)
+			.statusEffect(new StatusEffectInstance(RegistryEntry.of(WARP_WARD), 8 * 60 * 20, 0, true, true), 1)
 			.build()));
 	
 	public static final Item ARCANIUM_INGOT = new Item(GROUPED_RES);
-	public static final Item ARCANIUM_SWORD = new SwordItem(ArcanaToolMaterials.ARCANIUM, 3, -2.4f, new Settings().group(Tab.EQUIPMENT));
-	public static final Item ARCANIUM_SHOVEL = new ShovelItem(ArcanaToolMaterials.ARCANIUM, 1.5f, -3, new Settings().group(Tab.EQUIPMENT));
-	public static final Item ARCANIUM_PICKAXE = new PickaxeItem(ArcanaToolMaterials.ARCANIUM, 1, -2.8f, new Settings().group(Tab.EQUIPMENT));
-	public static final Item ARCANIUM_AXE = new AxeItem(ArcanaToolMaterials.ARCANIUM, 5.5f, -3, new Settings().group(Tab.EQUIPMENT));
-	public static final Item ARCANIUM_HOE = new HoeItem(ArcanaToolMaterials.ARCANIUM, -2, -1, new Settings().group(Tab.EQUIPMENT));
-	public static final Item ARCANIUM_HELMET = new ArmorItem(ArcanaArmourMaterials.ARCANIUM, EquipmentSlot.HEAD, new Settings().group(Tab.EQUIPMENT));
-	public static final Item ARCANIUM_CHESTPLATE = new ArmorItem(ArcanaArmourMaterials.ARCANIUM, EquipmentSlot.CHEST, new Settings().group(Tab.EQUIPMENT));
-	public static final Item ARCANIUM_LEGGINGS = new ArmorItem(ArcanaArmourMaterials.ARCANIUM, EquipmentSlot.LEGS, new Settings().group(Tab.EQUIPMENT));
-	public static final Item ARCANIUM_BOOTS = new ArmorItem(ArcanaArmourMaterials.ARCANIUM, EquipmentSlot.FEET, new Settings().group(Tab.EQUIPMENT));
+	public static final Item ARCANIUM_SWORD = new SwordItem(ArcanaToolMaterials.ARCANIUM, new ArcanaItemSettings().group(Tab.EQUIPMENT).attributeModifiers(SwordItem.createAttributeModifiers(ArcanaToolMaterials.ARCANIUM, 3, -2.4f)));
+	public static final Item ARCANIUM_SHOVEL = new ShovelItem(ArcanaToolMaterials.ARCANIUM, new ArcanaItemSettings().group(Tab.EQUIPMENT).attributeModifiers(ShovelItem.createAttributeModifiers(ArcanaToolMaterials.ARCANIUM, 1.5f, -3)));
+	public static final Item ARCANIUM_PICKAXE = new PickaxeItem(ArcanaToolMaterials.ARCANIUM, new ArcanaItemSettings().group(Tab.EQUIPMENT).attributeModifiers(PickaxeItem.createAttributeModifiers(ArcanaToolMaterials.ARCANIUM, 1, -2.8f)));
+	public static final Item ARCANIUM_AXE = new AxeItem(ArcanaToolMaterials.ARCANIUM, new ArcanaItemSettings().group(Tab.EQUIPMENT).attributeModifiers(AxeItem.createAttributeModifiers(ArcanaToolMaterials.ARCANIUM, 5.5f, -3)));
+	public static final Item ARCANIUM_HOE = new HoeItem(ArcanaToolMaterials.ARCANIUM, new ArcanaItemSettings().group(Tab.EQUIPMENT).attributeModifiers(HoeItem.createAttributeModifiers(ArcanaToolMaterials.ARCANIUM, -2, -1)));
+	public static final Item ARCANIUM_HELMET = new ArmorItem(RegistryEntry.of(ArcanaArmourMaterials.ARCANIUM), ArmorItem.Type.HELMET, new ArcanaItemSettings().group(Tab.EQUIPMENT));
+	public static final Item ARCANIUM_CHESTPLATE = new ArmorItem(RegistryEntry.of(ArcanaArmourMaterials.ARCANIUM), ArmorItem.Type.CHESTPLATE, new ArcanaItemSettings().group(Tab.EQUIPMENT));
+	public static final Item ARCANIUM_LEGGINGS = new ArmorItem(RegistryEntry.of(ArcanaArmourMaterials.ARCANIUM), ArmorItem.Type.LEGGINGS, new ArcanaItemSettings().group(Tab.EQUIPMENT));
+	public static final Item ARCANIUM_BOOTS = new ArmorItem(RegistryEntry.of(ArcanaArmourMaterials.ARCANIUM), ArmorItem.Type.BOOTS, new ArcanaItemSettings().group(Tab.EQUIPMENT));
 	
 	public static final Item THAUMIUM_INGOT = new Item(GROUPED_RES);
 	public static final Item THAUMIUM_NUGGET = new Item(GROUPED_RES);
@@ -247,67 +220,67 @@ public final class ArcanaRegistry{
 	public static final Item VOID_METAL_INGOT = new Item(GROUPED_RES);
 	public static final Item VOID_METAL_NUGGET = new Item(GROUPED_RES);
 	public static final Item VOID_SEED = new Item(GROUPED_RES);
-	public static final Item VOID_METAL_SWORD = new SwordItem(ArcanaToolMaterials.VOID_METAL, 3, -2.4f, new Settings().group(Tab.EQUIPMENT));
-	public static final Item VOID_METAL_SHOVEL = new ShovelItem(ArcanaToolMaterials.VOID_METAL, 1.5f, -3, new Settings().group(Tab.EQUIPMENT));
-	public static final Item VOID_METAL_PICKAXE = new PickaxeItem(ArcanaToolMaterials.VOID_METAL, 1, -2.8f, new Settings().group(Tab.EQUIPMENT));
-	public static final Item VOID_METAL_AXE = new AxeItem(ArcanaToolMaterials.VOID_METAL, 5.5f, -3, new Settings().group(Tab.EQUIPMENT));
-	public static final Item VOID_METAL_HOE = new HoeItem(ArcanaToolMaterials.VOID_METAL, -2, -1, new Settings().group(Tab.EQUIPMENT));
-	public static final Item VOID_METAL_HELMET = new ArmorItem(ArcanaArmourMaterials.VOID_METAL, EquipmentSlot.HEAD, new Settings().group(Tab.EQUIPMENT));
-	public static final Item VOID_METAL_CHESTPLATE = new ArmorItem(ArcanaArmourMaterials.VOID_METAL, EquipmentSlot.CHEST, new Settings().group(Tab.EQUIPMENT));
-	public static final Item VOID_METAL_LEGGINGS = new ArmorItem(ArcanaArmourMaterials.VOID_METAL, EquipmentSlot.LEGS, new Settings().group(Tab.EQUIPMENT));
-	public static final Item VOID_METAL_BOOTS = new ArmorItem(ArcanaArmourMaterials.VOID_METAL, EquipmentSlot.FEET, new Settings().group(Tab.EQUIPMENT));
+	public static final Item VOID_METAL_SWORD = new SwordItem(ArcanaToolMaterials.VOID_METAL, new ArcanaItemSettings().group(Tab.EQUIPMENT).attributeModifiers(SwordItem.createAttributeModifiers(ArcanaToolMaterials.VOID_METAL, 3, -2.4f)));
+	public static final Item VOID_METAL_SHOVEL = new ShovelItem(ArcanaToolMaterials.VOID_METAL, new ArcanaItemSettings().group(Tab.EQUIPMENT).attributeModifiers(ShovelItem.createAttributeModifiers(ArcanaToolMaterials.VOID_METAL, 1.5f, -3)));
+	public static final Item VOID_METAL_PICKAXE = new PickaxeItem(ArcanaToolMaterials.VOID_METAL, new ArcanaItemSettings().group(Tab.EQUIPMENT).attributeModifiers(PickaxeItem.createAttributeModifiers(ArcanaToolMaterials.VOID_METAL, 1, -2.8f)));
+	public static final Item VOID_METAL_AXE = new AxeItem(ArcanaToolMaterials.VOID_METAL, new ArcanaItemSettings().group(Tab.EQUIPMENT).attributeModifiers(AxeItem.createAttributeModifiers(ArcanaToolMaterials.VOID_METAL, 5.5f, -3)));
+	public static final Item VOID_METAL_HOE = new HoeItem(ArcanaToolMaterials.VOID_METAL, new ArcanaItemSettings().group(Tab.EQUIPMENT).attributeModifiers(HoeItem.createAttributeModifiers(ArcanaToolMaterials.VOID_METAL, -2, -1)));
+	public static final Item VOID_METAL_HELMET = new ArmorItem(RegistryEntry.of(ArcanaArmourMaterials.VOID_METAL), ArmorItem.Type.HELMET, new ArcanaItemSettings().group(Tab.EQUIPMENT));
+	public static final Item VOID_METAL_CHESTPLATE = new ArmorItem(RegistryEntry.of(ArcanaArmourMaterials.VOID_METAL), ArmorItem.Type.CHESTPLATE, new ArcanaItemSettings().group(Tab.EQUIPMENT));
+	public static final Item VOID_METAL_LEGGINGS = new ArmorItem(RegistryEntry.of(ArcanaArmourMaterials.VOID_METAL), ArmorItem.Type.LEGGINGS, new ArcanaItemSettings().group(Tab.EQUIPMENT));
+	public static final Item VOID_METAL_BOOTS = new ArmorItem(RegistryEntry.of(ArcanaArmourMaterials.VOID_METAL), ArmorItem.Type.HELMET, new ArcanaItemSettings().group(Tab.EQUIPMENT));
 	
 	public static final Item SILVERLEAF = new Item(GROUPED_RES);
 	public static final Item SILVERLEAF_AMALGAMATE = new Item(GROUPED_RES);
-	public static final Item SILVERLEAF_SWORD = new SwordItem(ArcanaToolMaterials.SILVERLEAF, 3, -2.4f, new Settings().group(Tab.EQUIPMENT));
-	public static final Item SILVERLEAF_SHOVEL = new ShovelItem(ArcanaToolMaterials.SILVERLEAF, 1.5f, -3, new Settings().group(Tab.EQUIPMENT));
-	public static final Item SILVERLEAF_PICKAXE = new PickaxeItem(ArcanaToolMaterials.SILVERLEAF, 1, -2.8f, new Settings().group(Tab.EQUIPMENT));
-	public static final Item SILVERLEAF_AXE = new AxeItem(ArcanaToolMaterials.SILVERLEAF, 5.5f, -3, new Settings().group(Tab.EQUIPMENT));
-	public static final Item SILVERLEAF_HOE = new HoeItem(ArcanaToolMaterials.SILVERLEAF, -2, -1, new Settings().group(Tab.EQUIPMENT));
-	public static final Item SILVERLEAF_HELMET = new ArmorItem(ArcanaArmourMaterials.SILVERLEAF, EquipmentSlot.HEAD, new Settings().group(Tab.EQUIPMENT));
-	public static final Item SILVERLEAF_CHESTPLATE = new ArmorItem(ArcanaArmourMaterials.SILVERLEAF, EquipmentSlot.CHEST, new Settings().group(Tab.EQUIPMENT));
-	public static final Item SILVERLEAF_LEGGINGS = new ArmorItem(ArcanaArmourMaterials.SILVERLEAF, EquipmentSlot.LEGS, new Settings().group(Tab.EQUIPMENT));
-	public static final Item SILVERLEAF_BOOTS = new ArmorItem(ArcanaArmourMaterials.SILVERLEAF, EquipmentSlot.FEET, new Settings().group(Tab.EQUIPMENT));
+	public static final Item SILVERLEAF_SWORD = new SwordItem(ArcanaToolMaterials.SILVERLEAF, new ArcanaItemSettings().group(Tab.EQUIPMENT).attributeModifiers(SwordItem.createAttributeModifiers(ArcanaToolMaterials.SILVERLEAF, 3, -2.4F)));
+	public static final Item SILVERLEAF_SHOVEL = new ShovelItem(ArcanaToolMaterials.SILVERLEAF, new ArcanaItemSettings().group(Tab.EQUIPMENT).attributeModifiers(ShovelItem.createAttributeModifiers(ArcanaToolMaterials.SILVERLEAF, 1.5f, -3)));
+	public static final Item SILVERLEAF_PICKAXE = new PickaxeItem(ArcanaToolMaterials.SILVERLEAF, new ArcanaItemSettings().group(Tab.EQUIPMENT).attributeModifiers(PickaxeItem.createAttributeModifiers(ArcanaToolMaterials.SILVERLEAF, 1, -2.8f)));
+	public static final Item SILVERLEAF_AXE = new AxeItem(ArcanaToolMaterials.SILVERLEAF, new ArcanaItemSettings().group(Tab.EQUIPMENT).attributeModifiers(AxeItem.createAttributeModifiers(ArcanaToolMaterials.SILVERLEAF, 5.5f, -3)));
+	public static final Item SILVERLEAF_HOE = new HoeItem(ArcanaToolMaterials.SILVERLEAF, new ArcanaItemSettings().group(Tab.EQUIPMENT).attributeModifiers(HoeItem.createAttributeModifiers(ArcanaToolMaterials.SILVERLEAF, -2, -1)));
+	public static final Item SILVERLEAF_HELMET = new ArmorItem(RegistryEntry.of(ArcanaArmourMaterials.SILVERLEAF), ArmorItem.Type.HELMET, new ArcanaItemSettings().group(Tab.EQUIPMENT));
+	public static final Item SILVERLEAF_CHESTPLATE = new ArmorItem(RegistryEntry.of(ArcanaArmourMaterials.SILVERLEAF), ArmorItem.Type.CHESTPLATE, new ArcanaItemSettings().group(Tab.EQUIPMENT));
+	public static final Item SILVERLEAF_LEGGINGS = new ArmorItem(RegistryEntry.of(ArcanaArmourMaterials.SILVERLEAF), ArmorItem.Type.LEGGINGS, new ArcanaItemSettings().group(Tab.EQUIPMENT));
+	public static final Item SILVERLEAF_BOOTS = new ArmorItem(RegistryEntry.of(ArcanaArmourMaterials.SILVERLEAF), ArmorItem.Type.BOOTS, new ArcanaItemSettings().group(Tab.EQUIPMENT));
 	
 	public static final Item WISPY_ESSENCE = new Item(GROUPED_RES);
 	public static final Item TWISTED_ESSENCE = new Item(GROUPED_RES);
-	public static final Item BEJEWELED_BEET = new Item(new Settings().group(Tab.RESOURCES).food(new FoodComponent.Builder().hunger(5).saturationModifier(1).build()));
+	public static final Item BEJEWELED_BEET = new Item(new ArcanaItemSettings().group(Tab.RESOURCES).food(new FoodComponent.Builder().nutrition(5).saturationModifier(1).build()));
 	public static final Item SPIRAL_SUGAR = new Item(GROUPED_RES);
 	public static final Item ABERRANT_FLORA = new Item(GROUPED_RES);
 	public static final Item BLOODLET_RUBY = new Item(new ArcanaItemSettings().fragile(0xBC0826, StatusEffects.INSTANT_HEALTH).group(Tab.RESOURCES));
-	public static final Item MOTILE = new MotileItem(new Settings().group(Tab.RESOURCES).rarity(Rarity.UNCOMMON));
-	public static final Item MOTILE_PIECE = new MotileItem(new Settings().group(Tab.RESOURCES).rarity(Rarity.UNCOMMON));
+	public static final Item MOTILE = new MotileItem(new ArcanaItemSettings().group(Tab.RESOURCES).rarity(Rarity.UNCOMMON));
+	public static final Item MOTILE_PIECE = new MotileItem(new ArcanaItemSettings().group(Tab.RESOURCES).rarity(Rarity.UNCOMMON));
 	
-	public static final Item SWORD_OF_THE_ZEPHYR = new SwordItem(ArcanaToolMaterials.PRIMAL, 3, -2.4f, new Settings().group(Tab.EQUIPMENT).rarity(Rarity.UNCOMMON));
-	public static final Item SHOVEL_OF_THE_EARTHMOVER = new EarthmoverShovelItem(ArcanaToolMaterials.PRIMAL, 1.5f, -3, new Settings().group(Tab.EQUIPMENT).rarity(Rarity.UNCOMMON));
-	public static final Item PICKAXE_OF_THE_CORE = new PickaxeItem(ArcanaToolMaterials.PRIMAL, 1, -2.8f, new Settings().group(Tab.EQUIPMENT).rarity(Rarity.UNCOMMON));
-	public static final Item AXE_OF_THE_STREAM = new AxeItem(ArcanaToolMaterials.PRIMAL, 5.5f, -3, new Settings().group(Tab.EQUIPMENT).rarity(Rarity.UNCOMMON));
-	public static final Item HOE_OF_THE_CYCLE = new HoeItem(ArcanaToolMaterials.PRIMAL, -2, -1, new Settings().group(Tab.EQUIPMENT).rarity(Rarity.UNCOMMON));
+	public static final Item SWORD_OF_THE_ZEPHYR = new SwordItem(ArcanaToolMaterials.PRIMAL, new ArcanaItemSettings().group(Tab.EQUIPMENT).rarity(Rarity.UNCOMMON).attributeModifiers(SwordItem.createAttributeModifiers(ArcanaToolMaterials.PRIMAL, 3, -2.4F)));
+	public static final Item SHOVEL_OF_THE_EARTHMOVER = new ShovelItem(ArcanaToolMaterials.PRIMAL, new ArcanaItemSettings().group(Tab.EQUIPMENT).rarity(Rarity.UNCOMMON).attributeModifiers(ShovelItem.createAttributeModifiers(ArcanaToolMaterials.PRIMAL, 1.5f, -3)).component(DataComponentTypes.TOOL, ArcanaToolMaterials.PRIMAL.createComponent(ArcanaTags.EARTHMOVER_MINEABLE)));
+	public static final Item PICKAXE_OF_THE_CORE = new PickaxeItem(ArcanaToolMaterials.PRIMAL, new ArcanaItemSettings().group(Tab.EQUIPMENT).rarity(Rarity.UNCOMMON).attributeModifiers(PickaxeItem.createAttributeModifiers(ArcanaToolMaterials.PRIMAL, 1, -2.8f)));
+	public static final Item AXE_OF_THE_STREAM = new AxeItem(ArcanaToolMaterials.PRIMAL, new ArcanaItemSettings().group(Tab.EQUIPMENT).rarity(Rarity.UNCOMMON).attributeModifiers(AxeItem.createAttributeModifiers(ArcanaToolMaterials.PRIMAL, 5.5f, -3)));
+	public static final Item HOE_OF_THE_CYCLE = new HoeItem(ArcanaToolMaterials.PRIMAL, new ArcanaItemSettings().group(Tab.EQUIPMENT).rarity(Rarity.UNCOMMON).attributeModifiers(HoeItem.createAttributeModifiers(ArcanaToolMaterials.PRIMAL, -2, -1)));
 	
-	public static final Item ARCANIUM_SCALPEL = new ScalpelItem(new Settings().group(Tab.EQUIPMENT).maxDamage(100), ScalpelItem.ScalpelType.ROSE);
-	public static final Item SILVERLEAF_SCALPEL = new ScalpelItem(new Settings().group(Tab.EQUIPMENT).maxDamage(100), ScalpelItem.ScalpelType.SILVER);
-	public static final Item VOID_METAL_SCALPEL = new ScalpelItem(new Settings().group(Tab.EQUIPMENT).maxDamage(100), ScalpelItem.ScalpelType.BLACK);
+	public static final Item ARCANIUM_SCALPEL = new ScalpelItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxDamage(100), ScalpelItem.ScalpelType.ROSE);
+	public static final Item SILVERLEAF_SCALPEL = new ScalpelItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxDamage(100), ScalpelItem.ScalpelType.SILVER);
+	public static final Item VOID_METAL_SCALPEL = new ScalpelItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxDamage(100), ScalpelItem.ScalpelType.BLACK);
 	
-	public static final Item GOLD_RING = new TrinketItem(new Settings().group(Tab.EQUIPMENT).maxCount(1));
-	public static final Item ARCANIUM_RING = new TrinketItem(new Settings().group(Tab.EQUIPMENT).maxCount(1));
-	public static final Item ADORNED_RING = new VisDiscountTrinketItem(new Settings().group(Tab.EQUIPMENT).maxCount(1), 5);
-	public static final Item LAMPLIGHT_RING = new LamplightTrinketItem(new Settings().group(Tab.EQUIPMENT).maxCount(1));
-	public static final Item PLANE_PROJECTION_RING = new TrinketItem(new Settings().group(Tab.EQUIPMENT).maxCount(1));
-	public static final Item RING_OF_THE_SURGING_BARRIER = new TrinketItem(new Settings().group(Tab.EQUIPMENT).maxCount(1).rarity(Rarity.UNCOMMON));
-	public static final Item RING_OF_TWIN_HEARTBEATS = new WarpingTrinketItem(new Settings().group(Tab.EQUIPMENT).maxCount(1).rarity(Rarity.UNCOMMON));
-	public static final Item RING_OF_THE_VOIDGAZER = new WarpBasedDiscountTrinketItem(new Settings().group(Tab.EQUIPMENT).maxCount(1).rarity(Rarity.UNCOMMON));
-	public static final Item EMERALD_NECKLACE = new TrinketItem(new Settings().group(Tab.EQUIPMENT).maxCount(1));
-	public static final Item AMULET_OF_RUNIC_SHIELDING = new ShieldingTrinketItem(new Settings().group(Tab.EQUIPMENT).maxCount(1), 2);
-	public static final Item AMULET_OF_UNBURDENED_TRAVEL = new ShieldingTrinketItem(new Settings().group(Tab.EQUIPMENT).maxCount(1), 4);
-	public static final Item AMULET_OF_DEAFENING_SHIELDING = new ShieldingTrinketItem(new Settings().group(Tab.EQUIPMENT).maxCount(1), 1);
+	public static final Item GOLD_RING = new TrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1));
+	public static final Item ARCANIUM_RING = new TrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1));
+	public static final Item ADORNED_RING = new VisDiscountTrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1), 5);
+	public static final Item LAMPLIGHT_RING = new LamplightTrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1));
+	public static final Item PLANE_PROJECTION_RING = new TrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1));
+	public static final Item RING_OF_THE_SURGING_BARRIER = new TrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1).rarity(Rarity.UNCOMMON));
+	public static final Item RING_OF_TWIN_HEARTBEATS = new WarpingTrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1).rarity(Rarity.UNCOMMON));
+	public static final Item RING_OF_THE_VOIDGAZER = new WarpBasedDiscountTrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1).rarity(Rarity.UNCOMMON));
+	public static final Item EMERALD_NECKLACE = new TrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1));
+	public static final Item AMULET_OF_RUNIC_SHIELDING = new ShieldingTrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1), 2);
+	public static final Item AMULET_OF_UNBURDENED_TRAVEL = new ShieldingTrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1), 4);
+	public static final Item AMULET_OF_DEAFENING_SHIELDING = new ShieldingTrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1), 1);
 	
-	public static final Item CRIMSON_BLADE = new SwordItem(ArcanaToolMaterials.CRIMSON, 3, -2.4f, new Settings().group(Tab.EQUIPMENT));
-	public static final Item CRIMSON_LONGBOW = new CrimsonLongbowItem(new Settings().group(Tab.EQUIPMENT).maxDamage(564));
-	public static final Item CRIMSON_LEECH = new CrimsonLeechItem(new Settings().group(Tab.EQUIPMENT).rarity(Rarity.UNCOMMON).maxDamage(874));
+	public static final Item CRIMSON_BLADE = new SwordItem(ArcanaToolMaterials.CRIMSON, new ArcanaItemSettings().group(Tab.EQUIPMENT).attributeModifiers(SwordItem.createAttributeModifiers(ArcanaToolMaterials.CRIMSON, 3, -2.4f)));
+	public static final Item CRIMSON_LONGBOW = new CrimsonLongbowItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxDamage(564));
+	public static final Item CRIMSON_LEECH = new CrimsonLeechItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).rarity(Rarity.UNCOMMON).maxDamage(874));
 	
-	public static final Item BOOTS_OF_THE_TRAVELLER = new BootsOfTheTravellerItem(ArcanaArmourMaterials.BOOTS_OF_THE_TRAVELLER, new Settings().group(Tab.EQUIPMENT));
-	public static final Item BOOTS_OF_THE_SAILOR = new BootsOfTheTravellerItem(ArcanaArmourMaterials.BOOTS_OF_THE_SAILOR, new Settings().group(Tab.EQUIPMENT));
-	public static final Item BOOTS_OF_THE_REAPER = new BootsOfTheTravellerItem(ArcanaArmourMaterials.BOOTS_OF_THE_REAPER, new Settings().group(Tab.EQUIPMENT));
+	public static final Item BOOTS_OF_THE_TRAVELLER = new BootsOfTheTravellerItem(ArcanaArmourMaterials.BOOTS_OF_THE_TRAVELLER, new ArcanaItemSettings().group(Tab.EQUIPMENT));
+	public static final Item BOOTS_OF_THE_SAILOR = new BootsOfTheTravellerItem(ArcanaArmourMaterials.BOOTS_OF_THE_SAILOR, new ArcanaItemSettings().group(Tab.EQUIPMENT));
+	public static final Item BOOTS_OF_THE_REAPER = new BootsOfTheTravellerItem(ArcanaArmourMaterials.BOOTS_OF_THE_REAPER, new ArcanaItemSettings().group(Tab.EQUIPMENT));
 	
 	public static final Item ALCHEMICAL_IRON = new Item(GROUPED_RES);
 	public static final Item ALCHEMICAL_GOLD = new Item(GROUPED_RES);
@@ -335,8 +308,8 @@ public final class ArcanaRegistry{
 	public static final Item LIGHTNING_FOCUS = new LightningFocusItem(GROUPED_WAND_SINGLE);
 	public static final Item EQUIVALENT_EXCHANGE_FOCUS = new EquivalentExchangeFocusItem(GROUPED_WAND_SINGLE);
 	public static final Item COAGULATION_FOCUS = new CoagulationFocusItem(GROUPED_WAND_SINGLE);
-	public static final Item CRYSTAL_CAPACITOR_FOCUS = new CrystalCapacitorFocusItem(new Settings().group(Tab.WANDS).maxCount(1).maxDamage(6));
-	public static final Item WARD_FOCUS = new WardFocusItem(new Settings().group(Tab.WANDS).maxCount(1).rarity(Rarity.UNCOMMON));
+	public static final Item CRYSTAL_CAPACITOR_FOCUS = new CrystalCapacitorFocusItem(new ArcanaItemSettings().group(Tab.WANDS).maxCount(1).maxDamage(6));
+	public static final Item WARD_FOCUS = new WardFocusItem(new ArcanaItemSettings().group(Tab.WANDS).maxCount(1).rarity(Rarity.UNCOMMON));
 	public static final Item CONSUME_REBUKE_FOCUS = new ConsumeRebukeFocus(GROUPED_WAND_SINGLE);
 	
 	// caps...
@@ -384,13 +357,13 @@ public final class ArcanaRegistry{
 	public static final Core MISSING_CORE = new Core.Impl(arcId("missing"), 0, 0);
 	
 	// banner patterns...
-	public static final BannerPattern ELDRITCH_BANNER_PATTERN_SHAPE = new BannerPattern("arcana_eldritch");
-	public static final Item ELDRITCH_BANNER_PATTERN = new BannerPatternItem(ArcanaTags.ELDRITCH_BANNER_PATTERNS, new Item.Settings().maxCount(1).group(Tab.MAIN).rarity(Rarity.UNCOMMON));
+	public static final BannerPattern ELDRITCH_BANNER_PATTERN_SHAPE = new BannerPattern(arcId("eldritch"), "block.arcana.banner.eldritch");
+	public static final Item ELDRITCH_BANNER_PATTERN = new BannerPatternItem(ArcanaTags.ELDRITCH_BANNER_PATTERNS, new ArcanaItemSettings().group(Tab.MAIN).maxCount(1).rarity(Rarity.UNCOMMON));
 	
 	// other...?
-	public static final Item EMPTY_PHIAL = new PhialItem(new Settings().group(Tab.PHIALS), null);
-	public static final Item PRIMORDIAL_PEARL = new PrimordialPearlItem(new Settings().group(Tab.RESOURCES).maxCount(1).rarity(Rarity.EPIC));
-	public static final Item BROKEN_AMULET = new TrinketItem(new Settings().group(Tab.RESOURCES).maxCount(1));
+	public static final Item EMPTY_PHIAL = new PhialItem(new ArcanaItemSettings().group(Tab.PHIALS), null);
+	public static final Item PRIMORDIAL_PEARL = new PrimordialPearlItem(new ArcanaItemSettings().group(Tab.RESOURCES).maxCount(1).rarity(Rarity.EPIC));
+	public static final Item BROKEN_AMULET = new TrinketItem(new ArcanaItemSettings().group(Tab.RESOURCES).maxCount(1));
 	public static final Item CHALLENGERS_AMULET = new TrinketItem(GROUPED_SINGLE);
 	public static final Item VICTORS_MEDALLION = new TrinketItem(GROUPED_SINGLE);
 	
@@ -425,8 +398,8 @@ public final class ArcanaRegistry{
 	public static final Block INFUSION_MATRIX = new InfusionMatrixBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).nonOpaque().strength(5));
 	
 	public static final Block NITOR = new NitorBlock(of(Material.DECORATION).dropsSelf().strength(0).luminance(15));
-	public static final Block HARDENED_GLASS = new GlassBlock(of(Material.GLASS).dropsSelf().usesTool(PICKAXE_MINEABLE).renderLayer(CUTOUT).strength(3, 10).sounds(BlockSoundGroup.GLASS).nonOpaque().allowsSpawning(Blocks::never).solidBlock(Blocks::never).suffocates(Blocks::never).blockVision(Blocks::never));
-	public static final Block LUMINIFEROUS_GLASS = new GlassBlock(of(Material.GLASS).dropsSelf().usesTool(PICKAXE_MINEABLE).renderLayer(TRANSLUCENT).luminance(15).strength(.6f).sounds(BlockSoundGroup.GLASS).nonOpaque().allowsSpawning(Blocks::never).solidBlock(Blocks::never).suffocates(Blocks::never).blockVision(Blocks::never));
+	public static final Block HARDENED_GLASS = new TranslucentBlock(of(Material.GLASS).dropsSelf().usesTool(PICKAXE_MINEABLE).renderLayer(CUTOUT).strength(3, 10).sounds(BlockSoundGroup.GLASS).nonOpaque().allowsSpawning(Blocks::never).solidBlock(Blocks::never).suffocates(Blocks::never).blockVision(Blocks::never));
+	public static final Block LUMINIFEROUS_GLASS = new TranslucentBlock(of(Material.GLASS).dropsSelf().usesTool(PICKAXE_MINEABLE).renderLayer(TRANSLUCENT).luminance(15).strength(.6f).sounds(BlockSoundGroup.GLASS).nonOpaque().allowsSpawning(Blocks::never).solidBlock(Blocks::never).suffocates(Blocks::never).blockVision(Blocks::never));
 	public static final Block STATIC_GLASS = new StaticGlassBlock(of(Material.GLASS).dropsSelf().usesTool(PICKAXE_MINEABLE).renderLayer(TRANSLUCENT).strength(.6f).sounds(BlockSoundGroup.GLASS).nonOpaque().allowsSpawning(Blocks::never).solidBlock(Blocks::never).suffocates(Blocks::never).blockVision(Blocks::never));
 	public static final Block PAVING_STONE_OF_TRAVEL = new PavingStoneOfTravelBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3, 7));
 	public static final Block PAVING_STONE_OF_WARDING = new PavingStoneOfWardingBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3.5f, 7));
@@ -454,23 +427,26 @@ public final class ArcanaRegistry{
 	
 	public static final Block ARCANE_STONE_SLAB = new SlabBlock(of(Material.STONE).requiresTool(PICKAXE_MINEABLE).strength(3, 7).sounds(BlockSoundGroup.WOOD));
 	public static final Block ARCANE_STONE_STAIRS = new StairsBlock(ARCANE_STONE.getDefaultState(), of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(2));
-	public static final Block ARCANE_STONE_PRESSURE_PLATE = new PressurePlateBlock(PressurePlateBlock.ActivationRule.MOBS, of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(.5f));
-	public static final Block ARCANE_STONE_BUTTON = new StoneButtonBlock(of(Material.STONE).dropsSelf().noCollision().strength(.5f));
+	public static final Block ARCANE_STONE_PRESSURE_PLATE = new PressurePlateBlock(ArcanaBlockSetTypes.GENERIC_STONE, of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(.5f));
+	public static final Block ARCANE_STONE_BUTTON = new ButtonBlock(ArcanaBlockSetTypes.GENERIC_STONE, 20, of(Material.STONE).dropsSelf().noCollision().strength(.5f));
 	public static final Block ARCANE_STONE_WALL = new WallBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(2));
 	
 	public static final Block ARCANE_STONE_BRICKS_SLAB = new SlabBlock(of(Material.STONE).requiresTool(PICKAXE_MINEABLE).strength(3, 7).sounds(BlockSoundGroup.WOOD));
 	public static final Block ARCANE_STONE_BRICKS_STAIRS = new StairsBlock(ARCANE_STONE_BRICKS.getDefaultState(), of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(2));
-	public static final Block ARCANE_STONE_BRICKS_PRESSURE_PLATE = new PressurePlateBlock(PressurePlateBlock.ActivationRule.MOBS, of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(.5f));
-	public static final Block ARCANE_STONE_BRICKS_BUTTON = new StoneButtonBlock(of(Material.STONE).dropsSelf().noCollision().strength(.5f));
+	public static final Block ARCANE_STONE_BRICKS_PRESSURE_PLATE = new PressurePlateBlock(ArcanaBlockSetTypes.GENERIC_STONE, of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(.5f));
+	public static final Block ARCANE_STONE_BRICKS_BUTTON = new ButtonBlock(ArcanaBlockSetTypes.GENERIC_STONE, 20, of(Material.STONE).dropsSelf().noCollision().strength(.5f));
 	public static final Block ARCANE_STONE_BRICKS_WALL = new WallBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(2));
 	
 	public static final Block ARCANE_STONE_TILES_SLAB = new SlabBlock(of(Material.STONE).requiresTool(PICKAXE_MINEABLE).strength(3, 7).sounds(BlockSoundGroup.WOOD));
 	public static final Block ARCANE_STONE_TILES_STAIRS = new StairsBlock(ARCANE_STONE_TILES.getDefaultState(), of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(2));
-	public static final Block ARCANE_STONE_TILES_PRESSURE_PLATE = new PressurePlateBlock(PressurePlateBlock.ActivationRule.MOBS, of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(.5f));
-	public static final Block ARCANE_STONE_TILES_BUTTON = new StoneButtonBlock(of(Material.STONE).dropsSelf().noCollision().strength(.5f));
+	public static final Block ARCANE_STONE_TILES_PRESSURE_PLATE = new PressurePlateBlock(ArcanaBlockSetTypes.GENERIC_STONE, of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(.5f));
+	public static final Block ARCANE_STONE_TILES_BUTTON = new ButtonBlock(ArcanaBlockSetTypes.GENERIC_STONE, 20, of(Material.STONE).dropsSelf().noCollision().strength(.5f));
 	public static final Block ARCANE_STONE_TILES_WALL = new WallBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(2));
 	
-	public static final Block SILVERWOOD_SAPLING = new SaplingBlock(new SilverwoodSaplingGenerator(), of(Material.PLANT).dropsSelf().renderLayer(CUTOUT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
+	public static final SaplingGenerator SILVERWOOD_SAPLING_GEN = new SaplingGenerator(
+			"arcana:silverwood_sapling", Optional.of(RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, arcId("silverwood_tree"))), Optional.empty(), Optional.empty()
+	);
+	public static final Block SILVERWOOD_SAPLING = new SaplingBlock(SILVERWOOD_SAPLING_GEN, of(Material.PLANT).dropsSelf().renderLayer(CUTOUT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
 	public static final Block SILVERWOOD_LOG = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
 	public static final Block SILVERWOOD_LEAVES = new LeavesBlock(of(Material.LEAVES).renderLayer(CUTOUT).strength(.2f).ticksRandomly().sounds(BlockSoundGroup.GRASS).nonOpaque().allowsSpawning(Blocks::canSpawnOnLeaves).suffocates(Blocks::never).blockVision(Blocks::never));
 	public static final Block SILVERWOOD_PLANKS = new Block(of(Material.WOOD).dropsSelf().strength(2, 3).sounds(BlockSoundGroup.WOOD));
@@ -482,20 +458,22 @@ public final class ArcanaRegistry{
 	public static final Block SILVERWOOD_SLAB = new SlabBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
 	public static final Block SILVERWOOD_STAIRS = new StairsBlock(SILVERWOOD_PLANKS.getDefaultState(), of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
 	public static final Block SILVERWOOD_FENCE = new FenceBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
-	public static final Block SILVERWOOD_FENCE_GATE = new FenceGateBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
-	public static final Block SILVERWOOD_PRESSURE_PLATE = new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING, of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(.5f).sounds(BlockSoundGroup.WOOD));
-	public static final Block SILVERWOOD_BUTTON = new WoodenButtonBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(.5f).noCollision().sounds(BlockSoundGroup.WOOD));
+	public static final Block SILVERWOOD_FENCE_GATE = new FenceGateBlock(ArcanaBlockSetTypes.SILVERWOOD, of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
+	public static final Block SILVERWOOD_PRESSURE_PLATE = new PressurePlateBlock(ArcanaBlockSetTypes.GENERIC_WOOD, of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(.5f).sounds(BlockSoundGroup.WOOD));
+	public static final Block SILVERWOOD_BUTTON = new ButtonBlock(ArcanaBlockSetTypes.GENERIC_WOOD, 30, of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(.5f).noCollision().sounds(BlockSoundGroup.WOOD));
 	
-	public static final SignType SILVERWOOD_SIGN_TY = SignTypeRegistry.registerSignType(arcId("silverwood"));
-	public static final Block SILVERWOOD_DOOR = new DoorBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).renderLayer(CUTOUT).strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque());
-	public static final Block SILVERWOOD_TRAPDOOR = new TrapdoorBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).renderLayer(CUTOUT).dropsSelf().strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque().allowsSpawning(Blocks::never));
-	public static final Block SILVERWOOD_SIGN = new SignBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).renderLayer(CUTOUT).strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque(), SILVERWOOD_SIGN_TY);
-	public static final Block SILVERWOOD_WALL_SIGN = new WallSignBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).renderLayer(CUTOUT).dropsLike(SILVERWOOD_SIGN).strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque(), SILVERWOOD_SIGN_TY);
+	public static final Block SILVERWOOD_DOOR = new DoorBlock(ArcanaBlockSetTypes.GENERIC_WOOD, of(Material.WOOD).usesTool(AXE_MINEABLE).renderLayer(CUTOUT).strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque());
+	public static final Block SILVERWOOD_TRAPDOOR = new TrapdoorBlock(ArcanaBlockSetTypes.GENERIC_WOOD, of(Material.WOOD).usesTool(AXE_MINEABLE).renderLayer(CUTOUT).dropsSelf().strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque().allowsSpawning(Blocks::never));
+	public static final Block SILVERWOOD_SIGN = new SignBlock(ArcanaBlockSetTypes.SILVERWOOD, of(Material.WOOD).usesTool(AXE_MINEABLE).renderLayer(CUTOUT).strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque());
+	public static final Block SILVERWOOD_WALL_SIGN = new WallSignBlock(ArcanaBlockSetTypes.SILVERWOOD, of(Material.WOOD).usesTool(AXE_MINEABLE).renderLayer(CUTOUT).dropsLike(SILVERWOOD_SIGN).strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque());
 	
 	public static final Block GLEAMING_SILVERWOOD_PLANKS = new Block(of(Material.WOOD).dropsSelf().strength(2, 3).sounds(BlockSoundGroup.WOOD));
 	public static final Block SOLAR_GLEAMING_SILVERWOOD_PLANKS = new Block(of(Material.WOOD).dropsSelf().strength(2, 3).sounds(BlockSoundGroup.WOOD));
 	
-	public static final Block GREATWOOD_SAPLING = new SaplingBlock(new GreatwoodSaplingGenerator(), of(Material.PLANT).dropsSelf().renderLayer(CUTOUT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
+	public static final SaplingGenerator GREATWOOD_SAPLING_GEN = new SaplingGenerator(
+			"arcana:greatwood_sapling", Optional.of(RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, arcId("greatwood_tree"))), Optional.empty(), Optional.empty()
+	);
+	public static final Block GREATWOOD_SAPLING = new SaplingBlock(GREATWOOD_SAPLING_GEN, of(Material.PLANT).dropsSelf().renderLayer(CUTOUT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
 	public static final Block GREATWOOD_LOG = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
 	public static final Block GREATWOOD_LEAVES = new LeavesBlock(of(Material.LEAVES).renderLayer(CUTOUT).strength(.2f).ticksRandomly().sounds(BlockSoundGroup.GRASS).nonOpaque().allowsSpawning(Blocks::canSpawnOnLeaves).suffocates(Blocks::never).blockVision(Blocks::never));
 	public static final Block GREATWOOD_PLANKS = new Block(of(Material.WOOD).dropsSelf().strength(2, 3).sounds(BlockSoundGroup.WOOD));
@@ -507,15 +485,14 @@ public final class ArcanaRegistry{
 	public static final Block GREATWOOD_SLAB = new SlabBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
 	public static final Block GREATWOOD_STAIRS = new StairsBlock(GREATWOOD_PLANKS.getDefaultState(), of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
 	public static final Block GREATWOOD_FENCE = new FenceBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
-	public static final Block GREATWOOD_FENCE_GATE = new FenceGateBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
-	public static final Block GREATWOOD_PRESSURE_PLATE = new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING, of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(.5f).sounds(BlockSoundGroup.WOOD));
-	public static final Block GREATWOOD_BUTTON = new WoodenButtonBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(.5f).noCollision().sounds(BlockSoundGroup.WOOD));
+	public static final Block GREATWOOD_FENCE_GATE = new FenceGateBlock(ArcanaBlockSetTypes.GREATWOOD, of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
+	public static final Block GREATWOOD_PRESSURE_PLATE = new PressurePlateBlock(ArcanaBlockSetTypes.GENERIC_WOOD, of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(.5f).sounds(BlockSoundGroup.WOOD));
+	public static final Block GREATWOOD_BUTTON = new ButtonBlock(ArcanaBlockSetTypes.GENERIC_WOOD, 30, of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(.5f).noCollision().sounds(BlockSoundGroup.WOOD));
 	
-	public static final SignType GREATWOOD_SIGN_TY = SignTypeRegistry.registerSignType(arcId("greatwood"));
-	public static final Block GREATWOOD_DOOR = new DoorBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).renderLayer(CUTOUT).strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque());
-	public static final Block GREATWOOD_TRAPDOOR = new TrapdoorBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).renderLayer(CUTOUT).dropsSelf().strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque().allowsSpawning(Blocks::never));
-	public static final Block GREATWOOD_SIGN = new SignBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).renderLayer(CUTOUT).strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque(), GREATWOOD_SIGN_TY);
-	public static final Block GREATWOOD_WALL_SIGN = new WallSignBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).renderLayer(CUTOUT).dropsLike(GREATWOOD_SIGN).strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque(), GREATWOOD_SIGN_TY);
+	public static final Block GREATWOOD_DOOR = new DoorBlock(ArcanaBlockSetTypes.GENERIC_WOOD, of(Material.WOOD).usesTool(AXE_MINEABLE).renderLayer(CUTOUT).strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque());
+	public static final Block GREATWOOD_TRAPDOOR = new TrapdoorBlock(ArcanaBlockSetTypes.GENERIC_WOOD, of(Material.WOOD).usesTool(AXE_MINEABLE).renderLayer(CUTOUT).dropsSelf().strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque().allowsSpawning(Blocks::never));
+	public static final Block GREATWOOD_SIGN = new SignBlock(ArcanaBlockSetTypes.GREATWOOD, of(Material.WOOD).usesTool(AXE_MINEABLE).renderLayer(CUTOUT).strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque());
+	public static final Block GREATWOOD_WALL_SIGN = new WallSignBlock(ArcanaBlockSetTypes.GREATWOOD, of(Material.WOOD).usesTool(AXE_MINEABLE).renderLayer(CUTOUT).dropsLike(GREATWOOD_SIGN).strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque());
 	
 	public static final Block GLEAMING_GREATWOOD_PLANKS = new Block(of(Material.WOOD).dropsSelf().strength(2, 3).sounds(BlockSoundGroup.WOOD));
 	public static final Block SOLAR_GLEAMING_GREATWOOD_PLANKS = new Block(of(Material.WOOD).dropsSelf().strength(2, 3).sounds(BlockSoundGroup.WOOD));
@@ -527,33 +504,33 @@ public final class ArcanaRegistry{
 	public static final Block TAINTWOOD_PLANKS = new Block(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.FUNGUS));
 	public static final Block TAINTWOOD_WOOD = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.FUNGUS));
 	
-	public static final Block TAINTWOOD_DOOR = new DoorBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).group(Tab.TAINTED).renderLayer(CUTOUT).strength(1.6f).sounds(BlockSoundGroup.FUNGUS).nonOpaque());
-	public static final Block TAINTWOOD_TRAPDOOR = new TrapdoorBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).group(Tab.TAINTED).renderLayer(CUTOUT).dropsSelf().strength(1.6f).sounds(BlockSoundGroup.FUNGUS).nonOpaque().allowsSpawning(Blocks::never));
+	public static final Block TAINTWOOD_DOOR = new DoorBlock(ArcanaBlockSetTypes.GENERIC_WOOD, of(Material.WOOD).usesTool(AXE_MINEABLE).group(Tab.TAINTED).renderLayer(CUTOUT).strength(1.6f).sounds(BlockSoundGroup.FUNGUS).nonOpaque());
+	public static final Block TAINTWOOD_TRAPDOOR = new TrapdoorBlock(ArcanaBlockSetTypes.GENERIC_WOOD, of(Material.WOOD).usesTool(AXE_MINEABLE).group(Tab.TAINTED).renderLayer(CUTOUT).dropsSelf().strength(1.6f).sounds(BlockSoundGroup.FUNGUS).nonOpaque().allowsSpawning(Blocks::never));
 	public static final Block TAINTWOOD_SLAB = new SlabBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.FUNGUS));
 	public static final Block TAINTWOOD_STAIRS = new StairsBlock(TAINTWOOD_PLANKS.getDefaultState(), of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(2).sounds(BlockSoundGroup.FUNGUS));
 	public static final Block TAINTWOOD_FENCE = new FenceBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.FUNGUS));
-	public static final Block TAINTWOOD_FENCE_GATE = new FenceGateBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.FUNGUS));
-	public static final Block TAINTWOOD_PRESSURE_PLATE = new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING, of(Material.WOOD).dropsSelf().group(Tab.TAINTED).usesTool(AXE_MINEABLE).strength(.5f).sounds(BlockSoundGroup.FUNGUS));
-	public static final Block TAINTWOOD_BUTTON = new WoodenButtonBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(.5f).noCollision().sounds(BlockSoundGroup.FUNGUS));
+	public static final Block TAINTWOOD_FENCE_GATE = new FenceGateBlock(ArcanaBlockSetTypes.TAINTWOOD, of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.FUNGUS));
+	public static final Block TAINTWOOD_PRESSURE_PLATE = new PressurePlateBlock(ArcanaBlockSetTypes.GENERIC_WOOD, of(Material.WOOD).dropsSelf().group(Tab.TAINTED).usesTool(AXE_MINEABLE).strength(.5f).sounds(BlockSoundGroup.FUNGUS));
+	public static final Block TAINTWOOD_BUTTON = new ButtonBlock(ArcanaBlockSetTypes.GENERIC_WOOD, 30, of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(.5f).noCollision().sounds(BlockSoundGroup.FUNGUS));
 	
 	public static final Block HOLLOWED_LOG = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.CORAL));
 	public static final Block HOLLOWED_PLANKS = new Block(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f, 3).sounds(BlockSoundGroup.CORAL));
 	public static final Block HOLLOWED_WOOD = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.CORAL));
 	
-	public static final Block HOLLOWED_DOOR = new DoorBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).group(Tab.TAINTED).renderLayer(CUTOUT).strength(1.6f).sounds(BlockSoundGroup.CORAL).nonOpaque());
-	public static final Block HOLLOWED_TRAPDOOR = new TrapdoorBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).group(Tab.TAINTED).renderLayer(CUTOUT).dropsSelf().strength(1.6f).sounds(BlockSoundGroup.CORAL).nonOpaque().allowsSpawning(Blocks::never));
+	public static final Block HOLLOWED_DOOR = new DoorBlock(ArcanaBlockSetTypes.GENERIC_WOOD, of(Material.WOOD).usesTool(AXE_MINEABLE).group(Tab.TAINTED).renderLayer(CUTOUT).strength(1.6f).sounds(BlockSoundGroup.CORAL).nonOpaque());
+	public static final Block HOLLOWED_TRAPDOOR = new TrapdoorBlock(ArcanaBlockSetTypes.GENERIC_WOOD, of(Material.WOOD).usesTool(AXE_MINEABLE).group(Tab.TAINTED).renderLayer(CUTOUT).dropsSelf().strength(1.6f).sounds(BlockSoundGroup.CORAL).nonOpaque().allowsSpawning(Blocks::never));
 	public static final Block HOLLOWED_SLAB = new SlabBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.CORAL));
 	public static final Block HOLLOWED_STAIRS = new StairsBlock(HOLLOWED_PLANKS.getDefaultState(), of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(2).sounds(BlockSoundGroup.CORAL));
 	public static final Block HOLLOWED_FENCE = new FenceBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.CORAL));
-	public static final Block HOLLOWED_FENCE_GATE = new FenceGateBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.CORAL));
-	public static final Block HOLLOWED_PRESSURE_PLATE = new PressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING, of(Material.WOOD).dropsSelf().group(Tab.TAINTED).usesTool(AXE_MINEABLE).strength(.5f).sounds(BlockSoundGroup.CORAL));
-	public static final Block HOLLOWED_BUTTON = new WoodenButtonBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(.5f).noCollision().sounds(BlockSoundGroup.CORAL));
+	public static final Block HOLLOWED_FENCE_GATE = new FenceGateBlock(ArcanaBlockSetTypes.HOLLOWED, of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.CORAL));
+	public static final Block HOLLOWED_PRESSURE_PLATE = new PressurePlateBlock(ArcanaBlockSetTypes.GENERIC_WOOD, of(Material.WOOD).dropsSelf().group(Tab.TAINTED).usesTool(AXE_MINEABLE).strength(.5f).sounds(BlockSoundGroup.CORAL));
+	public static final Block HOLLOWED_BUTTON = new ButtonBlock(ArcanaBlockSetTypes.GENERIC_WOOD, 30, of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(.5f).noCollision().sounds(BlockSoundGroup.CORAL));
 	
-	public static final Block VISHROOM = new SizedPlantBlock(of(Material.PLANT).dropsSelf().renderLayer(CUTOUT).sounds(BlockSoundGroup.GRASS).noCollision().breakInstantly().offsetType(AbstractBlock.OffsetType.XZ), 14, 14);
-	public static final Block CORDISPORA = new SizedPlantBlock(of(Material.PLANT).dropsSelf().renderLayer(CUTOUT).sounds(BlockSoundGroup.GRASS).noCollision().breakInstantly().offsetType(AbstractBlock.OffsetType.XZ), 6, 6);
-	public static final Block SNOWDROP = new SizedPlantBlock(of(Material.PLANT).dropsSelf().renderLayer(CUTOUT).sounds(BlockSoundGroup.GRASS).noCollision().breakInstantly().offsetType(AbstractBlock.OffsetType.XZ), 13, 14);
-	public static final Block FIREWHEEL = new SizedPlantBlock(of(Material.PLANT).dropsSelf().renderLayer(CUTOUT).sounds(BlockSoundGroup.GRASS).noCollision().breakInstantly().offsetType(AbstractBlock.OffsetType.XZ), 10, 15);
-	public static final Block LILIUM = new SizedPlantBlock(of(Material.PLANT).dropsSelf().renderLayer(CUTOUT).sounds(BlockSoundGroup.GRASS).noCollision().breakInstantly().offsetType(AbstractBlock.OffsetType.XZ), 6, 15);
+	public static final Block VISHROOM = new SizedPlantBlock(of(Material.PLANT).dropsSelf().renderLayer(CUTOUT).sounds(BlockSoundGroup.GRASS).noCollision().breakInstantly().offset(AbstractBlock.OffsetType.XZ), 14, 14);
+	public static final Block CORDISPORA = new SizedPlantBlock(of(Material.PLANT).dropsSelf().renderLayer(CUTOUT).sounds(BlockSoundGroup.GRASS).noCollision().breakInstantly().offset(AbstractBlock.OffsetType.XZ), 6, 6);
+	public static final Block SNOWDROP = new SizedPlantBlock(of(Material.PLANT).dropsSelf().renderLayer(CUTOUT).sounds(BlockSoundGroup.GRASS).noCollision().breakInstantly().offset(AbstractBlock.OffsetType.XZ), 13, 14);
+	public static final Block FIREWHEEL = new SizedPlantBlock(of(Material.PLANT).dropsSelf().renderLayer(CUTOUT).sounds(BlockSoundGroup.GRASS).noCollision().breakInstantly().offset(AbstractBlock.OffsetType.XZ), 10, 15);
+	public static final Block LILIUM = new SizedPlantBlock(of(Material.PLANT).dropsSelf().renderLayer(CUTOUT).sounds(BlockSoundGroup.GRASS).noCollision().breakInstantly().offset(AbstractBlock.OffsetType.XZ), 6, 15);
 	
 	public static final Block HUGE_VISHROOM_STEM = new MushroomBlock(of(Material.WOOD, MapColor.WHITE_GRAY).strength(0.2F).sounds(BlockSoundGroup.WOOD));
 	public static final Block HUGE_VISHROOM_CAP = new MushroomBlock(of(Material.WOOD, MapColor.GREEN).strength(0.2F).sounds(BlockSoundGroup.WOOD));
@@ -595,12 +572,13 @@ public final class ArcanaRegistry{
 	public static final Block TAINTED_DIORITE = new Block(of(Material.STONE, MapColor.PURPLE).group(Tab.TAINTED).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(1.6f, 6));
 	public static final Block TAINTED_GRANITE = new Block(of(Material.STONE, MapColor.PURPLE).group(Tab.TAINTED).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(1.6f, 6));
 	
+	// TODO: falling block colours
 	public static final Block TAINTED_SOIL = new Block(of(Material.SOIL, MapColor.PURPLE).group(Tab.TAINTED).dropsSelf().usesTool(SHOVEL_MINEABLE).strength(0.5f).sounds(BlockSoundGroup.GRAVEL));
 	public static final Block TAINTED_GRASS_BLOCK = new SnowyBlock(of(Material.SOLID_ORGANIC, MapColor.PURPLE).group(Tab.TAINTED).usesTool(SHOVEL_MINEABLE).strength(0.6f).sounds(BlockSoundGroup.GRASS));
-	public static final Block TAINTED_SAND = new FallingBlock(of(Material.AGGREGATE, MapColor.PURPLE).group(Tab.TAINTED).usesTool(SHOVEL_MINEABLE).strength(0.5f).sounds(BlockSoundGroup.SAND));
+	public static final Block TAINTED_SAND = new ColoredFallingBlock(new ColorCode(0), of(Material.AGGREGATE, MapColor.PURPLE).group(Tab.TAINTED).usesTool(SHOVEL_MINEABLE).strength(0.5f).sounds(BlockSoundGroup.SAND));
 	public static final Block TAINTED_SANDSTONE = new Block(of(Material.STONE, MapColor.PURPLE).group(Tab.TAINTED).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(0.8f));
-	public static final Block TAINTED_GRAVEL = new FallingBlock(of(Material.AGGREGATE, MapColor.PURPLE).group(Tab.TAINTED).usesTool(SHOVEL_MINEABLE).strength(0.7f).sounds(BlockSoundGroup.GRAVEL));
-	public static final Block TAINTED_SNOW_BLOCK = new FallingBlock(of(Material.SNOW_BLOCK, MapColor.PURPLE).group(Tab.TAINTED).requiresTool(SHOVEL_MINEABLE).strength(0.2f).sounds(BlockSoundGroup.SNOW));
+	public static final Block TAINTED_GRAVEL = new ColoredFallingBlock(new ColorCode(0), of(Material.AGGREGATE, MapColor.PURPLE).group(Tab.TAINTED).usesTool(SHOVEL_MINEABLE).strength(0.7f).sounds(BlockSoundGroup.GRAVEL));
+	public static final Block TAINTED_SNOW_BLOCK = new ColoredFallingBlock(new ColorCode(0), of(Material.SNOW_BLOCK, MapColor.PURPLE).group(Tab.TAINTED).requiresTool(SHOVEL_MINEABLE).strength(0.2f).sounds(BlockSoundGroup.SNOW));
 	
 	public static final Block TAINTED_HOLLOWED_ORE = new Block(of(Material.STONE, MapColor.PURPLE).group(Tab.TAINTED).requiresTool(PICKAXE_MINEABLE).strength(1.8f, 6));
 	
@@ -615,13 +593,13 @@ public final class ArcanaRegistry{
 	public static PointOfInterestType WARDED_CAMPFIRE_POI;
 	
 	// screen handlers...
-	public static final ScreenHandlerType<ArcaneCraftingScreen.Handler> ARCANE_CRAFTING_SCREEN_HANDLER = new ScreenHandlerType<>(ArcaneCraftingScreen.Handler::new);
-	public static final ScreenHandlerType<ResearchTableScreen.Handler> RESEARCH_TABLE_SCREEN_HANDLER = new ScreenHandlerType<>(ResearchTableScreen.Handler::new);
-	public static final ScreenHandlerType<KnowledgeableDropperScreen.Handler> KNOWLEDGEABLE_DROPPER_SCREEN_HANDLER = new ScreenHandlerType<>(KnowledgeableDropperScreen.Handler::new);
-	public static final ScreenHandlerType<ArcaneFurnaceScreen.Handler> ARCANE_FURNACE_SCREEN_HANDLER = new ScreenHandlerType<>(ArcaneFurnaceScreen.Handler::new);
-	public static final ScreenHandlerType<DistilleryPathfinderScreen.Handler> DISTILLERY_PATHFINDER_SCREEN_HANDLER = new ScreenHandlerType<>(DistilleryPathfinderScreen.Handler::new);
-	public static final ScreenHandlerType<CrystallizationPressScreen.Handler> CRYSTALLIZATION_PRESS_SCREEN_HANDLER = new ScreenHandlerType<>(CrystallizationPressScreen.Handler::new);
-	public static final ScreenHandlerType<FocusPouchScreen.Handler> FOCUS_POUCH_SCREEN_HANDLER = new ScreenHandlerType<>(FocusPouchScreen.Handler::new);
+	public static final ScreenHandlerType<ArcaneCraftingScreen.Handler> ARCANE_CRAFTING_SCREEN_HANDLER = new ScreenHandlerType<>(ArcaneCraftingScreen.Handler::new, FeatureSet.empty());
+	public static final ScreenHandlerType<ResearchTableScreen.Handler> RESEARCH_TABLE_SCREEN_HANDLER = new ScreenHandlerType<>(ResearchTableScreen.Handler::new, FeatureSet.empty());
+	public static final ScreenHandlerType<KnowledgeableDropperScreen.Handler> KNOWLEDGEABLE_DROPPER_SCREEN_HANDLER = new ScreenHandlerType<>(KnowledgeableDropperScreen.Handler::new, FeatureSet.empty());
+	public static final ScreenHandlerType<ArcaneFurnaceScreen.Handler> ARCANE_FURNACE_SCREEN_HANDLER = new ScreenHandlerType<>(ArcaneFurnaceScreen.Handler::new, FeatureSet.empty());
+	public static final ScreenHandlerType<DistilleryPathfinderScreen.Handler> DISTILLERY_PATHFINDER_SCREEN_HANDLER = new ScreenHandlerType<>(DistilleryPathfinderScreen.Handler::new, FeatureSet.empty());
+	public static final ScreenHandlerType<CrystallizationPressScreen.Handler> CRYSTALLIZATION_PRESS_SCREEN_HANDLER = new ScreenHandlerType<>(CrystallizationPressScreen.Handler::new, FeatureSet.empty());
+	public static final ScreenHandlerType<FocusPouchScreen.Handler> FOCUS_POUCH_SCREEN_HANDLER = new ScreenHandlerType<>(FocusPouchScreen.Handler::new, FeatureSet.empty());
 	
 	// block entities...
 	public static BlockEntityType<CrucibleBlockEntity> CRUCIBLE_BE = FabricBlockEntityTypeBuilder.create(CrucibleBlockEntity::new, CRUCIBLE).build();
@@ -650,17 +628,17 @@ public final class ArcanaRegistry{
 	public static BlockEntityType<MagicMirrorBlockEntity> MAGIC_MIRROR_BE = FabricBlockEntityTypeBuilder.create(MagicMirrorBlockEntity::new, MAGIC_MIRROR).build();
 	
 	// enchantments...
-	public static Enchantment WARPING = new WarpingCurseEnchantment(Enchantment.Rarity.VERY_RARE, EquipmentSlot.values());
+	/*public static Enchantment WARPING = new WarpingCurseEnchantment(Enchantment.Rarity.VERY_RARE, EquipmentSlot.values());
 	public static Enchantment PROJECTING = new ProjectingEnchantment();
 	public static LootSwapEnchantment TRANSMUTATIVE = new LootSwapEnchantment(EnchantmentTarget.WEAPON, LootSwapEnchantment.TRANSMUTATIVE_MAP, 1, 1.0f);
 	public static LootSwapEnchantment PURIFYING = new LootSwapEnchantment(EnchantmentTarget.DIGGER, LootSwapEnchantment.PURIFYING_MAP, 3, 0.2f);
-	public static Enchantment RUNIC_SHIELDING = new RunicShieldingEnchantment();
+	public static Enchantment RUNIC_SHIELDING = new RunicShieldingEnchantment();*/
 	
 	// structures
-	public static final RegistryEntry<StructurePool> CRIMSON_OUTPOST_STRUCTURE_POOL = StructurePools.register(
+	/*public static final RegistryEntry<StructurePool> CRIMSON_OUTPOST_STRUCTURE_POOL = StructurePools.register(
 			new StructurePool(
-					new Identifier("arcana:crimson_outpost"),
-					new Identifier("empty"),
+					arcId("crimson_outpost"),
+					Identifier.of("empty"),
 					ImmutableList.of(Pair.of(StructurePoolElement.ofLegacySingle("arcana:crimson_outpost"), 1)),
 					StructurePool.Projection.RIGID
 			)
@@ -678,14 +656,14 @@ public final class ArcanaRegistry{
 			ConstantHeightProvider.create(YOffset.fixed(0)),
 			false,
 			Heightmap.Type.WORLD_SURFACE_WG
-	);
+	);*/
 	
 	public static final StructurePlacement CRIMSON_OUTPOST_PLACEMENT = new RandomSpreadStructurePlacement(48, 12, SpreadType.LINEAR, 1256);
 	
-	public static final RegistryEntry<StructurePool> CRIMSON_CAMP_STRUCTURE_POOL = StructurePools.register(
+	/*public static final RegistryEntry<StructurePool> CRIMSON_CAMP_STRUCTURE_POOL = StructurePools.register(
 			new StructurePool(
-					new Identifier("arcana:crimson_camp"),
-					new Identifier("empty"),
+					arcId("crimson_camp"),
+					Identifier.of("empty"),
 					ImmutableList.of(Pair.of(StructurePoolElement.ofSingle("arcana:crimson_camp"), 1)),
 					StructurePool.Projection.RIGID
 			)
@@ -703,14 +681,14 @@ public final class ArcanaRegistry{
 			ConstantHeightProvider.create(YOffset.fixed(0)),
 			false,
 			Heightmap.Type.WORLD_SURFACE_WG
-	);
+	);*/
 	
 	public static final StructurePlacement CRIMSON_CAMP_PLACEMENT = new RandomSpreadStructurePlacement(38, 12, SpreadType.LINEAR, 1356);
 	
-	public static final RegistryEntry<StructurePool> FLORAL_ARCHIVE_STRUCTURE_POOL = StructurePools.register(
+	/*public static final RegistryEntry<StructurePool> FLORAL_ARCHIVE_STRUCTURE_POOL = StructurePools.register(
 			new StructurePool(
-					new Identifier("arcana:floral_archive"),
-					new Identifier("empty"),
+					arcId("floral_archive"),
+					Identifier.of("empty"),
 					ImmutableList.of(Pair.of(StructurePoolElement.ofSingle("arcana:floral_archive"), 1)),
 					StructurePool.Projection.RIGID
 			)
@@ -727,23 +705,23 @@ public final class ArcanaRegistry{
 			1,
 			UniformHeightProvider.create(YOffset.aboveBottom(10), YOffset.aboveBottom(60)),
 			false
-	);
+	);*/
 	
 	public static final StructurePlacement FLORAL_ARCHIVE_PLACEMENT = new RandomSpreadStructurePlacement(18, 4, SpreadType.TRIANGULAR, 856294);
 	
 	// particle types...
-	public static DefaultParticleType TAINT_BUBBLE = FabricParticleTypes.simple();
-	public static DefaultParticleType FLAME = FabricParticleTypes.simple();
-	public static DefaultParticleType LIGHTNING = FabricParticleTypes.simple();
-	public static DefaultParticleType TAINT_SPORE = FabricParticleTypes.simple();
+	public static SimpleParticleType TAINT_BUBBLE = FabricParticleTypes.simple();
+	public static SimpleParticleType FLAME = FabricParticleTypes.simple();
+	public static SimpleParticleType LIGHTNING = FabricParticleTypes.simple();
+	public static SimpleParticleType TAINT_SPORE = FabricParticleTypes.simple();
 	
-	public static ParticleType<CubeParticleEffect> WARDING_EFFECT = FabricParticleTypes.complex(CubeParticleEffect.PARAMETERS_FACTORY);
-	public static ParticleType<CubeParticleEffect> INFESTED_EFFECT = FabricParticleTypes.complex(CubeParticleEffect.PARAMETERS_FACTORY);
+	public static ParticleType<CubeParticleEffect> WARDING_EFFECT = FabricParticleTypes.complex(CubeParticleEffect::createCodec, CubeParticleEffect::createPacketCodec);
+	public static ParticleType<CubeParticleEffect> INFESTED_EFFECT = FabricParticleTypes.complex(CubeParticleEffect::createCodec, CubeParticleEffect::createPacketCodec);
 	
-	public static ParticleType<BlockStateParticleEffect> HUNGRY_NODE_DISC = FabricParticleTypes.complex(BlockStateParticleEffect.PARAMETERS_FACTORY);
-	public static ParticleType<BlockStateParticleEffect> HUNGRY_NODE_BLOCK = FabricParticleTypes.complex(BlockStateParticleEffect.PARAMETERS_FACTORY);
-	public static ParticleType<ItemStackParticleEffect> INFUSION_ITEM = FabricParticleTypes.complex(ItemStackParticleEffect.PARAMETERS_FACTORY);
-	public static ParticleType<AspectParticleEffect> ESSENTIA_STREAM = FabricParticleTypes.complex(AspectParticleEffect.PARAMETERS_FACTORY);
+	public static ParticleType<BlockStateParticleEffect> HUNGRY_NODE_DISC = FabricParticleTypes.complex(BlockStateParticleEffect::createCodec, BlockStateParticleEffect::createPacketCodec);
+	public static ParticleType<BlockStateParticleEffect> HUNGRY_NODE_BLOCK = FabricParticleTypes.complex(BlockStateParticleEffect::createCodec, BlockStateParticleEffect::createPacketCodec);
+	public static ParticleType<ItemStackParticleEffect> INFUSION_ITEM = FabricParticleTypes.complex(ItemStackParticleEffect::createCodec, ItemStackParticleEffect::createPacketCodec);
+	public static ParticleType<AspectParticleEffect> ESSENTIA_STREAM = FabricParticleTypes.complex(AspectParticleEffect::createCodec, AspectParticleEffect::createPacketCodec);
 	
 	// entities...
 	public static final EntityType<ThrownAlumentumEntity> THROWN_ALUMENTUM = FabricEntityTypeBuilder
@@ -837,10 +815,6 @@ public final class ArcanaRegistry{
 			.defaultAttributes(CrimsonJesterEntity::createJesterAttributes)
 			.dimensions(EntityDimensions.fixed(1, 1.8f))
 			.build();
-	
-	// entity groups... don't need registering
-	@SuppressWarnings("InstantiationOfUtilityClass") // no, it's just an identity token
-	public static final EntityGroup CRIMSON_GROUP = new EntityGroup();
 	
 	public static final List<Item> items = new ArrayList<>();
 	public static final List<Block> blocks = new ArrayList<>();
@@ -1035,7 +1009,8 @@ public final class ArcanaRegistry{
 		register("eldritch_wand_core", ELDRITCH_WAND_CORE);
 		registerCoreOnly(MISSING_CORE);
 		
-		register("eldritch", ELDRITCH_BANNER_PATTERN_SHAPE);
+		// TODO: banner pattern data
+		//Registry.register(Registries.BANNER_PATTERN, arcId("eldritch"), ELDRITCH_BANNER_PATTERN_SHAPE);
 		register("eldritch_banner_pattern", ELDRITCH_BANNER_PATTERN);
 		
 		register("empty_phial", EMPTY_PHIAL);
@@ -1054,7 +1029,7 @@ public final class ArcanaRegistry{
 		
 		for(Aspect aspect : Aspects.getOrderedAspects()){
 			var shortName = aspect.id().getPath();
-			CrystalItem crystalItem = new CrystalItem(new Settings().group(Tab.CRYSTALS), aspect);
+			CrystalItem crystalItem = new CrystalItem(new ArcanaItemSettings().group(Tab.CRYSTALS), aspect);
 			register("crystals/" + shortName, crystalItem);
 			Aspects.crystals.put(aspect, crystalItem);
 			
@@ -1102,7 +1077,7 @@ public final class ArcanaRegistry{
 		register("crystallization_press", CRYSTALLIZATION_PRESS);
 		register("mystic_mist", MYSTIC_MIST);
 		register("magic_mirror", MAGIC_MIRROR, false);
-		register("magic_mirror", new MagicMirrorBlockItem(MAGIC_MIRROR, new Settings().group(Tab.MAIN).maxCount(2)));
+		register("magic_mirror", new MagicMirrorBlockItem(MAGIC_MIRROR, new ArcanaItemSettings().group(Tab.MAIN).maxCount(2)));
 		register("warded_campfire", WARDED_CAMPFIRE);
 		register("crimson_campfire", CRIMSON_CAMPFIRE);
 		
@@ -1157,7 +1132,7 @@ public final class ArcanaRegistry{
 		register("silverwood_trapdoor", SILVERWOOD_TRAPDOOR);
 		register("silverwood_sign", SILVERWOOD_SIGN, false);
 		register("silverwood_wall_sign", SILVERWOOD_WALL_SIGN, false);
-		register("silverwood_sign", new SignItem(new Settings().group(Tab.MAIN).maxCount(16), SILVERWOOD_SIGN, SILVERWOOD_WALL_SIGN));
+		register("silverwood_sign", new SignItem(new ArcanaItemSettings().group(Tab.MAIN).maxCount(16), SILVERWOOD_SIGN, SILVERWOOD_WALL_SIGN));
 		
 		register("gleaming_silverwood_planks", GLEAMING_SILVERWOOD_PLANKS);
 		register("solar_gleaming_silverwood_planks", SOLAR_GLEAMING_SILVERWOOD_PLANKS);
@@ -1184,7 +1159,7 @@ public final class ArcanaRegistry{
 		register("greatwood_trapdoor", GREATWOOD_TRAPDOOR);
 		register("greatwood_sign", GREATWOOD_SIGN, false);
 		register("greatwood_wall_sign", GREATWOOD_WALL_SIGN, false);
-		register("greatwood_sign", new SignItem(new Settings().group(Tab.MAIN).maxCount(16), GREATWOOD_SIGN, GREATWOOD_WALL_SIGN));
+		register("greatwood_sign", new SignItem(new ArcanaItemSettings().group(Tab.MAIN).maxCount(16), GREATWOOD_SIGN, GREATWOOD_WALL_SIGN));
 		
 		register("gleaming_greatwood_planks", GLEAMING_GREATWOOD_PLANKS);
 		register("solar_gleaming_greatwood_planks", SOLAR_GLEAMING_GREATWOOD_PLANKS);
@@ -1216,8 +1191,9 @@ public final class ArcanaRegistry{
 		register("hollowed_trapdoor", HOLLOWED_TRAPDOOR);
 		
 		// HACKFIX, since fabric halfassed this API
-		BlockEntityType.SIGN.blocks = new HashSet<>(BlockEntityType.SIGN.blocks);
-		BlockEntityType.SIGN.blocks.addAll(Set.of(SILVERWOOD_SIGN, SILVERWOOD_WALL_SIGN, GREATWOOD_SIGN, GREATWOOD_WALL_SIGN));
+		// TODO: check if this sort of thing is still necessary
+		//BlockEntityType.SIGN.blocks = new HashSet<>(BlockEntityType.SIGN.blocks);
+		//BlockEntityType.SIGN.blocks.addAll(Set.of(SILVERWOOD_SIGN, SILVERWOOD_WALL_SIGN, GREATWOOD_SIGN, GREATWOOD_WALL_SIGN));
 		
 		register("vishroom", VISHROOM);
 		register("cordispora", CORDISPORA);
@@ -1352,13 +1328,6 @@ public final class ArcanaRegistry{
 		register("thaumic_halo", THAUMIC_HALO_BE);
 		register("magic_mirror", MAGIC_MIRROR_BE);
 		
-		// enchantments
-		register("warping", WARPING);
-		register("projecting", PROJECTING);
-		register("transmutative", TRANSMUTATIVE);
-		register("purifying", PURIFYING);
-		register("runic_shielding", RUNIC_SHIELDING);
-		
 		// features
 		register("hanging_node", new HangingNodeFeature());
 		register("surface_node", new SurfaceNodeFeature());
@@ -1371,9 +1340,9 @@ public final class ArcanaRegistry{
 		register("greatwood_trunk", GreatwoodTrunkPlacer.TYPE);
 		
 		// structures
-		register("crimson_outpost", CRIMSON_OUTPOST, CRIMSON_OUTPOST_PLACEMENT);
+		/*register("crimson_outpost", CRIMSON_OUTPOST, CRIMSON_OUTPOST_PLACEMENT);
 		register("crimson_camp", CRIMSON_CAMP, CRIMSON_CAMP_PLACEMENT);
-		register("floral_archive", FLORAL_ARCHIVE, FLORAL_ARCHIVE_PLACEMENT);
+		register("floral_archive", FLORAL_ARCHIVE, FLORAL_ARCHIVE_PLACEMENT);*/
 		
 		// particle types
 		register("taint_bubble", TAINT_BUBBLE);
@@ -1421,16 +1390,16 @@ public final class ArcanaRegistry{
 		register("pressure", PRESSURE);
 		
 		// loot pool types
-		register("tag_gift", TagGiftLootEntry.TYPE);
-		register("random_chance_once", RandomChanceOnceLootCondition.TYPE);
+		Registry.register(Registries.LOOT_POOL_ENTRY_TYPE, arcId("tag_gift"), TagGiftLootEntry.TYPE);
+		Registry.register(Registries.LOOT_CONDITION_TYPE, arcId("random_chance_once"), RandomChanceOnceLootCondition.TYPE);
 		
 		// entity attributes
 		// TODO: move elsewhere?
-		register("max_shielding", RunicShielding.MAX_SHIELDING);
+		Registry.register(Registries.ATTRIBUTE, arcId("max_shielding"), RunicShielding.MAX_SHIELDING);
 	}
 	
 	private static void register(String name, Item item){
-		Registry.register(Registry.ITEM, arcId(name), item);
+		Registry.register(Registries.ITEM, arcId(name), item);
 		items.add(item);
 		if(item instanceof Cap c)
 			registerCapOnly(c);
@@ -1443,79 +1412,52 @@ public final class ArcanaRegistry{
 	}
 	
 	private static void register(String name, Block block, boolean andItem){
-		Registry.register(Registry.BLOCK, arcId(name), block);
+		Registry.register(Registries.BLOCK, arcId(name), block);
 		blocks.add(block);
 		if(andItem){
-			Settings settings = new Settings().group(Tab.MAIN);
-			if(block.settings instanceof ArcanaBlockSettings abs && abs.getGroup() != null)
+			ArcanaItemSettings settings = new ArcanaItemSettings().group(Tab.MAIN);
+			if(block.getSettings() instanceof ArcanaBlockSettings abs && abs.getGroup() != null)
 				settings.group(abs.getGroup());
 			register(name, block instanceof BigBlock bb ? new BigBlockItem(bb, settings) : new BlockItem(block, settings));
 		}
 	}
 	
 	private static void register(String name, Fluid fluid){
-		Registry.register(Registry.FLUID, arcId(name), fluid);
+		Registry.register(Registries.FLUID, arcId(name), fluid);
 		if(fluid instanceof ArcanaFluid af && af.isStill())
 			stillFluids.add(af);
 	}
 	
 	private static void register(String name, ScreenHandlerType<?> type){
-		Registry.register(Registry.SCREEN_HANDLER, arcId(name), type);
+		Registry.register(Registries.SCREEN_HANDLER, arcId(name), type);
 	}
 	
 	private static void register(String name, BlockEntityType<?> type){
-		Registry.register(Registry.BLOCK_ENTITY_TYPE, arcId(name), type);
-	}
-	
-	private static void register(String name, Enchantment enchantment){
-		Registry.register(Registry.ENCHANTMENT, arcId(name), enchantment);
+		Registry.register(Registries.BLOCK_ENTITY_TYPE, arcId(name), type);
 	}
 	
 	private static void register(String name, Feature<?> feature){
-		Registry.register(Registry.FEATURE, arcId(name), feature);
+		Registry.register(Registries.FEATURE, arcId(name), feature);
 	}
 	
 	private static void register(String name, FoliagePlacerType<?> foliagePlacer){
-		Registry.register(Registry.FOLIAGE_PLACER_TYPE, arcId(name), foliagePlacer);
+		Registry.register(Registries.FOLIAGE_PLACER_TYPE, arcId(name), foliagePlacer);
 	}
 	
 	private static void register(String name, TrunkPlacerType<?> trunkPlacer){
-		Registry.register(Registry.TRUNK_PLACER_TYPE, arcId(name), trunkPlacer);
+		Registry.register(Registries.TRUNK_PLACER_TYPE, arcId(name), trunkPlacer);
 	}
 	
 	private static void register(String name, ParticleType<?> particleType){
-		Registry.register(Registry.PARTICLE_TYPE, arcId(name), particleType);
+		Registry.register(Registries.PARTICLE_TYPE, arcId(name), particleType);
 	}
 	
 	private static void register(String name, EntityType<?> entityType){
-		Registry.register(Registry.ENTITY_TYPE, arcId(name), entityType);
+		Registry.register(Registries.ENTITY_TYPE, arcId(name), entityType);
 	}
 	
 	private static void register(String name, StatusEffect effect){
-		Registry.register(Registry.STATUS_EFFECT, arcId(name), effect);
-	}
-	
-	private static void register(String name, BannerPattern effect){
-		Registry.register(Registry.BANNER_PATTERN, arcId(name), effect);
-	}
-	
-	private static void register(String name, LootPoolEntryType type){
-		Registry.register(Registry.LOOT_POOL_ENTRY_TYPE, arcId(name), type);
-	}
-	
-	private static void register(String name, LootConditionType type){
-		Registry.register(Registry.LOOT_CONDITION_TYPE, arcId(name), type);
-	}
-	
-	private static void register(String name, Structure structure, StructurePlacement placement){
-		RegistryKey<Structure> structureKey = RegistryKey.of(Registry.STRUCTURE_KEY, arcId(name));
-		RegistryEntry<Structure> structureEntry = BuiltinRegistries.add(BuiltinRegistries.STRUCTURE, structureKey, structure);
-		RegistryKey<StructureSet> setKey = RegistryKey.of(Registry.STRUCTURE_SET_KEY, arcId(name));
-		BuiltinRegistries.add(BuiltinRegistries.STRUCTURE_SET, setKey, new StructureSet(structureEntry, placement));
-	}
-	
-	private static void register(String name, EntityAttribute attribute){
-		Registry.register(Registry.ATTRIBUTE, arcId(name), attribute);
+		Registry.register(Registries.STATUS_EFFECT, arcId(name), effect);
 	}
 	
 	private static void registerCapOnly(Cap cap){
@@ -1526,25 +1468,17 @@ public final class ArcanaRegistry{
 		Core.cores.put(core.id(), core);
 	}
 	
-	private static Structure.Config createStructureConfig(TagKey<Biome> biomeTag, Map<SpawnGroup, StructureSpawns> spawns, GenerationStep.Feature featureStep, StructureTerrainAdaptation terrainAdaptation){
-		return new Structure.Config(getOrCreateBiomeTag(biomeTag), spawns, featureStep, terrainAdaptation);
-	}
-	
-	private static RegistryEntryList<Biome> getOrCreateBiomeTag(TagKey<Biome> key){
-		return BuiltinRegistries.BIOME.getOrCreateEntryList(key);
-	}
-	
 	private static ToIntFunction<BlockState> whenLit(int litLevel){
 		return state -> state.get(Properties.LIT) ? litLevel : 0;
 	}
 	
 	private static FoodComponent aspectCandyFood(StatusEffect effect){
 		return new FoodComponent.Builder()
-				.hunger(3)
+				.nutrition(3)
 				.saturationModifier(0.5f)
 				.alwaysEdible()
 				.snack()
-				.statusEffect(new StatusEffectInstance(effect, 135 * 20, 0, true, true), 1)
+				.statusEffect(new StatusEffectInstance(RegistryEntry.of(effect), 135 * 20, 0, true, true), 1)
 				.build();
 	}
 }

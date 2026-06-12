@@ -38,6 +38,7 @@ public abstract class ItemEntityMixin extends Entity{
 		ItemStack stack = getStack();
 		if(stack.isIn(ArcanaTags.FLOATS) && getVelocity().horizontalLengthSquared() > 1.0E-5F)
 			setVelocity(getVelocity().multiply(0.9f, 0.9f, 0.9f));
+		World world = getWorld();
 		if(world.isClient && world.random.nextInt(12) == 0 && stack.isOf(ArcanaRegistry.WISPY_ESSENCE))
 			world.addParticle(ArcanaRegistry.LIGHTNING,
 					false,
@@ -54,7 +55,7 @@ public abstract class ItemEntityMixin extends Entity{
 				// see PotionEntity
 				for(LivingEntity entity : world.getNonSpectatingEntities(LivingEntity.class, getBoundingBox().expand(4, 2, 4)))
 					if(entity.isAffectedBySplashPotions())
-						c.effect().applyInstantEffect(this, null, entity, 0, 1);
+						c.effect().value().applyInstantEffect(this, null, entity, 0, 1);
 			discard();
 		}
 	}

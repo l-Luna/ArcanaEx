@@ -7,7 +7,6 @@ import arcana.commands.ArcanaCommands;
 import arcana.effects.AspectPowerStatusEffect;
 import arcana.effects.SetBonusStatusEffect;
 import arcana.enchantments.LootSwapEnchantment;
-import arcana.entities.ThrownTaintBottleEntity;
 import arcana.items.CrimsonLeechItem;
 import arcana.recipes.alchemy.AlchemyRecipe;
 import arcana.recipes.arcane_crafting.ShapedArcaneCraftingRecipe;
@@ -28,16 +27,10 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.CommonLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.block.DispenserBlock;
-import net.minecraft.block.dispenser.ProjectileDispenserBehavior;
-import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.Util;
-import net.minecraft.util.math.Position;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.World;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,8 +39,6 @@ public final class Arcana implements ModInitializer{
 	public static final String MODID = "arcana";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
 	public static final ArcanaConfig CONFIG = ArcanaConfig.createToml(FabricLoader.getInstance().getConfigDir(), "", MODID, ArcanaConfig.class);
-	
-	public static final ItemAspectRegistry ASPECT_REGISTRY = new ItemAspectRegistry();
 	
 	@Override
 	public void onInitialize(){
@@ -59,8 +50,8 @@ public final class Arcana implements ModInitializer{
 		ArcanaSounds.setup();
 		ArcanaRegistry.setup();
 		
-		Registry.register(Registry.RECIPE_SERIALIZER, arcId("wand"), WandRecipe.SERIALIZER);
-		Registry.register(Registry.RECIPE_SERIALIZER, arcId("void_putty_repair"), VoidPuttyRepairRecipe.SERIALIZER);
+		Registry.register(Registries.RECIPE_SERIALIZER, arcId("wand"), WandRecipe.SERIALIZER);
+		Registry.register(Registries.RECIPE_SERIALIZER, arcId("void_putty_repair"), VoidPuttyRepairRecipe.SERIALIZER);
 		
 		ShapedArcaneCraftingRecipe.setup();
 		AlchemyRecipe.setup();
@@ -72,7 +63,7 @@ public final class Arcana implements ModInitializer{
 		ArcanaFeatures.addToWorldgen();
 		
 		ResourceManagerHelper serverResources = ResourceManagerHelper.get(ResourceType.SERVER_DATA);
-		serverResources.registerReloadListener(ASPECT_REGISTRY);
+		serverResources.registerReloadListener(arcId("aspects"), ItemAspectRegistry::new);
 		serverResources.registerReloadListener(new ResearchLoader());
 		serverResources.registerReloadListener(new RegistryMappingLoader<>("taint_maps", Taint.TAINT_MAP));
 		serverResources.registerReloadListener(new RegistryMappingLoader<>("untaint_maps", Taint.UNTAINT_MAP));
@@ -92,22 +83,23 @@ public final class Arcana implements ModInitializer{
 		ServerTickEvents.END_WORLD_TICK.register(WardedCampfireBlock::handleTime);
 		ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register(CrimsonLeechItem::handleEntityDeath);
 		
-		DispenserBlock.registerBehavior(ArcanaRegistry.TAINT_IN_A_BOTTLE, new ProjectileDispenserBehavior(){
+		// TODO:
+		/*DispenserBlock.registerBehavior(ArcanaRegistry.TAINT_IN_A_BOTTLE, new ProjectileDispenserBehavior(){
 			protected ProjectileEntity createProjectile(World world, Position position, ItemStack stack){
 				return Util.make(new ThrownTaintBottleEntity(position.getX(), position.getY(), position.getZ(), world),
 						entity -> entity.setItem(stack));
 			}
-		});
+		});*/
 	}
 	
 	public static Identifier arcId(String s){
-		return new Identifier(MODID, s);
+		return Identifier.of(MODID, s);
 	}
 	
 	// resolves non-namespaced IDs in the arcana namespace, otherwise uses the given namespace
 	public static Identifier maybeArcId(String s){
 		if(s.contains(":"))
-			return new Identifier(s);
+			return Identifier.of(s);
 		else
 			return arcId(s);
 	}

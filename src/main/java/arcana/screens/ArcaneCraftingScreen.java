@@ -8,12 +8,13 @@ import arcana.aspects.Aspects;
 import arcana.aspects.ScaledAspectMap;
 import arcana.client.AspectRenderHelper;
 import arcana.items.WandItem;
+import arcana.recipes.arcane_crafting.ArcaneCraftingRecipe;
 import arcana.recipes.arcane_crafting.ShapedArcaneCraftingRecipe;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -24,11 +25,12 @@ import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.s2c.play.ScreenHandlerSlotUpdateS2CPacket;
-import net.minecraft.recipe.Recipe;
+import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.recipe.RecipeManager;
 import net.minecraft.recipe.RecipeMatcher;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.book.RecipeBookCategory;
+import net.minecraft.recipe.input.CraftingRecipeInput;
 import net.minecraft.screen.AbstractRecipeScreenHandler;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
@@ -42,6 +44,7 @@ import net.minecraft.util.math.Vec2f;
 import net.minecraft.world.World;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static arcana.Arcana.arcId;
@@ -71,46 +74,45 @@ public class ArcaneCraftingScreen extends HandledScreen<ArcaneCraftingScreen.Han
 		titleY = -5;
 	}
 	
-	protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY){
-		RenderSystem.setShader(GameRenderer::getPositionTexShader);
+	protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY){
+		RenderSystem.setShader(GameRenderer::getPositionTexProgram);
 		RenderSystem.setShaderColor(1, 1, 1, 1);
-		RenderSystem.setShaderTexture(0, texture);
-		drawTexture(matrices, x, y, 0, 0, backgroundWidth, backgroundHeight);
+		context.drawTexture(texture, x, y, 0, 0, backgroundWidth, backgroundHeight);
 		
 		// draw required aspects for recipe
 		ClientWorld world = MinecraftClient.getInstance().world;
 		ItemStack wand = handler.wand.getStack(0);
-		world.getRecipeManager().getFirstMatch(ShapedArcaneCraftingRecipe.TYPE, handler.input, world).ifPresent(recipe -> {
+		world.getRecipeManager().getFirstMatch(ShapedArcaneCraftingRecipe.TYPE, handler.inv.createRecipeInput(), world).ifPresent(recipe -> {
 			ScaledAspectMap stored = wand.getItem() instanceof WandItem ? WandItem.aspectsFrom(wand) : new ScaledAspectMap(new AspectMap(), 1);
-			for(Aspect aspect : recipe.aspects().aspectSet()){
-				int amount = recipe.aspects().get(aspect);
+			for(Aspect aspect : recipe.value().aspects().aspectSet()){
+				int amount = recipe.value().aspects().get(aspect);
 				amount *= WandItem.costMultiplier(aspect, wand, client.player);
 				boolean blink = !stored.contains(aspect, amount);
-				matrices.push();
-				matrices.translate(x, y, getZOffset());
+				context.getMatrices().push();
+				context.getMatrices().translate(x, y, 1);
 				int x = (int)aspectPositions.get(aspect).x;
 				int y = (int)aspectPositions.get(aspect).y;
 				float alpha = blink ? (float)Math.abs(Math.sin((world.getTime() + delta) / 4.5f)) * 0.6f + 0.4f : 1;
-				AspectRenderHelper.renderAspect(aspect, matrices, x, y, 0, 1, 1, 1, alpha);
-				AspectRenderHelper.renderAspectStackOverlay(amount, matrices, MinecraftClient.getInstance().textRenderer, x, y, 0);
-				matrices.pop();
+				AspectRenderHelper.renderAspect(aspect, context.getMatrices(), x, y, 0, 1, 1, 1, alpha);
+				AspectRenderHelper.renderAspectStackOverlay(amount, context.getMatrices(), MinecraftClient.getInstance().textRenderer, x, y, 0);
+				context.getMatrices().pop();
 			}
 		});
 	}
 	
-	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-		renderBackground(matrices);
+	public void render(DrawContext matrices, int mouseX, int mouseY, float delta) {
+		renderBackground(matrices, mouseX, mouseY, delta);
 		super.render(matrices, mouseX, mouseY, delta);
 		drawMouseoverTooltip(matrices, mouseX, mouseY);
 	}
 	
-	protected void drawForeground(MatrixStack matrices, int mouseX, int mouseY){
+	protected void drawForeground(DrawContext matrices, int mouseX, int mouseY){
 		// no-op - don't draw label
 	}
 	
-	public static class Handler extends AbstractRecipeScreenHandler<CraftingInventory>{
+	public static class Handler extends AbstractRecipeScreenHandler<CraftingRecipeInput, ArcaneCraftingRecipe>{
 		
-		final CraftingInventory input = new CraftingInventory(this, 3, 3);
+		final CraftingInventory inv = new CraftingInventory(this, 3, 3);
 		final Inventory wand = new SimpleInventory(1){
 			public void markDirty(){
 				super.markDirty();
@@ -130,12 +132,12 @@ public class ArcaneCraftingScreen extends HandledScreen<ArcaneCraftingScreen.Han
 			context = ctx;
 			player = inv.player;
 			
-			addSlot(new ArcaneCraftingResultSlot(player, input, result, 0, 160, 64));
+			addSlot(new ArcaneCraftingResultSlot(player, this.inv, result, 0, 160, 64));
 			
 			// crafting slots
 			for(int i = 0; i < 3; ++i)
 				for(int j = 0; j < 3; ++j)
-					addSlot(new Slot(input, j + i * 3, 42 + j * 23, 41 + i * 23));
+					addSlot(new Slot(this.inv, j + i * 3, 42 + j * 23, 41 + i * 23));
 			
 			addSlot(new Slot(wand, 0, 160, 18){
 				public boolean canInsert(ItemStack stack){
@@ -160,20 +162,21 @@ public class ArcaneCraftingScreen extends HandledScreen<ArcaneCraftingScreen.Han
 				var itemStack = new AtomicReference<>(ItemStack.EMPTY);
 				RecipeManager manager = world.getServer().getRecipeManager();
 				// this is what if/else will look like in 2024
-				manager.getFirstMatch(ShapedArcaneCraftingRecipe.TYPE, craftInv, world).ifPresentOrElse(recipe -> {
+				CraftingRecipeInput input = craftInv.createRecipeInput();
+				manager.getFirstMatch(ShapedArcaneCraftingRecipe.TYPE, input, world).ifPresentOrElse(recipe -> {
 					// the pattern matches, but the aspects might not
 					// ArcaneCraftingScreen will display the missing aspects for us
 					ItemStack wandStack = wandInv.getStack(0);
 					if(wandStack.getItem() instanceof WandItem){
 						ScaledAspectMap stored = WandItem.aspectsFrom(wandStack);
-						AspectMap toTake = recipe.aspects().copy();
+						AspectMap toTake = recipe.value().aspects().copy();
 						toTake.multiply(aspect -> WandItem.costMultiplier(aspect, wandStack, player));
 						if(stored.contains(toTake) && result.shouldCraftRecipe(world, serverPlayer, recipe))
-							itemStack.set(recipe.craft(craftInv));
+							itemStack.set(recipe.value().craft(input, player.getWorld().getRegistryManager()));
 					}
-				}, () -> manager.getFirstMatch(RecipeType.CRAFTING, craftInv, world).ifPresent(recipe -> {
+				}, () -> manager.getFirstMatch(RecipeType.CRAFTING, input, world).ifPresent(recipe -> {
 					if(result.shouldCraftRecipe(world, serverPlayer, recipe))
-						itemStack.set(recipe.craft(craftInv));
+						itemStack.set(recipe.value().craft(input, player.getWorld().getRegistryManager()));
 				}));
 				
 				result.setStack(0, itemStack.get());
@@ -184,21 +187,21 @@ public class ArcaneCraftingScreen extends HandledScreen<ArcaneCraftingScreen.Han
 		
 		@Override
 		public void onContentChanged(Inventory inventory){
-			context.run((world, pos) -> updateResult(this, world, player, input, result, wand));
+			context.run((world, pos) -> updateResult(this, world, player, inv, result, wand));
 		}
 		
 		public void populateRecipeFinder(RecipeMatcher finder){
-			input.provideRecipeInputs(finder);
+			inv.provideRecipeInputs(finder);
 		}
 		
 		public void clearCraftingSlots(){
-			input.clear();
+			inv.clear();
 			result.clear();
 			wand.clear();
 		}
 		
-		public boolean matches(Recipe<? super CraftingInventory> recipe){
-			return recipe.matches(input, player.world);
+		public boolean matches(RecipeEntry<ArcaneCraftingRecipe> recipe){
+			return recipe.value().matches(inv.createRecipeInput(), player.getWorld());
 		}
 		
 		public int getCraftingResultSlotIndex(){
@@ -229,7 +232,7 @@ public class ArcaneCraftingScreen extends HandledScreen<ArcaneCraftingScreen.Han
 			return slot.inventory != result && super.canInsertIntoSlot(stack, slot);
 		}
 		
-		public ItemStack transferSlot(PlayerEntity player, int index){
+		public ItemStack quickMove(PlayerEntity player, int index){
 			ItemStack itemStack = ItemStack.EMPTY;
 			Slot slot = slots.get(index);
 			if(slot.hasStack()){
@@ -239,9 +242,9 @@ public class ArcaneCraftingScreen extends HandledScreen<ArcaneCraftingScreen.Han
 					// shift click from crafting
 					context.run((world, pos) -> {
 						Item item = itemStack2.getItem();
-						item.onCraft(itemStack2, world, player);
+						item.onCraftByPlayer(itemStack2, world, player);
 						if(item instanceof ContextCraftedItem cci)
-							cci.onCraft(itemStack2, input, world, player);
+							cci.onCraft(itemStack2, inv, world, player);
 					});
 					if(!this.insertItem(itemStack2, 11, 47, true))
 						return ItemStack.EMPTY;
@@ -280,9 +283,9 @@ public class ArcaneCraftingScreen extends HandledScreen<ArcaneCraftingScreen.Han
 			return canUse(context, player, ArcanaRegistry.ARCANE_CRAFTING_TABLE);
 		}
 		
-		public void close(PlayerEntity player){
-			super.close(player);
-			context.run((world, pos) -> dropInventory(player, input));
+		public void onClosed(PlayerEntity player){
+			super.onClosed(player);
+			context.run((world, pos) -> dropInventory(player, inv));
 			context.run((world, pos) -> dropInventory(player, wand));
 		}
 		
@@ -293,15 +296,15 @@ public class ArcaneCraftingScreen extends HandledScreen<ArcaneCraftingScreen.Han
 			}
 			
 			public void onTakeItem(PlayerEntity player, ItemStack stack){
-				World world = player.world;
+				World world = player.getWorld();
 				RecipeManager manager = world.getRecipeManager();
-				var arcaneCrafting = manager.getFirstMatch(ShapedArcaneCraftingRecipe.TYPE, input, world);
+				Optional<RecipeEntry<ArcaneCraftingRecipe>> arcaneCrafting = manager.getFirstMatch(ShapedArcaneCraftingRecipe.TYPE, inv.createRecipeInput(), world);
 				arcaneCrafting.ifPresent(recipe -> {
 					// also take required aspects
 					ItemStack wandStack = wand.getStack(0);
 					if(wandStack.getItem() instanceof WandItem){
 						// already checked to see if it contains enough
-						var toTake = recipe.aspects().copy();
+						AspectMap toTake = recipe.value().aspects().copy();
 						toTake.multiply(aspect -> WandItem.costMultiplier(aspect, wandStack, player));
 						WandItem.updateAspects(wandStack, map -> map.take(toTake));
 					}
@@ -310,27 +313,27 @@ public class ArcaneCraftingScreen extends HandledScreen<ArcaneCraftingScreen.Han
 				// need to allow for *arcane* crafting too
 				this.onCrafted(stack);
 				if(stack.getItem() instanceof ContextCraftedItem cci)
-					cci.onCraft(stack, input, player.world, player);
+					cci.onCraft(stack, inv, player.getWorld(), player);
 				DefaultedList<ItemStack> remains;
 				if(arcaneCrafting.isPresent())
-					remains = player.world.getRecipeManager().getRemainingStacks(ShapedArcaneCraftingRecipe.TYPE, input, player.world);
+					remains = player.getWorld().getRecipeManager().getRemainingStacks(ShapedArcaneCraftingRecipe.TYPE, inv.createRecipeInput(), player.getWorld());
 				else
-					remains = player.world.getRecipeManager().getRemainingStacks(RecipeType.CRAFTING, input, player.world);
+					remains = player.getWorld().getRecipeManager().getRemainingStacks(RecipeType.CRAFTING, inv.createRecipeInput(), player.getWorld());
 				
 				for(int i = 0; i < remains.size(); ++i){
-					ItemStack inputStack = input.getStack(i);
+					ItemStack inputStack = inv.getStack(i);
 					ItemStack remainingStack = remains.get(i);
 					if(!inputStack.isEmpty()){
-						input.removeStack(i, 1);
-						inputStack = input.getStack(i);
+						inv.removeStack(i, 1);
+						inputStack = inv.getStack(i);
 					}
 					
 					if(!remainingStack.isEmpty()){
 						if(inputStack.isEmpty())
-							input.setStack(i, remainingStack);
-						else if(ItemStack.areItemsEqualIgnoreDamage(inputStack, remainingStack) && ItemStack.areNbtEqual(inputStack, remainingStack)){
+							inv.setStack(i, remainingStack);
+						else if(ItemStack.areItemsAndComponentsEqual(inputStack, remainingStack)){
 							remainingStack.increment(inputStack.getCount());
-							input.setStack(i, remainingStack);
+							inv.setStack(i, remainingStack);
 						}else if(!player.getInventory().insertStack(remainingStack))
 							player.dropItem(remainingStack, false);
 					}

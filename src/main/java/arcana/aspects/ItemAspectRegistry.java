@@ -4,24 +4,24 @@ import arcana.api.AspectRecipe;
 import com.google.common.base.Stopwatch;
 import com.google.gson.*;
 import com.mojang.logging.LogUtils;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
 import net.fabricmc.fabric.api.resource.ResourceReloadListenerKeys;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.Recipe;
-import net.minecraft.recipe.RecipeManager;
-import net.minecraft.recipe.SmithingRecipe;
+import net.minecraft.recipe.*;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.resource.JsonDataLoader;
 import net.minecraft.resource.ResourceManager;
-import net.minecraft.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.Pair;
 import net.minecraft.util.profiler.Profiler;
-import net.minecraft.util.registry.Registry;
 import org.slf4j.Logger;
 
 import java.util.*;
@@ -49,9 +49,11 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 	
 	// TODO: would rather not do this
 	public static RecipeManager recipes;
+	private final RegistryWrapper.WrapperLookup lookup;
 	
-	public ItemAspectRegistry(){
+	public ItemAspectRegistry(RegistryWrapper.WrapperLookup lookup){
 		super(gson, "arcana/aspects");
+		this.lookup = lookup;
 	}
 	
 	public Identifier getFabricId(){
@@ -106,7 +108,7 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 	// applied after tag load event
 	public void applyAssociations(){
 		Stopwatch sw = Stopwatch.createStarted();
-		for(Item item : Registry.ITEM){
+		for(Item item : Registries.ITEM){
 			if(itemAssociations.containsKey(item))
 				itemAspects.put(item, itemAssociations.get(item));
 			else for(var tagAssoc : itemTagAssociations.entrySet()) // TODO: what if an item is in multiple tags?
@@ -120,7 +122,7 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 		computeInheritedAspects();
 		
 		// add bonuses after
-		for(Item item : Registry.ITEM){
+		for(Item item : Registries.ITEM){
 			var aspects = get(item);
 			for(var tagBonus : itemTagBonuses.entrySet())
 				if(item.getRegistryEntry().isIn(tagBonus.getKey())){
@@ -139,18 +141,18 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 	private void addStackFunctions(){
 		// add 2 magic per enchantment level
 		stackModifiers.add((stack, out) -> {
-			var enchants = EnchantmentHelper.get(stack);
+			var enchants = EnchantmentHelper.getEnchantments(stack);
 			if(!enchants.isEmpty())
-				out.add(new AspectStack(Aspects.MAGIC, enchants.values().stream().mapToInt(x -> x).sum() * 2));
+				out.add(new AspectStack(Aspects.MAGIC, enchants.getEnchantmentEntries().stream().mapToInt(Object2IntMap.Entry::getIntValue).sum() * 2));
 		});
 	}
 	
 	private void addIngredientProviders(){
 		// smithing doesn't properly implement getIngredients
 		ingredientProviders.put(SmithingRecipe.class, recipe -> {
-			if(recipe instanceof SmithingRecipe sr){
+			if(recipe instanceof SmithingTransformRecipe sr){
 				return List.of(sr.base, sr.addition);
-			}else return null; // unreachable
+			}else return null;
 		});
 	}
 	
@@ -164,10 +166,10 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 				if(additional)
 					key = key.substring(1);
 				if(key.startsWith("#")){
-					TagKey<Item> tag = TagKey.of(Registry.ITEM_KEY, new Identifier(key.substring(1)));
+					TagKey<Item> tag = TagKey.of(RegistryKeys.ITEM, Identifier.of(key.substring(1)));
 					parseAspectStackList(file, value).ifPresent(x -> (additional ? itemTagBonuses : itemTagAssociations).put(tag, x));
 				}else{
-					Item item = Registry.ITEM.get(new Identifier(key));
+					Item item = Registries.ITEM.get(Identifier.of(key));
 					if(item != Items.AIR)
 						parseAspectStackList(file, value).ifPresent(x -> itemAssociations.put(item, x));
 					else
@@ -222,8 +224,8 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 		// here we simply look at each possible craftable item and recursively generate aspects,
 		// producing weird behaviour on cycles
 		// this is also quadratic over recipes
-		for(Recipe<?> recipe : recipes.values()){
-			var output = recipe.getOutput().getItem();
+		for(RecipeEntry<?> recipe : recipes.values()){
+			var output = recipe.value().getResult().getItem();
 			if(!itemAspects.containsKey(output))
 				generate(output);
 			generating.clear();
@@ -240,14 +242,16 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 			return new AspectMap();
 		if(generating.contains(item)){
 			// counts as nothing to itself
-			logger.warn("Encountered cycle picking aspects for {}", Registry.ITEM.getId(item));
+			logger.warn("Encountered cycle picking aspects for {}", Registries.ITEM.getId(item));
 			return new AspectMap();
 		}
 		generating.add(item);
 		// consider every recipe that produces this
 		List<AspectMap> choices = new ArrayList<>();
-		for(Recipe<?> recipe : recipes.values()){
-			if(recipe.getOutput().getItem().equals(item) && recipe.getOutput().getCount() > 0){
+		for(RecipeEntry<?> recipeEntry : recipes.values()){
+			Recipe<?> recipe = recipeEntry.value();
+			ItemStack result = recipe.getResult();
+			if(result.getItem().equals(item) && result.getCount() > 0){
 				AspectMap collected = new AspectMap();
 				List<Ingredient> ingredients = recipe.getIngredients();
 				if(ingredientProviders.containsKey(recipe.getClass())){
@@ -269,7 +273,7 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 					ar.affect(collected);
 				// divide by the amount produced
 				for(AspectStack stack : collected.asStacks())
-					collected.set(stack.type(), stack.amount() / recipe.getOutput().getCount());
+					collected.set(stack.type(), stack.amount() / result.getCount());
 				choices.add(collected);
 			}
 		}

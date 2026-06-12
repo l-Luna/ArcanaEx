@@ -20,7 +20,7 @@ public class SetBonusStatusEffect extends ArcanaStatusEffect{
 		int matched = 0;
 		for(ItemStack item : player.getArmorItems())
 			if(item.getItem() instanceof ArmorItem armor)
-				if(setBonusMaterial == null || setBonusMaterial == armor.getMaterial()){
+				if(setBonusMaterial == null || setBonusMaterial.equals(armor.getMaterial().g)){
 					setBonusMaterial = armor.getMaterial();
 					matched++;
 				}

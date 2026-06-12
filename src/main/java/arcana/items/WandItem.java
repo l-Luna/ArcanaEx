@@ -17,13 +17,10 @@ import net.fabricmc.fabric.api.item.v1.FabricItem;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.item.TooltipContext;
-import net.minecraft.client.item.TooltipData;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.StackReference;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.nbt.NbtCompound;
@@ -34,7 +31,6 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.*;
-import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
@@ -46,7 +42,7 @@ import java.util.function.Consumer;
 
 public class WandItem extends Item implements FabricItem, WarpingItem{
 	
-	public WandItem(Settings settings){
+	public WandItem(Item.Settings settings){
 		super(settings);
 	}
 	
@@ -70,14 +66,15 @@ public class WandItem extends Item implements FabricItem, WarpingItem{
 				Text.translatable("wand.variant.arcana.wand"));
 	}
 	
-	public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks){
+	// TODO
+	/*public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks){
 		if(isIn(group)){
 			stacks.add(withCapAndCore(ArcanaRegistry.IRON_WAND_CAP, ArcanaRegistry.STICK_CORE));
 			stacks.add(withCapAndCore(ArcanaRegistry.GOLD_WAND_CAP, ArcanaRegistry.GREATWOOD_WAND_CORE));
 			stacks.add(withCapAndCore(ArcanaRegistry.THAUMIUM_WAND_CAP, ArcanaRegistry.SILVERWOOD_WAND_CORE));
 			stacks.add(withCapAndCore(ArcanaRegistry.NETHERITE_WAND_CAP, ArcanaRegistry.ARCANIUM_WAND_CORE));
 		}
-	}
+	}*/
 	
 	public ActionResult useOnBlock(ItemUsageContext context){
 		World world = context.getWorld();

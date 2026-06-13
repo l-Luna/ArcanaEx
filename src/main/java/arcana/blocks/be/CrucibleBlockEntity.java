@@ -8,9 +8,9 @@ import arcana.aspects.ItemAspectRegistry;
 import arcana.aura.AuraWorld;
 import arcana.aura.FluxOrigin;
 import arcana.blocks.CrucibleBlock;
-import arcana.components.KdItem;
-import arcana.components.Researcher;
 import arcana.items.TomeOfSharingItem;
+import arcana.legacy_components.KdItem;
+import arcana.legacy_components.Researcher;
 import arcana.recipes.alchemy.AlchemyInventory;
 import arcana.recipes.alchemy.AlchemyRecipe;
 import net.minecraft.block.Block;
@@ -21,9 +21,10 @@ import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.Packet;
 import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
@@ -53,10 +54,9 @@ public class CrucibleBlockEntity extends BlockEntity{
 				boolean melt = true;
 				Map<Identifier, Integer> research = null;
 				PlayerEntity thrower = null;
-				if(item.getThrower() != null){
-					thrower = world.getPlayerByUuid(item.getThrower());
-					if(thrower != null)
-						research = Researcher.from(thrower).getAllResearch();
+				if(item.getOwner() instanceof PlayerEntity pe){
+					thrower = pe;
+					research = Researcher.from(thrower).getAllResearch();
 				}else{
 					BlockPos source = KdItem.getSource(item);
 					if(source != null){
@@ -145,7 +145,7 @@ public class CrucibleBlockEntity extends BlockEntity{
 		return BlockEntityUpdateS2CPacket.create(this);
 	}
 	
-	public NbtCompound toInitialChunkDataNbt(){
-		return createNbt();
+	public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup){
+		return createNbt(registryLookup);
 	}
 }

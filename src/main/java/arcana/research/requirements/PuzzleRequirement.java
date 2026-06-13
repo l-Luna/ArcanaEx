@@ -1,7 +1,7 @@
 package arcana.research.requirements;
 
 import arcana.ArcanaRegistry;
-import arcana.components.Researcher;
+import arcana.legacy_components.Researcher;
 import arcana.network.PkGetNote;
 import arcana.research.*;
 import arcana.research.puzzles.Fieldwork;

@@ -1,7 +1,7 @@
 package arcana.blocks;
 
 import arcana.blocks.be.KnowledgeableDropperBlockEntity;
-import arcana.components.KdItem;
+import arcana.legacy_components.KdItem;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.dispenser.DispenserBehavior;
@@ -14,7 +14,10 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ItemScatterer;
-import net.minecraft.util.math.*;
+import net.minecraft.util.math.BlockPointer;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Position;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldEvents;
 

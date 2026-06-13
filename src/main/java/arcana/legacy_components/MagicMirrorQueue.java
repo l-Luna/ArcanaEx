@@ -1,4 +1,4 @@
-package arcana.components;
+package arcana.legacy_components;
 
 import arcana.util.NbtUtil;
 import dev.onyxstudios.cca.api.v3.component.Component;

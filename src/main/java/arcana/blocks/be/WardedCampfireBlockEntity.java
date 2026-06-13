@@ -6,6 +6,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.CampfireBlock;
 import net.minecraft.block.entity.CampfireBlockEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Properties;
@@ -22,13 +23,13 @@ public class WardedCampfireBlockEntity extends CampfireBlockEntity{
 		((BlockEntityAccessor)this).setType(ArcanaRegistry.WARDED_CAMPFIRE_BE);
 	}
 	
-	protected void writeNbt(NbtCompound nbt){
-		super.writeNbt(nbt);
+	protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){
+		super.writeNbt(nbt, registryLookup);
 		nbt.putInt("timer", timer);
 	}
 	
-	public void readNbt(NbtCompound nbt){
-		super.readNbt(nbt);
+	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){
+		super.readNbt(nbt, registryLookup);
 		timer = nbt.getInt("timer");
 	}
 	

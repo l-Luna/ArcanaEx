@@ -5,7 +5,7 @@ import arcana.client.RenderHelper;
 import arcana.client.research.EntrySectionRenderer;
 import arcana.client.research.RequirementRenderer;
 import arcana.client.research.sections.TextSectionRenderer;
-import arcana.components.Researcher;
+import arcana.legacy_components.Researcher;
 import arcana.research.*;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;

@@ -5,7 +5,7 @@ import arcana.aspects.AspectMap;
 import arcana.aspects.AspectStack;
 import arcana.client.tooltip.ItemAspectsTooltipComponent;
 import arcana.client.tooltip.PinkMarkerComponent;
-import arcana.components.Researcher;
+import arcana.legacy_components.Researcher;
 import arcana.research.BuiltinResearch;
 import arcana.research.Research;
 import com.mojang.blaze3d.systems.RenderSystem;

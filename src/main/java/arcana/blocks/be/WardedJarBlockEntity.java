@@ -6,9 +6,10 @@ import arcana.aspects.AspectStack;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.Packet;
 import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -31,15 +32,15 @@ public class WardedJarBlockEntity extends BlockEntity implements AspectIo{
 		this.isVoidJar = isVoidJar;
 	}
 	
-	public void readNbt(NbtCompound nbt){
-		super.readNbt(nbt);
+	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){
+		super.readNbt(nbt, registryLookup);
 		if(nbt.contains("stored"))
 			stored = AspectStack.fromNbt(nbt.getCompound("stored"));
 		else stored = null;
 	}
 	
-	protected void writeNbt(NbtCompound nbt){
-		super.writeNbt(nbt);
+	protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){
+		super.writeNbt(nbt, registryLookup);
 		if(stored != null)
 			nbt.put("stored", stored.toNbt());
 	}
@@ -74,8 +75,8 @@ public class WardedJarBlockEntity extends BlockEntity implements AspectIo{
 		return BlockEntityUpdateS2CPacket.create(this);
 	}
 	
-	public NbtCompound toInitialChunkDataNbt(){
-		return createNbt();
+	public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup){
+		return createNbt(registryLookup);
 	}
 	
 	public void markDirty(){

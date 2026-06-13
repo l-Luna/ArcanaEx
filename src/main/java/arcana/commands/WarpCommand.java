@@ -1,6 +1,6 @@
 package arcana.commands;
 
-import arcana.components.Researcher;
+import arcana.legacy_components.Researcher;
 import arcana.warp.WarpEvents;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;

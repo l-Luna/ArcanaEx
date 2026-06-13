@@ -1,4 +1,4 @@
-package arcana.components;
+package arcana.legacy_components;
 
 import arcana.aura.AuraChunk;
 import arcana.aura.AuraWorld;

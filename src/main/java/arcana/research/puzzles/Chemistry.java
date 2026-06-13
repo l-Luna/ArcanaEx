@@ -3,7 +3,7 @@ package arcana.research.puzzles;
 import arcana.aspects.Aspect;
 import arcana.aspects.AspectMap;
 import arcana.aspects.Aspects;
-import arcana.components.Researcher;
+import arcana.legacy_components.Researcher;
 import arcana.research.BuiltinResearch;
 import arcana.research.Puzzle;
 import arcana.research.Research;

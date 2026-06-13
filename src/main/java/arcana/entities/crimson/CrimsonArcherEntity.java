@@ -2,8 +2,8 @@ package arcana.entities.crimson;
 
 import arcana.ArcanaRegistry;
 import arcana.ArcanaTags;
-import arcana.components.CaArrow;
 import arcana.items.CrimsonLongbowItem;
+import arcana.legacy_components.CaArrow;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.RangedAttackMob;

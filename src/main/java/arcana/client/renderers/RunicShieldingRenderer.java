@@ -1,7 +1,7 @@
 package arcana.client.renderers;
 
 import arcana.client.RenderHelper;
-import arcana.components.RunicShielding;
+import arcana.legacy_components.RunicShielding;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;

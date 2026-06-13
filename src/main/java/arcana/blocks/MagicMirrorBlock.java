@@ -1,7 +1,7 @@
 package arcana.blocks;
 
 import arcana.blocks.be.MagicMirrorBlockEntity;
-import arcana.components.MagicMirrorQueue;
+import arcana.legacy_components.MagicMirrorQueue;
 import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;

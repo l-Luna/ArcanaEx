@@ -4,7 +4,7 @@ import arcana.ArcanaRegistry;
 import arcana.aspects.Aspect;
 import arcana.aspects.AspectMap;
 import arcana.client.particles.AspectParticleEffect;
-import arcana.components.Researcher;
+import arcana.legacy_components.Researcher;
 import arcana.recipes.infusion.BakedInfusionRecipe;
 import arcana.recipes.infusion.InfusionInventory;
 import arcana.recipes.infusion.InfusionRecipe;
@@ -17,10 +17,12 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.Packet;
 import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.particle.ItemStackParticleEffect;
+import net.minecraft.recipe.RecipeEntry;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -46,7 +48,7 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 	
 	private boolean activated = false;
 	
-	private InfusionRecipe curRecipe;
+	private RecipeEntry<InfusionRecipe> curRecipe;
 	private InfusionState curState = IDLE;
 	private AspectMap remainingEssentia;
 	private List<ItemStack> remainingItems;
@@ -169,7 +171,7 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 					researcher.doSync();
 				}
 				
-				BakedInfusionRecipe requirements = recipe.craftInfusion(inv);
+				BakedInfusionRecipe requirements = recipe.value().craftInfusion(inv);
 				result = requirements.result();
 				remainingEssentia = requirements.aspects();
 				remainingItems = requirements.outerStacks();
@@ -222,7 +224,7 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 	}
 	
 	public InfusionRecipe getCurrentRecipe(){
-		return curRecipe;
+		return curRecipe == null ? null : curRecipe.value();
 	}
 	
 	public InfusionState getCurrentState(){
@@ -241,15 +243,15 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 		return activated;
 	}
 	
-	protected void writeNbt(NbtCompound nbt){
-		super.writeNbt(nbt);
+	protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){
+		super.writeNbt(nbt, registryLookup);
 		nbt.putBoolean("activated", activated);
 		
 		if(curRecipe != null){
-			nbt.putString("currentRecipe", curRecipe.getId().toString());
+			nbt.putString("currentRecipe", curRecipe.id().toString());
 			nbt.put("remainingEssentia", remainingEssentia.toNbt());
-			nbt.put("remainingItems", remainingItems.stream().map(x -> x.writeNbt(new NbtCompound())).collect(NbtUtil.toNbtList()));
-			nbt.put("result", result.writeNbt(new NbtCompound()));
+			nbt.put("remainingItems", remainingItems.stream().map(x -> x.encode(registryLookup)).collect(NbtUtil.toNbtList()));
+			nbt.put("result", result.encode(registryLookup));
 			nbt.putInt("instabilityRate", instabilityRate);
 			nbt.putString("state", curState.name());
 			nbt.putInt("cooldown", cooldown);
@@ -257,19 +259,19 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 		}
 	}
 	
-	public void readNbt(NbtCompound nbt){
-		super.readNbt(nbt);
+	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){
+		super.readNbt(nbt, registryLookup);
 		activated = nbt.getBoolean("activated");
 		
 		if(nbt.contains("currentRecipe") && nbt.contains("state")){
-			lastRecipe = new Identifier(nbt.getString("currentRecipe"));
+			lastRecipe = Identifier.of(nbt.getString("currentRecipe"));
 			curState = InfusionState.valueOf(nbt.getString("state"));
 			cooldown = nbt.getInt("cooldown");
 			instability = nbt.getFloat("instability");
 			instabilityRate = nbt.getInt("instabilityRate");
 			remainingEssentia = AspectMap.fromNbt(nbt.getCompound("remainingEssentia"));
-			remainingItems = NbtUtil.readMutList(nbt, "remainingItems", ItemStack::fromNbt);
-			result = ItemStack.fromNbt(nbt.getCompound("result"));
+			remainingItems = NbtUtil.readMutList(nbt, "remainingItems", x -> ItemStack.fromNbtOrEmpty(registryLookup, x));
+			result = ItemStack.fromNbtOrEmpty(registryLookup, nbt.getCompound("result"));
 		}
 	}
 	
@@ -277,8 +279,8 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 		return BlockEntityUpdateS2CPacket.create(this);
 	}
 	
-	public NbtCompound toInitialChunkDataNbt() {
-		return createNbt();
+	public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup) {
+		return createNbt(registryLookup);
 	}
 	
 	public boolean tickItems(){

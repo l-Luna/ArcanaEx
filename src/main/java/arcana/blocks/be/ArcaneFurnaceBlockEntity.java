@@ -18,9 +18,10 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
-import net.minecraft.network.Packet;
 import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
@@ -93,9 +94,9 @@ public class ArcaneFurnaceBlockEntity extends BlockEntity implements NamedScreen
 		inventory.addListener(sender -> markDirty());
 	}
 	
-	protected void writeNbt(NbtCompound nbt){
-		super.writeNbt(nbt);
-		nbt.put("material", inventory.toNbtList());
+	protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){
+		super.writeNbt(nbt, registryLookup);
+		nbt.put("material", inventory.toNbtList(registryLookup));
 		nbt.put("aspects", aspects.toNbt());
 		
 		nbt.putInt("burnTime", burnTime);
@@ -107,9 +108,9 @@ public class ArcaneFurnaceBlockEntity extends BlockEntity implements NamedScreen
 		nbt.putFloat("substrateResidualBurn", substrateResidualBurn);
 	}
 	
-	public void readNbt(NbtCompound nbt){
-		super.readNbt(nbt);
-		inventory.readNbtList(nbt.getList("inventory", NbtElement.COMPOUND_TYPE));
+	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){
+		super.readNbt(nbt, registryLookup);
+		inventory.readNbtList(nbt.getList("inventory", NbtElement.COMPOUND_TYPE), registryLookup);
 		aspects = AspectMap.fromNbt(nbt.getCompound("aspects"));
 		
 		burnTime = nbt.getInt("burnTime");
@@ -248,7 +249,7 @@ public class ArcaneFurnaceBlockEntity extends BlockEntity implements NamedScreen
 		return BlockEntityUpdateS2CPacket.create(this);
 	}
 	
-	public NbtCompound toInitialChunkDataNbt(){
-		return createNbt();
+	public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup){
+		return createNbt(registryLookup);
 	}
 }

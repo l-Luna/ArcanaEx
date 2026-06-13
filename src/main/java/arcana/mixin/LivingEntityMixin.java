@@ -2,9 +2,9 @@ package arcana.mixin;
 
 import arcana.ArcanaDamageSources;
 import arcana.ArcanaRegistry;
-import arcana.components.RunicShielding;
 import arcana.duck.ArcanaLivingEntity;
 import arcana.items.BootsOfTheTravellerItem;
+import arcana.legacy_components.RunicShielding;
 import arcana.network.PkEntityStatusEx;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;

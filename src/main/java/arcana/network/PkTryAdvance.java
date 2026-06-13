@@ -1,7 +1,7 @@
 package arcana.network;
 
 import arcana.ReflectivelyUtilized;
-import arcana.components.Researcher;
+import arcana.legacy_components.Researcher;
 import arcana.research.Entry;
 import arcana.research.Research;
 import com.unascribed.lib39.tunnel.api.C2SMessage;

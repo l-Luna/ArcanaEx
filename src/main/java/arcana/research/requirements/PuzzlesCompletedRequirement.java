@@ -1,6 +1,6 @@
 package arcana.research.requirements;
 
-import arcana.components.Researcher;
+import arcana.legacy_components.Researcher;
 import arcana.research.Requirement;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;

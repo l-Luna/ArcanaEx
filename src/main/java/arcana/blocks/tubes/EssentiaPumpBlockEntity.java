@@ -9,6 +9,7 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
@@ -47,15 +48,15 @@ public class EssentiaPumpBlockEntity extends EssentiaTubeBlockEntity{
 		}
 	}
 	
-	protected void writeNbt(NbtCompound nbt){
-		super.writeNbt(nbt);
+	protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){
+		super.writeNbt(nbt, registryLookup);
 		nbt.putInt("timer", timer);
-		nbt.put("inventory", inventory.toNbtList());
+		nbt.put("inventory", inventory.toNbtList(registryLookup));
 	}
 	
-	public void readNbt(NbtCompound nbt){
-		super.readNbt(nbt);
+	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){
+		super.readNbt(nbt, registryLookup);
 		timer = nbt.getInt("timer");
-		inventory.readNbtList(nbt.getList("inventory", NbtElement.COMPOUND_TYPE));
+		inventory.readNbtList(nbt.getList("inventory", NbtElement.COMPOUND_TYPE), registryLookup);
 	}
 }

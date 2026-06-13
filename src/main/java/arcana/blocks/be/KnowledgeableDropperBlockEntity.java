@@ -9,6 +9,7 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
@@ -26,14 +27,14 @@ public class KnowledgeableDropperBlockEntity extends DispenserBlockEntity{
 		return Text.translatable("container.arcana.knowledgeable_dropper");
 	}
 	
-	protected void writeNbt(NbtCompound nbt){
-		super.writeNbt(nbt);
-		nbt.put("tome", tomeSlot.getStack(0).writeNbt(new NbtCompound()));
+	protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){
+		super.writeNbt(nbt, registryLookup);
+		nbt.put("tome", tomeSlot.getStack(0).encode(registryLookup));
 	}
 	
-	public void readNbt(NbtCompound nbt){
-		super.readNbt(nbt);
-		tomeSlot.setStack(0, ItemStack.fromNbt(nbt.getCompound("tome")));
+	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){
+		super.readNbt(nbt, registryLookup);
+		tomeSlot.setStack(0, ItemStack.fromNbtOrEmpty(registryLookup, nbt.getCompound("tome")));
 	}
 	
 	protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory){

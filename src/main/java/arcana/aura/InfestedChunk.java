@@ -2,7 +2,7 @@ package arcana.aura;
 
 import arcana.Arcana;
 import arcana.ArcanaConfig;
-import arcana.components.ChunkLayer;
+import arcana.legacy_components.ChunkLayer;
 import arcana.util.MathUtil;
 import arcana.util.SearchUtil;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;

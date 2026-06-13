@@ -15,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
@@ -109,10 +110,10 @@ public class CrystallizationPressBlockEntity extends BlockEntity implements Name
 		}
 	}
 	
-	protected void writeNbt(NbtCompound nbt){
-		super.writeNbt(nbt);
+	protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){
+		super.writeNbt(nbt, registryLookup);
 		
-		nbt.put("quartz", inventory.toNbtList());
+		nbt.put("quartz", inventory.toNbtList(registryLookup));
 		
 		if(stored != null)
 			nbt.put("stored", stored.toNbt());
@@ -121,10 +122,10 @@ public class CrystallizationPressBlockEntity extends BlockEntity implements Name
 		nbt.putInt("progress", progress);
 	}
 	
-	public void readNbt(NbtCompound nbt){
-		super.readNbt(nbt);
+	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){
+		super.readNbt(nbt, registryLookup);
 		
-		inventory.readNbtList(nbt.getList("quartz", NbtElement.COMPOUND_TYPE));
+		inventory.readNbtList(nbt.getList("quartz", NbtElement.COMPOUND_TYPE), registryLookup);
 		
 		if(nbt.contains("stored"))
 			stored = AspectStack.fromNbt(nbt.getCompound("stored"));

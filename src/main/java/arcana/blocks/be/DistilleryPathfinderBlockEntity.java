@@ -7,7 +7,7 @@ import arcana.aspects.Aspects;
 import arcana.aspects.ItemAspectRegistry;
 import arcana.aura.AuraWorld;
 import arcana.aura.FluxOrigin;
-import arcana.components.Researcher;
+import arcana.legacy_components.Researcher;
 import arcana.research.BuiltinResearch;
 import arcana.research.Research;
 import arcana.screens.DistilleryPathfinderScreen;
@@ -20,9 +20,10 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.Packet;
 import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
@@ -72,10 +73,10 @@ public class DistilleryPathfinderBlockEntity extends BlockEntity implements Name
 		fuel.addListener(__ -> markDirty());
 	}
 	
-	protected void writeNbt(NbtCompound nbt){
-		super.writeNbt(nbt);
-		nbt.put("material", material.getStack(0).writeNbt(new NbtCompound()));
-		nbt.put("fuel", fuel.getStack(0).writeNbt(new NbtCompound()));
+	protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){
+		super.writeNbt(nbt, registryLookup);
+		nbt.put("material", material.getStack(0).encode(registryLookup));
+		nbt.put("fuel", fuel.getStack(0).encode(registryLookup));
 		
 		nbt.putInt("burnTime", burnTime);
 		nbt.putInt("maxBurnTime", maxBurnTime);
@@ -84,10 +85,10 @@ public class DistilleryPathfinderBlockEntity extends BlockEntity implements Name
 		ownerUuid.ifPresent(uuid -> nbt.putUuid("owner", uuid));
 	}
 	
-	public void readNbt(NbtCompound nbt){
-		super.readNbt(nbt);
-		material.setStack(0, ItemStack.fromNbt(nbt.getCompound("material")));
-		fuel.setStack(0, ItemStack.fromNbt(nbt.getCompound("fuel")));
+	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){
+		super.readNbt(nbt, registryLookup);
+		material.setStack(0, ItemStack.fromNbt(registryLookup, nbt.getCompound("material")).get());
+		fuel.setStack(0, ItemStack.fromNbt(registryLookup, nbt.getCompound("fuel")).get());
 		
 		burnTime = nbt.getInt("burnTime");
 		maxBurnTime = nbt.getInt("maxBurnTime");
@@ -165,7 +166,7 @@ public class DistilleryPathfinderBlockEntity extends BlockEntity implements Name
 		return BlockEntityUpdateS2CPacket.create(this);
 	}
 	
-	public NbtCompound toInitialChunkDataNbt(){
-		return createNbt();
+	public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup){
+		return createNbt(registryLookup);
 	}
 }

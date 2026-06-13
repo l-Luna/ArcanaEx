@@ -4,6 +4,7 @@ import arcana.ArcanaRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.math.BlockPos;
 
 public class EssentiaValveBlockEntity extends EssentiaTubeBlockEntity{
@@ -27,14 +28,14 @@ public class EssentiaValveBlockEntity extends EssentiaTubeBlockEntity{
 		return !(disabledManually || disabledByRedstone);
 	}
 	
-	protected void writeNbt(NbtCompound nbt){
-		super.writeNbt(nbt);
+	protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){
+		super.writeNbt(nbt, registryLookup);
 		nbt.putBoolean("disabledManually", disabledManually);
 		nbt.putBoolean("disabledByRedstone", disabledByRedstone);
 	}
 	
-	public void readNbt(NbtCompound nbt){
-		super.readNbt(nbt);
+	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){
+		super.readNbt(nbt, registryLookup);
 		disabledManually = nbt.getBoolean("disabledManually");
 		disabledByRedstone = nbt.getBoolean("disabledByRedstone");
 	}

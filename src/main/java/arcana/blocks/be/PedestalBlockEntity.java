@@ -5,9 +5,10 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.Packet;
 import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.math.BlockPos;
 
 public class PedestalBlockEntity extends BlockEntity{
@@ -27,21 +28,21 @@ public class PedestalBlockEntity extends BlockEntity{
 		markDirty();
 	}
 	
-	protected void writeNbt(NbtCompound nbt){
-		super.writeNbt(nbt);
-		nbt.put("stack", stack.writeNbt(new NbtCompound()));
+	protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){
+		super.writeNbt(nbt, registryLookup);
+		nbt.put("stack", stack.encode(registryLookup));
 	}
 	
-	public void readNbt(NbtCompound nbt){
-		super.readNbt(nbt);
-		stack = ItemStack.fromNbt(nbt.getCompound("stack"));
+	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){
+		super.readNbt(nbt, registryLookup);
+		stack = ItemStack.fromNbtOrEmpty(registryLookup, nbt.getCompound("stack"));
 	}
 	
 	public Packet<ClientPlayPacketListener> toUpdatePacket(){
 		return BlockEntityUpdateS2CPacket.create(this);
 	}
 	
-	public NbtCompound toInitialChunkDataNbt(){
-		return createNbt();
+	public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup){
+		return createNbt(registryLookup);
 	}
 }

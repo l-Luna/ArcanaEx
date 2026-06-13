@@ -1,8 +1,8 @@
 package arcana.mixin;
 
 import arcana.blocks.WardedCampfireBlock;
-import arcana.components.RunicShielding;
 import arcana.items.BootsOfTheTravellerItem;
+import arcana.legacy_components.RunicShielding;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import net.minecraft.entity.EntityType;

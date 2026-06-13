@@ -12,10 +12,11 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.Packet;
 import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
@@ -94,16 +95,16 @@ public class ThaumicHaloBlockEntity extends BlockEntity{
 		}
 	}
 	
-	protected void writeNbt(NbtCompound nbt){
-		super.writeNbt(nbt);
+	protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){
+		super.writeNbt(nbt, registryLookup);
 		if(stored != null)
 			nbt.put("stored", stored.toNbt());
 		nbt.putInt("fuelTimer", fuelTimer);
 		nbt.putInt("workTimer", workTimer);
 	}
 	
-	public void readNbt(NbtCompound nbt){
-		super.readNbt(nbt);
+	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){
+		super.readNbt(nbt, registryLookup);
 		stored = nbt.contains("stored") ? AspectStack.fromNbt(nbt.getCompound("stored")) : null;
 		fuelTimer = nbt.getInt("fuelTimer");
 		workTimer = nbt.getInt("workTimer");
@@ -127,8 +128,8 @@ public class ThaumicHaloBlockEntity extends BlockEntity{
 		return BlockEntityUpdateS2CPacket.create(this);
 	}
 	
-	public NbtCompound toInitialChunkDataNbt(){
-		return createNbt();
+	public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup){
+		return createNbt(registryLookup);
 	}
 	
 	public void markDirty(){

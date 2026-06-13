@@ -1,7 +1,7 @@
 package arcana.warp;
 
 import arcana.ArcanaRegistry;
-import arcana.components.Researcher;
+import arcana.legacy_components.Researcher;
 import arcana.network.PkTriggerWarpEvent;
 import arcana.warp.events.FrailEvent;
 import arcana.warp.events.PassEvent;

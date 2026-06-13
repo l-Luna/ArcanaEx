@@ -4,9 +4,10 @@ import arcana.ArcanaRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.Packet;
 import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
 
@@ -27,15 +28,15 @@ public class InfusionPillarBlockEntity extends BlockEntity{
 		markDirty();
 	}
 	
-	protected void writeNbt(NbtCompound nbt){
-		super.writeNbt(nbt);
+	protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){
+		super.writeNbt(nbt, registryLookup);
 		nbt.putBoolean("active", relativeMatrixPosition != null);
 		if(relativeMatrixPosition != null)
 			nbt.putLong("relativeMatrixPosition", relativeMatrixPosition.asLong());
 	}
 	
-	public void readNbt(NbtCompound nbt){
-		super.readNbt(nbt);
+	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){
+		super.readNbt(nbt, registryLookup);
 		if(nbt.getBoolean("active"))
 			relativeMatrixPosition = BlockPos.fromLong(nbt.getLong("relativeMatrixPosition"));
 		else
@@ -46,7 +47,7 @@ public class InfusionPillarBlockEntity extends BlockEntity{
 		return BlockEntityUpdateS2CPacket.create(this);
 	}
 	
-	public NbtCompound toInitialChunkDataNbt() {
-		return createNbt();
+	public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup) {
+		return createNbt(registryLookup);
 	}
 }

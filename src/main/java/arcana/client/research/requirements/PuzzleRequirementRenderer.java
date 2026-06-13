@@ -1,7 +1,7 @@
 package arcana.client.research.requirements;
 
 import arcana.client.research.RequirementRenderer;
-import arcana.components.Researcher;
+import arcana.legacy_components.Researcher;
 import arcana.network.PkGetNote;
 import arcana.research.BuiltinResearch;
 import arcana.research.Puzzle;

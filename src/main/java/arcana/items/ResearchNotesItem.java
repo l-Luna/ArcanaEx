@@ -1,12 +1,11 @@
 package arcana.items;
 
 import arcana.client.research.requirements.PuzzleRequirementRenderer;
-import arcana.components.Researcher;
+import arcana.legacy_components.Researcher;
 import arcana.research.Puzzle;
 import arcana.research.Research;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

@@ -1,6 +1,6 @@
 package arcana.items;
 
-import arcana.components.Researcher;
+import arcana.legacy_components.Researcher;
 import arcana.research.BuiltinResearch;
 import arcana.research.Research;
 import net.minecraft.entity.LivingEntity;

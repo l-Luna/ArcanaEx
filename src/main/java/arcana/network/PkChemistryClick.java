@@ -5,7 +5,7 @@ import arcana.ReflectivelyUtilized;
 import arcana.aspects.Aspect;
 import arcana.aspects.AspectMap;
 import arcana.aspects.Aspects;
-import arcana.components.Researcher;
+import arcana.legacy_components.Researcher;
 import arcana.research.BuiltinResearch;
 import arcana.research.Research;
 import arcana.research.puzzles.Chemistry;

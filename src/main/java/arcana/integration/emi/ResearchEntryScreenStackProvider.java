@@ -1,6 +1,6 @@
 package arcana.integration.emi;
 
-import arcana.components.Researcher;
+import arcana.legacy_components.Researcher;
 import arcana.research.Entry;
 import arcana.research.Requirement;
 import arcana.research.requirements.ItemRequirement;

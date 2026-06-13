@@ -1,7 +1,7 @@
 package arcana.mixin;
 
-import arcana.components.CaArrow;
 import arcana.items.CrimsonLongbowItem;
+import arcana.legacy_components.CaArrow;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.item.BowItem;

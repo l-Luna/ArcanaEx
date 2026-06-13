@@ -7,11 +7,13 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class ResearchTableBlockEntity extends BlockEntity{
 	
+	// TODO: use ArrayInventory
 	public SimpleInventory scribingTools = new SimpleInventory(1), note = new SimpleInventory(1);
 	
 	public ResearchTableBlockEntity(BlockPos pos, BlockState state){
@@ -25,15 +27,15 @@ public class ResearchTableBlockEntity extends BlockEntity{
 		note.addListener(__ -> markDirty());
 	}
 	
-	protected void writeNbt(NbtCompound nbt){
-		super.writeNbt(nbt);
-		nbt.put("scribingTools", scribingTools.getStack(0).writeNbt(new NbtCompound()));
-		nbt.put("note", note.getStack(0).writeNbt(new NbtCompound()));
+	protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){
+		super.writeNbt(nbt, registryLookup);
+		nbt.put("scribingTools", scribingTools.getStack(0).encode(registryLookup));
+		nbt.put("note", note.getStack(0).encode(registryLookup));
 	}
 	
-	public void readNbt(NbtCompound nbt){
-		super.readNbt(nbt);
-		scribingTools.setStack(0, ItemStack.fromNbt(nbt.getCompound("scribingTools")));
-		note.setStack(0, ItemStack.fromNbt(nbt.getCompound("note")));
+	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){
+		super.readNbt(nbt, registryLookup);
+		scribingTools.setStack(0, ItemStack.fromNbtOrEmpty(registryLookup, nbt.getCompound("scribingTools")));
+		note.setStack(0, ItemStack.fromNbtOrEmpty(registryLookup, nbt.getCompound("note")));
 	}
 }

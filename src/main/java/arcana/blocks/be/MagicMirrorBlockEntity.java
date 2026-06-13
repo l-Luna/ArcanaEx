@@ -2,13 +2,14 @@ package arcana.blocks.be;
 
 import arcana.ArcanaRegistry;
 import arcana.blocks.MagicMirrorBlock;
-import arcana.components.MagicMirrorQueue;
+import arcana.legacy_components.MagicMirrorQueue;
 import arcana.util.MathUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
@@ -53,13 +54,15 @@ public class MagicMirrorBlockEntity extends BlockEntity{
 		return id;
 	}
 	
-	protected void writeNbt(NbtCompound nbt){
+	protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){
+		super.writeNbt(nbt, registryLookup);
 		nbt.putUuid("tag", tag);
 		if(id != null)
 			nbt.putUuid("m_id", id);
 	}
 	
-	public void readNbt(NbtCompound nbt){
+	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){
+		super.readNbt(nbt, registryLookup);
 		tag = nbt.getUuid("tag");
 		if(nbt.containsUuid("m_id"))
 			id = nbt.getUuid("m_id");

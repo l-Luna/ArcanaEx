@@ -32,7 +32,7 @@ public final class InventoryUtil{
 		return trinkets != null && trinkets.isEquipped(item);
 	}
 	
-	public static ItemStack transferSlot(ScreenHandler self, Inventory inventory, int index){
+	public static ItemStack quickMove(ScreenHandler self, Inventory inventory, int index){
 		ItemStack rem = ItemStack.EMPTY;
 		Slot slot = self.slots.get(index);
 		if(slot.hasStack()){

@@ -10,8 +10,8 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,11 +32,11 @@ public class PkSyncItemAspectData extends S2CMessage{
 	
 	public PkSyncItemAspectData(){
 		super(Networking.context);
-		ItemAspectRegistry.getAllItemAspects().forEach((item, stacks) -> entries.add(new Entry(Registry.ITEM.getId(item), stacks)));
+		ItemAspectRegistry.getAllItemAspects().forEach((item, stacks) -> entries.add(new Entry(Registries.ITEM.getId(item), stacks)));
 	}
 	
 	@Environment(EnvType.CLIENT)
 	protected void handle(MinecraftClient client, ClientPlayerEntity player){
-		ItemAspectRegistry.setAllItemAspects(entries.stream().collect(Collectors.toMap(x -> Registry.ITEM.get(x.item), y -> y.aspects)));
+		ItemAspectRegistry.setAllItemAspects(entries.stream().collect(Collectors.toMap(x -> Registries.ITEM.get(x.item), y -> y.aspects)));
 	}
 }

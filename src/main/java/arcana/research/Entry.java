@@ -78,7 +78,7 @@ public record Entry(
 	}
 	
 	public static Entry fromNbt(NbtCompound compound, Category in){
-		Identifier id = new Identifier(compound.getString("id"));
+		Identifier id = Identifier.of(compound.getString("id"));
 		String name = compound.getString("name"), desc = compound.getString("desc");
 		int x = compound.getInt("x"), y = compound.getInt("y");
 		

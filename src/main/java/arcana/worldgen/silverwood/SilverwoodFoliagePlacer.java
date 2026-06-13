@@ -1,8 +1,7 @@
 package arcana.worldgen.silverwood;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.intprovider.IntProvider;
 import net.minecraft.util.math.random.Random;
@@ -11,11 +10,9 @@ import net.minecraft.world.gen.feature.TreeFeatureConfig;
 import net.minecraft.world.gen.foliage.FoliagePlacer;
 import net.minecraft.world.gen.foliage.FoliagePlacerType;
 
-import java.util.function.BiConsumer;
-
 public class SilverwoodFoliagePlacer extends FoliagePlacer{
 	
-	public static final Codec<SilverwoodFoliagePlacer> CODEC = RecordCodecBuilder.create(
+	public static final MapCodec<SilverwoodFoliagePlacer> CODEC = RecordCodecBuilder.mapCodec(
 			i -> fillFoliagePlacerFields(i)
 					.and(IntProvider.createValidatingCodec(0, 16).fieldOf("height").forGetter(placer -> placer.height))
 					.apply(i, SilverwoodFoliagePlacer::new)
@@ -35,7 +32,7 @@ public class SilverwoodFoliagePlacer extends FoliagePlacer{
 	}
 	
 	protected void generate(TestableWorld world,
-	                        BiConsumer<BlockPos, BlockState> replacer,
+	                        BlockPlacer replacer,
 	                        Random random,
 	                        TreeFeatureConfig config,
 	                        int trunkHeight,

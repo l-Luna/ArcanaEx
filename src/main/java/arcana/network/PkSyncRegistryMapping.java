@@ -12,8 +12,8 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 public class PkSyncRegistryMapping extends S2CMessage{
 	
@@ -50,11 +50,11 @@ public class PkSyncRegistryMapping extends S2CMessage{
 			return;
 		mapping.clear();
 		for(String key : nbt.getKeys()){
-			Identifier to = new Identifier(nbt.getString(key));
+			Identifier to = Identifier.of(nbt.getString(key));
 			if(key.startsWith("#"))
-				mapping.addTagEntry(new Identifier(key.substring(1)), to);
+				mapping.addTagEntry(Identifier.of(key.substring(1)), to);
 			else
-				mapping.addIdentifierEntry(new Identifier(key), to);
+				mapping.addIdentifierEntry(Identifier.of(key), to);
 		}
 	}
 	

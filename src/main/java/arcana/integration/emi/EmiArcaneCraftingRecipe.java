@@ -13,6 +13,7 @@ import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.widget.SlotWidget;
 import dev.emi.emi.api.widget.Widget;
 import dev.emi.emi.api.widget.WidgetHolder;
+import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.recipe.ShapedRecipe;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec2f;
@@ -43,8 +44,8 @@ public class EmiArcaneCraftingRecipe implements EmiRecipe{
 	protected final EmiStack output;
 	protected final AspectMap aspects;
 	
-	public EmiArcaneCraftingRecipe(ShapedArcaneCraftingRecipe recipe){
-		this(recipe.getId(), padIngredients(recipe), EmiStack.of(recipe.getOutput()), recipe.aspects());
+	public EmiArcaneCraftingRecipe(RecipeEntry<ShapedArcaneCraftingRecipe> recipe){
+		this(recipe.id(), padIngredients(recipe.value()), EmiStack.of(recipe.value().getResult()), recipe.value().aspects());
 	}
 	
 	public EmiArcaneCraftingRecipe(Identifier id, List<EmiIngredient> input, EmiStack output, AspectMap aspects){

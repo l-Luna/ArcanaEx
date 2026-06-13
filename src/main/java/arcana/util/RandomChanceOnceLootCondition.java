@@ -1,25 +1,25 @@
 package arcana.util;
 
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSerializationContext;
-import net.minecraft.enchantment.EnchantmentHelper;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.loot.condition.LootCondition;
 import net.minecraft.loot.condition.LootConditionType;
 import net.minecraft.loot.context.LootContext;
 import net.minecraft.loot.context.LootContextParameters;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.JsonHelper;
-import net.minecraft.util.JsonSerializer;
-import net.minecraft.util.registry.Registry;
 
 public class RandomChanceOnceLootCondition implements LootCondition{
 	
-	public static final LootConditionType TYPE = new LootConditionType(new Serializer());
+	public static final MapCodec<RandomChanceOnceLootCondition> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+			Codec.FLOAT.fieldOf("chance").forGetter(x -> x.chance),
+			ItemStack.ITEM_CODEC.fieldOf("filter").forGetter(x -> x.filter.getRegistryEntry())
+	).apply(i, (chance, entry) -> new RandomChanceOnceLootCondition(chance, entry.value())));
+	
+	public static final LootConditionType TYPE = new LootConditionType(CODEC);
 	
 	private final float chance;
 	private final Item filter;
@@ -30,28 +30,15 @@ public class RandomChanceOnceLootCondition implements LootCondition{
 	}
 	
 	public boolean test(LootContext ctx){
-		Entity entity = ctx.get(LootContextParameters.KILLER_ENTITY);
+		Entity entity = ctx.get(LootContextParameters.ATTACKING_ENTITY);
 		int looting = 0;
-		if(entity instanceof LivingEntity le){
-			if(entity instanceof PlayerEntity player && InventoryUtil.streamAllItems(player).anyMatch(x -> x.getItem() == filter))
-				return false;
-			looting = EnchantmentHelper.getLooting(le);
-		}
+		if(entity instanceof PlayerEntity player && InventoryUtil.streamAllItems(player).anyMatch(x -> x.getItem() == filter))
+			return false;
 		
 		return ctx.getRandom().nextFloat() < chance + looting * 0.05;
 	}
 	
 	public LootConditionType getType(){
 		return TYPE;
-	}
-	
-	public static class Serializer implements JsonSerializer<RandomChanceOnceLootCondition>{
-		public void toJson(JsonObject obj, RandomChanceOnceLootCondition cond, JsonSerializationContext ctx){
-			obj.addProperty("chance", cond.chance);
-		}
-		
-		public RandomChanceOnceLootCondition fromJson(JsonObject obj, JsonDeserializationContext ctx){
-			return new RandomChanceOnceLootCondition(JsonHelper.getFloat(obj, "chance"), Registry.ITEM.get(new Identifier(JsonHelper.getString(obj, "filter"))));
-		}
 	}
 }

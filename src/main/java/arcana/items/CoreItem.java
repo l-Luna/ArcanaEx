@@ -5,8 +5,8 @@ import arcana.aspects.Aspect;
 import arcana.aspects.AspectMap;
 import arcana.aspects.Aspects;
 import net.minecraft.item.Item;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 public class CoreItem extends Item implements Core{
 	
@@ -22,7 +22,7 @@ public class CoreItem extends Item implements Core{
 	}
 	
 	public Identifier id(){
-		return Registry.ITEM.getId(this);
+		return Registries.ITEM.getId(this);
 	}
 	
 	public int capacity(){

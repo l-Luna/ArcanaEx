@@ -23,6 +23,7 @@
     "accessor.EntityAccessor",
     "accessor.LivingEntityAccessor",
     "accessor.MiningToolItemAccessor",
+    "accessor.SmithingTransformRecipeAccessor",
     "aspects.ItemStackMixin",
     "aspects.RecipeManagerMixin",
     "effects.LivingEntityMixin",

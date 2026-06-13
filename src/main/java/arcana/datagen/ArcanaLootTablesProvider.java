@@ -5,12 +5,12 @@ import arcana.aspects.Aspect;
 import arcana.aspects.Aspects;
 import arcana.blocks.ArcanaBlockSettings;
 import arcana.blocks.CrystalClusterBlock;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.FlowerPotBlock;
 import net.minecraft.block.SlabBlock;
-import net.minecraft.data.server.BlockLootTableGenerator;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
@@ -21,11 +21,13 @@ import net.minecraft.loot.function.ApplyBonusLootFunction;
 import net.minecraft.loot.function.SetCountLootFunction;
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
-import net.minecraft.predicate.NumberRange;
 import net.minecraft.predicate.StatePredicate;
-import net.minecraft.predicate.item.EnchantmentPredicate;
 import net.minecraft.predicate.item.ItemPredicate;
-import net.minecraft.tag.ItemTags;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.tag.ItemTags;
+
+import java.util.concurrent.CompletableFuture;
 
 import static arcana.ArcanaRegistry.*;
 
@@ -33,34 +35,36 @@ public class ArcanaLootTablesProvider extends FabricBlockLootTableProvider{
 	
 	private static final float[] saplingDropChance = { .05f, .0625f, .083333336f, .1f };
 	
-	protected ArcanaLootTablesProvider(FabricDataGenerator dataGenerator){
-		super(dataGenerator);
+	protected ArcanaLootTablesProvider(FabricDataOutput gen, CompletableFuture<RegistryWrapper.WrapperLookup> lookupFuture){
+		super(gen, lookupFuture);
 	}
 	
-	protected void generateBlockLootTables(){
+	public void generate(){
+		RegistryWrapper.Impl<Enchantment> enchantments = registryLookup.getWrapperOrThrow(RegistryKeys.ENCHANTMENT);
+		
 		for(Block block : ArcanaRegistry.blocks)
-			if(block.settings instanceof ArcanaBlockSettings abs)
+			if(block.getSettings() instanceof ArcanaBlockSettings abs)
 				if(abs.getDropsSelf())
 					if(block instanceof SlabBlock)
-						addDrop(block, BlockLootTableGenerator::slabDrops);
+						addDrop(block, this::slabDrops);
 					else if(block instanceof FlowerPotBlock)
-						addPottedPlantDrop(block);
+						addPottedPlantDrops(block);
 		
-		addDrop(SILVERWOOD_LEAVES, leaves -> leavesDrop(leaves, SILVERWOOD_SAPLING, saplingDropChance));
-		addDrop(GREATWOOD_LEAVES, leaves -> leavesDrop(leaves, GREATWOOD_SAPLING, saplingDropChance));
+		addDrop(SILVERWOOD_LEAVES, leaves -> leavesDrops(leaves, SILVERWOOD_SAPLING, saplingDropChance));
+		addDrop(GREATWOOD_LEAVES, leaves -> leavesDrops(leaves, GREATWOOD_SAPLING, saplingDropChance));
 		
-		addDrop(SILVERWOOD_DOOR, BlockLootTableGenerator::doorDrops);
-		addDrop(GREATWOOD_DOOR, BlockLootTableGenerator::doorDrops);
+		addDrop(SILVERWOOD_DOOR, this::doorDrops);
+		addDrop(GREATWOOD_DOOR, this::doorDrops);
 		
-		addDrop(GREATWOOD_SLAB, BlockLootTableGenerator::slabDrops);
+		addDrop(GREATWOOD_SLAB, this::slabDrops);
 		
-		addPottedPlantDrop(POTTED_SILVERWOOD_SAPLING);
-		addPottedPlantDrop(POTTED_GREATWOOD_SAPLING);
-		addPottedPlantDrop(POTTED_VISHROOM);
-		addPottedPlantDrop(POTTED_CORDISPORA);
-		addPottedPlantDrop(POTTED_SNOWDROP);
-		addPottedPlantDrop(POTTED_FIREWHEEL);
-		addPottedPlantDrop(POTTED_LILIUM);
+		addPottedPlantDrops(POTTED_SILVERWOOD_SAPLING);
+		addPottedPlantDrops(POTTED_GREATWOOD_SAPLING);
+		addPottedPlantDrops(POTTED_VISHROOM);
+		addPottedPlantDrops(POTTED_CORDISPORA);
+		addPottedPlantDrops(POTTED_SNOWDROP);
+		addPottedPlantDrops(POTTED_FIREWHEEL);
+		addPottedPlantDrops(POTTED_LILIUM);
 		
 		addDrop(TAINTED_GRASS_BLOCK, it -> drops(it, TAINTED_SOIL));
 		
@@ -71,13 +75,13 @@ public class ArcanaLootTablesProvider extends FabricBlockLootTableProvider{
 							LootPool.builder().rolls(ConstantLootNumberProvider.create(1)).with(
 									ItemEntry.builder(c)
 											// fully grown crystals with silk touch drop themselves
-											.conditionally(MatchToolLootCondition.builder(ItemPredicate.Builder.create().enchantment(new EnchantmentPredicate(Enchantments.SILK_TOUCH, NumberRange.IntRange.atLeast(1)))))
+											.conditionally(createSilkTouchCondition())
 											.conditionally(BlockStatePropertyLootCondition.builder(c).properties(StatePredicate.Builder.create().exactMatch(CrystalClusterBlock.size, 3)))
 											.alternatively(
 													ItemEntry.builder(drop)
 															// fully grown crystals drop 2-4 using a pickaxe, with fortune applied
 															.apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 4)))
-															.apply(ApplyBonusLootFunction.oreDrops(Enchantments.FORTUNE))
+															.apply(ApplyBonusLootFunction.oreDrops(enchantments.getOrThrow(Enchantments.FORTUNE)))
 															.conditionally(MatchToolLootCondition.builder(ItemPredicate.Builder.create().tag(ItemTags.CLUSTER_MAX_HARVESTABLES)))
 															.conditionally(BlockStatePropertyLootCondition.builder(c).properties(StatePredicate.Builder.create().exactMatch(CrystalClusterBlock.size, 3)))
 															

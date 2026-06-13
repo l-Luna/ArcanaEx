@@ -5,9 +5,8 @@ import arcana.items.TomeOfSharingItem;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -35,23 +34,21 @@ public class KnowledgeableDropperScreen extends HandledScreen<KnowledgeableDropp
 		titleY -= 2;
 	}
 	
-	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta){
-		renderBackground(matrices);
-		super.render(matrices, mouseX, mouseY, delta);
-		drawMouseoverTooltip(matrices, mouseX, mouseY);
+	public void render(DrawContext ctx, int mouseX, int mouseY, float delta){
+		renderBackground(ctx, mouseX, mouseY, delta);
+		super.render(ctx, mouseX, mouseY, delta);
+		drawMouseoverTooltip(ctx, mouseX, mouseY);
 	}
 	
-	protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY){
-		RenderSystem.setShader(GameRenderer::getPositionTexShader);
+	protected void drawBackground(DrawContext ctx, float delta, int mouseX, int mouseY){
 		RenderSystem.setShaderColor(1, 1, 1, 1);
-		RenderSystem.setShaderTexture(0, texture);
 		int x = (width - backgroundWidth) / 2;
 		int y = (height - backgroundHeight) / 2;
-		drawTexture(matrices, x, y, 0, 0, backgroundWidth, backgroundHeight);
+		ctx.drawTexture(texture, x, y, 0, 0, backgroundWidth, backgroundHeight);
 	}
 	
-	protected void drawForeground(MatrixStack matrices, int mouseX, int mouseY){
-		textRenderer.draw(matrices, title, titleX, titleY, 0xC0C0C0);
+	protected void drawForeground(DrawContext ctx, int mouseX, int mouseY){
+		ctx.drawText(textRenderer, title, titleX, titleY, 0xC0C0C0, false);
 	}
 	
 	public static class Handler extends ScreenHandler{
@@ -89,7 +86,7 @@ public class KnowledgeableDropperScreen extends HandledScreen<KnowledgeableDropp
 				addSlot(new Slot(pInv, idx, 8 + idx * 18, 142));
 		}
 		
-		public ItemStack transferSlot(PlayerEntity player, int index){
+		public ItemStack quickMove(PlayerEntity player, int index){
 			ItemStack itemStack = ItemStack.EMPTY;
 			Slot slot = slots.get(index);
 			if(slot.hasStack()){
@@ -119,8 +116,8 @@ public class KnowledgeableDropperScreen extends HandledScreen<KnowledgeableDropp
 			return inventory.canPlayerUse(player);
 		}
 		
-		public void close(PlayerEntity player){
-			super.close(player);
+		public void onClosed(PlayerEntity player){
+			super.onClosed(player);
 			inventory.onClose(player);
 		}
 	}

@@ -1,6 +1,6 @@
 package arcana.aspects;
 
-import net.minecraft.client.item.TooltipData;
+import net.minecraft.item.tooltip.TooltipData;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Comparator;

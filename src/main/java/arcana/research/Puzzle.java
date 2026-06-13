@@ -29,7 +29,7 @@ public abstract class Puzzle{
 	public static Puzzle makePuzzle(Identifier type, JsonObject contents){
 		if(factories.containsKey(type)){
 			var puzzle = factories.get(type).apply(contents);
-			puzzle.id = new Identifier(contents.get("key").getAsString());
+			puzzle.id = Identifier.of(contents.get("key").getAsString());
 			puzzle.desc = JsonHelper.getString(contents, "desc", "");
 			return puzzle;
 		}else
@@ -37,8 +37,8 @@ public abstract class Puzzle{
 	}
 	
 	public static Puzzle deserialize(NbtCompound passData){
-		Identifier id = new Identifier(passData.getString("id"));
-		Identifier type = new Identifier(passData.getString("type"));
+		Identifier id = Identifier.of(passData.getString("id"));
+		Identifier type = Identifier.of(passData.getString("type"));
 		NbtCompound data = passData.getCompound("data");
 		String desc = passData.getString("desc");
 		if(deserializers.containsKey(type)){

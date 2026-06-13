@@ -3,7 +3,7 @@ package arcana.datagen;
 import arcana.aspects.Aspects;
 import arcana.blocks.CrystalClusterBlock;
 import arcana.items.ScalpelItem;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.block.Block;
 import net.minecraft.data.client.*;
@@ -24,7 +24,7 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 	
 	private final List<Item> noAutoGen = new ArrayList<>();
 	
-	public ArcanaModelProvider(FabricDataGenerator gen){
+	public ArcanaModelProvider(FabricDataOutput gen){
 		super(gen);
 	}
 	

@@ -18,7 +18,7 @@ import java.util.List;
 // TODO: use modified texture to hide bottle icon in output, instead of covering up with slot backs
 public class EmiAltBrewingRecipe implements EmiRecipe{
 	
-	private static final Identifier BACKGROUND = new Identifier("textures/gui/container/brewing_stand.png");
+	private static final Identifier BACKGROUND = Identifier.of("textures/gui/container/brewing_stand.png");
 	private static final EmiStack BLAZE_POWDER = EmiStack.of(Items.BLAZE_POWDER);
 	private final EmiIngredient input, ingredient;
 	private final EmiStack output, input3, output3;

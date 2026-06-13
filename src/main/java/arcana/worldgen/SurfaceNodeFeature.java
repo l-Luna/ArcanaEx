@@ -10,7 +10,7 @@ import arcana.aura.NodeTypes;
 import arcana.blocks.CrystalClusterBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.tag.FluidTags;
+import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
@@ -44,7 +44,7 @@ public class SurfaceNodeFeature extends Feature<DefaultFeatureConfig>{
 			// add some crystal clusters
 			int successes = 0;
 			for(int i = 0; i < 40 && successes < (rng.nextInt(5) + 6); i++){
-				BlockPos toSet = pos.add(rng.nextTriangular(0, 6), rng.nextTriangular(0, 3), rng.nextTriangular(0, 6));
+				BlockPos toSet = pos.add((int)rng.nextTriangular(0, 6), (int)rng.nextTriangular(0, 3), (int)rng.nextTriangular(0, 6));
 				if(tryPutCrystal(world, toSet, world.getBlockState(toSet)))
 					successes++;
 			}
@@ -69,7 +69,7 @@ public class SurfaceNodeFeature extends Feature<DefaultFeatureConfig>{
 	}
 	
 	public static boolean tryPutCrystal(StructureWorldAccess world, BlockPos toSet, BlockState there){
-		if(there.isAir() || there.getMaterial().isReplaceable()){
+		if(there.isAir() || there.isReplaceable()){
 			Aspect c = from(Aspects.primals, world.getRandom());
 			for(Direction direction : Direction.shuffle(world.getRandom())){
 				var onPos = toSet.offset(direction.getOpposite());

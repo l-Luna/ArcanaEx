@@ -27,9 +27,9 @@ import net.minecraft.block.Blocks;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.RecipeManager;
+import net.minecraft.registry.Registries;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 import java.util.*;
 
@@ -88,10 +88,10 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 		ibaData.forEach((aspect, entries) -> registry.addRecipe(new EmiItemsByAspectsRecipe(entries, aspect)));
 		
 		Taint.TAINT_MAP.getEntryMap().forEach((from, to) -> {
-			registry.addRecipe(new EmiTaintingRecipe(EmiStack.of(from.asItem()), to.asItem(), Registry.BLOCK.getId(from)));
+			registry.addRecipe(new EmiTaintingRecipe(EmiStack.of(from.asItem()), to.asItem(), Registries.BLOCK.getId(from)));
 		});
 		Taint.UNTAINT_MAP.getEntryMap().forEach((from, to) -> {
-			registry.addRecipe(new EmiUntaintingRecipe(EmiStack.of(from.asItem()), to.asItem(), Registry.BLOCK.getId(from)));
+			registry.addRecipe(new EmiUntaintingRecipe(EmiStack.of(from.asItem()), to.asItem(), Registries.BLOCK.getId(from)));
 		});
 		Taint.TAINT_MAP.getTagMap().forEach((key, block) -> {
 			registry.addRecipe(new EmiTaintingRecipe(EmiIngredient.of(key), block.asItem(), key.id()));
@@ -167,7 +167,7 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 		
 		RecipeManager manager = registry.getRecipeManager();
 		manager.listAllOfType(ShapedArcaneCraftingRecipe.TYPE).stream().filter(ShapedArcaneCraftingRecipe.class::isInstance).map(it -> new EmiArcaneCraftingRecipe((ShapedArcaneCraftingRecipe)it)).forEach(registry::addRecipe);
-		manager.listAllOfType(AlchemyRecipe.TYPE).stream().map(EmiAlchemyRecipe::new).forEach(registry::addRecipe);
+		manager.listAllOfType(AlchemyRecipe.TYPE).stream().map(x -> new EmiAlchemyRecipe(x.value())).forEach(registry::addRecipe);
 		for(InfusionRecipe recipe : manager.listAllOfType(SimpleInfusionRecipe.TYPE)){
 			if(recipe instanceof SimpleInfusionRecipe simple)
 				registry.addRecipe(new EmiInfusionRecipe(simple));

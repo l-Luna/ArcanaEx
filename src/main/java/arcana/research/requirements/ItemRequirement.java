@@ -6,8 +6,8 @@ import arcana.util.NbtUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
@@ -42,7 +42,7 @@ public class ItemRequirement extends Requirement{
 	
 	public NbtCompound data(){
 		return NbtUtil.from(Map.of(
-				"item", Registry.ITEM.getId(item),
+				"item", Registries.ITEM.getId(item),
 				"matcher", matcher.asString()
 		));
 	}

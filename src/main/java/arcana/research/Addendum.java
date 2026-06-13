@@ -26,7 +26,7 @@ public record Addendum(
 	}
 	
 	public static Addendum fromNbt(NbtCompound compound, Entry owner){
-		Identifier id = new Identifier(compound.getString("id"));
+		Identifier id = Identifier.of(compound.getString("id"));
 		String name = compound.getString("name");
 		List<EntrySection> sections = NbtUtil.readList(compound, "sections", EntrySection::deserialize);
 		List<Requirement> autoUnlockReqs = NbtUtil.readList(compound, "autoUnlockReqs", Requirement::deserialize);

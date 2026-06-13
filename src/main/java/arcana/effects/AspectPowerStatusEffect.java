@@ -6,6 +6,7 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.registry.entry.RegistryEntry;
 
 import java.util.ArrayList;
 
@@ -20,15 +21,15 @@ public class AspectPowerStatusEffect extends ArcanaStatusEffect{
 		StatusEffect best = null;
 		int bestTime = -1;
 		for(StatusEffectInstance effectInst : player.getStatusEffects()){
-			StatusEffect type = effectInst.getEffectType();
+			StatusEffect type = effectInst.getEffectType().value();
 			if(ArcanaTags.isOf(type, ArcanaTags.ASPECT_CANDY_EFFECTS) && effectInst.getDuration() > bestTime){
 				best = type;
 				bestTime = effectInst.getDuration();
 			}
 		}
 		
-		for(StatusEffect effect : new ArrayList<>(player.getActiveStatusEffects().keySet()))
-			if(ArcanaTags.isOf(effect, ArcanaTags.ASPECT_CANDY_EFFECTS) && effect != best)
+		for(RegistryEntry<StatusEffect> effect : new ArrayList<>(player.getActiveStatusEffects().keySet()))
+			if(ArcanaTags.isOf(effect.value(), ArcanaTags.ASPECT_CANDY_EFFECTS) && effect != best)
 				player.removeStatusEffect(effect);
 	}
 }

@@ -2,10 +2,9 @@ package arcana.entities;
 
 import arcana.items.foci.PrismaticLightFocusItem;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
@@ -13,9 +12,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.Packet;
-import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.tag.EntityTypeTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Box;
@@ -37,7 +35,7 @@ public class PrismaticOrbEntity extends ProjectileEntity{
 		if(owner != null)
 			setVelocity(owner, owner.getPitch(), owner.getYaw(), 0, 1.8f, 0.7f);
 		else
-			setVelocity(world.random.nextDouble(), world.random.nextDouble(), world.random.nextDouble(), 1f, 0f);
+			setVelocity(getWorld().random.nextDouble(), getWorld().random.nextDouble(), getWorld().random.nextDouble(), 1f, 0f);
 	}
 	
 	public void tick(){
@@ -52,13 +50,13 @@ public class PrismaticOrbEntity extends ProjectileEntity{
 			}
 		}
 		
-		if(!world.isClient){
+		if(!getWorld().isClient){
 			HitResult hitResult = ProjectileUtil.getCollision(this, this::canHit);
 			if(hitResult.getType() != HitResult.Type.MISS)
 				onCollision(hitResult);
 			
-			if(isBurning() && world.random.nextFloat() < 0.2f)
-				((ServerWorld)world).spawnParticles(ParticleTypes.DRIPPING_LAVA,
+			if(isBurning() && getWorld().random.nextFloat() < 0.2f)
+				((ServerWorld)getWorld()).spawnParticles(ParticleTypes.DRIPPING_LAVA,
 						getPos().getX(),
 						getPos().getY(),
 						getPos().getZ(),
@@ -73,7 +71,7 @@ public class PrismaticOrbEntity extends ProjectileEntity{
 	protected void onCollision(HitResult hit){
 		super.onCollision(hit);
 		// particle burst
-		ServerWorld sw = (ServerWorld)world;
+		ServerWorld sw = (ServerWorld)getWorld();
 		sw.spawnParticles(ParticleTypes.END_ROD,
 				getPos().getX(),
 				getPos().getY(),
@@ -97,10 +95,10 @@ public class PrismaticOrbEntity extends ProjectileEntity{
 		// deal damage to all nearby entities
 		Entity owner = getOwner();
 		float d = 1.5f;
-		for(Entity entity : world.getOtherEntities(this, new Box(getPos().subtract(d, d, d), getPos().add(d, d, d))))
+		for(Entity entity : getWorld().getOtherEntities(this, new Box(getPos().subtract(d, d, d), getPos().add(d, d, d))))
 			if(entity instanceof LivingEntity target){
-				boolean undeadTarget = target.getGroup() == EntityGroup.UNDEAD;
-				target.damage(DamageSource.magic(this, owner), getDamage(undeadTarget));
+				boolean undeadTarget = target.getType().isIn(EntityTypeTags.UNDEAD);
+				target.damage(getDamageSources().create(DamageTypes.MAGIC, this, owner), getDamage(undeadTarget));
 				if(undeadTarget)
 					target.setOnFireFor(4);
 				if(isBurning())
@@ -119,10 +117,10 @@ public class PrismaticOrbEntity extends ProjectileEntity{
 		return hasShot() && entity != getOwner() && super.canHit(entity);
 	}
 	
-	protected void initDataTracker(){
-		dataTracker.startTracking(size, 0f);
-		dataTracker.startTracking(shot, false);
-		dataTracker.startTracking(burning, false);
+	protected void initDataTracker(DataTracker.Builder builder){
+		builder.add(size, 0f);
+		builder.add(shot, false);
+		builder.add(burning, false);
 	}
 	
 	public float getSize(){
@@ -161,10 +159,6 @@ public class PrismaticOrbEntity extends ProjectileEntity{
 		nbt.putFloat("size", getSize());
 		nbt.putBoolean("shot", hasShot());
 		nbt.putBoolean("burning", isBurning());
-	}
-	
-	public Packet<?> createSpawnPacket(){
-		return new EntitySpawnS2CPacket(this);
 	}
 	
 	public boolean shouldRender(double distance){

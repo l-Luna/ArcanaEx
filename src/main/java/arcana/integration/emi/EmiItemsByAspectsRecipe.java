@@ -17,8 +17,7 @@ import dev.emi.emi.api.widget.SlotWidget;
 import dev.emi.emi.api.widget.WidgetHolder;
 import dev.emi.emi.bom.BoM;
 import dev.emi.emi.runtime.EmiDrawContext;
-import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
@@ -171,19 +170,19 @@ public class EmiItemsByAspectsRecipe extends EmiIngredientRecipe{
 			return manager.getRecipe(offset);
 		}
 		
-		public void render(MatrixStack matrices, int mouseX, int mouseY, float delta){
+		public void render(DrawContext ctx, int mouseX, int mouseY, float delta){
 			Entry entry = manager.getEntry(offset);
 			if(!getStack().isEmpty() && entry != null){
-				super.render(matrices, mouseX, mouseY, delta);
-				RenderHelper.drawTinyNumbers(matrices, String.valueOf(entry.count), x + 2, y + 26, 22 / 255f, 206 / 255f, 242 / 255f, 1);
-				RenderHelper.drawTinyNumbers(matrices, Math.round(entry.purity * 100) + "%", x + 2, y + 32, 0.95f, 0.95f, 0.5f, 1);
+				super.render(ctx, mouseX, mouseY, delta);
+				RenderHelper.drawTinyNumbers(ctx, String.valueOf(entry.count), x + 2, y + 26, 22 / 255f, 206 / 255f, 242 / 255f, 1);
+				RenderHelper.drawTinyNumbers(ctx, Math.round(entry.purity * 100) + "%", x + 2, y + 32, 0.95f, 0.95f, 0.5f, 1);
 			}
 		}
 		
 		// FIXME: private EMI API
-		public void drawBackground(MatrixStack matrices, int mouseX, int mouseY, float delta){
-			SLOT_BG.render(matrices, x, y, 0);
-			EmiDrawContext context = EmiDrawContext.wrap(matrices);
+		public void drawBackground(DrawContext ctx, int mouseX, int mouseY, float delta){
+			SLOT_BG.render(ctx, x, y, 0);
+			EmiDrawContext context = EmiDrawContext.wrap(ctx);
 			if(BoM.getRecipe(getIngredient()) instanceof EmiAspectsByItemsRecipe recipe
 					&& recipe.getInputs().equals(List.of(getStack())))
 				context.drawTexture(EmiRenderHelper.WIDGETS, x, y, 36, 128, 18, 18);
@@ -196,7 +195,7 @@ public class EmiItemsByAspectsRecipe extends EmiIngredientRecipe{
 			super(x, y, width, height, u, v, texture, which, action);
 		}
 		
-		public void render(MatrixStack matrices, int mouseX, int mouseY, float delta){
+		public void render(DrawContext ctx, int mouseX, int mouseY, float delta){
 			int u = this.u;
 			int v = this.v;
 			if(isActive.getAsBoolean())
@@ -204,8 +203,7 @@ public class EmiItemsByAspectsRecipe extends EmiIngredientRecipe{
 			if(getBounds().contains(mouseX, mouseY))
 				v += height;
 			RenderSystem.enableDepthTest();
-			RenderSystem.setShaderTexture(0, texture);
-			DrawableHelper.drawTexture(matrices, x, y, 0, u, v, width, height, 256, 256);
+			ctx.drawTexture(texture, x, y, 0, u, v, width, height, 256, 256);
 		}
 	}
 }

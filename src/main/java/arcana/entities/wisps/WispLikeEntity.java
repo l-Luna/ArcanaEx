@@ -46,9 +46,9 @@ public abstract class WispLikeEntity extends PathAwareEntity{
 		targetSelector.add(2, new RevengeGoal(this));
 	}
 	
-	protected void initDataTracker(){
-		super.initDataTracker();
-		dataTracker.startTracking(ANGRY, false);
+	protected void initDataTracker(DataTracker.Builder builder){
+		super.initDataTracker(builder);
+		builder.add(ANGRY, false);
 	}
 	
 	public void setAngry(boolean angry){
@@ -63,8 +63,8 @@ public abstract class WispLikeEntity extends PathAwareEntity{
 		noClip = true;
 		super.tick();
 		noClip = false;
-		if(world.isClient)
-			world.addParticle(ArcanaRegistry.LIGHTNING,
+		if(getWorld().isClient)
+			getWorld().addParticle(ArcanaRegistry.LIGHTNING,
 					getX() + random.nextGaussian() * 0.1f,
 					getY() + (getHeight() / 2f) + random.nextGaussian() * 0.1f,
 					getZ() + random.nextGaussian() * 0.1f,
@@ -121,8 +121,8 @@ public abstract class WispLikeEntity extends PathAwareEntity{
 			for(int i = 0; i < 3; i++){
 				var rng = entity.random;
 				Vec3d target = anchor.add(rng.nextBetween(-10, 10), rng.nextBetween(-4, 8), rng.nextBetween(-10, 10));
-				BlockPos targetPos = new BlockPos(target);
-				if(entity.world.isAir(targetPos))
+				BlockPos targetPos = BlockPos.ofFloored(target);
+				if(entity.getWorld().isAir(targetPos))
 					entity.moveControl.moveTo(targetPos.getX(), targetPos.getY(), targetPos.getZ(), 0.6);
 			}
 		}

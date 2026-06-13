@@ -13,14 +13,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionUtil;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.ShapedRecipe;
-import net.minecraft.tag.TagKey;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryEntry;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
@@ -82,7 +82,7 @@ public class XIngredient implements Predicate<ItemStack>{
 		else if(json.has("item"))
 			return new XIngredient(ShapedRecipe.getItem(json), stackMatcher);
 		else if(json.has("tag")){
-			TagKey<Item> tag = TagKey.of(Registry.ITEM_KEY, new Identifier(JsonHelper.getString(json, "tag")));
+			TagKey<Item> tag = TagKey.of(RegistryKeys.ITEM, Identifier.of(JsonHelper.getString(json, "tag")));
 			return new XIngredient(tag, stackMatcher);
 		}else
 			throw new JsonParseException("An ingredient needs either an item or tag");
@@ -90,7 +90,7 @@ public class XIngredient implements Predicate<ItemStack>{
 	
 	public void write(PacketByteBuf buf){
 		if(item != null){
-			buf.writeIdentifier(Registry.ITEM.getId(item));
+			buf.writeIdentifier(Registries.ITEM.getId(item));
 			buf.writeBoolean(true);
 		}else{
 			buf.writeIdentifier(tag.id());
@@ -102,9 +102,9 @@ public class XIngredient implements Predicate<ItemStack>{
 	public static XIngredient read(PacketByteBuf buf){
 		Identifier id = buf.readIdentifier();
 		if(buf.readBoolean())
-			return new XIngredient(Registry.ITEM.get(id), matcherFromString(buf.readString()));
+			return new XIngredient(Registries.ITEM.get(id), matcherFromString(buf.readString()));
 		else
-			return new XIngredient(TagKey.of(Registry.ITEM_KEY, id), matcherFromString(buf.readString()));
+			return new XIngredient(TagKey.of(RegistryKeys.ITEM, id), matcherFromString(buf.readString()));
 	}
 	
 	public static StackMatcher matcherFromString(String desc){
@@ -124,7 +124,7 @@ public class XIngredient implements Predicate<ItemStack>{
 		if(item != null)
 			candidates = Stream.of(new ItemStack(item));
 		else
-			candidates = Registry.ITEM.streamTagsAndEntries()
+			candidates = Registries.ITEM.streamTagsAndEntries()
 					.filter(x -> x.getFirst().equals(tag))
 					.flatMap(x -> x.getSecond().stream())
 					.map(RegistryEntry::value)
@@ -199,11 +199,11 @@ public class XIngredient implements Predicate<ItemStack>{
 		private final Enchantment enchantment;
 		
 		public EnchantedWithMatcher(Identifier enchantmentId){
-			enchantment = Registry.ENCHANTMENT.get(enchantmentId);
+			enchantment = Registries.ENCHANTMENT.get(enchantmentId);
 		}
 		
 		public EnchantedWithMatcher(String enchantmentId){
-			this(new Identifier(enchantmentId));
+			this(Identifier.of(enchantmentId));
 		}
 		
 		public ItemStack preview(ItemStack in){
@@ -224,7 +224,7 @@ public class XIngredient implements Predicate<ItemStack>{
 		}
 		
 		public String asString(){
-			return "enchanted_with " + Registry.ENCHANTMENT.getId(enchantment);
+			return "enchanted_with " + Registries.ENCHANTMENT.getId(enchantment);
 		}
 		
 		private void enchant(ItemStack stack){
@@ -256,7 +256,7 @@ public class XIngredient implements Predicate<ItemStack>{
 		}
 		
 		public String asString(){
-			return "has_potion_type " + Registry.POTION.getId(potion);
+			return "has_potion_type " + Registries.POTION.getId(potion);
 		}
 	}
 }

@@ -9,8 +9,8 @@ import dev.emi.emi.api.widget.GeneratedSlotWidget;
 import dev.emi.emi.api.widget.SlotWidget;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 import java.util.List;
 import java.util.Random;
@@ -21,7 +21,7 @@ public class EmiVoidPuttyRepairRecipe extends EmiPatternCraftingRecipe{
 	public static List<EmiIngredient> REPAIRABLES_INGREDIENTS;
 	
 	private static void initRepairables(){
-		REPAIRABLES = Registry.ITEM.stream().filter(VoidPuttyRepairRecipe::isRepairable).toList();
+		REPAIRABLES = Registries.ITEM.stream().filter(VoidPuttyRepairRecipe::isRepairable).toList();
 		REPAIRABLES_INGREDIENTS = REPAIRABLES.stream().map(EmiStack::of).map(EmiIngredient.class::cast).toList();
 	}
 	

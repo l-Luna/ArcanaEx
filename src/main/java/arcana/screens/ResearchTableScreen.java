@@ -7,8 +7,8 @@ import arcana.client.research.PuzzleRenderer;
 import arcana.items.ResearchNotesItem;
 import arcana.research.Puzzle;
 import arcana.research.Research;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
@@ -16,6 +16,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.slot.Slot;
@@ -42,39 +43,39 @@ public class ResearchTableScreen extends HandledScreen<ResearchTableScreen.Handl
 		titleY = -100;
 	}
 	
-	protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY){
-		RenderSystem.setShaderTexture(0, texture);
-		drawRtTexture(matrices, x, y, 0, 0, 0, backgroundWidth, backgroundHeight);
+	protected void drawBackground(DrawContext ctx, float delta, int mouseX, int mouseY){
+		drawRtTexture(ctx, texture, x, y, 0, 0, 0, backgroundWidth, backgroundHeight);
 	}
 	
-	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta){
-		renderBackground(matrices);
-		super.render(matrices, mouseX, mouseY, delta);
+	public void render(DrawContext ctx, int mouseX, int mouseY, float delta){
+		renderBackground(ctx, mouseX, mouseY, delta);
+		super.render(ctx, mouseX, mouseY, delta);
 		// don't draw item tooltips if e.g. an aspect is selected
 		var notes = handler.slots.get(37).getStack();
-		var nbt = notes.getNbt();
+		NbtCompound nbt = notes.getNbt();
 		if(!notes.isEmpty() && nbt != null && nbt.contains("puzzle_id")){
-			Puzzle puzzle = Research.getPuzzle(new Identifier(nbt.getString("puzzle_id")));
+			Puzzle puzzle = Research.getPuzzle(Identifier.of(nbt.getString("puzzle_id")));
 			var renderer = PuzzleRenderer.get(puzzle);
 			if(renderer == null || renderer.drawItemTooltips())
-				drawMouseoverTooltip(matrices, mouseX, mouseY);
+				drawMouseoverTooltip(ctx, mouseX, mouseY);
 		}else
-			drawMouseoverTooltip(matrices, mouseX, mouseY);
+			drawMouseoverTooltip(ctx, mouseX, mouseY);
 	}
 	
-	public static void drawRtTexture(MatrixStack matrices, int x, int y, int z, float u, float v, int width, int height){
-		drawTexture(matrices, x, y, z, u, v, width, height, 338, 338);
+	public static void drawRtTexture(DrawContext ctx, Identifier tex, int x, int y, int z, float u, float v, int width, int height){
+		ctx.drawTexture(tex, x, y, z, u, v, width, height, 338, 338);
 	}
 	
-	protected void drawForeground(MatrixStack matrices, int mouseX, int mouseY){
+	protected void drawForeground(DrawContext ctx, int mouseX, int mouseY){
+		MatrixStack matrices = ctx.getMatrices();
 		// don't draw label
 		// do draw selected aspect over items
 		matrices.push();
 		matrices.translate(-x, -y, 0);
 		var notes = handler.slots.get(37).getStack();
-		var nbt = notes.getNbt();
+		NbtCompound nbt = notes.getNbt();
 		if(!notes.isEmpty() && nbt != null && nbt.contains("puzzle_id")){
-			Puzzle puzzle = Research.getPuzzle(new Identifier(nbt.getString("puzzle_id")));
+			Puzzle puzzle = Research.getPuzzle(Identifier.of(nbt.getString("puzzle_id")));
 			var renderer = PuzzleRenderer.get(puzzle);
 			if(renderer != null){
 				var data = nbt.getCompound("puzzle_data");
@@ -92,9 +93,9 @@ public class ResearchTableScreen extends HandledScreen<ResearchTableScreen.Handl
 		super.mouseClicked(mouseX, mouseY, button);
 		
 		var notes = handler.slots.get(37).getStack();
-		var nbt = notes.getNbt();
+		NbtCompound nbt = notes.getNbt();
 		if(!notes.isEmpty() && nbt != null && nbt.contains("puzzle_id") && notes.getItem() == ArcanaRegistry.RESEARCH_NOTES){
-			Puzzle puzzle = Research.getPuzzle(new Identifier(nbt.getString("puzzle_id")));
+			Puzzle puzzle = Research.getPuzzle(Identifier.of(nbt.getString("puzzle_id")));
 			var renderer = PuzzleRenderer.get(puzzle);
 			if(renderer != null)
 				return renderer.onClick(button, puzzle, nbt.getCompound("puzzle_data"), width, height, (int)mouseX, (int)mouseY);
@@ -105,9 +106,9 @@ public class ResearchTableScreen extends HandledScreen<ResearchTableScreen.Handl
 	
 	public void close(){
 		var notes = handler.slots.get(37).getStack();
-		var nbt = notes.getNbt();
+		NbtCompound nbt = notes.getNbt();
 		if(!notes.isEmpty() && nbt != null && nbt.contains("puzzle_id")){
-			Puzzle puzzle = Research.getPuzzle(new Identifier(nbt.getString("puzzle_id")));
+			Puzzle puzzle = Research.getPuzzle(Identifier.of(nbt.getString("puzzle_id")));
 			var renderer = PuzzleRenderer.get(puzzle);
 			if(renderer != null)
 				renderer.onClose();
@@ -158,7 +159,7 @@ public class ResearchTableScreen extends HandledScreen<ResearchTableScreen.Handl
 			inventory = tableInv.getLeft();
 		}
 		
-		public ItemStack transferSlot(PlayerEntity player, int index){
+		public ItemStack quickMove(PlayerEntity player, int index){
 			ItemStack itemStack = ItemStack.EMPTY;
 			Slot slot = slots.get(index);
 			if(slot != null && slot.hasStack()){

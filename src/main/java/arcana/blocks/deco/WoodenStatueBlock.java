@@ -4,11 +4,12 @@ import com.unascribed.lib39.weld.api.BigBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
-import net.minecraft.client.item.TooltipContext;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
@@ -22,7 +23,6 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Locale;
@@ -62,8 +62,8 @@ public class WoodenStatueBlock extends BigBlock{
 		return "block.arcana.wooden_statue";
 	}
 	
-	public void appendTooltip(ItemStack stack, @Nullable BlockView world, List<Text> tooltip, TooltipContext options){
-		super.appendTooltip(stack, world, tooltip, options);
+	public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType options){
+		super.appendTooltip(stack, context, tooltip, options);
 		tooltip.add(Text.translatable("block.arcana." + type.name().toLowerCase(Locale.ROOT) + "_no_evil").formatted(Formatting.GRAY));
 	}
 	
@@ -81,7 +81,7 @@ public class WoodenStatueBlock extends BigBlock{
 		FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
 		return super.getPlacementState(ctx)
 				.with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER)
-				.with(FACING, ctx.getPlayerFacing().getOpposite());
+				.with(FACING, ctx.getHorizontalPlayerFacing().getOpposite());
 	}
 	
 	public BlockState rotate(BlockState state, BlockRotation rotation){

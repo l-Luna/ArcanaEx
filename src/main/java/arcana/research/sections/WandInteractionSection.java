@@ -8,8 +8,8 @@ import arcana.util.NbtUtil;
 import com.google.gson.JsonObject;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
 import java.util.Map;
@@ -32,15 +32,15 @@ public class WandInteractionSection extends EntrySection{
 	
 	public WandInteractionSection(JsonObject obj){
 		this(
-				Registry.ITEM.get(new Identifier(obj.get("input").getAsString())),
-				Registry.ITEM.get(new Identifier(obj.get("result").getAsString()))
+				Registries.ITEM.get(Identifier.of(obj.get("input").getAsString())),
+				Registries.ITEM.get(Identifier.of(obj.get("result").getAsString()))
 		);
 	}
 	
 	public WandInteractionSection(NbtCompound compound){
 		this(
-				Registry.ITEM.get(new Identifier(compound.getString("input"))),
-				Registry.ITEM.get(new Identifier(compound.getString("result")))
+				Registries.ITEM.get(Identifier.of(compound.getString("input"))),
+				Registries.ITEM.get(Identifier.of(compound.getString("result")))
 		);
 	}
 	
@@ -61,6 +61,6 @@ public class WandInteractionSection extends EntrySection{
 	}
 	
 	public NbtCompound data(){
-		return NbtUtil.from(Map.of("input", Registry.ITEM.getId(input), "result", Registry.ITEM.getId(result)));
+		return NbtUtil.from(Map.of("input", Registries.ITEM.getId(input), "result", Registries.ITEM.getId(result)));
 	}
 }

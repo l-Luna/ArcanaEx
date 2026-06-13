@@ -10,6 +10,7 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
@@ -34,7 +35,7 @@ public final class WarpEvents{
 	
 	public static void tickWarp(ServerWorld world){
 		for(ServerPlayerEntity player : world.getPlayers()){
-			if(player.isSpectator() || player.hasStatusEffect(ArcanaRegistry.WARP_WARD))
+			if(player.isSpectator() || player.hasStatusEffect(RegistryEntry.of(ArcanaRegistry.WARP_WARD)))
 				continue;
 			Researcher researcher = Researcher.from(player);
 			long elapsed = world.getTime() - researcher.getLastWarpEventTime();
@@ -55,7 +56,7 @@ public final class WarpEvents{
 		var hadPrecursor = researcher.wasLastWarpEventPrecursor();
 		event.perform(player, hadPrecursor);
 		new PkTriggerWarpEvent(event, hadPrecursor).sendTo(player);
-		researcher.setLastWarpEvent(player.world.getTime(), event.isPrecursor());
+		researcher.setLastWarpEvent(player.getWorld().getTime(), event.isPrecursor());
 	}
 	
 	public static WarpEvent eligible(PlayerEntity player){
@@ -63,7 +64,7 @@ public final class WarpEvents{
 		int significantWarp = Researcher.bonusWarp(player);
 		int warp = researcher.getWarp() + significantWarp;
 		boolean hadPrecursor = researcher.wasLastWarpEventPrecursor();
-		Random random = player.world.random;
+		Random random = player.getWorld().random;
 		List<WarpEvent> choices = EVENTS.values().stream()
 				.filter(x -> x.minWarp() <= warp)
 				.filter(x -> x.applicableTo(player, significantWarp > 0))

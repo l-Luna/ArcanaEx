@@ -2,20 +2,23 @@ package arcana.datagen;
 
 import arcana.ArcanaRegistry;
 import arcana.blocks.ArcanaBlockSettings;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.RegistryWrapper;
+
+import java.util.concurrent.CompletableFuture;
 
 public class ArcanaBlockTagsProvider extends FabricTagProvider<Block>{
 	
-	public ArcanaBlockTagsProvider(FabricDataGenerator dataGenerator){
-		super(dataGenerator, Registry.BLOCK);
+	public ArcanaBlockTagsProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture){
+		super(output, RegistryKeys.BLOCK, registriesFuture);
 	}
 	
-	protected void generateTags(){
+	protected void configure(RegistryWrapper.WrapperLookup lookup){
 		for(Block block : ArcanaRegistry.blocks)
-			if(block.settings instanceof ArcanaBlockSettings abs)
+			if(block.getSettings() instanceof ArcanaBlockSettings abs)
 				if(abs.getToolTag() != null)
 					getOrCreateTagBuilder(abs.getToolTag()).add(block);
 	}

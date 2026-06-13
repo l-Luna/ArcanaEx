@@ -9,22 +9,20 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Quaternion;
+import net.minecraft.util.math.RotationAxis;
 import net.minecraft.util.math.Vec2f;
-import net.minecraft.util.math.Vec3f;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.*;
+import java.util.function.Supplier;
 
 import static arcana.Arcana.arcId;
 import static java.lang.Math.*;
@@ -71,7 +69,7 @@ public class ResearchBookScreen extends Screen{
 			tab = categories.size() - 1;
 		if(tab < 0)
 			tab = 0;
-		texture = new Identifier(book.id().getNamespace(), BOOK_PREFIX + book.id().getPath() + BOOK_SUFFIX);
+		texture = Identifier.of(book.id().getNamespace(), BOOK_PREFIX + book.id().getPath() + BOOK_SUFFIX);
 	}
 	
 	public static void notifyNewEntries(Set<Entry> newEntries){
@@ -175,47 +173,45 @@ public class ResearchBookScreen extends Screen{
 		return height - 30;
 	}
 	
-	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta){
-		renderBackground(matrices);
+	public void render(DrawContext ctx, int mouseX, int mouseY, float delta){
+		renderBackground(ctx, mouseX, mouseY, delta);
 		RenderSystem.enableBlend();
-		super.render(matrices, mouseX, mouseY, delta);
+		super.render(ctx, mouseX, mouseY, delta);
 		
+		MatrixStack matrices = ctx.getMatrices();
 		int scX = (width - frameWidth()) / 2 + 16, scY = (height - frameHeight()) / 2 + 17;
-		DrawableHelper.enableScissor(scX, scY, scX + frameWidth() - 32, scY + frameHeight() - 34);
+		ctx.enableScissor(scX, scY, scX + frameWidth() - 32, scY + frameHeight() - 34);
 		
-		renderResearchBackground(matrices);
-		renderEntries(matrices, delta);
+		renderResearchBackground(ctx);
+		renderEntries(ctx, delta);
 		
 		int gx = (int)Math.floor((mouseX / zoom - xOffset()) / 30);
 		int gy = (int)Math.floor((mouseY / zoom - yOffset()) / 30);
 		if(debug){
 			matrices.push();
 			matrices.translate(0, 0, 300);
-			textRenderer.draw(matrices, "X: %d / Y : %d".formatted(gx, gy), scX + 2, scY + 4, 0xFFFFFF);
+			ctx.drawText(textRenderer, "X: %d / Y : %d".formatted(gx, gy), scX + 2, scY + 4, 0xFFFFFF, false);
 		}
 		
 		if(debug || Arcana.CONFIG.alwaysShowResearchBookCursor){
 			matrices.scale(zoom, zoom, zoom);
-			RenderSystem.setShader(GameRenderer::getPositionColorTexShader);
-			RenderSystem.setShaderTexture(0, ICONS_TEX);
-			drawTexture(matrices, (int)((gx*30 + xOffset()) + 1), (int)((gy*30 + yOffset()) + 1), 0, 78, 28, 28);
+			ctx.drawTexture(ICONS_TEX, (int)((gx*30 + xOffset()) + 1), (int)((gy*30 + yOffset()) + 1), 0, 78, 28, 28);
 			matrices.pop();
 		}
 		
 		RenderSystem.disableScissor();
 		
-		setZOffset(299);
-		renderFrame(matrices);
-		setZOffset(0);
-		renderEntryTooltip(matrices, mouseX, mouseY);
+		matrices.push();
+		matrices.translate(0, 0, 299);
+		renderFrame(ctx);
+		matrices.pop();
+		renderEntryTooltip(ctx, mouseX, mouseY);
 		
-		buttons.forEach(button -> button.renderAfter(matrices, mouseX, mouseY));
+		buttons.forEach(button -> button.renderAfter(ctx, mouseX, mouseY));
 		RenderSystem.enableBlend();
 	}
 	
-	private void renderResearchBackground(MatrixStack matrices){
-		RenderSystem.setShader(GameRenderer::getPositionTexShader);
-		RenderSystem.setShaderTexture(0, categories.get(tab).bg());
+	private void renderResearchBackground(DrawContext ctx){
 		
 		int bgWidth = frameWidth() - 32;
 		int bgHeight = frameHeight() - 34;
@@ -233,10 +229,11 @@ public class ResearchBookScreen extends Screen{
 		float v = (((yPan / 2f + 256f) / MAX_PAN) * (MAX_PAN * scale - maxSize)) + ySzDiff / 2f;
 		// TODO: not completely correctly centred on the smaller axis though
 		
-		drawTexture(matrices, screenX, screenY, u, v, bgWidth, bgHeight, (int)Math.ceil(MAX_PAN * scale), (int)Math.ceil(MAX_PAN * scale));
+		ctx.drawTexture(categories.get(tab).bg(), screenX, screenY, u, v, bgWidth, bgHeight, (int)Math.ceil(MAX_PAN * scale), (int)Math.ceil(MAX_PAN * scale));
 	}
 	
-	private void renderEntries(MatrixStack matrices, float delta){
+	private void renderEntries(DrawContext ctx, float delta){
+		MatrixStack matrices = ctx.getMatrices();
 		matrices.push();
 		matrices.scale(zoom, zoom, 1);
 		float time = client.world.getTime() + delta;
@@ -250,22 +247,19 @@ public class ResearchBookScreen extends Screen{
 				int warping = entry.warping();
 				if(warping > 0 && warping <= 5){
 					matrices.push();
-					matrices.translate(x + 15, y + 15, getZOffset());
+					matrices.translate(x + 15, y + 15, 0);
 					final int sq = 20;
 					for(int i = 0; i < sq; i++){
 						matrices.push();
-						matrices.multiply(Quaternion.fromEulerXyzDegrees(new Vec3f(0, 0, (360f / sq) * i)));
+						matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(((360f / sq) * i)));
 						matrices.translate(sin(time / 20f) * warping + warping, 0, 0);
-						fill(matrices, 0, 0, 12, 12, 0x11ff00ff);
+						ctx.fill(0, 0, 12, 12, 0x11ff00ff);
 						matrices.pop();
 					}
 					matrices.pop();
 				}
 				
 				// render base
-				RenderSystem.setShader(GameRenderer::getPositionColorTexShader);
-				RenderSystem.setShaderTexture(0, ICONS_TEX);
-				
 				Vec2f baseUv = baseUv(entry);
 				float mult = 1f;
 				if(style == PageStyle.IN_PROGRESS)
@@ -273,24 +267,24 @@ public class ResearchBookScreen extends Screen{
 				else if(style == PageStyle.PENDING)
 					mult = 0.2f;
 				RenderSystem.setShaderColor(mult, mult, mult, 1);
-				drawTexture(matrices, x + 2, y + 2, (int)baseUv.x, (int)baseUv.y, 26, 26);
+				ctx.drawTexture(ICONS_TEX, x + 2, y + 2, (int)baseUv.x, (int)baseUv.y, 26, 26);
 				RenderSystem.setShaderColor(1, 1, 1, 1);
 				
 				// render icons
 				if(style != PageStyle.PENDING){
 					int iconU = pickIconU(entry);
 					if(iconU >= 0)
-						RenderHelper.drawTexture(matrices, x + 20, y, 0, iconU, 107, 9, 9, 1, 1, 1);
+						RenderHelper.drawTexture(ctx, x + 20, y, 0, iconU, 107, 9, 9, 1, 1, 1);
 				}
 				
 				if(!entry.icons().isEmpty()){
 					int frames = entry.getIntMeta("icon_frames");
 					if(entry.meta().contains("stacked_icons")){
 						for(Icon icon : entry.icons())
-							RenderHelper.renderIcon(matrices, icon, x + 7, y + 7, getZOffset(), zoom, frames);
+							RenderHelper.renderIcon(ctx, icon, x + 7, y + 7, 0, zoom, frames);
 					}else if(entry.meta().contains("detail_icons")){
 						Icon main = entry.icons().get(0);
-						RenderHelper.renderIcon(matrices, main, x + 6, y + 6, getZOffset(), zoom, frames);
+						RenderHelper.renderIcon(ctx, main, x + 6, y + 6, 0, zoom, frames);
 						Icon detail = entry.icons().get(1 + (int)((time / 30) % (entry.icons().size() - 1)));
 						float scale = 0.8f;
 						float offset = 9 + 16 * (1 - scale);
@@ -298,19 +292,17 @@ public class ResearchBookScreen extends Screen{
 						matrices.scale(scale, scale, 1);
 						// TODO: fix irritating jitter (related to rounding in nested scaling?)
 						// TODO: fix rendering over tooltips
-						RenderHelper.renderIcon(matrices, detail, (int)Math.ceil((x+offset)), (int)Math.ceil((y+offset)), getZOffset()+1000, zoom*scale, frames);
+						RenderHelper.renderIcon(ctx, detail, (int)Math.ceil((x+offset)), (int)Math.ceil((y+offset)), 1000, zoom*scale, frames);
 						matrices.pop();
 					}else{
 						Icon icon = entry.icons().get((int)((time / 30) % entry.icons().size()));
 						float u = style == PageStyle.PENDING ? 0.2f : 1f;
-						RenderHelper.renderIcon(matrices, icon, x + 7, y + 7, getZOffset(), zoom, frames, u, u, u, 1);
+						RenderHelper.renderIcon(ctx, icon, x + 7, y + 7, 0, zoom, frames, u, u, u, 1);
 					}
 				}
 				
 				// render arrows
 				RenderSystem.enableBlend();
-				RenderSystem.setShader(GameRenderer::getPositionTexShader);
-				RenderSystem.setShaderTexture(0, ICONS_TEX);
 				for(Parent parent : entry.parents()){
 					RenderSystem.setShaderColor(1, 1, 1, style == PageStyle.PENDING ? 0.2f : 1);
 					Entry pEntry = Research.getEntry(parent.id());
@@ -320,62 +312,62 @@ public class ResearchBookScreen extends Screen{
 						int xdiff = entry.x() - pEntry.x();
 						int ydiff = entry.y() - pEntry.y();
 						if(xdiff == 0){
-							arrows.drawVerticalLine(matrices, entry.x(), entry.y(), pEntry.y());
+							arrows.drawVerticalLine(ctx, entry.x(), entry.y(), pEntry.y());
 							if(parent.hasArrowhead()){
 								if(ydiff > 0)
-									arrows.drawDownArrowTo(matrices, entry);
+									arrows.drawDownArrowTo(ctx, entry);
 								else
-									arrows.drawUpArrowTo(matrices, entry);
+									arrows.drawUpArrowTo(ctx, entry);
 							}
 						}else if(ydiff == 0){
-							arrows.drawHorizontalLine(matrices, entry.y(), entry.x(), pEntry.x());
+							arrows.drawHorizontalLine(ctx, entry.y(), entry.x(), pEntry.x());
 							if(parent.hasArrowhead()){
 								if(xdiff > 0)
-									arrows.drawRightArrowTo(matrices, entry);
+									arrows.drawRightArrowTo(ctx, entry);
 								else
-									arrows.drawLeftArrowTo(matrices, entry);
+									arrows.drawLeftArrowTo(ctx, entry);
 							}
 						}else{
 							boolean large = abs(xdiff) > 1 && abs(ydiff) > 1;
 							if(parent.showReverse()){
-								arrows.drawSizedVerticalLine(matrices, entry.x(), entry.y(), pEntry.y(), large);
-								arrows.drawSizedHorizontalLine(matrices, pEntry.y(), pEntry.x(), entry.x(), large);
+								arrows.drawSizedVerticalLine(ctx, entry.x(), entry.y(), pEntry.y(), large);
+								arrows.drawSizedHorizontalLine(ctx, pEntry.y(), pEntry.x(), entry.x(), large);
 								if(xdiff > 0 && ydiff > 0){
-									arrows.drawSizedLdCurve(matrices, entry.x(), pEntry.y(), large);
+									arrows.drawSizedLdCurve(ctx, entry.x(), pEntry.y(), large);
 									if(parent.hasArrowhead())
-										arrows.drawDownArrowTo(matrices, entry);
+										arrows.drawDownArrowTo(ctx, entry);
 								}else if(xdiff > 0 && ydiff < 0){
-									arrows.drawSizedLuCurve(matrices, entry.x(), pEntry.y(), large);
+									arrows.drawSizedLuCurve(ctx, entry.x(), pEntry.y(), large);
 									if(parent.hasArrowhead())
-										arrows.drawUpArrowTo(matrices, entry);
+										arrows.drawUpArrowTo(ctx, entry);
 								}else if(xdiff < 0 && ydiff > 0){
-									arrows.drawSizedRdCurve(matrices, entry.x(), pEntry.y(), large);
+									arrows.drawSizedRdCurve(ctx, entry.x(), pEntry.y(), large);
 									if(parent.hasArrowhead())
-										arrows.drawDownArrowTo(matrices, entry);
+										arrows.drawDownArrowTo(ctx, entry);
 								}else if(xdiff < 0 && ydiff < 0){
-									arrows.drawSizedRuCurve(matrices, entry.x(), pEntry.y(), large);
+									arrows.drawSizedRuCurve(ctx, entry.x(), pEntry.y(), large);
 									if(parent.hasArrowhead())
-										arrows.drawUpArrowTo(matrices, entry);
+										arrows.drawUpArrowTo(ctx, entry);
 								}
 							}else{
-								arrows.drawSizedHorizontalLine(matrices, entry.y(), entry.x(), pEntry.x(), large);
-								arrows.drawSizedVerticalLine(matrices, pEntry.x(), pEntry.y(), entry.y(), large);
+								arrows.drawSizedHorizontalLine(ctx, entry.y(), entry.x(), pEntry.x(), large);
+								arrows.drawSizedVerticalLine(ctx, pEntry.x(), pEntry.y(), entry.y(), large);
 								if(xdiff > 0 && ydiff > 0){
-									arrows.drawSizedRuCurve(matrices, pEntry.x(), entry.y(), large);
+									arrows.drawSizedRuCurve(ctx, pEntry.x(), entry.y(), large);
 									if(parent.hasArrowhead())
-										arrows.drawRightArrowTo(matrices, entry);
+										arrows.drawRightArrowTo(ctx, entry);
 								}else if(xdiff > 0 && ydiff < 0){
-									arrows.drawSizedRdCurve(matrices, pEntry.x(), entry.y(), large);
+									arrows.drawSizedRdCurve(ctx, pEntry.x(), entry.y(), large);
 									if(parent.hasArrowhead())
-										arrows.drawRightArrowTo(matrices, entry);
+										arrows.drawRightArrowTo(ctx, entry);
 								}else if(xdiff < 0 && ydiff > 0){
-									arrows.drawSizedLuCurve(matrices, pEntry.x(), entry.y(), large);
+									arrows.drawSizedLuCurve(ctx, pEntry.x(), entry.y(), large);
 									if(parent.hasArrowhead())
-										arrows.drawLeftArrowTo(matrices, entry);
+										arrows.drawLeftArrowTo(ctx, entry);
 								}else if(xdiff < 0 && ydiff < 0){
-									arrows.drawSizedLdCurve(matrices, pEntry.x(), entry.y(), large);
+									arrows.drawSizedLdCurve(ctx, pEntry.x(), entry.y(), large);
 									if(parent.hasArrowhead())
-										arrows.drawLeftArrowTo(matrices, entry);
+										arrows.drawLeftArrowTo(ctx, entry);
 								}
 							}
 						}
@@ -410,7 +402,7 @@ public class ResearchBookScreen extends Screen{
 		ctx.drawTexture(texture, x + fWidth - 17, (y + (fHeight / 2)) - 35, 157, 35, 17, 70);
 	}
 	
-	private void renderEntryTooltip(MatrixStack matrices, int mouseX, int mouseY){
+	private void renderEntryTooltip(DrawContext ctx, int mouseX, int mouseY){
 		for(Entry entry : categories.get(tab).entries()){
 			if(hovering(entry, mouseX, mouseY)){
 				PageStyle style = style(entry);
@@ -430,7 +422,7 @@ public class ResearchBookScreen extends Screen{
 							lines.add(Text.literal("- " + s).formatted(Formatting.DARK_GRAY));
 					}
 					
-					renderTooltip(matrices, lines, mouseX, mouseY);
+					ctx.drawTooltip(textRenderer, lines, mouseX, mouseY);
 				}
 				break;
 			}
@@ -525,13 +517,13 @@ public class ResearchBookScreen extends Screen{
 		return super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
 	}
 	
-	public boolean mouseScrolled(double mouseX, double mouseY, double scroll){
+	public boolean mouseScrolled(double mouseX, double mouseY, double hScroll, double vScroll){
 		float amnt = 1.2f;
-		if((scroll < 0 && zoom > 0.5) || (scroll > 0 && zoom < 1))
-			zoom *= scroll > 0 ? amnt : 1 / amnt;
+		if((vScroll < 0 && zoom > 0.5) || (vScroll > 0 && zoom < 1))
+			zoom *= vScroll > 0 ? amnt : 1 / amnt;
 		if(zoom > 1f)
 			zoom = 1f;
-		return super.mouseScrolled(mouseX, mouseY, scroll);
+		return super.mouseScrolled(mouseX, mouseY, hScroll, vScroll);
 	}
 	
 	public boolean keyPressed(int keyCode, int scanCode, int modifiers){
@@ -660,36 +652,36 @@ public class ResearchBookScreen extends Screen{
 			return (int)((gY * 30 + yOffset()));
 		}
 		
-		void drawHorizontalSegment(MatrixStack stack, int gX, int gY){
-			drawTexture(stack, gX2SX(gX), gY2SY(gY), 104, 0, 30, 30);
+		void drawHorizontalSegment(DrawContext ctx, int gX, int gY){
+			ctx.drawTexture(ICONS_TEX, gX2SX(gX), gY2SY(gY), 104, 0, 30, 30);
 		}
 		
-		void drawVerticalSegment(MatrixStack stack, int gX, int gY){
-			drawTexture(stack, gX2SX(gX), gY2SY(gY), 134, 0, 30, 30);
+		void drawVerticalSegment(DrawContext ctx, int gX, int gY){
+			ctx.drawTexture(ICONS_TEX, gX2SX(gX), gY2SY(gY), 134, 0, 30, 30);
 		}
 		
-		void drawHorizontalLine(MatrixStack stack, int y, int startGX, int endGX){
+		void drawHorizontalLine(DrawContext ctx, int y, int startGX, int endGX){
 			int temp = startGX;
 			// *possibly* swap them
 			startGX = min(startGX, endGX);
 			endGX = max(endGX, temp);
 			// *exclusive*
 			for(int j = startGX + 1; j < endGX; j++){
-				drawHorizontalSegment(stack, j, y);
+				drawHorizontalSegment(ctx, j, y);
 			}
 		}
 		
-		void drawVerticalLine(MatrixStack stack, int x, int startGY, int endGY){
+		void drawVerticalLine(DrawContext ctx, int x, int startGY, int endGY){
 			int temp = startGY;
 			// *possibly* swap them
 			startGY = min(startGY, endGY);
 			endGY = max(endGY, temp);
 			// *exclusive*
 			for(int j = startGY + 1; j < endGY; j++)
-				drawVerticalSegment(stack, x, j);
+				drawVerticalSegment(ctx, x, j);
 		}
 		
-		void drawHorizontalLineMinus1(MatrixStack stack, int y, int startGX, int endGX){
+		void drawHorizontalLineMinus1(DrawContext ctx, int y, int startGX, int endGX){
 			int temp = startGX;
 			// take one
 			if(startGX > endGX)
@@ -701,10 +693,10 @@ public class ResearchBookScreen extends Screen{
 			endGX = max(endGX, temp);
 			// *exclusive*
 			for(int j = startGX + 1; j < endGX; j++)
-				drawHorizontalSegment(stack, j, y);
+				drawHorizontalSegment(ctx, j, y);
 		}
 		
-		void drawVerticalLineMinus1(MatrixStack stack, int x, int startGY, int endGY){
+		void drawVerticalLineMinus1(DrawContext ctx, int x, int startGY, int endGY){
 			int temp = startGY;
 			// take one
 			if(startGY > endGY)
@@ -716,122 +708,122 @@ public class ResearchBookScreen extends Screen{
 			endGY = max(endGY, temp);
 			// *exclusive*
 			for(int j = startGY + 1; j < endGY; j++)
-				drawVerticalSegment(stack, x, j);
+				drawVerticalSegment(ctx, x, j);
 		}
 		
-		void drawLuCurve(MatrixStack stack, int gX, int gY){
-			drawTexture(stack, gX2SX(gX), gY2SY(gY), 164, 0, 30, 30);
+		void drawLuCurve(DrawContext ctx, int gX, int gY){
+			ctx.drawTexture(ICONS_TEX, gX2SX(gX), gY2SY(gY), 164, 0, 30, 30);
 		}
 		
-		void drawRuCurve(MatrixStack stack, int gX, int gY){
-			drawTexture(stack, gX2SX(gX), gY2SY(gY), 194, 0, 30, 30);
+		void drawRuCurve(DrawContext ctx, int gX, int gY){
+			ctx.drawTexture(ICONS_TEX, gX2SX(gX), gY2SY(gY), 194, 0, 30, 30);
 		}
 		
-		void drawLdCurve(MatrixStack stack, int gX, int gY){
-			drawTexture(stack, gX2SX(gX), gY2SY(gY), 224, 0, 30, 30);
+		void drawLdCurve(DrawContext ctx, int gX, int gY){
+			ctx.drawTexture(ICONS_TEX, gX2SX(gX), gY2SY(gY), 224, 0, 30, 30);
 		}
 		
-		void drawRdCurve(MatrixStack stack, int gX, int gY){
-			drawTexture(stack, gX2SX(gX), gY2SY(gY), 104, 30, 30, 30);
+		void drawRdCurve(DrawContext ctx, int gX, int gY){
+			ctx.drawTexture(ICONS_TEX, gX2SX(gX), gY2SY(gY), 104, 30, 30, 30);
 		}
 		
 		// we offset the large curves so that they can be placed in the same way as the small ones
-		void drawLargeLuCurve(MatrixStack stack, int gX, int gY){
-			drawTexture(stack, gX2SX(gX - 1), gY2SY(gY - 1), 134, 30, 60, 60);
+		void drawLargeLuCurve(DrawContext ctx, int gX, int gY){
+			ctx.drawTexture(ICONS_TEX, gX2SX(gX - 1), gY2SY(gY - 1), 134, 30, 60, 60);
 		}
 		
-		void drawLargeRuCurve(MatrixStack stack, int gX, int gY){
-			drawTexture(stack, gX2SX(gX), gY2SY(gY - 1), 194, 30, 60, 60);
+		void drawLargeRuCurve(DrawContext ctx, int gX, int gY){
+			ctx.drawTexture(ICONS_TEX, gX2SX(gX), gY2SY(gY - 1), 194, 30, 60, 60);
 		}
 		
-		void drawLargeLdCurve(MatrixStack stack, int gX, int gY){
-			drawTexture(stack, gX2SX(gX - 1), gY2SY(gY), 134, 90, 60, 60);
+		void drawLargeLdCurve(DrawContext ctx, int gX, int gY){
+			ctx.drawTexture(ICONS_TEX, gX2SX(gX - 1), gY2SY(gY), 134, 90, 60, 60);
 		}
 		
-		void drawLargeRdCurve(MatrixStack stack, int gX, int gY){
-			drawTexture(stack, gX2SX(gX), gY2SY(gY), 194, 90, 60, 60);
+		void drawLargeRdCurve(DrawContext ctx, int gX, int gY){
+			ctx.drawTexture(ICONS_TEX, gX2SX(gX), gY2SY(gY), 194, 90, 60, 60);
 		}
 		
 		// selects from regular/large curves and regular/minus-1 lines
-		void drawSizedLuCurve(MatrixStack stack, int gX, int gY, boolean large){
+		void drawSizedLuCurve(DrawContext ctx, int gX, int gY, boolean large){
 			if(large)
-				drawLargeLuCurve(stack, gX, gY);
+				drawLargeLuCurve(ctx, gX, gY);
 			else
-				drawLuCurve(stack, gX, gY);
+				drawLuCurve(ctx, gX, gY);
 		}
 		
-		void drawSizedRuCurve(MatrixStack stack, int gX, int gY, boolean large){
+		void drawSizedRuCurve(DrawContext ctx, int gX, int gY, boolean large){
 			if(large)
-				drawLargeRuCurve(stack, gX, gY);
+				drawLargeRuCurve(ctx, gX, gY);
 			else
-				drawRuCurve(stack, gX, gY);
+				drawRuCurve(ctx, gX, gY);
 		}
 		
-		void drawSizedLdCurve(MatrixStack stack, int gX, int gY, boolean large){
+		void drawSizedLdCurve(DrawContext ctx, int gX, int gY, boolean large){
 			if(large)
-				drawLargeLdCurve(stack, gX, gY);
+				drawLargeLdCurve(ctx, gX, gY);
 			else
-				drawLdCurve(stack, gX, gY);
+				drawLdCurve(ctx, gX, gY);
 		}
 		
-		void drawSizedRdCurve(MatrixStack stack, int gX, int gY, boolean large){
+		void drawSizedRdCurve(DrawContext ctx, int gX, int gY, boolean large){
 			if(large)
-				drawLargeRdCurve(stack, gX, gY);
+				drawLargeRdCurve(ctx, gX, gY);
 			else
-				drawRdCurve(stack, gX, gY);
+				drawRdCurve(ctx, gX, gY);
 		}
 		
-		void drawSizedVerticalLine(MatrixStack stack, int x, int startGY, int endGY, boolean large){
+		void drawSizedVerticalLine(DrawContext ctx, int x, int startGY, int endGY, boolean large){
 			if(large)
-				drawVerticalLineMinus1(stack, x, startGY, endGY);
+				drawVerticalLineMinus1(ctx, x, startGY, endGY);
 			else
-				drawVerticalLine(stack, x, startGY, endGY);
+				drawVerticalLine(ctx, x, startGY, endGY);
 		}
 		
-		void drawSizedHorizontalLine(MatrixStack stack, int y, int startGX, int endGX, boolean large){
+		void drawSizedHorizontalLine(DrawContext ctx, int y, int startGX, int endGX, boolean large){
 			if(large)
-				drawHorizontalLineMinus1(stack, y, startGX, endGX);
+				drawHorizontalLineMinus1(ctx, y, startGX, endGX);
 			else
-				drawHorizontalLine(stack, y, startGX, endGX);
+				drawHorizontalLine(ctx, y, startGX, endGX);
 		}
 		
-		void drawDownArrow(MatrixStack stack, int gX, int gY){
-			drawTexture(stack, gX2SX(gX), gY2SY(gY) + 1, 104, 60, 30, 30);
+		void drawDownArrow(DrawContext ctx, int gX, int gY){
+			ctx.drawTexture(ICONS_TEX, gX2SX(gX), gY2SY(gY) + 1, 104, 60, 30, 30);
 		}
 		
-		void drawUpArrow(MatrixStack stack, int gX, int gY){
-			drawTexture(stack, gX2SX(gX), gY2SY(gY) - 1, 104, 120, 30, 30);
+		void drawUpArrow(DrawContext ctx, int gX, int gY){
+			ctx.drawTexture(ICONS_TEX, gX2SX(gX), gY2SY(gY) - 1, 104, 120, 30, 30);
 		}
 		
-		void drawLeftArrow(MatrixStack stack, int gX, int gY){
-			drawTexture(stack, gX2SX(gX) - 1, gY2SY(gY), 104, 90, 30, 30);
+		void drawLeftArrow(DrawContext ctx, int gX, int gY){
+			ctx.drawTexture(ICONS_TEX, gX2SX(gX) - 1, gY2SY(gY), 104, 90, 30, 30);
 		}
 		
-		void drawRightArrow(MatrixStack stack, int gX, int gY){
-			drawTexture(stack, gX2SX(gX) + 1, gY2SY(gY), 104, 150, 30, 30);
+		void drawRightArrow(DrawContext ctx, int gX, int gY){
+			ctx.drawTexture(ICONS_TEX, gX2SX(gX) + 1, gY2SY(gY), 104, 150, 30, 30);
 		}
 		
 		// offsets based on arrow type
-		void drawDownArrowTo(MatrixStack stack, Entry entry){
+		void drawDownArrowTo(DrawContext stack, Entry entry){
 			drawDownArrow(stack, entry.x(), entry.y() - 1);
 		}
 		
-		void drawUpArrowTo(MatrixStack stack, Entry entry){
+		void drawUpArrowTo(DrawContext stack, Entry entry){
 			drawUpArrow(stack, entry.x(), entry.y() + 1);
 		}
 		
-		void drawLeftArrowTo(MatrixStack stack, Entry entry){
+		void drawLeftArrowTo(DrawContext stack, Entry entry){
 			drawLeftArrow(stack, entry.x() + 1, entry.y());
 		}
 		
-		void drawRightArrowTo(MatrixStack stack, Entry entry){
+		void drawRightArrowTo(DrawContext stack, Entry entry){
 			drawRightArrow(stack, entry.x() - 1, entry.y());
 		}
 	}
 	
 	private interface TooltipButton{
 		
-		void renderAfter(MatrixStack matrices, int mouseX, int mouseY);
+		void renderAfter(DrawContext matrices, int mouseX, int mouseY);
 	}
 	
 	private /* non-static */ class CategoryButton extends ButtonWidget implements TooltipButton{
@@ -840,29 +832,28 @@ public class ResearchBookScreen extends Screen{
 		Category category;
 		
 		public CategoryButton(int x, int y, int categoryIdx, Category category){
-			super(x, y, 16, 16, Text.literal(""), button -> tab = categoryIdx);
+			super(x, y, 16, 16, Text.literal(""), button -> tab = categoryIdx, Supplier::get);
 			this.categoryIdx = categoryIdx;
 			this.category = category;
 			visible = true;
 		}
 		
-		public void render(MatrixStack matrices, int mouseX, int mouseY, float delta){
-			hovered = mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
+		public void renderWidget(DrawContext ctx, int mouseX, int mouseY, float delta){
+			hovered = mouseX >= getX() && mouseY >= getY() && mouseX < getX() + width && mouseY < getY() + height;
 			if(visible){
 				int xOffset = categoryIdx == tab ? 6 : (hovered) ? 4 : 0;
-				int renderX = x - xOffset;
-				RenderSystem.setShaderTexture(0, texture);
-				drawTexture(matrices, renderX - 11, y - 1, 0, 158, 34 - (6 - xOffset), 18);
-				RenderHelper.renderIcon(matrices, category.icon(), renderX, y, getZOffset());
+				int renderX = getX() - xOffset;
+				ctx.drawTexture(texture, renderX - 11, getY() - 1, 0, 158, 34 - (6 - xOffset), 18);
+				RenderHelper.renderIcon(ctx, category.icon(), renderX, getY(), 0);
 				int iconU = categoryIcons.getOrDefault(category, -1);
 				if(iconU != -1){
 					RenderSystem.setShaderTexture(0, ICONS_TEX);
-					RenderHelper.drawTexture(matrices, renderX - 7, y, 0, iconU, 107, 9, 9, 1, 1, 1);
+					RenderHelper.drawTexture(ctx, renderX - 7, getY(), 0, iconU, 107, 9, 9, 1, 1, 1);
 				}
 			}
 		}
 		
-		public void renderAfter(MatrixStack matrices, int mouseX, int mouseY){
+		public void renderAfter(DrawContext ctx, int mouseX, int mouseY){
 			if(hovered && visible){
 				if(!category.entries().isEmpty()){
 					Researcher researcher = Researcher.from(player);
@@ -877,9 +868,9 @@ public class ResearchBookScreen extends Screen{
 							Text.literal(String.valueOf(percent))));
 					if(debug)
 						lines.add(Text.literal(category.id().toString()).formatted(Formatting.DARK_GRAY));
-					ResearchBookScreen.this.renderTooltip(matrices, lines, mouseX, mouseY);
+					ctx.drawTooltip(textRenderer, lines, mouseX, mouseY);
 				}else
-					ResearchBookScreen.this.renderTooltip(matrices, Text.translatable(category.name()), mouseX, mouseY);
+					ctx.drawTooltip(textRenderer, Text.translatable(category.name()), mouseX, mouseY);
 			}
 		}
 	}
@@ -911,27 +902,26 @@ public class ResearchBookScreen extends Screen{
 						unreadAddendaEntries.remove(entry);
 					}
 				}
-			});
+			}, Supplier::get);
 			this.pin = pin;
 		}
 		
-		public void render(MatrixStack matrices, int mouseX, int mouseY, float delta){
-			hovered = mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
+		public void renderWidget(DrawContext ctx, int mouseX, int mouseY, float delta){
+			hovered = mouseX >= getX() && mouseY >= getY() && mouseX < getX() + width && mouseY < getY() + height;
 			if(visible){
 				int xOffset = hovered ? 3 : 0;
-				RenderSystem.setShaderTexture(0, texture);
-				drawTexture(matrices, x - 2, y - 1, 6 - xOffset, 140, 34 - (6 - xOffset), 18);
-				RenderHelper.renderIcon(matrices, pin.icon(), x + xOffset, y - 1, 0);
+				ctx.drawTexture(texture, getX() - 2, getY() - 1, 6 - xOffset, 140, 34 - (6 - xOffset), 18);
+				RenderHelper.renderIcon(ctx, pin.icon(), getX() + xOffset, getY() - 1, 0);
 			}
 		}
 		
-		public void renderAfter(MatrixStack matrices, int mouseX, int mouseY){
+		public void renderAfter(DrawContext ctx, int mouseX, int mouseY){
 			if(pin.icon().stack() != null)
 				if(hovered && visible){
 					var stack = pin.icon().stack();
-					List<Text> tooltips = new ArrayList<>(getTooltipFromItem(stack));
+					List<Text> tooltips = new ArrayList<>(getTooltipFromItem(client, stack));
 					tooltips.add(Text.translatable("research.entry.unpin").formatted(Formatting.AQUA));
-					ResearchBookScreen.this.renderTooltip(matrices, tooltips, stack.getTooltipData(), mouseX, mouseY);
+					ctx.drawTooltip(textRenderer, tooltips, stack.getTooltipData(), mouseX, mouseY);
 				}
 		}
 	}

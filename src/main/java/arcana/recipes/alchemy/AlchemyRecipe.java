@@ -10,10 +10,11 @@ import com.google.gson.JsonObject;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.*;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -30,7 +31,7 @@ public class AlchemyRecipe implements Recipe<AlchemyInventory>, ArcanaRecipe, As
 	
 	public static void setup(){
 		TYPE = Registry.register(
-				Registry.RECIPE_TYPE,
+				Registries.RECIPE_TYPE,
 				arcId("alchemy"),
 				new RecipeType<>(){
 					public String toString(){
@@ -39,7 +40,7 @@ public class AlchemyRecipe implements Recipe<AlchemyInventory>, ArcanaRecipe, As
 				}
 		);
 		SERIALIZER = Registry.register(
-				Registry.RECIPE_SERIALIZER,
+				Registries.RECIPE_SERIALIZER,
 				arcId("alchemy"),
 				new Serializer()
 		);

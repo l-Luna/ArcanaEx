@@ -5,8 +5,8 @@ import arcana.util.NbtUtil;
 import com.google.gson.JsonObject;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 import java.util.Map;
 
@@ -27,15 +27,15 @@ public class BannerPatternPreviewSection extends EntrySection{
 	
 	public BannerPatternPreviewSection(JsonObject obj){
 		this(
-				Registry.ITEM.get(new Identifier(obj.get("pattern_item").getAsString())),
-				new Identifier(obj.get("pattern").getAsString())
+				Registries.ITEM.get(Identifier.of(obj.get("pattern_item").getAsString())),
+				Identifier.of(obj.get("pattern").getAsString())
 		);
 	}
 	
 	public BannerPatternPreviewSection(NbtCompound compound){
 		this(
-				Registry.ITEM.get(new Identifier(compound.getString("pattern_item"))),
-				new Identifier(compound.getString("pattern"))
+				Registries.ITEM.get(Identifier.of(compound.getString("pattern_item"))),
+				Identifier.of(compound.getString("pattern"))
 		);
 	}
 	
@@ -52,6 +52,6 @@ public class BannerPatternPreviewSection extends EntrySection{
 	}
 	
 	public NbtCompound data(){
-		return NbtUtil.from(Map.of("pattern_item", Registry.ITEM.getId(patternItem), "pattern", pattern));
+		return NbtUtil.from(Map.of("pattern_item", Registries.ITEM.getId(patternItem), "pattern", pattern));
 	}
 }

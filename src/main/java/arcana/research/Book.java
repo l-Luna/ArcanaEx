@@ -22,7 +22,7 @@ public record Book(Identifier id, List<Category> categories){
 	}
 	
 	public static Book fromNbt(NbtCompound compound){
-		Identifier id = new Identifier(compound.getString("id"));
+		Identifier id = Identifier.of(compound.getString("id"));
 		List<Category> categories = new ArrayList<>();
 		var book = new Book(id, categories);
 		// the book object needs to exist before constructing the categories

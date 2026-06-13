@@ -2,7 +2,6 @@ package arcana.effects;
 
 import arcana.components.RunicShielding;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.player.PlayerEntity;
 
@@ -16,11 +15,12 @@ public class FrailWarpStatusEffect extends ArcanaStatusEffect{
 		return true;
 	}
 	
-	public void applyUpdateEffect(LivingEntity entity, int amplifier){
+	public boolean applyUpdateEffect(LivingEntity entity, int amplifier){
 		if(entity instanceof PlayerEntity player
 				&& !player.isDead()
 				&& !player.getAbilities().invulnerable
 				&& RunicShielding.from(player).getHalfPoints() < 2)
-			player.damage(DamageSource.WITHER, (player.getHealth() + player.getAbsorptionAmount()) * 2);
+			player.damage(entity.getDamageSources().wither(), (player.getHealth() + player.getAbsorptionAmount()) * 2);
+		return true;
 	}
 }

@@ -1,7 +1,6 @@
 package arcana.effects;
 
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectCategory;
 
 public class TaintedStatusEffect extends ArcanaStatusEffect{
@@ -17,8 +16,9 @@ public class TaintedStatusEffect extends ArcanaStatusEffect{
 		return true;
 	}
 	
-	public void applyUpdateEffect(LivingEntity entity, int amplifier){
+	public boolean applyUpdateEffect(LivingEntity entity, int amplifier){
 		// TODO: taint damage source
-		entity.damage(DamageSource.LIGHTNING_BOLT, 1);
+		entity.damage(entity.getDamageSources().generic(), 1);
+		return true;
 	}
 }

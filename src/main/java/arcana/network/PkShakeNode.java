@@ -31,6 +31,6 @@ public class PkShakeNode extends S2CMessage{
 	
 	@Environment(EnvType.CLIENT)
 	protected void handle(MinecraftClient client, ClientPlayerEntity player){
-		node.deref(player.world).ifPresent(node -> NodeRenderer.shakeNode(node, ticks));
+		node.deref(player.getWorld()).ifPresent(node -> NodeRenderer.shakeNode(node, ticks));
 	}
 }

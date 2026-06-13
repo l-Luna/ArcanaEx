@@ -6,9 +6,9 @@ import dev.emi.emi.api.widget.Widget;
 import dev.emi.emi.api.widget.WidgetHolder;
 import dev.emi.emi.screen.WidgetGroup;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
 import net.minecraft.client.util.Window;
-import net.minecraft.client.util.math.MatrixStack;
 
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -36,18 +36,18 @@ public class DynamicWidgets extends Widget{
 		return new Bounds(inner.x, inner.y, inner.width, inner.height);
 	}
 	
-	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta){
+	public void render(DrawContext ctx, int mouseX, int mouseY, float delta){
 		long time = System.currentTimeMillis() / INCREMENT;
 		if(lastGenerated == -1 || time > lastGenerated){
 			lastGenerated = time;
 			inner.widgets.clear();
 			generator.accept(inner, time);
 		}
-		matrices.push();
-		matrices.translate(inner.x, inner.y, 0);
+		ctx.getMatrices().push();
+		ctx.getMatrices().translate(inner.x, inner.y, 0);
 		for(Widget widget : inner.widgets)
-			widget.render(matrices, mouseX, mouseY, delta);
-		matrices.pop();
+			widget.render(ctx, mouseX, mouseY, delta);
+		ctx.getMatrices().pop();
 	}
 	
 	public List<TooltipComponent> getTooltip(int mouseX, int mouseY){

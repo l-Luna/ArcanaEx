@@ -40,7 +40,7 @@ public class StructureMushroomFeature extends Feature<StructureMushroomFeatureCo
 			// found a valid height, generate here
 			for(int i = 0; i < h; i++){
 				BlockPos here = origin.up(i);
-				world.setBlockState(here, config.stemProvider().getBlockState(context.getRandom(), here), Block.NOTIFY_ALL);
+				world.setBlockState(here, config.stemProvider().get(context.getRandom(), here), Block.NOTIFY_ALL);
 			}
 			BlockPos capPos = capCornerOrigin.up(h);
 			template.place(world, capPos, origin, new StructurePlacementData().setPosition(capPos), context.getRandom(), Block.NOTIFY_ALL);

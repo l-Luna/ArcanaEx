@@ -10,6 +10,7 @@ import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
@@ -32,7 +33,7 @@ public class PkGetNote extends C2SMessage{
 			return;
 		Puzzle puzzle = Research.getPuzzle(puzzleId);
 		ItemStack noteStack = new ItemStack(ArcanaRegistry.RESEARCH_NOTES);
-		var tag = noteStack.getOrCreateNbt();
+		NbtCompound tag = noteStack.getOrCreateNbt();
 		tag.putString("puzzle_id", puzzleId.toString());
 		tag.put("puzzle_data", puzzle.getInitialNoteTag(player));
 		if(!player.giveItemStack(noteStack)){

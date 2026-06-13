@@ -1,6 +1,7 @@
 package arcana.aspects;
 
 import arcana.api.AspectRecipe;
+import arcana.mixin.accessor.SmithingTransformRecipeAccessor;
 import com.google.common.base.Stopwatch;
 import com.google.gson.*;
 import com.mojang.logging.LogUtils;
@@ -103,6 +104,9 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 		
 		// load associations
 		prepared.forEach(this::applyJson);
+		
+		// TODO (just in case): if tags don't load, think about resource listener event again
+		applyAssociations();
 	}
 	
 	// applied after tag load event
@@ -149,9 +153,10 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 	
 	private void addIngredientProviders(){
 		// smithing doesn't properly implement getIngredients
-		ingredientProviders.put(SmithingRecipe.class, recipe -> {
+		ingredientProviders.put(SmithingTransformRecipe.class, recipe -> {
 			if(recipe instanceof SmithingTransformRecipe sr){
-				return List.of(sr.base, sr.addition);
+				SmithingTransformRecipeAccessor acc = (SmithingTransformRecipeAccessor)sr;
+				return List.of(acc.arcana$getTemplate(), acc.arcana$getBase(), acc.arcana$getAddition());
 			}else return null;
 		});
 	}
@@ -173,11 +178,11 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 					if(item != Items.AIR)
 						parseAspectStackList(file, value).ifPresent(x -> itemAssociations.put(item, x));
 					else
-						logger.warn("Invalid item \"%s\" in file \"%s\", ignoring".formatted(key, file));
+						logger.warn("Invalid item \"{}\" in file \"{}\", ignoring", key, file);
 				}
 			}
 		}else
-			logger.warn("Root in aspect map \"%s\" is not a JSON object, ignoring".formatted(file));
+			logger.warn("Root in aspect map \"{}\" is not a JSON object, ignoring", file);
 	}
 	
 	public static Optional<AspectMap> parseAspectStackList(Identifier file, JsonElement json){
@@ -193,7 +198,7 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 					if(aspect != null)
 						ret.add(aspect, amount);
 					else
-						logger.warn("Invalid aspect \"%s\" referenced in file \"%s\", ignoring".formatted(aspectName, file));
+						logger.warn("Invalid aspect \"{}\" referenced in file \"{}\", ignoring", aspectName, file);
 				}else if(element.isJsonPrimitive()){
 					JsonPrimitive p = element.getAsJsonPrimitive();
 					String name = p.getAsString();
@@ -207,25 +212,20 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 					if(aspect != null)
 						ret.add(aspect, amount);
 					else
-						logger.warn("Invalid aspect \"%s\" referenced in file \"%s\", ignoring".formatted(name, file));
+						logger.warn("Invalid aspect \"{}\" referenced in file \"{}\", ignoring", name, file);
 				}else
-					logger.warn("Aspect stack in file \"" + file + "\" is not an object or array, ignoring");
+					logger.warn("Aspect stack in file \"{}\" is not an object or array, ignoring", file);
 			}
 			return Optional.of(ret);
 		}else
-			logger.warn("Aspect stack list in file \"%s\" is not a JSON list, ignoring".formatted(file));
+			logger.warn("Aspect stack list in file \"{}\" is not a JSON list, ignoring", file);
 		return Optional.empty();
 	}
 	
 	private void computeInheritedAspects(){
 		// TODO: this is a naive approach
-		// could get better results by toposorting the condensation of the item/recipe graph?
-		
-		// here we simply look at each possible craftable item and recursively generate aspects,
-		// producing weird behaviour on cycles
-		// this is also quadratic over recipes
 		for(RecipeEntry<?> recipe : recipes.values()){
-			var output = recipe.value().getResult().getItem();
+			var output = recipe.value().getResult(lookup).getItem();
 			if(!itemAspects.containsKey(output))
 				generate(output);
 			generating.clear();
@@ -250,7 +250,7 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 		List<AspectMap> choices = new ArrayList<>();
 		for(RecipeEntry<?> recipeEntry : recipes.values()){
 			Recipe<?> recipe = recipeEntry.value();
-			ItemStack result = recipe.getResult();
+			ItemStack result = recipe.getResult(lookup);
 			if(result.getItem().equals(item) && result.getCount() > 0){
 				AspectMap collected = new AspectMap();
 				List<Ingredient> ingredients = recipe.getIngredients();

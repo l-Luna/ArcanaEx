@@ -66,7 +66,7 @@ public final class NodeCommand{
 	
 	private static int performList(CommandContext<ServerCommandSource> context){
 		World world = context.getSource().getWorld();
-		AuraChunk auraHere = AuraChunk.from(world, new BlockPos(context.getSource().getPosition()));
+		AuraChunk auraHere = AuraChunk.from(world, BlockPos.ofFloored(context.getSource().getPosition()));
 		if(auraHere != null)
 			context.getSource().sendMessage(Text.literal(auraHere.nodes().toString()));
 		else

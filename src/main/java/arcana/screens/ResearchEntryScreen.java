@@ -9,6 +9,7 @@ import arcana.components.Researcher;
 import arcana.research.*;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.resource.language.I18n;
@@ -21,6 +22,7 @@ import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import static arcana.screens.ResearchBookScreen.BOOK_PREFIX;
@@ -53,7 +55,7 @@ public class ResearchEntryScreen extends Screen{
 		this.entry = entry;
 		this.parent = parent;
 		Identifier bookKey = entry.category().book().id();
-		bg = new Identifier(bookKey.getNamespace(), BOOK_PREFIX + bookKey.getPath() + suffix);
+		bg = Identifier.of(bookKey.getNamespace(), BOOK_PREFIX + bookKey.getPath() + suffix);
 		client = MinecraftClient.getInstance(); // needs to be set early for pin button
 	}
 	
@@ -77,8 +79,8 @@ public class ResearchEntryScreen extends Screen{
 		var w = mc.textRenderer.getWidth(text);
 		cont = addDrawableChild(new ButtonWidget(x - w / 2 + 2, y + 15, w + 10, 16, Text.literal(text), button -> {
 			ArcanaClient.sendTryAdvance(entry);
-		}){
-			public void render(MatrixStack matrices, int mouseX, int mouseY, float delta){
+		}, Supplier::get){
+			public void renderWidget(DrawContext matrices, int mouseX, int mouseY, float delta){
 				var player = mc.player;
 				var researcher = Researcher.from(player);
 				active = researcher.entryStage(entry) < entry.sections().size() && entry.sections().get(researcher.entryStage(entry)).getRequirements().stream().allMatch(it -> it.satisfiedBy(player));
@@ -89,22 +91,21 @@ public class ResearchEntryScreen extends Screen{
 		updateButtons();
 	}
 	
-	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta){
-		renderBackground(matrices);
-		super.render(matrices, mouseX, mouseY, delta);
-		RenderSystem.setShaderTexture(0, bg);
-		drawTexture(matrices, (width - 256) / 2, (height - 181) / 2 - heightOffset, 0, 0, 256, 181);
+	public void render(DrawContext ctx, int mouseX, int mouseY, float delta){
+		renderBackground(ctx, mouseX, mouseY, delta);
+		super.render(ctx, mouseX, mouseY, delta);
+		ctx.drawTexture(bg, (width - 256) / 2, (height - 181) / 2 - heightOffset, 0, 0, 256, 181);
 		
 		// Main rendering
 		if(totalLength() > idx){
 			EntrySection section = getSectionAtIndex(idx);
 			if(section != null)
-				EntrySectionRenderer.get(section).render(matrices, section, sectionIndex(idx), width, height, mouseX, mouseY, false);
+				EntrySectionRenderer.get(section).render(ctx, section, sectionIndex(idx), width, height, mouseX, mouseY, false);
 		}
 		if(totalLength() > idx + 1){
 			EntrySection section = getSectionAtIndex(idx + 1);
 			if(section != null)
-				EntrySectionRenderer.get(section).render(matrices, section, sectionIndex(idx + 1), width, height, mouseX, mouseY, true);
+				EntrySectionRenderer.get(section).render(ctx, section, sectionIndex(idx + 1), width, height, mouseX, mouseY, true);
 		}
 		
 		// Requirements
@@ -117,20 +118,20 @@ public class ResearchEntryScreen extends Screen{
 			final int baseX = (width / 2) - (reqWidth * requirements.size() / 2);
 			for(int i = 0, size = requirements.size(); i < size; i++){
 				Requirement requirement = requirements.get(i);
-				renderer(requirement).render(matrices, baseX + i * reqWidth + 2, y, requirement, (int)player.world.getTime(), delta);
-				renderAmount(matrices, requirement, baseX + i * reqWidth + 2, y, requirement.getAmount(), requirement.satisfiedBy(player));
+				renderer(requirement).render(ctx, baseX + i * reqWidth + 2, y, requirement, (int)player.getWorld().getTime(), delta);
+				renderAmount(ctx, requirement, baseX + i * reqWidth + 2, y, requirement.getAmount(), requirement.satisfiedBy(player));
 			}
 			// Show tooltips
 			for(int i = 0, size = requirements.size(); i < size; i++)
 				if(mouseX >= 20 * i + baseX + 2 && mouseX <= 20 * i + baseX + 18 && mouseY >= y && mouseY <= y + 18){
-					List<? extends Text> tooltip = renderer(requirements.get(i)).tooltip(requirements.get(i), (int)player.world.getTime());
+					List<? extends Text> tooltip = renderer(requirements.get(i)).tooltip(requirements.get(i), (int)player.getWorld().getTime());
 					List<Text> lines = new ArrayList<>();
 					for(int tIdx = 0, tooltipSize = tooltip.size(); tIdx < tooltipSize; tIdx++){
 						Text s = tooltip.get(tIdx);
 						s.getWithStyle(s.getStyle().withFormatting(tIdx == 0 ? Formatting.WHITE : Formatting.GRAY));
 						lines.add(s);
 					}
-					renderTooltip(matrices, lines, mouseX, mouseY);
+					ctx.drawTooltip(textRenderer, lines, mouseX, mouseY);
 					break;
 				}
 		}
@@ -139,16 +140,16 @@ public class ResearchEntryScreen extends Screen{
 		if(totalLength() > idx){
 			EntrySection section = getSectionAtIndex(idx);
 			if(section != null)
-				EntrySectionRenderer.get(section).renderAfter(matrices, section, sectionIndex(idx), width, height, mouseX, mouseY, false);
+				EntrySectionRenderer.get(section).renderAfter(ctx, section, sectionIndex(idx), width, height, mouseX, mouseY, false);
 		}
 		if(totalLength() > idx + 1){
 			EntrySection section = getSectionAtIndex(idx + 1);
 			if(section != null)
-				EntrySectionRenderer.get(section).renderAfter(matrices, section, sectionIndex(idx + 1), width, height, mouseX, mouseY, true);
+				EntrySectionRenderer.get(section).renderAfter(ctx, section, sectionIndex(idx + 1), width, height, mouseX, mouseY, true);
 		}
 		
 		// Pins
-		pins.forEach(button -> button.renderAfter(matrices, mouseX, mouseY));
+		pins.forEach(button -> button.renderAfter(ctx, mouseX, mouseY));
 	}
 	
 	public void updateButtons(){
@@ -241,21 +242,21 @@ public class ResearchEntryScreen extends Screen{
 		return RequirementRenderer.get(requirement);
 	}
 	
-	private void renderAmount(MatrixStack stack, Requirement requirement, int x, int y, int amount, boolean complete){
+	private void renderAmount(DrawContext ctx, Requirement requirement, int x, int y, int amount, boolean complete){
+		MatrixStack matrices = ctx.getMatrices();
 		if(renderer(requirement).shouldDrawTickOrCross(requirement, amount)){
-			//display tick or cross
-			RenderSystem.setShaderTexture(0, bg);
+			// display tick or cross
 			// ensure it renders over items
-			setZOffset(300);
-			drawTexture(stack, x + 10, y + 8, complete ? 0 : 8, 247, 8, 9);
-			setZOffset(0);
+			matrices.push();
+			matrices.translate(0, 0, 300);
+			ctx.drawTexture(bg, x + 10, y + 8, complete ? 0 : 8, 247, 8, 9);
+			matrices.pop();
 		}else{
 			String s = String.valueOf(amount);
-			var text = client.textRenderer;
-			stack.push();
-			stack.translate(0, 0, 300);
-			text.drawWithShadow(stack, s, x + 17 - text.getWidth(s), y + 9, complete ? 0xAAFFAA : 0xEE9999);
-			stack.pop();
+			matrices.push();
+			matrices.translate(0, 0, 300);
+			ctx.drawTextWithShadow(textRenderer, s, x + 17 - textRenderer.getWidth(s), y + 9, complete ? 0xAAFFAA : 0xEE9999);
+			matrices.pop();
 		}
 	}
 	
@@ -280,15 +281,15 @@ public class ResearchEntryScreen extends Screen{
 		return false;
 	}
 	
-	public boolean mouseScrolled(double mouseX, double mouseY, double scroll){
-		if(super.mouseScrolled(mouseX, mouseY, scroll))
+	public boolean mouseScrolled(double mouseX, double mouseY, double hScroll, double vScroll){
+		if(super.mouseScrolled(mouseX, mouseY, hScroll, vScroll))
 			return true;
-		if(scroll > 0 && canTurnLeft()){
+		if(vScroll > 0 && canTurnLeft()){
 			idx -= 2;
 			updateButtons();
 			return true;
 		}
-		if(scroll < 0 && canTurnRight()){
+		if(vScroll < 0 && canTurnRight()){
 			idx += 2;
 			updateButtons();
 			return true;
@@ -337,18 +338,18 @@ public class ResearchEntryScreen extends Screen{
 		private final boolean right;
 		
 		public ChangePageButton(int x, int y, boolean right, PressAction onPress){
-			super(x, y, 12, 6, Text.literal(""), onPress);
+			super(x, y, 12, 6, Text.literal(""), onPress, Supplier::get);
 			this.right = right;
 		}
 		
-		public void render(MatrixStack matrices, int mouseX, int mouseY, float delta){
+		public void renderWidget(DrawContext ctx, int mouseX, int mouseY, float delta){
 			if(visible){
-				hovered = mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
+				hovered = mouseX >= getX() && mouseY >= getY() && mouseX < getX() + width && mouseY < getY() + height;
 				float mult = hovered ? 1f : 0.5f;
 				int texX = right ? 12 : 0;
 				int texY = 185;
 				RenderSystem.setShaderTexture(0, bg);
-				RenderHelper.drawTexture(matrices, x, y, getZOffset(), texX, texY, width, height, mult, mult, mult);
+				RenderHelper.drawTexture(ctx, getX(), getY(), 0, texX, texY, width, height, mult, mult, mult);
 			}
 		}
 	}
@@ -356,17 +357,17 @@ public class ResearchEntryScreen extends Screen{
 	private /* non-static */ class ReturnToBookButton extends ButtonWidget{
 		
 		public ReturnToBookButton(int x, int y, PressAction onPress){
-			super(x, y, 15, 8, Text.literal(""), onPress);
+			super(x, y, 15, 8, Text.literal(""), onPress, Supplier::get);
 		}
 		
-		public void render(MatrixStack matrices, int mouseX, int mouseY, float delta){
+		public void renderWidget(DrawContext ctx, int mouseX, int mouseY, float delta){
 			if(visible){
-				hovered = mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
+				hovered = mouseX >= getX() && mouseY >= getY() && mouseX < getX() + width && mouseY < getY() + height;
 				float mult = hovered ? 1f : 0.5f;
 				int texX = 41;
 				int texY = 204;
 				RenderSystem.setShaderTexture(0, bg);
-				RenderHelper.drawTexture(matrices, x, y, getZOffset(), texX, texY, width, height, mult, mult, mult);
+				RenderHelper.drawTexture(ctx, getX(), getY(), 0, texX, texY, width, height, mult, mult, mult);
 			}
 		}
 	}
@@ -400,32 +401,31 @@ public class ResearchEntryScreen extends Screen{
 						ArcanaClient.sendModifyPins(pin, true);
 					}
 				}
-			});
+			}, Supplier::get);
 			this.pin = pin;
 			visible = true;
 		}
 		
-		public void render(MatrixStack matrices, int mouseX, int mouseY, float delta){
+		public void renderWidget(DrawContext ctx, int mouseX, int mouseY, float delta){
 			if(visible){
 				int stageIndex = indexOfStage(pin.stage());
 				int xOffset = idx == (stageIndex % 2 == 0 ? stageIndex : stageIndex - 1) ? 6 : hovered ? 4 : 0;
 				
-				RenderSystem.setShaderTexture(0, bg);
-				drawTexture(matrices, x - 2, y - 1, 16 + (6 - xOffset), 238, 34 - (6 - xOffset), 18);
-				RenderHelper.renderIcon(matrices, pin.icon(), x + xOffset - 1, y - 1, getZOffset() + 1);
+				ctx.drawTexture(bg, getX() - 2, getY() - 1, 16 + (6 - xOffset), 238, 34 - (6 - xOffset), 18);
+				RenderHelper.renderIcon(ctx, pin.icon(), getX() + xOffset - 1, getY() - 1, 1);
 			}
 		}
 		
-		public void renderAfter(MatrixStack matrices, int mouseX, int mouseY){
-			hovered = mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
+		public void renderAfter(DrawContext ctx, int mouseX, int mouseY){
+			hovered = mouseX >= getX() && mouseY >= getY() && mouseX < getX() + width && mouseY < getY() + height;
 			if(pin.icon().stack() != null)
 				if(hovered){
 					var stack = pin.icon().stack();
-					List<Text> tooltips = new ArrayList<>(getTooltipFromItem(stack));
+					List<Text> tooltips = new ArrayList<>(getTooltipFromItem(client, stack));
 					List<Integer> pinned = Researcher.from(client.player).getPinned().get(entry.id());
 					boolean isPinned = pinned != null && pinned.contains(pin.stage());
 					tooltips.add(Text.translatable(isPinned ? "research.entry.unpin" : "research.entry.pin").formatted(Formatting.AQUA));
-					ResearchEntryScreen.this.renderTooltip(matrices, tooltips, stack.getTooltipData(), mouseX, mouseY);
+					ctx.drawTooltip(textRenderer, tooltips, stack.getTooltipData(), mouseX, mouseY);
 				}
 		}
 	}

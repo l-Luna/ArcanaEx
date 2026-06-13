@@ -9,8 +9,9 @@ import dev.emi.emi.EmiUtil;
 import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.stack.serializer.EmiStackSerializer;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.component.ComponentChanges;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -43,8 +44,8 @@ public class AspectEmiStack extends EmiStack{
 		return stack.amount() == 0;
 	}
 	
-	public void render(MatrixStack matrices, int x, int y, float delta, int flags){
-		AspectRenderHelper.renderAspectStack(stack, matrices, MinecraftClient.getInstance().textRenderer, x, y, 100);
+	public void render(DrawContext ctx, int x, int y, float delta, int flags){
+		AspectRenderHelper.renderAspectStack(stack, ctx, MinecraftClient.getInstance().textRenderer, x, y, 100);
 	}
 	
 	public NbtCompound getNbt(){
@@ -84,39 +85,22 @@ public class AspectEmiStack extends EmiStack{
 		return this;
 	}
 	
+	public ComponentChanges getComponentChanges(){
+		return ComponentChanges.EMPTY;
+	}
+	
 	public long getAmount(){
 		return stack.amount();
 	}
 	
-	/*public static class AspectEmiStackSerializer implements EmiIngredientSerializer<AspectEmiStack>{
-		
-		public JsonObject serialize(AspectEmiStack stack){
-			JsonObject obj = new JsonObject();
-			obj.addProperty("id", stack.stack.type().id().toString());
-			obj.addProperty("amount", stack.stack.amount());
-			return obj;
-		}
-		
-		public String getType(){
-			return "arcana:aspect";
-		}
-		
-		public EmiIngredient deserialize(JsonElement elem){
-			JsonObject object = elem.getAsJsonObject();
-			Identifier id = new Identifier(object.get("id").getAsString());
-			int amount = object.get("amount").getAsInt();
-			return new AspectEmiStack(Aspects.byName(id), amount);
-		}
-	}*/
-	
 	public static class AspectEmiStackSerializer implements EmiStackSerializer<AspectEmiStack>{
-		
-		public EmiStack create(Identifier id, NbtCompound nbt, long amount){
-			return new AspectEmiStack(Aspects.byName(id), (int)amount);
-		}
 		
 		public String getType(){
 			return "arcana_aspect";
+		}
+		
+		public EmiStack create(Identifier id, ComponentChanges componentChanges, long amount){
+			return new AspectEmiStack(Aspects.byName(id), (int)amount);
 		}
 	}
 }

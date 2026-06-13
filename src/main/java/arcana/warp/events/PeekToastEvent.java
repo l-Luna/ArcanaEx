@@ -5,13 +5,13 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.GameRenderer;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.toast.Toast;
 import net.minecraft.client.toast.ToastManager;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 
 import java.util.List;
 
@@ -37,16 +37,16 @@ public class PeekToastEvent extends WarpEvent{
 	@Environment(EnvType.CLIENT)
 	private static class PeekToast implements Toast{
 		
-		public Visibility draw(MatrixStack matrices, ToastManager manager, long startTime){
-			RenderSystem.setShader(GameRenderer::getPositionTexShader);
-			RenderSystem.setShaderTexture(0, TEXTURE);
+		private static final Identifier TEXTURE = Identifier.ofVanilla("toast/advancement");
+		
+		public Visibility draw(DrawContext ctx, ToastManager manager, long startTime){
 			RenderSystem.setShaderColor(1, 1, 1, 1);
-			manager.drawTexture(matrices, 0, 0, 0, 0, getWidth(), getHeight());
+			ctx.drawTexture(TEXTURE, 0, 0, 0, 0, getWidth(), getHeight());
 			
 			var text = manager.getClient().textRenderer;
 			List<OrderedText> lines = text.wrapLines(Text.translatable("message.arcana.warp.peek"), 125);
 			for(int i = 0; i < lines.size(); i++)
-				text.draw(matrices, lines.get(i), 18, 13 + (text.fontHeight + 1) * i, -1);
+				ctx.drawText(manager.getClient().textRenderer, lines.get(i), 18, 13 + (text.fontHeight + 1) * i, -1, false);
 			
 			return startTime > 30 ? Visibility.HIDE : Visibility.SHOW;
 		}

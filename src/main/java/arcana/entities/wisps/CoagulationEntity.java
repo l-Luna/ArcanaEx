@@ -66,8 +66,8 @@ public class CoagulationEntity extends WispLikeEntity implements Tameable{
 		return ownerId;
 	}
 	
-	public @Nullable Entity getOwner(){
-		return ownerId != null ? world.getPlayerByUuid(ownerId) : null;
+	public LivingEntity getOwner(){
+		return ownerId != null ? getWorld().getPlayerByUuid(ownerId) : null;
 	}
 	
 	public static class DietAttackWithOwnerGoal<TameableEntity extends MobEntity & Tameable> extends TrackTargetGoal{

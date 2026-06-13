@@ -43,9 +43,9 @@ public class PkChemistryClick extends C2SMessage{
 		if(handler instanceof ResearchTableScreen.Handler rtsh){
 			var notes = rtsh.slots.get(37).getStack();
 			if(!notes.isEmpty()){
-				var nbt = notes.getNbt();
+				NbtCompound nbt = notes.getNbt();
 				if(nbt != null){
-					Chemistry puzzle = (Chemistry)Research.getPuzzle(new Identifier(nbt.getString("puzzle_id")));
+					Chemistry puzzle = (Chemistry)Research.getPuzzle(Identifier.of(nbt.getString("puzzle_id")));
 					// TODO: validate missing spaces
 					var puzzleData = nbt.getCompound("puzzle_data");
 					AspectMap stored = AspectMap.fromNbt(puzzleData.getCompound("stored_aspects"));
@@ -58,7 +58,7 @@ public class PkChemistryClick extends C2SMessage{
 					
 					if(toPlace == null){
 						grid.remove(hexId);
-						if(toReplace != null && hasExpertise && player.world.random.nextFloat() < returnChance){
+						if(toReplace != null && hasExpertise && player.getWorld().random.nextFloat() < returnChance){
 							stored.add(toReplace, 1);
 							puzzleData.put("stored_aspects", stored.toNbt());
 						}
@@ -66,7 +66,7 @@ public class PkChemistryClick extends C2SMessage{
 						stored.take(toPlace, 1);
 						puzzleData.put("stored_aspects", stored.toNbt());
 						grid.putString(hexId, toSet);
-						if(toReplace != null && hasExpertise && player.world.random.nextFloat() < returnChance){
+						if(toReplace != null && hasExpertise && player.getWorld().random.nextFloat() < returnChance){
 							stored.add(toReplace, 1);
 							puzzleData.put("stored_aspects", stored.toNbt());
 						}

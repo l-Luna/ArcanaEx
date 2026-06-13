@@ -41,7 +41,7 @@ public class EmiInfusionEnchantmentRecipe extends AbstractEmiInfusionRecipe{
 		outputs = new ArrayList<>();
 		for(int i = 1; i <= enchantment.getMaxLevel(); i++){
 			ItemStack bookCatalyst = new ItemStack(Items.ENCHANTED_BOOK);
-			EnchantmentHelper.set(Map.of(enchantment, i), bookCatalyst);
+			EnchantmentHelper.set(bookCatalyst, Map.of(enchantment, i));
 			outputs.add(EmiStack.of(bookCatalyst));
 		}
 		catalysts.addAll(baseOuters);

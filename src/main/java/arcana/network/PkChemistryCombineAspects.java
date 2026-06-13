@@ -7,6 +7,7 @@ import arcana.aspects.Aspects;
 import arcana.screens.ResearchTableScreen;
 import com.unascribed.lib39.tunnel.api.C2SMessage;
 import com.unascribed.lib39.tunnel.api.NetworkContext;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
@@ -31,7 +32,7 @@ public class PkChemistryCombineAspects extends C2SMessage{
 		ScreenHandler handler = player.currentScreenHandler;
 		if(handler instanceof ResearchTableScreen.Handler rtsh){
 			var notes = rtsh.slots.get(37).getStack();
-			var nbt = notes.getNbt();
+			NbtCompound nbt = notes.getNbt();
 			if(nbt != null){
 				var puzzleData = nbt.getCompound("puzzle_data");
 				AspectMap stored = AspectMap.fromNbt(puzzleData.getCompound("stored_aspects"));

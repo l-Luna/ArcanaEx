@@ -39,7 +39,7 @@ public final class NbtUtil{
 			else if(value instanceof NodeReference nodeRef)
 				compound.put(key, nodeRef.toNbt());
 			else if(value instanceof ItemStack stack)
-				compound.put(key, stack.writeNbt(new NbtCompound()));
+				compound.put(key, stack.encode());
 			// ...
 		}
 		return compound;

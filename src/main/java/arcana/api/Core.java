@@ -16,7 +16,7 @@ public interface Core{
 	BiMap<Identifier, @NotNull Core> cores = HashBiMap.create();
 	
 	static @NotNull Core byName(String name){
-		return byName(new Identifier(name));
+		return byName(Identifier.of(name));
 	}
 	
 	static @NotNull Core byName(Identifier name){

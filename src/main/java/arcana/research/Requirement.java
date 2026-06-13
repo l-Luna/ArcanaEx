@@ -5,8 +5,8 @@ import arcana.recipes.XIngredient;
 import arcana.research.requirements.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -27,7 +27,7 @@ public abstract class Requirement{
 	}
 	
 	public static Requirement deserialize(NbtCompound passData){
-		Identifier type = new Identifier(passData.getString("type"));
+		Identifier type = Identifier.of(passData.getString("type"));
 		NbtCompound data = passData.getCompound("data");
 		int amount = passData.getInt("amount");
 		if(deserializers.get(type) != null){
@@ -40,14 +40,14 @@ public abstract class Requirement{
 	
 	public static void setup(){
 		// item (tag) requirement construction is handled by ResearchLoader
-		deserializers.put(ItemRequirement.TYPE, compound -> new ItemRequirement(Registry.ITEM.get(new Identifier(compound.getString("item"))), XIngredient.matcherFromString(compound.getString("matcher"))));
-		deserializers.put(ItemTagRequirement.TYPE, compound -> new ItemTagRequirement(new Identifier(compound.getString("tag"))));
+		deserializers.put(ItemRequirement.TYPE, compound -> new ItemRequirement(Registries.ITEM.get(Identifier.of(compound.getString("item"))), XIngredient.matcherFromString(compound.getString("matcher"))));
+		deserializers.put(ItemTagRequirement.TYPE, compound -> new ItemTagRequirement(Identifier.of(compound.getString("tag"))));
 		
 		factories.put(XpRequirement.TYPE, __ -> new XpRequirement());
 		deserializers.put(XpRequirement.TYPE, __ -> new XpRequirement());
 		
 		factories.put(PuzzleRequirement.TYPE, args -> new PuzzleRequirement(Arcana.maybeArcId(args.get(0))));
-		deserializers.put(PuzzleRequirement.TYPE, compound -> new PuzzleRequirement(new Identifier(compound.getString("puzzle"))));
+		deserializers.put(PuzzleRequirement.TYPE, compound -> new PuzzleRequirement(Identifier.of(compound.getString("puzzle"))));
 		
 		factories.put(PuzzlesCompletedRequirement.TYPE, __ -> new PuzzlesCompletedRequirement());
 		deserializers.put(PuzzlesCompletedRequirement.TYPE, __ -> new PuzzlesCompletedRequirement());

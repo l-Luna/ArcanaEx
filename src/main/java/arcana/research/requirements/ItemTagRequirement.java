@@ -5,9 +5,9 @@ import arcana.util.NbtUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.tag.TagKey;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 import java.util.Map;
 
@@ -20,7 +20,7 @@ public class ItemTagRequirement extends Requirement{
 	private final TagKey<Item> tag;
 	
 	public ItemTagRequirement(Identifier tagId){
-		tag = TagKey.of(Registry.ITEM_KEY, tagId);
+		tag = TagKey.of(RegistryKeys.ITEM, tagId);
 	}
 	
 	public TagKey<Item> getTag(){

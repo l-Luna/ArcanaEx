@@ -25,8 +25,8 @@ public class ThrownTaintBottleEntity extends ThrownItemEntity{
 	}
 	
 	// used by dispenser behaviour
-	public ThrownTaintBottleEntity(double d, double e, double f, World world){
-		super(ArcanaRegistry.THROWN_TAINT_BOTTLE, d, e, f, world);
+	public ThrownTaintBottleEntity(double x, double y, double z, World world){
+		super(ArcanaRegistry.THROWN_TAINT_BOTTLE, x, y, z, world);
 	}
 	
 	// used by item

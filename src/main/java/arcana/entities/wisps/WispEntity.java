@@ -11,12 +11,12 @@ import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.damage.EntityDamageSource;
 import net.minecraft.entity.mob.Angerable;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -68,8 +68,8 @@ public class WispEntity extends WispLikeEntity implements Angerable, ScalpelSlas
 		if(anchor == null)
 			anchor = getBlockPos();
 		super.tick();
-		if(!world.isClient)
-			tickAngerLogic((ServerWorld)world, true);
+		if(!getWorld().isClient)
+			tickAngerLogic((ServerWorld)getWorld(), true);
 	}
 	
 	public boolean handleAttack(Entity attacker){
@@ -81,27 +81,24 @@ public class WispEntity extends WispLikeEntity implements Angerable, ScalpelSlas
 		return false;
 	}
 	
-	public boolean isInvulnerableTo(DamageSource damageSource){
-		if(damageSource.isOutOfWorld())
+	public boolean isInvulnerableTo(DamageSource eds){
+		if(eds.isIn(DamageTypeTags.BYPASSES_INVULNERABILITY))
 			return false;
-		return !(damageSource instanceof EntityDamageSource eds)
-				|| handleAttack(eds.getAttacker())
-				|| eds.isExplosive()
-				|| eds.isFire()
-				|| eds.isThorns()
-				|| eds.isMagic();
+		// TODO: use custom damage type for reifying damage
+		ItemStack stack = eds.getWeaponStack();
+		return eds.getAttacker() instanceof WispLikeEntity || (stack != null && stack.isIn(ArcanaTags.WISP_ATTACK_WHITELIST));
 	}
 	
 	// start items with no velocity
 	public @Nullable ItemEntity dropStack(ItemStack stack, float yOffset){
 		if(stack.isEmpty())
 			return null;
-		else if(world.isClient)
+		else if(getWorld().isClient)
 			return null;
 		else{
-			ItemEntity entity = new ItemEntity(world, getX(), getY() + yOffset, getZ(), stack, 0, 0, 0);
+			ItemEntity entity = new ItemEntity(getWorld(), getX(), getY() + yOffset, getZ(), stack, 0, 0, 0);
 			entity.setToDefaultPickupDelay();
-			world.spawnEntity(entity);
+			getWorld().spawnEntity(entity);
 			return entity;
 		}
 	}
@@ -114,7 +111,7 @@ public class WispEntity extends WispLikeEntity implements Angerable, ScalpelSlas
 	
 	public void readCustomDataFromNbt(NbtCompound nbt){
 		super.readCustomDataFromNbt(nbt);
-		readAngerFromNbt(world, nbt);
+		readAngerFromNbt(getWorld(), nbt);
 		anchor = nbt.contains("anchor") ? BlockPos.fromLong(nbt.getLong("anchor")) : null;
 	}
 	
@@ -137,7 +134,7 @@ public class WispEntity extends WispLikeEntity implements Angerable, ScalpelSlas
 	}
 	
 	public void chooseRandomAngerTime(){
-		setAngerTime(world.random.nextBetween(20 * 25, 20 * 40));
+		setAngerTime(getWorld().random.nextBetween(20 * 25, 20 * 40));
 	}
 	
 	public void onScalpelSlash(World world, PlayerEntity user, BlockPos pos){

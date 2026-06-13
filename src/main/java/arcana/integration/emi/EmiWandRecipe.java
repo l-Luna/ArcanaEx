@@ -10,8 +10,8 @@ import dev.emi.emi.api.widget.GeneratedSlotWidget;
 import dev.emi.emi.api.widget.SlotWidget;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +20,10 @@ import java.util.stream.Collectors;
 
 public final class EmiWandRecipe extends EmiPatternCraftingRecipe{
 	
-	private static final List<Item> CAPS = Registry.ITEM.stream()
+	private static final List<Item> CAPS = Registries.ITEM.stream()
 			.filter(Cap.class::isInstance)
 			.toList();
-	private static final List<Item> CORES = Registry.ITEM.stream()
+	private static final List<Item> CORES = Registries.ITEM.stream()
 			.filter(Core.class::isInstance)
 			.collect(Collectors.toCollection(ArrayList::new));
 	

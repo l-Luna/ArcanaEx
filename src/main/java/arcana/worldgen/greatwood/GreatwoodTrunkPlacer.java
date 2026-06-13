@@ -1,6 +1,6 @@
 package arcana.worldgen.greatwood;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.BlockState;
@@ -21,7 +21,7 @@ import java.util.function.BiConsumer;
 
 public class GreatwoodTrunkPlacer extends TrunkPlacer{
 	
-	public static final Codec<GreatwoodTrunkPlacer> CODEC = RecordCodecBuilder.create(
+	public static final MapCodec<GreatwoodTrunkPlacer> CODEC = RecordCodecBuilder.mapCodec(
 			i -> fillTrunkPlacerFields(i).apply(i, GreatwoodTrunkPlacer::new)
 	);
 	
@@ -104,7 +104,7 @@ public class GreatwoodTrunkPlacer extends TrunkPlacer{
 						
 						for(int j = 0; j <= length; j++){
 							// Traverse through the branch
-							BlockPos local = start.add(Math.cos(angle) * j, j / 2.0, Math.sin(angle) * j);
+							BlockPos local = start.add((int)(Math.cos(angle) * j), (int)(j / 2.0), (int)(Math.sin(angle) * j));
 							
 							// Place logs if it's air
 							trySetState(world, replacer, rng, local.mutableCopy(), config);

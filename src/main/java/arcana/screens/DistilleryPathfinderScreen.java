@@ -3,9 +3,8 @@ package arcana.screens;
 import arcana.ArcanaRegistry;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -33,15 +32,13 @@ public class DistilleryPathfinderScreen extends HandledScreen<DistilleryPathfind
 		titleX = (backgroundWidth - textRenderer.getWidth(title)) / 2;
 	}
 	
-	protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY){
-		RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
+	protected void drawBackground(DrawContext ctx, float delta, int mouseX, int mouseY){
 		RenderSystem.setShaderColor(1, 1, 1, 1);
-		RenderSystem.setShaderTexture(0, texture);
-		drawTexture(matrices, x, y, 0, 0, backgroundWidth, backgroundHeight);
+		ctx.drawTexture(texture, x, y, 0, 0, backgroundWidth, backgroundHeight);
 		
 		if(handler.getBurnTime() > 0 && handler.getMaxBurnTime() > 0){
 			int pixels = (int)Math.ceil(13 * handler.getBurnTime() / (double)handler.getMaxBurnTime());
-			drawTexture(matrices, x + 57, y + 37 + (13 - pixels), 176, 12 - pixels, 14, pixels + 1);
+			ctx.drawTexture(texture, x + 57, y + 37 + (13 - pixels), 176, 12 - pixels, 14, pixels + 1);
 		}
 		
 		if(handler.getProgress() > 0){
@@ -53,14 +50,14 @@ public class DistilleryPathfinderScreen extends HandledScreen<DistilleryPathfind
 			
 			// TODO: slow down smoothly
 			int pixels = (int)Math.min(Math.ceil(22 * handler.getProgress() / (20 * 8d /* seconds */)), 21 /* limit */);
-			drawTexture(matrices, x + 80, y + 35, 177, 14, pixels, 16);
+			ctx.drawTexture(texture, x + 80, y + 35, 177, 14, pixels, 16);
 		}
 	}
 	
-	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-		renderBackground(matrices);
-		super.render(matrices, mouseX, mouseY, delta);
-		drawMouseoverTooltip(matrices, mouseX, mouseY);
+	public void render(DrawContext ctx, int mouseX, int mouseY, float delta) {
+		renderBackground(ctx, mouseX, mouseY, delta);
+		super.render(ctx, mouseX, mouseY, delta);
+		drawMouseoverTooltip(ctx, mouseX, mouseY);
 	}
 	
 	public static class Handler extends ScreenHandler{
@@ -115,7 +112,7 @@ public class DistilleryPathfinderScreen extends HandledScreen<DistilleryPathfind
 			return props.get(2);
 		}
 		
-		public ItemStack transferSlot(PlayerEntity player, int index){
+		public ItemStack quickMove(PlayerEntity player, int index){
 			// TODO: quick move
 			return ItemStack.EMPTY;
 		}
@@ -124,8 +121,8 @@ public class DistilleryPathfinderScreen extends HandledScreen<DistilleryPathfind
 			return inventory.canPlayerUse(player);
 		}
 		
-		public void close(PlayerEntity player){
-			super.close(player);
+		public void onClosed(PlayerEntity player){
+			super.onClosed(player);
 			inventory.onClose(player);
 		}
 	}

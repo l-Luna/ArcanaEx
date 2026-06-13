@@ -36,10 +36,10 @@ public record Category(
 	}
 	
 	public static Category fromNbt(NbtCompound nbt, Book in){
-		Identifier id = new Identifier(nbt.getString("id"));
+		Identifier id = Identifier.of(nbt.getString("id"));
 		Icon icon = Icon.fromString(nbt.getString("icon"));
-		Identifier bg = new Identifier(nbt.getString("bg"));
-		Identifier requirement = nbt.contains("requirement") ? new Identifier(nbt.getString("requirement")) : null;
+		Identifier bg = Identifier.of(nbt.getString("bg"));
+		Identifier requirement = nbt.contains("requirement") ? Identifier.of(nbt.getString("requirement")) : null;
 		String name = nbt.getString("name");
 		
 		List<Entry> entries = new ArrayList<>();

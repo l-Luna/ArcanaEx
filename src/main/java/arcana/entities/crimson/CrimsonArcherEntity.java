@@ -65,7 +65,7 @@ public class CrimsonArcherEntity extends CrimsonEntity implements RangedAttackMo
 	
 	// "if you don't have a bow, don't try to use it"
 	public void updateAttackType(){
-		if(world != null && !world.isClient){
+		if(getWorld() != null && !getWorld().isClient){
 			goalSelector.remove(meleeAttackGoal);
 			goalSelector.remove(bowAttackGoal);
 			ItemStack itemStack = getStackInHand(getBowHand());
@@ -84,20 +84,20 @@ public class CrimsonArcherEntity extends CrimsonEntity implements RangedAttackMo
 	
 	// behaviour
 	
-	public void attack(LivingEntity target, float pullProgress){
+	public void shootAt(LivingEntity target, float pullProgress){
 		Hand hand = getBowHand();
 		ItemStack bowStack = getStackInHand(hand);
-		ItemStack arrowStack = getArrowType(bowStack);
-		var arrow = createArrowProjectile(arrowStack, pullProgress);
+		ItemStack arrowStack = getProjectileType(bowStack);
+		PersistentProjectileEntity arrow = createArrowProjectile(arrowStack, pullProgress);
 		double diffX = target.getX() - getX();
 		double diffY = target.getBodyY(0.3333333333333333) - arrow.getY();
 		double diffZ = target.getZ() - getZ();
 		double dist = Math.sqrt(diffX * diffX + diffZ * diffZ);
-		arrow.setVelocity(diffX, diffY + dist * 0.2f, diffZ, 1.6f, 14f - world.getDifficulty().getId() * 4);
+		arrow.setVelocity(diffX, diffY + dist * 0.2f, diffZ, 1.6f, 14f - getWorld().getDifficulty().getId() * 4);
 		if(arrow instanceof ArrowEntity ae && bowStack.getItem() instanceof CrimsonLongbowItem)
 			CaArrow.setProjected(ae, true);
 		playSound(SoundEvents.ENTITY_SKELETON_SHOOT, 1, 1 / (getRandom().nextFloat() * .4f + .8f));
-		world.spawnEntity(arrow);
+		getWorld().spawnEntity(arrow);
 	}
 	
 	private @NotNull Hand getBowHand(){
@@ -110,7 +110,7 @@ public class CrimsonArcherEntity extends CrimsonEntity implements RangedAttackMo
 	
 	public void equipStack(EquipmentSlot slot, ItemStack stack){
 		super.equipStack(slot, stack);
-		if(!world.isClient)
+		if(!getWorld().isClient)
 			updateAttackType();
 	}
 	
@@ -121,9 +121,9 @@ public class CrimsonArcherEntity extends CrimsonEntity implements RangedAttackMo
 		if(canShootThrough){
 			Vec3d src = new Vec3d(getX(), getEyeY(), getZ());
 			Vec3d dst = new Vec3d(entity.getX(), entity.getEyeY(), entity.getZ());
-			if(entity.world != world || src.distanceTo(dst) > 128)
+			if(entity.getWorld() != getWorld() || src.distanceTo(dst) > 128)
 				return false;
-			return this.world.raycast(new RaycastContext(src, dst, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, this){
+			return this.getWorld().raycast(new RaycastContext(src, dst, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, this){
 				// allow seeing through thin blocks
 				public VoxelShape getBlockShape(BlockState state, BlockView world, BlockPos pos){
 					return state.isIn(ArcanaTags.PROJECTED_ARROW_IGNORES) ? VoxelShapes.empty() : super.getBlockShape(state, world, pos);
@@ -206,7 +206,7 @@ public class CrimsonArcherEntity extends CrimsonEntity implements RangedAttackMo
 						int i = actor.getItemUseTime();
 						if(i >= 20){
 							actor.clearActiveItem();
-							actor.attack(target, BowItem.getPullProgress(i));
+							actor.shootAt(target, BowItem.getPullProgress(i));
 							cooldown = attackInterval;
 						}
 					}

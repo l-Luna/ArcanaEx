@@ -8,6 +8,7 @@ import arcana.util.NbtUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.recipe.Recipe;
+import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
@@ -32,9 +33,9 @@ public abstract class AbstractRecipeSection extends EntrySection{
 	}
 	
 	public Stream<Pin> pins(int idx, World world, Entry entry){
-		Optional<? extends Recipe<?>> recipe = world.getRecipeManager().get(recipeId);
+		Optional<? extends Recipe<?>> recipe = world.getRecipeManager().get(recipeId).map(RecipeEntry::value);
 		if(recipe.isPresent()){
-			ItemStack output = recipe.get().getOutput();
+			ItemStack output = recipe.get().getResult(world.getRegistryManager());
 			return Stream.of(new Pin(new Icon(output), entry, idx, output.getItem()));
 		}
 		return super.pins(idx, world, entry);

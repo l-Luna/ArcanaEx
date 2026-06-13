@@ -9,33 +9,40 @@ import arcana.items.CrystalItem;
 import arcana.items.PhialItem;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import net.minecraft.data.DataGenerator;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.minecraft.data.DataOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.DataWriter;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registries;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 import static arcana.Arcana.arcId;
 
 // tfw aspect crystals
 public class AspectsProvider implements DataProvider{
 	
-	private final DataGenerator.PathResolver aspectsResolver;
+	private final DataOutput.PathResolver aspectsResolver;
 	private final Map<Item, AspectMap> aspects = new HashMap<>();
 	
-	public AspectsProvider(DataGenerator gen){
-		aspectsResolver = gen.createPathResolver(DataGenerator.OutputType.DATA_PACK, "arcana/aspects");
+	public AspectsProvider(FabricDataOutput gen){
+		aspectsResolver = gen.getResolver(DataOutput.OutputType.DATA_PACK, "arcana/aspects");
 	}
 	
-	public final void run(DataWriter writer) throws IOException{
+	public final CompletableFuture<?> run(DataWriter writer){
 		generateAspects();
-		writeJsons(writer);
+		try{
+			writeJsons(writer);
+		}catch(IOException e){
+			throw new RuntimeException(e);
+		}
+		return CompletableFuture.completedFuture(null);
 	}
 	
 	private void writeJsons(DataWriter writer) throws IOException{
@@ -47,7 +54,7 @@ public class AspectsProvider implements DataProvider{
 					arr.add(stack.type().id().toString());
 				else
 					arr.add(stack.amount() + "*" + stack.type().id().toString());
-			obj.add(Registry.ITEM.getId(item).toString(), arr);
+			obj.add(Registries.ITEM.getId(item).toString(), arr);
 		});
 		DataProvider.writeToPath(writer, obj, aspectsResolver.resolveJson(arcId("generated")));
 	}

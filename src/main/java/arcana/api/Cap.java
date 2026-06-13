@@ -14,7 +14,7 @@ public interface Cap{
 	BiMap<Identifier, @NotNull Cap> caps = HashBiMap.create();
 	
 	static @NotNull Cap byName(String name){
-		return byName(new Identifier(name));
+		return byName(Identifier.of(name));
 	}
 	
 	static @NotNull Cap byName(Identifier name){

@@ -4,6 +4,7 @@ import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.registry.RegistryWrapper;
 
 // SimpleInventory with fixed NBT (de)serialization; the name means "obvious inventory"
 public class ArrayInventory extends SimpleInventory{
@@ -21,28 +22,28 @@ public class ArrayInventory extends SimpleInventory{
 	}
 	
 	@Override
-	public void readNbtList(NbtList nbtList){
+	public void readNbtList(NbtList list, RegistryWrapper.WrapperLookup registries){
 		for(int i = 0; i < size(); i++)
 			setStack(i, ItemStack.EMPTY);
 		
-		for(int i = 0; i < nbtList.size(); i++){
-			NbtCompound tag = nbtList.getCompound(i);
-			int idx = tag.getByte("Slot");
+		for(int i = 0; i < list.size(); i++){
+			NbtCompound tag = list.getCompound(i);
+			int idx = tag.getByte("slot");
 			if(idx < size())
-				setStack(idx, ItemStack.fromNbt(tag));
+				ItemStack.fromNbt(registries, tag.get("stack")).ifPresent(itemStack -> setStack(idx, itemStack));
 		}
 	}
 	
 	@Override
-	public NbtList toNbtList(){
+	public NbtList toNbtList(RegistryWrapper.WrapperLookup registries){
 		NbtList list = new NbtList();
 		
 		for(int i = 0; i < size(); i++){
 			ItemStack stack = getStack(i);
 			if(!stack.isEmpty()){
 				NbtCompound tag = new NbtCompound();
-				tag.putByte("Slot", (byte)i);
-				stack.writeNbt(tag);
+				tag.putByte("slot", (byte)i);
+				tag.put("stack", stack.encode(registries));
 				list.add(tag);
 			}
 		}

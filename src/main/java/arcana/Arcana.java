@@ -23,10 +23,11 @@ import arcana.worldgen.ArcanaFeatures;
 import com.unascribed.lib39.dessicant.api.DessicantControl;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
-import net.fabricmc.fabric.api.event.lifecycle.v1.CommonLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.block.DispenserBlock;
+import net.minecraft.block.dispenser.ProjectileDispenserBehavior;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.resource.ResourceType;
@@ -70,11 +71,6 @@ public final class Arcana implements ModInitializer{
 		serverResources.registerReloadListener(new RegistryMappingLoader<>("purifying_maps", LootSwapEnchantment.PURIFYING_MAP));
 		serverResources.registerReloadListener(new RegistryMappingLoader<>("transmutative_maps", LootSwapEnchantment.TRANSMUTATIVE_MAP));
 		
-		CommonLifecycleEvents.TAGS_LOADED.register((registries, client) -> {
-			if(!client)
-				ASPECT_REGISTRY.applyAssociations();
-		});
-		
 		ArcanaCommands.register();
 		
 		ServerTickEvents.END_WORLD_TICK.register(world -> world.getPlayers().forEach(BuiltinResearch::checkTick));
@@ -83,13 +79,7 @@ public final class Arcana implements ModInitializer{
 		ServerTickEvents.END_WORLD_TICK.register(WardedCampfireBlock::handleTime);
 		ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register(CrimsonLeechItem::handleEntityDeath);
 		
-		// TODO:
-		/*DispenserBlock.registerBehavior(ArcanaRegistry.TAINT_IN_A_BOTTLE, new ProjectileDispenserBehavior(){
-			protected ProjectileEntity createProjectile(World world, Position position, ItemStack stack){
-				return Util.make(new ThrownTaintBottleEntity(position.getX(), position.getY(), position.getZ(), world),
-						entity -> entity.setItem(stack));
-			}
-		});*/
+		DispenserBlock.registerBehavior(ArcanaRegistry.TAINT_IN_A_BOTTLE, new ProjectileDispenserBehavior(ArcanaRegistry.TAINT_IN_A_BOTTLE));
 	}
 	
 	public static Identifier arcId(String s){

@@ -60,6 +60,6 @@ public class FluidUtil{
 		if(fluid.matchesType(fstate.getFluid()))
 			return fluid.matchesType(world.getBlockState(pos.up()).getFluidState().getFluid()) ? 1.0F : fstate.getHeight();
 		else
-			return !bstate.getMaterial().isSolid() ? 0 : -1;
+			return !bstate.isSolidBlock(world, pos) ? 0 : -1;
 	}
 }

@@ -4,18 +4,18 @@ import arcana.util.RegistryMapping;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.enums.DoubleBlockHalf;
+import net.minecraft.registry.Registries;
 import net.minecraft.state.property.Properties;
 import net.minecraft.state.property.Property;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
 public class Taint{
 	
 	public static final RegistryMapping<Block>
-			TAINT_MAP = new RegistryMapping<>(Registry.BLOCK),
-			UNTAINT_MAP = new RegistryMapping<>(Registry.BLOCK);
+			TAINT_MAP = new RegistryMapping<>(Registries.BLOCK),
+			UNTAINT_MAP = new RegistryMapping<>(Registries.BLOCK);
 	
 	// use a separate method to name the ? as T
 	private static <T extends Comparable<T>> BlockState preserve(BlockState newState, BlockState fromState, Property<T> prop){

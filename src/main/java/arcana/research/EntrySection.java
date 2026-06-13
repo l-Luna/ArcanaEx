@@ -26,14 +26,14 @@ public abstract class EntrySection{
 	}
 	
 	public static EntrySection deserialize(NbtCompound passData){
-		Identifier type = new Identifier(passData.getString("type"));
+		Identifier type = Identifier.of(passData.getString("type"));
 		NbtCompound data = passData.getCompound("data");
 		List<Requirement> requirements = NbtUtil.readList(passData, "requirements", Requirement::deserialize);
 		if(deserializers.get(type) != null){
 			EntrySection section = deserializers.get(type).apply(data);
 			requirements.forEach(section::addRequirement);
 			// receiving on client
-			section.in = new Identifier(passData.getString("entry"));
+			section.in = Identifier.of(passData.getString("entry"));
 			return section;
 		}
 		return null;
@@ -48,22 +48,22 @@ public abstract class EntrySection{
 		deserializers.put(TextSection.TYPE, nbt -> new TextSection(nbt.getString("text")));
 		
 		factories.put(ImageSection.TYPE, withContentsId(ImageSection::new));
-		deserializers.put(ImageSection.TYPE, nbt -> new ImageSection(new Identifier(nbt.getString("image"))));
+		deserializers.put(ImageSection.TYPE, nbt -> new ImageSection(Identifier.of(nbt.getString("image"))));
 		
 		factories.put(CraftingRecipeSection.TYPE, withContentsId(CraftingRecipeSection::new));
-		deserializers.put(CraftingRecipeSection.TYPE, nbt -> new CraftingRecipeSection(new Identifier(nbt.getString("recipe"))));
+		deserializers.put(CraftingRecipeSection.TYPE, nbt -> new CraftingRecipeSection(Identifier.of(nbt.getString("recipe"))));
 		
 		factories.put(ArcaneCraftingRecipeSection.TYPE, withContentsId(ArcaneCraftingRecipeSection::new));
-		deserializers.put(ArcaneCraftingRecipeSection.TYPE, nbt -> new ArcaneCraftingRecipeSection(new Identifier(nbt.getString("recipe"))));
+		deserializers.put(ArcaneCraftingRecipeSection.TYPE, nbt -> new ArcaneCraftingRecipeSection(Identifier.of(nbt.getString("recipe"))));
 		
 		factories.put(CookingRecipeSection.TYPE, withContentsId(CookingRecipeSection::new));
-		deserializers.put(CookingRecipeSection.TYPE, nbt -> new CookingRecipeSection(new Identifier(nbt.getString("recipe"))));
+		deserializers.put(CookingRecipeSection.TYPE, nbt -> new CookingRecipeSection(Identifier.of(nbt.getString("recipe"))));
 		
 		factories.put(AlchemyRecipeSection.TYPE, withContentsId(AlchemyRecipeSection::new));
-		deserializers.put(AlchemyRecipeSection.TYPE, nbt -> new AlchemyRecipeSection(new Identifier(nbt.getString("recipe"))));
+		deserializers.put(AlchemyRecipeSection.TYPE, nbt -> new AlchemyRecipeSection(Identifier.of(nbt.getString("recipe"))));
 		
 		factories.put(InfusionRecipeSection.TYPE, withContentsId(InfusionRecipeSection::new));
-		deserializers.put(InfusionRecipeSection.TYPE, nbt -> new InfusionRecipeSection(new Identifier(nbt.getString("recipe"))));
+		deserializers.put(InfusionRecipeSection.TYPE, nbt -> new InfusionRecipeSection(Identifier.of(nbt.getString("recipe"))));
 		
 		factories.put(WandInteractionSection.TYPE, WandInteractionSection::new);
 		deserializers.put(WandInteractionSection.TYPE, WandInteractionSection::new);
@@ -83,8 +83,8 @@ public abstract class EntrySection{
 	}
 	
 	private static <T> Function<JsonObject, T> withContentsId(Function<Identifier, T> builder){
-		// chained composition only works with `(String s) -> new Identifier(s)`, uglier than just doing it manually
-		return builder.compose(json -> new Identifier(json.getAsJsonPrimitive("content").getAsString()));
+		// chained composition only works with `(String s) -> Identifier.of(s)`, uglier than just doing it manually
+		return builder.compose(json -> Identifier.of(json.getAsJsonPrimitive("content").getAsString()));
 	}
 	
 	//

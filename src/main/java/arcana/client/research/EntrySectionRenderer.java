@@ -9,7 +9,8 @@ import arcana.research.sections.*;
 import arcana.screens.ResearchEntryScreen;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
@@ -54,9 +55,9 @@ public interface EntrySectionRenderer<T extends EntrySection>{
 	
 	//
 	
-	void render(MatrixStack matrices, T section, int pageIdx, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right);
+	void render(DrawContext ctx, T section, int pageIdx, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right);
 	
-	void renderAfter(MatrixStack matrices, T section, int pageIdx, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right);
+	void renderAfter(DrawContext ctx, T section, int pageIdx, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right);
 	
 	int span(T section, PlayerEntity player);
 	
@@ -81,28 +82,28 @@ public interface EntrySectionRenderer<T extends EntrySection>{
 	
 	static Identifier overlayTexture(EntrySection section){
 		var bookId = Research.getEntry(section.getIn()).category().book().id();
-		return new Identifier(bookId.getNamespace(), BOOK_PREFIX + bookId.getPath() + ResearchEntryScreen.overlaySuffix);
+		return Identifier.of(bookId.getNamespace(), BOOK_PREFIX + bookId.getPath() + ResearchEntryScreen.overlaySuffix);
 	}
 	
-	default void tooltipArea(MatrixStack matrices, ItemStack stack, int mouseX, int mouseY, int areaX, int areaY){
+	default void tooltipArea(DrawContext ctx, ItemStack stack, int mouseX, int mouseY, int areaX, int areaY){
 		if(mouseX >= areaX && mouseX < areaX + 16 && mouseY >= areaY && mouseY < areaY + 16)
-			drawTooltip(matrices, stack, mouseX, mouseY);
+			drawTooltip(ctx, stack, mouseX, mouseY);
 	}
 	
-	default void tooltipArea(MatrixStack matrices, Aspect aspect, int mouseX, int mouseY, int areaX, int areaY){
+	default void tooltipArea(DrawContext ctx, Aspect aspect, int mouseX, int mouseY, int areaX, int areaY){
 		if(mouseX >= areaX && mouseX < areaX + 16 && mouseY >= areaY && mouseY < areaY + 16)
-			drawTooltip(matrices, aspect, mouseX, mouseY);
+			drawTooltip(ctx, aspect, mouseX, mouseY);
 	}
 	
-	default void drawTooltip(MatrixStack matrices, Aspect aspect, int mouseX, int mouseY){
-		AspectRenderHelper.renderAspectTooltip(aspect, matrices, mouseX, mouseY);
+	default void drawTooltip(DrawContext ctx, Aspect aspect, int mouseX, int mouseY){
+		AspectRenderHelper.renderAspectTooltip(aspect, ctx, mouseX, mouseY);
 	}
 	
-	default void drawTooltip(MatrixStack matrices, ItemStack stack, int mouseX, int mouseY){
-		screen().renderTooltip(matrices, screen().getTooltipFromItem(stack), stack.getTooltipData(), mouseX, mouseY);
+	default void drawTooltip(DrawContext ctx, ItemStack stack, int mouseX, int mouseY){
+		ctx.drawTooltip(textRenderer(), Screen.getTooltipFromItem(client(), stack), stack.getTooltipData(), mouseX, mouseY);
 	}
 	
-	default void drawTooltip(MatrixStack matrices, List<Text> tooltip, int mouseX, int mouseY){
-		screen().renderTooltip(matrices, tooltip, mouseX, mouseY);
+	default void drawTooltip(DrawContext ctx, List<Text> tooltip, int mouseX, int mouseY){
+		ctx.drawTooltip(textRenderer(), tooltip, mouseX, mouseY);
 	}
 }

@@ -1,46 +1,12 @@
 accessWidener v1 named
 
-#accessible field net/minecraft/client/render/model/BasicBakedModel itemPropertyOverrides Lnet/minecraft/client/render/model/json/ModelOverrideList;
-#mutable field net/minecraft/client/render/model/BasicBakedModel itemPropertyOverrides Lnet/minecraft/client/render/model/json/ModelOverrideList;
-#accessible method net/minecraft/client/font/TextRenderer getFontStorage (Lnet/minecraft/util/Identifier;)Lnet/minecraft/client/font/FontStorage;
-#accessible method net/minecraft/client/gui/screen/Screen renderTooltipFromComponents (Lnet/minecraft/client/util/math/MatrixStack;Ljava/util/List;II)V
-#accessible method net/minecraft/screen/ScreenHandler insertItem (Lnet/minecraft/item/ItemStack;IIZ)Z
-#
-#accessible field net/minecraft/data/client/ItemModelGenerator writer Ljava/util/function/BiConsumer;
-#
-#accessible method net/minecraft/item/HoeItem <init> (Lnet/minecraft/item/ToolMaterial;IFLnet/minecraft/item/Item$Settings;)V
-#accessible method net/minecraft/block/Blocks canSpawnOnLeaves (Lnet/minecraft/block/BlockState;Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/entity/EntityType;)Ljava/lang/Boolean;
-#accessible method net/minecraft/block/Blocks never (Lnet/minecraft/block/BlockState;Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;)Z
-#accessible method net/minecraft/block/Blocks never (Lnet/minecraft/block/BlockState;Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/entity/EntityType;)Ljava/lang/Boolean;
-#
-#accessible method net/minecraft/item/FoodComponent <init> (IFZZZLjava/util/List;)V
-#
-#accessible field net/minecraft/item/ArmorItem attributeModifiers Lcom/google/common/collect/Multimap;
-#mutable field net/minecraft/item/ArmorItem attributeModifiers Lcom/google/common/collect/Multimap;
-#
-#accessible method net/minecraft/world/gen/foliage/FoliagePlacerType <init> (Lcom/mojang/serialization/Codec;)V
-#accessible method net/minecraft/world/gen/trunk/TrunkPlacerType <init> (Lcom/mojang/serialization/Codec;)V
-#
-#accessible field net/minecraft/recipe/SmithingRecipe base Lnet/minecraft/recipe/Ingredient;
-#accessible field net/minecraft/recipe/SmithingRecipe addition Lnet/minecraft/recipe/Ingredient;
-#
-#accessible field net/minecraft/block/AbstractBlock settings Lnet/minecraft/block/AbstractBlock$Settings;
-#accessible field net/minecraft/block/entity/BlockEntityType blocks Ljava/util/Set;
-#mutable field net/minecraft/block/entity/BlockEntityType blocks Ljava/util/Set;
-#
-#accessible field net/minecraft/server/world/ServerWorld shouldTickTime Z
-#
-#accessible method net/minecraft/item/BlockItem getPlacementState (Lnet/minecraft/item/ItemPlacementContext;)Lnet/minecraft/block/BlockState;
-#accessible method net/minecraft/item/ItemUsageContext getHitResult ()Lnet/minecraft/util/hit/BlockHitResult;
-#
-#accessible field net/minecraft/entity/ai/goal/BowAttackGoal actor Lnet/minecraft/entity/mob/HostileEntity;
-#accessible field net/minecraft/entity/ai/goal/BowAttackGoal targetSeeingTicker I
-#accessible field net/minecraft/entity/ai/goal/BowAttackGoal squaredRange F
-#accessible field net/minecraft/entity/ai/goal/BowAttackGoal combatTicks I
-#accessible field net/minecraft/entity/ai/goal/BowAttackGoal speed D
-#accessible field net/minecraft/entity/ai/goal/BowAttackGoal movingToLeft Z
-#accessible field net/minecraft/entity/ai/goal/BowAttackGoal backward Z
-#accessible field net/minecraft/entity/ai/goal/BowAttackGoal cooldown I
-#accessible field net/minecraft/entity/ai/goal/BowAttackGoal attackInterval I
-#
-#accessible class net/minecraft/client/gui/hud/InGameHud$HeartType
+accessible field net/minecraft/entity/ai/goal/BowAttackGoal actor Lnet/minecraft/entity/mob/HostileEntity;
+accessible field net/minecraft/entity/ai/goal/BowAttackGoal targetSeeingTicker I
+accessible field net/minecraft/entity/ai/goal/BowAttackGoal squaredRange F
+accessible field net/minecraft/entity/ai/goal/BowAttackGoal combatTicks I
+accessible field net/minecraft/entity/ai/goal/BowAttackGoal movingToLeft Z
+accessible field net/minecraft/entity/ai/goal/BowAttackGoal backward Z
+accessible field net/minecraft/entity/ai/goal/BowAttackGoal cooldown I
+accessible field net/minecraft/entity/ai/goal/BowAttackGoal attackInterval I
+
+accessible method net/minecraft/screen/ScreenHandler insertItem (Lnet/minecraft/item/ItemStack;IIZ)Z

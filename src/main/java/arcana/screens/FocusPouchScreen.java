@@ -7,9 +7,8 @@ import arcana.util.InventoryUtil;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -38,23 +37,21 @@ public class FocusPouchScreen extends HandledScreen<FocusPouchScreen.Handler>{
 		titleY -= 2;
 	}
 	
-	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta){
-		renderBackground(matrices);
-		super.render(matrices, mouseX, mouseY, delta);
-		drawMouseoverTooltip(matrices, mouseX, mouseY);
+	public void render(DrawContext ctx, int mouseX, int mouseY, float delta){
+		renderBackground(ctx, mouseX, mouseY, delta);
+		super.render(ctx, mouseX, mouseY, delta);
+		drawMouseoverTooltip(ctx, mouseX, mouseY);
 	}
 	
-	protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY){
-		RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
+	protected void drawBackground(DrawContext ctx, float delta, int mouseX, int mouseY){
 		RenderSystem.setShaderColor(1, 1, 1, 1);
-		RenderSystem.setShaderTexture(0, texture);
-		drawTexture(matrices, x, y, 0, 0, backgroundWidth, backgroundHeight);
+		ctx.drawTexture(texture, x, y, 0, 0, backgroundWidth, backgroundHeight);
 		
 		// TODO: last focus location
 	}
 	
-	protected void drawForeground(MatrixStack matrices, int mouseX, int mouseY){
-		textRenderer.draw(matrices, title, titleX, titleY, 0xC0C0C0);
+	protected void drawForeground(DrawContext ctx, int mouseX, int mouseY){
+		ctx.drawText(textRenderer, title, titleX, titleY, 0xC0C0C0, false);
 	}
 	
 	public static class Handler extends ScreenHandler{
@@ -97,8 +94,8 @@ public class FocusPouchScreen extends HandledScreen<FocusPouchScreen.Handler>{
 				addSlot(new Slot(pInv, idx, 10 + idx * 18, 150));
 		}
 		
-		public ItemStack transferSlot(PlayerEntity player, int index){
-			return InventoryUtil.transferSlot(this, inventory, index);
+		public ItemStack quickMove(PlayerEntity player, int index){
+			return InventoryUtil.quickMove(this, inventory, index);
 		}
 		
 		public boolean canUse(PlayerEntity player){

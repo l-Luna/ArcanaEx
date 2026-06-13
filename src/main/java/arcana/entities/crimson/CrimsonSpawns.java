@@ -59,7 +59,7 @@ public class CrimsonSpawns{
 	}
 	
 	private static void doSpawn(World world, EntityType<?> type, BlockPos where){
-		Entity e = type.create((ServerWorld)world, null, null, null, where, SpawnReason.SPAWNER, true, false);
+		Entity e = type.create((ServerWorld)world, null, where, SpawnReason.SPAWNER, true, false);
 		world.spawnEntity(e);
 		world.syncWorldEvent(WorldEvents.SPAWNER_SPAWNS_MOB, where, 0);
 		world.emitGameEvent(e, GameEvent.ENTITY_PLACE, where);

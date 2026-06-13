@@ -48,11 +48,11 @@ public record Parent(
 			showReverse = true; s = s.substring(1);
 		}
 		if(s.contains("@")){
-			Identifier id = new Identifier(s.substring(0, s.indexOf("@")));
+			Identifier id = Identifier.of(s.substring(0, s.indexOf("@")));
 			int stage = Integer.parseInt(s.substring(s.indexOf("@") + 1));
 			return new Parent(id, stage, show, hasArrowhead, showReverse);
 		}else
-			return new Parent(new Identifier(s), -1, show, hasArrowhead, showReverse);
+			return new Parent(Identifier.of(s), -1, show, hasArrowhead, showReverse);
 	}
 	
 	public String toString(){

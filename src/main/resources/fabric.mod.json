@@ -25,18 +25,6 @@
     ],
     "emi": [
       "arcana.integration.emi.ArcanaEmiPlugin"
-    ],
-    "cardinal-components-world": [
-      "arcana.components.ComponentInit"
-    ],
-    "cardinal-components-entity": [
-      "arcana.components.ComponentInit"
-    ],
-    "cardinal-components-chunk": [
-      "arcana.components.ComponentInit"
-    ],
-    "terrablender": [
-      "arcana.worldgen.ArcanaOverworldBiomes"
     ]
   },
   "mixins": [

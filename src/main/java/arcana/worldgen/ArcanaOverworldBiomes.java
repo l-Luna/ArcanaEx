@@ -45,8 +45,8 @@ public class ArcanaOverworldBiomes implements TerraBlenderApi{
 						.build();
 				for(MultiNoiseUtil.NoiseHypercube point : magicalForestPoints)
 					builder.replaceBiome(point, arcBiomeKey("magical_forest"));*/
-				builder.replaceBiome(RegistryKey.of(Registry.BIOME_KEY, new Identifier("birch_forest")), arcBiomeKey("magical_forest"));
-				builder.replaceBiome(RegistryKey.of(Registry.BIOME_KEY, new Identifier("old_growth_birch_forest")), arcBiomeKey("magical_forest"));
+				builder.replaceBiome(RegistryKey.of(Registry.BIOME_KEY, Identifier.of("birch_forest")), arcBiomeKey("magical_forest"));
+				builder.replaceBiome(RegistryKey.of(Registry.BIOME_KEY, Identifier.of("old_growth_birch_forest")), arcBiomeKey("magical_forest"));
 			});
 		}
 	}

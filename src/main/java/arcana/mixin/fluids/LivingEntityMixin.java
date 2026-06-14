@@ -27,7 +27,7 @@ public abstract class LivingEntityMixin extends Entity{
 	
 	@ModifyExpressionValue(method = "tickMovement",
 	                       at = @At(value = "INVOKE",
-	                                target = "Lnet/minecraft/entity/LivingEntity;getFluidHeight(Lnet/minecraft/tag/TagKey;)D",
+	                                target = "Lnet/minecraft/entity/LivingEntity;getFluidHeight(Lnet/minecraft/registry/tag/TagKey;)D",
 	                                ordinal = 1))
 	private double tickFluidSwimmingHeight(double original){
 		return Math.max(original, ((ArcanaFluidEntity)this).arcana$getMaxFluidHeight());
@@ -86,7 +86,7 @@ public abstract class LivingEntityMixin extends Entity{
 				setVelocity(vel.x, 0.3f, vel.z);
 			
 			// and the method epilogue
-			lem.updateLimbs(lem, this instanceof Flutterer);
+			lem.updateLimbs(this instanceof Flutterer);
 		}
 	}
 	

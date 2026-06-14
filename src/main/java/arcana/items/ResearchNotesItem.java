@@ -35,7 +35,7 @@ public class ResearchNotesItem extends Item{
 		var nbt = stack.getNbt();
 		if(nbt != null)
 			if(nbt.contains("puzzle_id")){
-				Puzzle puzzle = Research.getPuzzle(new Identifier(nbt.getString("puzzle_id")));
+				Puzzle puzzle = Research.getPuzzle(Identifier.of(nbt.getString("puzzle_id")));
 				if(puzzle != null)
 					for(MutableText text : PuzzleRequirementRenderer.tooltipForPuzzle(puzzle))
 						tooltip.add(text.formatted(Formatting.AQUA));
@@ -48,7 +48,7 @@ public class ResearchNotesItem extends Item{
 			var nbt = stack.getNbt();
 			if(nbt != null)
 				if(nbt.contains("puzzle_id")){
-					Puzzle puzzle = Research.getPuzzle(new Identifier(nbt.getString("puzzle_id")));
+					Puzzle puzzle = Research.getPuzzle(Identifier.of(nbt.getString("puzzle_id")));
 					Researcher researcher = Researcher.from(user);
 					researcher.completePuzzle(puzzle);
 					if(!user.isCreative())

@@ -7,7 +7,7 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.item.ItemModels;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.render.model.BakedModel;
-import net.minecraft.client.render.model.json.ModelTransformation.Mode;
+import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
@@ -20,6 +20,8 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+
+import static arcana.Arcana.arcId;
 
 @Mixin(ItemRenderer.class)
 public class ItemRendererMixin{
@@ -39,7 +41,7 @@ public class ItemRendererMixin{
 										 //
 	                                     @Nullable LivingEntity _entity,
 	                                     ItemStack item,
-	                                     Mode renderMode,
+	                                     ModelTransformationMode renderMode,
 	                                     boolean leftHanded,
 	                                     MatrixStack matrices,
 	                                     VertexConsumerProvider vertexConsumers,
@@ -48,14 +50,14 @@ public class ItemRendererMixin{
 	                                     int overlay,
 	                                     int _seed){
 		if(entity != null){
-			boolean isInventory = renderMode == Mode.GUI || renderMode == Mode.GROUND || renderMode == Mode.FIXED;
-			Arm arm = renderMode == Mode.FIRST_PERSON_LEFT_HAND || renderMode == Mode.THIRD_PERSON_LEFT_HAND ? Arm.LEFT
-					: renderMode == Mode.FIRST_PERSON_RIGHT_HAND || renderMode == Mode.THIRD_PERSON_RIGHT_HAND ? Arm.RIGHT
+			boolean isInventory = renderMode == ModelTransformationMode.GUI || renderMode == ModelTransformationMode.GROUND || renderMode == ModelTransformationMode.FIXED;
+			Arm arm = renderMode == ModelTransformationMode.FIRST_PERSON_LEFT_HAND || renderMode == ModelTransformationMode.THIRD_PERSON_LEFT_HAND ? Arm.LEFT
+					: renderMode == ModelTransformationMode.FIRST_PERSON_RIGHT_HAND || renderMode == ModelTransformationMode.THIRD_PERSON_RIGHT_HAND ? Arm.RIGHT
 					: null;
 			Hand hand = entity.getMainArm() == arm ? Hand.MAIN_HAND : arm != null ? Hand.OFF_HAND : null;
 			if(!isInventory)
 				if(stack.isOf(ArcanaRegistry.CRIMSON_LEECH) && entity.handSwinging && entity.preferredHand == hand)
-					return models.getModelManager().getModel(new ModelIdentifier("arcana:crimson_leech_attacking#inventory"));
+					return models.getModelManager().getModel(new ModelIdentifier(arcId("crimson_leech_attacking"), "inventory"));
 		}
 		return original.call(instance, stack, world, entity, seed);
 	}

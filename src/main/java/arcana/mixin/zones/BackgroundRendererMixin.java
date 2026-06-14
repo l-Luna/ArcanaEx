@@ -26,7 +26,7 @@ public class BackgroundRendererMixin{
 	        at = @At("TAIL"))
 	private static void applyZoneFogDensity(Camera camera, BackgroundRenderer.FogType fogType, float viewDistance, boolean thickFog, float tickDelta, CallbackInfo ci){
 		if(camera.getFocusedEntity() != null){
-			float density = ZoneEffects.fogDensity(camera.getFocusedEntity().world, camera.getPos());
+			float density = ZoneEffects.fogDensity(camera.getFocusedEntity().getWorld(), camera.getPos());
 			RenderSystem.setShaderFogStart(RenderSystem.getShaderFogStart() * density);
 			RenderSystem.setShaderFogEnd(RenderSystem.getShaderFogEnd() * density);
 		}

@@ -321,7 +321,7 @@ public final class NodeRenderer{
 	}
 	
 	private static Identifier getNodeResourceId(NodeType nt, String ext){
-		return new Identifier(nt.id().getNamespace(), "textures/nodes/" + nt.id().getPath() + ext);
+		return Identifier.of(nt.id().getNamespace(), "textures/nodes/" + nt.id().getPath() + ext);
 	}
 	
 	private static int maxFrames(NodeType nt){

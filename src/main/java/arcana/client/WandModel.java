@@ -97,16 +97,16 @@ public final class WandModel implements UnbakedModel{
 	}
 	
 	public static Identifier capTexture(Cap cap){
-		return new Identifier(cap.id().getNamespace(), "item/wand/caps/" + cap.id().getPath());
+		return Identifier.of(cap.id().getNamespace(), "item/wand/caps/" + cap.id().getPath());
 	}
 	
 	public static Identifier coreTexture(Core core){
-		return new Identifier(core.id().getNamespace(), "item/wand/cores/" + core.id().getPath());
+		return Identifier.of(core.id().getNamespace(), "item/wand/cores/" + core.id().getPath());
 	}
 	
 	public static Identifier focusModel(Item focus){
 		Identifier id = Registry.ITEM.getId(focus);
-		return new Identifier(id.getNamespace(), "item/wand/foci/" + id.getPath());
+		return Identifier.of(id.getNamespace(), "item/wand/foci/" + id.getPath());
 	}
 	
 	@SuppressWarnings("deprecation")

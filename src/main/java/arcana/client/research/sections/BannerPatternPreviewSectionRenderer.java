@@ -58,6 +58,6 @@ public class BannerPatternPreviewSectionRenderer implements EntrySectionRenderer
 	
 	// from BannerPattern
 	private static Identifier getSpriteId(Identifier pattern, boolean banner) {
-		return new Identifier(pattern.getNamespace(), "textures/entity/" + (banner ? "banner" : "shield") + "/" + pattern.getPath() + ".png");
+		return Identifier.of(pattern.getNamespace(), "textures/entity/" + (banner ? "banner" : "shield") + "/" + pattern.getPath() + ".png");
 	}
 }

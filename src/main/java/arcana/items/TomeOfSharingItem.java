@@ -84,7 +84,7 @@ public class TomeOfSharingItem extends Item{
 		if(researchTag != null){
 			Map<Identifier, Integer> research = new HashMap<>(researchTag.getKeys().size());
 			for(String key : researchTag.getKeys())
-				research.put(new Identifier(key), researchTag.getInt(key));
+				research.put(Identifier.of(key), researchTag.getInt(key));
 			return research;
 		}
 		return Map.of();
@@ -96,7 +96,7 @@ public class TomeOfSharingItem extends Item{
 			NbtList puzzleList = tag.getList("puzzles", NbtElement.STRING_TYPE);
 			Set<Identifier> puzzles = new HashSet<>(puzzleList.size());
 			for(NbtElement element : puzzleList)
-				puzzles.add(new Identifier(element.asString())); // NbtString returns its value
+				puzzles.add(Identifier.of(element.asString())); // NbtString returns its value
 			return puzzles;
 		}
 		return Set.of();

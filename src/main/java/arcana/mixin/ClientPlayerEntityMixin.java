@@ -5,7 +5,6 @@ import com.mojang.authlib.GameProfile;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.encryption.PlayerPublicKey;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -15,8 +14,8 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 @Mixin(ClientPlayerEntity.class)
 public abstract class ClientPlayerEntityMixin extends PlayerEntity{
 	
-	public ClientPlayerEntityMixin(World world, BlockPos pos, float yaw, GameProfile gameProfile, PlayerPublicKey publicKey){
-		super(world, pos, yaw, gameProfile, publicKey);
+	public ClientPlayerEntityMixin(World world, BlockPos pos, float yaw, GameProfile gameProfile){
+		super(world, pos, yaw, gameProfile);
 	}
 	
 	// change auto-jump threshold with step assist

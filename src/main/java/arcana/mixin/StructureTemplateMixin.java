@@ -53,7 +53,7 @@ public class StructureTemplateMixin{
 			if(e.nbt.getBoolean("arcana:actually_a_node")){
 				// add the respective node
 				String id = e.nbt.getString("id");
-				NodeType ty = NodeTypes.byName(new Identifier(id));
+				NodeType ty = NodeTypes.byName(Identifier.of(id));
 				if(ty != null){
 					Vec3d transformed = StructureTemplate.transformAround(e.pos, mirror, rotation, pivot);
 					Vec3d offset = transformed.add(pos.getX(), pos.getY(), pos.getZ());

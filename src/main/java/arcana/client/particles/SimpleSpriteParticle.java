@@ -2,7 +2,7 @@ package arcana.client.particles;
 
 import net.minecraft.client.particle.*;
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particle.DefaultParticleType;
+import net.minecraft.particle.SimpleParticleType;
 import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.Nullable;
 
@@ -35,7 +35,7 @@ public class SimpleSpriteParticle extends SpriteBillboardParticle{
 		return ParticleTextureSheet.PARTICLE_SHEET_LIT;
 	}
 	
-	public static class Factory implements ParticleFactory<DefaultParticleType>{
+	public static class Factory implements ParticleFactory<SimpleParticleType>{
 		
 		private final SpriteProvider spr;
 		
@@ -94,7 +94,7 @@ public class SimpleSpriteParticle extends SpriteBillboardParticle{
 		}
 		
 		@Nullable
-		public Particle createParticle(DefaultParticleType params, ClientWorld world, double x, double y, double z, double vX, double vY, double vZ){
+		public Particle createParticle(SimpleParticleType params, ClientWorld world, double x, double y, double z, double vX, double vY, double vZ){
 			SimpleSpriteParticle particle = new SimpleSpriteParticle(world, x, y, z, vX, vY, vZ, spr);
 			particle.gravityStrength = gravity;
 			particle.velocityMultiplier = 1 - drag;

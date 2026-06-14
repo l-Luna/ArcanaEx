@@ -2,7 +2,9 @@ package arcana.mixin.warding;
 
 import arcana.aura.WardedChunk;
 import com.llamalad7.mixinextras.sugar.Local;
+import net.minecraft.block.Block;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.structure.StructurePlacementData;
 import net.minecraft.structure.StructureTemplate;
 import net.minecraft.util.math.BlockBox;
@@ -24,7 +26,7 @@ public class StructureTemplateMixin{
 	private boolean isWarded;
 	
 	@Inject(method = "readNbt", at = @At("HEAD"))
-	void readNbt(NbtCompound nbt, CallbackInfo ci){
+	void readNbt(RegistryEntryLookup<Block> blockLookup, NbtCompound nbt, CallbackInfo ci){
 		isWarded = nbt.getBoolean("arcana:warded");
 	}
 	
@@ -42,8 +44,8 @@ public class StructureTemplateMixin{
 	                   @Local StructureTemplate.StructureBlockInfo where){
 		if(isWarded){
 			BlockBox box = placementData.getBoundingBox();
-			if((box == null || box.contains(where.pos)) && !where.state.isAir())
-				WardedChunk.setWarded(world.toServerWorld(), where.pos, true);
+			if((box == null || box.contains(where.pos())) && !where.state().isAir())
+				WardedChunk.setWarded(world.toServerWorld(), where.pos(), true);
 		}
 	}
 }

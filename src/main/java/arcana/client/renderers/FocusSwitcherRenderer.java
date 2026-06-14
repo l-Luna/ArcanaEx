@@ -3,7 +3,8 @@ package arcana.client.renderers;
 import arcana.items.WandItem;
 import arcana.network.PkSwapFocus;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.StackReference;
 import net.minecraft.item.ItemStack;
@@ -20,7 +21,7 @@ public final class FocusSwitcherRenderer{
 	private static boolean inStorage = true;
 	
 	// TODO: combine with HudRenderer, or otherwise adjust for wand HUD position
-	public static void renderHud(MatrixStack matrices, float delta){
+	public static void renderHud(DrawContext matrices, RenderTickCounter delta){
 		MinecraftClient mc = MinecraftClient.getInstance();
 		PlayerEntity player = mc.player;
 		if(player == null)

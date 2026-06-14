@@ -146,7 +146,7 @@ public class Node implements Position{
 	
 	public static Node fromNbt(NbtCompound nbt){
 		var pos = new Vec3d(nbt.getDouble("x"), nbt.getDouble("y"), nbt.getDouble("z"));
-		NodeType nodeType = NodeTypes.byName(new Identifier(nbt.getString("type")));
+		NodeType nodeType = NodeTypes.byName(Identifier.of(nbt.getString("type")));
 		var node = new Node(nodeType, pos, AspectMap.fromNbt(nbt.getCompound("aspectCap")));
 		node.ticksUntilRecharge = nbt.getInt("ticksUntilRecharge");
 		node.uuid = nbt.getUuid("uuid");
@@ -170,7 +170,7 @@ public class Node implements Position{
 	}
 	
 	public BlockPos asBlockPos(){
-		return new BlockPos(x, y, z);
+		return BlockPos.ofFloored(x, y, z);
 	}
 	
 	public Vec3d asVec3d(){

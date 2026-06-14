@@ -36,13 +36,11 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
-import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
 import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler;
 import net.fabricmc.fabric.api.client.rendering.v1.*;
-import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.block.Block;
@@ -50,27 +48,25 @@ import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.color.block.BlockColorProvider;
 import net.minecraft.client.color.world.BiomeColors;
-import net.minecraft.client.color.world.FoliageColors;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.gui.tooltip.BundleTooltipComponent;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
-import net.minecraft.client.item.BundleTooltipData;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
-import net.minecraft.client.item.TooltipData;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.CampfireBlockEntityRenderer;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
-import net.minecraft.client.texture.SpriteAtlasTexture;
-import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.tooltip.BundleTooltipData;
+import net.minecraft.item.tooltip.TooltipData;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.profiler.Profiler;
+import net.minecraft.world.biome.FoliageColors;
 
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
@@ -101,7 +97,7 @@ public final class ArcanaClient implements ClientModInitializer{
 				return new MagicMirrorTooltipComponent(mm.tag());
 			return null;
 		});
-		ItemTooltipCallback.EVENT.register(arcId("early"), (stack, ctx, lines) -> {
+		ItemTooltipCallback.EVENT.register(arcId("early"), (stack, ctx, type, lines) -> {
 			if(((ArcanaItem)stack.getItem()).arcana$getFragileComponent() != null)
 				lines.add(1, Text.translatable("tooltip.arcana.fragile").formatted(Formatting.GRAY));
 		});
@@ -116,7 +112,8 @@ public final class ArcanaClient implements ClientModInitializer{
 		HudRenderCallback.EVENT.register(RunicShieldingRenderer::renderOverlay);
 		ClientTickEvents.START_CLIENT_TICK.register(FocusSwitcherRenderer::tick);
 		
-		ModelLoadingRegistry.INSTANCE.registerResourceProvider(__ -> new WandModel.Provider());
+		// TODO: should be unnecessary, but check!
+		/*ModelLoadingRegistry.INSTANCE.registerResourceProvider(__ -> new WandModel.Provider());
 		ModelLoadingRegistry.INSTANCE.registerModelProvider((manager, out) -> {
 			out.accept(InfusionPillarBlockEntityRenderer.BASE_ID);
 			out.accept(InfusionPillarBlockEntityRenderer.UPPER_ID);
@@ -145,10 +142,11 @@ public final class ArcanaClient implements ClientModInitializer{
 			
 			registry.register(arcId("block/warded"));
 			// registry.register(arcId("block/infested"));
-		});
-		CoreShaderRegistrationCallback.EVENT.register(context -> {
+		});*/
+		// TODO: veiling
+		/*CoreShaderRegistrationCallback.EVENT.register(context -> {
 			context.register(arcId("particle_turbulent"), ArcanaShaders.FX, shader -> ArcanaShaders.fxTurbulent = shader);
-		});
+		});*/
 		
 		ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(new IdentifiableResourceReloadListener(){
 			public Identifier getFabricId(){
@@ -190,7 +188,7 @@ public final class ArcanaClient implements ClientModInitializer{
 		);
 		ModelPredicateProviderRegistry.register(ArcanaRegistry.TOME_OF_SHARING, arcId("bound"), new TomeOfSharingPredicateProvider());
 		ModelPredicateProviderRegistry.register(ArcanaRegistry.CRIMSON_LONGBOW, arcId("pull"), (stack, w, e, s)
-				-> e == null ? 0 : e.getActiveItem() != stack ? 0 : (stack.getMaxUseTime() - e.getItemUseTimeLeft()) / 20f);
+				-> e == null ? 0 : e.getActiveItem() != stack ? 0 : (stack.getMaxUseTime(e) - e.getItemUseTimeLeft()) / 20f);
 		ModelPredicateProviderRegistry.register(ArcanaRegistry.CRIMSON_LONGBOW, arcId("pulling"), (stack, w, e, s)
 				-> e == null ? 0 : e.isUsingItem() && e.getActiveItem() == stack ? 1 : 0);
 		
@@ -243,7 +241,7 @@ public final class ArcanaClient implements ClientModInitializer{
 		EntityRendererRegistry.register(ArcanaRegistry.COAGULATION, ctx -> new WispLikeEntityRenderer<>(ctx, 2, 12, true, 0.5f, null));
 		
 		for(Block block : ArcanaRegistry.blocks)
-			if(block.settings instanceof ArcanaBlockSettings abs)
+			if(block.getSettings() instanceof ArcanaBlockSettings abs)
 				if(abs.getRenderLayer() != null)
 					BlockRenderLayerMap.INSTANCE.putBlock(block, switch(abs.getRenderLayer()){
 						case CUTOUT -> RenderLayer.getCutout();
@@ -273,7 +271,7 @@ public final class ArcanaClient implements ClientModInitializer{
 		if(data == null)
 			return null;
 		if(data instanceof BundleTooltipData btd)
-			return new BundleTooltipComponent(btd);
+			return new BundleTooltipComponent(btd.contents());
 		return TooltipComponentCallback.EVENT.invoker().getComponent(data);
 	}
 	
@@ -342,6 +340,6 @@ public final class ArcanaClient implements ClientModInitializer{
 		MinecraftClient client = MinecraftClient.getInstance();
 		if(client.world == null)
 			return 0;
-		return MathUtil.osc(client.world, period, client.getTickDelta());
+		return MathUtil.osc(client.world, period, client.getRenderTickCounter().getTickDelta(true));
 	}
 }

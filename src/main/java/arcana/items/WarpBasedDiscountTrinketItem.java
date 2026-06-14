@@ -1,6 +1,5 @@
 package arcana.items;
 
-import arcana.ArcanaRegistry;
 import arcana.api.VisDiscountingItem;
 import arcana.api.WarpingItem;
 import arcana.aspects.Aspect;
@@ -11,9 +10,9 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -35,9 +34,9 @@ public class WarpBasedDiscountTrinketItem extends TrinketItem implements Warping
 	}
 	
 	@Environment(EnvType.CLIENT)
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context){
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type){
 		int percentOff = percentOff(stack, null, MinecraftClient.getInstance().player);
 		tooltip.add(Text.translatable("tooltip.arcana.wand.discount.all", percentOff).formatted(Formatting.DARK_PURPLE));
-		tooltip.add(ArcanaRegistry.WARPING.getName(2));
+		tooltip.add(WarpingItem.warpingTooltip(2));
 	}
 }

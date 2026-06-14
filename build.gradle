@@ -112,6 +112,7 @@ processResources {
 
 tasks.withType(JavaCompile).configureEach {
 	it.options.release = 21
+	it.options.compilerArgs.addAll("-Xmaxerrs", "1000")
 }
 
 tasks.withType(ProcessResources).configureEach {

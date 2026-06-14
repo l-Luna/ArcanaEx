@@ -9,10 +9,10 @@ import arcana.client.RenderHelper;
 import arcana.items.WandItem;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
@@ -39,17 +39,17 @@ public final class HudRenderer{
 			Aspects.ENTROPY, new Vec2f(21, 41)
 	);
 	
-	public static void renderHud(MatrixStack matrices, float delta){
+	public static void renderHud(DrawContext matrices, RenderTickCounter delta){
 		PlayerEntity player = MinecraftClient.getInstance().player;
 		if(player != null){
-			World world = player.world;
+			World world = player.getWorld();
 			ItemStack mainHand = player.getMainHandStack(),offHand = player.getOffHandStack();
 			matrices.push();
 			ItemStack wandStack;
 			if((wandStack = mainHand).getItem() instanceof WandItem || (wandStack = offHand).getItem() instanceof WandItem){
 				ScaledAspectMap aspectStacks = WandItem.aspectsFrom(wandStack);
 				Identifier coreId = WandItem.coreFrom(wandStack).id();
-				Identifier coreTexId = new Identifier(coreId.getNamespace(), "textures/gui/hud/wand_bases/" + coreId.getPath() + ".png");
+				Identifier coreTexId = Identifier.of(coreId.getNamespace(), "textures/gui/hud/wand_bases/" + coreId.getPath() + ".png");
 				
 				// draw bg
 				RenderSystem.setShader(GameRenderer::getPositionTexColorShader);

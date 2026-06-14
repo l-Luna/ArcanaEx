@@ -294,24 +294,24 @@ public final class Researcher implements Component, AutoSyncedComponent{
 		stages.clear();
 		NbtCompound entries = tag.getCompound("stages");
 		for(String key : entries.getKeys())
-			stages.put(new Identifier(key), entries.getInt(key));
+			stages.put(Identifier.of(key), entries.getInt(key));
 		
 		pinned.clear();
 		NbtCompound pins = tag.getCompound("pins");
 		for(String key : pins.getKeys())
-			pinned.put(new Identifier(key), Arrays.stream(pins.getIntArray(key)).boxed().collect(Collectors.toCollection(ArrayList::new)));
+			pinned.put(Identifier.of(key), Arrays.stream(pins.getIntArray(key)).boxed().collect(Collectors.toCollection(ArrayList::new)));
 		
 		completedPuzzles.clear();
 		for(NbtElement puzzle : tag.getList("puzzles", NbtElement.STRING_TYPE))
-			completedPuzzles.add(new Identifier(puzzle.asString()));
+			completedPuzzles.add(Identifier.of(puzzle.asString()));
 		
 		completedAddenda.clear();
 		for(NbtElement addendum : tag.getList("addenda", NbtElement.STRING_TYPE))
-			completedAddenda.add(new Identifier(addendum.asString()));
+			completedAddenda.add(Identifier.of(addendum.asString()));
 		
 		castFoci.clear();
 		for(NbtElement addendum : tag.getList("cast_foci", NbtElement.STRING_TYPE))
-			castFoci.add(new Identifier(addendum.asString()));
+			castFoci.add(Identifier.of(addendum.asString()));
 	}
 	
 	public void writeToNbt(NbtCompound tag){

@@ -20,8 +20,8 @@ import static arcana.Arcana.arcId;
 public class WispLikeEntityRenderer<T extends WispLikeEntity> extends EntityRenderer<T>{
 	
 	private Identifier texture = arcId("textures/entity/wisp.png");
-	private RenderLayer layer;
-	private RenderLayer layerDark;
+	private final RenderLayer layer;
+	private final RenderLayer layerDark;
 	
 	private final int rings;
 	private final float ringTime;

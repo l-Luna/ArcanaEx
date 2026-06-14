@@ -22,7 +22,7 @@ public class ResearchEntryScreenStackProvider implements EmiStackProvider<Resear
 	public EmiStackInteraction getStackAt(ResearchEntryScreen screen, int mouseX, int mouseY){
 		Researcher r = Researcher.from(MinecraftClient.getInstance().player);
 		Entry entry = screen.getEntry();
-		if(r.entryStage(entry) < entry.sections().size() && entry.sections().get(r.entryStage(entry)).getRequirements().size() > 0){
+		if(r.entryStage(entry) < entry.sections().size() && !entry.sections().get(r.entryStage(entry)).getRequirements().isEmpty()){
 			List<Requirement> requirements = entry.sections().get(r.entryStage(entry)).getRequirements();
 			int y = (screen.height - bgHeight) / 2 + 175;
 			int reqSize = 20;

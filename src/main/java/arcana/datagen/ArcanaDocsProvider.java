@@ -105,17 +105,17 @@ public class ArcanaDocsProvider{
 	
 	private static void spanToDocs(TextFormatter.Span span, StringBuilder where){
 		if(span instanceof TextFormatter.TextSpan ts){
-			String classes = customStyleToClasses(ts.renderStyle);
+			String classes = customStyleToClasses(ts.renderStyle());
 			if(!classes.isBlank())
 				where.append("<span class=\"").append(classes).append("\">");
-			where.append(ts.text);
+			where.append(ts.text());
 			if(!classes.isBlank())
 				where.append("</span>");
 		}
 		if(span instanceof TextFormatter.AspectSpan as)
-			where.append("<img class=\"aspect-icon\" src=\"icons/aspects/%s.png\" alt=\"%s\" />".formatted(as.aspect.id().getPath(), as.aspect.id()));
+			where.append("<img class=\"aspect-icon\" src=\"icons/aspects/%s.png\" alt=\"%s\" />".formatted(as.aspect().id().getPath(), as.aspect().id()));
 		if(span instanceof TextFormatter.MultiSpan ms)
-			for(TextFormatter.Span inner : ms.spans)
+			for(TextFormatter.Span inner : ms.spans())
 				spanToDocs(inner, where);
 	}
 	

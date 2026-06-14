@@ -4,8 +4,9 @@ import arcana.client.RenderHelper;
 import arcana.legacy_components.RunicShielding;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
+import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
@@ -54,7 +55,7 @@ public final class RunicShieldingRenderer{
 		client.getProfiler().pop();
 	}
 	
-	public static void renderOverlay(MatrixStack matrices, float tickDelta){
+	public static void renderOverlay(DrawContext matrices, RenderTickCounter delta){
 		MinecraftClient client = MinecraftClient.getInstance();
 		PlayerEntity player = client.player;
 		if(player == null)

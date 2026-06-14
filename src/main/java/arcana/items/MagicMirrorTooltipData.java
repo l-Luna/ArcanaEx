@@ -1,6 +1,6 @@
 package arcana.items;
 
-import net.minecraft.client.item.TooltipData;
+import net.minecraft.item.tooltip.TooltipData;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;

@@ -124,7 +124,7 @@ public class InfusionEnchantmentRecipe implements InfusionRecipe, ArcanaRecipe, 
 	public static class Serializer implements RecipeSerializer<InfusionEnchantmentRecipe>{
 		
 		public InfusionEnchantmentRecipe read(Identifier id, JsonObject json){
-			Enchantment enchantment = Registry.ENCHANTMENT.get(new Identifier(JsonHelper.getString(json, "enchantment")));
+			Enchantment enchantment = Registry.ENCHANTMENT.get(Identifier.of(JsonHelper.getString(json, "enchantment")));
 			ItemStack preview = ShapedRecipe.outputFromJson(JsonHelper.getObject(json, "preview"));
 			List<XIngredient> baseIngredients = new ArrayList<>();
 			for(JsonElement ingredients : JsonHelper.getArray(json, "base_ingredients"))

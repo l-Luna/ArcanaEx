@@ -280,7 +280,7 @@ public class RenderHelper{
 		RenderSystem.setShaderColor(r, g, b, a);
 		Matrix4fStack matrices = RenderSystem.getModelViewStack();
 		matrices.pushMatrix();
-		matrices.translate(x, y, 100 + 0);
+		matrices.translate(x, y, 100);
 		matrices.translate(8, 8, 0);
 		matrices.scale(1, -1, 1);
 		matrices.scale(16, 16, 16);

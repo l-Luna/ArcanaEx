@@ -27,7 +27,7 @@ public class NodalGeodeFeature extends Feature<NodalGeodeFeatureConfig>{
 	public boolean generate(FeatureContext<NodalGeodeFeatureConfig> context){
 		// delegate to GeodeFeature, add node on top
 		GeodeFeature delegate = new GeodeFeature(GeodeFeatureConfig.CODEC);
-		GeodeFeatureConfig geodeConfig = context.getConfig().geodeConfig;
+		GeodeFeatureConfig geodeConfig = context.getConfig().geodeConfig();
 		ConfiguredFeature<GeodeFeatureConfig, ?> confDelegate = new ConfiguredFeature<>(delegate, geodeConfig);
 		var pos = context.getOrigin();
 		var rng = context.getRandom();
@@ -43,7 +43,7 @@ public class NodalGeodeFeature extends Feature<NodalGeodeFeatureConfig>{
 			// contain greater-than-maximum of this primal,
 			//   then 1-2 other primals (possibly repeating this one),
 			//   then 1/4 chance of a random compound
-			Aspect aspect = context.getConfig().primaryAspect;
+			Aspect aspect = context.getConfig().primaryAspect();
 			AspectMap cap = toAdd.getAspectCap();
 			cap.clear();
 			cap.add(aspect, type.aspectCap() + 15);

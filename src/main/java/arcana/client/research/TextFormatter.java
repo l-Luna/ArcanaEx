@@ -45,86 +45,66 @@ public class TextFormatter{
 	}
 	
 	// TODO: text size, shadow
-	public static class TextSpan implements Span{
-		
-		public final CustomTextStyle renderStyle;
-		public final String text;
-		
-		public TextSpan(String text, CustomTextStyle style){
-			this.text = text;
-			this.renderStyle = style;
-		}
+		public record TextSpan(String text, CustomTextStyle renderStyle) implements Span{
 		
 		public void render(MatrixStack stack, int x, int y){
-			if(renderStyle.getSize() != 1){
-				stack.push();
-				stack.scale(renderStyle.getSize(), renderStyle.getSize(), 1);
+				if(renderStyle.getSize() != 1){
+					stack.push();
+					stack.scale(renderStyle.getSize(), renderStyle.getSize(), 1);
+				}
+				renderStringWithCustomFormatting(stack, text, renderStyle, x / renderStyle.getSize(), y / renderStyle.getSize());
+				if(renderStyle.getSize() != 1)
+					stack.pop();
 			}
-			renderStringWithCustomFormatting(stack, text, renderStyle, x / renderStyle.getSize(), y / renderStyle.getSize());
-			if(renderStyle.getSize() != 1)
-				stack.pop();
-		}
-		
-		public float getWidth(){
-			return width(text, renderStyle) * renderStyle.getSize() * (renderStyle.isSubscript() || renderStyle.isSuperscript() ? .6f : 1);
-		}
-		
-		public float getHeight(){
-			return (9 + (renderStyle.isWavy() ? 1 : 0)) * renderStyle.getSize();
-		}
-	}
-	
-	public static class AspectSpan implements Span{
-		
-		public final Aspect aspect;
-		
-		public AspectSpan(Aspect aspect){
-			this.aspect = aspect;
-		}
-		
-		public void render(MatrixStack stack, int x, int y){
-			if(aspect != null)
-				AspectRenderHelper.renderAspect(aspect, stack, x, y, 100, 1, 1, 1, 1);
-		}
-		
-		public float getWidth(){
-			return 16;
-		}
-		
-		public float getHeight(){
-			return 17;
-		}
-	}
-	
-	public static class MultiSpan implements Span{
-		
-		public final List<Span> spans;
-		
-		public MultiSpan(List<Span> spans){
-			this.spans = spans;
-		}
-		
-		public void render(MatrixStack stack, int x, int y){
-			for(Span span : spans){
-				span.render(stack, x, y);
-				x += span.getWidth();
+			
+			public float getWidth(){
+				return width(text, renderStyle) * renderStyle.getSize() * (renderStyle.isSubscript() || renderStyle.isSuperscript() ? .6f : 1);
+			}
+			
+			public float getHeight(){
+				return (9 + (renderStyle.isWavy() ? 1 : 0)) * renderStyle.getSize();
 			}
 		}
+	
+	public record AspectSpan(Aspect aspect) implements Span{
 		
-		public float getWidth(){
-			float width = 0;
-			for(Span span : spans)
-				width += span.getWidth();
-			return width;
+		public void render(MatrixStack stack, int x, int y){
+				if(aspect != null)
+					AspectRenderHelper.renderAspect(aspect, stack, x, y, 100, 1, 1, 1, 1);
+			}
+			
+			public float getWidth(){
+				return 16;
+			}
+			
+			public float getHeight(){
+				return 17;
+			}
 		}
+	
+	public record MultiSpan(List<Span> spans) implements Span{
 		
-		public float getHeight(){
-			float height = 0;
-			for(Span span : spans)
-				height = Math.max(span.getHeight(), height);
-			return height;
+		public void render(MatrixStack stack, int x, int y){
+				for(Span span : spans){
+					span.render(stack, x, y);
+					x += span.getWidth();
+				}
+			}
+			
+			public float getWidth(){
+				float width = 0;
+				for(Span span : spans)
+					width += span.getWidth();
+				return width;
+			}
+			
+			public float getHeight(){
+				float height = 0;
+				for(Span span : spans)
+					height = Math.max(span.getHeight(), height);
+				return height;
+			}
 		}
-	}
 	
 	public interface Paragraph{
 		
@@ -343,7 +323,7 @@ public class TextFormatter{
 				}
 				if(segments.size() == 1)
 					list.add(segments.get(0));
-				else if(segments.size() > 0)
+				else if(!segments.isEmpty())
 					list.add(new MultiSpan(segments));
 			}
 			ret.add(new SpanParagraph(list, centred));

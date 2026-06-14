@@ -286,7 +286,7 @@ public class Caster implements Component, AutoSyncedComponent, ServerTickingComp
 		if(tag.contains("drainTargetNode"))
 			drainTargetNode = NodeReference.fromNbt(tag.getCompound("drainTargetNode"));
 		if(tag.contains("drainTargetAspect"))
-			drainTargetAspect = Aspects.byName(new Identifier(tag.getString("drainTargetAspect")));
+			drainTargetAspect = Aspects.byName(Identifier.of(tag.getString("drainTargetAspect")));
 		if(tag.contains("drainTimer"))
 			drainTimer = tag.getInt("drainTimer");
 		if(tag.contains("contFocusState"))

@@ -670,12 +670,13 @@
       "bound": "Bound"
     },
     "radius": "Radius: {}",
-    "fragile": "Fragile"
+    "fragile": "Fragile",
+    "warping": "Warping"
   },
 
   // Enchantments
   "enchantment.arcana": {
-    "warping": "Warping",
+    "warping": "Curse of Warping",
     "projecting": "Projecting",
     "transmutative": "Transmutative",
     "purifying": "Purifying",

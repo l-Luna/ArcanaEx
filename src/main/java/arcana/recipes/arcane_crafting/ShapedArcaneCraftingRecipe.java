@@ -77,7 +77,7 @@ public class ShapedArcaneCraftingRecipe extends ShapedRecipe implements ArcaneCr
 	public static class Serializer extends ShapedRecipe.Serializer{
 		
 		public ShapedRecipe read(Identifier id, JsonObject json){
-			ShapedRecipe orig = super.read(id, json);
+			ShapedRecipe orig = ShapedRecipe.Serializer.read(id, json);
 			ItemStack output = orig.getOutput();
 			if(json.has("apply"))
 				output = XIngredient.matcherFromString(json.get("apply").getAsString()).preview(output);
@@ -88,7 +88,7 @@ public class ShapedArcaneCraftingRecipe extends ShapedRecipe implements ArcaneCr
 		}
 		
 		public void write(PacketByteBuf bytes, ShapedRecipe recipe){
-			super.write(bytes, recipe);
+			ShapedRecipe.Serializer.write(bytes, recipe);
 			bytes.writeNbt(((ShapedArcaneCraftingRecipe)recipe).aspects.toNbt());
 			String key = ((ShapedArcaneCraftingRecipe)recipe).translationKey;
 			bytes.writeBoolean(key != null);
@@ -97,7 +97,7 @@ public class ShapedArcaneCraftingRecipe extends ShapedRecipe implements ArcaneCr
 		}
 		
 		public ShapedRecipe read(Identifier id, PacketByteBuf bytes){
-			ShapedRecipe orig = super.read(id, bytes);
+			ShapedRecipe orig = ShapedRecipe.Serializer.read(id, bytes);
 			ShapedArcaneCraftingRecipe recipe = new ShapedArcaneCraftingRecipe(orig);
 			recipe.aspects = AspectMap.fromNbt(bytes.readNbt());
 			if(bytes.readBoolean())

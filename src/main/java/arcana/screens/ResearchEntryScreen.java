@@ -111,7 +111,7 @@ public class ResearchEntryScreen extends Screen{
 		// Requirements
 		var player = client.player;
 		Researcher r = Researcher.from(player);
-		if(r.entryStage(entry) < entry.sections().size() && entry.sections().get(r.entryStage(entry)).getRequirements().size() > 0){
+		if(r.entryStage(entry) < entry.sections().size() && !entry.sections().get(r.entryStage(entry)).getRequirements().isEmpty()){
 			List<Requirement> requirements = entry.sections().get(r.entryStage(entry)).getRequirements();
 			final int y = (height - bgHeight) / 2 + 175;
 			final int reqWidth = 20;
@@ -307,7 +307,7 @@ public class ResearchEntryScreen extends Screen{
 		}
 		// mouse button 0 is left click, defer to entries and requirements
 		Researcher r = Researcher.from(client.player);
-		if(r.entryStage(entry) < entry.sections().size() && entry.sections().get(r.entryStage(entry)).getRequirements().size() > 0){
+		if(r.entryStage(entry) < entry.sections().size() && !entry.sections().get(r.entryStage(entry)).getRequirements().isEmpty()){
 			List<Requirement> requirements = entry.sections().get(r.entryStage(entry)).getRequirements();
 			final int y = (height - bgHeight) / 2 + 175;
 			final int reqSize = 20;

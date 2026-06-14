@@ -3,7 +3,7 @@ package arcana.worldgen.silverwood;
 import arcana.aura.AuraWorld;
 import arcana.aura.Node;
 import arcana.aura.NodeTypes;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
@@ -21,7 +21,7 @@ import java.util.function.BiConsumer;
 
 public class SilverwoodTrunkPlacer extends TrunkPlacer{
 	
-	public static final Codec<SilverwoodTrunkPlacer> CODEC = RecordCodecBuilder.create(
+	public static final MapCodec<SilverwoodTrunkPlacer> CODEC = RecordCodecBuilder.mapCodec(
 			i -> fillTrunkPlacerFields(i).apply(i, SilverwoodTrunkPlacer::new)
 	);
 	

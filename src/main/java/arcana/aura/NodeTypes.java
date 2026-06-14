@@ -171,7 +171,7 @@ public class NodeTypes{
 			float xPos = (float)(node.getX());
 			float zPos = (float)(node.getZ() - discRad);
 			// TODO: weighted selection
-			BlockState state = (Registry.BLOCK.get(new Identifier(blocks.getKeys().toArray(new String[0])[world.getRandom().nextInt(blocks.getKeys().size())]))).getDefaultState();
+			BlockState state = (Registry.BLOCK.get(Identifier.of(blocks.getKeys().toArray(new String[0])[world.getRandom().nextInt(blocks.getKeys().size())]))).getDefaultState();
 			sw.spawnParticles(new BlockStateParticleEffect(ArcanaRegistry.HUNGRY_NODE_DISC, state), xPos, node.getY(), zPos, 0, discRad / 6f, 0, discRad / 6f, 1);
 		}
 	}

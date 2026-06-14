@@ -12,7 +12,7 @@ import java.util.List;
 
 public class XpRequirementRenderer implements RequirementRenderer<XpRequirement>{
 	
-	private static final Identifier experienceOrbTexture = new Identifier("textures/entity/experience_orb.png");
+	private static final Identifier experienceOrbTexture = Identifier.of("textures/entity/experience_orb.png");
 	
 	public void render(MatrixStack matrices, int x, int y, XpRequirement requirement, int time, float delta){
 		doXPRender(matrices, time, x, y, delta);

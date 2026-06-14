@@ -6,6 +6,7 @@ import arcana.blocks.WardedCampfireBlock;
 import arcana.commands.ArcanaCommands;
 import arcana.effects.AspectPowerStatusEffect;
 import arcana.effects.SetBonusStatusEffect;
+import arcana.enchantments.ArcanaEnchantmentComponents;
 import arcana.enchantments.LootSwapEnchantment;
 import arcana.items.CrimsonLeechItem;
 import arcana.recipes.alchemy.AlchemyRecipe;
@@ -49,6 +50,7 @@ public final class Arcana implements ModInitializer{
 		DessicantControl.optIn(MODID);
 		
 		ArcanaSounds.setup();
+		ArcanaEnchantmentComponents.setup();
 		ArcanaRegistry.setup();
 		
 		Registry.register(Registries.RECIPE_SERIALIZER, arcId("wand"), WandRecipe.SERIALIZER);

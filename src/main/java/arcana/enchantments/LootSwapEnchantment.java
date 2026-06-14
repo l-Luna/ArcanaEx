@@ -3,12 +3,10 @@ package arcana.enchantments;
 import arcana.util.RegistryMapping;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentTarget;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -16,39 +14,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-public class LootSwapEnchantment extends Enchantment{
+public class LootSwapEnchantment{
 	
 	public static final RegistryMapping<Item>
-			PURIFYING_MAP = new RegistryMapping<>(Registry.ITEM),
-			TRANSMUTATIVE_MAP = new RegistryMapping<>(Registry.ITEM);
-	
-	public final RegistryMapping<Item> swaps;
-	public final float baseChance;
-	
-	private final int maxLevel;
-	
-	public LootSwapEnchantment(EnchantmentTarget type, RegistryMapping<Item> swaps, int maxLevel, float baseChance){
-		super(Rarity.VERY_RARE, type, new EquipmentSlot[]{ EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
-		this.swaps = swaps;
-		this.maxLevel = maxLevel;
-		this.baseChance = baseChance;
-	}
-	
-	public int getMaxLevel(){
-		return maxLevel;
-	}
-	
-	public boolean isAvailableForRandomSelection(){
-		return false;
-	}
-	
-	public boolean isAvailableForEnchantedBookOffer(){
-		return false;
-	}
-	
-	public boolean isTreasure(){
-		return true;
-	}
+			PURIFYING_MAP = new RegistryMapping<>(Registries.ITEM),
+			TRANSMUTATIVE_MAP = new RegistryMapping<>(Registries.ITEM);
 	
 	@NotNull
 	public static List<ItemStack> applyLootSwaps(@NotNull List<ItemStack> original, ItemStack stack, Random rng){
@@ -76,7 +46,7 @@ public class LootSwapEnchantment extends Enchantment{
 		return it;
 	}
 	
-	public static void processStack(LootSwapEnchantment enchantment, Random rng, int level, ItemStack in, Consumer<ItemStack> out){
+	public static void processStack(LootSwapEffect enchantment, Random rng, int level, ItemStack in, Consumer<ItemStack> out){
 		Item targetItem = enchantment.swaps.apply(in.getItem()).orElse(null);
 		float chance = level * enchantment.baseChance;
 		if(targetItem != null){

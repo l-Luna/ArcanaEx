@@ -1,0 +1,43 @@
+{
+  "anvil_cost": 1,
+  "description": {
+    "translate": "enchantment.arcana.projecting"
+  },
+  "effects": {
+    "minecraft:attributes": [
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 1,
+          "per_level_above_first": 1
+        },
+        "attribute": "minecraft:player.block_interaction_range",
+        "id": "arcana:enchantment.projecting",
+        "operation": "add_value"
+      }
+    ],
+    "arcana:dynamic_max_levels": {
+      "max_level_tags": [
+        "arcana:max_projecting_level/1",
+        "arcana:max_projecting_level/2",
+        "arcana:max_projecting_level/3"
+      ]
+    }
+  },
+  "slots": [],
+  "trinkets/slots": [
+    "hand/ring"
+  ],
+  "max_level": 3,
+  "supported_items": "#trinkets:hand/ring",
+  "primary_items": [],
+  "weight": 1,
+  "max_cost": {
+    "base": 12,
+    "per_level_above_first": 11
+  },
+  "min_cost": {
+    "base": 1,
+    "per_level_above_first": 11
+  }
+}

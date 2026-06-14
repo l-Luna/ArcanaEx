@@ -1,0 +1,34 @@
+{
+  "anvil_cost": 1,
+  "description": {
+    "translate": "enchantment.arcana.purifying"
+  },
+  "effects": {
+    "arcana:loot_swap": [
+      {
+        "mapping": "arcana:purifying",
+        "chance": {
+          "type": "minecraft:linear",
+          "base": 0.2,
+          "per_level_above_first": 0.2
+        }
+      }
+    ]
+  },
+  "slots": [
+    "mainhand"
+  ],
+  "max_level": 3,
+  "exclusive_set": "#minecraft:exclusive_set/mining",
+  "supported_items": "#minecraft:enchantable/mining_loot",
+  "primary_items": [],
+  "weight": 1,
+  "max_cost": {
+    "base": 12,
+    "per_level_above_first": 11
+  },
+  "min_cost": {
+    "base": 1,
+    "per_level_above_first": 11
+  }
+}

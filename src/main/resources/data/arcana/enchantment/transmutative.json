@@ -1,0 +1,29 @@
+{
+  "anvil_cost": 1,
+  "description": {
+    "translate": "enchantment.arcana.transmutative"
+  },
+  "effects": {
+    "arcana:loot_swap": [
+      {
+        "mapping": "arcana:transmutative",
+        "chance": 1
+      }
+    ]
+  },
+  "slots": [
+    "mainhand"
+  ],
+  "max_level": 1,
+  "supported_items": "#minecraft:enchantable/sword",
+  "primary_items": [],
+  "weight": 1,
+  "max_cost": {
+    "base": 12,
+    "per_level_above_first": 11
+  },
+  "min_cost": {
+    "base": 1,
+    "per_level_above_first": 11
+  }
+}

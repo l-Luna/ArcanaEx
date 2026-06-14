@@ -1,0 +1,36 @@
+{
+  "anvil_cost": 1,
+  "description": {
+    "translate": "enchantment.arcana.runic_shielding"
+  },
+  "effects": {
+    "minecraft:attributes": [
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 0.5,
+          "per_level_above_first": 0.5
+        },
+        "attribute": "arcana:generic.runic_shielding",
+        "id": "arcana:enchantment.runic_shielding",
+        "operation": "add_value"
+      }
+    ]
+  },
+  "slots": [
+    "armor"
+  ],
+  "exclusive_set": "#minecraft:exclusive_set/armor",
+  "max_level": 3,
+  "supported_items": "#minecraft:enchantable/armor",
+  "primary_items": [],
+  "weight": 1,
+  "max_cost": {
+    "base": 12,
+    "per_level_above_first": 11
+  },
+  "min_cost": {
+    "base": 1,
+    "per_level_above_first": 11
+  }
+}

@@ -7,7 +7,7 @@ import arcana.commands.ArcanaCommands;
 import arcana.effects.AspectPowerStatusEffect;
 import arcana.effects.SetBonusStatusEffect;
 import arcana.enchantments.ArcanaEnchantmentComponents;
-import arcana.enchantments.LootSwapEnchantment;
+import arcana.enchantments.LootSwapEffect;
 import arcana.items.CrimsonLeechItem;
 import arcana.recipes.alchemy.AlchemyRecipe;
 import arcana.recipes.arcane_crafting.ShapedArcaneCraftingRecipe;
@@ -70,8 +70,8 @@ public final class Arcana implements ModInitializer{
 		serverResources.registerReloadListener(new ResearchLoader());
 		serverResources.registerReloadListener(new RegistryMappingLoader<>("taint_maps", Taint.TAINT_MAP));
 		serverResources.registerReloadListener(new RegistryMappingLoader<>("untaint_maps", Taint.UNTAINT_MAP));
-		serverResources.registerReloadListener(new RegistryMappingLoader<>("purifying_maps", LootSwapEnchantment.PURIFYING_MAP));
-		serverResources.registerReloadListener(new RegistryMappingLoader<>("transmutative_maps", LootSwapEnchantment.TRANSMUTATIVE_MAP));
+		serverResources.registerReloadListener(new RegistryMappingLoader<>("purifying_maps", LootSwapEffect.PURIFYING_MAP));
+		serverResources.registerReloadListener(new RegistryMappingLoader<>("transmutative_maps", LootSwapEffect.TRANSMUTATIVE_MAP));
 		
 		ArcanaCommands.register();
 		

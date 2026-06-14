@@ -1,13 +1,13 @@
 package arcana.mixin;
 
 import arcana.blocks.ArcanaBlockSettings;
-import arcana.enchantments.LootSwapEnchantment;
+import arcana.enchantments.LootSwapEffect;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.loot.context.LootContext;
+import net.minecraft.loot.context.LootContextParameterSet;
 import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.loot.context.LootContextTypes;
 import org.spongepowered.asm.mixin.Mixin;
@@ -24,9 +24,9 @@ public class AbstractBlockMixin{
 		
 		// based on lib39 dessicant auto-drops, but using ArcanaBlockSettings
 		@ModifyReturnValue(method = "getDroppedStacks", at = @At("RETURN"))
-		public List<ItemStack> autoDrop(List<ItemStack> original, BlockState state, LootContext.Builder builder){
+		public List<ItemStack> autoDrop(List<ItemStack> original, BlockState state, LootContextParameterSet.Builder builder){
 			if(original.isEmpty()
-					&& state.getBlock().settings instanceof ArcanaBlockSettings abs
+					&& state.getBlock().getSettings() instanceof ArcanaBlockSettings abs
 					&& abs.getDropsSelf()
 					&& state.getBlock().asItem() != Items.AIR)
 				return List.of(state.getBlock().asItem().getDefaultStack());
@@ -39,10 +39,10 @@ public class AbstractBlockMixin{
 	public static class AbstractBlockMixin_Late{
 		
 		@ModifyReturnValue(method = "getDroppedStacks", at = @At("RETURN"))
-		public List<ItemStack> autoDrop(List<ItemStack> original, BlockState state, LootContext.Builder builder){
-			LootContext ctx = builder.build(LootContextTypes.BLOCK);
+		public List<ItemStack> autoDrop(List<ItemStack> original, BlockState state, LootContextParameterSet.Builder builder){
+			LootContextParameterSet ctx = builder.build(LootContextTypes.BLOCK);
 			ItemStack stack = ctx.get(LootContextParameters.TOOL);
-			return stack != null ? LootSwapEnchantment.applyLootSwaps(original, stack, ctx.getRandom()) : original;
+			return stack != null ? LootSwapEffect.applyLootSwaps(original, stack, ctx.getWorld().random) : original;
 		}
 	}
 }

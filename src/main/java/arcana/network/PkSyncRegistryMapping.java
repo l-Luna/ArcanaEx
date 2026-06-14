@@ -2,7 +2,7 @@ package arcana.network;
 
 import arcana.ReflectivelyUtilized;
 import arcana.aura.Taint;
-import arcana.enchantments.LootSwapEnchantment;
+import arcana.enchantments.LootSwapEffect;
 import arcana.util.RegistryMapping;
 import com.unascribed.lib39.tunnel.api.NetworkContext;
 import com.unascribed.lib39.tunnel.api.S2CMessage;
@@ -62,8 +62,8 @@ public class PkSyncRegistryMapping extends S2CMessage{
 		return switch(mappingId){
 			case 0 -> Taint.TAINT_MAP;
 			case 1 -> Taint.UNTAINT_MAP;
-			case 2 -> LootSwapEnchantment.PURIFYING_MAP;
-			case 3 -> LootSwapEnchantment.TRANSMUTATIVE_MAP;
+			case 2 -> LootSwapEffect.PURIFYING_MAP;
+			case 3 -> LootSwapEffect.TRANSMUTATIVE_MAP;
 			default -> null;
 		};
 	}

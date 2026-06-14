@@ -1,6 +1,6 @@
 package arcana.mixin.enchantments;
 
-import arcana.enchantments.LootSwapEnchantment;
+import arcana.enchantments.LootSwapEffect;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContext;
@@ -22,7 +22,7 @@ public class LivingEntityMixin{
 	           index = 1)
 	Consumer<ItemStack> applyLootSwaps(LootContext ctx, Consumer<ItemStack> lootConsumer){
 		return ctx.get(LootContextParameters.KILLER_ENTITY) instanceof LivingEntity le
-				? LootSwapEnchantment.applyLootSwaps(lootConsumer, le.getMainHandStack(), ctx.getRandom())
+				? LootSwapEffect.applyLootSwaps(lootConsumer, le.getMainHandStack(), ctx.getRandom())
 				: lootConsumer;
 	}
 }

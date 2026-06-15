@@ -6,13 +6,12 @@ import net.minecraft.client.particle.*;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ColorHelper.Argb;
-import net.minecraft.util.math.Matrix3f;
-import net.minecraft.util.math.Quaternion;
-import net.minecraft.util.math.Vec3f;
+import org.joml.Matrix3f;
+import org.joml.Vector3f;
 
 public class EssentiaStreamParticle extends SpriteBillboardParticle{
 	
-	private final Vec3f origin;
+	private final Vector3f origin;
 	private final Matrix3f rotation;
 	
 	private final SpriteProvider spr;
@@ -28,16 +27,16 @@ public class EssentiaStreamParticle extends SpriteBillboardParticle{
 		super(world, x, y, z, 0, 0, 0);
 		gravityStrength = 0;
 		collidesWithWorld = false;
-		origin = new Vec3f((float)x, (float)y, (float)z);
-		rotation = new Matrix3f(Quaternion.fromEulerYxz((float)angleX, (float)angleY, 0));
+		origin = new Vector3f((float)x, (float)y, (float)z);
+		rotation = new Matrix3f().rotationXYZ((float)angleX, (float)angleY, 0);
 		maxAge = 80;
 		setSpriteForAge(spr);
 		var newPos = posWhen(age);
-		setPos(newPos.getX(), newPos.getY(), newPos.getZ());
+		setPos(newPos.x(), newPos.y(), newPos.z());
 		// avoid initial stuttering
-		prevPosX = newPos.getX();
-		prevPosY = newPos.getY();
-		prevPosZ = newPos.getZ();
+		prevPosX = newPos.x();
+		prevPosY = newPos.y();
+		prevPosZ = newPos.z();
 		setColor(Argb.getRed(aspect.colour()) / 255f, Argb.getGreen(aspect.colour()) / 255f, Argb.getBlue(aspect.colour()) / 255f);
 		this.spr = spr;
 	}
@@ -46,16 +45,16 @@ public class EssentiaStreamParticle extends SpriteBillboardParticle{
 		velocityX = velocityY = velocityZ = 0;
 		super.tick();
 		var newPos = posWhen(age);
-		setPos(newPos.getX(), newPos.getY(), newPos.getZ());
+		setPos(newPos.x(), newPos.y(), newPos.z());
 		setSpriteForAge(spr);
 		// ...end when we reach a matrix...
-		Vec3f toC = new Vec3f(0, age / 12f, 0);
-		toC.transform(rotation);
+		Vector3f toC = new Vector3f(0, age / 12f, 0);
+		toC.mul(rotation);
 		toC.add(origin);
-		if(world.getBlockEntity(new BlockPos(toC.getX(), toC.getY() + 1, toC.getZ())) instanceof InfusionMatrixBlockEntity
+		if(world.getBlockEntity(BlockPos.ofFloored(toC.x(), toC.y() + 1, toC.z())) instanceof InfusionMatrixBlockEntity
 				// is the central line roughly in the middle
-				&& Math.abs(toC.getX() - Math.floor(toC.getX()) - .5) < .1
-				&& Math.abs(toC.getZ() - Math.floor(toC.getZ()) - .5) < .1)
+				&& Math.abs(toC.x() - Math.floor(toC.x()) - .5) < .1
+				&& Math.abs(toC.z() - Math.floor(toC.z()) - .5) < .1)
 			markDead();
 	}
 	
@@ -63,11 +62,11 @@ public class EssentiaStreamParticle extends SpriteBillboardParticle{
 		return ParticleTextureSheet.PARTICLE_SHEET_LIT;
 	}
 	
-	private Vec3f posWhen(int t){
+	private Vector3f posWhen(int t){
 		final float r = .15f;
 		int rand = System.identityHashCode(this) % 16; // chosen by fair memory alloc
-		Vec3f to = new Vec3f((float)(r * Math.sin(t / 4f + rand)), t / 12f, (float)(r * Math.cos(t / 4f + rand)));
-		to.transform(rotation);
+		Vector3f to = new Vector3f((float)(r * Math.sin(t / 4f + rand)), t / 12f, (float)(r * Math.cos(t / 4f + rand)));
+		to.mul(rotation);
 		to.add(origin);
 		return to;
 	}

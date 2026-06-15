@@ -2,8 +2,8 @@ package arcana.aura;
 
 import arcana.ArcanaRegistry;
 import net.minecraft.item.ItemConvertible;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 public enum FluxOrigin{
 	CRUCIBLE_EMPTYING(ArcanaRegistry.CRUCIBLE, "arcana.flux_origin.crucible_empty"),
@@ -25,7 +25,7 @@ public enum FluxOrigin{
 	}
 	
 	FluxOrigin(ItemConvertible sprite, String key){
-		this(Registry.ITEM.getId(sprite.asItem()), key);
+		this(Registries.ITEM.getId(sprite.asItem()), key);
 	}
 	
 	FluxOrigin(ItemConvertible i){

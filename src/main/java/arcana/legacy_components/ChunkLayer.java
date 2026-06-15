@@ -2,15 +2,16 @@ package arcana.legacy_components;
 
 import arcana.util.MathUtil;
 import arcana.util.NbtUtil;
-import dev.onyxstudios.cca.api.v3.component.Component;
-import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtLongArray;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.chunk.Chunk;
 import org.jetbrains.annotations.Nullable;
+import org.ladysnake.cca.api.v3.component.Component;
+import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 
 import java.util.Arrays;
 import java.util.BitSet;
@@ -110,14 +111,14 @@ public abstract class ChunkLayer implements Component, AutoSyncedComponent{
 	
 	//
 	
-	public void writeToNbt(NbtCompound tag){
+	public void writeToNbt(NbtCompound tag, RegistryWrapper.WrapperLookup lookup){
 		tag.put("slices", Arrays.stream(markedBlocks)
 				.map(x -> x != null ? x.toLongArray() : new long[0])
 				.map(NbtLongArray::new)
 				.collect(NbtUtil.toNbtList()));
 	}
 	
-	public void readFromNbt(NbtCompound tag){
+	public void readFromNbt(NbtCompound tag, RegistryWrapper.WrapperLookup lookup){
 		int i = 0;
 		total = 0;
 		for(NbtElement sliceE : tag.getList("slices", NbtElement.LONG_ARRAY_TYPE)){

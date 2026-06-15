@@ -3,19 +3,15 @@ package arcana.aura;
 import arcana.Arcana;
 import arcana.ArcanaConfig;
 import arcana.util.NbtUtil;
-import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import com.mojang.logging.LogUtils;
-import dev.onyxstudios.cca.api.v3.component.Component;
-import dev.onyxstudios.cca.api.v3.component.ComponentKey;
-import dev.onyxstudios.cca.api.v3.component.ComponentRegistryV3;
-import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
-import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
 import it.unimi.dsi.fastutil.longs.Long2FloatMap;
 import it.unimi.dsi.fastutil.longs.Long2FloatOpenHashMap;
 import net.fabricmc.fabric.impl.event.lifecycle.LoadedChunksCache;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.*;
@@ -24,6 +20,11 @@ import net.minecraft.world.*;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.WorldChunk;
 import org.jetbrains.annotations.Nullable;
+import org.ladysnake.cca.api.v3.component.Component;
+import org.ladysnake.cca.api.v3.component.ComponentKey;
+import org.ladysnake.cca.api.v3.component.ComponentRegistryV3;
+import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
+import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
 import org.slf4j.Logger;
 
 import java.util.*;
@@ -63,7 +64,7 @@ public final class AuraWorld implements Component, ServerTickingComponent, AutoS
 	// accessors
 	
 	public static AuraWorld from(World world){
-		return world.getComponent(KEY);
+		return KEY.get(world);
 	}
 	
 	public static AuraWorld from(StructureWorldAccess swa){
@@ -104,7 +105,7 @@ public final class AuraWorld implements Component, ServerTickingComponent, AutoS
 	}
 	
 	public Optional<Node> raycastNodes(LivingEntity viewer, boolean ignoreBlocks){
-		return raycastNodes(viewer, ReachEntityAttributes.getReachDistance(viewer, 4.5), ignoreBlocks);
+		return raycastNodes(viewer, viewer.getAttributeValue(EntityAttributes.PLAYER_BLOCK_INTERACTION_RANGE), ignoreBlocks);
 	}
 	
 	public Optional<Node> raycastNodes(Entity viewer, double length, boolean ignoreBlocks){
@@ -116,7 +117,7 @@ public final class AuraWorld implements Component, ServerTickingComponent, AutoS
 		Vec3d to = from.add(viewer.getRotationVector().multiply(length));
 		BlockHitResult bhr = null;
 		if(!ignoreBlocks)
-			bhr = viewer.world.raycast(new RaycastContext(from, to, RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, viewer));
+			bhr = viewer.getWorld().raycast(new RaycastContext(from, to, RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, viewer));
 		Box bounds = new Box(from, to).expand(Node.HALF_NODE);
 		Node ret = null;
 		double curSqrDist = length * length;
@@ -138,7 +139,7 @@ public final class AuraWorld implements Component, ServerTickingComponent, AutoS
 	
 	// serialization
 	
-	public void writeToNbt(NbtCompound tag){
+	public void writeToNbt(NbtCompound tag, RegistryWrapper.WrapperLookup lookup){
 		NbtCompound fluxStatsNbt = new NbtCompound();
 		for(Map.Entry<FluxOrigin, Float> entry : globalFluxStats.entrySet())
 			fluxStatsNbt.putFloat(entry.getKey().name(), entry.getValue());
@@ -149,7 +150,7 @@ public final class AuraWorld implements Component, ServerTickingComponent, AutoS
 		}
 	}
 	
-	public void readFromNbt(NbtCompound tag){
+	public void readFromNbt(NbtCompound tag, RegistryWrapper.WrapperLookup lookup){
 		globalFluxStats.clear();
 		NbtCompound fluxStatsNbt = tag.getCompound("fluxStats");
 		for(String key : fluxStatsNbt.getKeys())
@@ -165,7 +166,7 @@ public final class AuraWorld implements Component, ServerTickingComponent, AutoS
 	}
 	
 	public void sync(){
-		world.syncComponent(KEY);
+		KEY.sync(world);
 	}
 	
 	// ticking

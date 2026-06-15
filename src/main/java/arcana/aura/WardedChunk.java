@@ -2,13 +2,13 @@ package arcana.aura;
 
 import arcana.legacy_components.ChunkLayer;
 import arcana.util.MathUtil;
-import dev.onyxstudios.cca.api.v3.component.ComponentKey;
-import dev.onyxstudios.cca.api.v3.component.ComponentRegistryV3;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkSectionPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkStatus;
+import org.ladysnake.cca.api.v3.component.ComponentKey;
+import org.ladysnake.cca.api.v3.component.ComponentRegistryV3;
 
 import static arcana.Arcana.arcId;
 
@@ -28,10 +28,11 @@ public class WardedChunk extends ChunkLayer{
 	}
 	
 	public static boolean setWarded(World w, BlockPos pos, boolean warded){
-		return w.getChunk(ChunkSectionPos.getSectionCoord(pos.getX()), ChunkSectionPos.getSectionCoord(pos.getZ()), ChunkStatus.EMPTY).getComponent(KEY).setMarkedO(MathUtil.toChunkOffset(pos), warded);
+		Chunk chunk = w.getChunk(ChunkSectionPos.getSectionCoord(pos.getX()), ChunkSectionPos.getSectionCoord(pos.getZ()), ChunkStatus.EMPTY);
+		return KEY.get(chunk).setMarkedO(MathUtil.toChunkOffset(pos), warded);
 	}
 	
 	public static void sync(World w, BlockPos pos){
-		w.getChunk(pos).syncComponent(KEY);
+		KEY.sync(w.getChunk(pos));
 	}
 }

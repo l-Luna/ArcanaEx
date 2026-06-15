@@ -16,7 +16,7 @@ import net.minecraft.client.render.model.BakedModelManager;
 import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Vec3f;
+import net.minecraft.util.math.RotationAxis;
 import net.minecraft.util.math.random.Random;
 
 import static arcana.Arcana.arcId;
@@ -41,15 +41,15 @@ public class EssentiaValveBlockEntityRenderer implements BlockEntityRenderer<Ess
 		BlockState state = be.getWorld().getBlockState(be.getPos());
 		if(state.isOf(ArcanaRegistry.ESSENTIA_VALVE) && state.get(ConnectingBlock.UP))
 			if(!state.get(ConnectingBlock.NORTH))
-				matrices.multiply(Vec3f.NEGATIVE_X.getDegreesQuaternion(90));
+				matrices.multiply(RotationAxis.NEGATIVE_X.rotationDegrees(90));
 			else if(!state.get(ConnectingBlock.EAST))
-				matrices.multiply(Vec3f.NEGATIVE_Z.getDegreesQuaternion(90));
+				matrices.multiply(RotationAxis.NEGATIVE_Z.rotationDegrees(90));
 			else if(!state.get(ConnectingBlock.SOUTH))
-				matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90));
+				matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(90));
 			else if(!state.get(ConnectingBlock.WEST))
-				matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(90));
+				matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(90));
 			else if(!state.get(ConnectingBlock.DOWN))
-				matrices.multiply(Vec3f.NEGATIVE_X.getDegreesQuaternion(180));
+				matrices.multiply(RotationAxis.NEGATIVE_X.rotationDegrees(180));
 		
 		// set base gear height
 		matrices.translate(0, 0.2, 0);
@@ -62,17 +62,17 @@ public class EssentiaValveBlockEntityRenderer implements BlockEntityRenderer<Ess
 			float heightDiff = (tickDiff / 10) * .06f;
 			float rotationDiff = (tickDiff / 10) * 135;
 			matrices.translate(0, heightDiff, 0);
-			matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(rotationDiff + 45));
+			matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(rotationDiff + 45));
 		}else{
 			float tickDiff = Math.min(10, (be.getWorld().getTime() + tickDelta) - be.lastChangedTick);
 			float heightDiff = (1 - (tickDiff / 10)) * .06f;
 			float rotationDiff = (1 - (tickDiff / 10)) * 135;
 			matrices.translate(0, heightDiff, 0);
-			matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(rotationDiff + 45));
+			matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(rotationDiff + 45));
 		}
 		
 		// shrink gear model
-		matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90));
+		matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(90));
 		matrices.scale(0.7f, 0.7f, 0.7f);
 		
 		// un-center

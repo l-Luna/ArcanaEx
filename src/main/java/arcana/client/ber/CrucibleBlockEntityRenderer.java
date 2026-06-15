@@ -7,7 +7,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.math.Vec3f;
+import org.joml.Vector3f;
 
 public class CrucibleBlockEntityRenderer implements BlockEntityRenderer<CrucibleBlockEntity>{
 	
@@ -20,6 +20,6 @@ public class CrucibleBlockEntityRenderer implements BlockEntityRenderer<Crucible
 		var player = MinecraftClient.getInstance().player;
 		if(!GogglesOfRevealingItem.hasRevealing(player))
 			return;
-		AspectRenderHelper.renderAspectsInWorld(matrices, player, entity.getAspects(), entity.getPos(), new Vec3f(0, 1.8f, 0));
+		AspectRenderHelper.renderAspectsInWorld(matrices, player, entity.getAspects(), entity.getPos(), new Vector3f(0, 1.8f, 0));
 	}
 }

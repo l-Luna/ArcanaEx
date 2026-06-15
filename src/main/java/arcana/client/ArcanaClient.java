@@ -36,6 +36,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
+import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
@@ -112,8 +113,10 @@ public final class ArcanaClient implements ClientModInitializer{
 		HudRenderCallback.EVENT.register(RunicShieldingRenderer::renderOverlay);
 		ClientTickEvents.START_CLIENT_TICK.register(FocusSwitcherRenderer::tick);
 		
+		ModelLoadingPlugin.register(new WandModel.Provider());
+		
 		// TODO: should be unnecessary, but check!
-		/*ModelLoadingRegistry.INSTANCE.registerResourceProvider(__ -> new WandModel.Provider());
+		/*
 		ModelLoadingRegistry.INSTANCE.registerModelProvider((manager, out) -> {
 			out.accept(InfusionPillarBlockEntityRenderer.BASE_ID);
 			out.accept(InfusionPillarBlockEntityRenderer.UPPER_ID);

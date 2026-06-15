@@ -1,12 +1,8 @@
 package arcana.aura;
 
 import arcana.util.NbtUtil;
-import dev.onyxstudios.cca.api.v3.component.Component;
-import dev.onyxstudios.cca.api.v3.component.ComponentKey;
-import dev.onyxstudios.cca.api.v3.component.ComponentRegistryV3;
-import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
-import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.ChunkPos;
@@ -15,6 +11,11 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkStatus;
 import net.minecraft.world.chunk.WorldChunk;
 import org.jetbrains.annotations.Nullable;
+import org.ladysnake.cca.api.v3.component.Component;
+import org.ladysnake.cca.api.v3.component.ComponentKey;
+import org.ladysnake.cca.api.v3.component.ComponentRegistryV3;
+import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
+import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -69,7 +70,7 @@ public class AuraChunk implements Component, AutoSyncedComponent, ServerTickingC
 	// accessors
 	
 	public static AuraChunk from(Chunk chunk){
-		return chunk.getComponent(KEY);
+		return KEY.get(chunk);
 	}
 	
 	@Nullable
@@ -100,12 +101,12 @@ public class AuraChunk implements Component, AutoSyncedComponent, ServerTickingC
 	
 	// serialization
 	
-	public void writeToNbt(NbtCompound tag){
+	public void writeToNbt(NbtCompound tag, RegistryWrapper.WrapperLookup lookup){
 		tag.putFloat("flux", flux);
 		tag.put("nodes", nodes.stream().map(Node::toNbt).collect(NbtUtil.toNbtList()));
 	}
 	
-	public void readFromNbt(NbtCompound tag){
+	public void readFromNbt(NbtCompound tag, RegistryWrapper.WrapperLookup lookup){
 		flux = tag.getFloat("flux");
 		Map<UUID, Node> oldNodes = nodes.stream().collect(Collectors.toMap(Node::getUuid, x -> x));
 		nodes = new ArrayList<>(oldNodes.size());
@@ -128,7 +129,7 @@ public class AuraChunk implements Component, AutoSyncedComponent, ServerTickingC
 	}
 	
 	public void sync(){
-		chunk.syncComponent(KEY);
+		KEY.sync(chunk);
 	}
 	
 	// ticking

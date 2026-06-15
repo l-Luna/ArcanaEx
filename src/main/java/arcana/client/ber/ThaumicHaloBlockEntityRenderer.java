@@ -8,7 +8,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.math.Vec3f;
+import org.joml.Vector3f;
 
 public class ThaumicHaloBlockEntityRenderer implements BlockEntityRenderer<ThaumicHaloBlockEntity>{
 	
@@ -21,6 +21,6 @@ public class ThaumicHaloBlockEntityRenderer implements BlockEntityRenderer<Thaum
 		var player = MinecraftClient.getInstance().player;
 		if(!GogglesOfRevealingItem.hasRevealing(player) || entity.stored == null)
 			return;
-		AspectRenderHelper.renderAspectsInWorld(matrices, player, AspectMap.fromAspectStack(entity.stored), entity.getPos(), new Vec3f(0, 2, -0.8f));
+		AspectRenderHelper.renderAspectsInWorld(matrices, player, AspectMap.fromAspectStack(entity.stored), entity.getPos(), new Vector3f(0, 2, -0.8f));
 	}
 }

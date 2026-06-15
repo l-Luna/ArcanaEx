@@ -17,6 +17,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.BlockStateParticleEffect;
+import net.minecraft.registry.Registries;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.TypeFilter;
@@ -25,7 +26,6 @@ import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -102,7 +102,7 @@ public class NodeTypes{
 	private static final float hungryCarryFraction = 0.4f;
 	
 	private static <T extends Entity> void tickHungry(Node node, World world){
-		BlockPos pos = new BlockPos(node);
+		BlockPos pos = node.asBlockPos();
 		int range = /*(int)(.7 * Math.sqrt(node.getAspects().asStacks().stream().mapToInt(AspectStack::amount).sum()) + 1)*/6;
 		// check blocks in range
 		Mutable cursor = new Mutable();
@@ -133,7 +133,7 @@ public class NodeTypes{
 									NbtCompound blocks = node.getOrCreateTag().getCompound("blocks");
 									node.getTag().put("blocks", blocks);
 									// keep track of broken blocks
-									String key = Registry.BLOCK.getId(state.getBlock()).toString();
+									String key = Registries.BLOCK.getId(state.getBlock()).toString();
 									blocks.putInt(key, blocks.getInt(key) + 1);
 									// gain some of its aspects
 									for(ItemStack stack : Block.getDroppedStacks(state, sw, cursor, world.getBlockEntity(cursor))){
@@ -171,14 +171,14 @@ public class NodeTypes{
 			float xPos = (float)(node.getX());
 			float zPos = (float)(node.getZ() - discRad);
 			// TODO: weighted selection
-			BlockState state = (Registry.BLOCK.get(Identifier.of(blocks.getKeys().toArray(new String[0])[world.getRandom().nextInt(blocks.getKeys().size())]))).getDefaultState();
+			BlockState state = (Registries.BLOCK.get(Identifier.of(blocks.getKeys().toArray(new String[0])[world.getRandom().nextInt(blocks.getKeys().size())]))).getDefaultState();
 			sw.spawnParticles(new BlockStateParticleEffect(ArcanaRegistry.HUNGRY_NODE_DISC, state), xPos, node.getY(), zPos, 0, discRad / 6f, 0, discRad / 6f, 1);
 		}
 	}
 	
 	private static void tickPure(Node node, World world){
 		if(world.random.nextInt(30) == 0)
-			AuraWorld.from(world).incrementFlux(-world.random.nextBetween(3, 8), null, new BlockPos(node));
+			AuraWorld.from(world).incrementFlux(-world.random.nextBetween(3, 8), null, node.asBlockPos());
 		
 		if(world.random.nextInt(80) == 0)
 			SearchUtil.randomSearch(world, node.asBlockPos(), 5, 3, (pos, state) -> InfestedChunk.setInfested(world, pos, false) || Taint.untaintBlock(world, pos));
@@ -186,7 +186,7 @@ public class NodeTypes{
 	
 	private static void tickTainted(Node node, World world){
 		if(world.random.nextInt(Arcana.CONFIG.taintConfig.taintedNodeFluxInvChance) == 0)
-			AuraWorld.from(world).incrementFlux(world.random.nextBetween(1, 4), null, new BlockPos(node));
+			AuraWorld.from(world).incrementFlux(world.random.nextBetween(1, 4), null, node.asBlockPos());
 		
 		if(world.random.nextInt(Arcana.CONFIG.taintConfig.taintedNodeInfestInvChance) == 0)
 			SearchUtil.randomSearch(world, node.asBlockPos(), 7, 12, (pos, state) -> !state.isAir() && InfestedChunk.setInfested(world, pos, true));

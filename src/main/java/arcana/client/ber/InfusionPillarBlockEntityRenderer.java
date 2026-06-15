@@ -17,8 +17,7 @@ import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Quaternion;
-import net.minecraft.util.math.Vec3f;
+import net.minecraft.util.math.RotationAxis;
 import net.minecraft.util.math.random.LocalRandom;
 import net.minecraft.util.math.random.Random;
 
@@ -81,8 +80,8 @@ public class InfusionPillarBlockEntityRenderer implements BlockEntityRenderer<In
 		// rotate around the centre
 		matrices.translate(.5, 0, .5);
 		// and the block's rotation
-		matrices.multiply(Quaternion.fromEulerXyzDegrees(new Vec3f(0, rotSideways, 0)));
-		matrices.multiply(Quaternion.fromEulerXyzDegrees(new Vec3f(rotVertical, 0, 0)));
+		matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(rotSideways));
+		matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(rotVertical));
 		matrices.translate(-.5, 0, -.5);
 		matrices.translate(-.03, 0, .1);
 		renderManager.getModelRenderer().render(entity.getWorld(), upper, state, entity.getPos(), matrices, buffer, false, Random.create(), state.getRenderingSeed(entity.getPos()), overlay);
@@ -90,7 +89,7 @@ public class InfusionPillarBlockEntityRenderer implements BlockEntityRenderer<In
 		// place and rotate top part correctly
 		matrices.translate(0, 17 / 16f, 5.5f / 16f);
 		matrices.translate(0, 0, 7 / 16f);
-		matrices.multiply(Quaternion.fromEulerXyzDegrees(new Vec3f(rotUpper, 0, 0)));
+		matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(rotUpper));
 		matrices.translate(0, 0, -7 / 16f);
 		
 		renderManager.getModelRenderer().render(entity.getWorld(), peak, state, entity.getPos(), matrices, buffer, false, Random.create(), state.getRenderingSeed(entity.getPos()), overlay);

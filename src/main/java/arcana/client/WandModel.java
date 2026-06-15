@@ -5,11 +5,10 @@ import arcana.api.Cap;
 import arcana.api.Core;
 import arcana.items.FocusItem;
 import arcana.items.WandItem;
+import arcana.mixin.accessor.BasicBakedModelAccessor;
 import arcana.mixin.accessor.JsonUnbakedModelAccessor;
 import com.mojang.datafixers.util.Either;
-import com.mojang.datafixers.util.Pair;
-import net.fabricmc.fabric.api.client.model.ModelProviderContext;
-import net.fabricmc.fabric.api.client.model.ModelResourceProvider;
+import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
 import net.minecraft.client.render.model.*;
 import net.minecraft.client.render.model.json.JsonUnbakedModel;
 import net.minecraft.client.render.model.json.ModelOverride;
@@ -21,13 +20,16 @@ import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -35,19 +37,19 @@ import static arcana.Arcana.arcId;
 
 public final class WandModel implements UnbakedModel{
 	
+	// TODO: is this necessary?
 	private static final List<SpriteIdentifier> texDeps = Stream.of(
 					Cap.caps.values().stream().map(WandModel::capTexture),
 					Core.cores.values().stream().map(WandModel::coreTexture),
-					Registry.ITEM.stream().filter(FocusItem.class::isInstance).map(WandModel::focusModel)
+					Registries.ITEM.stream().filter(FocusItem.class::isInstance).map(WandModel::focusModel)
 			).flatMap(x -> x).map(WandModel::atlased).toList();
-	
 	
 	public static final Identifier wandModel = arcId("item/wand/wand");
 	
 	private static final Identifier defaultCoreTexId = coreTexture(ArcanaRegistry.STICK_CORE);
 	private static final Identifier defaultCapTexId = capTexture(ArcanaRegistry.IRON_WAND_CAP);
 	
-	private static final List<Identifier> modelDeps = new ArrayList<>(Registry.ITEM.stream().filter(FocusItem.class::isInstance).map(WandModel::focusModel).toList());
+	private static final List<Identifier> modelDeps = new ArrayList<>(Registries.ITEM.stream().filter(FocusItem.class::isInstance).map(WandModel::focusModel).toList());
 	static{
 		modelDeps.add(wandModel);
 	}
@@ -56,34 +58,33 @@ public final class WandModel implements UnbakedModel{
 		return modelDeps;
 	}
 	
-	public Collection<SpriteIdentifier> getTextureDependencies(Function<Identifier, UnbakedModel> ubModels, Set<Pair<String, String>> unresolvedTextureReferences){
-		return texDeps;
+	public void setParents(Function<Identifier, UnbakedModel> modelLoader){
+		//
 	}
 	
-	public BakedModel bake(ModelLoader loader, Function<SpriteIdentifier, Sprite> textureGetter, ModelBakeSettings bakeSettings, Identifier modelId){
-		return bakeWithTextures(loader, textureGetter, bakeSettings, modelId, defaultCoreTexId, defaultCapTexId, null);
+	public BakedModel bake(Baker baker, Function<SpriteIdentifier, Sprite> textureGetter, ModelBakeSettings bakeSettings){
+		return bakeWithTextures(baker, textureGetter, bakeSettings, defaultCoreTexId, defaultCapTexId, null);
 	}
 	
 	@NotNull
-	private static BakedModel bakeWithTextures(ModelLoader loader,
+	private static BakedModel bakeWithTextures(Baker baker,
 	                                           Function<SpriteIdentifier, Sprite> textureGetter,
 	                                           ModelBakeSettings bakeSettings,
-	                                           Identifier modelId,
 	                                           Identifier coreTexId,
 	                                           Identifier capTexId,
 	                                           @Nullable Identifier focusModel){
-		JsonUnbakedModel model = (JsonUnbakedModel)loader.getOrLoadModel(wandModel);
+		JsonUnbakedModel model = (JsonUnbakedModel)baker.getOrLoadModel(wandModel);
 		// substitute sprites
 		Map<String, Either<SpriteIdentifier, String>> texMap = ((JsonUnbakedModelAccessor)model).getTextureMap();
 		texMap.put("core", Either.left(atlased(coreTexId)));
 		texMap.put("cap", Either.left(atlased(capTexId)));
 		// bake
-		BakedModel baked = model.bake(loader, textureGetter, bakeSettings, modelId);
+		BakedModel baked = model.bake(baker, textureGetter, bakeSettings);
 		assert baked != null;
 		var bbm = (BasicBakedModel)baked;
 		// merge focus model if needed
 		if(focusModel != null){
-			BasicBakedModel fbbm = (BasicBakedModel)loader.getOrLoadModel(focusModel).bake(loader, textureGetter, bakeSettings, focusModel);
+			BasicBakedModel fbbm = (BasicBakedModel)baker.getOrLoadModel(focusModel).bake(baker, textureGetter, bakeSettings);
 			assert fbbm != null;
 			for(BakedQuad quad : fbbm.getQuads(null, null, null))
 				bbm.getQuads(null, null, null).add(quad);
@@ -92,7 +93,7 @@ public final class WandModel implements UnbakedModel{
 					bbm.getQuads(null, dir, null).add(quad);
 		}
 		// apply overrides
-		bbm.itemPropertyOverrides = new WandModelOverrideList(loader, model, loader::getOrLoadModel, List.of(), textureGetter, bakeSettings);
+		((BasicBakedModelAccessor)bbm).arcana$setItemPropertyOverrides(new WandModelOverrideList(baker, model, List.of(), textureGetter, bakeSettings));
 		return baked;
 	}
 	
@@ -105,7 +106,7 @@ public final class WandModel implements UnbakedModel{
 	}
 	
 	public static Identifier focusModel(Item focus){
-		Identifier id = Registry.ITEM.getId(focus);
+		Identifier id = Registries.ITEM.getId(focus);
 		return Identifier.of(id.getNamespace(), "item/wand/foci/" + id.getPath());
 	}
 	
@@ -116,13 +117,13 @@ public final class WandModel implements UnbakedModel{
 	
 	public static class WandModelOverrideList extends ModelOverrideList{
 		
-		private final ModelLoader loader;
+		private final Baker baker;
 		private final Function<SpriteIdentifier, Sprite> spriteFn;
 		private final ModelBakeSettings mbs;
 		
-		public WandModelOverrideList(ModelLoader loader, JsonUnbakedModel parent, Function<Identifier, UnbakedModel> ubModels, List<ModelOverride> overrides, Function<SpriteIdentifier, Sprite> fn, ModelBakeSettings mbs){
-			super(loader, parent, ubModels, overrides);
-			this.loader = loader;
+		public WandModelOverrideList(Baker baker, JsonUnbakedModel parent, List<ModelOverride> overrides, Function<SpriteIdentifier, Sprite> fn, ModelBakeSettings mbs){
+			super(baker, parent, overrides);
+			this.baker = baker;
 			spriteFn = fn;
 			this.mbs = mbs;
 		}
@@ -131,18 +132,18 @@ public final class WandModel implements UnbakedModel{
 		public BakedModel apply(BakedModel model, ItemStack stack, @Nullable ClientWorld world, @Nullable LivingEntity entity, int seed){
 			Cap cap = WandItem.capFrom(stack);
 			Core core = WandItem.coreFrom(stack);
-			var fstack = WandItem.focusFrom(stack);
+			ItemStack fstack = WandItem.focusFrom(stack);
 			Identifier f = fstack.isEmpty() ? null : focusModel(fstack.getItem());
-			return bakeWithTextures(loader, spriteFn, mbs, arcId("wand"), coreTexture(core), capTexture(cap), f);
+			return bakeWithTextures(baker, spriteFn, mbs, coreTexture(core), capTexture(cap), f);
 		}
 	}
 	
-	public static class Provider implements ModelResourceProvider{
+	public static class Provider implements ModelLoadingPlugin{
 		
-		private static final Identifier wandId = arcId("item/wand");
+		private static final Identifier WAND_ID = arcId("item/wand");
 		
-		public @Nullable UnbakedModel loadModelResource(Identifier id, ModelProviderContext ctx){
-			return id.equals(wandId) ? new WandModel() : null;
+		public void onInitializeModelLoader(Context pluginContext){
+			pluginContext.resolveModel().register(context -> context.id().equals(WAND_ID) ? new WandModel() : null);
 		}
 	}
 }

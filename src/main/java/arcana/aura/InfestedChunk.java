@@ -5,15 +5,15 @@ import arcana.ArcanaConfig;
 import arcana.legacy_components.ChunkLayer;
 import arcana.util.MathUtil;
 import arcana.util.SearchUtil;
-import dev.onyxstudios.cca.api.v3.component.ComponentKey;
-import dev.onyxstudios.cca.api.v3.component.ComponentRegistryV3;
-import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.WorldChunk;
+import org.ladysnake.cca.api.v3.component.ComponentKey;
+import org.ladysnake.cca.api.v3.component.ComponentRegistryV3;
+import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
 
 import java.util.EnumSet;
 
@@ -54,7 +54,7 @@ public class InfestedChunk extends ChunkLayer implements ServerTickingComponent{
 			for(int yD = 0; yD < 2; yD++){
 				for(int zD = 0; zD < 2; zD++){
 					// where 0 = near, 1 = far
-					InfestedChunk there = from(world, new BlockPos(position).add(16 * xD * Math.signum(in.x), 0, 16 * zD * Math.signum(in.z)));
+					InfestedChunk there = from(world, BlockPos.ofFloored(position).add((int)(16 * xD * Math.signum(in.x)), 0, (int)(16 * zD * Math.signum(in.z))));
 					if(there == null)
 						continue;
 					double contribution =
@@ -89,7 +89,7 @@ public class InfestedChunk extends ChunkLayer implements ServerTickingComponent{
 	}
 	
 	public void sync(){
-		chunk.syncComponent(KEY);
+		KEY.sync(chunk);
 	}
 	
 	public void serverTick(){

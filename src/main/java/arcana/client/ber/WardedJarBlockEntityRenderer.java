@@ -13,7 +13,7 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Vec3f;
+import org.joml.Vector3f;
 
 import static arcana.Arcana.arcId;
 
@@ -89,7 +89,7 @@ public class WardedJarBlockEntityRenderer implements BlockEntityRenderer<WardedJ
 			var player = MinecraftClient.getInstance().player;
 			if(!GogglesOfRevealingItem.hasRevealing(player))
 				return;
-			AspectRenderHelper.renderAspectsInWorld(matrices, player, AspectMap.fromAspectStack(stack), entity.getPos(), new Vec3f(0, 0.7f, -0.6f));
+			AspectRenderHelper.renderAspectsInWorld(matrices, player, AspectMap.fromAspectStack(stack), entity.getPos(), new Vector3f(0, 0.7f, -0.6f));
 		}
 	}
 	
@@ -98,7 +98,6 @@ public class WardedJarBlockEntityRenderer implements BlockEntityRenderer<WardedJ
 				.color(colour)
 				.texture(u, v)
 				.light(light)
-				.normal(1, 0, 0)
-				.next();
+				.normal(1, 0, 0);
 	}
 }

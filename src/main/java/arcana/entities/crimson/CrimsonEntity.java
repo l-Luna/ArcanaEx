@@ -1,7 +1,9 @@
 package arcana.entities.crimson;
 
-import arcana.ArcanaRegistry;
-import net.minecraft.entity.*;
+import net.minecraft.entity.EntityData;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -9,17 +11,22 @@ import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.RangedWeaponItem;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.animation.AnimationController;
+import software.bernie.geckolib.animation.PlayState;
+import software.bernie.geckolib.animation.RawAnimation;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class CrimsonEntity extends HostileEntity implements IAnimatable{
+public class CrimsonEntity extends HostileEntity implements GeoEntity{
 	
-	protected static final AnimationBuilder idleAnim = new AnimationBuilder().addAnimation("idle");
-	private final AnimationFactory animFactory = GeckoLibUtil.createFactory(this);
+	private static final RawAnimation IDLE_ANIM = RawAnimation.begin().thenPlay("idle");
+	private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 	
 	public CrimsonEntity(EntityType<? extends HostileEntity> entityType, World world){
 		super(entityType, world);
@@ -27,10 +34,10 @@ public class CrimsonEntity extends HostileEntity implements IAnimatable{
 	
 	// setup
 	
-	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt){
-		EntityData i = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData){
+		EntityData i = super.initialize(world, difficulty, spawnReason, entityData);
 		initEquipment(world.getRandom(), difficulty);
-		updateEnchantments(random, difficulty);
+		updateEnchantments(world, random, difficulty);
 		setLeftHanded(true);
 		setEquipmentDropChance(EquipmentSlot.MAINHAND, 0.25f);
 		return i;
@@ -53,16 +60,8 @@ public class CrimsonEntity extends HostileEntity implements IAnimatable{
 				.add(EntityAttributes.GENERIC_FOLLOW_RANGE, 36);
 	}
 	
-	public EntityGroup getGroup(){
-		return ArcanaRegistry.CRIMSON_GROUP;
-	}
-	
 	public boolean canUseRangedWeapon(RangedWeaponItem weapon){
 		return weapon instanceof BowItem;
-	}
-	
-	protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions){
-		return 1.74f;
 	}
 	
 	public double getHeightOffset(){
@@ -71,14 +70,14 @@ public class CrimsonEntity extends HostileEntity implements IAnimatable{
 	
 	// animation - not really used, geckolib is used here primarily for models
 	
-	public void registerControllers(AnimationData data){
-		data.addAnimationController(new AnimationController<>(this, "idle", 20, event -> {
-			event.getController().setAnimation(idleAnim);
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers){
+		controllers.add(new AnimationController<>(this, "idle", 20, event -> {
+			event.getController().setAnimation(IDLE_ANIM);
 			return PlayState.CONTINUE;
 		}));
 	}
 	
-	public AnimationFactory getFactory(){
-		return animFactory;
+	public AnimatableInstanceCache getAnimatableInstanceCache(){
+		return cache;
 	}
 }

@@ -16,8 +16,8 @@ import net.minecraft.client.render.model.BakedModelManager;
 import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Quaternion;
 import net.minecraft.util.math.random.Random;
+import org.joml.Quaternionf;
 
 import static arcana.Arcana.arcId;
 
@@ -47,8 +47,8 @@ public class InfusionMatrixBlockEntityRenderer implements BlockEntityRenderer<In
 			
 			matrices.translate(0, lerpedY, 0);
 			matrices.translate(.5, .8, .5);
-			matrices.multiply(Quaternion.fromEulerXyz(0, (float)Math.toRadians(time + tickDelta), (float)Math.toRadians((time + tickDelta) / 4)));
-			matrices.multiply(Quaternion.fromEulerYxz(0, MathHelper.HALF_PI / 2f, MathHelper.HALF_PI / 2f));
+			matrices.multiply(new Quaternionf().rotateXYZ(0, (float)Math.toRadians(time + tickDelta), (float)Math.toRadians((time + tickDelta) / 4)));
+			matrices.multiply(new Quaternionf().rotateXYZ(MathHelper.HALF_PI / 2f, 0, MathHelper.HALF_PI / 2f));
 		}else
 			matrices.translate(.5, .5, .5);
 		matrices.scale(.8f, .8f, .8f);

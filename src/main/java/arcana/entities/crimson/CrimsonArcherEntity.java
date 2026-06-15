@@ -57,8 +57,8 @@ public class CrimsonArcherEntity extends CrimsonEntity implements RangedAttackMo
 		equipStack(EquipmentSlot.MAINHAND, new ItemStack(ArcanaRegistry.CRIMSON_LONGBOW));
 	}
 	
-	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt){
-		EntityData i = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData){
+		EntityData i = super.initialize(world, difficulty, spawnReason, entityData);
 		updateAttackType();
 		return i;
 	}
@@ -88,7 +88,7 @@ public class CrimsonArcherEntity extends CrimsonEntity implements RangedAttackMo
 		Hand hand = getBowHand();
 		ItemStack bowStack = getStackInHand(hand);
 		ItemStack arrowStack = getProjectileType(bowStack);
-		PersistentProjectileEntity arrow = createArrowProjectile(arrowStack, pullProgress);
+		PersistentProjectileEntity arrow = createArrowProjectile(arrowStack, pullProgress, bowStack);
 		double diffX = target.getX() - getX();
 		double diffY = target.getBodyY(0.3333333333333333) - arrow.getY();
 		double diffZ = target.getZ() - getZ();
@@ -104,8 +104,8 @@ public class CrimsonArcherEntity extends CrimsonEntity implements RangedAttackMo
 		return getMainHandStack().getItem() instanceof BowItem ? Hand.MAIN_HAND : Hand.OFF_HAND;
 	}
 	
-	protected PersistentProjectileEntity createArrowProjectile(ItemStack arrow, float damageModifier){
-		return ProjectileUtil.createArrowProjectile(this, arrow, damageModifier);
+	protected PersistentProjectileEntity createArrowProjectile(ItemStack arrow, float damageModifier, ItemStack shotFrom){
+		return ProjectileUtil.createArrowProjectile(this, arrow, damageModifier, shotFrom);
 	}
 	
 	public void equipStack(EquipmentSlot slot, ItemStack stack){
@@ -144,8 +144,11 @@ public class CrimsonArcherEntity extends CrimsonEntity implements RangedAttackMo
 	
 	protected static class AnyBowAttackGoal<T extends HostileEntity & RangedAttackMob> extends BowAttackGoal<T>{
 		
+		private final double speed;
+		
 		public AnyBowAttackGoal(T actor, double speed, int attackInterval, float range){
 			super(actor, speed, attackInterval, range);
+			this.speed = speed;
 		}
 		
 		protected boolean isHoldingBow(){

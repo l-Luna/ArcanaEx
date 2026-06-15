@@ -10,10 +10,9 @@ import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Matrix4f;
-import net.minecraft.util.math.Quaternion;
-import net.minecraft.util.math.Vec3f;
+import net.minecraft.util.math.RotationAxis;
 import net.minecraft.util.math.random.Random;
+import org.joml.Matrix4f;
 
 import static arcana.Arcana.arcId;
 
@@ -52,7 +51,7 @@ public class WispLikeEntityRenderer<T extends WispLikeEntity> extends EntityRend
 		matrices.translate(0, 0.75f, 0);
 		matrices.scale(0.08f, 0.08f, 0.08f);
 		matrices.multiply(dispatcher.getRotation());
-		matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180));
+		matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180));
 		float birthLerp = entityTime > 60 ? 1 : 1 - (float)Math.pow(2, -entityTime / 10);
 		float deathLerp = entity.deathTime > 0 ? 1 - (entity.deathTime + tickDelta) / 20f : 1;
 		float hurtLerp = entity.hurtTime > 0 ? MathHelper.clamp(entity.hurtTime - tickDelta - 1, 0, 8) / 8f : 0;
@@ -75,7 +74,7 @@ public class WispLikeEntityRenderer<T extends WispLikeEntity> extends EntityRend
 			matrices.push();
 			matrices.scale(radHere, radHere, radHere);
 			if(hurtLerp != 0)
-				matrices.multiply(Quaternion.fromEulerXyz(0, 0, -hurtLerp * MathHelper.HALF_PI / 2));
+				matrices.multiply(RotationAxis.POSITIVE_Z.rotation(-hurtLerp * MathHelper.HALF_PI / 2));
 			int v = entity.angry() ? 32 : 0;
 			quad(vc, matrices, -16, -16, 0, v, 32, 32, alphaHere);
 			matrices.pop();
@@ -83,13 +82,13 @@ public class WispLikeEntityRenderer<T extends WispLikeEntity> extends EntityRend
 		
 		matrices.push();
 		if(entity.hurtTime > 0){
-			Random rng = entity.world.random;
+			Random rng = entity.getWorld().random;
 			float scale = Math.min(entity.hurtTime, 10) / 10f;
 			matrices.translate(scale * rng.nextBetween(-10, 10) / 10f, scale * rng.nextBetween(-10, 10) / 10f, scale * rng.nextBetween(-10, 10) / 10f);
 		}
 		
 		matrices.push();
-		matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion((entityTime * 4) % 90));
+		matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees((entityTime * 4) % 90));
 		matrices.translate(0, 0, -0.001);
 		matrices.scale(1.2f, 1.2f, 1);
 		quad(vc, matrices, -5, -5, 61, 12, 10, 10, 0.3f * finAlpha);
@@ -132,7 +131,6 @@ public class WispLikeEntityRenderer<T extends WispLikeEntity> extends EntityRend
 		vc.vertex(posMat, x, y, 0)
 				.color(1, 1, 1, alpha)
 				.texture(texU, texV)
-				.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
-				.next();
+				.light(LightmapTextureManager.MAX_LIGHT_COORDINATE);
 	}
 }

@@ -32,11 +32,10 @@ public class PrismaticOrbEntityRenderer extends EntityRenderer<PrismaticOrbEntit
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
 		RenderSystem.enableDepthTest();
-		RenderSystem.setShader(GameRenderer::getPositionColorTexLightmapShader);
+		RenderSystem.setShader(GameRenderer::getPositionColorTexLightmapProgram);
 		RenderSystem.setShaderColor(1, 1, 1, 1);
 		RenderSystem.setShaderTexture(0, SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE);
-		BufferBuilder vc = Tessellator.getInstance().getBuffer();
-		vc.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL);
+		BufferBuilder vc = Tessellator.getInstance().begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL);
 		
 		ms.push();
 		ms.translate(-0.0625, -0.0625, -0.0625);
@@ -62,7 +61,7 @@ public class PrismaticOrbEntityRenderer extends EntityRenderer<PrismaticOrbEntit
 		ms.pop();
 		
 		RenderSystem.setShaderColor(1, 1, 1, 1);
-		BufferRenderer.drawWithShader(vc.end());
+		BufferRenderer.draw(vc.end());
 		RenderSystem.disableBlend();
 	}
 }

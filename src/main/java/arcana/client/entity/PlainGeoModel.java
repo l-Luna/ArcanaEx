@@ -1,10 +1,10 @@
 package arcana.client.entity;
 
 import net.minecraft.util.Identifier;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.model.GeoModel;
 
-public class PlainGeoModel<T extends IAnimatable> extends AnimatedGeoModel<T>{
+public class PlainGeoModel<T extends GeoEntity> extends GeoModel<T>{
 	
 	private final Identifier model, texture, animation;
 	

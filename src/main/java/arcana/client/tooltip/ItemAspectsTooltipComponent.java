@@ -3,9 +3,8 @@ package arcana.client.tooltip;
 import arcana.aspects.AspectStack;
 import arcana.client.AspectRenderHelper;
 import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
-import net.minecraft.client.render.item.ItemRenderer;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.Nullable;
 
@@ -21,14 +20,14 @@ public record ItemAspectsTooltipComponent(List<AspectStack> aspects, @Nullable T
 		return Math.max(Math.min(aspects().size(), 6) * 19 + 2, inner == null ? 0 : inner.getWidth(text));
 	}
 	
-	public void drawItems(TextRenderer textRenderer, int x, int y, MatrixStack matrices, ItemRenderer itemRenderer, int z){
+	public void drawItems(TextRenderer textRenderer, int x, int y, DrawContext ctx){
 		if(inner != null){
-			inner.drawItems(textRenderer, x, y, matrices, itemRenderer, z);
+			inner.drawItems(textRenderer, x, y, ctx);
 			y += inner.getHeight();
 		}
 		int n = 0;
 		for(AspectStack aspect : aspects){
-			AspectRenderHelper.renderAspectStack(aspect, matrices, textRenderer, x + n * 19 + 1, y + 1, z);
+			AspectRenderHelper.renderAspectStack(aspect, ctx, textRenderer, x + n * 19 + 1, y + 1, 0);
 			n++;
 			if(n >= 6){
 				n = 0;

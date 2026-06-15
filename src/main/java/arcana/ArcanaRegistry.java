@@ -778,42 +778,42 @@ public final class ArcanaRegistry{
 			.entityFactory(CrimsonKnightEntity::new)
 			.spawnGroup(SpawnGroup.MONSTER)
 			.defaultAttributes(CrimsonKnightEntity::createKnightAttributes)
-			.dimensions(EntityDimensions.fixed(1, 1.8f))
+			.dimensions(EntityDimensions.fixed(1, 1.8f).withEyeHeight(1.74f))
 			.build();
 	public static final EntityType<CrimsonArcherEntity> CRIMSON_ARCHER = FabricEntityTypeBuilder
 			.createLiving()
 			.entityFactory(CrimsonArcherEntity::new)
 			.spawnGroup(SpawnGroup.MONSTER)
 			.defaultAttributes(CrimsonArcherEntity::createArcherAttributes)
-			.dimensions(EntityDimensions.fixed(1, 1.8f))
+			.dimensions(EntityDimensions.fixed(1, 1.8f).withEyeHeight(1.74f))
 			.build();
 	public static final EntityType<CrimsonProtectorEntity> CRIMSON_PROTECTOR = FabricEntityTypeBuilder
 			.createLiving()
 			.entityFactory(CrimsonProtectorEntity::new)
 			.spawnGroup(SpawnGroup.MONSTER)
 			.defaultAttributes(CrimsonProtectorEntity::createProtectorAttributes)
-			.dimensions(EntityDimensions.fixed(1, 1.8f))
+			.dimensions(EntityDimensions.fixed(1, 1.8f).withEyeHeight(1.74f))
 			.build();
 	public static final EntityType<CrimsonMissionaryEntity> CRIMSON_MISSIONARY = FabricEntityTypeBuilder
 			.createLiving()
 			.entityFactory(CrimsonMissionaryEntity::new)
 			.spawnGroup(SpawnGroup.MONSTER)
 			.defaultAttributes(CrimsonMissionaryEntity::createMissionaryAttributes)
-			.dimensions(EntityDimensions.fixed(1, 1.8f))
+			.dimensions(EntityDimensions.fixed(1, 1.8f).withEyeHeight(1.74f))
 			.build();
 	public static final EntityType<CrimsonHeavyKnightEntity> CRIMSON_HEAVY_KNIGHT = FabricEntityTypeBuilder
 			.createLiving()
 			.entityFactory(CrimsonHeavyKnightEntity::new)
 			.spawnGroup(SpawnGroup.MONSTER)
 			.defaultAttributes(CrimsonHeavyKnightEntity::createHeavyKnightAttributes)
-			.dimensions(EntityDimensions.fixed(1, 1.8f))
+			.dimensions(EntityDimensions.fixed(1, 1.8f).withEyeHeight(1.74f))
 			.build();
 	public static final EntityType<CrimsonJesterEntity> CRIMSON_JESTER = FabricEntityTypeBuilder
 			.createLiving()
 			.entityFactory(CrimsonJesterEntity::new)
 			.spawnGroup(SpawnGroup.MONSTER)
 			.defaultAttributes(CrimsonJesterEntity::createJesterAttributes)
-			.dimensions(EntityDimensions.fixed(1, 1.8f))
+			.dimensions(EntityDimensions.fixed(1, 1.8f).withEyeHeight(1.74f))
 			.build();
 	
 	public static final List<Item> items = new ArrayList<>();

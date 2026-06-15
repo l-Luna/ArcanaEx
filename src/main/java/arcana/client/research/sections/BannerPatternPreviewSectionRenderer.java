@@ -3,8 +3,8 @@ package arcana.client.research.sections;
 import arcana.client.research.EntrySectionRenderer;
 import arcana.research.sections.BannerPatternPreviewSection;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.resource.language.I18n;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
@@ -17,7 +17,7 @@ import static net.minecraft.client.gui.DrawableHelper.drawTexture;
 
 public class BannerPatternPreviewSectionRenderer implements EntrySectionRenderer<BannerPatternPreviewSection>{
 	
-	public void render(MatrixStack matrices, BannerPatternPreviewSection section, int pageIdx, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right){
+	public void render(DrawContext ctx, BannerPatternPreviewSection section, int pageIdx, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right){
 		int x = right ? pageX + rightXOffset : pageX;
 		
 		ItemStack stack = new ItemStack(section.getPatternItem());
@@ -45,7 +45,7 @@ public class BannerPatternPreviewSectionRenderer implements EntrySectionRenderer
 		drawTexture(matrices, shieldX + 1, shieldY + 1, 101, 2, 2, 10, 20, 64, 64);
 	}
 	
-	public void renderAfter(MatrixStack matrices, BannerPatternPreviewSection section, int pageIdx, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right){
+	public void renderAfter(DrawContext ctx, BannerPatternPreviewSection section, int pageIdx, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right){
 		int x = right ? pageX + rightXOffset : pageX;
 		int rX = x + (screenWidth - 256) / 2 + (pageWidth - 58) / 2 + 21;
 		int rY = pageY + (screenHeight - bgHeight) / 2 + 18 - heightOffset;

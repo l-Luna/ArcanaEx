@@ -21,7 +21,8 @@ public final class FocusSwitcherRenderer{
 	private static boolean inStorage = true;
 	
 	// TODO: combine with HudRenderer, or otherwise adjust for wand HUD position
-	public static void renderHud(DrawContext matrices, RenderTickCounter delta){
+	public static void renderHud(DrawContext ctx, RenderTickCounter counter){
+		float delta = counter.getTickDelta(true);
 		MinecraftClient mc = MinecraftClient.getInstance();
 		PlayerEntity player = mc.player;
 		if(player == null)
@@ -46,10 +47,10 @@ public final class FocusSwitcherRenderer{
 		if(!quickAccess.isEmpty()){
 			storageY += 20;
 			for(int i = 0; i < quickAccess.size(); i++)
-				mc.getItemRenderer().renderInGui(quickAccess.get(i).get(), (int)(i * spacing + 60 + 10*introEase), 30);
+				ctx.drawItem(quickAccess.get(i).get(), (int)(i * spacing + 60 + 10*introEase), 30);
 		}
 		for(int i = 0; i < storage.size(); i++)
-			mc.getItemRenderer().renderInGui(storage.get(i).get(), (int)(i * spacing + 60 + 10*introEase), storageY);
+			ctx.drawItem(storage.get(i).get(), (int)(i * spacing + 60 + 10*introEase), storageY);
 	}
 	
 	public static void tick(MinecraftClient client){

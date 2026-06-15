@@ -11,17 +11,23 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.fabricmc.fabric.impl.event.lifecycle.LoadedChunksCache;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.*;
+import net.minecraft.client.util.BufferAllocator;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Position;
-import net.minecraft.util.math.Quaternion;
-import net.minecraft.util.math.Vec3f;
+import net.minecraft.util.math.RotationAxis;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
+import org.joml.Matrix4f;
+import org.joml.Matrix4fStack;
+import org.joml.Quaternionf;
+import org.joml.Vector3f;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -45,8 +51,8 @@ public final class NodeRenderer{
 	public static void render(WorldRenderContext context){
 		context.profiler().push("arcana:nodes");
 		
-		var player = MinecraftClient.getInstance().player;
-		float dt = MinecraftClient.getInstance().getLastFrameDuration();
+		ClientPlayerEntity player = MinecraftClient.getInstance().player;
+		float dt = MinecraftClient.getInstance().getRenderTickCounter().getLastFrameDuration();
 		boolean hasGoggles = GogglesOfRevealingItem.hasRevealing(player);
 		
 		context.lightmapTextureManager().enable();
@@ -54,12 +60,11 @@ public final class NodeRenderer{
 		RenderSystem.enableBlend();
 		RenderSystem.blendFunc(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA);
 		
-		RenderSystem.setShader(GameRenderer::getParticleShader);
+		RenderSystem.setShader(GameRenderer::getParticleProgram);
 		RenderSystem.setShaderColor(1, 1, 1, 1);
 		RenderSystem.depthMask(true);
 		
 		Tessellator tessellator = Tessellator.getInstance();
-		BufferBuilder buffer = tessellator.getBuffer();
 		
 		Camera camera = context.camera();
 		ClientWorld world = context.world();
@@ -92,10 +97,10 @@ public final class NodeRenderer{
 			RenderSystem.disableDepthTest();
 		nodesByType.forEach((type, nodes) -> {
 			RenderSystem.setShaderTexture(0, loadTexture(type));
-			buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);
+			BufferBuilder buffer = tessellator.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);
 			for(Node node : nodes)
 				drawNode(camera, node, buffer, .12f, world);
-			BufferRenderer.drawWithShader(buffer.end());
+			BufferRenderer.draw(buffer.end());
 		});
 		
 		// second pass, hidden by blocks, requires goggles
@@ -103,18 +108,18 @@ public final class NodeRenderer{
 		if(hasGoggles){
 			nodesByType.forEach((type, nodes) -> {
 				RenderSystem.setShaderTexture(0, loadTexture(type));
-				buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);
+				BufferBuilder buffer = tessellator.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);
 				for(Node node : nodes)
 					drawNode(camera, node, buffer, .85f, world);
-				BufferRenderer.drawWithShader(buffer.end());
+				BufferRenderer.draw(buffer.end());
 			});
 			
 			Aspects.primals.forEach(primal -> {
 				RenderSystem.setShaderTexture(0, AspectRenderHelper.texture(primal));
-				buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);
+				BufferBuilder buffer = tessellator.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);
 				for(Node node : allVisible)
 					drawNodeAspect(camera, node, buffer, primal, world);
-				BufferRenderer.drawWithShader(buffer.end());
+				BufferRenderer.draw(buffer.end());
 			});
 			
 			for(Node node : allVisible){
@@ -122,26 +127,25 @@ public final class NodeRenderer{
 				for(Aspect aspect : node.getAspects().aspectSet())
 					if(!Aspects.primals.contains(aspect)){
 						RenderSystem.setShaderTexture(0, AspectRenderHelper.texture(aspect));
-						buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);
+						BufferBuilder buffer = tessellator.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);
 						drawNodeAspect(camera, node, buffer, aspect, world);
-						BufferRenderer.drawWithShader(buffer.end());
+						BufferRenderer.draw(buffer.end());
 					}
 			}
 			
 			for(Node node : allVisible)
 				for(Aspect aspect : node.getAspects().aspectSet())
-					drawNodeAspectCount(camera, node, buffer, aspect);
+					drawNodeAspectCount(camera, node, aspect);
 		}
 		
 		// show node hitboxes
 		if(showNodeHitboxes){
-			RenderSystem.setShader(GameRenderer::getRenderTypeLinesShader);
+			RenderSystem.setShader(GameRenderer::getRenderTypeLinesProgram);
 			RenderSystem.lineWidth(1f);
-			BufferBuilder bufferBuilder = tessellator.getBuffer();
-			bufferBuilder.begin(VertexFormat.DrawMode.LINES, VertexFormats.LINES);
+			BufferBuilder buffer = tessellator.begin(VertexFormat.DrawMode.LINES, VertexFormats.LINES);
 			for(Node node : allVisible)
-				WorldRenderer.drawBox(new MatrixStack(), bufferBuilder, node.bounds().offset(camera.getPos().negate()), 0f, 0.5f, 1f, 1f);
-			tessellator.draw();
+				WorldRenderer.drawBox(new MatrixStack(), buffer, node.bounds().offset(camera.getPos().negate()), 0f, 0.5f, 1f, 1f);
+			BufferRenderer.draw(buffer.end());
 		}
 		
 		RenderSystem.depthMask(true);
@@ -176,13 +180,13 @@ public final class NodeRenderer{
 		return WorldRenderer.getLightmapCoordinates(world, n.asBlockPos());
 	}
 	
-	private static Vec3f offsetFor(Node n){
+	private static Vector3f offsetFor(Node n){
 		float timer = stateFor(n).shakeTimer;
 		if(timer <= 0)
-			return Vec3f.ZERO.copy();
+			return new Vector3f();
 		Random rng = MinecraftClient.getInstance().world.random;
-		Vec3f f = new Vec3f(rng.nextFloat() - 0.5f, rng.nextFloat() - 0.5f, rng.nextFloat() - 0.5f);
-		f.scale(MathHelper.sqrt(timer) / 15);
+		Vector3f f = new Vector3f(rng.nextFloat() - 0.5f, rng.nextFloat() - 0.5f, rng.nextFloat() - 0.5f);
+		f.mul(MathHelper.sqrt(timer) / 15);
 		return f;
 	}
 	
@@ -190,7 +194,7 @@ public final class NodeRenderer{
 	
 	private static void drawNode(Camera camera, Node node, BufferBuilder buffer, float alpha, World w){
 		float scale = scaleFor(node);
-		Vec3f offset = offsetFor(node);
+		Vector3f offset = offsetFor(node);
 		offset.add(-scale, -scale, 0);
 		drawQuad(camera, node, offset, buffer, alpha, scale * 2, v(node, false, w), v(node, true, w), 1, lightFor(node, w));
 	}
@@ -201,10 +205,10 @@ public final class NodeRenderer{
 			return;
 		float scale = .7f;
 		// calculate positions in a circle around the node
-		Vec3f offset = Vec3f.POSITIVE_Y.copy();
-		offset.scale(1.2f * ns.aspectLerp);
+		Vector3f offset = new Vector3f(0, 1, 0);
+		offset.mul(1.2f * ns.aspectLerp);
 		offset.add(0, 0, -0.01f);
-		offset.rotate(Quaternion.fromEulerXyz(0, 0, (float)((Math.PI * 2) * (node.getAspects().indexOf(aspect) / (float)node.getAspects().size()))));
+		offset.rotate(RotationAxis.POSITIVE_Z.rotation((float)((Math.PI * 2) * (node.getAspects().indexOf(aspect) / (float)node.getAspects().size()))));
 		// centre, face to camera
 		offset.add(-scale / 2, -scale / 2, 0);
 		
@@ -218,7 +222,7 @@ public final class NodeRenderer{
 		drawQuad(camera, node, offset, buffer, alpha / 2, scale, 0, 1 - frac, 1 - frac, lightFor(node, world));
 	}
 	
-	private static void drawNodeAspectCount(Camera camera, Node node, BufferBuilder buffer, Aspect aspect){
+	private static void drawNodeAspectCount(Camera camera, Node node, Aspect aspect){
 		if(!node.getAspects().contains(aspect))
 			return;
 		
@@ -232,37 +236,41 @@ public final class NodeRenderer{
 			alpha = 4 / 255f;
 		var intAlpha = (int)(alpha * 255) << 24;
 		
-		Vec3f offset = Vec3f.POSITIVE_Y.copy();
-		offset.scale(1.2f * ns.aspectLerp);
-		offset.rotate(Quaternion.fromEulerXyz(0, 0, (float)((Math.PI * 2) * (node.getAspects().indexOf(aspect) / (float)node.getAspects().size()))));
+		Vector3f offset = new Vector3f(0, 1, 0);
+		offset.mul(1.2f * ns.aspectLerp);
+		offset.rotate(RotationAxis.POSITIVE_Z.rotation((float)((Math.PI * 2) * (node.getAspects().indexOf(aspect) / (float)node.getAspects().size()))));
 		
-		MatrixStack stack = RenderSystem.getModelViewStack();
-		stack.push();
-		stack.multiply(camera.getRotation());
-		stack.translate(-node.getX(), node.getY(), -node.getZ());
-		stack.translate(camera.getPos().x, -camera.getPos().y, camera.getPos().z);
-		var o = camera.getRotation().toEulerXyz();
-		stack.multiply(Quaternion.fromEulerXyz(0, o.getY(), 0));
-		stack.multiply(Quaternion.fromEulerXyz(-o.getX(), 0, -o.getZ()));
-		stack.translate(-offset.getX(), offset.getY(), offset.getZ());
-		stack.multiply(Quaternion.fromEulerXyz(0, (float)Math.PI, (float)Math.PI));
+		var vcp = VertexConsumerProvider.immediate(new BufferAllocator(512));
+		Matrix4fStack stack = RenderSystem.getModelViewStack();
+		stack.pushMatrix();
+		stack.rotate(camera.getRotation());
+		stack.translate((float)-node.getX(), (float)node.getY(), (float)-node.getZ());
+		stack.translate((float)camera.getPos().x, (float)-camera.getPos().y, (float)camera.getPos().z);
+		Vector3f o = camera.getRotation().getEulerAnglesXYZ(new Vector3f());
+		stack.rotate(RotationAxis.POSITIVE_Y.rotation(o.y()));
+		stack.rotate(RotationAxis.POSITIVE_X.rotation(-o.x()));
+		stack.rotate(RotationAxis.POSITIVE_Z.rotation(-o.z()));
+		stack.translate(-offset.x(), offset.y(), offset.z());
+		stack.rotate(RotationAxis.POSITIVE_Y.rotation((float)Math.PI));
+		stack.rotate(RotationAxis.POSITIVE_Z.rotation((float)Math.PI));
 		stack.scale(.035f, .035f, .1f);
-		stack.translate(0, 0, -0.25);
-		MinecraftClient.getInstance().textRenderer.draw(stack, amount, 0, 0, 0xFFFFFF | intAlpha);
-		stack.translate(1, 1, 0.1);
-		MinecraftClient.getInstance().textRenderer.draw(stack, amount, 0, 0, 0x666666 | intAlpha);
-		stack.pop();
+		stack.translate(0, 0, -0.25f);
+		MinecraftClient.getInstance().textRenderer.draw(amount, 0, 0, 0xFFFFFF | intAlpha, false, stack.get(new Matrix4f()), vcp, TextRenderer.TextLayerType.POLYGON_OFFSET, 0, LightmapTextureManager.MAX_LIGHT_COORDINATE);
+		stack.translate(1, 1, 0.1f);
+		MinecraftClient.getInstance().textRenderer.draw(amount, 0, 0, 0xFFFFFF | intAlpha, false, stack.get(new Matrix4f()), vcp, TextRenderer.TextLayerType.POLYGON_OFFSET, 0, LightmapTextureManager.MAX_LIGHT_COORDINATE);
+		stack.popMatrix();
+		vcp.draw();
 	}
 	
-	private static void drawQuad(Camera camera, Position pos, Vec3f offset, VertexConsumer cons, float alpha, float scale, float minV, float maxV, float height, int light){
+	private static void drawQuad(Camera camera, Position pos, Vector3f offset, VertexConsumer cons, float alpha, float scale, float minV, float maxV, float height, int light){
 		if(alpha <= 0)
 			return;
 		
 		// based on BillboardParticle
-		Vec3f[] corners = { new Vec3f(0, 0, 0), new Vec3f(0, height, 0), new Vec3f(1, height, 0), new Vec3f(1, 0, 0) };
-		Quaternion rot = camera.getRotation();
-		for(Vec3f corner : corners){
-			corner.scale(scale);
+		Vector3f[] corners = { new Vector3f(0, 0, 0), new Vector3f(0, height, 0), new Vector3f(1, height, 0), new Vector3f(1, 0, 0) };
+		Quaternionf rot = camera.getRotation();
+		for(Vector3f corner : corners){
+			corner.mul(scale);
 			corner.add(offset);
 			corner.rotate(rot);
 			corner.add((float)(pos.getX() - camera.getPos().x),
@@ -270,26 +278,22 @@ public final class NodeRenderer{
 			           (float)(pos.getZ() - camera.getPos().z));
 		}
 		
-		cons.vertex(corners[0].getX(), corners[0].getY(), corners[0].getZ())
+		cons.vertex(corners[0].x(), corners[0].y(), corners[0].z())
 				.texture(1, maxV)
 				.color(1, 1, 1, alpha)
-				.light(light)
-				.next();
-		cons.vertex(corners[1].getX(), corners[1].getY(), corners[1].getZ())
+				.light(light);
+		cons.vertex(corners[1].x(), corners[1].y(), corners[1].z())
 				.texture(1, minV)
 				.color(1, 1, 1, alpha)
-				.light(light)
-				.next();
-		cons.vertex(corners[2].getX(), corners[2].getY(), corners[2].getZ())
+				.light(light);
+		cons.vertex(corners[2].x(), corners[2].y(), corners[2].z())
 				.texture(0, minV)
 				.color(1, 1, 1, alpha)
-				.light(light)
-				.next();
-		cons.vertex(corners[3].getX(), corners[3].getY(), corners[3].getZ())
+				.light(light);
+		cons.vertex(corners[3].x(), corners[3].y(), corners[3].z())
 				.texture(0, maxV)
 				.color(1, 1, 1, alpha)
-				.light(light)
-				.next();
+				.light(light);
 	}
 	
 	@SuppressWarnings("IntegerDivisionInFloatingPointContext") // intentional

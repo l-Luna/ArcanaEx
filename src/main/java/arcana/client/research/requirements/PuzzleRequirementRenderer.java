@@ -8,10 +8,8 @@ import arcana.research.Puzzle;
 import arcana.research.Research;
 import arcana.research.puzzles.Fieldwork;
 import arcana.research.requirements.PuzzleRequirement;
-import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.resource.language.I18n;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
@@ -28,10 +26,9 @@ public class PuzzleRequirementRenderer implements RequirementRenderer<PuzzleRequ
 	public static final Identifier FIELDWORK_TEX = arcId("textures/gui/research/fieldwork.png");
 	public static final Identifier RESEARCH_NOTE_TEX = arcId("textures/gui/research/research_note.png");
 	
-	public void render(MatrixStack matrices, int x, int y, PuzzleRequirement requirement, int time, float delta){
+	public void render(DrawContext ctx, int x, int y, PuzzleRequirement requirement, int time, float delta){
 		Puzzle puzzle = Research.getPuzzle(requirement.getPuzzleId());
-		RenderSystem.setShaderTexture(0, puzzle instanceof Fieldwork ? FIELDWORK_TEX : RESEARCH_NOTE_TEX);
-		DrawableHelper.drawTexture(matrices, x, y, 101, 0, 0, 16, 16, 16, 16);
+		ctx.drawTexture(puzzle instanceof Fieldwork ? FIELDWORK_TEX : RESEARCH_NOTE_TEX, x, y, 101, 0, 0, 16, 16, 16, 16);
 	}
 	
 	public List<? extends Text> tooltip(PuzzleRequirement requirement, int time){

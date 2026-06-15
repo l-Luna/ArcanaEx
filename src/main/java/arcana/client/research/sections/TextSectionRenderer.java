@@ -6,6 +6,7 @@ import arcana.client.research.TextFormatter;
 import arcana.client.research.TextFormatter.Paragraph;
 import arcana.research.sections.TextSection;
 import arcana.screens.ResearchEntryScreen;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
@@ -21,7 +22,8 @@ public class TextSectionRenderer implements EntrySectionRenderer<TextSection>{
 	private static final Map<TextSection, List<Paragraph>> TEXT_CACHE = new HashMap<>();
 	private static final int PARAGRAPH_SPACING = 6;
 	
-	public void render(MatrixStack matrices, TextSection section, int pageIdx, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right){
+	public void render(DrawContext ctx, TextSection section, int pageIdx, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right){
+		MatrixStack matrices = ctx.getMatrices();
 		List<Paragraph> paragraphs = format(section);
 		matrices.push();
 		matrices.scale(scaling(), scaling(), 1);
@@ -35,7 +37,7 @@ public class TextSectionRenderer implements EntrySectionRenderer<TextSection>{
 			Paragraph paragraph = paragraphs.get(i);
 			if((curPageHeight + paragraph.getHeight()) < pageHeight()){
 				if(curPage == pageIdx){
-					paragraph.render(matrices, (int)lineX, (int)curY, scaling());
+					paragraph.render(ctx, (int)lineX, (int)curY, scaling());
 					curY += paragraph.getHeight() + 6;
 				}
 				curPageHeight += paragraph.getHeight() + PARAGRAPH_SPACING;
@@ -46,7 +48,7 @@ public class TextSectionRenderer implements EntrySectionRenderer<TextSection>{
 					// make sure this span gets added to the next line instead
 					i--;
 				else if(curPage == pageIdx){
-					paragraph.render(matrices, (int)lineX, (int)curY, scaling());
+					paragraph.render(ctx, (int)lineX, (int)curY, scaling());
 					curY += paragraph.getHeight() + 6;
 				}
 			}
@@ -55,7 +57,7 @@ public class TextSectionRenderer implements EntrySectionRenderer<TextSection>{
 		matrices.pop();
 	}
 	
-	public void renderAfter(MatrixStack matrices, TextSection section, int pageIdx, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right){
+	public void renderAfter(DrawContext ctx, TextSection section, int pageIdx, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right){
 		// no-op
 		// TODO: tooltip for aspect spans?
 	}

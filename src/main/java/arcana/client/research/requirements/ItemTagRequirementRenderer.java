@@ -3,11 +3,11 @@ package arcana.client.research.requirements;
 import arcana.ArcanaTags;
 import arcana.client.research.RequirementRenderer;
 import arcana.research.requirements.ItemTagRequirement;
-import net.minecraft.client.item.TooltipContext;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.resource.language.I18n;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -17,20 +17,21 @@ import java.util.List;
 
 public class ItemTagRequirementRenderer implements RequirementRenderer<ItemTagRequirement>{
 	
-	public void render(MatrixStack matrices, int x, int y, ItemTagRequirement requirement, int time, float delta){
+	public void render(DrawContext ctx, int x, int y, ItemTagRequirement requirement, int time, float delta){
 		List<Item> choices = ArcanaTags.itemsIn(requirement.getTag());
 		ItemStack choice = new ItemStack(choices.get((time / 30) % choices.size()));
 		
-		client().getItemRenderer().renderGuiItemIcon(choice, x, y);
+		ctx.drawItem(choice, x, y);
 	}
 	
 	public List<Text> tooltip(ItemTagRequirement requirement, int time){
 		List<Item> choices = ArcanaTags.itemsIn(requirement.getTag());
 		ItemStack choice = new ItemStack(choices.get((time / 30) % choices.size()));
 		
-		var tooltips = choice.getTooltip(
+		List<Text> tooltips = choice.getTooltip(
+				Item.TooltipContext.create(client().world),
 				client().player,
-				client().options.advancedItemTooltips ? TooltipContext.Default.ADVANCED : TooltipContext.Default.NORMAL
+				client().options.advancedItemTooltips ? TooltipType.Default.ADVANCED : TooltipType.Default.BASIC
 		);
 		tooltips = new ArrayList<>(tooltips);
 		if(requirement.getAmount() != 0)

@@ -5,9 +5,7 @@ import arcana.legacy_components.RunicShielding;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.render.RenderTickCounter;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
@@ -23,13 +21,11 @@ public final class RunicShieldingRenderer{
 	private static final Identifier overlayTexturePath = arcId("textures/gui/hud/runic_shielding_overlay.png");
 	
 	// y position is adjusted in InGameHudMixin
-	public static void renderShielding(MatrixStack matrices, int x, int y, PlayerEntity player){
+	public static void renderShielding(DrawContext ctx, int x, int y, PlayerEntity player){
 		MinecraftClient client = MinecraftClient.getInstance();
 		World w = client.world;
 		
 		client.getProfiler().push("arcana:runic_shielding");
-		RenderSystem.setShaderColor(1, 1, 1, 1);
-		RenderSystem.setShaderTexture(0, iconsTexturePath);
 		
 		RunicShielding shielding = RunicShielding.from(player);
 		int halfPoints = shielding.getHalfPoints();
@@ -46,12 +42,10 @@ public final class RunicShieldingRenderer{
 			int n = (i+1)*2;
 			int u = 0;
 			int bgV = flash ? 27 : 0;
-			DrawableHelper.drawTexture(matrices, x + 8 * i, y + bounce, 0, u, bgV, 9, 9, 128, 128);
+			ctx.drawTexture(iconsTexturePath, x + 8 * i, y + bounce, 0, u, bgV, 9, 9, 128, 128);
 			int fgV = n-1 == halfPoints ? 9 : n <= halfPoints ? 18 : 36;
-			DrawableHelper.drawTexture(matrices, x + 8 * i, y + bounce, 0, u, fgV, 9, 9, 128, 128);
+			ctx.drawTexture(iconsTexturePath, x + 8 * i, y + bounce, 0, u, fgV, 9, 9, 128, 128);
 		}
-		
-		RenderSystem.setShaderTexture(0, InGameHud.GUI_ICONS_TEXTURE);
 		client.getProfiler().pop();
 	}
 	
@@ -62,11 +56,11 @@ public final class RunicShieldingRenderer{
 			return;
 		
 		RunicShielding shielding = RunicShielding.from(player);
-		long timeSinceActivation = player.world.getTime() - shielding.getLastActivateTime();
+		long timeSinceActivation = player.getWorld().getTime() - shielding.getLastActivateTime();
 		if(timeSinceActivation < 13){
 			int scaledWidth = client.getWindow().getScaledWidth();
 			int scaledHeight = client.getWindow().getScaledHeight();
-			float opacity = Math.max(1- (timeSinceActivation + Math.min(tickDelta, 1)) / 13, 0.1f);
+			float opacity = Math.max(1- (timeSinceActivation + Math.min(delta.getTickDelta(true), 1)) / 13, 0.1f);
 			RenderSystem.setShaderColor(1, 1, 1, 1);
 			RenderSystem.setShaderTexture(0, overlayTexturePath);
 			// use scaled width/height as texture height to stretch texture

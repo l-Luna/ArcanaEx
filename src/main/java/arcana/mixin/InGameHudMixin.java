@@ -7,16 +7,17 @@ import arcana.effects.PressureStatusEffect;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.sugar.Local;
-import com.mojang.blaze3d.systems.RenderSystem;
 import it.unimi.dsi.fastutil.booleans.BooleanArrayList;
 import it.unimi.dsi.fastutil.booleans.BooleanList;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.hud.InGameHud;
+import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.client.texture.Sprite;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.math.MathHelper;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -33,40 +34,39 @@ public class InGameHudMixin extends DrawableHelper{
 	@Final
 	private MinecraftClient client;
 	@Unique
-	private final BooleanList suppressStack = new BooleanArrayList();
+	private static final BooleanList suppressStack = new BooleanArrayList();
 	
 	@Inject(method = "renderHealthBar", at = @At("TAIL"))
-	void renderRunicShieldingBars(MatrixStack matrices, PlayerEntity player, int x, int y, int _lines, int regeneratingHeartIndex, float maxHealth, int lastHealth, int health, int absorption, boolean blinking, CallbackInfo ci){
+	void renderRunicShieldingBars(DrawContext ctx, PlayerEntity player, int x, int y, int _lines, int regeneratingHeartIndex, float maxHealth, int lastHealth, int health, int absorption, boolean blinking, CallbackInfo ci){
 		int lines = MathHelper.ceil((maxHealth + absorption) / 20f);
 		y -= lines * 10;
 		if(player.getArmor() > 0)
 			y -= 10;
-		RunicShieldingRenderer.renderShielding(matrices, x, y, player);
+		RunicShieldingRenderer.renderShielding(ctx, x, y, player);
 	}
 	
 	@WrapMethod(method = "renderHealthBar")
-	void applyFrailEffect(MatrixStack matrices, PlayerEntity player, int x, int y, int lines, int regeneratingHeartIndex, float maxHealth, int lastHealth, int health, int absorption, boolean blinking, Operation<Void> original){
-		if(player.hasStatusEffect(ArcanaRegistry.WARP_FRAIL))
+	void applyFrailEffect(DrawContext ctx, PlayerEntity player, int x, int y, int lines, int regeneratingHeartIndex, float maxHealth, int lastHealth, int health, int absorption, boolean blinking, Operation<Void> original){
+		if(player.hasStatusEffect(RegistryEntry.of(ArcanaRegistry.WARP_FRAIL)))
 			lastHealth = health = 0;
-		original.call(matrices, player, x, y, lines, regeneratingHeartIndex, maxHealth, lastHealth, health, absorption, blinking);
+		original.call(ctx, player, x, y, lines, regeneratingHeartIndex, maxHealth, lastHealth, health, absorption, blinking);
 	}
 	
 	@Inject(method = "method_18620", at = @At("TAIL"))
-	void drawPressureOverlay(Sprite sprite, float opacity, MatrixStack matrices, int x, int y, CallbackInfo ci){
+	private static void drawPressureOverlay(DrawContext ctx, float alpha, int x, int y, Sprite sprite, CallbackInfo ci){
 		if(suppressStack.removeBoolean(0)){
-			RenderSystem.setShaderTexture(0, ArcanaClient.SUPPRESSED_EFFECT_TEX_PATH);
-			DrawableHelper.drawTexture(matrices, x + 1, y + 1, getZOffset(), 0, 0, 22, 22, 22, 22);
+			ctx.drawTexture(ArcanaClient.SUPPRESSED_EFFECT_TEX_PATH, x + 1, y + 1, 0, 0, 0, 22, 22, 22, 22);
 		}
 	}
 	
 	@Inject(method = "renderStatusEffectOverlay", at = @At(value = "HEAD"))
-	void initPressureOverlay(MatrixStack matrices, CallbackInfo ci){
+	void initPressureOverlay(DrawContext ctx, RenderTickCounter tickCounter, CallbackInfo ci){
 		suppressStack.clear();
 	}
 	
 	@Inject(method = "renderStatusEffectOverlay",
 	        at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z", shift = At.Shift.AFTER))
-	void queuePressureOverlay(MatrixStack matrices, CallbackInfo ci, @Local StatusEffect effect){
+	void queuePressureOverlay(DrawContext ctx, RenderTickCounter tickCounter, CallbackInfo ci, @Local StatusEffect effect){
 		suppressStack.add(PressureStatusEffect.suppresses(client.player, effect));
 	}
 }

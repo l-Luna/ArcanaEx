@@ -2,7 +2,7 @@ package arcana.client.research.sections;
 
 import arcana.research.sections.CookingRecipeSection;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.AbstractCookingRecipe;
 import net.minecraft.recipe.Recipe;
@@ -12,7 +12,7 @@ import static arcana.screens.ResearchEntryScreen.*;
 
 public class CookingRecipeSectionRenderer extends AbstractRecipeSectionRenderer<CookingRecipeSection>{
 	
-	protected void renderRecipe(MatrixStack matrices, Recipe<?> recipe, CookingRecipeSection section, int pageIdx, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right){
+	protected void renderRecipe(DrawContext ctx, Recipe<?> recipe, CookingRecipeSection section, int pageIdx, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right){
 		if(recipe instanceof AbstractCookingRecipe cr){
 			int x = right ? pageX + rightXOffset : pageX;
 			int inputX = x + (screenWidth - 256 + pageWidth) / 2 - 8;
@@ -24,7 +24,7 @@ public class CookingRecipeSectionRenderer extends AbstractRecipeSectionRenderer<
 		}
 	}
 	
-	protected void renderRecipeTooltips(MatrixStack matrices, Recipe<?> recipe, CookingRecipeSection section, int pageIdx, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right){
+	protected void renderRecipeTooltips(DrawContext ctx, Recipe<?> recipe, CookingRecipeSection section, int pageIdx, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right){
 		if(recipe instanceof AbstractCookingRecipe cr){
 			int x = right ? pageX + rightXOffset : pageX;
 			int inputX = x + (screenWidth - 256 + pageWidth) / 2 - 8;

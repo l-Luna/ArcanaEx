@@ -3,9 +3,7 @@ package arcana.client.research.requirements;
 import arcana.client.research.RequirementRenderer;
 import arcana.legacy_components.Researcher;
 import arcana.research.requirements.FociCastRequirement;
-import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
@@ -17,9 +15,8 @@ public class FociCastRequirementRenderer implements RequirementRenderer<FociCast
 	
 	public static final Identifier FOCI_CAST_TEX = arcId("textures/research/foci_cast.png");
 	
-	public void render(MatrixStack matrices, int x, int y, FociCastRequirement requirement, int time, float delta){
-		RenderSystem.setShaderTexture(0, FOCI_CAST_TEX);
-		DrawableHelper.drawTexture(matrices, x, y, 101, 0, 0, 16, 16, 16, 16);
+	public void render(DrawContext ctx, int x, int y, FociCastRequirement requirement, int time, float delta){
+		ctx.drawTexture(FOCI_CAST_TEX, x, y, 101, 0, 0, 16, 16, 16, 16);
 	}
 	
 	public List<? extends Text> tooltip(FociCastRequirement requirement, int time){

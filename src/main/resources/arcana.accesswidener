@@ -1,5 +1,7 @@
 accessWidener v1 named
 
+accessible method net/minecraft/client/font/TextRenderer getFontStorage (Lnet/minecraft/util/Identifier;)Lnet/minecraft/client/font/FontStorage;
+
 accessible field net/minecraft/entity/ai/goal/BowAttackGoal actor Lnet/minecraft/entity/mob/HostileEntity;
 accessible field net/minecraft/entity/ai/goal/BowAttackGoal targetSeeingTicker I
 accessible field net/minecraft/entity/ai/goal/BowAttackGoal squaredRange F

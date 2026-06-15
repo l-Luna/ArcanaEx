@@ -2,7 +2,7 @@ package arcana.client.research.sections;
 
 import arcana.research.sections.CraftingRecipeSection;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.CraftingRecipe;
 import net.minecraft.recipe.Recipe;
@@ -13,7 +13,7 @@ import static arcana.screens.ResearchEntryScreen.*;
 
 public class CraftingRecipeSectionRenderer extends AbstractRecipeSectionRenderer<CraftingRecipeSection>{
 	
-	protected void renderRecipe(MatrixStack matrices, Recipe<?> recipe, CraftingRecipeSection section, int pageIdx, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right){
+	protected void renderRecipe(DrawContext ctx, Recipe<?> recipe, CraftingRecipeSection section, int pageIdx, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right){
 		if(recipe instanceof CraftingRecipe cr){
 			int x = right ? pageX + rightXOffset : pageX;
 			int ulX = x + (screenWidth - 256 + pageWidth) / 2 - 32, ulY = pageY + (screenHeight - bgHeight + pageHeight) / 2 - 10 - heightOffset;
@@ -38,7 +38,7 @@ public class CraftingRecipeSectionRenderer extends AbstractRecipeSectionRenderer
 		}
 	}
 	
-	protected void renderRecipeTooltips(MatrixStack matrices, Recipe<?> recipe, CraftingRecipeSection section, int pageIdx, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right){
+	protected void renderRecipeTooltips(DrawContext ctx, Recipe<?> recipe, CraftingRecipeSection section, int pageIdx, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right){
 		if(recipe instanceof CraftingRecipe cr){
 			int x = right ? pageX + rightXOffset : pageX;
 			int ulX = x + (screenWidth - 256 + pageWidth) / 2 - 32, ulY = pageY + (screenHeight - bgHeight + pageHeight) / 2 - 10 - heightOffset;

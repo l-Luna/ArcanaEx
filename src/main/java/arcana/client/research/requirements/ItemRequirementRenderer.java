@@ -3,9 +3,10 @@ package arcana.client.research.requirements;
 import arcana.client.research.RequirementRenderer;
 import arcana.items.WandItem;
 import arcana.research.requirements.ItemRequirement;
-import net.minecraft.client.item.TooltipContext;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.gui.DrawContext;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Text;
 
 import java.util.ArrayList;
@@ -13,22 +14,23 @@ import java.util.List;
 
 public class ItemRequirementRenderer implements RequirementRenderer<ItemRequirement>{
 	
-	public void render(MatrixStack matrices, int x, int y, ItemRequirement requirement, int time, float delta){
+	public void render(DrawContext ctx, int x, int y, ItemRequirement requirement, int time, float delta){
 		var stack = new ItemStack(requirement.getItem());
 		stack = requirement.getMatcher().preview(stack);
 		if(requirement.getItem() instanceof WandItem)
 			stack = WandItem.basicWand();
-		client().getItemRenderer().renderGuiItemIcon(stack, x, y);
+		ctx.drawItem(stack, x, y);
 	}
 	
 	public List<Text> tooltip(ItemRequirement requirement, int time){
-		var stack = new ItemStack(requirement.getItem());
+		ItemStack stack = new ItemStack(requirement.getItem());
 		stack = requirement.getMatcher().preview(stack);
 		if(requirement.getItem() instanceof WandItem)
 			stack = WandItem.basicWand();
-		var tooltips = stack.getTooltip(
+		List<Text> tooltips = stack.getTooltip(
+				Item.TooltipContext.create(client().world),
 				client().player,
-				client().options.advancedItemTooltips ? TooltipContext.Default.ADVANCED : TooltipContext.Default.NORMAL
+				client().options.advancedItemTooltips ? TooltipType.Default.ADVANCED : TooltipType.Default.BASIC
 		);
 		tooltips = new ArrayList<>(tooltips);
 		if(requirement.getAmount() != 0)

@@ -9,13 +9,13 @@ import arcana.research.Entry;
 import arcana.research.Research;
 import arcana.research.sections.TextSection;
 import arcana.screens.ResearchEntryScreen;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.*;
-import net.minecraft.client.render.Tessellator;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.resource.language.I18n;
+import net.minecraft.client.util.BufferAllocator;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Style;
 import net.minecraft.util.math.MathHelper;
@@ -37,7 +37,7 @@ public class TextFormatter{
 	
 	public interface Span{
 		
-		void render(MatrixStack stack, int x, int y);
+		void render(DrawContext ctx, int x, int y);
 		
 		float getWidth();
 		
@@ -45,70 +45,71 @@ public class TextFormatter{
 	}
 	
 	// TODO: text size, shadow
-		public record TextSpan(String text, CustomTextStyle renderStyle) implements Span{
+	public record TextSpan(String text, CustomTextStyle renderStyle) implements Span{
 		
-		public void render(MatrixStack stack, int x, int y){
-				if(renderStyle.getSize() != 1){
-					stack.push();
-					stack.scale(renderStyle.getSize(), renderStyle.getSize(), 1);
-				}
-				renderStringWithCustomFormatting(stack, text, renderStyle, x / renderStyle.getSize(), y / renderStyle.getSize());
-				if(renderStyle.getSize() != 1)
-					stack.pop();
+		public void render(DrawContext ctx, int x, int y){
+			if(renderStyle.getSize() != 1){
+				ctx.getMatrices().push();
+				ctx.getMatrices().scale(renderStyle.getSize(), renderStyle.getSize(), 1);
 			}
-			
-			public float getWidth(){
-				return width(text, renderStyle) * renderStyle.getSize() * (renderStyle.isSubscript() || renderStyle.isSuperscript() ? .6f : 1);
-			}
-			
-			public float getHeight(){
-				return (9 + (renderStyle.isWavy() ? 1 : 0)) * renderStyle.getSize();
-			}
+			renderStringWithCustomFormatting(ctx.getMatrices(), text, renderStyle, x / renderStyle.getSize(), y / renderStyle.getSize());
+			if(renderStyle.getSize() != 1)
+				ctx.getMatrices().pop();
 		}
+		
+		public float getWidth(){
+			return width(text, renderStyle) * renderStyle.getSize() * (renderStyle.isSubscript() || renderStyle.isSuperscript() ? .6f : 1);
+		}
+		
+		public float getHeight(){
+			return (9 + (renderStyle.isWavy() ? 1 : 0)) * renderStyle.getSize();
+		}
+	}
 	
 	public record AspectSpan(Aspect aspect) implements Span{
 		
-		public void render(MatrixStack stack, int x, int y){
-				if(aspect != null)
-					AspectRenderHelper.renderAspect(aspect, stack, x, y, 100, 1, 1, 1, 1);
-			}
-			
-			public float getWidth(){
-				return 16;
-			}
-			
-			public float getHeight(){
-				return 17;
-			}
+		public void render(DrawContext ctx, int x, int y){
+			if(aspect != null)
+				AspectRenderHelper.renderAspect(aspect, ctx, x, y, 100, 1, 1, 1, 1);
 		}
+		
+		public float getWidth(){
+			return 16;
+		}
+		
+		public float getHeight(){
+			return 17;
+		}
+	}
 	
 	public record MultiSpan(List<Span> spans) implements Span{
 		
-		public void render(MatrixStack stack, int x, int y){
-				for(Span span : spans){
-					span.render(stack, x, y);
-					x += span.getWidth();
-				}
-			}
-			
-			public float getWidth(){
-				float width = 0;
-				for(Span span : spans)
-					width += span.getWidth();
-				return width;
-			}
-			
-			public float getHeight(){
-				float height = 0;
-				for(Span span : spans)
-					height = Math.max(span.getHeight(), height);
-				return height;
+		public void render(DrawContext ctx, int x, int y){
+			float curX = x;
+			for(Span span : spans){
+				span.render(ctx, (int)curX, y);
+				curX += span.getWidth();
 			}
 		}
+		
+		public float getWidth(){
+			float width = 0;
+			for(Span span : spans)
+				width += span.getWidth();
+			return width;
+		}
+		
+		public float getHeight(){
+			float height = 0;
+			for(Span span : spans)
+				height = Math.max(span.getHeight(), height);
+			return height;
+		}
+	}
 	
 	public interface Paragraph{
 		
-		void render(MatrixStack stack, int x, int y, float scale);
+		void render(DrawContext ctx, int x, int y, float scale);
 		
 		float getHeight();
 	}
@@ -156,7 +157,7 @@ public class TextFormatter{
 			this(spans, false);
 		}
 		
-		public void render(MatrixStack stack, int x, int y, float scale){
+		public void render(DrawContext ctx, int x, int y, float scale){
 			float curY = 0;
 			for(List<Span> line : lines){
 				float curX = 0;
@@ -167,7 +168,7 @@ public class TextFormatter{
 				if(centred)
 					curX = (getTextWidth() - lineWidth) / 2;
 				for(Span span : line){
-					span.render(stack, (int)(x + curX), (int)(y + curY + (lineHeight - span.getHeight()) / 2));
+					span.render(ctx, (int)(x + curX), (int)(y + curY + (lineHeight - span.getHeight()) / 2));
 					curX += span.getWidth() + 5;
 				}
 				curY += lineHeight;
@@ -181,10 +182,9 @@ public class TextFormatter{
 	
 	public static class SeparatorParagraph implements Paragraph{
 		
-		public void render(MatrixStack stack, int x, int y, float scale){
-			var screen = (ResearchEntryScreen)(MinecraftClient.getInstance().currentScreen);
-			RenderSystem.setShaderTexture(0, screen.bg);
-			screen.drawTexture(stack, (int)(x + (getTextWidth() - 86) / 2), y + 3, 29, 184, 86, 3);
+		public void render(DrawContext ctx, int x, int y, float scale){
+			ResearchEntryScreen screen = (ResearchEntryScreen)(MinecraftClient.getInstance().currentScreen);
+			ctx.drawTexture(screen.bg, (int)(x + (getTextWidth() - 86) / 2), y + 3, 29, 184, 86, 3);
 		}
 		
 		public float getHeight(){
@@ -204,7 +204,7 @@ public class TextFormatter{
 			if(c == '\u00a7')
 				formatting = true;
 			else if(!formatting)
-				ret += font.getGlyph(c,false).getAdvance(style.isBold());
+				ret += font.getGlyph(c, false).getAdvance(style.isBold());
 			else
 				formatting = false;
 		return ret;
@@ -396,7 +396,7 @@ public class TextFormatter{
 			y /= .5f;
 			y = style.isSuperscript() ? y - 3 : y + 8;
 		}
-		VertexConsumerProvider.Immediate buffer = VertexConsumerProvider.immediate(Tessellator.getInstance().getBuffer());
+		VertexConsumerProvider.Immediate buffer = VertexConsumerProvider.immediate(new BufferAllocator(1536));
 		int colour = style.getColour();
 		float red = (float)(colour >> 16 & 255) / 255.0F;
 		float green = (float)(colour >> 8 & 255) / 255.0F;
@@ -409,7 +409,7 @@ public class TextFormatter{
 			if(!(renderer instanceof EmptyGlyphRenderer)){
 				float boldOffset = style.isBold() ? glyph.getBoldOffset() : 0;
 				float shadowOffset = style.isShadow() ? glyph.getShadowOffset() : 0;
-				float wavyOffset = style.isWavy() ? MathHelper.sin(x * -0.1f + (MinecraftClient.getInstance().getTickDelta() + MinecraftClient.getInstance().world.getTime() % 100000) / 8f) * 0.8f : 0;
+				float wavyOffset = style.isWavy() ? MathHelper.sin(x * -0.1f + (MinecraftClient.getInstance().getRenderTickCounter().getTickDelta(true) + MinecraftClient.getInstance().world.getTime() % 100000) / 8f) * 0.8f : 0;
 				if(style.isShadow()){
 					renderer.draw(style.isItalics(), x + shadowOffset, y + shadowOffset + wavyOffset, stack.peek().getPositionMatrix(), consumer, red * .25f, green * .25f, blue * .25f, .25f, 0xf000f0);
 					if(style.isBold())

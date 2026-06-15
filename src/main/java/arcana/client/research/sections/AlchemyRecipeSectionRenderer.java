@@ -5,10 +5,10 @@ import arcana.aspects.AspectStack;
 import arcana.client.AspectRenderHelper;
 import arcana.recipes.alchemy.AlchemyRecipe;
 import arcana.research.sections.AlchemyRecipeSection;
-import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Recipe;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
 
 import java.util.Comparator;
@@ -20,29 +20,29 @@ import static arcana.screens.ResearchEntryScreen.*;
 
 public class AlchemyRecipeSectionRenderer extends AbstractRecipeSectionRenderer<AlchemyRecipeSection>{
 	
-	protected void renderRecipe(MatrixStack matrices, Recipe<?> recipe, AlchemyRecipeSection section, int pageIdx, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right){
+	protected void renderRecipe(DrawContext ctx, Recipe<?> recipe, AlchemyRecipeSection section, int pageIdx, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right){
 		if(recipe instanceof AlchemyRecipe ar){
 			int x = right ? pageX + rightXOffset : pageX;
 			
 			int ulX = x + (screenWidth - 256 + pageWidth) / 2 - 35;
 			int ulY = pageY + (screenHeight - bgHeight + pageHeight) / 2 - 10 - heightOffset;
-			RenderSystem.setShaderTexture(0, overlayTexture(section));
-			drawTexture(matrices, ulX, ulY, 101, 73, 1, 70, 70, 256, 256);
-			drawTexture(matrices, ulX + 19, ulY - 4, 101, 23, 145, 17, 17, 256, 256);
+			Identifier texture = overlayTexture(section);
+			ctx.drawTexture(texture, ulX, ulY, 101, 73, 1, 70, 70, 256, 256);
+			ctx.drawTexture(texture, ulX + 19, ulY - 4, 101, 23, 145, 17, 17, 256, 256);
 			
 			int inputX = ulX + 1, inputY = ulY - 5;
 			ItemStack[] stacks = ar.getIngredients().get(0).getMatchingStacks();
-			client().getItemRenderer().renderInGui(stacks[displayIdx(stacks.length)], inputX, inputY);
+			ctx.drawItem(stacks[displayIdx(stacks.length)], inputX, inputY);
 			
 			// Display aspects
 			int aspectStartX = ulX + 12;
 			int aspectStartY = ulY + 20;
 			positionAspects(ar.getConsumedAspects(null), aspectStartX, aspectStartY).forEach((stack, pos) ->
-					AspectRenderHelper.renderAspectStack(stack, matrices, textRenderer(), pos.getLeft(), pos.getRight(), 101));
+					AspectRenderHelper.renderAspectStack(stack, ctx, textRenderer(), pos.getLeft(), pos.getRight(), 101));
 		}
 	}
 	
-	protected void renderRecipeTooltips(MatrixStack matrices, Recipe<?> recipe, AlchemyRecipeSection section, int pageIdx, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right){
+	protected void renderRecipeTooltips(DrawContext ctx, Recipe<?> recipe, AlchemyRecipeSection section, int pageIdx, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right){
 		if(recipe instanceof AlchemyRecipe ar){
 			int x = right ? pageX + rightXOffset : pageX;
 			
@@ -51,13 +51,13 @@ public class AlchemyRecipeSectionRenderer extends AbstractRecipeSectionRenderer<
 			
 			int inputX = ulX + 1, inputY = ulY - 5;
 			ItemStack[] stacks = ar.getIngredients().get(0).getMatchingStacks();
-			tooltipArea(matrices, stacks[displayIdx(stacks.length)], mouseX, mouseY, inputX, inputY);
+			tooltipArea(ctx, stacks[displayIdx(stacks.length)], mouseX, mouseY, inputX, inputY);
 			
 			// Display aspects
 			int aspectStartX = ulX + 12;
 			int aspectStartY = ulY + 20;
 			positionAspects(ar.getConsumedAspects(null), aspectStartX, aspectStartY).forEach((stack, pos) ->
-					tooltipArea(matrices, stack.type(), mouseX, mouseY, pos.getLeft(), pos.getRight()));
+					tooltipArea(ctx, stack.type(), mouseX, mouseY, pos.getLeft(), pos.getRight()));
 		}
 	}
 	

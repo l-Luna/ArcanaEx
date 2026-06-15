@@ -10,9 +10,7 @@ import arcana.network.PkChemistryClick;
 import arcana.network.PkChemistryCombineAspects;
 import arcana.research.puzzles.Chemistry;
 import arcana.research.puzzles.Chemistry.HexOffset;
-import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 
@@ -34,7 +32,7 @@ public class ChemistryPuzzleRenderer implements PuzzleRenderer<Chemistry>{
 	private static Aspect combineLeft, combineRight;
 	// TODO: paginate aspect display
 	
-	public void render(MatrixStack matrices, Chemistry puzzle, NbtCompound notesTag, int screenWidth, int screenHeight, int mouseX, int mouseY){
+	public void render(DrawContext ctx, Chemistry puzzle, NbtCompound notesTag, int screenWidth, int screenHeight, int mouseX, int mouseY){
 		int x = (screenWidth - bgWidth) / 2, y = (screenHeight - bgHeight) / 2;
 		
 		// draw stored aspects
@@ -42,39 +40,37 @@ public class ChemistryPuzzleRenderer implements PuzzleRenderer<Chemistry>{
 		List<AspectStack> stacks = aspects.asStacks();
 		stacks.sort(Comparator.comparing(AspectStack::type));
 		for(int i = 0; i < stacks.size(); i++){
-			var xPos = x + 9 + (i % 6) * 17;
-			var yPos = y + 33 + (i / 6) * 18;
-			AspectRenderHelper.renderAspectStack(stacks.get(i), matrices, xPos, yPos, 0);
+			int xPos = x + 9 + (i % 6) * 17;
+			int yPos = y + 33 + (i / 6) * 18;
+			AspectRenderHelper.renderAspectStack(stacks.get(i), ctx, xPos, yPos, 0);
 			if(within(mouseX, mouseY, xPos, yPos, 16))
-				highlight(matrices, xPos, yPos, 16);
+				highlight(ctx, xPos, yPos, 16);
 		}
 		
 		
 		// draw bottom part of sidebar
-		RenderSystem.setShaderTexture(0, overlayTex);
-		DrawableHelper.drawTexture(matrices, x + 9, y + 134, 0, 0, 192, 100, 26, 256, 256); // sidebar bg
-		DrawableHelper.drawTexture(matrices, x + 34, y + 139, 0, 0, 218, 18, 20, 256, 256); // left combo slot
-		DrawableHelper.drawTexture(matrices, x + 66, y + 139, 0, 0, 218, 18, 20, 256, 256); // right combo slot
+		ctx.drawTexture(overlayTex, x + 9, y + 134, 0, 0, 192, 100, 26, 256, 256); // sidebar bg
+		ctx.drawTexture(overlayTex, x + 34, y + 139, 0, 0, 218, 18, 20, 256, 256); // left combo slot
+		ctx.drawTexture(overlayTex, x + 66, y + 139, 0, 0, 218, 18, 20, 256, 256); // right combo slot
 		// combine button
 		if(combineLeft == null || combineRight == null || Aspects.combined(combineLeft, combineRight).isEmpty())
-			DrawableHelper.drawTexture(matrices, x + 55, y + 144, 0, 30, 179, 8, 10, 256, 256);
+			ctx.drawTexture(overlayTex, x + 55, y + 144, 0, 30, 179, 8, 10, 256, 256);
 		else if(within(mouseX, mouseY, x + 55, y + 144, 8, 10))
-			DrawableHelper.drawTexture(matrices, x + 55, y + 144, 0, 30, 159, 8, 10, 256, 256);
+			ctx.drawTexture(overlayTex, x + 55, y + 144, 0, 30, 159, 8, 10, 256, 256);
 		else
-			DrawableHelper.drawTexture(matrices, x + 55, y + 144, 0, 30, 169, 8, 10, 256, 256);
+			ctx.drawTexture(overlayTex, x + 55, y + 144, 0, 30, 169, 8, 10, 256, 256);
 		// combo slot aspects and highlights
 		if(combineLeft != null)
-			AspectRenderHelper.renderAspect(combineLeft, matrices, x + 35, y + 141, 0);
+			AspectRenderHelper.renderAspect(combineLeft, ctx, x + 35, y + 141, 0);
 		if(combineRight != null)
-			AspectRenderHelper.renderAspect(combineRight, matrices, x + 67, y + 141, 0);
+			AspectRenderHelper.renderAspect(combineRight, ctx, x + 67, y + 141, 0);
 		if(within(mouseX, mouseY, x + 35, y + 141, 16))
-			highlight(matrices, x + 35, y + 141, 16);
+			highlight(ctx, x + 35, y + 141, 16);
 		if(within(mouseX, mouseY, x + 67, y + 141, 16))
-			highlight(matrices, x + 67, y + 141, 16);
+			highlight(ctx, x + 67, y + 141, 16);
 		
 		// draw paper & hex grid
-		RenderSystem.setShaderTexture(0, overlayTex);
-		DrawableHelper.drawTexture(matrices, x + 119, y + 19, 0, 0, 25, 198, 134, 256, 256);
+		ctx.drawTexture(overlayTex, x + 119, y + 19, 0, 0, 25, 198, 134, 256, 256);
 		
 		// hexes have 3 pixels of vertical overlap and 2 pixels of horizontal spacing
 		int size = puzzle.getSize();
@@ -86,8 +82,8 @@ public class ChemistryPuzzleRenderer implements PuzzleRenderer<Chemistry>{
 		// build grid & draw aspects
 		processHexes(size, x, y, (xPos, yPos, turn, rx, ry) -> {
 			if(turn % nodeGap == 0){
-				var node = puzzle.getNodes().get(turn / nodeGap);
-				AspectRenderHelper.renderAspect(node, matrices, xPos + 2, yPos + 2, 1);
+				Aspect node = puzzle.getNodes().get(turn / nodeGap);
+				AspectRenderHelper.renderAspect(node, ctx, xPos + 2, yPos + 2, 1);
 				grid.put(new HexOffset(rx, ry), node);
 				return false;
 			}
@@ -95,13 +91,12 @@ public class ChemistryPuzzleRenderer implements PuzzleRenderer<Chemistry>{
 			if(puzzle.excludedByFlux(rx, ry))
 				return false;
 			
-			RenderSystem.setShaderTexture(0, overlayTex);
-			DrawableHelper.drawTexture(matrices, xPos, yPos, 0, 0, 0, 20, 20, 256, 256);
+			ctx.drawTexture(overlayTex, xPos, yPos, 0, 0, 0, 20, 20, 256, 256);
 			
 			String hexId = rx + "," + ry;
 			if(gridTag.contains(hexId)){
-				var aspect = Aspects.byName(gridTag.getString(hexId));
-				AspectRenderHelper.renderAspect(aspect, matrices, xPos + 2, yPos + 2, 0);
+				Aspect aspect = Aspects.byName(gridTag.getString(hexId));
+				AspectRenderHelper.renderAspect(aspect, ctx, xPos + 2, yPos + 2, 0);
 				grid.put(new HexOffset(rx, ry), aspect);
 			}
 			
@@ -109,9 +104,8 @@ public class ChemistryPuzzleRenderer implements PuzzleRenderer<Chemistry>{
 		});
 		
 		// draw connections
-		RenderSystem.setShaderTexture(0, overlayTex);
 		processHexes(size, x, y, (xPos, yPos, turn, rx, ry) -> {
-			var pos = new HexOffset(rx, ry);
+			HexOffset pos = new HexOffset(rx, ry);
 			Aspect self = grid.get(pos);
 			if(self != null)
 				for(HexOffset offset : Chemistry.neighborsByRow(ry)){
@@ -119,12 +113,12 @@ public class ChemistryPuzzleRenderer implements PuzzleRenderer<Chemistry>{
 					Aspect neighbor = grid.get(neighborPos);
 					if(neighbor != null && (self.equals(neighbor.left()) || self.equals(neighbor.right())))
 						switch(offset.turn()){
-							case 0 -> DrawableHelper.drawTexture(matrices, xPos + 17, yPos + 8, 0, 42, 11, 8, 5, 256, 256);
-							case 1 -> DrawableHelper.drawTexture(matrices, xPos + 12, yPos + 15, 0, 37, 18, 7, 7, 256, 256);
-							case 2 -> DrawableHelper.drawTexture(matrices, xPos + 1, yPos + 15, 0, 26, 18, 7, 7, 256, 256);
-							case 3 -> DrawableHelper.drawTexture(matrices, xPos - 5, yPos + 8, 0, 20, 11, 8, 5, 256, 256);
-							case 4 -> DrawableHelper.drawTexture(matrices, xPos + 1, yPos - 3, 0, 26, 0, 7, 7, 256, 256);
-							case 5 -> DrawableHelper.drawTexture(matrices, xPos + 12, yPos - 3, 0, 37, 0, 7, 7, 256, 256);
+							case 0 -> ctx.drawTexture(overlayTex, xPos + 17, yPos + 8, 0, 42, 11, 8, 5, 256, 256);
+							case 1 -> ctx.drawTexture(overlayTex, xPos + 12, yPos + 15, 0, 37, 18, 7, 7, 256, 256);
+							case 2 -> ctx.drawTexture(overlayTex, xPos + 1, yPos + 15, 0, 26, 18, 7, 7, 256, 256);
+							case 3 -> ctx.drawTexture(overlayTex, xPos - 5, yPos + 8, 0, 20, 11, 8, 5, 256, 256);
+							case 4 -> ctx.drawTexture(overlayTex, xPos + 1, yPos - 3, 0, 26, 0, 7, 7, 256, 256);
+							case 5 -> ctx.drawTexture(overlayTex, xPos + 12, yPos - 3, 0, 37, 0, 7, 7, 256, 256);
 						}
 				}
 			
@@ -135,12 +129,12 @@ public class ChemistryPuzzleRenderer implements PuzzleRenderer<Chemistry>{
 		processHexes(size, x, y, (xPos, yPos, turn, rx, ry) -> {
 			if(turn % nodeGap != 0)
 				if(within(mouseX, mouseY, xPos + 1, yPos + 2, 18, 16) && !puzzle.excludedByFlux(rx, ry))
-					highlight(matrices, xPos + 1, yPos + 2, 18, 16);
+					highlight(ctx, xPos + 1, yPos + 2, 18, 16);
 			return false;
 		});
 		
 		if(selected != null)
-			AspectRenderHelper.renderAspect(selected, matrices, mouseX, mouseY, 1000);
+			AspectRenderHelper.renderAspect(selected, ctx, mouseX, mouseY, 1000);
 	}
 	
 	public boolean onClick(int button, Chemistry puzzle, NbtCompound notesTag, int screenWidth, int screenHeight, int mouseX, int mouseY){
@@ -150,8 +144,8 @@ public class ChemistryPuzzleRenderer implements PuzzleRenderer<Chemistry>{
 		List<AspectStack> stacks = aspects.asStacks();
 		stacks.sort(Comparator.comparing(AspectStack::type));
 		for(int i = 0; i < stacks.size(); i++){
-			var xPos = x + 9 + (i % 6) * 17;
-			var yPos = y + 33 + (i / 6) * 18;
+			int xPos = x + 9 + (i % 6) * 17;
+			int yPos = y + 33 + (i / 6) * 18;
 			if(within(mouseX, mouseY, xPos, yPos, 16)){
 				if(button == 0){
 					selected = stacks.get(i).type();
@@ -223,7 +217,7 @@ public class ChemistryPuzzleRenderer implements PuzzleRenderer<Chemistry>{
 		});
 	}
 	
-	public void renderAfter(MatrixStack matrices, Chemistry puzzle, NbtCompound notesTag, int screenWidth, int screenHeight, int mouseX, int mouseY){
+	public void renderAfter(DrawContext ctx, Chemistry puzzle, NbtCompound notesTag, int screenWidth, int screenHeight, int mouseX, int mouseY){
 		if(selected != null)
 			return;
 		
@@ -234,22 +228,22 @@ public class ChemistryPuzzleRenderer implements PuzzleRenderer<Chemistry>{
 		List<AspectStack> stacks = aspects.asStacks();
 		stacks.sort(Comparator.comparing(AspectStack::type));
 		for(int i = 0; i < stacks.size(); i++){
-			var xPos = x + 9 + (i % 6) * 17;
-			var yPos = y + 33 + (i / 6) * 18;
+			int xPos = x + 9 + (i % 6) * 17;
+			int yPos = y + 33 + (i / 6) * 18;
 			if(within(mouseX, mouseY, xPos, yPos, 16)){
-				AspectRenderHelper.renderAspectTooltip(stacks.get(i).type(), matrices, mouseX, mouseY);
+				AspectRenderHelper.renderAspectTooltip(stacks.get(i).type(), ctx, mouseX, mouseY);
 				return;
 			}
 		}
 		
 		// bottom of sidebar
 		if(combineLeft != null && within(mouseX, mouseY, x + 35, y + 141, 16)){
-			AspectRenderHelper.renderAspectTooltip(combineLeft, matrices, mouseX, mouseY);
+			AspectRenderHelper.renderAspectTooltip(combineLeft, ctx, mouseX, mouseY);
 			return;
 		}
 		
 		if(combineRight != null && within(mouseX, mouseY, x + 67, y + 141, 16)){
-			AspectRenderHelper.renderAspectTooltip(combineRight, matrices, mouseX, mouseY);
+			AspectRenderHelper.renderAspectTooltip(combineRight, ctx, mouseX, mouseY);
 			return;
 		}
 		
@@ -259,15 +253,15 @@ public class ChemistryPuzzleRenderer implements PuzzleRenderer<Chemistry>{
 		NbtCompound gridTag = notesTag.getCompound("grid_aspects");
 		processHexes(size, x, y, (xPos, yPos, turn, rx, ry) -> {
 			if(turn % nodeGap == 0 && within(mouseX, mouseY, xPos + 1, yPos + 2, 18, 16)){
-				var node = puzzle.getNodes().get(turn / nodeGap);
-				AspectRenderHelper.renderAspectTooltip(node, matrices, mouseX, mouseY);
+				Aspect node = puzzle.getNodes().get(turn / nodeGap);
+				AspectRenderHelper.renderAspectTooltip(node, ctx, mouseX, mouseY);
 				return true;
 			}
 			
 			String hexId = rx + "," + ry;
 			if(gridTag.contains(hexId) && within(mouseX, mouseY, xPos + 1, yPos + 2, 18, 16)){
-				var aspect = Aspects.byName(gridTag.getString(hexId));
-				AspectRenderHelper.renderAspectTooltip(aspect, matrices, mouseX, mouseY);
+				Aspect aspect = Aspects.byName(gridTag.getString(hexId));
+				AspectRenderHelper.renderAspectTooltip(aspect, ctx, mouseX, mouseY);
 				return true;
 			}
 			
@@ -275,30 +269,28 @@ public class ChemistryPuzzleRenderer implements PuzzleRenderer<Chemistry>{
 		});
 	}
 	
-	public void renderComplete(MatrixStack matrices, Chemistry puzzle, NbtCompound notesTag, int screenWidth, int screenHeight, int mouseX, int mouseY){
+	public void renderComplete(DrawContext ctx, Chemistry puzzle, NbtCompound notesTag, int screenWidth, int screenHeight, int mouseX, int mouseY){
 		// only draw the grid
 		int x = (screenWidth - bgWidth) / 2, y = (screenHeight - bgHeight) / 2;
-		RenderSystem.setShaderTexture(0, overlayTex);
-		DrawableHelper.drawTexture(matrices, x + 119, y + 19, 0, 0, 25, 198, 134, 256, 256);
+		ctx.drawTexture(overlayTex, x + 119, y + 19, 0, 0, 25, 198, 134, 256, 256);
 		
-		var size = puzzle.getSize();
+		int size = puzzle.getSize();
 		int nodeGap = (size - 1) * 6 / puzzle.getNodes().size();
 		NbtCompound gridTag = notesTag.getCompound("grid_aspects");
 		Map<HexOffset, Aspect> grid = new HashMap<>(gridTag.getKeys().size() + puzzle.getNodes().size());
 		processHexes(size, x, y, (xPos, yPos, turn, rx, ry) -> {
 			if(turn % nodeGap == 0){
-				var node = puzzle.getNodes().get(turn / nodeGap);
-				AspectRenderHelper.renderAspect(node, matrices, xPos + 2, yPos + 2, 1);
+				Aspect node = puzzle.getNodes().get(turn / nodeGap);
+				AspectRenderHelper.renderAspect(node, ctx, xPos + 2, yPos + 2, 1);
 				grid.put(new HexOffset(rx, ry), node);
 				return false;
 			}
 			
 			String hexId = rx + "," + ry;
 			if(gridTag.contains(hexId)){
-				RenderSystem.setShaderTexture(0, overlayTex);
-				DrawableHelper.drawTexture(matrices, xPos, yPos, 0, 0, 0, 20, 20, 256, 256);
-				var aspect = Aspects.byName(gridTag.getString(hexId));
-				AspectRenderHelper.renderAspect(aspect, matrices, xPos + 2, yPos + 2, 0);
+				ctx.drawTexture(overlayTex, xPos, yPos, 0, 0, 0, 20, 20, 256, 256);
+				Aspect aspect = Aspects.byName(gridTag.getString(hexId));
+				AspectRenderHelper.renderAspect(aspect, ctx, xPos + 2, yPos + 2, 0);
 				grid.put(new HexOffset(rx, ry), aspect);
 			}
 			
@@ -306,9 +298,8 @@ public class ChemistryPuzzleRenderer implements PuzzleRenderer<Chemistry>{
 		});
 		
 		// draw connections
-		RenderSystem.setShaderTexture(0, overlayTex);
 		processHexes(size, x, y, (xPos, yPos, turn, rx, ry) -> {
-			var pos = new HexOffset(rx, ry);
+			HexOffset pos = new HexOffset(rx, ry);
 			Aspect self = grid.get(pos);
 			if(self != null)
 				for(HexOffset offset : Chemistry.neighborsByRow(ry)){
@@ -316,12 +307,12 @@ public class ChemistryPuzzleRenderer implements PuzzleRenderer<Chemistry>{
 					Aspect neighbor = grid.get(neighborPos);
 					if(neighbor != null && (self.equals(neighbor.left()) || self.equals(neighbor.right())))
 						switch(offset.turn()){
-							case 0 -> DrawableHelper.drawTexture(matrices, xPos + 17, yPos + 8, 0, 42, 11, 8, 5, 256, 256);
-							case 1 -> DrawableHelper.drawTexture(matrices, xPos + 12, yPos + 15, 0, 37, 18, 7, 7, 256, 256);
-							case 2 -> DrawableHelper.drawTexture(matrices, xPos + 1, yPos + 15, 0, 26, 18, 7, 7, 256, 256);
-							case 3 -> DrawableHelper.drawTexture(matrices, xPos - 5, yPos + 8, 0, 20, 11, 8, 5, 256, 256);
-							case 4 -> DrawableHelper.drawTexture(matrices, xPos + 1, yPos - 3, 0, 26, 0, 7, 7, 256, 256);
-							case 5 -> DrawableHelper.drawTexture(matrices, xPos + 12, yPos - 3, 0, 37, 0, 7, 7, 256, 256);
+							case 0 -> ctx.drawTexture(overlayTex, xPos + 17, yPos + 8, 0, 42, 11, 8, 5, 256, 256);
+							case 1 -> ctx.drawTexture(overlayTex, xPos + 12, yPos + 15, 0, 37, 18, 7, 7, 256, 256);
+							case 2 -> ctx.drawTexture(overlayTex, xPos + 1, yPos + 15, 0, 26, 18, 7, 7, 256, 256);
+							case 3 -> ctx.drawTexture(overlayTex, xPos - 5, yPos + 8, 0, 20, 11, 8, 5, 256, 256);
+							case 4 -> ctx.drawTexture(overlayTex, xPos + 1, yPos - 3, 0, 26, 0, 7, 7, 256, 256);
+							case 5 -> ctx.drawTexture(overlayTex, xPos + 12, yPos - 3, 0, 37, 0, 7, 7, 256, 256);
 						}
 				}
 			
@@ -330,7 +321,7 @@ public class ChemistryPuzzleRenderer implements PuzzleRenderer<Chemistry>{
 		
 		// tooltips
 		selected = combineLeft = combineRight = null;
-		renderAfter(matrices, puzzle, notesTag, screenWidth, screenHeight, mouseX, mouseY);
+		renderAfter(ctx, puzzle, notesTag, screenWidth, screenHeight, mouseX, mouseY);
 	}
 	
 	public void onClose(){
@@ -349,11 +340,11 @@ public class ChemistryPuzzleRenderer implements PuzzleRenderer<Chemistry>{
 		return mouseX >= x && mouseX < x + width && mouseY >= y && mouseY < y + height;
 	}
 	
-	private static void highlight(MatrixStack matrices, int x, int y, int size){
-		highlight(matrices, x, y, size, size);
+	private static void highlight(DrawContext ctx, int x, int y, int size){
+		highlight(ctx, x, y, size, size);
 	}
 	
-	private static void highlight(MatrixStack matrices, int x, int y, int width, int height){
-		DrawableHelper.fill(matrices, x, y, x + width, y + height, 0x44FFFFFF);
+	private static void highlight(DrawContext ctx, int x, int y, int width, int height){
+		ctx.fill(x, y, x + width, y + height, 0x44FFFFFF);
 	}
 }

@@ -4,9 +4,12 @@ import arcana.duck.ProjectedBlockHitResult;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.*;
+import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.NotNull;
 
 public final class PlaneProjectionRenderer{
@@ -17,20 +20,19 @@ public final class PlaneProjectionRenderer{
 		
 		VertexConsumer vc = ctx.consumers().getBuffer(RenderLayer.getLines());
 		Vec3d cam = ctx.camera().getPos();
-		Matrix4f posMat = ctx.matrixStack().peek().getPositionMatrix();
-		Matrix3f normMat = ctx.matrixStack().peek().getNormalMatrix();
+		MatrixStack.Entry entry = ctx.matrixStack().peek();
 		
 		Direction side = pbhr.getSide();
 		Vec3d bad = side.getDirection() == Direction.AxisDirection.NEGATIVE ? Vec3d.ZERO : new Vec3d(side.getUnitVector());
 		Vec3d base = Vec3d.of(pbhr.getBlockPos().offset(side.getOpposite())).add(bad).subtract(cam);
-		renderEdge(new Box(base.add(cornerOffset(0, 0, side)), base.add(cornerOffset(0, 1, side))), posMat, normMat, vc);
-		renderEdge(new Box(base.add(cornerOffset(1, 0, side)), base.add(cornerOffset(1, 1, side))), posMat, normMat, vc);
-		renderEdge(new Box(base.add(cornerOffset(0, 0, side)), base.add(cornerOffset(1, 0, side))), posMat, normMat, vc);
-		renderEdge(new Box(base.add(cornerOffset(0, 1, side)), base.add(cornerOffset(1, 1, side))), posMat, normMat, vc);
+		renderEdge(new Box(base.add(cornerOffset(0, 0, side)), base.add(cornerOffset(0, 1, side))), entry, vc);
+		renderEdge(new Box(base.add(cornerOffset(1, 0, side)), base.add(cornerOffset(1, 1, side))), entry, vc);
+		renderEdge(new Box(base.add(cornerOffset(0, 0, side)), base.add(cornerOffset(1, 0, side))), entry, vc);
+		renderEdge(new Box(base.add(cornerOffset(0, 1, side)), base.add(cornerOffset(1, 1, side))), entry, vc);
 		
-		renderEdge(new Box(base.add(cornerOffset(0, 0, side)), base.add(cornerOffset(1, 1, side))), posMat, normMat, vc);
-		renderEdge(new Box(base.add(cornerOffset(0, 0.4f, side)), base.add(cornerOffset(0.6f, 1, side))), posMat, normMat, vc);
-		renderEdge(new Box(base.add(cornerOffset(0.4f, 0, side)), base.add(cornerOffset(1, 0.6f, side))), posMat, normMat, vc);
+		renderEdge(new Box(base.add(cornerOffset(0, 0, side)), base.add(cornerOffset(1, 1, side))), entry, vc);
+		renderEdge(new Box(base.add(cornerOffset(0, 0.4f, side)), base.add(cornerOffset(0.6f, 1, side))), entry, vc);
+		renderEdge(new Box(base.add(cornerOffset(0.4f, 0, side)), base.add(cornerOffset(1, 0.6f, side))), entry, vc);
 	}
 	
 	private static @NotNull Vec3d cornerOffset(float u, float v, Direction side){
@@ -44,21 +46,19 @@ public final class PlaneProjectionRenderer{
 		);
 	}
 	
-	private static void renderEdge(Box along, Matrix4f posMat, Matrix3f normMat, VertexConsumer vc){
-		double xx = along.getXLength();
-		double yy = along.getYLength();
-		double zz = along.getZLength();
+	private static void renderEdge(Box along, MatrixStack.Entry entry, VertexConsumer vc){
+		double xx = along.getLengthX();
+		double yy = along.getLengthY();
+		double zz = along.getLengthZ();
 		double n = Math.sqrt(xx * xx + yy * yy + zz * zz);
 		xx /= n;
 		yy /= n;
 		zz /= n;
-		vc.vertex(posMat, (float)(along.minX), (float)(along.minY), (float)(along.minZ))
+		vc.vertex(entry, (float)(along.minX), (float)(along.minY), (float)(along.minZ))
 				.color(0, 0, 0, 0.4f)
-				.normal(normMat, (float)xx, (float)yy, (float)zz)
-				.next();
-		vc.vertex(posMat, (float)(along.maxX), (float)(along.maxY), (float)(along.maxZ))
+				.normal(entry, (float)xx, (float)yy, (float)zz);
+		vc.vertex(entry, (float)(along.maxX), (float)(along.maxY), (float)(along.maxZ))
 				.color(0, 0, 0, 0.4f)
-				.normal(normMat, (float)xx, (float)yy, (float)zz)
-				.next();
+				.normal(entry, (float)xx, (float)yy, (float)zz);
 	}
 }

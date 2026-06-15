@@ -1,7 +1,7 @@
 package arcana.mixin;
 
 import arcana.ArcanaRegistry;
-import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.registry.tag.BlockTags;
@@ -18,7 +18,7 @@ public abstract class AbstractBlockStateMixin{
 	@Shadow
 	protected abstract BlockState asBlockState();
 	
-	@ModifyExpressionValue(method = "getModelOffset", at = @At(value = "NEW", target = "(DDD)Lnet/minecraft/util/math/Vec3d;"))
+	@ModifyReturnValue(method = "getModelOffset", at = @At("RETURN"))
 	Vec3d modifyModelOffsetY(Vec3d original, BlockView world, BlockPos pos){
 		BlockState state = asBlockState();
 		if(state.isIn(BlockTags.SMALL_FLOWERS) && world.getBlockState(pos.down()).isOf(ArcanaRegistry.STONE_VASE))

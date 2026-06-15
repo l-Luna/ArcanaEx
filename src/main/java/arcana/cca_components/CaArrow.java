@@ -1,11 +1,12 @@
-package arcana.legacy_components;
+package arcana.cca_components;
 
-import dev.onyxstudios.cca.api.v3.component.Component;
-import dev.onyxstudios.cca.api.v3.component.ComponentKey;
-import dev.onyxstudios.cca.api.v3.component.ComponentRegistryV3;
-import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryWrapper;
+import org.ladysnake.cca.api.v3.component.Component;
+import org.ladysnake.cca.api.v3.component.ComponentKey;
+import org.ladysnake.cca.api.v3.component.ComponentRegistryV3;
+import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 
 import static arcana.Arcana.arcId;
 
@@ -24,12 +25,12 @@ public class CaArrow implements Component, AutoSyncedComponent{
 		ae.getComponent(KEY).projected = projected;
 	}
 	
-	public void readFromNbt(NbtCompound tag){
+	public void readFromNbt(NbtCompound tag, RegistryWrapper.WrapperLookup lookup){
 		if(tag.contains("projected"))
 			projected = tag.getBoolean("projected");
 	}
 	
-	public void writeToNbt(NbtCompound tag){
+	public void writeToNbt(NbtCompound tag, RegistryWrapper.WrapperLookup lookup){
 		tag.putBoolean("projected", projected);
 	}
 }

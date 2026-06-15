@@ -2,7 +2,7 @@ package arcana.blocks.be;
 
 import arcana.ArcanaRegistry;
 import arcana.blocks.MagicMirrorBlock;
-import arcana.legacy_components.MagicMirrorQueue;
+import arcana.cca_components.MagicMirrorQueue;
 import arcana.util.MathUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;

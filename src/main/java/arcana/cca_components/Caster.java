@@ -1,4 +1,4 @@
-package arcana.legacy_components;
+package arcana.cca_components;
 
 import arcana.ArcanaRegistry;
 import arcana.api.Focus;
@@ -15,20 +15,21 @@ import arcana.network.PkShakeNode;
 import arcana.research.BuiltinResearch;
 import arcana.research.Research;
 import arcana.util.MathUtil;
-import dev.onyxstudios.cca.api.v3.component.Component;
-import dev.onyxstudios.cca.api.v3.component.ComponentKey;
-import dev.onyxstudios.cca.api.v3.component.ComponentRegistryV3;
-import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
-import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
+import org.ladysnake.cca.api.v3.component.Component;
+import org.ladysnake.cca.api.v3.component.ComponentKey;
+import org.ladysnake.cca.api.v3.component.ComponentRegistryV3;
+import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
+import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -266,7 +267,7 @@ public class Caster implements Component, AutoSyncedComponent, ServerTickingComp
 	}
 	
 	private World world(){
-		return player.world;
+		return player.getWorld();
 	}
 	
 	//
@@ -275,7 +276,7 @@ public class Caster implements Component, AutoSyncedComponent, ServerTickingComp
 		player.syncComponent(KEY);
 	}
 	
-	public void readFromNbt(NbtCompound tag){
+	public void readFromNbt(NbtCompound tag, RegistryWrapper.WrapperLookup lookup){
 		state = CasterState.IDLE;
 		String stateName = tag.getString("state");
 		for(CasterState value : CasterState.values())
@@ -293,7 +294,7 @@ public class Caster implements Component, AutoSyncedComponent, ServerTickingComp
 			contFocusState = tag.getCompound("contFocusState");
 	}
 	
-	public void writeToNbt(NbtCompound tag){
+	public void writeToNbt(NbtCompound tag, RegistryWrapper.WrapperLookup lookup){
 		tag.putString("state", state.name());
 		tag.putInt("stateTimer", stateTimer);
 		if(drainTargetNode != null){

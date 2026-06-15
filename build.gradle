@@ -96,6 +96,12 @@ dependencies {
 	}
 	implementation include("folk.sisby:kaleido-config:${kaleido_version}")
 
+	for(String cc_module : ["base", "world", "entity", "chunk"])
+		modImplementation include("org.ladysnake.cardinal-components-api:cardinal-components-${cc_module}:${cardinal_comp_version}"){
+			exclude(group: "net.fabricmc.fabric-api")
+			exclude(group: "net.fabricmc", module: "fabric-loader")
+		}
+
 	/*modRuntimeOnly ("supercoder79:databreaker:0.2.10") {
 		exclude module : "fabric-loader"
 	}*/

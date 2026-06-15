@@ -1,7 +1,7 @@
 package arcana.integration.emi;
 
 import arcana.aspects.AspectMap;
-import arcana.legacy_components.Researcher;
+import arcana.cca_components.Researcher;
 import arcana.recipes.alchemy.AlchemyRecipe;
 import arcana.research.Entry;
 import arcana.research.Research;

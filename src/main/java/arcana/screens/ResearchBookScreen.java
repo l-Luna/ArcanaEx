@@ -1,9 +1,9 @@
 package arcana.screens;
 
 import arcana.Arcana;
+import arcana.cca_components.Researcher;
 import arcana.client.ArcanaClient;
 import arcana.client.RenderHelper;
-import arcana.legacy_components.Researcher;
 import arcana.research.*;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.datafixers.util.Pair;

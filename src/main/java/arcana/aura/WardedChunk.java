@@ -1,6 +1,6 @@
 package arcana.aura;
 
-import arcana.legacy_components.ChunkLayer;
+import arcana.cca_components.ChunkLayer;
 import arcana.util.MathUtil;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkSectionPos;

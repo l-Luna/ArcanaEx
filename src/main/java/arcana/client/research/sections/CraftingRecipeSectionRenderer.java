@@ -1,7 +1,6 @@
 package arcana.client.research.sections;
 
 import arcana.research.sections.CraftingRecipeSection;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.CraftingRecipe;
@@ -18,8 +17,7 @@ public class CraftingRecipeSectionRenderer extends AbstractRecipeSectionRenderer
 			int x = right ? pageX + rightXOffset : pageX;
 			int ulX = x + (screenWidth - 256 + pageWidth) / 2 - 32, ulY = pageY + (screenHeight - bgHeight + pageHeight) / 2 - 10 - heightOffset;
 			
-			RenderSystem.setShaderTexture(0, overlayTexture(section));
-			drawTexture(matrices, ulX - 4, ulY - 4, 101, 145, 1, 72, 72, 256, 256);
+			ctx.drawTexture(overlayTexture(section), ulX - 4, ulY - 4, 101, 145, 1, 72, 72, 256, 256);
 			
 			int width = recipe instanceof ShapedRecipe ? ((ShapedRecipe)cr).getWidth() : 3;
 			int height = recipe instanceof ShapedRecipe ? ((ShapedRecipe)cr).getHeight() : 3;
@@ -32,7 +30,7 @@ public class CraftingRecipeSectionRenderer extends AbstractRecipeSectionRenderer
 						int itemY = ulY + yy * 24;
 						ItemStack[] stacks = recipe.getIngredients().get(index).getMatchingStacks();
 						if(stacks.length > 0)
-							client().getItemRenderer().renderInGui(stacks[displayIdx(stacks.length)], itemX, itemY);
+							ctx.drawItem(stacks[displayIdx(stacks.length)], itemX, itemY);
 					}
 				}
 		}
@@ -54,7 +52,7 @@ public class CraftingRecipeSectionRenderer extends AbstractRecipeSectionRenderer
 						int itemY = ulY + yy * 24;
 						ItemStack[] stacks = recipe.getIngredients().get(index).getMatchingStacks();
 						if(stacks.length > 0)
-							tooltipArea(matrices, stacks[displayIdx(stacks.length)], mouseX, mouseY, itemX, itemY);
+							tooltipArea(ctx, stacks[displayIdx(stacks.length)], mouseX, mouseY, itemX, itemY);
 					}
 				}
 		}

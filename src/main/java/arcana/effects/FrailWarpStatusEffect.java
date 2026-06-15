@@ -1,6 +1,6 @@
 package arcana.effects;
 
-import arcana.legacy_components.RunicShielding;
+import arcana.cca_components.RunicShielding;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.player.PlayerEntity;

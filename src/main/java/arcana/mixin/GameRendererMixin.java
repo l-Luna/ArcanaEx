@@ -35,7 +35,8 @@ public class GameRendererMixin{
 			cir.setReturnValue(MinecraftClient.getInstance().player.getMainHandStack().isIn(ArcanaTags.WISP_ATTACK_WHITELIST));
 	}
 	
-	@WrapOperation(method = "updateTargetedEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;raycast(DFZ)Lnet/minecraft/util/hit/HitResult;"))
+	// TODO: second pass
+	@WrapOperation(method = "findCrosshairTarget", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;raycast(DFZ)Lnet/minecraft/util/hit/HitResult;"))
 	HitResult handlePlaneProjection(Entity instance, double maxDistance, float tickDelta, boolean includeFluids, Operation<HitResult> original){
 		HitResult value = original.call(instance, maxDistance, tickDelta, includeFluids);
 		if(value instanceof BlockHitResult bhr

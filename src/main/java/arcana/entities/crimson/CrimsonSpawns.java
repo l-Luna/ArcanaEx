@@ -1,7 +1,7 @@
 package arcana.entities.crimson;
 
 import arcana.ArcanaRegistry;
-import arcana.legacy_components.Researcher;
+import arcana.cca_components.Researcher;
 import arcana.research.BuiltinResearch;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;

@@ -2,7 +2,7 @@ package arcana.aura;
 
 import arcana.Arcana;
 import arcana.ArcanaConfig;
-import arcana.legacy_components.ChunkLayer;
+import arcana.cca_components.ChunkLayer;
 import arcana.util.MathUtil;
 import arcana.util.SearchUtil;
 import net.minecraft.util.math.BlockPos;

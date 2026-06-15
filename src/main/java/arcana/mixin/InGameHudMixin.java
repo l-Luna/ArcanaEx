@@ -11,7 +11,6 @@ import it.unimi.dsi.fastutil.booleans.BooleanArrayList;
 import it.unimi.dsi.fastutil.booleans.BooleanList;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.client.texture.Sprite;
@@ -28,7 +27,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(InGameHud.class)
-public class InGameHudMixin extends DrawableHelper{
+public class InGameHudMixin{
 	
 	@Shadow
 	@Final
@@ -66,7 +65,7 @@ public class InGameHudMixin extends DrawableHelper{
 	
 	@Inject(method = "renderStatusEffectOverlay",
 	        at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z", shift = At.Shift.AFTER))
-	void queuePressureOverlay(DrawContext ctx, RenderTickCounter tickCounter, CallbackInfo ci, @Local StatusEffect effect){
-		suppressStack.add(PressureStatusEffect.suppresses(client.player, effect));
+	void queuePressureOverlay(DrawContext ctx, RenderTickCounter tickCounter, CallbackInfo ci, @Local RegistryEntry<StatusEffect> effect){
+		suppressStack.add(PressureStatusEffect.suppresses(client.player, effect.value()));
 	}
 }

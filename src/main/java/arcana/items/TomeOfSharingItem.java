@@ -1,6 +1,6 @@
 package arcana.items;
 
-import arcana.legacy_components.Researcher;
+import arcana.cca_components.Researcher;
 import arcana.research.Research;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

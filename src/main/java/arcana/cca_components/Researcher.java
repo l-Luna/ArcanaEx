@@ -1,29 +1,32 @@
-package arcana.legacy_components;
+package arcana.cca_components;
 
-import arcana.ArcanaRegistry;
 import arcana.api.WarpingItem;
 import arcana.aura.AuraWorld;
 import arcana.aura.NodeTypes;
+import arcana.enchantments.ArcanaEnchantmentComponents;
 import arcana.items.FocusItem;
 import arcana.research.*;
 import arcana.util.InventoryUtil;
 import arcana.util.NbtUtil;
-import dev.onyxstudios.cca.api.v3.component.Component;
-import dev.onyxstudios.cca.api.v3.component.ComponentKey;
-import dev.onyxstudios.cca.api.v3.component.ComponentRegistryV3;
-import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.EnchantmentLevelBasedValue;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtString;
-import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Box;
-import net.minecraft.util.registry.Registry;
+import org.ladysnake.cca.api.v3.component.Component;
+import org.ladysnake.cca.api.v3.component.ComponentKey;
+import org.ladysnake.cca.api.v3.component.ComponentRegistryV3;
+import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -179,7 +182,7 @@ public final class Researcher implements Component, AutoSyncedComponent{
 	}
 	
 	public void markFocusCast(FocusItem focus){
-		castFoci.add(Registry.ITEM.getId(focus));
+		castFoci.add(Registries.ITEM.getId(focus));
 	}
 	
 	public long getLastWarpEventTime(){
@@ -268,7 +271,7 @@ public final class Researcher implements Component, AutoSyncedComponent{
 		int total = InventoryUtil.streamAllItems(player).mapToInt(x -> warpFromStack(x, player)).sum();
 		// find bonus warp by eldritch nodes
 		Box nodeBox = new Box(player.getPos().add(4, 4, 4), player.getPos().subtract(4, 4, 4));
-		total += (int)AuraWorld.from(player.world)
+		total += (int)AuraWorld.from(player.getWorld())
 				.getNodesInBounds(nodeBox)
 				.stream()
 				.filter(x -> x.getType() == NodeTypes.ELDRITCH)
@@ -277,16 +280,19 @@ public final class Researcher implements Component, AutoSyncedComponent{
 	}
 	
 	private static int warpFromStack(ItemStack stack, PlayerEntity player){
-		int total = 0;
+		float total = 0;
 		if(!stack.isEmpty()){
-			total += EnchantmentHelper.getLevel(ArcanaRegistry.WARPING, stack);
+			Pair<List<EnchantmentLevelBasedValue>, Integer> warpingEffect = EnchantmentHelper.getEffectListAndLevel(stack, ArcanaEnchantmentComponents.WARPING);
+			List<EnchantmentLevelBasedValue> first = warpingEffect.getFirst();
+			for(EnchantmentLevelBasedValue value : first)
+				total += value.getValue(warpingEffect.getSecond());
 			if(stack.getItem() instanceof WarpingItem wi)
 				total += wi.warping(stack, player);
 		}
-		return total;
+		return (int)total;
 	}
 	
-	public void readFromNbt(NbtCompound tag){
+	public void readFromNbt(NbtCompound tag, RegistryWrapper.WrapperLookup lookup){
 		warp = tag.getInt("warp");
 		lastWarpEventTime = tag.getLong("last_warp_event_time");
 		wasPrecursor = tag.getBoolean("was_precursor");
@@ -314,7 +320,7 @@ public final class Researcher implements Component, AutoSyncedComponent{
 			castFoci.add(Identifier.of(addendum.asString()));
 	}
 	
-	public void writeToNbt(NbtCompound tag){
+	public void writeToNbt(NbtCompound tag, RegistryWrapper.WrapperLookup lookup){
 		tag.putInt("warp", warp);
 		tag.putLong("last_warp_event_time", lastWarpEventTime);
 		tag.putBoolean("was_precursor", wasPrecursor);
@@ -335,7 +341,7 @@ public final class Researcher implements Component, AutoSyncedComponent{
 		tag.put("cast_foci", castFoci.stream().map(x -> NbtString.of(x.toString())).collect(NbtUtil.toNbtList()));
 	}
 	
-	public void applySyncPacket(PacketByteBuf buf){
+	public void applySyncPacket(RegistryByteBuf buf){
 		// make a list of all new entries and addenda, and pass those to the client
 		Set<Identifier> oldAddenda = new HashSet<>(completedAddenda);
 		Map<Identifier, Integer> oldStages = new HashMap<>(stages);
@@ -359,7 +365,7 @@ public final class Researcher implements Component, AutoSyncedComponent{
 	}
 	
 	private void postResearchUpdate(PlayerEntity player, Set<Addendum> newAddenda, Set<Entry> newEntries){
-		if(player.world.isClient){
+		if(player.getWorld().isClient){
 			try{
 				Class.forName("arcana.client.ArcanaClient").getMethod("postResearchUpdate", Set.class, Set.class).invoke(null, newAddenda, newEntries);
 			}catch(Exception e){

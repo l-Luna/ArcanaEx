@@ -4,13 +4,11 @@ import arcana.api.Focus;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -25,7 +23,7 @@ public abstract class FocusItem extends Item implements Focus{
 	}
 	
 	@Environment(EnvType.CLIENT)
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context){
+	public void appendTooltip(ItemStack stack, TooltipContext ctx, List<Text> tooltip, TooltipType type){
 		tooltip.add(WandItem.costText(castCost(stack, null, MinecraftClient.getInstance().player)));
 	}
 }

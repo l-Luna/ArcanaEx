@@ -1,4 +1,4 @@
-package arcana.legacy_components;
+package arcana.cca_components;
 
 import arcana.util.MathUtil;
 import arcana.util.NbtUtil;

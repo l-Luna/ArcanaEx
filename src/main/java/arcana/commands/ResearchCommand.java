@@ -1,7 +1,7 @@
 package arcana.commands;
 
+import arcana.cca_components.Researcher;
 import arcana.datagen.ArcanaDocsProvider;
-import arcana.legacy_components.Researcher;
 import arcana.research.Addendum;
 import arcana.research.Entry;
 import arcana.research.Puzzle;

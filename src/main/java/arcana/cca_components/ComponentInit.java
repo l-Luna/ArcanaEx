@@ -1,18 +1,18 @@
-package arcana.legacy_components;
+package arcana.cca_components;
 
 import arcana.aura.AuraChunk;
 import arcana.aura.AuraWorld;
 import arcana.aura.InfestedChunk;
 import arcana.aura.WardedChunk;
-import dev.onyxstudios.cca.api.v3.chunk.ChunkComponentFactoryRegistry;
-import dev.onyxstudios.cca.api.v3.chunk.ChunkComponentInitializer;
-import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
-import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
-import dev.onyxstudios.cca.api.v3.entity.RespawnCopyStrategy;
-import dev.onyxstudios.cca.api.v3.world.WorldComponentFactoryRegistry;
-import dev.onyxstudios.cca.api.v3.world.WorldComponentInitializer;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
+import org.ladysnake.cca.api.v3.chunk.ChunkComponentFactoryRegistry;
+import org.ladysnake.cca.api.v3.chunk.ChunkComponentInitializer;
+import org.ladysnake.cca.api.v3.entity.EntityComponentFactoryRegistry;
+import org.ladysnake.cca.api.v3.entity.EntityComponentInitializer;
+import org.ladysnake.cca.api.v3.entity.RespawnCopyStrategy;
+import org.ladysnake.cca.api.v3.world.WorldComponentFactoryRegistry;
+import org.ladysnake.cca.api.v3.world.WorldComponentInitializer;
 
 public class ComponentInit implements EntityComponentInitializer, WorldComponentInitializer, ChunkComponentInitializer{
 	

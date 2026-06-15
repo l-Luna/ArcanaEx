@@ -1,7 +1,7 @@
 package arcana.enchantments;
 
 import net.minecraft.component.ComponentType;
-import net.minecraft.enchantment.effect.EnchantmentValueEffect;
+import net.minecraft.enchantment.EnchantmentLevelBasedValue;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 
@@ -22,9 +22,9 @@ public final class ArcanaEnchantmentComponents{
 			.build();
 	
 	// TODO: warp effect provider
-	public static final ComponentType<List<EnchantmentValueEffect>> WARPING = ComponentType
-			.<List<EnchantmentValueEffect>>builder()
-			.codec(EnchantmentValueEffect.CODEC.listOf())
+	public static final ComponentType<List<EnchantmentLevelBasedValue>> WARPING = ComponentType
+			.<List<EnchantmentLevelBasedValue>>builder()
+			.codec(EnchantmentLevelBasedValue.CODEC.listOf())
 			.build();
 	
 	public static void setup(){

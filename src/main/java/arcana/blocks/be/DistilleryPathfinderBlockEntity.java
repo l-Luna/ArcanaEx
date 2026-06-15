@@ -7,7 +7,7 @@ import arcana.aspects.Aspects;
 import arcana.aspects.ItemAspectRegistry;
 import arcana.aura.AuraWorld;
 import arcana.aura.FluxOrigin;
-import arcana.legacy_components.Researcher;
+import arcana.cca_components.Researcher;
 import arcana.research.BuiltinResearch;
 import arcana.research.Research;
 import arcana.screens.DistilleryPathfinderScreen;

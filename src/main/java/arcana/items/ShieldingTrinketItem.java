@@ -1,6 +1,6 @@
 package arcana.items;
 
-import arcana.legacy_components.RunicShielding;
+import arcana.cca_components.RunicShielding;
 import com.google.common.collect.Multimap;
 import dev.emi.trinkets.api.SlotReference;
 import dev.emi.trinkets.api.TrinketItem;

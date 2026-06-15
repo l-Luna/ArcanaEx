@@ -1,7 +1,7 @@
 package arcana.client.research.requirements;
 
+import arcana.cca_components.Researcher;
 import arcana.client.research.RequirementRenderer;
-import arcana.legacy_components.Researcher;
 import arcana.research.requirements.PuzzlesCompletedRequirement;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.Text;

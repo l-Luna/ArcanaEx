@@ -1,7 +1,7 @@
 package arcana.items;
 
+import arcana.cca_components.Researcher;
 import arcana.client.research.requirements.PuzzleRequirementRenderer;
-import arcana.legacy_components.Researcher;
 import arcana.research.Puzzle;
 import arcana.research.Research;
 import net.fabricmc.api.EnvType;

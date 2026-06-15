@@ -27,7 +27,7 @@ public abstract class FluidBlockMixin{
 	protected abstract void playExtinguishSound(WorldAccess world, BlockPos pos);
 	
 	@Shadow
-	public abstract FluidState getFluidState(BlockState state);
+	protected abstract FluidState getFluidState(BlockState state);
 	
 	// this handles lava flowing into taint goo (or equiv.), i.e. all directions except taint goo falling onto lava
 	// see ArcanaFluid itself for that

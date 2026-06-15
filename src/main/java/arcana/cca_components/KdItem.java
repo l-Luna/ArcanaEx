@@ -1,13 +1,14 @@
-package arcana.legacy_components;
+package arcana.cca_components;
 
-import dev.onyxstudios.cca.api.v3.component.Component;
-import dev.onyxstudios.cca.api.v3.component.ComponentKey;
-import dev.onyxstudios.cca.api.v3.component.ComponentRegistryV3;
-import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
+import org.ladysnake.cca.api.v3.component.Component;
+import org.ladysnake.cca.api.v3.component.ComponentKey;
+import org.ladysnake.cca.api.v3.component.ComponentRegistryV3;
+import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 
 import static arcana.Arcana.arcId;
 
@@ -28,12 +29,12 @@ public class KdItem implements Component, AutoSyncedComponent{
 		ie.getComponent(KEY).pos = pos;
 	}
 	
-	public void readFromNbt(NbtCompound tag){
+	public void readFromNbt(NbtCompound tag, RegistryWrapper.WrapperLookup lookup){
 		if(tag.contains("pos"))
 			pos = BlockPos.fromLong(tag.getLong("pos"));
 	}
 	
-	public void writeToNbt(NbtCompound tag){
+	public void writeToNbt(NbtCompound tag, RegistryWrapper.WrapperLookup lookup){
 		if(pos != null)
 			tag.putLong("pos", pos.asLong());
 	}

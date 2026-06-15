@@ -2,7 +2,7 @@ package arcana.items;
 
 import arcana.ArcanaRegistry;
 import arcana.api.ContextCraftedItem;
-import arcana.legacy_components.MagicMirrorQueue;
+import arcana.cca_components.MagicMirrorQueue;
 import arcana.util.MathUtil;
 import net.minecraft.client.item.TooltipData;
 import net.minecraft.entity.Entity;

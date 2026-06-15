@@ -6,7 +6,7 @@ import arcana.aura.AuraChunk;
 import arcana.aura.AuraWorld;
 import arcana.aura.Node;
 import arcana.aura.NodeTypes;
-import arcana.legacy_components.Researcher;
+import arcana.cca_components.Researcher;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;

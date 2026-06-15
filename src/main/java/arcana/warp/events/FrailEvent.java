@@ -1,7 +1,7 @@
 package arcana.warp.events;
 
 import arcana.ArcanaRegistry;
-import arcana.legacy_components.RunicShielding;
+import arcana.cca_components.RunicShielding;
 import arcana.util.InventoryUtil;
 import arcana.warp.WarpEvent;
 import net.fabricmc.api.EnvType;

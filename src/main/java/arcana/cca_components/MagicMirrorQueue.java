@@ -1,15 +1,16 @@
-package arcana.legacy_components;
+package arcana.cca_components;
 
 import arcana.util.NbtUtil;
-import dev.onyxstudios.cca.api.v3.component.Component;
-import dev.onyxstudios.cca.api.v3.component.ComponentKey;
-import dev.onyxstudios.cca.api.v3.component.ComponentRegistryV3;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+import org.ladysnake.cca.api.v3.component.Component;
+import org.ladysnake.cca.api.v3.component.ComponentKey;
+import org.ladysnake.cca.api.v3.component.ComponentRegistryV3;
 
 import java.util.*;
 
@@ -53,17 +54,17 @@ public class MagicMirrorQueue implements Component{
 	
 	//
 	
-	public void readFromNbt(NbtCompound tag){
+	public void readFromNbt(NbtCompound tag, RegistryWrapper.WrapperLookup lookup){
 		queues.clear();
 		for(NbtElement queueElem : tag.getList("queues", NbtElement.COMPOUND_TYPE)){
 			if(!(queueElem instanceof NbtCompound it))
 				continue;
 			queues.put(it.getUuid("target"), NbtUtil.readMutList(it, "queue", nbt ->
-					new Entry(nbt.getUuid("sender_id"), ItemStack.fromNbt(nbt.getCompound("stack")))));
+					new Entry(nbt.getUuid("sender_id"), ItemStack.fromNbtOrEmpty(lookup, nbt.getCompound("stack")))));
 		}
 	}
 	
-	public void writeToNbt(NbtCompound tag){
+	public void writeToNbt(NbtCompound tag, RegistryWrapper.WrapperLookup lookup){
 		NbtList queues = this.queues.entrySet().stream()
 				.map(x -> NbtUtil.from(Map.of(
 						"target", x.getKey(),

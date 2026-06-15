@@ -1,4 +1,4 @@
-package arcana.legacy_components;
+package arcana.cca_components;
 
 import arcana.ArcanaRegistry;
 import arcana.ArcanaSounds;
@@ -7,11 +7,6 @@ import arcana.items.WandItem;
 import arcana.mixin.accessor.EntityAccessor;
 import arcana.mixin.accessor.LivingEntityAccessor;
 import arcana.util.InventoryUtil;
-import dev.onyxstudios.cca.api.v3.component.Component;
-import dev.onyxstudios.cca.api.v3.component.ComponentKey;
-import dev.onyxstudios.cca.api.v3.component.ComponentRegistryV3;
-import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
-import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.ClampedEntityAttribute;
 import net.minecraft.entity.attribute.EntityAttribute;
@@ -20,9 +15,17 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
+import org.ladysnake.cca.api.v3.component.Component;
+import org.ladysnake.cca.api.v3.component.ComponentKey;
+import org.ladysnake.cca.api.v3.component.ComponentRegistryV3;
+import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
+import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
 
 import java.util.Comparator;
 
@@ -41,7 +44,7 @@ public class RunicShielding implements Component, AutoSyncedComponent, ServerTic
 	}
 	
 	public static int getMaxShielding(LivingEntity entity){
-		return (int)entity.getAttributeValue(MAX_SHIELDING);
+		return (int)entity.getAttributeValue(RegistryEntry.of(MAX_SHIELDING));
 	}
 	
 	private final PlayerEntity player;
@@ -78,18 +81,18 @@ public class RunicShielding implements Component, AutoSyncedComponent, ServerTic
 				|| world.isClient
 				|| player.isInvulnerableTo(source)
 				|| player.isDead()
-				|| (source.isFire() && player.hasStatusEffect(StatusEffects.FIRE_RESISTANCE))
+				|| (source.isIn(DamageTypeTags.IS_FALL) && player.hasStatusEffect(StatusEffects.FIRE_RESISTANCE))
 				|| (player.timeUntilRegen > 10 && amount <= ((LivingEntityAccessor)player).arcana$getLastDamageTaken()))
 			return false;
-		if(halfPoints <= 1 || source.isOutOfWorld())
+		if(halfPoints <= 1 || source.isIn(DamageTypeTags.BYPASSES_INVULNERABILITY))
 			return false;
 		float frac = MathHelper.clamp(amount / player.getHealth(), 0, 1);
 		float chance = MathHelper.sqrt(frac);
-		if(player.getRandom().nextFloat() <= chance || player.hasStatusEffect(ArcanaRegistry.WARP_FRAIL)){
+		if(player.getRandom().nextFloat() <= chance || player.hasStatusEffect(RegistryEntry.of(ArcanaRegistry.WARP_FRAIL))){
 			boolean hasHeartTrinket = InventoryUtil.hasTrinket(player, ArcanaRegistry.RING_OF_TWIN_HEARTBEATS);
 			halfPoints -= 2;
 			rechargeTimer = (hasHeartTrinket ? -17 : -10) * 20;
-			lastActivateTime = player.world.getTime();
+			lastActivateTime = player.getWorld().getTime();
 			player.timeUntilRegen = 20;
 			((LivingEntityAccessor)player).arcana$setLastDamageTaken(amount);
 			world.playSound(
@@ -117,7 +120,7 @@ public class RunicShielding implements Component, AutoSyncedComponent, ServerTic
 			rechargeTimer = 0;
 		if(halfPoints < maxHalfPoints){
 			rechargeTimer++;
-			if(player.world.getTime() % 6 == 0 && InventoryUtil.hasTrinket(player, ArcanaRegistry.RING_OF_THE_SURGING_BARRIER)){
+			if(player.getWorld().getTime() % 6 == 0 && InventoryUtil.hasTrinket(player, ArcanaRegistry.RING_OF_THE_SURGING_BARRIER)){
 				ItemStack bestWand = InventoryUtil.streamInventory(player.getInventory())
 						.filter(x -> x.getItem() instanceof WandItem)
 						.max(Comparator.comparing(x -> WandItem.aspectsFrom(x).get(Aspects.EARTH)))
@@ -127,12 +130,12 @@ public class RunicShielding implements Component, AutoSyncedComponent, ServerTic
 					rechargeTimer += 9;
 				}
 			}
-			if(rechargeTimer > 0 && player.world.getTime() % 2 == 0 && InventoryUtil.hasTrinket(player, ArcanaRegistry.RING_OF_TWIN_HEARTBEATS))
+			if(rechargeTimer > 0 && player.getWorld().getTime() % 2 == 0 && InventoryUtil.hasTrinket(player, ArcanaRegistry.RING_OF_TWIN_HEARTBEATS))
 				rechargeTimer += 1;
 			if(rechargeTimer >= MAX_RECHARGE_TIMER){
 				halfPoints++;
 				rechargeTimer = 0;
-				lastRechargeTime = player.world.getTime();
+				lastRechargeTime = player.getWorld().getTime();
 				sync();
 			}
 		}
@@ -142,14 +145,14 @@ public class RunicShielding implements Component, AutoSyncedComponent, ServerTic
 		player.syncComponent(KEY);
 	}
 	
-	public void readFromNbt(@NotNull NbtCompound compound){
+	public void readFromNbt(@NotNull NbtCompound compound, RegistryWrapper.WrapperLookup lookup){
 		halfPoints = compound.getInt("points");
 		rechargeTimer = compound.getInt("rechargeTimer");
 		lastRechargeTime = compound.getLong("lastRechargeTime");
 		lastActivateTime = compound.getLong("lastActivateTime");
 	}
 	
-	public void writeToNbt(@NotNull NbtCompound compound){
+	public void writeToNbt(@NotNull NbtCompound compound, RegistryWrapper.WrapperLookup lookup){
 		compound.putInt("points", halfPoints);
 		compound.putInt("rechargeTimer", rechargeTimer);
 		compound.putLong("lastRechargeTime", lastRechargeTime);

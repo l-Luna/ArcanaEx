@@ -3,7 +3,7 @@ package arcana.items;
 import arcana.api.VisDiscountingItem;
 import arcana.api.WarpingItem;
 import arcana.aspects.Aspect;
-import arcana.legacy_components.Researcher;
+import arcana.cca_components.Researcher;
 import dev.emi.trinkets.api.TrinketItem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

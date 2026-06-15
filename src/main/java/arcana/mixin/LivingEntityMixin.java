@@ -2,11 +2,10 @@ package arcana.mixin;
 
 import arcana.ArcanaDamageSources;
 import arcana.ArcanaRegistry;
+import arcana.cca_components.RunicShielding;
 import arcana.duck.ArcanaLivingEntity;
 import arcana.items.BootsOfTheTravellerItem;
-import arcana.legacy_components.RunicShielding;
 import arcana.network.PkEntityStatusEx;
-import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.LadderBlock;
@@ -22,9 +21,11 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -66,17 +67,17 @@ public abstract class LivingEntityMixin extends Entity implements ArcanaLivingEn
 	private boolean shouldWalkOnWater(){
 		return getEquippedStack(EquipmentSlot.FEET).getItem() == ArcanaRegistry.BOOTS_OF_THE_SAILOR
 				&& !isSneaky()
-				&& !world.getFluidState(getBlockPos().up()).isIn(FluidTags.WATER);
+				&& !getWorld().getFluidState(getBlockPos().up()).isIn(FluidTags.WATER);
 	}
 	
 	@Inject(method = "hasStatusEffect", at = @At("HEAD"), cancellable = true)
-	private void hasStatusEffect(StatusEffect effect, CallbackInfoReturnable<Boolean> cir){
+	private void hasStatusEffect(RegistryEntry<StatusEffect> effect, CallbackInfoReturnable<Boolean> cir){
 		if(effect == StatusEffects.JUMP_BOOST && shouldJumpBoost())
 			cir.setReturnValue(true);
 	}
 	
 	@ModifyReturnValue(method = "getStatusEffect", at = @At("RETURN"))
-	private StatusEffectInstance getStatusEffect(StatusEffectInstance original, StatusEffect effect){
+	private StatusEffectInstance getStatusEffect(@Nullable StatusEffectInstance original, RegistryEntry<StatusEffect> effect){
 		if(effect == StatusEffects.JUMP_BOOST && (original == null || original.getAmplifier() < 3) && shouldJumpBoost())
 			return new StatusEffectInstance(StatusEffects.JUMP_BOOST, 0, 3);
 		return original;
@@ -92,7 +93,7 @@ public abstract class LivingEntityMixin extends Entity implements ArcanaLivingEn
 	@Inject(method = "canEnterTrapdoor", at = @At("HEAD"), cancellable = true)
 	private void canEnterTrapdoor(BlockPos pos, BlockState state, CallbackInfoReturnable<Boolean> cir){
 		if(state.get(TrapdoorBlock.OPEN)){
-			BlockState ladderState = world.getBlockState(pos.down());
+			BlockState ladderState = getWorld().getBlockState(pos.down());
 			if(ladderState.isOf(ArcanaRegistry.METAL_LADDER) && ladderState.get(LadderBlock.FACING) == state.get(TrapdoorBlock.FACING))
 				cir.setReturnValue(true);
 		}
@@ -104,7 +105,7 @@ public abstract class LivingEntityMixin extends Entity implements ArcanaLivingEn
 			method = "createLivingAttributes()Lnet/minecraft/entity/attribute/DefaultAttributeContainer$Builder;",
 			require = 1, allow = 1, at = @At("RETURN"))
 	private static void addAttributes(final CallbackInfoReturnable<DefaultAttributeContainer.Builder> info){
-		info.getReturnValue().add(RunicShielding.MAX_SHIELDING);
+		info.getReturnValue().add(RegistryEntry.of(RunicShielding.MAX_SHIELDING));
 	}
 	
 	// putrefaction: mark on death, reduce iframes, drop with fortune 1, and drop as a player kill
@@ -127,22 +128,5 @@ public abstract class LivingEntityMixin extends Entity implements ArcanaLivingEn
 	void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir){
 		if(source == ArcanaDamageSources.PUTREFACTION)
 			timeUntilRegen = 18;
-	}
-	
-	@ModifyExpressionValue(method = "drop",
-	                       at = @At(value = "INVOKE",
-	                                target = "Lnet/minecraft/enchantment/EnchantmentHelper;getLooting(Lnet/minecraft/entity/LivingEntity;)I"))
-	int getLootingForDrops(int original, DamageSource source){
-		if(source == ArcanaDamageSources.PUTREFACTION)
-			original++;
-		return original;
-	}
-	
-	@ModifyExpressionValue(method = "drop",
-	                       at = @At(value = "FIELD",
-	                                target = "Lnet/minecraft/entity/LivingEntity;playerHitTimer:I",
-	                                opcode = Opcodes.GETFIELD))
-	int wasFromPlayer(int original, DamageSource source){
-		return source == ArcanaDamageSources.PUTREFACTION ? 1 : original;
 	}
 }

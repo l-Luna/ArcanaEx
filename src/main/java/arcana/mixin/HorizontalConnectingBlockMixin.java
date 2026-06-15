@@ -1,7 +1,7 @@
 package arcana.mixin;
 
 import arcana.ArcanaTags;
-import arcana.legacy_components.CaArrow;
+import arcana.cca_components.CaArrow;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.EntityShapeContext;
 import net.minecraft.block.HorizontalConnectingBlock;

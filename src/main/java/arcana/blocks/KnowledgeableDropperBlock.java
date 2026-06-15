@@ -1,7 +1,7 @@
 package arcana.blocks;
 
 import arcana.blocks.be.KnowledgeableDropperBlockEntity;
-import arcana.legacy_components.KdItem;
+import arcana.cca_components.KdItem;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.dispenser.DispenserBehavior;

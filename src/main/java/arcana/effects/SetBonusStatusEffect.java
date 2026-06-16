@@ -1,13 +1,12 @@
 package arcana.effects;
 
-import arcana.items.ArcanaArmourMaterials;
-import net.minecraft.entity.effect.StatusEffect;
+import arcana.items.ArcanaArmorItem;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
+import net.minecraft.util.Identifier;
 
 public class SetBonusStatusEffect extends ArcanaStatusEffect{
 	
@@ -16,25 +15,23 @@ public class SetBonusStatusEffect extends ArcanaStatusEffect{
 	}
 	
 	public static void handleArmourSetBonus(PlayerEntity player){
-		ArmorMaterial setBonusMaterial = null;
+		Identifier setBonus = null;
 		int matched = 0;
 		for(ItemStack item : player.getArmorItems())
-			if(item.getItem() instanceof ArmorItem armor)
-				if(setBonusMaterial == null || setBonusMaterial.equals(armor.getMaterial().g)){
-					setBonusMaterial = armor.getMaterial();
+			if(item.getItem() instanceof ArcanaArmorItem armor)
+				if(setBonus == null || setBonus.equals(armor.material.setBonus().orElse(null))){
+					setBonus = armor.material.setBonus().get();
 					matched++;
 				}
-		if(matched >= 4 && setBonusMaterial instanceof ArcanaArmourMaterials aam){
-			StatusEffect effect = aam.getSetBonusEffect();
-			if(effect != null)
-				player.addStatusEffect(new StatusEffectInstance(
-						effect,
-						10 /* ticks */,
-						0 /* level */,
-						true /* ambient */,
-						false /* no particles */,
-						true /* yes icon */
-				));
+		if(matched >= 4){
+			Registries.STATUS_EFFECT.getEntry(setBonus).ifPresent(effect -> player.addStatusEffect(new StatusEffectInstance(
+					effect,
+					10 /* ticks */,
+					0 /* level */,
+					true /* ambient */,
+					false /* no particles */,
+					true /* yes icon */
+			)));
 		}
 	}
 }

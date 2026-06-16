@@ -162,7 +162,7 @@ public final class ArcanaRegistry{
 	// items...
 	public static final Item SCRIBBLED_NOTES = new ScribbledNotesItem(GROUPED_SINGLE);
 	public static final Item SCRIBING_TOOLS = new Item(new ArcanaItemSettings().group(Tab.MAIN).maxDamage(200));
-	public static final Item GOGGLES_OF_REVEALING = new GogglesOfRevealingItem(new ArcanaItemSettings().group(Tab.MAIN).maxCount(1));
+	public static final Item GOGGLES_OF_REVEALING = new GogglesOfRevealingItem(new ArcanaItemSettings().group(Tab.MAIN).maxCount(1).maxDamage(100));
 	public static final Item MONOCLE_OF_REVEALING = new TrinketItem(GROUPED_SINGLE);
 	public static final Item INTROSPECTIVE_LENS = new Item(GROUPED_SINGLE);
 	public static final Item REVELATORY_LENS = new Item(GROUPED_SINGLE);
@@ -209,10 +209,10 @@ public final class ArcanaRegistry{
 	public static final Item ARCANIUM_PICKAXE = new PickaxeItem(ArcanaToolMaterials.ARCANIUM, new ArcanaItemSettings().group(Tab.EQUIPMENT).attributeModifiers(PickaxeItem.createAttributeModifiers(ArcanaToolMaterials.ARCANIUM, 1, -2.8f)));
 	public static final Item ARCANIUM_AXE = new AxeItem(ArcanaToolMaterials.ARCANIUM, new ArcanaItemSettings().group(Tab.EQUIPMENT).attributeModifiers(AxeItem.createAttributeModifiers(ArcanaToolMaterials.ARCANIUM, 5.5f, -3)));
 	public static final Item ARCANIUM_HOE = new HoeItem(ArcanaToolMaterials.ARCANIUM, new ArcanaItemSettings().group(Tab.EQUIPMENT).attributeModifiers(HoeItem.createAttributeModifiers(ArcanaToolMaterials.ARCANIUM, -2, -1)));
-	public static final Item ARCANIUM_HELMET = new ArmorItem(RegistryEntry.of(ArcanaArmourMaterials.ARCANIUM), ArmorItem.Type.HELMET, new ArcanaItemSettings().group(Tab.EQUIPMENT));
-	public static final Item ARCANIUM_CHESTPLATE = new ArmorItem(RegistryEntry.of(ArcanaArmourMaterials.ARCANIUM), ArmorItem.Type.CHESTPLATE, new ArcanaItemSettings().group(Tab.EQUIPMENT));
-	public static final Item ARCANIUM_LEGGINGS = new ArmorItem(RegistryEntry.of(ArcanaArmourMaterials.ARCANIUM), ArmorItem.Type.LEGGINGS, new ArcanaItemSettings().group(Tab.EQUIPMENT));
-	public static final Item ARCANIUM_BOOTS = new ArmorItem(RegistryEntry.of(ArcanaArmourMaterials.ARCANIUM), ArmorItem.Type.BOOTS, new ArcanaItemSettings().group(Tab.EQUIPMENT));
+	public static final Item ARCANIUM_HELMET = new ArcanaArmorItem(ArcanaArmorMaterials.ARCANIUM, ArmorItem.Type.HELMET, new ArcanaItemSettings().group(Tab.EQUIPMENT));
+	public static final Item ARCANIUM_CHESTPLATE = new ArcanaArmorItem(ArcanaArmorMaterials.ARCANIUM, ArmorItem.Type.CHESTPLATE, new ArcanaItemSettings().group(Tab.EQUIPMENT));
+	public static final Item ARCANIUM_LEGGINGS = new ArcanaArmorItem(ArcanaArmorMaterials.ARCANIUM, ArmorItem.Type.LEGGINGS, new ArcanaItemSettings().group(Tab.EQUIPMENT));
+	public static final Item ARCANIUM_BOOTS = new ArcanaArmorItem(ArcanaArmorMaterials.ARCANIUM, ArmorItem.Type.BOOTS, new ArcanaItemSettings().group(Tab.EQUIPMENT));
 	
 	public static final Item THAUMIUM_INGOT = new Item(GROUPED_RES);
 	public static final Item THAUMIUM_NUGGET = new Item(GROUPED_RES);
@@ -225,10 +225,10 @@ public final class ArcanaRegistry{
 	public static final Item VOID_METAL_PICKAXE = new PickaxeItem(ArcanaToolMaterials.VOID_METAL, new ArcanaItemSettings().group(Tab.EQUIPMENT).attributeModifiers(PickaxeItem.createAttributeModifiers(ArcanaToolMaterials.VOID_METAL, 1, -2.8f)));
 	public static final Item VOID_METAL_AXE = new AxeItem(ArcanaToolMaterials.VOID_METAL, new ArcanaItemSettings().group(Tab.EQUIPMENT).attributeModifiers(AxeItem.createAttributeModifiers(ArcanaToolMaterials.VOID_METAL, 5.5f, -3)));
 	public static final Item VOID_METAL_HOE = new HoeItem(ArcanaToolMaterials.VOID_METAL, new ArcanaItemSettings().group(Tab.EQUIPMENT).attributeModifiers(HoeItem.createAttributeModifiers(ArcanaToolMaterials.VOID_METAL, -2, -1)));
-	public static final Item VOID_METAL_HELMET = new ArmorItem(RegistryEntry.of(ArcanaArmourMaterials.VOID_METAL), ArmorItem.Type.HELMET, new ArcanaItemSettings().group(Tab.EQUIPMENT));
-	public static final Item VOID_METAL_CHESTPLATE = new ArmorItem(RegistryEntry.of(ArcanaArmourMaterials.VOID_METAL), ArmorItem.Type.CHESTPLATE, new ArcanaItemSettings().group(Tab.EQUIPMENT));
-	public static final Item VOID_METAL_LEGGINGS = new ArmorItem(RegistryEntry.of(ArcanaArmourMaterials.VOID_METAL), ArmorItem.Type.LEGGINGS, new ArcanaItemSettings().group(Tab.EQUIPMENT));
-	public static final Item VOID_METAL_BOOTS = new ArmorItem(RegistryEntry.of(ArcanaArmourMaterials.VOID_METAL), ArmorItem.Type.HELMET, new ArcanaItemSettings().group(Tab.EQUIPMENT));
+	public static final Item VOID_METAL_HELMET = new ArcanaArmorItem(ArcanaArmorMaterials.VOID_METAL, ArmorItem.Type.HELMET, new ArcanaItemSettings().group(Tab.EQUIPMENT));
+	public static final Item VOID_METAL_CHESTPLATE = new ArcanaArmorItem(ArcanaArmorMaterials.VOID_METAL, ArmorItem.Type.CHESTPLATE, new ArcanaItemSettings().group(Tab.EQUIPMENT));
+	public static final Item VOID_METAL_LEGGINGS = new ArcanaArmorItem(ArcanaArmorMaterials.VOID_METAL, ArmorItem.Type.LEGGINGS, new ArcanaItemSettings().group(Tab.EQUIPMENT));
+	public static final Item VOID_METAL_BOOTS = new ArcanaArmorItem(ArcanaArmorMaterials.VOID_METAL, ArmorItem.Type.HELMET, new ArcanaItemSettings().group(Tab.EQUIPMENT));
 	
 	public static final Item SILVERLEAF = new Item(GROUPED_RES);
 	public static final Item SILVERLEAF_AMALGAMATE = new Item(GROUPED_RES);
@@ -237,10 +237,10 @@ public final class ArcanaRegistry{
 	public static final Item SILVERLEAF_PICKAXE = new PickaxeItem(ArcanaToolMaterials.SILVERLEAF, new ArcanaItemSettings().group(Tab.EQUIPMENT).attributeModifiers(PickaxeItem.createAttributeModifiers(ArcanaToolMaterials.SILVERLEAF, 1, -2.8f)));
 	public static final Item SILVERLEAF_AXE = new AxeItem(ArcanaToolMaterials.SILVERLEAF, new ArcanaItemSettings().group(Tab.EQUIPMENT).attributeModifiers(AxeItem.createAttributeModifiers(ArcanaToolMaterials.SILVERLEAF, 5.5f, -3)));
 	public static final Item SILVERLEAF_HOE = new HoeItem(ArcanaToolMaterials.SILVERLEAF, new ArcanaItemSettings().group(Tab.EQUIPMENT).attributeModifiers(HoeItem.createAttributeModifiers(ArcanaToolMaterials.SILVERLEAF, -2, -1)));
-	public static final Item SILVERLEAF_HELMET = new ArmorItem(RegistryEntry.of(ArcanaArmourMaterials.SILVERLEAF), ArmorItem.Type.HELMET, new ArcanaItemSettings().group(Tab.EQUIPMENT));
-	public static final Item SILVERLEAF_CHESTPLATE = new ArmorItem(RegistryEntry.of(ArcanaArmourMaterials.SILVERLEAF), ArmorItem.Type.CHESTPLATE, new ArcanaItemSettings().group(Tab.EQUIPMENT));
-	public static final Item SILVERLEAF_LEGGINGS = new ArmorItem(RegistryEntry.of(ArcanaArmourMaterials.SILVERLEAF), ArmorItem.Type.LEGGINGS, new ArcanaItemSettings().group(Tab.EQUIPMENT));
-	public static final Item SILVERLEAF_BOOTS = new ArmorItem(RegistryEntry.of(ArcanaArmourMaterials.SILVERLEAF), ArmorItem.Type.BOOTS, new ArcanaItemSettings().group(Tab.EQUIPMENT));
+	public static final Item SILVERLEAF_HELMET = new ArcanaArmorItem(ArcanaArmorMaterials.SILVERLEAF, ArmorItem.Type.HELMET, new ArcanaItemSettings().group(Tab.EQUIPMENT));
+	public static final Item SILVERLEAF_CHESTPLATE = new ArcanaArmorItem(ArcanaArmorMaterials.SILVERLEAF, ArmorItem.Type.CHESTPLATE, new ArcanaItemSettings().group(Tab.EQUIPMENT));
+	public static final Item SILVERLEAF_LEGGINGS = new ArcanaArmorItem(ArcanaArmorMaterials.SILVERLEAF, ArmorItem.Type.LEGGINGS, new ArcanaItemSettings().group(Tab.EQUIPMENT));
+	public static final Item SILVERLEAF_BOOTS = new ArcanaArmorItem(ArcanaArmorMaterials.SILVERLEAF, ArmorItem.Type.BOOTS, new ArcanaItemSettings().group(Tab.EQUIPMENT));
 	
 	public static final Item WISPY_ESSENCE = new Item(GROUPED_RES);
 	public static final Item TWISTED_ESSENCE = new Item(GROUPED_RES);
@@ -276,11 +276,11 @@ public final class ArcanaRegistry{
 	
 	public static final Item CRIMSON_BLADE = new SwordItem(ArcanaToolMaterials.CRIMSON, new ArcanaItemSettings().group(Tab.EQUIPMENT).attributeModifiers(SwordItem.createAttributeModifiers(ArcanaToolMaterials.CRIMSON, 3, -2.4f)));
 	public static final Item CRIMSON_LONGBOW = new CrimsonLongbowItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxDamage(564));
-	public static final Item CRIMSON_LEECH = new CrimsonLeechItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).rarity(Rarity.UNCOMMON).maxDamage(874));
+	public static final Item CRIMSON_LEECH = new CrimsonLeechItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).rarity(Rarity.UNCOMMON).maxDamage(874).attributeModifiers(CrimsonLeechItem.createAttributeModifiers()));
 	
-	public static final Item BOOTS_OF_THE_TRAVELLER = new BootsOfTheTravellerItem(ArcanaArmourMaterials.BOOTS_OF_THE_TRAVELLER, new ArcanaItemSettings().group(Tab.EQUIPMENT));
-	public static final Item BOOTS_OF_THE_SAILOR = new BootsOfTheTravellerItem(ArcanaArmourMaterials.BOOTS_OF_THE_SAILOR, new ArcanaItemSettings().group(Tab.EQUIPMENT));
-	public static final Item BOOTS_OF_THE_REAPER = new BootsOfTheTravellerItem(ArcanaArmourMaterials.BOOTS_OF_THE_REAPER, new ArcanaItemSettings().group(Tab.EQUIPMENT));
+	public static final Item BOOTS_OF_THE_TRAVELLER = new BootsOfTheTravellerItem(ArcanaArmorMaterials.BOOTS_OF_THE_TRAVELLER, new ArcanaItemSettings().group(Tab.EQUIPMENT));
+	public static final Item BOOTS_OF_THE_SAILOR = new BootsOfTheTravellerItem(ArcanaArmorMaterials.BOOTS_OF_THE_SAILOR, new ArcanaItemSettings().group(Tab.EQUIPMENT));
+	public static final Item BOOTS_OF_THE_REAPER = new BootsOfTheTravellerItem(ArcanaArmorMaterials.BOOTS_OF_THE_REAPER, new ArcanaItemSettings().group(Tab.EQUIPMENT));
 	
 	public static final Item ALCHEMICAL_IRON = new Item(GROUPED_RES);
 	public static final Item ALCHEMICAL_GOLD = new Item(GROUPED_RES);

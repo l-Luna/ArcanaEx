@@ -8,7 +8,6 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.hit.BlockHitResult;
@@ -30,7 +29,7 @@ public class PedestalBlock extends WaterloggableBlock implements BlockEntityProv
 		super(settings);
 	}
 	
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit){
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit){
 		BlockEntity at = world.getBlockEntity(pos);
 		if(at instanceof PedestalBlockEntity pedestal){
 			ItemStack held = player.getStackInHand(hand);
@@ -42,13 +41,13 @@ public class PedestalBlock extends WaterloggableBlock implements BlockEntityProv
 					player.setStackInHand(hand, pedestal.getStack());
 					pedestal.setStack(ItemStack.EMPTY);
 					return ActionResult.SUCCESS;
-				}else if(ItemStack.canCombine(held, pedestal.getStack()) && held.getCount() < held.getMaxCount()){
+				}else if(ItemStack.areItemsAndComponentsEqual(held, pedestal.getStack()) && held.getCount() < held.getMaxCount()){
 					held.increment(1);
 					pedestal.setStack(ItemStack.EMPTY);
 					return ActionResult.SUCCESS;
 				}
 		}
-		return super.onUse(state, world, pos, player, hand, hit);
+		return super.onUse(state, world, pos, player, hit);
 	}
 	
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved){

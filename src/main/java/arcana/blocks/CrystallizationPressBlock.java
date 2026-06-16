@@ -37,7 +37,7 @@ public class CrystallizationPressBlock extends BlockWithEntity implements Aspect
 	}
 	
 	public BlockState getPlacementState(ItemPlacementContext ctx){
-		return getDefaultState().with(Properties.HORIZONTAL_AXIS, ctx.getPlayerFacing().getAxis());
+		return getDefaultState().with(Properties.HORIZONTAL_AXIS, ctx.getHorizontalPlayerFacing().getAxis());
 	}
 	
 	public BlockRenderType getRenderType(BlockState state){

@@ -70,7 +70,7 @@ public class MagicMirrorQueue implements Component{
 						"target", x.getKey(),
 						"queue", x.getValue().stream()
 								.map(e -> NbtUtil.from(Map.of(
-										"stack", e.stack,
+										"stack", e.stack.encode(lookup),
 										"sender_id", e.senderId
 								)))
 								.collect(NbtUtil.toNbtList())

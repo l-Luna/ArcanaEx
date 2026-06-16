@@ -37,7 +37,7 @@ public class WaterloggableBlock extends Block implements Waterloggable{
 	
 	public BlockState getStateForNeighborUpdate(BlockState state, Direction dir, BlockState neighbor, WorldAccess world, BlockPos pos, BlockPos neighborPos){
 		if(state.get(waterlogged))
-			world.createAndScheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+			world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
 		
 		return super.getStateForNeighborUpdate(state, dir, neighbor, world, pos, neighborPos);
 	}

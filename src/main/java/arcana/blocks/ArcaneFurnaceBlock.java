@@ -50,7 +50,7 @@ public class ArcaneFurnaceBlock extends BlockWithEntity implements InventoryProv
 	}
 	
 	public BlockState getPlacementState(ItemPlacementContext ctx){
-		return getDefaultState().with(FACING, ctx.getPlayerFacing().getOpposite());
+		return getDefaultState().with(FACING, ctx.getHorizontalPlayerFacing().getOpposite());
 	}
 	
 	@Nullable

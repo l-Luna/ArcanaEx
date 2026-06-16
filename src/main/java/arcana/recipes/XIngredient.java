@@ -31,7 +31,7 @@ import java.util.stream.Stream;
 
 public class XIngredient implements Predicate<ItemStack>{
 	
-	public static final Map<String, Function<String, StackMatcher>> matchers = Map.of(
+	public static final Map<String, Function<String, StackMatcher>> MATCHERS = Map.of(
 			"any", __ -> new AnyMatcher(),
 			"max_durability", __ -> new MaxDurabilityMatcher(),
 			"enchanted_with", EnchantedWithMatcher::new,
@@ -111,7 +111,7 @@ public class XIngredient implements Predicate<ItemStack>{
 		var split = desc.split(" ", 2);
 		String matcherName = split[0];
 		String matcherParams = split.length > 1 ? split[1] : "";
-		return matchers.get(matcherName).apply(matcherParams);
+		return MATCHERS.get(matcherName).apply(matcherParams);
 	}
 	
 	@NotNull

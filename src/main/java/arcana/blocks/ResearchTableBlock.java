@@ -89,7 +89,7 @@ public class ResearchTableBlock extends BigBlock implements Waterloggable, Block
 		FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
 		return super.getPlacementState(ctx)
 				.with(waterlogged, fluidState.getFluid() == Fluids.WATER)
-				.with(facing, ctx.getPlayerFacing().rotateYCounterclockwise())
+				.with(facing, ctx.getHorizontalPlayerFacing().rotateYCounterclockwise())
 				.with(hasInk, false);
 	}
 	

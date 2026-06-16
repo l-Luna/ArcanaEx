@@ -15,6 +15,8 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.tooltip.HoveredTooltipPositioner;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
+import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.util.BufferAllocator;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
@@ -100,6 +102,8 @@ public final class AspectRenderHelper{
 			matrices.pop();
 			return;
 		}
+		VertexConsumerProvider.Immediate vcp = VertexConsumerProvider.immediate(new BufferAllocator(512));
+		DrawContext standin = new DrawContext(MinecraftClient.getInstance(), matrices, vcp);
 		var alpha = (float)(1 - Math.sqrt(sqrDist) / 10);
 		var intAlpha = (int)(Math.max(0, alpha * 255)) << 24;
 		
@@ -116,11 +120,12 @@ public final class AspectRenderHelper{
 			RenderSystem.enableDepthTest();
 			RenderSystem.enableBlend();
 			RenderSystem.defaultBlendFunc();
-			AspectRenderHelper.renderAspect(stack.type(), matrices, 0, 0, 0, 1, 1, 1, alpha);
-			AspectRenderHelper.renderAspectStackOverlay(stack.amount(), matrices, MinecraftClient.getInstance().textRenderer, 0, 0, 0, 0xFFFFFF | intAlpha);
+			AspectRenderHelper.renderAspect(stack.type(), standin, 0, 0, 0, 1, 1, 1, alpha);
+			AspectRenderHelper.renderAspectStackOverlay(stack.amount(), standin, MinecraftClient.getInstance().textRenderer, 0, 0, 0, 0xFFFFFF | intAlpha);
 			matrices.pop();
 		}
 		matrices.pop();
+		vcp.draw();
 	}
 	
 	public static void renderAspectTooltip(Aspect aspect, DrawContext ctx, int x, int y){

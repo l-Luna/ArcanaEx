@@ -18,7 +18,6 @@ import net.minecraft.stat.Stats;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
 import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -78,7 +77,7 @@ public class CrucibleBlock extends BlockWithEntity{
 		return BlockRenderType.MODEL;
 	}
 	
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit){
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit){
 		ItemStack itemstack = player.getStackInHand(hand);
 		if(itemstack.isEmpty()){
 			if(player.isSneaking()){
@@ -119,7 +118,7 @@ public class CrucibleBlock extends BlockWithEntity{
 				return ActionResult.SUCCESS;
 			}
 		}
-		return super.onUse(state, world, pos, player, hand, hit);
+		return super.onUse(state, world, pos, player, hit);
 	}
 	
 	public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random rand){

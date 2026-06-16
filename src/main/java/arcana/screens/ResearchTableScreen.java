@@ -5,6 +5,7 @@ import arcana.blocks.ResearchTableBlock;
 import arcana.blocks.be.ResearchTableBlockEntity;
 import arcana.client.research.PuzzleRenderer;
 import arcana.items.ResearchNotesItem;
+import arcana.items.components.ArcanaItemComponentTypes;
 import arcana.research.Puzzle;
 import arcana.research.Research;
 import net.minecraft.block.BlockState;
@@ -51,10 +52,9 @@ public class ResearchTableScreen extends HandledScreen<ResearchTableScreen.Handl
 		renderBackground(ctx, mouseX, mouseY, delta);
 		super.render(ctx, mouseX, mouseY, delta);
 		// don't draw item tooltips if e.g. an aspect is selected
-		var notes = handler.slots.get(37).getStack();
-		NbtCompound nbt = notes.getNbt();
-		if(!notes.isEmpty() && nbt != null && nbt.contains("puzzle_id")){
-			Puzzle puzzle = Research.getPuzzle(Identifier.of(nbt.getString("puzzle_id")));
+		ItemStack notes = handler.slots.get(37).getStack();
+		if(!notes.isEmpty()){
+			Puzzle puzzle = Research.getPuzzle(notes.get(ArcanaItemComponentTypes.RESEARCH_NOTE_PUZZLE_ID));
 			var renderer = PuzzleRenderer.get(puzzle);
 			if(renderer == null || renderer.drawItemTooltips())
 				drawMouseoverTooltip(ctx, mouseX, mouseY);
@@ -72,18 +72,17 @@ public class ResearchTableScreen extends HandledScreen<ResearchTableScreen.Handl
 		// do draw selected aspect over items
 		matrices.push();
 		matrices.translate(-x, -y, 0);
-		var notes = handler.slots.get(37).getStack();
-		NbtCompound nbt = notes.getNbt();
-		if(!notes.isEmpty() && nbt != null && nbt.contains("puzzle_id")){
-			Puzzle puzzle = Research.getPuzzle(Identifier.of(nbt.getString("puzzle_id")));
-			var renderer = PuzzleRenderer.get(puzzle);
+		ItemStack notes = handler.slots.get(37).getStack();
+		if(!notes.isEmpty()){
+			Puzzle puzzle = Research.getPuzzle(notes.get(ArcanaItemComponentTypes.RESEARCH_NOTE_PUZZLE_ID));
+			PuzzleRenderer<Puzzle> renderer = PuzzleRenderer.get(puzzle);
 			if(renderer != null){
-				var data = nbt.getCompound("puzzle_data");
+				NbtCompound data = notes.get(ArcanaItemComponentTypes.RESEARCH_NOTE_PUZZLE_DATA);
 				if(notes.getItem() == ArcanaRegistry.RESEARCH_NOTES){
-					renderer.render(matrices, puzzle, data, width, height, mouseX, mouseY);
-					renderer.renderAfter(matrices, puzzle, data, width, height, mouseX, mouseY);
+					renderer.render(ctx, puzzle, data, width, height, mouseX, mouseY);
+					renderer.renderAfter(ctx, puzzle, data, width, height, mouseX, mouseY);
 				}else if(notes.getItem() == ArcanaRegistry.COMPLETE_RESEARCH_NOTES)
-					renderer.renderComplete(matrices, puzzle, data, width, height, mouseX, mouseY);
+					renderer.renderComplete(ctx, puzzle, data, width, height, mouseX, mouseY);
 			}
 		}
 		matrices.pop();
@@ -92,24 +91,22 @@ public class ResearchTableScreen extends HandledScreen<ResearchTableScreen.Handl
 	public boolean mouseClicked(double mouseX, double mouseY, int button){
 		super.mouseClicked(mouseX, mouseY, button);
 		
-		var notes = handler.slots.get(37).getStack();
-		NbtCompound nbt = notes.getNbt();
-		if(!notes.isEmpty() && nbt != null && nbt.contains("puzzle_id") && notes.getItem() == ArcanaRegistry.RESEARCH_NOTES){
-			Puzzle puzzle = Research.getPuzzle(Identifier.of(nbt.getString("puzzle_id")));
+		ItemStack notes = handler.slots.get(37).getStack();
+		if(!notes.isEmpty() && notes.getItem() == ArcanaRegistry.RESEARCH_NOTES){
+			Puzzle puzzle = Research.getPuzzle(notes.get(ArcanaItemComponentTypes.RESEARCH_NOTE_PUZZLE_ID));
 			var renderer = PuzzleRenderer.get(puzzle);
 			if(renderer != null)
-				return renderer.onClick(button, puzzle, nbt.getCompound("puzzle_data"), width, height, (int)mouseX, (int)mouseY);
+				return renderer.onClick(button, puzzle, notes.get(ArcanaItemComponentTypes.RESEARCH_NOTE_PUZZLE_DATA), width, height, (int)mouseX, (int)mouseY);
 		}
 		
 		return false;
 	}
 	
 	public void close(){
-		var notes = handler.slots.get(37).getStack();
-		NbtCompound nbt = notes.getNbt();
-		if(!notes.isEmpty() && nbt != null && nbt.contains("puzzle_id")){
-			Puzzle puzzle = Research.getPuzzle(Identifier.of(nbt.getString("puzzle_id")));
-			var renderer = PuzzleRenderer.get(puzzle);
+		ItemStack notes = handler.slots.get(37).getStack();
+		if(!notes.isEmpty()){
+			Puzzle puzzle = Research.getPuzzle(notes.get(ArcanaItemComponentTypes.RESEARCH_NOTE_PUZZLE_ID));
+			PuzzleRenderer<Puzzle> renderer = PuzzleRenderer.get(puzzle);
 			if(renderer != null)
 				renderer.onClose();
 		}

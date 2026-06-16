@@ -278,9 +278,9 @@ public final class ArcanaRegistry{
 	public static final Item CRIMSON_LONGBOW = new CrimsonLongbowItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxDamage(564));
 	public static final Item CRIMSON_LEECH = new CrimsonLeechItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).rarity(Rarity.UNCOMMON).maxDamage(874).attributeModifiers(CrimsonLeechItem.createAttributeModifiers()));
 	
-	public static final Item BOOTS_OF_THE_TRAVELLER = new BootsOfTheTravellerItem(ArcanaArmorMaterials.BOOTS_OF_THE_TRAVELLER, new ArcanaItemSettings().group(Tab.EQUIPMENT));
-	public static final Item BOOTS_OF_THE_SAILOR = new BootsOfTheTravellerItem(ArcanaArmorMaterials.BOOTS_OF_THE_SAILOR, new ArcanaItemSettings().group(Tab.EQUIPMENT));
-	public static final Item BOOTS_OF_THE_REAPER = new BootsOfTheTravellerItem(ArcanaArmorMaterials.BOOTS_OF_THE_REAPER, new ArcanaItemSettings().group(Tab.EQUIPMENT));
+	public static final Item BOOTS_OF_THE_TRAVELLER = new BootsOfTheTravellerItem(RegistryEntry.of(ArcanaArmorMaterials.BOOTS_OF_THE_TRAVELLER), new ArcanaItemSettings().group(Tab.EQUIPMENT).attributeModifiers(BootsOfTheTravellerItem.createAttributeModifiers()));
+	public static final Item BOOTS_OF_THE_SAILOR = new BootsOfTheTravellerItem(RegistryEntry.of(ArcanaArmorMaterials.BOOTS_OF_THE_SAILOR), new ArcanaItemSettings().group(Tab.EQUIPMENT).attributeModifiers(BootsOfTheTravellerItem.createAttributeModifiers()));
+	public static final Item BOOTS_OF_THE_REAPER = new BootsOfTheTravellerItem(RegistryEntry.of(ArcanaArmorMaterials.BOOTS_OF_THE_REAPER), new ArcanaItemSettings().group(Tab.EQUIPMENT).attributeModifiers(BootsOfTheTravellerItem.createAttributeModifiers()));
 	
 	public static final Item ALCHEMICAL_IRON = new Item(GROUPED_RES);
 	public static final Item ALCHEMICAL_GOLD = new Item(GROUPED_RES);

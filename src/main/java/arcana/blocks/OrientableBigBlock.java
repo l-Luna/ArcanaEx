@@ -48,7 +48,7 @@ public class OrientableBigBlock extends BigBlock{
 	}
 	
 	public BlockState getPlacementState(ItemPlacementContext ctx){
-		return super.getPlacementState(ctx).with(FACING, ctx.getPlayerFacing());
+		return super.getPlacementState(ctx).with(FACING, ctx.getHorizontalPlayerFacing());
 	}
 	
 	public int getX(BlockState state){

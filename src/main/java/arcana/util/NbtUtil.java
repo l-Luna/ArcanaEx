@@ -1,7 +1,6 @@
 package arcana.util;
 
 import arcana.aura.NodeReference;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
@@ -38,8 +37,6 @@ public final class NbtUtil{
 				compound.putLong(key, pos.toLong());
 			else if(value instanceof NodeReference nodeRef)
 				compound.put(key, nodeRef.toNbt());
-			else if(value instanceof ItemStack stack)
-				compound.put(key, stack.encode());
 			// ...
 		}
 		return compound;

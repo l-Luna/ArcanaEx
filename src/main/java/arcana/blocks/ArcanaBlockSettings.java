@@ -20,15 +20,6 @@ public class ArcanaBlockSettings extends FabricBlockSettings{
 		((AbstractBlock.Settings)this).mapColor(color);
 	}
 	
-	/*protected ArcanaBlockSettings(AbstractBlock.Settings settings){
-		super(settings);
-		if(settings instanceof ArcanaBlockSettings abs){
-			dropsSelf = abs.dropsSelf;
-			renderLayer = abs.renderLayer;
-			toolTag = abs.toolTag;
-		}
-	}*/
-	
 	public static ArcanaBlockSettings of(Material material){
 		return new ArcanaBlockSettings(MapColor.CYAN /*material.getColor()*/);
 	}

@@ -1,13 +1,18 @@
 package arcana.mixin.recipes;
 
 import arcana.ArcanaRegistry;
+import arcana.ArcanaTags;
+import arcana.enchantments.ArcanaEnchantmentComponents;
+import arcana.enchantments.DynamicMaxLevelsEffect;
 import arcana.recipes.crafting.VoidPuttyRepairRecipe;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.screen.*;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -43,11 +48,22 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler{
 		}
 	}
 	
+	// TODO: cap levels in anvil for infusion enchants & dynamic max levels
 	@WrapOperation(method = "updateResult", at = @At(value = "INVOKE", target = "Lnet/minecraft/enchantment/Enchantment;getMaxLevel()I"))
-	int capRunicShieldingLevel(Enchantment enchantment, Operation<Integer> original){
-		if(enchantment == ArcanaRegistry.RUNIC_SHIELDING)
+	int capRunicShieldingLevel(Enchantment enchantment, Operation<Integer> original, @Local(ordinal = 0) RegistryEntry<Enchantment> self){
+		if(self.isIn(ArcanaTags.CANT_ANVIL_COMBINE))
 			return 1;
-		return original.call(enchantment);
+		ItemStack stack = input.getStack(0);
+		DynamicMaxLevelsEffect levels = enchantment.effects().getOrDefault(ArcanaEnchantmentComponents.DYNAMIC_MAX_LEVELS, null);
+		int lvl = original.call(enchantment);
+		if(levels != null){
+			int possible = levels.maxLevelTags().size();
+			// start at the proposed level, walk down until a valid level is reached
+			for(lvl = Math.min(lvl, possible); lvl > 0; lvl--)
+				if(stack.isIn(levels.maxLevelTags().get(lvl - 1)))
+					break;
+		}
+		return lvl;
 	}
 	
 	@Inject(method = "canTakeOutput", at = @At("HEAD"), cancellable = true)

@@ -19,7 +19,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.OptionalInt;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import static arcana.Arcana.arcId;
@@ -36,13 +36,13 @@ public class EmiAlchemyRecipe implements EmiRecipe{
 	protected final EmiStack output;
 	protected final AspectMap aspects;
 	protected final @Nullable Identifier researchId;
-	protected final OptionalInt researchStage;
+	protected final Optional<Integer> researchStage;
 	
-	public EmiAlchemyRecipe(AlchemyRecipe recipe){
-		this(recipe.getId(), EmiXIngredient.of(recipe.getIngredient()), EmiStack.of(recipe.getOutput()), recipe.getConsumedAspects(null), recipe.getResearchId(), recipe.getResearchStage());
+	public EmiAlchemyRecipe(Identifier id, AlchemyRecipe recipe){
+		this(id, EmiIngredient.of(recipe.getIngredient()), EmiStack.of(recipe.getResult()), recipe.getConsumedAspects(null), recipe.getResearchId(), recipe.getResearchStage());
 	}
 	
-	public EmiAlchemyRecipe(Identifier id, EmiIngredient input, EmiStack output, AspectMap aspects, @Nullable Identifier researchId, OptionalInt researchStage){
+	public EmiAlchemyRecipe(Identifier id, EmiIngredient input, EmiStack output, AspectMap aspects, @Nullable Identifier researchId, Optional<Integer> researchStage){
 		this.id = id;
 		this.input = input;
 		this.output = output;

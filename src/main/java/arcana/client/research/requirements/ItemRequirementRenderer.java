@@ -15,8 +15,7 @@ import java.util.List;
 public class ItemRequirementRenderer implements RequirementRenderer<ItemRequirement>{
 	
 	public void render(DrawContext ctx, int x, int y, ItemRequirement requirement, int time, float delta){
-		var stack = new ItemStack(requirement.getItem());
-		stack = requirement.getMatcher().preview(stack);
+		ItemStack stack = new ItemStack(requirement.getItem());
 		if(requirement.getItem() instanceof WandItem)
 			stack = WandItem.basicWand();
 		ctx.drawItem(stack, x, y);
@@ -24,7 +23,6 @@ public class ItemRequirementRenderer implements RequirementRenderer<ItemRequirem
 	
 	public List<Text> tooltip(ItemRequirement requirement, int time){
 		ItemStack stack = new ItemStack(requirement.getItem());
-		stack = requirement.getMatcher().preview(stack);
 		if(requirement.getItem() instanceof WandItem)
 			stack = WandItem.basicWand();
 		List<Text> tooltips = stack.getTooltip(

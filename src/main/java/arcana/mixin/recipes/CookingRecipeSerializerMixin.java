@@ -1,26 +1,30 @@
 package arcana.mixin.recipes;
 
-import com.google.gson.JsonObject;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.recipe.AbstractCookingRecipe;
 import net.minecraft.recipe.CookingRecipeSerializer;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.JsonHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.util.Optional;
+import java.util.function.Function;
 
 @Mixin(CookingRecipeSerializer.class)
-public class CookingRecipeSerializerMixin{
+public class CookingRecipeSerializerMixin<T extends AbstractCookingRecipe>{
 	
-	@SuppressWarnings("rawtypes")
-	@Inject(method = "read(Lnet/minecraft/util/Identifier;Lcom/google/gson/JsonObject;)Lnet/minecraft/recipe/AbstractCookingRecipe;",
-	        at = @At("RETURN"))
-	private void applyArcanaCookingRecipeAmount(Identifier identifier, JsonObject jsonObject, CallbackInfoReturnable cir){
-		AbstractCookingRecipe cr = (AbstractCookingRecipe)cir.getReturnValue();
-		if(jsonObject.has("arcana:amount")){
-			int amount = JsonHelper.getInt(jsonObject, "arcana:amount");
-			cr.getOutput().setCount(amount);
-		}
+	// extend the codec with an `arcana:amount` field
+	@ModifyExpressionValue(method = "<init>", at = @At(value = "INVOKE", target = "Lcom/mojang/serialization/codecs/RecordCodecBuilder;mapCodec(Ljava/util/function/Function;)Lcom/mojang/serialization/MapCodec;"))
+	MapCodec<T> addAmountField(MapCodec<T> original){
+		return RecordCodecBuilder.mapCodec(i -> i
+				.group(
+						original.forGetter(Function.identity()),
+						Codec.INT.optionalFieldOf("arcana:amount").forGetter(x -> Optional.of(x.getResult(null).getCount())))
+				.apply(i, (T recipe, Optional<Integer> amount) -> {
+					amount.ifPresent(it -> recipe.getResult(null).setCount(it));
+					return recipe;
+				}));
 	}
 }

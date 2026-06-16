@@ -8,6 +8,7 @@ import arcana.aspects.ItemAspectRegistry;
 import arcana.aura.Taint;
 import arcana.items.WandItem;
 import arcana.recipes.alchemy.AlchemyRecipe;
+import arcana.recipes.arcane_crafting.ArcaneCraftingRecipe;
 import arcana.recipes.arcane_crafting.ShapedArcaneCraftingRecipe;
 import arcana.recipes.infusion.InfusionEnchantmentRecipe;
 import arcana.recipes.infusion.InfusionRecipe;
@@ -26,6 +27,7 @@ import dev.emi.emi.config.FluidUnit;
 import net.minecraft.block.Blocks;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Items;
+import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.recipe.RecipeManager;
 import net.minecraft.registry.Registries;
 import net.minecraft.text.Text;
@@ -166,13 +168,16 @@ public final class ArcanaEmiPlugin implements EmiPlugin{
 		registry.addStackProvider(ResearchEntryScreen.class, new ResearchEntryScreenStackProvider());
 		
 		RecipeManager manager = registry.getRecipeManager();
-		manager.listAllOfType(ShapedArcaneCraftingRecipe.TYPE).stream().filter(ShapedArcaneCraftingRecipe.class::isInstance).map(it -> new EmiArcaneCraftingRecipe((ShapedArcaneCraftingRecipe)it)).forEach(registry::addRecipe);
-		manager.listAllOfType(AlchemyRecipe.TYPE).stream().map(x -> new EmiAlchemyRecipe(x.value())).forEach(registry::addRecipe);
-		for(InfusionRecipe recipe : manager.listAllOfType(SimpleInfusionRecipe.TYPE)){
-			if(recipe instanceof SimpleInfusionRecipe simple)
-				registry.addRecipe(new EmiInfusionRecipe(simple));
-			else if(recipe instanceof InfusionEnchantmentRecipe infEnchantment)
-				registry.addRecipe(new EmiInfusionEnchantmentRecipe(infEnchantment));
+		manager.listAllOfType(AlchemyRecipe.TYPE).stream().map(x -> new EmiAlchemyRecipe(x.id(), x.value())).forEach(registry::addRecipe);
+		for(RecipeEntry<ArcaneCraftingRecipe> entry : manager.listAllOfType(ShapedArcaneCraftingRecipe.TYPE)){
+			if(entry.value() instanceof ShapedArcaneCraftingRecipe shaped)
+				registry.addRecipe(new EmiArcaneCraftingRecipe(entry.id(), shaped));
+		}
+		for(RecipeEntry<InfusionRecipe> recipe : manager.listAllOfType(SimpleInfusionRecipe.TYPE)){
+			if(recipe.value() instanceof SimpleInfusionRecipe simple)
+				registry.addRecipe(new EmiInfusionRecipe(recipe.id(), simple));
+			else if(recipe.value() instanceof InfusionEnchantmentRecipe infEnchantment)
+				registry.addRecipe(new EmiInfusionEnchantmentRecipe(recipe.id(), infEnchantment));
 		}
 	}
 }

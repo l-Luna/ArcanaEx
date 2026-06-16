@@ -2,11 +2,11 @@ package arcana.client.research.sections;
 
 import arcana.aspects.AspectStack;
 import arcana.client.AspectRenderHelper;
-import arcana.recipes.XIngredient;
 import arcana.recipes.infusion.SimpleInfusionRecipe;
 import arcana.research.sections.InfusionRecipeSection;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
@@ -41,7 +41,7 @@ public class InfusionRecipeSectionRenderer extends AbstractRecipeSectionRenderer
 			if(centralStacks.length > 0)
 				ctx.drawItem(centralStacks[displayIdx(centralStacks.length)], midX, midY);
 			
-			List<XIngredient> outers = ir.outerIngredients();
+			List<Ingredient> outers = ir.outerIngredients();
 			for(int i = 0; i < outers.size(); i++){
 				ItemStack[] stacks = outers.get(i).getMatchingStacks();
 				if(stacks.length > 0){
@@ -85,7 +85,7 @@ public class InfusionRecipeSectionRenderer extends AbstractRecipeSectionRenderer
 			if(centralStacks.length > 0)
 				tooltipArea(ctx, centralStacks[displayIdx(centralStacks.length)], mouseX, mouseY, midX, midY);
 			
-			List<XIngredient> outers = ir.outerIngredients();
+			List<Ingredient> outers = ir.outerIngredients();
 			for(int i = 0; i < outers.size(); i++){
 				ItemStack[] stacks = outers.get(i).getMatchingStacks();
 				if(stacks.length > 0){

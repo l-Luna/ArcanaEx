@@ -61,6 +61,7 @@ public final class ArcanaTags{
 	public static final TagKey<BannerPattern> ELDRITCH_BANNER_PATTERNS = TagKey.of(RegistryKeys.BANNER_PATTERN, arcId("pattern_item/eldritch"));
 	
 	public static final TagKey<Enchantment> UNLOCKS_PROJECTING_ENTRY = TagKey.of(RegistryKeys.ENCHANTMENT, arcId("unlocks_projecting_entry"));
+	public static final TagKey<Enchantment> CANT_ANVIL_COMBINE = TagKey.of(RegistryKeys.ENCHANTMENT, arcId("cant_anvil_combine"));
 	
 	// status effect tags are under mob_effects
 	public static final TagKey<StatusEffect> ASPECT_CANDY_EFFECTS = TagKey.of(RegistryKeys.STATUS_EFFECT, arcId("aspect_candy_effects"));

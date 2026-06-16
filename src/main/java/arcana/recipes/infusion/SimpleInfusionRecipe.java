@@ -2,21 +2,22 @@ package arcana.recipes.infusion;
 
 import arcana.api.RenamableRecipe;
 import arcana.aspects.AspectMap;
-import arcana.aspects.ItemAspectRegistry;
 import arcana.recipes.ArcanaRecipe;
-import arcana.recipes.XIngredient;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import arcana.util.PacketCodecUtil;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
-import net.minecraft.recipe.ShapedRecipe;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.JsonHelper;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -30,9 +31,8 @@ public class SimpleInfusionRecipe implements InfusionRecipe, ArcanaRecipe, Renam
 	public static RecipeType<InfusionRecipe> TYPE;
 	public static Serializer SERIALIZER;
 	
-	private final Identifier id;
 	private final ItemStack result;
-	private final List<XIngredient> outerIngredients;
+	private final List<Ingredient> outerIngredients;
 	private final Ingredient centralIngredient;
 	private final AspectMap aspects;
 	private final int instability;
@@ -40,7 +40,7 @@ public class SimpleInfusionRecipe implements InfusionRecipe, ArcanaRecipe, Renam
 	
 	public static void setup(){
 		TYPE = Registry.register(
-				Registry.RECIPE_TYPE,
+				Registries.RECIPE_TYPE,
 				arcId("infusion"),
 				new RecipeType<>(){
 					public String toString(){
@@ -49,14 +49,13 @@ public class SimpleInfusionRecipe implements InfusionRecipe, ArcanaRecipe, Renam
 				}
 		);
 		SERIALIZER = Registry.register(
-				Registry.RECIPE_SERIALIZER,
+				Registries.RECIPE_SERIALIZER,
 				arcId("infusion"),
 				new Serializer()
 		);
 	}
 	
-	public SimpleInfusionRecipe(Identifier id, ItemStack result, List<XIngredient> outerIngredients, Ingredient centralIngredient, AspectMap aspects, int instability, @Nullable String name){
-		this.id = id;
+	public SimpleInfusionRecipe(ItemStack result, List<Ingredient> outerIngredients, Ingredient centralIngredient, AspectMap aspects, int instability, @Nullable String name){
 		this.result = result;
 		this.outerIngredients = outerIngredients;
 		this.centralIngredient = centralIngredient;
@@ -65,9 +64,9 @@ public class SimpleInfusionRecipe implements InfusionRecipe, ArcanaRecipe, Renam
 		this.name = name;
 	}
 	
-	public BakedInfusionRecipe craftInfusion(InfusionInventory inventory){
+	public BakedInfusionRecipe craftInfusion(InfusionInput inventory){
 		// check main ingredients
-		if(!(centralIngredient.test(inventory.centre) && inventory.aspects.contains(aspects)))
+		if(!(centralIngredient.test(inventory.centre()) && inventory.aspects().contains(aspects)))
 			return null;
 		// resolve outer ingredients to specific items
 		List<ItemStack> used = matchIngredients(inventory, outerIngredients);
@@ -77,11 +76,11 @@ public class SimpleInfusionRecipe implements InfusionRecipe, ArcanaRecipe, Renam
 	}
 	
 	@Nullable
-	protected static List<ItemStack> matchIngredients(InfusionInventory inventory, List<XIngredient> ingredients){
-		List<ItemStack> available = new ArrayList<>(inventory.outerStacks);
+	protected static List<ItemStack> matchIngredients(InfusionInput inventory, List<Ingredient> ingredients){
+		List<ItemStack> available = new ArrayList<>(inventory.outerStacks());
 		List<ItemStack> used = new ArrayList<>(ingredients.size());
 		ingredient:
-		for(XIngredient ingredient : ingredients){
+		for(Ingredient ingredient : ingredients){
 			// safe to remove in this loop, since we break immediately
 			for(int i = 0; i < available.size(); i++){
 				ItemStack stack = available.get(i);
@@ -97,22 +96,22 @@ public class SimpleInfusionRecipe implements InfusionRecipe, ArcanaRecipe, Renam
 		return used;
 	}
 	
-	public ItemStack craft(InfusionInventory inventory){
+	public ItemStack craft(InfusionInput inventory, RegistryWrapper.WrapperLookup lookup){
 		return result;
 	}
 	
-	public ItemStack getOutput(){
+	public ItemStack getResult(RegistryWrapper.WrapperLookup lookup){
 		return result;
 	}
 	
-	public Identifier getId(){
-		return id;
+	public ItemStack getResult(){
+		return result;
 	}
 	
 	public DefaultedList<Ingredient> getIngredients(){
 		DefaultedList<Ingredient> ret = DefaultedList.ofSize(outerIngredients.size() + 1);
 		ret.add(centralIngredient);
-		ret.addAll(outerIngredients.stream().map(XIngredient::basic).toList());
+		ret.addAll(outerIngredients);
 		return ret;
 	}
 	
@@ -124,7 +123,7 @@ public class SimpleInfusionRecipe implements InfusionRecipe, ArcanaRecipe, Renam
 		return centralIngredient;
 	}
 	
-	public List<XIngredient> outerIngredients(){
+	public List<Ingredient> outerIngredients(){
 		return outerIngredients;
 	}
 	
@@ -145,42 +144,31 @@ public class SimpleInfusionRecipe implements InfusionRecipe, ArcanaRecipe, Renam
 	}
 	
 	public static class Serializer implements RecipeSerializer<SimpleInfusionRecipe>{
+		public static final MapCodec<SimpleInfusionRecipe> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+				ItemStack.VALIDATED_CODEC.fieldOf("result").forGetter(x -> x.result),
+				Ingredient.DISALLOW_EMPTY_CODEC.listOf().fieldOf("outer_ingredients").forGetter(x -> x.outerIngredients),
+				Ingredient.DISALLOW_EMPTY_CODEC.fieldOf("central").forGetter(x -> x.centralIngredient),
+				AspectMap.CODEC.fieldOf("aspects").forGetter(x -> x.aspects),
+				Codec.INT.optionalFieldOf("instability", 1).forGetter(x -> x.instability),
+				Codec.STRING.optionalFieldOf("name", null).forGetter(x -> x.name)
+		).apply(i, SimpleInfusionRecipe::new));
 		
-		public SimpleInfusionRecipe read(Identifier id, JsonObject json){
-			ItemStack result = ShapedRecipe.outputFromJson(JsonHelper.getObject(json, "result"));
-			Ingredient central = Ingredient.fromJson(JsonHelper.getObject(json, "central"));
-			List<XIngredient> outers = new ArrayList<>();
-			for(JsonElement ingredients : JsonHelper.getArray(json, "ingredients"))
-				outers.add(XIngredient.fromJson(ingredients));
-			AspectMap aspects = ItemAspectRegistry.parseAspectStackList(id, JsonHelper.getArray(json, "aspects")).orElseGet(AspectMap::new);
-			int instability = JsonHelper.getInt(json, "instability", 1);
-			String name = JsonHelper.getString(json, "name", null);
-			return new SimpleInfusionRecipe(id, result, outers, central, aspects, instability, name);
+		public static final PacketCodec<RegistryByteBuf, SimpleInfusionRecipe> PACKET_CODEC = PacketCodec.tuple(
+				ItemStack.PACKET_CODEC, (SimpleInfusionRecipe x) -> x.result,
+				Ingredient.PACKET_CODEC.collect(PacketCodecs.toList()), x -> x.outerIngredients,
+				Ingredient.PACKET_CODEC, x -> x.centralIngredient,
+				AspectMap.PACKET_CODEC, x -> x.aspects,
+				PacketCodecs.VAR_INT, x -> x.instability,
+				PacketCodecUtil.nullable(PacketCodecs.STRING), x -> x.name,
+				SimpleInfusionRecipe::new
+		);
+		
+		public MapCodec<SimpleInfusionRecipe> codec(){
+			return CODEC;
 		}
 		
-		public void write(PacketByteBuf buf, SimpleInfusionRecipe recipe){
-			buf.writeBoolean(recipe.name != null);
-			if(recipe.name != null)
-				buf.writeString(recipe.name);
-			buf.writeItemStack(recipe.result);
-			buf.writeVarInt(recipe.outerIngredients.size());
-			for(XIngredient ingredient : recipe.outerIngredients)
-				ingredient.write(buf);
-			recipe.centralIngredient.write(buf);
-			buf.writeNbt(recipe.aspects.toNbt());
-			buf.writeVarInt(recipe.instability);
-		}
-		
-		public SimpleInfusionRecipe read(Identifier id, PacketByteBuf buf){
-			String name = null;
-			if(buf.readBoolean())
-				name = buf.readString();
-			ItemStack result = buf.readItemStack();
-			int size = buf.readVarInt();
-			List<XIngredient> outer = new ArrayList<>(size);
-			for(int i = 0; i < size; i++)
-				outer.add(XIngredient.read(buf));
-			return new SimpleInfusionRecipe(id, result, outer, Ingredient.fromPacket(buf), AspectMap.fromNbt(buf.readNbt()), buf.readVarInt(), name);
+		public PacketCodec<RegistryByteBuf, SimpleInfusionRecipe> packetCodec(){
+			return PACKET_CODEC;
 		}
 	}
 }

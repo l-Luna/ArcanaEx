@@ -20,11 +20,11 @@ public class EmiInfusionRecipe extends AbstractEmiInfusionRecipe{
 	protected final AspectMap aspects;
 	protected final int instability;
 	
-	public EmiInfusionRecipe(SimpleInfusionRecipe recipe){
-		id = recipe.getId();
-		outers = recipe.outerIngredients().stream().map(EmiXIngredient::of).toList();
+	public EmiInfusionRecipe(Identifier id, SimpleInfusionRecipe recipe){
+		this.id = id;
+		outers = recipe.outerIngredients().stream().map(EmiIngredient::of).toList();
 		central = EmiIngredient.of(recipe.centralIngredient());
-		output = EmiStack.of(recipe.getOutput());
+		output = EmiStack.of(recipe.getResult());
 		aspects = recipe.aspects();
 		instability = recipe.instability();
 	}

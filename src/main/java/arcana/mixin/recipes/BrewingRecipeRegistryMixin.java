@@ -2,9 +2,10 @@ package arcana.mixin.recipes;
 
 import arcana.ArcanaRegistry;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.PotionContentsComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.potion.PotionUtil;
 import net.minecraft.potion.Potions;
 import net.minecraft.recipe.BrewingRecipeRegistry;
 import org.spongepowered.asm.mixin.Mixin;
@@ -13,13 +14,15 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.Optional;
+
 @Mixin(BrewingRecipeRegistry.class)
 public class BrewingRecipeRegistryMixin{
 	
 	@Unique
 	private static boolean isSilverleafRecipe(ItemStack input, ItemStack ingredient){
 		return input.isOf(Items.POTION)
-				&& PotionUtil.getPotion(input) == Potions.WATER
+				&& input.getOrDefault(DataComponentTypes.POTION_CONTENTS, PotionContentsComponent.DEFAULT).potion().equals(Optional.of(Potions.WATER))
 				&& ingredient.isOf(ArcanaRegistry.SILVERLEAF)
 				&& ingredient.getCount() >= 8;
 	}

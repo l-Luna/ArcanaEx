@@ -1,7 +1,6 @@
 package arcana.client.research.sections;
 
 import arcana.research.sections.CookingRecipeSection;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.AbstractCookingRecipe;
@@ -17,10 +16,9 @@ public class CookingRecipeSectionRenderer extends AbstractRecipeSectionRenderer<
 			int x = right ? pageX + rightXOffset : pageX;
 			int inputX = x + (screenWidth - 256 + pageWidth) / 2 - 8;
 			int inputY = pageY + (screenHeight - bgHeight + pageHeight) / 2 + 8 - heightOffset;
-			RenderSystem.setShaderTexture(0, overlayTexture(section));
-			drawTexture(matrices, inputX - 9, inputY - 9, 101, 219, 1, 34, 48, 256, 256);
+			ctx.drawTexture(overlayTexture(section), inputX - 9, inputY - 9, 101, 219, 1, 34, 48, 256, 256);
 			ItemStack[] stacks = cr.getIngredients().get(0).getMatchingStacks();
-			client().getItemRenderer().renderInGui(stacks[displayIdx(stacks.length)], inputX, inputY);
+			ctx.drawItem(stacks[displayIdx(stacks.length)], inputX, inputY);
 		}
 	}
 	
@@ -30,7 +28,7 @@ public class CookingRecipeSectionRenderer extends AbstractRecipeSectionRenderer<
 			int inputX = x + (screenWidth - 256 + pageWidth) / 2 - 8;
 			int inputY = pageY + (screenHeight - bgHeight + pageHeight) / 2 + 8 - heightOffset;
 			ItemStack[] stacks = cr.getIngredients().get(0).getMatchingStacks();
-			tooltipArea(matrices, stacks[displayIdx(stacks.length)], mouseX, mouseY, inputX, inputY);
+			tooltipArea(ctx, stacks[displayIdx(stacks.length)], mouseX, mouseY, inputX, inputY);
 		}
 	}
 }

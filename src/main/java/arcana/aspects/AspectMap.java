@@ -1,9 +1,15 @@
 package arcana.aspects;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.Decoder;
+import com.mojang.serialization.Encoder;
 import com.unascribed.lib39.tunnel.api.Marshallable;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.network.codec.PacketCodecs;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -15,7 +21,32 @@ import java.util.function.Function;
  */
 public record AspectMap(Map<Aspect, Integer> underlying) implements Iterable<AspectStack>, Marshallable{
 	
-	public static final Codec<AspectMap> CODEC = Codec.unboundedMap(Aspect.CODEC, Codec.INT).xmap(AspectMap::new, AspectMap::underlying);
+	private static final Decoder<AspectMap> SHORTHAND_DECODER = Codec.STRING.listOf().flatMap(list -> {
+		AspectMap map = new AspectMap();
+		for(String s : list){
+			int count = 1;
+			if(s.contains("*")){
+				String[] split = s.split("\\*", 2);
+				try{
+					count = Integer.parseInt(split[0]);
+				}catch(NumberFormatException e){
+					return DataResult.error(e::getMessage, map);
+				}
+				s = split[1];
+			}
+			Aspect aspect = Aspects.byName(s);
+			if(aspect == null){
+				String tmp = s;
+				return DataResult.error(() -> "Invalid aspect: \"" + tmp + "\"", map);
+			}
+			map.add(aspect, count);
+		}
+		return DataResult.success(map);
+	});
+	private static final Codec<AspectMap> BASE_CODEC = Codec.unboundedMap(Aspect.CODEC, Codec.INT).xmap(AspectMap::new, AspectMap::underlying);
+	
+	public static final Codec<AspectMap> CODEC = Codec.withAlternative(BASE_CODEC, Codec.of(Encoder.error("unreachable"), SHORTHAND_DECODER));
+	public static final PacketCodec<ByteBuf, AspectMap> PACKET_CODEC = PacketCodecs.codec(BASE_CODEC);
 	
 	public AspectMap(){
 		this(new LinkedHashMap<>());

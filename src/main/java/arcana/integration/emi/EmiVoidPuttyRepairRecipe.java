@@ -17,11 +17,11 @@ import java.util.Random;
 
 public class EmiVoidPuttyRepairRecipe extends EmiPatternCraftingRecipe{
 	
-	public static List<Item> REPAIRABLES;
+	public static List<ItemStack> REPAIRABLES;
 	public static List<EmiIngredient> REPAIRABLES_INGREDIENTS;
 	
 	private static void initRepairables(){
-		REPAIRABLES = Registries.ITEM.stream().filter(VoidPuttyRepairRecipe::isRepairable).toList();
+		REPAIRABLES = Registries.ITEM.stream().map(Item::getDefaultStack).filter(VoidPuttyRepairRecipe::isRepairable).toList();
 		REPAIRABLES_INGREDIENTS = REPAIRABLES.stream().map(EmiStack::of).map(EmiIngredient.class::cast).toList();
 	}
 	
@@ -47,7 +47,7 @@ public class EmiVoidPuttyRepairRecipe extends EmiPatternCraftingRecipe{
 	}
 	
 	public static EmiStack getRepairable(Random rng, boolean damaged){
-		ItemStack stack = new ItemStack(REPAIRABLES.get(rng.nextInt(REPAIRABLES.size())));
+		ItemStack stack = REPAIRABLES.get(rng.nextInt(REPAIRABLES.size())).copy();
 		if(damaged && stack.getMaxDamage() > 2)
 			stack.setDamage(rng.nextInt(1, stack.getMaxDamage() - 1));
 		return EmiStack.of(stack);

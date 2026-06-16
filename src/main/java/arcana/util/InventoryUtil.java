@@ -7,6 +7,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.input.RecipeInput;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.Pair;
@@ -18,6 +19,10 @@ public final class InventoryUtil{
 	
 	public static Stream<ItemStack> streamInventory(Inventory i){
 		return IntStream.range(0, i.size()).mapToObj(i::getStack);
+	}
+	
+	public static Stream<ItemStack> streamInventory(RecipeInput i){
+		return IntStream.range(0, i.getSize()).mapToObj(i::getStackInSlot);
 	}
 	
 	public static Stream<ItemStack> streamAllItems(PlayerEntity player){

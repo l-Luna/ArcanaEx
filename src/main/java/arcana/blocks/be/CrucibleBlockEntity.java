@@ -11,7 +11,7 @@ import arcana.blocks.CrucibleBlock;
 import arcana.cca_components.KdItem;
 import arcana.cca_components.Researcher;
 import arcana.items.TomeOfSharingItem;
-import arcana.recipes.alchemy.AlchemyInventory;
+import arcana.recipes.alchemy.AlchemyInput;
 import arcana.recipes.alchemy.AlchemyRecipe;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -24,6 +24,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -67,12 +68,12 @@ public class CrucibleBlockEntity extends BlockEntity{
 					}
 				}
 				if(research != null){
-					AlchemyInventory inventory = new AlchemyInventory(this, stack, research);
-					Optional<AlchemyRecipe> optionalRecipe = world.getRecipeManager().getFirstMatch(AlchemyRecipe.TYPE, inventory, world);
+					AlchemyInput inventory = new AlchemyInput(this, stack, research);
+					Optional<RecipeEntry<AlchemyRecipe>> optionalRecipe = world.getRecipeManager().getFirstMatch(AlchemyRecipe.TYPE, inventory, world);
 					if(optionalRecipe.isPresent()){
 						melt = false;
-						AlchemyRecipe recipe = optionalRecipe.get();
-						ItemStack result = recipe.craft(inventory);
+						AlchemyRecipe recipe = optionalRecipe.get().value();
+						ItemStack result = recipe.craft(inventory, world.getRegistryManager());
 						aspects.take(recipe.getConsumedAspects(inventory));
 						if(stack.getCount() == 1)
 							item.remove(Entity.RemovalReason.KILLED);

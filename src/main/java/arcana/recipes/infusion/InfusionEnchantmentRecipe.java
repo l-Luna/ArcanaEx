@@ -1,29 +1,32 @@
 package arcana.recipes.infusion;
 
-import arcana.api.DynamicMaxLevelEnchantment;
 import arcana.api.RenamableRecipe;
 import arcana.aspects.AspectMap;
-import arcana.aspects.ItemAspectRegistry;
 import arcana.recipes.ArcanaRecipe;
-import arcana.recipes.XIngredient;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import arcana.util.PacketCodecUtil;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.network.codec.PacketCodecs;
+import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
-import net.minecraft.recipe.ShapedRecipe;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.JsonHelper;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.entry.RegistryElementCodec;
+import net.minecraft.registry.entry.RegistryEntry;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import static arcana.Arcana.arcId;
@@ -32,29 +35,27 @@ public class InfusionEnchantmentRecipe implements InfusionRecipe, ArcanaRecipe, 
 	
 	public static Serializer SERIALIZER;
 	
-	private final Enchantment enchantment;
-	private final List<XIngredient> baseIngredients;
+	private final RegistryEntry<Enchantment> enchantment;
+	private final List<Ingredient> baseIngredients;
 	private final AspectMap baseAspects;
 	private final ItemStack preview;
 	
-	private final Identifier id;
 	private final int baseInstability;
 	private final @Nullable String name;
 	
 	public static void setup(){
 		SERIALIZER = Registry.register(
-				Registry.RECIPE_SERIALIZER,
+				Registries.RECIPE_SERIALIZER,
 				arcId("infusion_enchantment"),
 				new Serializer()
 		);
 	}
 	
-	public InfusionEnchantmentRecipe(Enchantment enchantment, List<XIngredient> baseIngredients, AspectMap baseAspects, ItemStack preview, Identifier id, int baseInstability, @Nullable String name){
+	public InfusionEnchantmentRecipe(RegistryEntry<Enchantment> enchantment, List<Ingredient> baseIngredients, AspectMap baseAspects, ItemStack preview, int baseInstability, @Nullable String name){
 		this.enchantment = enchantment;
 		this.baseIngredients = baseIngredients;
 		this.baseAspects = baseAspects;
 		this.preview = preview;
-		this.id = id;
 		this.baseInstability = baseInstability;
 		this.name = name;
 	}
@@ -63,41 +64,37 @@ public class InfusionEnchantmentRecipe implements InfusionRecipe, ArcanaRecipe, 
 		return Optional.ofNullable(name);
 	}
 	
-	public BakedInfusionRecipe craftInfusion(InfusionInventory inventory){
-		ItemStack central = inventory.centre.copy();
+	public BakedInfusionRecipe craftInfusion(InfusionInput inventory){
+		ItemStack central = inventory.centre().copy();
 		int currentLevel = EnchantmentHelper.getLevel(enchantment, central);
-		if(!(enchantment.isAcceptableItem(central) || central.isOf(Items.BOOK)) || currentLevel >= DynamicMaxLevelEnchantment.getMaxLevel(enchantment, central))
+		// TODO: check incompatible enchantments
+		// TODO: check dynamic max levels
+		if(!(enchantment.value().isAcceptableItem(central) || central.isOf(Items.BOOK)))
 			return null;
 		int multiplier = 1 << currentLevel;
 		AspectMap cost = baseAspects.copy();
 		cost.multiply(__ -> (float)multiplier);
-		if(!inventory.aspects.contains(cost))
+		if(!inventory.aspects().contains(cost))
 			return null;
-		List<XIngredient> actualIngredients = new ArrayList<>(baseIngredients.size() * multiplier);
+		List<Ingredient> actualIngredients = new ArrayList<>(baseIngredients.size() * multiplier);
 		for(int i = 0; i < multiplier; i++)
 			actualIngredients.addAll(baseIngredients);
 		List<ItemStack> used = SimpleInfusionRecipe.matchIngredients(inventory, actualIngredients);
 		if(used == null)
 			return null;
-		Map<Enchantment, Integer> currentEnchants = EnchantmentHelper.get(central);
-		currentEnchants.put(enchantment, currentLevel + 1);
-		EnchantmentHelper.set(currentEnchants, central);
+		EnchantmentHelper.apply(central, x -> x.set(enchantment, currentLevel + 1));
 		return new BakedInfusionRecipe(central, used, cost, baseInstability + currentLevel + 1);
 	}
 	
-	public ItemStack getOutput(){
+	public ItemStack getResult(RegistryWrapper.WrapperLookup lookup){
 		return preview;
 	}
 	
-	public Identifier getId(){
-		return id;
-	}
-	
-	public Enchantment getEnchantment(){
+	public RegistryEntry<Enchantment> getEnchantment(){
 		return enchantment;
 	}
 	
-	public List<XIngredient> getBaseIngredients(){
+	public List<Ingredient> getBaseIngredients(){
 		return baseIngredients;
 	}
 	
@@ -123,46 +120,31 @@ public class InfusionEnchantmentRecipe implements InfusionRecipe, ArcanaRecipe, 
 	
 	public static class Serializer implements RecipeSerializer<InfusionEnchantmentRecipe>{
 		
-		public InfusionEnchantmentRecipe read(Identifier id, JsonObject json){
-			Enchantment enchantment = Registry.ENCHANTMENT.get(Identifier.of(JsonHelper.getString(json, "enchantment")));
-			ItemStack preview = ShapedRecipe.outputFromJson(JsonHelper.getObject(json, "preview"));
-			List<XIngredient> baseIngredients = new ArrayList<>();
-			for(JsonElement ingredients : JsonHelper.getArray(json, "base_ingredients"))
-				baseIngredients.add(XIngredient.fromJson(ingredients));
-			AspectMap baseAspects = ItemAspectRegistry.parseAspectStackList(id, JsonHelper.getArray(json, "base_aspects")).orElseGet(AspectMap::new);
-			int instability = JsonHelper.getInt(json, "base_instability", 0);
-			String name = JsonHelper.getString(json, "name", null);
-			
-			return new InfusionEnchantmentRecipe(enchantment, baseIngredients, baseAspects, preview, id, instability, name);
+		private static final MapCodec<InfusionEnchantmentRecipe> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+				RegistryElementCodec.of(RegistryKeys.ENCHANTMENT, Enchantment.CODEC).fieldOf("enchantment").forGetter(InfusionEnchantmentRecipe::getEnchantment),
+				Ingredient.DISALLOW_EMPTY_CODEC.listOf().fieldOf("base_ingredients").forGetter(InfusionEnchantmentRecipe::getBaseIngredients),
+				AspectMap.CODEC.fieldOf("base_aspects").forGetter(InfusionEnchantmentRecipe::getBaseAspects),
+				ItemStack.VALIDATED_CODEC.fieldOf("preview").forGetter(InfusionEnchantmentRecipe::getPreviewStack),
+				Codec.INT.optionalFieldOf("base_instability", 0).forGetter(InfusionEnchantmentRecipe::getBaseInstability),
+				Codec.STRING.optionalFieldOf("name", null).forGetter(x -> x.name)
+		).apply(i, InfusionEnchantmentRecipe::new));
+		
+		private static final PacketCodec<RegistryByteBuf, InfusionEnchantmentRecipe> PACKET_CODEC = PacketCodec.tuple(
+				PacketCodecs.registryEntry(RegistryKeys.ENCHANTMENT), InfusionEnchantmentRecipe::getEnchantment,
+				Ingredient.PACKET_CODEC.collect(PacketCodecs.toList()), InfusionEnchantmentRecipe::getBaseIngredients,
+				AspectMap.PACKET_CODEC, InfusionEnchantmentRecipe::getBaseAspects,
+				ItemStack.PACKET_CODEC, InfusionEnchantmentRecipe::getPreviewStack,
+				PacketCodecs.VAR_INT, InfusionEnchantmentRecipe::getBaseInstability,
+				PacketCodecUtil.nullable(PacketCodecs.STRING), x -> x.name,
+				InfusionEnchantmentRecipe::new
+		);
+		
+		public MapCodec<InfusionEnchantmentRecipe> codec(){
+			return CODEC;
 		}
 		
-		public void write(PacketByteBuf buf, InfusionEnchantmentRecipe recipe){
-			// name?, preview, enchantment, baseIngredients, baseEssentia, instability
-			buf.writeBoolean(recipe.name != null);
-			if(recipe.name != null)
-				buf.writeString(recipe.name);
-			buf.writeItemStack(recipe.preview);
-			buf.writeRegistryValue(Registry.ENCHANTMENT, recipe.enchantment);
-			buf.writeVarInt(recipe.baseIngredients.size());
-			for(XIngredient ingredient : recipe.baseIngredients)
-				ingredient.write(buf);
-			buf.writeNbt(recipe.baseAspects.toNbt());
-			buf.writeVarInt(recipe.baseInstability);
-		}
-		
-		public InfusionEnchantmentRecipe read(Identifier id, PacketByteBuf buf){
-			String name = null;
-			if(buf.readBoolean())
-				name = buf.readString();
-			ItemStack preview = buf.readItemStack();
-			Enchantment enchantment = buf.readRegistryValue(Registry.ENCHANTMENT);
-			int size = buf.readVarInt();
-			List<XIngredient> baseIngredients = new ArrayList<>(size);
-			for(int i = 0; i < size; i++)
-				baseIngredients.add(XIngredient.read(buf));
-			AspectMap baseEssentia = AspectMap.fromNbt(buf.readNbt());
-			int instability = buf.readVarInt();
-			return new InfusionEnchantmentRecipe(enchantment, baseIngredients, baseEssentia, preview, id, instability, name);
+		public PacketCodec<RegistryByteBuf, InfusionEnchantmentRecipe> packetCodec(){
+			return PACKET_CODEC;
 		}
 	}
 }

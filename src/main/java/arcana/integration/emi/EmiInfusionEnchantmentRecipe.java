@@ -10,17 +10,17 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class EmiInfusionEnchantmentRecipe extends AbstractEmiInfusionRecipe{
 	
 	protected final Identifier id;
-	protected final Enchantment enchantment;
+	protected final RegistryEntry<Enchantment> enchantment;
 	protected final List<EmiIngredient> baseOuters;
 	protected final AspectMap baseAspects;
 	protected final int baseInstability;
@@ -29,19 +29,20 @@ public class EmiInfusionEnchantmentRecipe extends AbstractEmiInfusionRecipe{
 	protected final List<EmiIngredient> catalysts;
 	protected final List<EmiStack> outputs;
 	
-	public EmiInfusionEnchantmentRecipe(InfusionEnchantmentRecipe recipe){
-		this.id = recipe.getId();
+	public EmiInfusionEnchantmentRecipe(Identifier id, InfusionEnchantmentRecipe recipe){
+		this.id = id;
 		this.enchantment = recipe.getEnchantment();
-		this.baseOuters = recipe.getBaseIngredients().stream().map(EmiXIngredient::of).toList();
+		this.baseOuters = recipe.getBaseIngredients().stream().map(EmiIngredient::of).toList();
 		this.baseAspects = recipe.getBaseAspects().copy();
 		this.baseInstability = recipe.getBaseInstability();
 		this.previewCental = recipe.getPreviewStack();
 		
 		catalysts = new ArrayList<>();
 		outputs = new ArrayList<>();
-		for(int i = 1; i <= enchantment.getMaxLevel(); i++){
+		for(int i = 1; i <= enchantment.value().getMaxLevel(); i++){
 			ItemStack bookCatalyst = new ItemStack(Items.ENCHANTED_BOOK);
-			EnchantmentHelper.set(bookCatalyst, Map.of(enchantment, i));
+			int tmp = i;
+			EnchantmentHelper.apply(bookCatalyst, b -> b.add(enchantment, tmp));
 			outputs.add(EmiStack.of(bookCatalyst));
 		}
 		catalysts.addAll(baseOuters);
@@ -71,12 +72,12 @@ public class EmiInfusionEnchantmentRecipe extends AbstractEmiInfusionRecipe{
 	
 	public void addWidgets(WidgetHolder widgets){
 		widgets.add(new DynamicWidgets(this, widgets, (group, key) -> {
-			int reps = (int)(key % enchantment.getMaxLevel()) + 1;
+			int reps = (int)(key % enchantment.value().getMaxLevel()) + 1;
 			ItemStack input = previewCental.copy();
 			ItemStack output = previewCental.copy();
 			if(reps > 1)
-				EnchantmentHelper.set(Map.of(enchantment, reps - 1), input);
-			EnchantmentHelper.set(Map.of(enchantment, reps), output);
+				EnchantmentHelper.apply(input, b -> b.add(enchantment, reps - 1));
+			EnchantmentHelper.apply(output, b -> b.add(enchantment, reps));
 			List<EmiIngredient> outers = new ArrayList<>(baseOuters.size() * reps);
 			for(int i = 0; i < reps; i++)
 				outers.addAll(baseOuters);

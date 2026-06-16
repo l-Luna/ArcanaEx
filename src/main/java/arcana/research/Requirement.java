@@ -1,7 +1,6 @@
 package arcana.research;
 
 import arcana.Arcana;
-import arcana.recipes.XIngredient;
 import arcana.research.requirements.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
@@ -40,7 +39,7 @@ public abstract class Requirement{
 	
 	public static void setup(){
 		// item (tag) requirement construction is handled by ResearchLoader
-		deserializers.put(ItemRequirement.TYPE, compound -> new ItemRequirement(Registries.ITEM.get(Identifier.of(compound.getString("item"))), XIngredient.matcherFromString(compound.getString("matcher"))));
+		deserializers.put(ItemRequirement.TYPE, compound -> new ItemRequirement(Registries.ITEM.get(Identifier.of(compound.getString("item")))));
 		deserializers.put(ItemTagRequirement.TYPE, compound -> new ItemTagRequirement(Identifier.of(compound.getString("tag"))));
 		
 		factories.put(XpRequirement.TYPE, __ -> new XpRequirement());

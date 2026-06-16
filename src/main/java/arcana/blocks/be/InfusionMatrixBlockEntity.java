@@ -6,7 +6,7 @@ import arcana.aspects.AspectMap;
 import arcana.cca_components.Researcher;
 import arcana.client.particles.AspectParticleEffect;
 import arcana.recipes.infusion.BakedInfusionRecipe;
-import arcana.recipes.infusion.InfusionInventory;
+import arcana.recipes.infusion.InfusionInput;
 import arcana.recipes.infusion.InfusionRecipe;
 import arcana.recipes.infusion.SimpleInfusionRecipe;
 import arcana.research.BuiltinResearch;
@@ -162,7 +162,7 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 					.filter(Objects::nonNull)
 					.forEach(aspects::add);
 			
-			InfusionInventory inv = new InfusionInventory(centre, outers, aspects);
+			InfusionInput inv = new InfusionInput(centre, outers, aspects);
 			world.getRecipeManager().getFirstMatch(SimpleInfusionRecipe.TYPE, inv, world).ifPresent(recipe -> {
 				curRecipe = recipe;
 				Researcher researcher = Researcher.from(player);

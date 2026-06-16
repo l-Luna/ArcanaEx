@@ -3,14 +3,14 @@ package arcana.integration.emi;
 import arcana.screens.ArcaneCraftingScreen;
 import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.recipe.VanillaEmiRecipeCategories;
-import dev.emi.emi.api.recipe.handler.EmiRecipeHandler;
+import dev.emi.emi.api.recipe.handler.StandardRecipeHandler;
 import net.minecraft.screen.slot.Slot;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmiArcaneCraftingRecipeHandler implements EmiRecipeHandler<ArcaneCraftingScreen.Handler>{
+public class EmiArcaneCraftingRecipeHandler implements StandardRecipeHandler<ArcaneCraftingScreen.Handler>{
 	
 	public List<Slot> getInputSources(ArcaneCraftingScreen.Handler handler){
 		List<Slot> slots = new ArrayList<>();

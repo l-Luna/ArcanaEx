@@ -2,20 +2,20 @@ package arcana.recipes.arcane_crafting;
 
 import arcana.api.RenamableRecipe;
 import arcana.aspects.AspectMap;
-import arcana.aspects.ItemAspectRegistry;
 import arcana.recipes.ArcanaRecipe;
-import arcana.recipes.XIngredient;
-import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.recipe.Ingredient;
+import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.recipe.RawShapedRecipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.ShapedRecipe;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.JsonHelper;
-import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.recipe.book.CraftingRecipeCategory;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 
 import java.util.Optional;
 
@@ -28,7 +28,7 @@ public class ShapedArcaneCraftingRecipe extends ShapedRecipe implements ArcaneCr
 	
 	public static void setup(){
 		TYPE = Registry.register(
-				Registry.RECIPE_TYPE,
+				Registries.RECIPE_TYPE,
 				arcId("arcane_crafting"),
 				new RecipeType<>(){
 					public String toString(){
@@ -37,21 +37,19 @@ public class ShapedArcaneCraftingRecipe extends ShapedRecipe implements ArcaneCr
 				}
 		);
 		SERIALIZER = Registry.register(
-				Registry.RECIPE_SERIALIZER,
+				Registries.RECIPE_SERIALIZER,
 				arcId("arcane_crafting"),
 				new Serializer()
 		);
 	}
 	
-	private AspectMap aspects;
-	private String translationKey;
+	private final AspectMap aspects;
+	private final String translationKey;
 	
-	public ShapedArcaneCraftingRecipe(Identifier id, String group, int width, int height, DefaultedList<Ingredient> input, ItemStack output){
-		super(id, group, width, height, input, output);
-	}
-	
-	public ShapedArcaneCraftingRecipe(ShapedRecipe from){
-		this(from.getId(), from.getGroup(), from.getWidth(), from.getHeight(), from.getIngredients(), from.getOutput());
+	public ShapedArcaneCraftingRecipe(String group, RawShapedRecipe raw, ItemStack result, AspectMap aspects, String translationKey){
+		super(group, CraftingRecipeCategory.MISC, raw, result, false);
+		this.aspects = aspects;
+		this.translationKey = translationKey;
 	}
 	
 	public RecipeType<?> getType(){
@@ -74,35 +72,47 @@ public class ShapedArcaneCraftingRecipe extends ShapedRecipe implements ArcaneCr
 		return true;
 	}
 	
-	public static class Serializer extends ShapedRecipe.Serializer{
+	public static class Serializer implements RecipeSerializer<ShapedArcaneCraftingRecipe>{
+		public static final MapCodec<ShapedArcaneCraftingRecipe> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+						Codec.STRING.optionalFieldOf("group", "").forGetter(ShapedRecipe::getGroup),
+						RawShapedRecipe.CODEC.forGetter(recipe -> recipe.raw),
+						ItemStack.VALIDATED_CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
+						AspectMap.CODEC.fieldOf("aspects").forGetter(ShapedArcaneCraftingRecipe::aspects),
+						Codec.STRING.optionalFieldOf("name", null).forGetter(recipe -> recipe.translationKey)
+				)
+				.apply(i, ShapedArcaneCraftingRecipe::new));
+		public static final PacketCodec<RegistryByteBuf, ShapedArcaneCraftingRecipe> PACKET_CODEC = PacketCodec.ofStatic(
+				ShapedArcaneCraftingRecipe.Serializer::write, ShapedArcaneCraftingRecipe.Serializer::read
+		);
 		
-		public ShapedRecipe read(Identifier id, JsonObject json){
-			ShapedRecipe orig = ShapedRecipe.Serializer.read(id, json);
-			ItemStack output = orig.getOutput();
-			if(json.has("apply"))
-				output = XIngredient.matcherFromString(json.get("apply").getAsString()).preview(output);
-			ShapedArcaneCraftingRecipe recipe = new ShapedArcaneCraftingRecipe(orig.getId(), orig.getGroup(), orig.getWidth(), orig.getHeight(), orig.getIngredients(), output);
-			recipe.aspects = ItemAspectRegistry.parseAspectStackList(id, JsonHelper.getArray(json, "aspects")).orElse(null);
-			recipe.translationKey = JsonHelper.getString(json, "name", null);
-			return recipe;
+		@Override
+		public MapCodec<ShapedArcaneCraftingRecipe> codec(){
+			return CODEC;
 		}
 		
-		public void write(PacketByteBuf bytes, ShapedRecipe recipe){
-			ShapedRecipe.Serializer.write(bytes, recipe);
-			bytes.writeNbt(((ShapedArcaneCraftingRecipe)recipe).aspects.toNbt());
-			String key = ((ShapedArcaneCraftingRecipe)recipe).translationKey;
-			bytes.writeBoolean(key != null);
-			if(key != null)
-				bytes.writeString(key);
+		@Override
+		public PacketCodec<RegistryByteBuf, ShapedArcaneCraftingRecipe> packetCodec(){
+			return PACKET_CODEC;
 		}
 		
-		public ShapedRecipe read(Identifier id, PacketByteBuf bytes){
-			ShapedRecipe orig = ShapedRecipe.Serializer.read(id, bytes);
-			ShapedArcaneCraftingRecipe recipe = new ShapedArcaneCraftingRecipe(orig);
-			recipe.aspects = AspectMap.fromNbt(bytes.readNbt());
-			if(bytes.readBoolean())
-				recipe.translationKey = bytes.readString();
-			return recipe;
+		private static ShapedArcaneCraftingRecipe read(RegistryByteBuf buf){
+			String string = buf.readString();
+			RawShapedRecipe rawShapedRecipe = RawShapedRecipe.PACKET_CODEC.decode(buf);
+			ItemStack itemStack = ItemStack.PACKET_CODEC.decode(buf);
+			AspectMap aspects = AspectMap.PACKET_CODEC.decode(buf);
+			String translationKey = buf.readBoolean() ? buf.readString() : null;
+			return new ShapedArcaneCraftingRecipe(string, rawShapedRecipe, itemStack, aspects, translationKey);
+		}
+		
+		private static void write(RegistryByteBuf buf, ShapedArcaneCraftingRecipe recipe){
+			buf.writeString(recipe.getGroup());
+			RawShapedRecipe.PACKET_CODEC.encode(buf, recipe.raw);
+			ItemStack.PACKET_CODEC.encode(buf, recipe.result);
+			AspectMap.PACKET_CODEC.encode(buf, recipe.aspects);
+			boolean bl = recipe.translationKey != null;
+			buf.writeBoolean(bl);
+			if(bl)
+				buf.writeString(recipe.translationKey);
 		}
 	}
 }

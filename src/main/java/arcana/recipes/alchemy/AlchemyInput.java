@@ -3,40 +3,43 @@ package arcana.recipes.alchemy;
 import arcana.aspects.AspectMap;
 import arcana.blocks.be.CrucibleBlockEntity;
 import arcana.research.Research;
-import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.input.RecipeInput;
 import net.minecraft.util.Identifier;
 
 import java.util.Map;
 
-public class AlchemyInventory extends SimpleInventory{
+public class AlchemyInput implements RecipeInput{
 	
+	private final ItemStack reagent;
 	private final CrucibleBlockEntity crucible;
 	// mirror Researcher and TomeOfSharingItem
 	private final Map<Identifier, Integer> stages;
 	
-	public AlchemyInventory(CrucibleBlockEntity crucible, ItemStack stack, Map<Identifier, Integer> stages){
-		super(stack);
+	public AlchemyInput(CrucibleBlockEntity crucible, ItemStack reagent, Map<Identifier, Integer> stages){
 		this.crucible = crucible;
+		this.reagent = reagent;
 		this.stages = stages;
 	}
 	
+	public ItemStack getStackInSlot(int slot){
+		return slot == 0 ? reagent : null;
+	}
+	
+	public int getSize(){
+		return 1;
+	}
+	
 	public boolean isEmpty(){
-		return super.isEmpty() && crucible.getAspects().isEmpty();
-	}
-	
-	public void clear(){
-		super.clear();
-		crucible.getAspects().clear();
-	}
-	
-	public void markDirty(){
-		super.markDirty();
-		crucible.markDirty();
+		return RecipeInput.super.isEmpty() && crucible.getAspects().isEmpty();
 	}
 	
 	public AspectMap getAspects(){
 		return crucible.getAspects();
+	}
+	
+	public ItemStack getReagent(){
+		return reagent;
 	}
 	
 	public int entryStage(Identifier entryId){

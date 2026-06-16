@@ -11,10 +11,10 @@ import arcana.items.WandItem;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.*;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -33,7 +33,7 @@ public class FireFocusItem extends FocusItem{
 	
 	public AspectMap deciCastCost(ItemStack wand, ItemStack focus, PlayerEntity user){
 		// TODO: check player reach
-		BlockState looking = user.world.getBlockState(((BlockHitResult)user.raycast(5.5, 0, false)).getBlockPos());
+		BlockState looking = user.getWorld().getBlockState(((BlockHitResult)user.raycast(5.5, 0, false)).getBlockPos());
 		if(WardedCampfireBlock.canBeLit(looking) || CrimsonCampfireBlock.canBeLit(looking))
 			return AspectMap.fromAspectStacks(new AspectStack(Aspects.ORDER, 100), new AspectStack(Aspects.FIRE, 100));
 		return AspectMap.fromAspectStack(new AspectStack(Aspects.FIRE, 3));
@@ -50,7 +50,7 @@ public class FireFocusItem extends FocusItem{
 		BlockState bs = world.getBlockState(pos);
 		if(!CampfireBlock.canBeLit(bs) && !WardedCampfireBlock.canBeLit(bs) && !CrimsonCampfireBlock.canBeLit(bs) && !CandleBlock.canBeLit(bs) && !CandleCakeBlock.canBeLit(bs)){
 			BlockPos toLight = pos.offset(ctx.getSide());
-			if(AbstractFireBlock.canPlaceAt(world, toLight, ctx.getPlayerFacing())){
+			if(AbstractFireBlock.canPlaceAt(world, toLight, ctx.getHorizontalPlayerFacing())){
 				world.playSound(player, toLight, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1, world.getRandom().nextFloat() * .4f + .8f);
 				world.setBlockState(toLight, AbstractFireBlock.getState(world, toLight), Block.NOTIFY_ALL | Block.REDRAW_ON_MAIN_THREAD);
 				world.emitGameEvent(player, GameEvent.BLOCK_PLACE, pos);
@@ -75,12 +75,12 @@ public class FireFocusItem extends FocusItem{
 		float damage = Math.round(0.12f * strength + 3);
 		
 		// bonus damage if the user has ignis power
-		if(user.hasStatusEffect(ArcanaRegistry.FIRE_POWER))
+		if(user.hasStatusEffect(RegistryEntry.of(ArcanaRegistry.FIRE_POWER)))
 			damage += 4;
 		
 		target.setOnFireFor((int)(damage + 2));
-		target.damage(DamageSource.ON_FIRE, damage);
+		target.damage(user.getDamageSources().inFire(), damage);
 		target.setAttacker(user);
-		return ActionResult.success(user.world.isClient);
+		return ActionResult.success(user.getWorld().isClient);
 	}
 }

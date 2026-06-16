@@ -1,17 +1,15 @@
 package arcana.items;
 
 import arcana.blocks.be.MagicMirrorBlockEntity;
+import arcana.items.components.ArcanaItemComponentTypes;
 import arcana.util.MathUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.client.item.TooltipData;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.item.tooltip.TooltipData;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -30,25 +28,24 @@ public class MagicMirrorBlockItem extends BlockItem{
 	}
 	
 	public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected){
-		NbtCompound nbt = stack.getNbt();
-		if(!world.isClient && nbt != null && nbt.getBoolean("bundled")){
+		if(!world.isClient && stack.getOrDefault(ArcanaItemComponentTypes.MAGIC_MIRROR_BUNDLED_FLAG, false)){
 			setTag(stack, MathUtil.randomUuid(world.random));
-			nbt.remove("bundled");
+			stack.set(ArcanaItemComponentTypes.MAGIC_MIRROR_BUNDLED_FLAG, false);
 			stack.setCount(2);
 		}
 	}
 	
-	public void onCraft(ItemStack stack, World world, PlayerEntity player){
+	public void onCraftByPlayer(ItemStack stack, World world, PlayerEntity player){
 		setTag(stack, MathUtil.randomUuid(world.random));
 	}
 	
-	public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks){
+	/*public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks){
 		if(isIn(group)){
 			ItemStack stack = getDefaultStack();
 			stack.getOrCreateNbt().putBoolean("bundled", true);
 			stacks.add(stack);
 		}
-	}
+	}*/
 	
 	protected boolean postPlacement(BlockPos pos, World world, @Nullable PlayerEntity player, ItemStack stack, BlockState state){
 		if(!world.isClient && world.getBlockEntity(pos) instanceof MagicMirrorBlockEntity mm){
@@ -60,12 +57,11 @@ public class MagicMirrorBlockItem extends BlockItem{
 	}
 	
 	public static @Nullable UUID getTag(ItemStack mirrorStack){
-		NbtCompound nbt = mirrorStack.getNbt();
-		return nbt != null && nbt.containsUuid("tag") ? nbt.getUuid("tag") : null;
+		return mirrorStack.getOrDefault(ArcanaItemComponentTypes.MAGIC_MIRROR_TAG, null);
 	}
 	
 	public static ItemStack setTag(ItemStack mirrorStack, UUID uuid){
-		mirrorStack.getOrCreateNbt().putUuid("tag", uuid);
+		mirrorStack.set(ArcanaItemComponentTypes.MAGIC_MIRROR_TAG, uuid);
 		return mirrorStack;
 	}
 }

@@ -1,5 +1,6 @@
 package arcana.aspects;
 
+import com.mojang.serialization.Codec;
 import com.unascribed.lib39.tunnel.api.Marshallable;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
@@ -14,8 +15,14 @@ import java.util.function.Function;
  */
 public record AspectMap(Map<Aspect, Integer> underlying) implements Iterable<AspectStack>, Marshallable{
 	
+	public static final Codec<AspectMap> CODEC = Codec.unboundedMap(Aspect.CODEC, Codec.INT).xmap(AspectMap::new, AspectMap::underlying);
+	
 	public AspectMap(){
 		this(new LinkedHashMap<>());
+	}
+	
+	public AspectMap{
+		underlying = new LinkedHashMap<>(underlying);
 	}
 	
 	public int get(Aspect aspect){

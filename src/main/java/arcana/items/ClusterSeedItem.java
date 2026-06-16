@@ -34,12 +34,7 @@ public class ClusterSeedItem extends Item{
 	}
 	
 	public ActionResult useOnBlock(ItemUsageContext context){
-		ActionResult result = place(new ItemPlacementContext(context));
-		if(!result.isAccepted() && isFood()){
-			ActionResult actual = use(context.getWorld(), context.getPlayer(), context.getHand()).getResult();
-			return actual == ActionResult.CONSUME ? ActionResult.CONSUME_PARTIAL : actual;
-		}
-		return result;
+		return place(new ItemPlacementContext(context));
 	}
 	
 	public ActionResult place(ItemPlacementContext context){

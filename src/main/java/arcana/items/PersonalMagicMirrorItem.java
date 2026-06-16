@@ -3,20 +3,18 @@ package arcana.items;
 import arcana.ArcanaRegistry;
 import arcana.api.ContextCraftedItem;
 import arcana.cca_components.MagicMirrorQueue;
+import arcana.items.components.ArcanaItemComponentTypes;
 import arcana.util.MathUtil;
-import net.minecraft.client.item.TooltipData;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.StackReference;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.item.tooltip.TooltipData;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.ClickType;
-import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -37,11 +35,10 @@ public class PersonalMagicMirrorItem extends Item implements ContextCraftedItem{
 		if(!world.isClient){
 			if(getId(stack) == null)
 				setId(stack, MathUtil.randomUuid(world.random));
-			NbtCompound nbt = stack.getOrCreateNbt();
-			if(nbt.getBoolean("bundled")){
+			if(stack.getOrDefault(ArcanaItemComponentTypes.MAGIC_MIRROR_BUNDLED_FLAG, false)){
 				UUID tag = MathUtil.randomUuid(world.random);
 				MagicMirrorBlockItem.setTag(stack, tag);
-				nbt.remove("bundled");
+				stack.set(ArcanaItemComponentTypes.MAGIC_MIRROR_BUNDLED_FLAG, false);
 				if(entity instanceof PlayerEntity player)
 					player.giveItemStack(MagicMirrorBlockItem.setTag(new ItemStack(ArcanaRegistry.MAGIC_MIRROR), tag));
 			}
@@ -61,21 +58,21 @@ public class PersonalMagicMirrorItem extends Item implements ContextCraftedItem{
 		}
 	}
 	
-	public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks){
+	/*public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks){
 		if(isIn(group)){
 			ItemStack stack = getDefaultStack();
 			stack.getOrCreateNbt().putBoolean("bundled", true);
 			stacks.add(stack);
 		}
-	}
+	}*/
 	
 	public boolean onClicked(ItemStack stack, ItemStack otherStack, Slot slot, ClickType clickType, PlayerEntity player, StackReference ref){
-		if(player.world.isClient)
+		if(player.getWorld().isClient)
 			return false; // TODO: creative inventory
 		if(clickType == ClickType.RIGHT && !otherStack.isEmpty()){
 			UUID targetTag = MagicMirrorBlockItem.getTag(stack);
 			if(targetTag != null){
-				MagicMirrorQueue.from(player.world).push(targetTag, getId(stack), otherStack);
+				MagicMirrorQueue.from(player.getWorld()).push(targetTag, getId(stack), otherStack);
 				ref.set(ItemStack.EMPTY);
 				// TODO: SFX
 				return true;
@@ -85,12 +82,11 @@ public class PersonalMagicMirrorItem extends Item implements ContextCraftedItem{
 	}
 	
 	public static @Nullable UUID getId(ItemStack mirrorStack){
-		NbtCompound nbt = mirrorStack.getNbt();
-		return nbt != null && nbt.containsUuid("id") ? nbt.getUuid("id") : null;
+		return mirrorStack.getOrDefault(ArcanaItemComponentTypes.MAGIC_MIRROR_ID, null);
 	}
 	
 	public static ItemStack setId(ItemStack mirrorStack, UUID uuid){
-		mirrorStack.getOrCreateNbt().putUuid("id", uuid);
+		mirrorStack.set(ArcanaItemComponentTypes.MAGIC_MIRROR_ID, uuid);
 		return mirrorStack;
 	}
 	

@@ -27,7 +27,7 @@ public class CoagulationFocusItem extends FocusItem{
 	
 	public void tickContinuousCast(ContinuousCastContext ccc){
 		PlayerEntity user = ccc.user;
-		World w = user.world;
+		World w = user.getWorld();
 		Vec3d target = PrismaticLightFocusItem.hoverPosition(user);
 		if(ccc.castTime >= 30){
 			ccc.stop();

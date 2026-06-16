@@ -257,9 +257,9 @@ public final class ArcanaRegistry{
 	public static final Item AXE_OF_THE_STREAM = new AxeItem(ArcanaToolMaterials.PRIMAL, new ArcanaItemSettings().group(Tab.EQUIPMENT).rarity(Rarity.UNCOMMON).attributeModifiers(AxeItem.createAttributeModifiers(ArcanaToolMaterials.PRIMAL, 5.5f, -3)));
 	public static final Item HOE_OF_THE_CYCLE = new HoeItem(ArcanaToolMaterials.PRIMAL, new ArcanaItemSettings().group(Tab.EQUIPMENT).rarity(Rarity.UNCOMMON).attributeModifiers(HoeItem.createAttributeModifiers(ArcanaToolMaterials.PRIMAL, -2, -1)));
 	
-	public static final Item ARCANIUM_SCALPEL = new ScalpelItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxDamage(100), ScalpelItem.ScalpelType.ROSE);
-	public static final Item SILVERLEAF_SCALPEL = new ScalpelItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxDamage(100), ScalpelItem.ScalpelType.SILVER);
-	public static final Item VOID_METAL_SCALPEL = new ScalpelItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxDamage(100), ScalpelItem.ScalpelType.BLACK);
+	public static final Item ARCANIUM_SCALPEL = new ScalpelItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxDamage(129).attributeModifiers(ScalpelItem.createAttributeModifiers(ScalpelItem.ScalpelType.ROSE)), ScalpelItem.ScalpelType.ROSE);
+	public static final Item SILVERLEAF_SCALPEL = new ScalpelItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxDamage(315).attributeModifiers(ScalpelItem.createAttributeModifiers(ScalpelItem.ScalpelType.SILVER)), ScalpelItem.ScalpelType.SILVER);
+	public static final Item VOID_METAL_SCALPEL = new ScalpelItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxDamage(101).attributeModifiers(ScalpelItem.createAttributeModifiers(ScalpelItem.ScalpelType.BLACK)), ScalpelItem.ScalpelType.BLACK);
 	
 	public static final Item GOLD_RING = new TrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1));
 	public static final Item ARCANIUM_RING = new TrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1));
@@ -270,9 +270,9 @@ public final class ArcanaRegistry{
 	public static final Item RING_OF_TWIN_HEARTBEATS = new WarpingTrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1).rarity(Rarity.UNCOMMON));
 	public static final Item RING_OF_THE_VOIDGAZER = new WarpBasedDiscountTrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1).rarity(Rarity.UNCOMMON));
 	public static final Item EMERALD_NECKLACE = new TrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1));
-	public static final Item AMULET_OF_RUNIC_SHIELDING = new ShieldingTrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1), 2);
-	public static final Item AMULET_OF_UNBURDENED_TRAVEL = new ShieldingTrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1), 4);
-	public static final Item AMULET_OF_DEAFENING_SHIELDING = new ShieldingTrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1), 1);
+	public static final Item AMULET_OF_RUNIC_SHIELDING = new TrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1).attributeModifiers(RunicShielding.createAttributeModifiers(2)));
+	public static final Item AMULET_OF_UNBURDENED_TRAVEL = new TrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1).attributeModifiers(RunicShielding.createAttributeModifiers(6)));
+	public static final Item AMULET_OF_DEAFENING_SHIELDING = new TrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1).attributeModifiers(RunicShielding.createAttributeModifiers(1)));
 	
 	public static final Item CRIMSON_BLADE = new SwordItem(ArcanaToolMaterials.CRIMSON, new ArcanaItemSettings().group(Tab.EQUIPMENT).attributeModifiers(SwordItem.createAttributeModifiers(ArcanaToolMaterials.CRIMSON, 3, -2.4f)));
 	public static final Item CRIMSON_LONGBOW = new CrimsonLongbowItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxDamage(564));

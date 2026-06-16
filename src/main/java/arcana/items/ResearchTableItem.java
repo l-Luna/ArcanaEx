@@ -5,6 +5,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 
 import static arcana.blocks.ResearchTableBlock.left;
 
@@ -16,9 +18,9 @@ public class ResearchTableItem extends BlockItem{
 	
 	protected boolean place(ItemPlacementContext context, BlockState state){
 		// only handle the research table
-		var f = Block.NOTIFY_ALL | Block.REDRAW_ON_MAIN_THREAD;
-		var pos = context.getBlockPos();
-		var offset = context.getPlayerFacing().rotateYClockwise();
+		int f = Block.NOTIFY_ALL | Block.REDRAW_ON_MAIN_THREAD;
+		BlockPos pos = context.getBlockPos();
+		Direction offset = context.getPlayerLookDirection().rotateYClockwise();
 		
 		// check if the right block is replaceable
 		// not that context.canPlace() offsets by hit side, which is not what we want, so we use state.canReplace

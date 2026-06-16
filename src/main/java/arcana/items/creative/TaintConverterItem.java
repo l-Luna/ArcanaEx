@@ -5,12 +5,12 @@ import arcana.aura.InfestedChunk;
 import arcana.aura.Taint;
 import arcana.client.particles.CubeParticleEffect;
 import arcana.client.particles.CubeParticleStyle;
-import net.minecraft.client.item.TooltipContext;
+import arcana.items.components.ArcanaItemComponentTypes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -69,16 +69,15 @@ public class TaintConverterItem extends Item{
 	}
 	
 	private static int radiusFor(ItemStack stack){
-		NbtCompound nbt = stack.getNbt();
-		return nbt == null ? 1 : nbt.getInt("radius");
+		return stack.getOrDefault(ArcanaItemComponentTypes.RADIUS, 1);
 	}
 	
 	private static void setRadiusFor(ItemStack stack, int radius){
-		stack.getOrCreateNbt().putInt("radius", radius);
+		stack.set(ArcanaItemComponentTypes.RADIUS, radius);
 	}
 	
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context){
-		super.appendTooltip(stack, world, tooltip, context);
+	public void appendTooltip(ItemStack stack, @Nullable TooltipContext ctx, List<Text> tooltip, TooltipType type){
+		super.appendTooltip(stack, ctx, tooltip, type);
 		tooltip.add(Text.translatable("tooltip.arcana.radius", radiusFor(stack)));
 	}
 }

@@ -2,13 +2,18 @@ package arcana.items;
 
 import arcana.ArcanaRegistry;
 import arcana.api.*;
-import arcana.aspects.*;
+import arcana.aspects.Aspect;
+import arcana.aspects.Aspects;
+import arcana.aspects.ScaledAspectMap;
+import arcana.aspects.WandAspectsTooltipData;
 import arcana.aura.AuraWorld;
 import arcana.aura.Node;
 import arcana.blocks.be.InfusionMatrixBlockEntity;
 import arcana.cca_components.Caster;
 import arcana.cca_components.Researcher;
 import arcana.client.ArcanaClient;
+import arcana.items.components.ArcanaItemComponentTypes;
+import arcana.items.components.WandDataComponent;
 import dev.emi.trinkets.api.SlotReference;
 import dev.emi.trinkets.api.TrinketsApi;
 import net.fabricmc.api.EnvType;
@@ -23,8 +28,10 @@ import net.minecraft.inventory.StackReference;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.item.tooltip.TooltipData;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -43,14 +50,12 @@ import java.util.function.Consumer;
 public class WandItem extends Item implements FabricItem, WarpingItem{
 	
 	public WandItem(Item.Settings settings){
-		super(settings);
+		super(settings.component(ArcanaItemComponentTypes.WAND_DATA, WandDataComponent.createDefault()));
 	}
 	
 	public static ItemStack withCapAndCore(Cap cap, Core core){
 		ItemStack stack = new ItemStack(ArcanaRegistry.WAND);
-		NbtCompound tag = stack.getOrCreateNbt();
-		tag.putString("cap_id", cap.id().toString());
-		tag.putString("core_id", core.id().toString());
+		stack.set(ArcanaItemComponentTypes.WAND_DATA, WandDataComponent.withCapAndCore(cap.id(), core.id()));
 		return stack;
 	}
 	
@@ -192,7 +197,7 @@ public class WandItem extends Item implements FabricItem, WarpingItem{
 	}
 	
 	@Environment(EnvType.CLIENT)
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context){
+	public void appendTooltip(ItemStack stack, @Nullable TooltipContext ctx, List<Text> tooltip, TooltipType type){
 		appendTooltipImpl(stack, tooltip);
 	}
 	
@@ -208,7 +213,7 @@ public class WandItem extends Item implements FabricItem, WarpingItem{
 		}
 		int warping = warping(stack, player);
 		if(warping != 0)
-			tooltip.add(ArcanaRegistry.WARPING.getName(warping));
+			tooltip.add(WarpingItem.warpingTooltip(warping));
 		// if the discount in all primals is the same, say vis discount, otherwise list every aspect
 		int air = percentOff(Aspects.AIR, stack, player);
 		boolean all = true;
@@ -262,31 +267,33 @@ public class WandItem extends Item implements FabricItem, WarpingItem{
 	// TODO: NBT-backed aspect map?
 	
 	public static ScaledAspectMap aspectsFrom(ItemStack stack){
-		return new ScaledAspectMap(AspectMap.fromNbt(stack.getSubNbt("aspects")), 0.1f);
+		return new ScaledAspectMap(stack.get(ArcanaItemComponentTypes.WAND_DATA).stored, 0.1f);
 	}
 	
 	public static void updateAspects(ItemStack stack, Consumer<ScaledAspectMap> updater){
 		ScaledAspectMap map = aspectsFrom(stack);
 		updater.accept(map);
-		stack.getOrCreateNbt().put("aspects", map.underlying().toNbt());
+		dataFrom(stack).stored = map.underlying();
 	}
 	
 	public static Cap capFrom(ItemStack stack){
-		return Cap.byName(stack.getOrCreateNbt().getString("cap_id"));
+		return Cap.byName(dataFrom(stack).cap);
 	}
 	
 	public static Core coreFrom(ItemStack stack){
-		return Core.byName(stack.getOrCreateNbt().getString("core_id"));
+		return Core.byName(dataFrom(stack).core);
 	}
 	
 	public static @NotNull ItemStack focusFrom(ItemStack stack){
-		return ItemStack.fromNbt(stack.getOrCreateNbt().getCompound("focus"));
+		return dataFrom(stack).focus;
 	}
 	
 	public static void putFocus(ItemStack wand, ItemStack focus){
-		var focusTag = new NbtCompound();
-		focus.writeNbt(focusTag);
-		wand.setSubNbt("focus", focusTag);
+		dataFrom(wand).focus = focus;
+	}
+	
+	public static WandDataComponent dataFrom(ItemStack stack){
+		return stack.get(ArcanaItemComponentTypes.WAND_DATA);
 	}
 	
 	public static void updateFocus(ItemStack wand, Consumer<ItemStack> updater){
@@ -328,7 +335,7 @@ public class WandItem extends Item implements FabricItem, WarpingItem{
 	
 	public static int focusStrength(ItemStack stack, @Nullable PlayerEntity player){
 		int strength = capFrom(stack).strength() + coreFrom(stack).strength();
-		if(player != null && player.hasStatusEffect(ArcanaRegistry.ARCANE_AURA))
+		if(player != null && player.hasStatusEffect(RegistryEntry.of(ArcanaRegistry.ARCANE_AURA)))
 			strength += (int)(strength * 0.2);
 		return strength;
 	}

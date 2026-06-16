@@ -12,3 +12,6 @@ accessible field net/minecraft/entity/ai/goal/BowAttackGoal cooldown I
 accessible field net/minecraft/entity/ai/goal/BowAttackGoal attackInterval I
 
 accessible method net/minecraft/screen/ScreenHandler insertItem (Lnet/minecraft/item/ItemStack;IIZ)Z
+
+accessible method net/minecraft/item/BlockItem getPlacementState (Lnet/minecraft/item/ItemPlacementContext;)Lnet/minecraft/block/BlockState;
+accessible method net/minecraft/item/ItemUsageContext getHitResult ()Lnet/minecraft/util/hit/BlockHitResult;

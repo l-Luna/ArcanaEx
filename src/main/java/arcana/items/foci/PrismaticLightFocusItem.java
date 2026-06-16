@@ -11,6 +11,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -39,12 +40,12 @@ public class PrismaticLightFocusItem extends FocusItem{
 	public void startContinuousCast(ContinuousCastContext ccc){
 		PlayerEntity user = ccc.user;
 		NbtCompound state = ccc.state;
-		World w = user.world;
+		World w = user.getWorld();
 		if(!w.isClient){
 			PrismaticOrbEntity orb = new PrismaticOrbEntity(ArcanaRegistry.PRISMATIC_ORB, w);
 			orb.setOwner(user);
 			orb.setPosition(hoverPosition(user));
-			orb.setBurning(user.hasStatusEffect(ArcanaRegistry.FIRE_POWER));
+			orb.setBurning(user.hasStatusEffect(RegistryEntry.of(ArcanaRegistry.FIRE_POWER)));
 			w.spawnEntity(orb);
 			state.putUuid("orbId", orb.getUuid());
 		}
@@ -53,7 +54,7 @@ public class PrismaticLightFocusItem extends FocusItem{
 	public void endContinuousCast(ContinuousCastContext ccc){
 		PlayerEntity user = ccc.user;
 		NbtCompound state = ccc.state;
-		World w = user.world;
+		World w = user.getWorld();
 		if(!w.isClient){
 			ServerWorld sw = (ServerWorld)w;
 			if(!state.containsUuid("orbId"))

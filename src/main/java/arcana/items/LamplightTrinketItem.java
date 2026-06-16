@@ -22,10 +22,10 @@ public class LamplightTrinketItem extends TrinketItem{
 		if(entity.isSpectator())
 			return;
 		super.tick(stack, slot, entity);
-		World world = entity.world;
+		World world = entity.getWorld();
 		if(world.isClient)
 			return;
-		BlockPos userPos = new BlockPos(entity.getEyePos());
+		BlockPos userPos = BlockPos.ofFloored(entity.getEyePos());
 		if(world.getTime() % 20 == 10)
 			proc(world, userPos);
 		if(world.getTime() % 20 * 3 == 30)
@@ -34,7 +34,7 @@ public class LamplightTrinketItem extends TrinketItem{
 	
 	private static boolean proc(World world, BlockPos userPos){
 		BlockState there = world.getBlockState(userPos);
-		if((there.isAir() || there.getMaterial().isReplaceable()) && world.getLightLevel(userPos) < 8){
+		if((there.isAir() || there.isReplaceable()) && world.getLightLevel(userPos) < 8){
 			boolean wet = world.getFluidState(userPos).isOf(Fluids.WATER);
 			world.setBlockState(userPos, ArcanaRegistry.LIGHT_BLOCK.getDefaultState().with(Properties.WATERLOGGED, wet));
 			return true;

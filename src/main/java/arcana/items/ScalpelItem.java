@@ -10,16 +10,14 @@ import arcana.entities.wisps.PureWispEntity;
 import arcana.entities.wisps.TaintedWispEntity;
 import arcana.entities.wisps.WispEntity;
 import arcana.network.PkShakeNode;
-import com.google.common.collect.ImmutableMultimap;
-import com.google.common.collect.Multimap;
-import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.api.EnvironmentInterface;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.component.type.AttributeModifierSlot;
+import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
@@ -35,8 +33,8 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.RotationAxis;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3f;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 
@@ -53,27 +51,28 @@ public class ScalpelItem extends Item implements AnimatedUseItem{
 	
 	public final ScalpelType type;
 	
-	private final Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
-	
 	public ScalpelItem(Settings settings, ScalpelType type){
-		super(settings.maxDamageIfAbsent(100));
+		super(settings.maxDamage(100));
 		this.type = type;
-		
+	}
+	
+	public static AttributeModifiersComponent createAttributeModifiers(ScalpelType type){
 		float attackDamage = switch(type){
 			case ROSE, SILVER -> 2.5f;
 			case BLACK -> 3.5f;
 		};
-		float attackSpeed = -3;
-		ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
-		builder.put(
-				EntityAttributes.GENERIC_ATTACK_DAMAGE,
-				new EntityAttributeModifier(ATTACK_DAMAGE_MODIFIER_ID, "Weapon modifier", attackDamage, EntityAttributeModifier.Operation.ADDITION)
-		);
-		builder.put(
-				EntityAttributes.GENERIC_ATTACK_SPEED,
-				new EntityAttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Weapon modifier", attackSpeed, EntityAttributeModifier.Operation.ADDITION)
-		);
-		this.attributeModifiers = builder.build();
+		return AttributeModifiersComponent.builder()
+				.add(
+						EntityAttributes.GENERIC_ATTACK_DAMAGE,
+						new EntityAttributeModifier(BASE_ATTACK_DAMAGE_MODIFIER_ID, attackDamage, EntityAttributeModifier.Operation.ADD_VALUE),
+						AttributeModifierSlot.MAINHAND
+				)
+				.add(
+						EntityAttributes.GENERIC_ATTACK_SPEED,
+						new EntityAttributeModifier(BASE_ATTACK_SPEED_MODIFIER_ID, -3, EntityAttributeModifier.Operation.ADD_VALUE),
+						AttributeModifierSlot.MAINHAND
+				)
+				.build();
 	}
 	
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand){
@@ -86,6 +85,7 @@ public class ScalpelItem extends Item implements AnimatedUseItem{
 		if(remainingUseTicks == 7 && user instanceof PlayerEntity pe){
 			Optional<Node> nodeO = AuraWorld.from(world).raycastNodes(user, false);
 			Random rng = world.random;
+			EquipmentSlot hand = LivingEntity.getSlotForHand(user.getActiveHand());
 			if(nodeO.isPresent()){
 				if(!world.isClient){
 					Node node = nodeO.get();
@@ -108,10 +108,11 @@ public class ScalpelItem extends Item implements AnimatedUseItem{
 							world.spawnEntity(wisp);
 						}
 					}
-					stack.damage(1, user, e -> e.sendToolBreakStatus(e.getActiveHand()));
+					stack.damage(1, user, hand);
 				}
 			}else{
-				double reach = ReachEntityAttributes.getReachDistance(user, 4.5);
+				// TODO: separate block and entity interaction ranges
+				double reach = user.getAttributeValue(EntityAttributes.PLAYER_BLOCK_INTERACTION_RANGE);
 				double sqReach = reach * reach;
 				
 				HitResult blockHit = user.raycast(reach, 1, false);
@@ -123,7 +124,7 @@ public class ScalpelItem extends Item implements AnimatedUseItem{
 				
 				if(entityHit != null && entityHit.getEntity() instanceof ScalpelSlashable se){
 					se.onScalpelSlash(world, pe, entityHit.getEntity().getBlockPos());
-					stack.damage(1, user, e -> e.sendToolBreakStatus(e.getActiveHand()));
+					stack.damage(1, user, hand);
 				}else if(blockHit instanceof BlockHitResult bhr
 						&& bhr.getType() != HitResult.Type.MISS){
 					BlockPos pos = bhr.getBlockPos();
@@ -138,11 +139,11 @@ public class ScalpelItem extends Item implements AnimatedUseItem{
 							}else
 								style = CubeParticleStyle.SHAKE;
 							sw.spawnParticles(new CubeParticleEffect(ArcanaRegistry.WARDING_EFFECT, style), pos.getX(), pos.getY(), pos.getZ(), 0, 0, 0, 0, 0);
-							stack.damage(1, user, e -> e.sendToolBreakStatus(e.getActiveHand()));
+							stack.damage(1, user, hand);
 						}
 					}else if(world.getBlockState(pos).getBlock() instanceof ScalpelSlashable se){
 						se.onScalpelSlash(world, pe, pos);
-						stack.damage(1, user, e -> e.sendToolBreakStatus(e.getActiveHand()));
+						stack.damage(1, user, hand);
 					}
 				}
 			}
@@ -153,23 +154,23 @@ public class ScalpelItem extends Item implements AnimatedUseItem{
 		return stack;
 	}
 	
-	public int getMaxUseTime(ItemStack stack){
+	public int getMaxUseTime(ItemStack stack, LivingEntity user){
 		return 30;
 	}
 	
-	public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(EquipmentSlot slot){
+	/*public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(EquipmentSlot slot){
 		return slot == EquipmentSlot.MAINHAND ? this.attributeModifiers : super.getAttributeModifiers(slot);
-	}
+	}*/
 	
 	public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker){
-		stack.damage(1, attacker, e -> e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND));
+		stack.damage(1, attacker, EquipmentSlot.MAINHAND);
 		return true;
 	}
 	
 	@Environment(EnvType.CLIENT)
 	public void applyUsingAnimation(MatrixStack matrices, PlayerEntity player, ItemStack stack, float tickDelta, Hand hand, Arm arm){
-		matrices.multiply(Vec3f.POSITIVE_Y.getRadialQuaternion(0.2f));
-		float x = (player.getItemUseTime() + tickDelta) / (float)getMaxUseTime(stack);
+		matrices.multiply(RotationAxis.POSITIVE_Y.rotation(0.2f));
+		float x = (player.getItemUseTime() + tickDelta) / (float)getMaxUseTime(stack, player);
 		float of = x < 0.7 ? -x / 3f
 				: x <= 0.8 ? 12f * (x - 0.7f) - (0.7f / 3)
 				: -6 * (x - 0.8f) + 0.96f;

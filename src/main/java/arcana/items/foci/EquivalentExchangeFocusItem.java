@@ -4,15 +4,14 @@ import arcana.aspects.AspectMap;
 import arcana.aspects.AspectStack;
 import arcana.aspects.Aspects;
 import arcana.items.FocusItem;
-import net.fabricmc.fabric.api.mininglevel.v1.FabricMineableTags;
-import net.fabricmc.fabric.api.mininglevel.v1.MiningLevelManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
-import net.minecraft.loot.context.LootContext;
+import net.minecraft.loot.context.LootContextParameterSet;
 import net.minecraft.loot.context.LootContextParameters;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.world.ServerWorld;
@@ -23,17 +22,25 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.Map;
 
 public class EquivalentExchangeFocusItem extends FocusItem{
 	
-	private static final Map<TagKey<Block>, Item> mineableTags = Map.of(
+	private static final Map<TagKey<Block>, Item> MINEABLE_TAGS = Map.of(
 			BlockTags.AXE_MINEABLE, Items.DIAMOND_AXE,
 			BlockTags.HOE_MINEABLE, Items.DIAMOND_HOE,
 			BlockTags.PICKAXE_MINEABLE, Items.DIAMOND_PICKAXE,
 			BlockTags.SHOVEL_MINEABLE, Items.DIAMOND_SHOVEL,
-			FabricMineableTags.SWORD_MINEABLE, Items.DIAMOND_SWORD,
-			FabricMineableTags.SHEARS_MINEABLE, Items.SHEARS
+			BlockTags.SWORD_EFFICIENT, Items.DIAMOND_SWORD
+	);
+	
+	private static final List<TagKey<Block>> MINING_LEVEL_TAGS = List.of(
+			BlockTags.INCORRECT_FOR_WOODEN_TOOL,
+			BlockTags.INCORRECT_FOR_STONE_TOOL,
+			BlockTags.INCORRECT_FOR_IRON_TOOL,
+			BlockTags.INCORRECT_FOR_DIAMOND_TOOL,
+			BlockTags.INCORRECT_FOR_NETHERITE_TOOL
 	);
 	
 	public EquivalentExchangeFocusItem(Settings settings){
@@ -43,14 +50,14 @@ public class EquivalentExchangeFocusItem extends FocusItem{
 	public AspectMap deciCastCost(@Nullable ItemStack wand, ItemStack focus, PlayerEntity user){
 		int amount = 1;
 		// TODO: move cost calculation to casting code
-		if(user != null && user.world != null){
+		if(user != null && user.getWorld() != null){
 			// (0.7 order, 0.7 entropy) * mining level + (0.1, 0.1)
 			// "requires a tool" increases the mining level to 1
 			BlockPos pos = ((BlockHitResult)user.raycast(5.5, 0, false)).getBlockPos();
-			BlockState looking = user.world.getBlockState(pos);
-			amount = Math.max(looking.isToolRequired() ? 1 : 0, MiningLevelManager.getRequiredMiningLevel(looking) + 1) * 7 + 1;
+			BlockState looking = user.getWorld().getBlockState(pos);
+			amount = Math.max(looking.isToolRequired() ? 1 : 0, getRequiredMiningLevel(looking) + 1) * 7 + 1;
 			// for display purposes
-			if(looking.getHardness(user.world, pos) == -1)
+			if(looking.getHardness(user.getWorld(), pos) == -1)
 				amount = 100000;
 		}
 		return AspectMap.fromAspectStacks(new AspectStack(Aspects.ORDER, amount), new AspectStack(Aspects.ENTROPY, amount));
@@ -90,24 +97,30 @@ public class EquivalentExchangeFocusItem extends FocusItem{
 		return super.useOnBlock(ctx);
 	}
 	
-	private static LootContext.Builder swapContext(ItemUsageContext ctx, BlockState target){
-		return new LootContext.Builder((ServerWorld)ctx.getWorld())
-				.random(ctx.getWorld().random)
-				.parameter(LootContextParameters.ORIGIN, ctx.getHitPos())
-				.parameter(LootContextParameters.TOOL, toolFor(target))
-				.parameter(LootContextParameters.THIS_ENTITY, ctx.getPlayer())
-				.parameter(LootContextParameters.BLOCK_STATE, target)
-				.optionalParameter(LootContextParameters.BLOCK_ENTITY, ctx.getWorld().getBlockEntity(ctx.getBlockPos()));
+	private static LootContextParameterSet.Builder swapContext(ItemUsageContext ctx, BlockState target){
+		return new LootContextParameterSet.Builder((ServerWorld)ctx.getWorld())
+				.add(LootContextParameters.ORIGIN, ctx.getHitPos())
+				.add(LootContextParameters.TOOL, toolFor(target, ctx.getWorld()))
+				.add(LootContextParameters.THIS_ENTITY, ctx.getPlayer())
+				.add(LootContextParameters.BLOCK_STATE, target)
+				.addOptional(LootContextParameters.BLOCK_ENTITY, ctx.getWorld().getBlockEntity(ctx.getBlockPos()));
 	}
 	
 	// perform swaps with diamond tools
-	private static ItemStack toolFor(BlockState target){
-		for(var entry : mineableTags.entrySet())
+	private static ItemStack toolFor(BlockState target, World world){
+		for(var entry : MINEABLE_TAGS.entrySet())
 			if(target.isIn(entry.getKey())){
-				var stack = new ItemStack(entry.getValue());
-				stack.addEnchantment(Enchantments.SILK_TOUCH, 1);
+				ItemStack stack = new ItemStack(entry.getValue());
+				stack.addEnchantment(world.getRegistryManager().get(RegistryKeys.ENCHANTMENT).getEntry(Enchantments.SILK_TOUCH).get(), 1);
 				return stack;
 			}
 		return ItemStack.EMPTY;
+	}
+	
+	private static int getRequiredMiningLevel(BlockState block){
+		for(int i = 0; i < MINING_LEVEL_TAGS.size(); i++)
+			if(!block.isIn(MINING_LEVEL_TAGS.get(i)))
+				return i;
+		return MINING_LEVEL_TAGS.size() + 1;
 	}
 }

@@ -29,7 +29,7 @@ public class LightFocusItem extends FocusItem{
 	public ActionResult castOnBlock(ItemUsageContext ctx){
 		BlockPos toSet = ctx.getBlockPos().offset(ctx.getSide());
 		BlockState there = ctx.getWorld().getBlockState(toSet);
-		if(there.isAir() || there.getMaterial().isReplaceable()){
+		if(there.isAir() || there.isReplaceable()){
 			boolean wet = ctx.getWorld().getFluidState(toSet).isOf(Fluids.WATER);
 			ctx.getWorld().setBlockState(toSet, ArcanaRegistry.LIGHT_BLOCK.getDefaultState().with(waterlogged, wet));
 			return ActionResult.SUCCESS;

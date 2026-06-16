@@ -4,15 +4,15 @@ import arcana.aura.AuraWorld;
 import arcana.aura.Node;
 import arcana.aura.NodeType;
 import arcana.aura.NodeTypes;
-import net.minecraft.client.item.TooltipContext;
+import arcana.items.components.ArcanaItemComponentTypes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -49,20 +49,17 @@ public class NodePlacerItem extends Item{
 		return super.use(world, user, hand);
 	}
 	
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context){
-		super.appendTooltip(stack, world, tooltip, context);
+	public void appendTooltip(ItemStack stack, @Nullable TooltipContext ctx, List<Text> tooltip, TooltipType type){
+		super.appendTooltip(stack, ctx, tooltip, type);
 		tooltip.add(typeFor(stack).name());
 	}
 	
 	private static void setTypeFor(ItemStack stack, NodeType type){
-		stack.getOrCreateNbt().putString("type", type.id().toString());
+		stack.set(ArcanaItemComponentTypes.NODE_TYPE, type);
 	}
 	
 	private static NodeType typeFor(ItemStack stack){
-		NodeType type = NodeTypes.NORMAL;
-		if(stack.hasNbt() && stack.getNbt().contains("type"))
-			type = NodeTypes.byName(Identifier.tryParse(stack.getNbt().getString("type")));
-		return type;
+		return stack.getOrDefault(ArcanaItemComponentTypes.NODE_TYPE, NodeTypes.NORMAL);
 	}
 	
 	private static void cycleType(PlayerEntity user, ItemStack stack){

@@ -38,7 +38,7 @@ public class FetchFocusItem extends FocusItem{
 	
 	public void tickContinuousCast(ContinuousCastContext ccc){
 		PlayerEntity user = ccc.user;
-		World world = user.world;
+		World world = user.getWorld();
 		
 		if(world.getTime() % 10 == 0 && !ccc.requestDrainDeci(AspectMap.fromAspectStacks(new AspectStack(Aspects.AIR, 2)))){
 			ccc.stop();
@@ -83,7 +83,7 @@ public class FetchFocusItem extends FocusItem{
 	
 	// from ItemEntity.onPlayerCollision
 	private static void collect(PlayerEntity player, ItemEntity entity){
-		if(!player.world.isClient){
+		if(!player.getWorld().isClient){
 			ItemStack stack = entity.getStack();
 			Item oldItem = stack.getItem();
 			int oldCount = stack.getCount();

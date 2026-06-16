@@ -1,13 +1,36 @@
 package arcana.util;
 
+import com.mojang.datafixers.util.Pair;
+import com.mojang.serialization.Codec;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.registry.RegistryWrapper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 // SimpleInventory with fixed NBT (de)serialization; the name means "obvious inventory"
 public class ArrayInventory extends SimpleInventory{
+	
+	public static final Codec<ArrayInventory> CODEC = Codec.compoundList(Codec.INT, ItemStack.CODEC).xmap(
+			x -> {
+				ArrayInventory inventory = new ArrayInventory(x.size());
+				for(Pair<Integer, ItemStack> pair : x)
+					inventory.setStack(pair.getFirst(), pair.getSecond());
+				return inventory;
+			},
+			x -> {
+				List<Pair<Integer, ItemStack>> ret = new ArrayList<>();
+				for(int i = 0; i < x.size(); i++){
+					ItemStack there = x.getStack(i);
+					if(!there.isEmpty())
+						ret.add(Pair.of(i, there));
+				}
+				return ret;
+			}
+	);
 	
 	public ArrayInventory(){
 		super();

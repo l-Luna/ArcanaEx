@@ -7,9 +7,12 @@ import arcana.items.WandItem;
 import arcana.mixin.accessor.EntityAccessor;
 import arcana.mixin.accessor.LivingEntityAccessor;
 import arcana.util.InventoryUtil;
+import net.minecraft.component.type.AttributeModifierSlot;
+import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.ClampedEntityAttribute;
 import net.minecraft.entity.attribute.EntityAttribute;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
@@ -18,6 +21,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.DamageTypeTags;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
@@ -38,6 +42,7 @@ public class RunicShielding implements Component, AutoSyncedComponent, ServerTic
 	public static final EntityAttribute MAX_SHIELDING = new ClampedEntityAttribute("attribute.name.generic.arcana.max_shielding", 0, 0, 100).setTracked(true);
 	
 	private static final int MAX_RECHARGE_TIMER = 7 * 20;
+	private static final Identifier MODIFIER_ID = arcId("trinket_runic_shielding");
 	
 	public static RunicShielding from(PlayerEntity entity){
 		return entity.getComponent(KEY);
@@ -45,6 +50,16 @@ public class RunicShielding implements Component, AutoSyncedComponent, ServerTic
 	
 	public static int getMaxShielding(LivingEntity entity){
 		return (int)entity.getAttributeValue(RegistryEntry.of(MAX_SHIELDING));
+	}
+	
+	public static AttributeModifiersComponent createAttributeModifiers(float shielding){
+		return AttributeModifiersComponent.builder()
+				.add(
+						RegistryEntry.of(RunicShielding.MAX_SHIELDING),
+						new EntityAttributeModifier(MODIFIER_ID, shielding, EntityAttributeModifier.Operation.ADD_VALUE),
+						AttributeModifierSlot.MAINHAND
+				)
+				.build();
 	}
 	
 	private final PlayerEntity player;

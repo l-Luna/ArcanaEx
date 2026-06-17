@@ -4,7 +4,6 @@ import arcana.api.AspectRecipe;
 import arcana.api.RenamableRecipe;
 import arcana.aspects.AspectMap;
 import arcana.recipes.ArcanaRecipe;
-import arcana.util.PacketCodecUtil;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -50,16 +49,16 @@ public class AlchemyRecipe implements Recipe<AlchemyInput>, ArcanaRecipe, Aspect
 		);
 	}
 	
-	public AlchemyRecipe(@Nullable Identifier researchId, Optional<Integer> researchStage, String translationKey, Ingredient ingredient, AspectMap aspects, ItemStack result){
+	public AlchemyRecipe(Optional<Identifier> researchId, Optional<Integer> researchStage, Optional<String> translationKey, Ingredient ingredient, AspectMap aspects, ItemStack result){
 		this.researchId = researchId;
 		this.researchStage = researchStage;
-		this.translationKey = translationKey;
+		this.translationKey = translationKey.orElse(null);
 		this.ingredient = ingredient;
 		this.aspects = aspects;
 		this.result = result;
 	}
 	
-	private final @Nullable Identifier researchId;
+	private final Optional<Identifier> researchId;
 	private final Optional<Integer> researchStage;
 	private final String translationKey;
 	
@@ -70,7 +69,7 @@ public class AlchemyRecipe implements Recipe<AlchemyInput>, ArcanaRecipe, Aspect
 	
 	public boolean matches(AlchemyInput inventory, World world){
 		if(ingredient.test(inventory.getReagent()) && inventory.getAspects().contains(aspects))
-			return researchId == null || inventory.complete(researchId, researchStage.orElse(-1));
+			return researchId.isEmpty() || inventory.complete(researchId.get(), researchStage.orElse(-1));
 		return false;
 	}
 	
@@ -114,7 +113,7 @@ public class AlchemyRecipe implements Recipe<AlchemyInput>, ArcanaRecipe, Aspect
 		return true;
 	}
 	
-	public @Nullable Identifier getResearchId(){
+	public Optional<Identifier> getResearchId(){
 		return researchId;
 	}
 	
@@ -134,18 +133,18 @@ public class AlchemyRecipe implements Recipe<AlchemyInput>, ArcanaRecipe, Aspect
 		
 		// TODO: restore "arcana:entry@stage" syntax?
 		private static final MapCodec<AlchemyRecipe> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
-				Identifier.CODEC.optionalFieldOf("research_id", null).forGetter(AlchemyRecipe::getResearchId),
+				Identifier.CODEC.optionalFieldOf("research_id").forGetter(AlchemyRecipe::getResearchId),
 				Codec.INT.optionalFieldOf("research_stage").forGetter(x -> x.researchStage),
-				Codec.STRING.optionalFieldOf("name", null).forGetter(x -> x.translationKey),
+				Codec.STRING.optionalFieldOf("name").forGetter(x -> Optional.ofNullable(x.translationKey)),
 				Ingredient.DISALLOW_EMPTY_CODEC.fieldOf("ingredient").forGetter(AlchemyRecipe::getIngredient),
 				AspectMap.CODEC.fieldOf("aspects").forGetter(x->x.aspects),
 				ItemStack.CODEC.fieldOf("result").forGetter(x->x.result)
 		).apply(i, AlchemyRecipe::new));
 		
 		private static final PacketCodec<RegistryByteBuf, AlchemyRecipe> PACKET_CODEC = PacketCodec.tuple(
-				PacketCodecUtil.nullable(Identifier.PACKET_CODEC), AlchemyRecipe::getResearchId,
+				PacketCodecs.optional(Identifier.PACKET_CODEC), AlchemyRecipe::getResearchId,
 				PacketCodecs.optional(PacketCodecs.VAR_INT), x -> x.researchStage,
-				PacketCodecUtil.nullable(PacketCodecs.STRING), x -> x.translationKey,
+				PacketCodecs.optional(PacketCodecs.STRING), x -> Optional.ofNullable(x.translationKey),
 				Ingredient.PACKET_CODEC, AlchemyRecipe::getIngredient,
 				AspectMap.PACKET_CODEC, x -> x.aspects,
 				ItemStack.PACKET_CODEC, x -> x.result,

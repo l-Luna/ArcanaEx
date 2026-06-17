@@ -150,11 +150,11 @@ public class SimpleInfusionRecipe implements InfusionRecipe, ArcanaRecipe, Renam
 				Ingredient.DISALLOW_EMPTY_CODEC.fieldOf("central").forGetter(x -> x.centralIngredient),
 				AspectMap.CODEC.fieldOf("aspects").forGetter(x -> x.aspects),
 				Codec.INT.optionalFieldOf("instability", 1).forGetter(x -> x.instability),
-				Codec.STRING.optionalFieldOf("name", null).forGetter(x -> x.name)
-		).apply(i, SimpleInfusionRecipe::new));
+				Codec.STRING.optionalFieldOf("name").forGetter(x -> Optional.ofNullable(x.name))
+		).apply(i, (a, b, c, d, e, f) -> new SimpleInfusionRecipe(a, b, c, d, e, f.orElse(null))));
 		
 		public static final PacketCodec<RegistryByteBuf, SimpleInfusionRecipe> PACKET_CODEC = PacketCodec.tuple(
-				ItemStack.PACKET_CODEC, (SimpleInfusionRecipe x) -> x.result,
+				ItemStack.PACKET_CODEC, x -> x.result,
 				Ingredient.PACKET_CODEC.collect(PacketCodecs.toList()), x -> x.outerIngredients,
 				Ingredient.PACKET_CODEC, x -> x.centralIngredient,
 				AspectMap.PACKET_CODEC, x -> x.aspects,

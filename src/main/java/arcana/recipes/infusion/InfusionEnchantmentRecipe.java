@@ -126,8 +126,8 @@ public class InfusionEnchantmentRecipe implements InfusionRecipe, ArcanaRecipe, 
 				AspectMap.CODEC.fieldOf("base_aspects").forGetter(InfusionEnchantmentRecipe::getBaseAspects),
 				ItemStack.VALIDATED_CODEC.fieldOf("preview").forGetter(InfusionEnchantmentRecipe::getPreviewStack),
 				Codec.INT.optionalFieldOf("base_instability", 0).forGetter(InfusionEnchantmentRecipe::getBaseInstability),
-				Codec.STRING.optionalFieldOf("name", null).forGetter(x -> x.name)
-		).apply(i, InfusionEnchantmentRecipe::new));
+				Codec.STRING.optionalFieldOf("name").forGetter(x -> Optional.ofNullable(x.name))
+		).apply(i, (a, b, c, d, e, f) -> new InfusionEnchantmentRecipe(a, b, c, d, e, f.orElse(null))));
 		
 		private static final PacketCodec<RegistryByteBuf, InfusionEnchantmentRecipe> PACKET_CODEC = PacketCodec.tuple(
 				PacketCodecs.registryEntry(RegistryKeys.ENCHANTMENT), InfusionEnchantmentRecipe::getEnchantment,

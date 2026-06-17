@@ -78,9 +78,9 @@ public class ShapedArcaneCraftingRecipe extends ShapedRecipe implements ArcaneCr
 						RawShapedRecipe.CODEC.forGetter(recipe -> recipe.raw),
 						ItemStack.VALIDATED_CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
 						AspectMap.CODEC.fieldOf("aspects").forGetter(ShapedArcaneCraftingRecipe::aspects),
-						Codec.STRING.optionalFieldOf("name", null).forGetter(recipe -> recipe.translationKey)
+						Codec.STRING.optionalFieldOf("name").forGetter(recipe -> Optional.ofNullable(recipe.translationKey))
 				)
-				.apply(i, ShapedArcaneCraftingRecipe::new));
+				.apply(i, (a, b, c, d, e) -> new ShapedArcaneCraftingRecipe(a, b, c, d, e.orElse(null))));
 		public static final PacketCodec<RegistryByteBuf, ShapedArcaneCraftingRecipe> PACKET_CODEC = PacketCodec.ofStatic(
 				ShapedArcaneCraftingRecipe.Serializer::write, ShapedArcaneCraftingRecipe.Serializer::read
 		);

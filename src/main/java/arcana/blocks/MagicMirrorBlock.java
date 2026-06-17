@@ -3,6 +3,7 @@ package arcana.blocks;
 import arcana.blocks.be.MagicMirrorBlockEntity;
 import arcana.cca_components.MagicMirrorQueue;
 import com.google.common.collect.Maps;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -16,7 +17,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
-import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.ItemActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -29,6 +31,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Map;
 
 public class MagicMirrorBlock extends WaterloggableBlock implements BlockEntityProvider{
+	
+	private static final MapCodec<MagicMirrorBlock> CODEC = createCodec(MagicMirrorBlock::new);
 	
 	public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
 	
@@ -46,20 +50,23 @@ public class MagicMirrorBlock extends WaterloggableBlock implements BlockEntityP
 		setDefaultState(stateManager.getDefaultState().with(FACING, Direction.NORTH));
 	}
 	
+	protected MapCodec<? extends Block> getCodec(){
+		return CODEC;
+	}
+	
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder){
 		super.appendProperties(builder);
 		builder.add(FACING);
 	}
 	
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit){
-		ItemStack held = player.getStackInHand(hand);
-		if(!held.isEmpty() && world.getBlockEntity(pos) instanceof MagicMirrorBlockEntity mm){
-			MagicMirrorQueue.from(world).push(mm.getTag(), mm.getId(), held);
+	protected ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit){
+		if(!stack.isEmpty() && world.getBlockEntity(pos) instanceof MagicMirrorBlockEntity mm){
+			MagicMirrorQueue.from(world).push(mm.getTag(), mm.getId(), stack);
 			player.setStackInHand(hand, ItemStack.EMPTY);
 			// TODO: SFX
-			return ActionResult.SUCCESS;
+			return ItemActionResult.SUCCESS;
 		}
-		return super.onUse(state, world, pos, player, hit);
+		return super.onUseWithItem(stack, state, world, pos, player, hand, hit);
 	}
 	
 	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos){

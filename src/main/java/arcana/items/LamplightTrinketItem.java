@@ -36,7 +36,7 @@ public class LamplightTrinketItem extends TrinketItem{
 		BlockState there = world.getBlockState(userPos);
 		if((there.isAir() || there.isReplaceable()) && world.getLightLevel(userPos) < 8){
 			boolean wet = world.getFluidState(userPos).isOf(Fluids.WATER);
-			world.setBlockState(userPos, ArcanaRegistry.LIGHT_BLOCK.getDefaultState().with(Properties.WATERLOGGED, wet));
+			world.setBlockState(userPos, ArcanaRegistry.TEMPORARY_LIGHT_BLOCK.getDefaultState().with(Properties.WATERLOGGED, wet));
 			return true;
 		}
 		return false;

@@ -2,6 +2,7 @@ package arcana.blocks;
 
 import arcana.blocks.be.ResearchTableBlockEntity;
 import arcana.screens.ResearchTableScreen;
+import com.mojang.serialization.MapCodec;
 import com.unascribed.lib39.weld.api.BigBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
@@ -21,7 +22,6 @@ import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -31,80 +31,86 @@ import org.jetbrains.annotations.Nullable;
 @SuppressWarnings("deprecation")
 public class ResearchTableBlock extends BigBlock implements Waterloggable, BlockEntityProvider{
 	
-	public static final BooleanProperty left = BooleanProperty.of("left");
-	public static final DirectionProperty facing = Properties.HORIZONTAL_FACING;
-	public static final BooleanProperty waterlogged = Properties.WATERLOGGED;
-	public static final BooleanProperty hasInk = BooleanProperty.of("has_ink");
+	private static final MapCodec<ResearchTableBlock> CODEC = createCodec(ResearchTableBlock::new);
+	
+	public static final BooleanProperty LEFT = BooleanProperty.of("left");
+	public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
+	public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
+	public static final BooleanProperty HAS_INK = BooleanProperty.of("has_ink");
 	
 	public ResearchTableBlock(Settings settings){
 		super(null, null, null, settings);
 	}
 	
+	protected MapCodec<? extends Block> getCodec(){
+		return CODEC;
+	}
+	
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder){
 		super.appendProperties(builder);
-		builder.add(left, facing, waterlogged, hasInk);
+		builder.add(LEFT, FACING, WATERLOGGED, HAS_INK);
 	}
 	
 	// BigBlock handles multi-block-ness for us, but we need to handle orientability ourselves
 	
 	public int getXSize(BlockState state){
-		return Math.abs(state.get(facing).getOffsetX()) + 1;
+		return Math.abs(state.get(FACING).getOffsetX()) + 1;
 	}
 	
 	public int getZSize(BlockState state){
-		return Math.abs(state.get(facing).getOffsetZ()) + 1;
+		return Math.abs(state.get(FACING).getOffsetZ()) + 1;
 	}
 	
 	public int getX(BlockState state){
-		var offset = state.get(facing).getOffsetX();
-		return (offset < 0 ? 1 : 0) + (state.get(left) ? offset : 0);
+		var offset = state.get(FACING).getOffsetX();
+		return (offset < 0 ? 1 : 0) + (state.get(LEFT) ? offset : 0);
 	}
 	
 	public int getZ(BlockState state){
-		var offset = state.get(facing).getOffsetZ();
-		return (offset < 0 ? 1 : 0) + (state.get(left) ? offset : 0);
+		var offset = state.get(FACING).getOffsetZ();
+		return (offset < 0 ? 1 : 0) + (state.get(LEFT) ? offset : 0);
 	}
 	
 	public BlockState setX(BlockState state, int z){
-		return switch(state.get(facing)){
-			case WEST -> state.with(left, z == 0);
-			case EAST -> state.with(left, z == 1);
+		return switch(state.get(FACING)){
+			case WEST -> state.with(LEFT, z == 0);
+			case EAST -> state.with(LEFT, z == 1);
 			case UP, DOWN, NORTH, SOUTH -> state;
 		};
 	}
 	
 	public BlockState setZ(BlockState state, int z){
-		return switch(state.get(facing)){
-			case NORTH -> state.with(left, z == 0);
-			case SOUTH -> state.with(left, z == 1);
+		return switch(state.get(FACING)){
+			case NORTH -> state.with(LEFT, z == 0);
+			case SOUTH -> state.with(LEFT, z == 1);
 			case UP, DOWN, EAST, WEST -> state;
 		};
 	}
 	
 	public FluidState getFluidState(BlockState state){
-		return state.get(waterlogged) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
+		return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
 	}
 	
 	public BlockState getPlacementState(ItemPlacementContext ctx){
 		FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
 		return super.getPlacementState(ctx)
-				.with(waterlogged, fluidState.getFluid() == Fluids.WATER)
-				.with(facing, ctx.getHorizontalPlayerFacing().rotateYCounterclockwise())
-				.with(hasInk, false);
+				.with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER)
+				.with(FACING, ctx.getHorizontalPlayerFacing().rotateYCounterclockwise())
+				.with(HAS_INK, false);
 	}
 	
 	protected BlockState copyState(BlockState us, BlockState neighbor){
 		return super.copyState(us, neighbor)
-				.with(waterlogged, neighbor.get(waterlogged))
-				.with(hasInk, neighbor.get(hasInk));
+				.with(WATERLOGGED, neighbor.get(WATERLOGGED))
+				.with(HAS_INK, neighbor.get(HAS_INK));
 	}
 	
 	@Nullable
 	public BlockEntity createBlockEntity(BlockPos pos, BlockState state){
-		return state.get(left) ? new ResearchTableBlockEntity(pos, state) : null;
+		return state.get(LEFT) ? new ResearchTableBlockEntity(pos, state) : null;
 	}
 	
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit){
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit){
 		if(world.isClient)
 			return ActionResult.SUCCESS;
 		else{

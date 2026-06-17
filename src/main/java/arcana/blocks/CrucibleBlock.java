@@ -2,6 +2,7 @@ package arcana.blocks;
 
 import arcana.ArcanaRegistry;
 import arcana.blocks.be.CrucibleBlockEntity;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
@@ -18,6 +19,8 @@ import net.minecraft.stat.Stats;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.ItemActionResult;
 import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -30,6 +33,8 @@ import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
 public class CrucibleBlock extends BlockWithEntity{
+	
+	private static final MapCodec<CrucibleBlock> CODEC = createCodec(CrucibleBlock::new);
 	
 	public static final VoxelShape INSIDE = createCuboidShape(2, 4, 2, 14, 15, 14);
 	protected static final VoxelShape SHAPE = VoxelShapes.combineAndSimplify(
@@ -48,6 +53,10 @@ public class CrucibleBlock extends BlockWithEntity{
 		setDefaultState(stateManager.getDefaultState().with(FULL, false));
 	}
 	
+	protected MapCodec<? extends BlockWithEntity> getCodec(){
+		return CODEC;
+	}
+	
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder){
 		builder.add(FULL);
 	}
@@ -60,7 +69,7 @@ public class CrucibleBlock extends BlockWithEntity{
 		return INSIDE;
 	}
 	
-	public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type){
+	protected boolean canPathfindThrough(BlockState state, NavigationType type){
 		return false;
 	}
 	
@@ -70,53 +79,52 @@ public class CrucibleBlock extends BlockWithEntity{
 	}
 	
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World _world, BlockState _state, BlockEntityType<T> type){
-		return checkType(type, ArcanaRegistry.CRUCIBLE_BE, (world, pos, state, entity) -> entity.tick());
+		return validateTicker(type, ArcanaRegistry.CRUCIBLE_BE, (world, pos, state, entity) -> entity.tick());
 	}
 	
 	public BlockRenderType getRenderType(BlockState state){
 		return BlockRenderType.MODEL;
 	}
 	
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit){
-		ItemStack itemstack = player.getStackInHand(hand);
-		if(itemstack.isEmpty()){
-			if(player.isSneaking()){
-				if(state.get(FULL)){
-					if(!world.isClient){
-						world.setBlockState(pos, state.with(FULL, false), 2);
-						world.playSound(null, pos, SoundEvents.ITEM_BUCKET_EMPTY, SoundCategory.BLOCKS, 1, 1);
-					}
-					((CrucibleBlockEntity)world.getBlockEntity(pos)).setEmpty();
-				}
-				return ActionResult.SUCCESS;
+	protected ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit){
+		Item item = stack.getItem();
+		if(item == Items.WATER_BUCKET){
+			if(!state.get(FULL) && !world.isClient){
+				if(!player.isCreative())
+					player.setStackInHand(hand, new ItemStack(Items.BUCKET));
+				player.incrementStat(Stats.FILL_CAULDRON);
+				world.setBlockState(pos, state.with(FULL, true), 2);
+				world.playSound(null, pos, SoundEvents.ITEM_BUCKET_EMPTY, SoundCategory.BLOCKS, 1, 1);
 			}
-			return ActionResult.PASS;
-		}else{
-			Item item = itemstack.getItem();
-			if(item == Items.WATER_BUCKET){
-				if(!state.get(FULL) && !world.isClient){
-					if(!player.isCreative())
-						player.setStackInHand(hand, new ItemStack(Items.BUCKET));
-					player.incrementStat(Stats.FILL_CAULDRON);
-					world.setBlockState(pos, state.with(FULL, true), 2);
+			return ItemActionResult.SUCCESS;
+		}else if(item == Items.BUCKET){
+			if(state.get(FULL) && !world.isClient && ((CrucibleBlockEntity)world.getBlockEntity(pos)).getAspects().isEmpty()){
+				if(!player.isCreative()){
+					stack.decrement(1);
+					if(stack.isEmpty())
+						player.setStackInHand(hand, new ItemStack(Items.WATER_BUCKET));
+					else if(!player.getInventory().insertStack(new ItemStack(Items.WATER_BUCKET)))
+						player.dropItem(new ItemStack(Items.WATER_BUCKET), false);
+				}
+				player.incrementStat(Stats.USE_CAULDRON);
+				world.setBlockState(pos, state.with(FULL, false), 2);
+				world.playSound(null, pos, SoundEvents.ITEM_BUCKET_FILL, SoundCategory.BLOCKS, 1, 1);
+			}
+			return ItemActionResult.SUCCESS;
+		}
+		return super.onUseWithItem(stack, state, world, pos, player, hand, hit);
+	}
+	
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit){
+		if(player.isSneaking()){
+			if(state.get(FULL)){
+				if(!world.isClient){
+					world.setBlockState(pos, state.with(FULL, false), 2);
 					world.playSound(null, pos, SoundEvents.ITEM_BUCKET_EMPTY, SoundCategory.BLOCKS, 1, 1);
 				}
-				return ActionResult.SUCCESS;
-			}else if(item == Items.BUCKET){
-				if(state.get(FULL) && !world.isClient && ((CrucibleBlockEntity)world.getBlockEntity(pos)).getAspects().isEmpty()){
-					if(!player.isCreative()){
-						itemstack.decrement(1);
-						if(itemstack.isEmpty())
-							player.setStackInHand(hand, new ItemStack(Items.WATER_BUCKET));
-						else if(!player.getInventory().insertStack(new ItemStack(Items.WATER_BUCKET)))
-							player.dropItem(new ItemStack(Items.WATER_BUCKET), false);
-					}
-					player.incrementStat(Stats.USE_CAULDRON);
-					world.setBlockState(pos, state.with(FULL, false), 2);
-					world.playSound(null, pos, SoundEvents.ITEM_BUCKET_FILL, SoundCategory.BLOCKS, 1, 1);
-				}
-				return ActionResult.SUCCESS;
+				((CrucibleBlockEntity)world.getBlockEntity(pos)).setEmpty();
 			}
+			return ActionResult.SUCCESS;
 		}
 		return super.onUse(state, world, pos, player, hit);
 	}

@@ -1,5 +1,7 @@
 package arcana.blocks;
 
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.unascribed.lib39.weld.api.BigBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -13,6 +15,13 @@ import net.minecraft.util.math.Direction;
 import org.jetbrains.annotations.Nullable;
 
 public class OrientableBigBlock extends BigBlock{
+	
+	private static final MapCodec<OrientableBigBlock> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+			PropertyCodecs.INT_CODEC.fieldOf("right").forGetter(x->x.right),
+			PropertyCodecs.INT_CODEC.fieldOf("up").forGetter(x->x.up),
+			PropertyCodecs.INT_CODEC.fieldOf("forward").forGetter(x->x.fwd),
+			createSettingsCodec()
+	).apply(i, OrientableBigBlock::create));
 	
 	public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
 	
@@ -34,6 +43,10 @@ public class OrientableBigBlock extends BigBlock{
 		this.right = right;
 		this.up = up;
 		this.fwd = fwd;
+	}
+	
+	protected MapCodec<? extends Block> getCodec(){
+		return CODEC;
 	}
 	
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder){

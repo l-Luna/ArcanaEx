@@ -1,6 +1,7 @@
 package arcana.blocks;
 
 import arcana.ArcanaRegistry;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CropBlock;
@@ -18,6 +19,8 @@ import net.minecraft.world.World;
 
 public class BejeweledBeetsBlock extends CropBlock{
 	
+	private static final MapCodec<BejeweledBeetsBlock> CODEC = createCodec(BejeweledBeetsBlock::new);
+	
 	private static final VoxelShape[] AGE_TO_SHAPE = new VoxelShape[]{
 			Block.createCuboidShape(0, 0, 0, 16, 2, 16),
 			Block.createCuboidShape(0, 0, 0, 16, 4, 16),
@@ -27,6 +30,10 @@ public class BejeweledBeetsBlock extends CropBlock{
 	
 	public BejeweledBeetsBlock(Settings settings){
 		super(settings);
+	}
+	
+	public MapCodec<? extends CropBlock> getCodec(){
+		return CODEC;
 	}
 	
 	public IntProperty getAgeProperty(){

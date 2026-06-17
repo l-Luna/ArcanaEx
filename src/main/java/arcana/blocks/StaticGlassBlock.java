@@ -1,5 +1,6 @@
 package arcana.blocks;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.EntityShapeContext;
 import net.minecraft.block.ShapeContext;
@@ -12,8 +13,14 @@ import net.minecraft.world.BlockView;
 
 public class StaticGlassBlock extends TranslucentBlock{
 	
+	private static final MapCodec<StaticGlassBlock> CODEC = createCodec(StaticGlassBlock::new);
+	
 	public StaticGlassBlock(Settings settings){
 		super(settings);
+	}
+	
+	protected MapCodec<? extends TranslucentBlock> getCodec(){
+		return CODEC;
 	}
 	
 	public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context){

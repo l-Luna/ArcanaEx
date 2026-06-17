@@ -2,6 +2,7 @@ package arcana.blocks;
 
 import arcana.ArcanaRegistry;
 import arcana.blocks.be.WardedCampfireBlockEntity;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CampfireBlock;
 import net.minecraft.block.entity.BlockEntity;
@@ -21,9 +22,15 @@ import static arcana.Arcana.arcId;
 
 public class WardedCampfireBlock extends CampfireBlock{
 	
+	private static final MapCodec<CampfireBlock> CODEC = createCodec(WardedCampfireBlock::new);
+	
 	public WardedCampfireBlock(Settings settings){
 		super(false, 0, settings);
 		setDefaultState(getDefaultState().with(LIT, false));
+	}
+	
+	public MapCodec<CampfireBlock> getCodec(){
+		return CODEC;
 	}
 	
 	public BlockState getPlacementState(ItemPlacementContext ctx){
@@ -36,11 +43,11 @@ public class WardedCampfireBlock extends CampfireBlock{
 	
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type){
 		if(world.isClient)
-			return state.get(LIT) ? checkType(type, ArcanaRegistry.WARDED_CAMPFIRE_BE, CampfireBlockEntity::clientTick) : null;
+			return state.get(LIT) ? validateTicker(type, ArcanaRegistry.WARDED_CAMPFIRE_BE, CampfireBlockEntity::clientTick) : null;
 		else
 			return state.get(LIT)
-					? checkType(type, ArcanaRegistry.WARDED_CAMPFIRE_BE, WardedCampfireBlockEntity::litServerTick)
-					: checkType(type, ArcanaRegistry.WARDED_CAMPFIRE_BE, CampfireBlockEntity::unlitServerTick);
+					? validateTicker(type, ArcanaRegistry.WARDED_CAMPFIRE_BE, WardedCampfireBlockEntity::litServerTick)
+					: validateTicker(type, ArcanaRegistry.WARDED_CAMPFIRE_BE, CampfireBlockEntity::unlitServerTick);
 	}
 	
 	public static boolean canBeLit(BlockState state){
@@ -57,11 +64,11 @@ public class WardedCampfireBlock extends CampfireBlock{
 	}
 	
 	public static boolean isProtected(Entity e){
-		return e.world instanceof ServerWorld sw && isProtected(sw, e.getBlockPos());
+		return e.getWorld() instanceof ServerWorld sw && isProtected(sw, e.getBlockPos());
 	}
 	
 	public static void handleTime(ServerWorld sw){
-		if(sw.isDay() || !sw.shouldTickTime || !sw.getLevelProperties().getGameRules().getBoolean(GameRules.DO_DAYLIGHT_CYCLE))
+		if(sw.isDay() || !sw.getGameRules().getBoolean(GameRules.DO_DAYLIGHT_CYCLE) || !sw.getLevelProperties().getGameRules().getBoolean(GameRules.DO_DAYLIGHT_CYCLE))
 			return;
 		int psum = 0;
 		for(ServerPlayerEntity player : sw.getPlayers())

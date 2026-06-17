@@ -14,7 +14,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
 
-import static arcana.blocks.WaterloggableBlock.waterlogged;
+import static arcana.blocks.WaterloggableBlock.WATERLOGGED;
 
 public class LightFocusItem extends FocusItem{
 	
@@ -31,7 +31,7 @@ public class LightFocusItem extends FocusItem{
 		BlockState there = ctx.getWorld().getBlockState(toSet);
 		if(there.isAir() || there.isReplaceable()){
 			boolean wet = ctx.getWorld().getFluidState(toSet).isOf(Fluids.WATER);
-			ctx.getWorld().setBlockState(toSet, ArcanaRegistry.LIGHT_BLOCK.getDefaultState().with(waterlogged, wet));
+			ctx.getWorld().setBlockState(toSet, ArcanaRegistry.TEMPORARY_LIGHT_BLOCK.getDefaultState().with(WATERLOGGED, wet));
 			return ActionResult.SUCCESS;
 		}
 		return super.castOnBlock(ctx);

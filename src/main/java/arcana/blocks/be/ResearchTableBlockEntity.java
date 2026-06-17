@@ -21,7 +21,7 @@ public class ResearchTableBlockEntity extends BlockEntity{
 		scribingTools.addListener(inv -> {
 			World w = getWorld();
 			if(w != null && w.getBlockState(getPos()).isOf(ArcanaRegistry.RESEARCH_TABLE))
-				w.setBlockState(getPos(), w.getBlockState(getPos()).with(ResearchTableBlock.hasInk, !inv.isEmpty()));
+				w.setBlockState(getPos(), w.getBlockState(getPos()).with(ResearchTableBlock.HAS_INK, !inv.isEmpty()));
 			markDirty();
 		});
 		note.addListener(__ -> markDirty());

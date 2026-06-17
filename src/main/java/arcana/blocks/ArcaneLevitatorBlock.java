@@ -2,6 +2,7 @@ package arcana.blocks;
 
 import arcana.ArcanaRegistry;
 import arcana.blocks.be.ArcaneLevitatorBlockEntity;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
@@ -14,8 +15,14 @@ import org.jetbrains.annotations.Nullable;
 
 public class ArcaneLevitatorBlock extends BlockWithEntity{
 	
+	private static final MapCodec<ArcaneLevitatorBlock> CODEC = createCodec(ArcaneLevitatorBlock::new);
+	
 	public ArcaneLevitatorBlock(Settings settings){
 		super(settings);
+	}
+	
+	protected MapCodec<? extends BlockWithEntity> getCodec(){
+		return CODEC;
 	}
 	
 	public BlockEntity createBlockEntity(BlockPos pos, BlockState state){
@@ -24,7 +31,7 @@ public class ArcaneLevitatorBlock extends BlockWithEntity{
 	
 	@Nullable
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type){
-		return checkType(type, ArcanaRegistry.ARCANE_LEVITATOR_BE, ArcaneLevitatorBlockEntity::tick);
+		return validateTicker(type, ArcanaRegistry.ARCANE_LEVITATOR_BE, ArcaneLevitatorBlockEntity::tick);
 	}
 	
 	public BlockRenderType getRenderType(BlockState state){

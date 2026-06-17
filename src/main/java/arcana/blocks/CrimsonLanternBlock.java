@@ -1,6 +1,7 @@
 package arcana.blocks;
 
 import arcana.blocks.be.CrimsonLanternBlockEntity;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.LanternBlock;
@@ -13,8 +14,14 @@ import org.jetbrains.annotations.Nullable;
 
 public class CrimsonLanternBlock extends LanternBlock implements BlockEntityProvider{
 	
+	private static final MapCodec<LanternBlock> CODEC = createCodec(CrimsonLanternBlock::new);
+	
 	public CrimsonLanternBlock(Settings settings){
 		super(settings);
+	}
+	
+	public MapCodec<LanternBlock> getCodec(){
+		return CODEC;
 	}
 	
 	public @Nullable BlockEntity createBlockEntity(BlockPos pos, BlockState state){

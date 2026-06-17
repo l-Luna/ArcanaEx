@@ -1,8 +1,10 @@
 package arcana.blocks.tubes;
 
 import arcana.ArcanaRegistry;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.ConnectingBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
@@ -17,20 +19,26 @@ import org.jetbrains.annotations.Nullable;
 
 public class EssentiaPumpBlock extends EssentiaTubeBlock{
 	
-	public static final DirectionProperty facing = Properties.FACING;
+	private static final MapCodec<EssentiaPumpBlock> CODEC = createCodec(EssentiaPumpBlock::new);
+	
+	public static final DirectionProperty FACING = Properties.FACING;
 	
 	public EssentiaPumpBlock(Settings settings){
 		super(settings);
-		setDefaultState(getStateManager().getDefaultState().with(facing, Direction.UP));
+		setDefaultState(getStateManager().getDefaultState().with(FACING, Direction.UP));
+	}
+	
+	protected MapCodec<? extends ConnectingBlock> getCodec(){
+		return CODEC;
 	}
 	
 	public @Nullable BlockState getPlacementState(ItemPlacementContext ctx){
-		return super.getPlacementState(ctx).with(facing, ctx.getSide());
+		return super.getPlacementState(ctx).with(FACING, ctx.getSide());
 	}
 	
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder){
 		super.appendProperties(builder);
-		builder.add(facing);
+		builder.add(FACING);
 	}
 	
 	@Nullable

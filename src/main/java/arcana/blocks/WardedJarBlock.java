@@ -4,11 +4,14 @@ import arcana.api.AspectIo;
 import arcana.aspects.AspectStack;
 import arcana.blocks.be.WardedJarBlockEntity;
 import arcana.blocks.tubes.EssentiaTubeBlock;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.item.BlockItem;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipType;
@@ -28,32 +31,41 @@ import java.util.List;
 
 public class WardedJarBlock extends BlockWithEntity implements AspectIo{
 	
-	public static final BooleanProperty connected = BooleanProperty.of("connected");
-	public static final VoxelShape shape = createCuboidShape(3, 0, 3, 13, 14, 13);
+	private static final MapCodec<WardedJarBlock> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+			createSettingsCodec(),
+			Codec.BOOL.fieldOf("is_void_jar").forGetter(x -> x.isVoidJar)
+	).apply(i, WardedJarBlock::new));
+	
+	public static final BooleanProperty CONNECTED = BooleanProperty.of("connected");
+	public static final VoxelShape SHAPE = createCuboidShape(3, 0, 3, 13, 14, 13);
 	
 	private final boolean isVoidJar;
 	
 	public WardedJarBlock(Settings settings, boolean isVoidJar){
 		super(settings);
 		this.isVoidJar = isVoidJar;
-		setDefaultState(getStateManager().getDefaultState().with(connected, false));
+		setDefaultState(getStateManager().getDefaultState().with(CONNECTED, false));
+	}
+	
+	protected MapCodec<? extends BlockWithEntity> getCodec(){
+		return CODEC;
 	}
 	
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder){
 		super.appendProperties(builder);
-		builder.add(connected);
+		builder.add(CONNECTED);
 	}
 	
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context){
-		return shape;
+		return SHAPE;
 	}
 	
 	public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighbor, WorldAccess world, BlockPos pos, BlockPos neighborPos){
 		if(direction == Direction.UP)
 			if(neighbor.getBlock() instanceof EssentiaTubeBlock)
-				return state.with(connected, true);
+				return state.with(CONNECTED, true);
 			else
-				return state.with(connected, false);
+				return state.with(CONNECTED, false);
 		else
 			return state;
 	}
@@ -77,7 +89,7 @@ public class WardedJarBlock extends BlockWithEntity implements AspectIo{
 	@Environment(EnvType.CLIENT)
 	public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType options){
 		super.appendTooltip(stack, context, tooltip, options);
-		NbtCompound nbt = BlockItem.getBlockEntityNbt(stack);
+		NbtCompound nbt = stack.get(DataComponentTypes.BLOCK_ENTITY_DATA).copyNbt();
 		if(nbt != null && nbt.contains("stored")){
 			AspectStack stored = AspectStack.fromNbt(nbt.getCompound("stored"));
 			tooltip.add(Text.translatable("tooltip.arcana.wand.focus_cost.individual", stored.amount(), stored.type().name()));

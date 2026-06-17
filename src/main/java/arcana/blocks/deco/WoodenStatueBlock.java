@@ -1,5 +1,8 @@
 package arcana.blocks.deco;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.unascribed.lib39.weld.api.BigBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -35,6 +38,11 @@ public class WoodenStatueBlock extends BigBlock{
 		HEAR
 	}
 	
+	private static final MapCodec<WoodenStatueBlock> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+			createSettingsCodec(),
+			Codec.STRING.xmap(Type::valueOf, Enum::name).fieldOf("type").forGetter(x -> x.type)
+	).apply(i, WoodenStatueBlock::new));
+	
 	public static final IntProperty Y = IntProperty.of("y", 0, 1);
 	public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
 	public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
@@ -47,6 +55,10 @@ public class WoodenStatueBlock extends BigBlock{
 	public WoodenStatueBlock(Settings settings, Type type){
 		super(null, Y, null, settings);
 		this.type = type;
+	}
+	
+	protected MapCodec<? extends Block> getCodec(){
+		return CODEC;
 	}
 	
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder){

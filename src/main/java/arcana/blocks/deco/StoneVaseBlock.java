@@ -1,5 +1,6 @@
 package arcana.blocks.deco;
 
+import com.mojang.serialization.MapCodec;
 import com.unascribed.lib39.weld.api.BigBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -17,6 +18,8 @@ import net.minecraft.world.BlockView;
 
 public class StoneVaseBlock extends BigBlock{
 	
+	private static final MapCodec<StoneVaseBlock> CODEC = createCodec(StoneVaseBlock::new);
+	
 	public static final IntProperty Y = IntProperty.of("y", 0, 1);
 	public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 	
@@ -25,6 +28,10 @@ public class StoneVaseBlock extends BigBlock{
 	
 	public StoneVaseBlock(Settings settings){
 		super(null, Y, null, settings);
+	}
+	
+	protected MapCodec<? extends Block> getCodec(){
+		return CODEC;
 	}
 	
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder){

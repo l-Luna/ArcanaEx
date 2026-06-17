@@ -1,7 +1,9 @@
 package arcana.blocks;
 
+import arcana.ArcanaRegistry;
 import arcana.blocks.be.KnowledgeableDropperBlockEntity;
 import arcana.cca_components.KdItem;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.dispenser.DispenserBehavior;
@@ -23,16 +25,22 @@ import net.minecraft.world.WorldEvents;
 
 public class KnowledgeableDropperBlock extends DispenserBlock{
 	
+	private static final MapCodec<KnowledgeableDropperBlock> CODEC = createCodec(KnowledgeableDropperBlock::new);
+	
 	private static final DispenserBehavior BEHAVIOR = new Behaviour();
 	
 	public KnowledgeableDropperBlock(Settings settings){
 		super(settings);
 	}
 	
+	public MapCodec<? extends DispenserBlock> getCodec(){
+		return CODEC;
+	}
+	
 	// from DropperBlock
-	protected void dispense(ServerWorld world, BlockPos pos){
-		BlockPointerImpl pointer = new BlockPointerImpl(world, pos);
-		DispenserBlockEntity be = pointer.getBlockEntity();
+	protected void dispense(ServerWorld world, BlockState state, BlockPos pos){
+		DispenserBlockEntity be = world.getBlockEntity(pos, ArcanaRegistry.KNOWLEDGEABLE_DROPPER_BE).orElseThrow();
+		BlockPointer pointer = new BlockPointer(world, pos, state, be);
 		int i = be.chooseNonEmptySlot(world.random);
 		if(i < 0)
 			world.syncWorldEvent(WorldEvents.DISPENSER_FAILS, pos, 0);
@@ -58,7 +66,7 @@ public class KnowledgeableDropperBlock extends DispenserBlock{
 		}
 	}
 	
-	protected DispenserBehavior getBehaviorForItem(ItemStack stack){
+	protected DispenserBehavior getBehaviorForItem(World world, ItemStack stack){
 		return BEHAVIOR;
 	}
 	
@@ -79,7 +87,7 @@ public class KnowledgeableDropperBlock extends DispenserBlock{
 		// from ItemDispenserBehavior
 		// reduce variance & attach source position
 		protected ItemStack dispenseSilently(BlockPointer pointer, ItemStack stack){
-			Direction direction = pointer.getBlockState().get(DispenserBlock.FACING);
+			Direction direction = pointer.state().get(DispenserBlock.FACING);
 			Position position = DispenserBlock.getOutputLocation(pointer);
 			ItemStack itemStack = stack.split(1);
 			spawnItem(pointer, itemStack, 6, direction, position);
@@ -87,7 +95,7 @@ public class KnowledgeableDropperBlock extends DispenserBlock{
 		}
 		
 		public static void spawnItem(BlockPointer from, ItemStack stack, int speed, Direction side, Position pos){
-			World world = from.getWorld();
+			World world = from.world();
 			double x = pos.getX();
 			double y = pos.getY();
 			double z = pos.getZ();
@@ -103,7 +111,7 @@ public class KnowledgeableDropperBlock extends DispenserBlock{
 					world.random.nextTriangular(0.2, 0.017 * (double)speed),
 					world.random.nextTriangular((double)side.getOffsetZ() * rand, 0.005 * (double)speed)
 			);
-			KdItem.setSource(entity, from.getPos());
+			KdItem.setSource(entity, from.pos());
 			world.spawnEntity(entity);
 		}
 	}

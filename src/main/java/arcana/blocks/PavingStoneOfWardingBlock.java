@@ -1,5 +1,6 @@
 package arcana.blocks;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.EntityShapeContext;
@@ -14,20 +15,26 @@ import net.minecraft.world.BlockView;
 
 public class PavingStoneOfWardingBlock extends Block{
 	
-	protected static final VoxelShape normalCollisionShape = Block.createCuboidShape(0, 0, 0, 16, 14, 16);
-	protected static final VoxelShape hostileCollisionShape = Block.createCuboidShape(0, 0, 0, 16, 32 + 17, 16);
+	private static final MapCodec<PavingStoneOfWardingBlock> CODEC = createCodec(PavingStoneOfWardingBlock::new);
+	
+	protected static final VoxelShape NORMAL_COLLISION_SHAPE = Block.createCuboidShape(0, 0, 0, 16, 14, 16);
+	protected static final VoxelShape HOSTILE_COLLISION_SHAPE = Block.createCuboidShape(0, 0, 0, 16, 32 + 17, 16);
 	
 	public PavingStoneOfWardingBlock(Settings settings){
 		super(settings);
 	}
 	
+	protected MapCodec<? extends Block> getCodec(){
+		return CODEC;
+	}
+	
 	public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context){
 		if(context instanceof EntityShapeContext esc && esc.getEntity() instanceof MobEntity mob)
-			return mob instanceof Monster ? hostileCollisionShape : normalCollisionShape;
+			return mob instanceof Monster ? HOSTILE_COLLISION_SHAPE : NORMAL_COLLISION_SHAPE;
 		else return super.getCollisionShape(state, world, pos, context);
 	}
 	
-	public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type){
+	protected boolean canPathfindThrough(BlockState state, NavigationType type){
 		return false;
 	}
 	

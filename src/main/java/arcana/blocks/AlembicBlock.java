@@ -3,6 +3,7 @@ package arcana.blocks;
 import arcana.api.AspectIo;
 import arcana.aspects.AspectStack;
 import arcana.blocks.be.AlembicBlockEntity;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
@@ -18,7 +19,9 @@ import org.jetbrains.annotations.Nullable;
 
 public class AlembicBlock extends BlockWithEntity implements AspectIo{
 	
-	protected static final VoxelShape shape = VoxelShapes.union(
+	private static final MapCodec<AlembicBlock> CODEC = createCodec(AlembicBlock::new);
+	
+	protected static final VoxelShape SHAPE = VoxelShapes.union(
 			createCuboidShape(1, 1, 1, 15, 15, 15),
 			createCuboidShape(0, 2, 0, 16, 4, 16),
 			createCuboidShape(0, 12, 0, 16, 14, 16),
@@ -30,8 +33,12 @@ public class AlembicBlock extends BlockWithEntity implements AspectIo{
 		super(settings);
 	}
 	
+	protected MapCodec<? extends BlockWithEntity> getCodec(){
+		return CODEC;
+	}
+	
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context){
-		return shape;
+		return SHAPE;
 	}
 	
 	// we do not accept returns thank you

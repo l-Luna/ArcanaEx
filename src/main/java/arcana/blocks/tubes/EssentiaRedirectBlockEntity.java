@@ -20,7 +20,7 @@ public class EssentiaRedirectBlockEntity extends EssentiaTubeBlockEntity{
 	public void insert(AspectSpeck speck){
 		super.insert(speck);
 		// if we can send the speck in the right direction, do it
-		Direction towards = getCachedState().get(EssentiaRedirectBlock.facing);
+		Direction towards = getCachedState().get(EssentiaRedirectBlock.FACING);
 		if(EssentiaTubeBlock.connectsTo(world.getBlockState(pos.offset(towards)).getBlock()))
 			speck.direction = towards;
 	}

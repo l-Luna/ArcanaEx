@@ -4,6 +4,7 @@ import arcana.ArcanaRegistry;
 import arcana.api.AspectIo;
 import arcana.aspects.AspectStack;
 import arcana.blocks.be.MysticMistBlockEntity;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
@@ -18,8 +19,14 @@ import org.jetbrains.annotations.Nullable;
 
 public class MysticMistBlock extends BlockWithEntity implements AspectIo{
 	
+	private static final MapCodec<MysticMistBlock> CODEC = createCodec(MysticMistBlock::new);
+	
 	public MysticMistBlock(Settings settings){
 		super(settings);
+	}
+	
+	protected MapCodec<? extends BlockWithEntity> getCodec(){
+		return CODEC;
 	}
 	
 	public BlockEntity createBlockEntity(BlockPos pos, BlockState state){
@@ -28,7 +35,7 @@ public class MysticMistBlock extends BlockWithEntity implements AspectIo{
 	
 	@Nullable
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type){
-		return checkType(type, ArcanaRegistry.MYSTIC_MIST_BE, MysticMistBlockEntity::tick);
+		return validateTicker(type, ArcanaRegistry.MYSTIC_MIST_BE, MysticMistBlockEntity::tick);
 	}
 	
 	public BlockRenderType getRenderType(BlockState state){

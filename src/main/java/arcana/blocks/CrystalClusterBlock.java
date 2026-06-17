@@ -7,6 +7,8 @@ import arcana.aura.AuraWorld;
 import arcana.aura.Node;
 import arcana.network.Networking;
 import arcana.network.PkShakeNode;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
@@ -33,10 +35,15 @@ import java.util.Map;
 @SuppressWarnings("deprecation")
 public class CrystalClusterBlock extends WaterloggableBlock{
 	
-	public static final Property<Direction> facing = Properties.FACING;
-	public static final IntProperty size = IntProperty.of("size", 0, 3);
+	private static final MapCodec<CrystalClusterBlock> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+			createSettingsCodec(),
+			Aspect.CODEC.fieldOf("aspect").forGetter(x -> x.aspect)
+	).apply(i, CrystalClusterBlock::new));
 	
-	private static final Map<Direction, VoxelShape[]> shapes = genShapes();
+	public static final Property<Direction> FACING = Properties.FACING;
+	public static final IntProperty SIZE = IntProperty.of("size", 0, 3);
+	
+	private static final Map<Direction, VoxelShape[]> SHAPES = genShapes();
 	
 	private final Aspect aspect;
 	
@@ -45,23 +52,27 @@ public class CrystalClusterBlock extends WaterloggableBlock{
 		this.aspect = aspect;
 	}
 	
+	protected MapCodec<? extends Block> getCodec(){
+		return CODEC;
+	}
+	
 	@Nullable
 	public BlockState getPlacementState(ItemPlacementContext ctx){
 		var world = ctx.getWorld();
 		var pos = ctx.getBlockPos().offset(ctx.getSide().getOpposite());
 		if(!world.getBlockState(pos).isOpaqueFullCube(world, pos))
 			return null;
-		return super.getPlacementState(ctx).with(facing, ctx.getSide()).with(size, 3);
+		return super.getPlacementState(ctx).with(FACING, ctx.getSide()).with(SIZE, 3);
 	}
 	
 	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos){
-		BlockPos support = pos.offset(state.get(facing).getOpposite());
+		BlockPos support = pos.offset(state.get(FACING).getOpposite());
 		return world.getBlockState(support).isOpaqueFullCube(world, support);
 	}
 	
 	public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos){
 		if(!state.canPlaceAt(world, pos))
-			world.createAndScheduleBlockTick(pos, this, 1);
+			world.scheduleBlockTick(pos, this, 1);
 		
 		return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
 	}
@@ -76,20 +87,20 @@ public class CrystalClusterBlock extends WaterloggableBlock{
 	}
 	
 	public int getComparatorOutput(BlockState state, World world, BlockPos pos){
-		return state.get(size) == 3 ? 15 : 0;
+		return state.get(SIZE) == 3 ? 15 : 0;
 	}
 	
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder){
 		super.appendProperties(builder);
-		builder.add(facing, size);
+		builder.add(FACING, SIZE);
 	}
 	
 	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random){
 		super.randomTick(state, world, pos, random);
 		// drain our aspect from nodes to grow
-		if(state.get(size) != 3){
+		if(state.get(SIZE) != 3){
 			AuraWorld view = AuraWorld.from((World)world);
-			for(Node node : view.getNodesInBounds(new Box(pos.down(4).south(4).west(4), pos.up(4).north(4).east(4)))){
+			for(Node node : view.getNodesInBounds(new Box(pos.down(4).south(4).west(4).toCenterPos(), pos.up(4).north(4).east(4).toCenterPos()))){
 				var toDrain = getAspect();
 				boolean isAuram = toDrain == Aspects.AURA;
 				AspectMap nodeAspects = node.getAspects();
@@ -100,7 +111,7 @@ public class CrystalClusterBlock extends WaterloggableBlock{
 					if(nodeAspects.get(toDrain) >= amount){
 						nodeAspects.take(toDrain, amount);
 						node.markDirty();
-						world.setBlockState(pos, state.with(size, state.get(size) + 1));
+						world.setBlockState(pos, state.with(SIZE, state.get(SIZE) + 1));
 						break;
 					}else if(isAuram){
 						node.damage(random.nextInt(12) == 0, random);
@@ -112,7 +123,7 @@ public class CrystalClusterBlock extends WaterloggableBlock{
 	}
 	
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context){
-		return shapes.get(state.get(facing))[state.get(size)];
+		return SHAPES.get(state.get(FACING))[state.get(SIZE)];
 	}
 	
 	public Aspect getAspect(){

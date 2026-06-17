@@ -1,6 +1,8 @@
 package arcana.blocks;
 
 import arcana.blocks.be.PedestalBlockEntity;
+import com.mojang.serialization.MapCodec;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
@@ -8,6 +10,8 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.ItemActionResult;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.hit.BlockHitResult;
@@ -19,7 +23,9 @@ import net.minecraft.world.World;
 
 public class PedestalBlock extends WaterloggableBlock implements BlockEntityProvider{
 	
-	private static final VoxelShape shape = VoxelShapes.union(
+	private static final MapCodec<PedestalBlock> CODEC = createCodec(PedestalBlock::new);
+	
+	private static final VoxelShape SHAPE = VoxelShapes.union(
 			createCuboidShape(1, 0, 1, 15, 4, 15),
 			createCuboidShape(3, 12, 3, 13, 16, 13),
 			createCuboidShape(6, 4, 6, 10, 12, 10)
@@ -29,23 +35,33 @@ public class PedestalBlock extends WaterloggableBlock implements BlockEntityProv
 		super(settings);
 	}
 	
+	protected MapCodec<? extends Block> getCodec(){
+		return CODEC;
+	}
+	
+	protected ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit){
+		BlockEntity at = world.getBlockEntity(pos);
+		if(at instanceof PedestalBlockEntity pedestal){
+			if(pedestal.getStack().isEmpty()){
+				pedestal.setStack(stack.split(1));
+				return ItemActionResult.SUCCESS;
+			}else if(!pedestal.getStack().isEmpty() && ItemStack.areItemsAndComponentsEqual(stack, pedestal.getStack()) && stack.getCount() < stack.getMaxCount()){
+				stack.increment(1);
+				pedestal.setStack(ItemStack.EMPTY);
+				return ItemActionResult.SUCCESS;
+			}
+		}
+		return super.onUseWithItem(stack, state, world, pos, player, hand, hit);
+	}
+	
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit){
 		BlockEntity at = world.getBlockEntity(pos);
 		if(at instanceof PedestalBlockEntity pedestal){
-			ItemStack held = player.getStackInHand(hand);
-			if(pedestal.getStack().isEmpty() && !held.isEmpty()){
-				pedestal.setStack(held.split(1));
+			if(!pedestal.getStack().isEmpty()){
+				player.setStackInHand(player.preferredHand, pedestal.getStack());
+				pedestal.setStack(ItemStack.EMPTY);
 				return ActionResult.SUCCESS;
-			}else if(!pedestal.getStack().isEmpty())
-				if(held.isEmpty()){
-					player.setStackInHand(hand, pedestal.getStack());
-					pedestal.setStack(ItemStack.EMPTY);
-					return ActionResult.SUCCESS;
-				}else if(ItemStack.areItemsAndComponentsEqual(held, pedestal.getStack()) && held.getCount() < held.getMaxCount()){
-					held.increment(1);
-					pedestal.setStack(ItemStack.EMPTY);
-					return ActionResult.SUCCESS;
-				}
+			}
 		}
 		return super.onUse(state, world, pos, player, hit);
 	}
@@ -60,7 +76,7 @@ public class PedestalBlock extends WaterloggableBlock implements BlockEntityProv
 	}
 	
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context){
-		return shape;
+		return SHAPE;
 	}
 	
 	public BlockEntity createBlockEntity(BlockPos pos, BlockState state){

@@ -159,9 +159,9 @@ public class NodeTypes{
 		
 		// and damage entities that touch it
 		for(Entity entity : world.getEntitiesByType(TypeFilter.instanceOf(LivingEntity.class), new Box(pos).expand(range), x -> x.getPos().isInRange(node, range * 0.75f)))
-			entity.damage(ArcanaDamageSources.HUNGRY_NODE, 2f);
+			entity.damage(ArcanaDamageSources.hungryNode(world), 2f);
 		for(Entity entity : world.getEntitiesByType(EntityType.ITEM, new Box(pos).expand(1), x -> x.getPos().isInRange(node, Node.HALF_NODE)))
-			entity.damage(ArcanaDamageSources.HUNGRY_NODE, 2f);
+			entity.damage(ArcanaDamageSources.hungryNode(world), 2f);
 		
 		// make disc particles
 		// disc radius = 1/3 * pull radius

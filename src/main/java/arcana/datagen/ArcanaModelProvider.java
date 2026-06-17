@@ -110,7 +110,7 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 			blockGen.blockStateCollector.accept(VariantsBlockStateSupplier
 					.create(value, BlockStateVariant.create())
 					.coordinate(blockGen.createUpDefaultFacingVariantMap())
-					.coordinate(BlockStateVariantMap.create(CrystalClusterBlock.size).register(size -> {
+					.coordinate(BlockStateVariantMap.create(CrystalClusterBlock.SIZE).register(size -> {
 						String suffix = size == 3 ? "" : "_" + (size + 1);
 						return BlockStateVariant.create()
 								.put(VariantSettings.MODEL, blockGen.createSubModel(value, suffix, Models.CROSS, TextureMap::cross));

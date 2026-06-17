@@ -43,7 +43,7 @@ public class PutrefactionFluid extends ArcanaFluid{
 	}
 	
 	public void onEntityInteractTick(Entity entity){
-		entity.damage(ArcanaDamageSources.PUTREFACTION, 2);
+		entity.damage(ArcanaDamageSources.putrefaction(entity.getEntityWorld()), 2);
 	}
 	
 	public float getEntityPushStrength(Entity entity){

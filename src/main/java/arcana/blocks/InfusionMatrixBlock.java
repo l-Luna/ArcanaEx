@@ -6,6 +6,7 @@ import arcana.aura.AuraWorld;
 import arcana.aura.FluxOrigin;
 import arcana.blocks.be.InfusionMatrixBlockEntity;
 import arcana.blocks.be.InfusionPillarBlockEntity;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
@@ -19,8 +20,14 @@ import org.jetbrains.annotations.Nullable;
 
 public class InfusionMatrixBlock extends BlockWithEntity implements ScalpelSlashable{
 	
+	private static final MapCodec<InfusionMatrixBlock> CODEC = createCodec(InfusionMatrixBlock::new);
+	
 	public InfusionMatrixBlock(Settings settings){
 		super(settings);
+	}
+	
+	protected MapCodec<? extends BlockWithEntity> getCodec(){
+		return CODEC;
 	}
 	
 	public BlockEntity createBlockEntity(BlockPos pos, BlockState state){
@@ -29,7 +36,7 @@ public class InfusionMatrixBlock extends BlockWithEntity implements ScalpelSlash
 	
 	@Nullable
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type){
-		return checkType(type, ArcanaRegistry.INFUSION_MATRIX_BE, (_1, _2, _3, be) -> be.tick());
+		return validateTicker(type, ArcanaRegistry.INFUSION_MATRIX_BE, (_1, _2, _3, be) -> be.tick());
 	}
 	
 	public boolean onSyncedBlockEvent(BlockState state, World world, BlockPos pos, int type, int data){

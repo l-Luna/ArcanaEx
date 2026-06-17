@@ -8,6 +8,7 @@ import net.minecraft.block.MapColor;
 import net.minecraft.registry.tag.TagKey;
 
 // TODO: use AW instead
+// TODO: once the block codecs are actually used, The Horrors ensue
 public class ArcanaBlockSettings extends FabricBlockSettings{
 	
 	private boolean dropsSelf = false;

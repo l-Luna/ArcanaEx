@@ -1,8 +1,10 @@
 package arcana.blocks.tubes;
 
 import arcana.ArcanaRegistry;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.ConnectingBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
@@ -17,8 +19,14 @@ import org.jetbrains.annotations.Nullable;
 
 public class EssentiaValveBlock extends EssentiaTubeBlock{
 	
+	private static final MapCodec<EssentiaValveBlock> CODEC = createCodec(EssentiaValveBlock::new);
+	
 	public EssentiaValveBlock(Settings settings){
 		super(settings);
+	}
+	
+	protected MapCodec<? extends ConnectingBlock> getCodec(){
+		return CODEC;
 	}
 	
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit){

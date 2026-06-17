@@ -180,8 +180,8 @@ public class ArcaneFurnaceBlockEntity extends BlockEntity implements NamedScreen
 		// substrates are similar; it's depleted with progress and not with time though
 		if(furnace.substrateAmount <= 0 && canActivate){
 			ItemStack substrate = furnace.inventory.getStack(2);
-			if(!substrate.isEmpty() && ArcaneFurnaceBlock.substrateTimes.containsKey(substrate.getItem())){
-				ArcaneFurnaceBlock.SubstrateData data = ArcaneFurnaceBlock.substrateTimes.get(substrate.getItem());
+			if(!substrate.isEmpty() && ArcaneFurnaceBlock.SUBSTRATE_TIMES.containsKey(substrate.getItem())){
+				ArcaneFurnaceBlock.SubstrateData data = ArcaneFurnaceBlock.SUBSTRATE_TIMES.get(substrate.getItem());
 				furnace.substrateAmount = furnace.maxSubstrateAmount = data.amount();
 				furnace.substrateColour = data.colour();
 				substrate.decrement(1);

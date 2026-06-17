@@ -76,18 +76,18 @@ public class ArcanaLootTablesProvider extends FabricBlockLootTableProvider{
 									ItemEntry.builder(c)
 											// fully grown crystals with silk touch drop themselves
 											.conditionally(createSilkTouchCondition())
-											.conditionally(BlockStatePropertyLootCondition.builder(c).properties(StatePredicate.Builder.create().exactMatch(CrystalClusterBlock.size, 3)))
+											.conditionally(BlockStatePropertyLootCondition.builder(c).properties(StatePredicate.Builder.create().exactMatch(CrystalClusterBlock.SIZE, 3)))
 											.alternatively(
 													ItemEntry.builder(drop)
 															// fully grown crystals drop 2-4 using a pickaxe, with fortune applied
 															.apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 4)))
 															.apply(ApplyBonusLootFunction.oreDrops(enchantments.getOrThrow(Enchantments.FORTUNE)))
 															.conditionally(MatchToolLootCondition.builder(ItemPredicate.Builder.create().tag(ItemTags.CLUSTER_MAX_HARVESTABLES)))
-															.conditionally(BlockStatePropertyLootCondition.builder(c).properties(StatePredicate.Builder.create().exactMatch(CrystalClusterBlock.size, 3)))
+															.conditionally(BlockStatePropertyLootCondition.builder(c).properties(StatePredicate.Builder.create().exactMatch(CrystalClusterBlock.SIZE, 3)))
 															
 															// fully grown crystals otherwise drop 2
 															.alternatively(applyExplosionDecay(c, ItemEntry.builder(drop).apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(2))))
-																	.conditionally(BlockStatePropertyLootCondition.builder(c).properties(StatePredicate.Builder.create().exactMatch(CrystalClusterBlock.size, 3))))
+																	.conditionally(BlockStatePropertyLootCondition.builder(c).properties(StatePredicate.Builder.create().exactMatch(CrystalClusterBlock.SIZE, 3))))
 															
 															// other crystals drop 1
 															.alternatively(applyExplosionDecay(c, ItemEntry.builder(drop).apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1)))))

@@ -114,7 +114,7 @@ public abstract class LivingEntityMixin extends Entity implements ArcanaLivingEn
 	
 	@Inject(method = "onDeath", at = @At("HEAD"))
 	void onDeath(DamageSource source, CallbackInfo ci){
-		if(source == ArcanaDamageSources.PUTREFACTION){
+		if(source.isOf(ArcanaDamageSources.PUTREFACTION_KEY)){
 			diedToPutrefaction = true;
 			PkEntityStatusEx.sendStatus(this, PkEntityStatusEx.STATUS_DIED_TO_PUTREFACTION);
 		}
@@ -126,7 +126,7 @@ public abstract class LivingEntityMixin extends Entity implements ArcanaLivingEn
 	                 opcode = Opcodes.PUTFIELD,
 	                 shift = At.Shift.AFTER))
 	void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir){
-		if(source == ArcanaDamageSources.PUTREFACTION)
+		if(source.isOf(ArcanaDamageSources.PUTREFACTION_KEY))
 			timeUntilRegen = 18;
 	}
 }

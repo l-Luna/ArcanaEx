@@ -1,6 +1,8 @@
 package arcana.blocks;
 
 import arcana.screens.ArcaneCraftingScreen;
+import com.mojang.serialization.MapCodec;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.screen.NamedScreenHandlerFactory;
@@ -16,10 +18,15 @@ import net.minecraft.world.World;
 @SuppressWarnings("deprecation")
 public class ArcaneCraftingTableBlock extends WaterloggableBlock{
 	
-	private static final Text title = Text.translatable("container.crafting");
+	private static final MapCodec<ArcaneCraftingTableBlock> CODEC = createCodec(ArcaneCraftingTableBlock::new);
+	private static final Text TITLE = Text.translatable("container.crafting");
 	
 	public ArcaneCraftingTableBlock(Settings settings){
 		super(settings);
+	}
+	
+	protected MapCodec<? extends Block> getCodec(){
+		return CODEC;
 	}
 	
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit){
@@ -34,7 +41,7 @@ public class ArcaneCraftingTableBlock extends WaterloggableBlock{
 	
 	public NamedScreenHandlerFactory createScreenHandlerFactory(BlockState state, World world, BlockPos pos) {
 		return new SimpleNamedScreenHandlerFactory(
-				(syncId, inventory, player) -> new ArcaneCraftingScreen.Handler(syncId, inventory, ScreenHandlerContext.create(world, pos)), title
+				(syncId, inventory, player) -> new ArcaneCraftingScreen.Handler(syncId, inventory, ScreenHandlerContext.create(world, pos)), TITLE
 		);
 	}
 }

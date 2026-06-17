@@ -8,7 +8,7 @@ import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 
-import static arcana.blocks.ResearchTableBlock.left;
+import static arcana.blocks.ResearchTableBlock.LEFT;
 
 public class ResearchTableItem extends BlockItem{
 	
@@ -35,7 +35,7 @@ public class ResearchTableItem extends BlockItem{
 				return false;
 		}
 		
-		return context.getWorld().setBlockState(pos, state.with(left, true), f)
-		    && context.getWorld().setBlockState(pos.offset(offset), state.with(left, false), f);
+		return context.getWorld().setBlockState(pos, state.with(LEFT, true), f)
+		    && context.getWorld().setBlockState(pos.offset(offset), state.with(LEFT, false), f);
 	}
 }

@@ -136,8 +136,8 @@ public class ResearchTableScreen extends HandledScreen<ResearchTableScreen.Handl
 			
 			Pair<SimpleInventory, SimpleInventory> tableInv = ctx.get((world, pos) -> {
 				BlockState state = world.getBlockState(pos);
-				if(!state.get(ResearchTableBlock.left))
-					pos = pos.offset(state.get(ResearchTableBlock.facing));
+				if(!state.get(ResearchTableBlock.LEFT))
+					pos = pos.offset(state.get(ResearchTableBlock.FACING));
 				ResearchTableBlockEntity entity = (ResearchTableBlockEntity)world.getBlockEntity(pos);
 				return new Pair<>(entity.scribingTools, entity.note);
 			}).orElse(new Pair<>(new SimpleInventory(1), new SimpleInventory(1)));

@@ -45,25 +45,25 @@ public class ThrownTaintBottleEntity extends ThrownItemEntity{
 	}
 	
 	private void collide(){
-		if(!world.isClient){
-			Random rng = world.random;
+		if(!getWorld().isClient){
+			Random rng = getWorld().random;
 			int tainted = 0;
 			// aim to taint 6 blocks within a 5x3x5 area, fail after 12 attempts
 			BlockPos.Mutable pos = new BlockPos.Mutable();
 			for(int tries = 0; tries < 12 && tainted < 6; tries++){
 				pos.set(getBlockPos()).move(rng.nextInt(5) - 2, rng.nextInt(3) - 1, rng.nextInt(5) - 2);
 				// don't check for pure node protection, the player has made their choice
-				boolean didTaint = Taint.taintBlock(world, pos);
-				boolean didInfest = InfestedChunk.setInfested(world, pos, true);
+				boolean didTaint = Taint.taintBlock(getWorld(), pos);
+				boolean didInfest = InfestedChunk.setInfested(getWorld(), pos, true);
 				if(didTaint || didInfest)
 					tainted++;
 			}
 			
 			// add flux
-			AuraWorld.from(world).incrementFlux(rng.nextInt(3) + 3 + (6 - tainted), FluxOrigin.TAINT_IN_A_BOTTLE, getBlockPos());
+			AuraWorld.from(getWorld()).incrementFlux(rng.nextInt(3) + 3 + (6 - tainted), FluxOrigin.TAINT_IN_A_BOTTLE, getBlockPos());
 			// add particles
 			int i = WorldEvents.INSTANT_SPLASH_POTION_SPLASHED;
-			world.syncWorldEvent(i, getBlockPos(), Aspects.TAINT.colour());
+			getWorld().syncWorldEvent(i, getBlockPos(), Aspects.TAINT.colour());
 			// and disappear
 			discard();
 		}

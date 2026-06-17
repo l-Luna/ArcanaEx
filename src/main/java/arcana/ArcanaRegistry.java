@@ -554,7 +554,7 @@ public final class ArcanaRegistry{
 	public static final Block GLEAMING_LAMPLIGHT = new Block(of(Material.GLASS).dropsSelf().usesTool(PICKAXE_MINEABLE).strength(2, 7).luminance(15));
 	public static final Block CHISELED_GLEAMING_LAMPLIGHT = new Block(of(Material.GLASS).dropsSelf().usesTool(PICKAXE_MINEABLE).strength(2, 7).luminance(15));
 	
-	public static final Block LIGHT_BLOCK = new LightFocusBlock(of(Material.DECORATION).dropsNothing().breakInstantly().ticksRandomly().luminance(state -> 7 + state.get(LightFocusBlock.life)));
+	public static final Block TEMPORARY_LIGHT_BLOCK = new TemporaryLightBlock(of(Material.DECORATION).dropsNothing().breakInstantly().ticksRandomly().luminance(state -> 7 + state.get(TemporaryLightBlock.LIFE)));
 	public static final Block TAINT_GOO = new FluidBlock(STILL_TAINT_GOO, FabricBlockSettings.copy(Blocks.WATER));
 	public static final Block PUTREFACTION = new FluidBlock(STILL_PUTREFACTION, FabricBlockSettings.copy(Blocks.WATER));
 	
@@ -626,13 +626,6 @@ public final class ArcanaRegistry{
 	public static BlockEntityType<DistilleryPathfinderBlockEntity> DISTILLERY_PATHFINDER_BE = FabricBlockEntityTypeBuilder.create(DistilleryPathfinderBlockEntity::new, DISTILLERY_PATHFINDER).build();
 	public static BlockEntityType<ThaumicHaloBlockEntity> THAUMIC_HALO_BE = FabricBlockEntityTypeBuilder.create(ThaumicHaloBlockEntity::new, THAUMIC_HALO).build();
 	public static BlockEntityType<MagicMirrorBlockEntity> MAGIC_MIRROR_BE = FabricBlockEntityTypeBuilder.create(MagicMirrorBlockEntity::new, MAGIC_MIRROR).build();
-	
-	// enchantments...
-	/*public static Enchantment WARPING = new WarpingCurseEnchantment(Enchantment.Rarity.VERY_RARE, EquipmentSlot.values());
-	public static Enchantment PROJECTING = new ProjectingEnchantment();
-	public static LootSwapEnchantment TRANSMUTATIVE = new LootSwapEnchantment(EnchantmentTarget.WEAPON, LootSwapEnchantment.TRANSMUTATIVE_MAP, 1, 1.0f);
-	public static LootSwapEnchantment PURIFYING = new LootSwapEnchantment(EnchantmentTarget.DIGGER, LootSwapEnchantment.PURIFYING_MAP, 3, 0.2f);
-	public static Enchantment RUNIC_SHIELDING = new RunicShieldingEnchantment();*/
 	
 	// structures
 	/*public static final RegistryEntry<StructurePool> CRIMSON_OUTPOST_STRUCTURE_POOL = StructurePools.register(
@@ -953,11 +946,11 @@ public final class ArcanaRegistry{
 		register("shattered_husk", SHATTERED_HUSK);
 		register("synthetic_scaffolding", SYNTHETIC_SCAFFOLDING);
 		register("formless_foam", FORMLESS_FOAM);
-		ArcaneFurnaceBlock.substrateTimes.put(SYNTHETIC_SCAFFOLDING, new ArcaneFurnaceBlock.SubstrateData(15, 0x43FC48));
-		ArcaneFurnaceBlock.substrateTimes.put(FORMLESS_FOAM, new ArcaneFurnaceBlock.SubstrateData(40, 0x2FD8C2));
+		ArcaneFurnaceBlock.SUBSTRATE_TIMES.put(SYNTHETIC_SCAFFOLDING, new ArcaneFurnaceBlock.SubstrateData(15, 0x43FC48));
+		ArcaneFurnaceBlock.SUBSTRATE_TIMES.put(FORMLESS_FOAM, new ArcaneFurnaceBlock.SubstrateData(40, 0x2FD8C2));
 		
 		register("void_putty", VOID_PUTTY);
-		ArcaneFurnaceBlock.substrateTimes.put(VOID_PUTTY, new ArcaneFurnaceBlock.SubstrateData(200, 0x852797));
+		ArcaneFurnaceBlock.SUBSTRATE_TIMES.put(VOID_PUTTY, new ArcaneFurnaceBlock.SubstrateData(200, 0x852797));
 		
 		register("wand", WAND);
 		
@@ -1038,7 +1031,7 @@ public final class ArcanaRegistry{
 			Aspects.phials.put(aspect, phialItem);
 			
 			if(Aspects.primals.contains(aspect))
-				ArcaneFurnaceBlock.substrateTimes.put(crystalItem, new ArcaneFurnaceBlock.SubstrateData(5, aspect.colour()));
+				ArcaneFurnaceBlock.SUBSTRATE_TIMES.put(crystalItem, new ArcaneFurnaceBlock.SubstrateData(5, aspect.colour()));
 		}
 		
 		// blocks
@@ -1260,7 +1253,7 @@ public final class ArcanaRegistry{
 			Aspects.clusterSeeds.put(aspect, seed);
 		}
 		
-		register("light_block", LIGHT_BLOCK, false);
+		register("light_block", TEMPORARY_LIGHT_BLOCK, false);
 		register("taint_goo", TAINT_GOO, false);
 		register("putrefaction", PUTREFACTION, false);
 		

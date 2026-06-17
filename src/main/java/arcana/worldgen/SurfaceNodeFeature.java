@@ -78,9 +78,9 @@ public class SurfaceNodeFeature extends Feature<DefaultFeatureConfig>{
 					world.setBlockState(
 							toSet,
 							Aspects.clusters.get(c).getDefaultState()
-									.with(CrystalClusterBlock.facing, direction)
-									.with(CrystalClusterBlock.size, 3)
-									.with(CrystalClusterBlock.waterlogged, world.getFluidState(toSet).isIn(FluidTags.WATER)),
+									.with(CrystalClusterBlock.FACING, direction)
+									.with(CrystalClusterBlock.SIZE, 3)
+									.with(CrystalClusterBlock.WATERLOGGED, world.getFluidState(toSet).isIn(FluidTags.WATER)),
 							Block.NOTIFY_ALL | Block.FORCE_STATE
 					);
 					return true;

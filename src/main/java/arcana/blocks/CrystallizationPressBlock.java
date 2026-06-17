@@ -4,6 +4,7 @@ import arcana.ArcanaRegistry;
 import arcana.api.AspectIo;
 import arcana.aspects.AspectStack;
 import arcana.blocks.be.CrystallizationPressBlockEntity;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
@@ -26,9 +27,15 @@ import org.jetbrains.annotations.Nullable;
 
 public class CrystallizationPressBlock extends BlockWithEntity implements AspectIo, InventoryProvider{
 	
+	private static final MapCodec<CrystallizationPressBlock> CODEC = createCodec(CrystallizationPressBlock::new);
+	
 	public CrystallizationPressBlock(Settings settings){
 		super(settings);
 		setDefaultState(stateManager.getDefaultState().with(Properties.HORIZONTAL_AXIS, Direction.Axis.X));
+	}
+	
+	protected MapCodec<? extends BlockWithEntity> getCodec(){
+		return CODEC;
 	}
 	
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder){
@@ -49,7 +56,7 @@ public class CrystallizationPressBlock extends BlockWithEntity implements Aspect
 	}
 	
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World _world, BlockState _state, BlockEntityType<T> type){
-		return checkType(type, ArcanaRegistry.CRYSTALLIZATION_PRESS_BE, CrystallizationPressBlockEntity::tick);
+		return validateTicker(type, ArcanaRegistry.CRYSTALLIZATION_PRESS_BE, CrystallizationPressBlockEntity::tick);
 	}
 	
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit){

@@ -2,6 +2,7 @@ package arcana.blocks;
 
 import arcana.ArcanaRegistry;
 import arcana.blocks.be.ArcaneFurnaceBlockEntity;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
@@ -19,7 +20,6 @@ import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -34,7 +34,10 @@ import java.util.Map;
 
 public class ArcaneFurnaceBlock extends BlockWithEntity implements InventoryProvider{
 	
-	public static final Map<Item, SubstrateData> substrateTimes = new HashMap<>();
+	private static final MapCodec<ArcaneFurnaceBlock> CODEC = createCodec(ArcaneFurnaceBlock::new);
+	
+	// TODO: data-ify
+	public static final Map<Item, SubstrateData> SUBSTRATE_TIMES = new HashMap<>();
 	
 	public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
 	public static final BooleanProperty ON = Properties.LIT;
@@ -42,6 +45,10 @@ public class ArcaneFurnaceBlock extends BlockWithEntity implements InventoryProv
 	public ArcaneFurnaceBlock(Settings settings){
 		super(settings);
 		setDefaultState(stateManager.getDefaultState().with(FACING, Direction.NORTH).with(ON, Boolean.FALSE));
+	}
+	
+	protected MapCodec<? extends BlockWithEntity> getCodec(){
+		return CODEC;
 	}
 	
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder){
@@ -60,14 +67,14 @@ public class ArcaneFurnaceBlock extends BlockWithEntity implements InventoryProv
 	
 	@Nullable
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World _world, BlockState _state, BlockEntityType<T> type){
-		return checkType(type, ArcanaRegistry.ARCANE_FURNACE_BE, ArcaneFurnaceBlockEntity::tick);
+		return validateTicker(type, ArcanaRegistry.ARCANE_FURNACE_BE, ArcaneFurnaceBlockEntity::tick);
 	}
 	
 	public BlockRenderType getRenderType(BlockState state){
 		return BlockRenderType.MODEL;
 	}
 	
-	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit){
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit){
 		if(world.isClient)
 			return ActionResult.SUCCESS;
 		if(world.getBlockEntity(pos) instanceof ArcaneFurnaceBlockEntity furnace){

@@ -2,6 +2,7 @@ package arcana.blocks.tubes;
 
 import arcana.ArcanaRegistry;
 import arcana.api.AspectIo;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -14,12 +15,13 @@ import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 
 public class EssentiaTubeBlock extends ConnectingBlock implements BlockEntityProvider{
+	
+	private static final MapCodec<EssentiaTubeBlock> CODEC = createCodec(EssentiaTubeBlock::new);
 	
 	public EssentiaTubeBlock(Settings settings){
 		super(.1875f, settings);
@@ -30,6 +32,10 @@ public class EssentiaTubeBlock extends ConnectingBlock implements BlockEntityPro
 				.with(WEST, Boolean.FALSE)
 				.with(UP, Boolean.FALSE)
 				.with(DOWN, Boolean.FALSE));
+	}
+	
+	protected MapCodec<? extends ConnectingBlock> getCodec(){
+		return CODEC;
 	}
 	
 	private boolean canConnect(BlockState neighbor){
@@ -62,7 +68,7 @@ public class EssentiaTubeBlock extends ConnectingBlock implements BlockEntityPro
 		builder.add(NORTH, SOUTH, EAST, WEST, UP, DOWN);
 	}
 	
-	public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type){
+	protected boolean canPathfindThrough(BlockState state, NavigationType type){
 		return false;
 	}
 	

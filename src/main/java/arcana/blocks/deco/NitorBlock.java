@@ -1,6 +1,7 @@
 package arcana.blocks.deco;
 
 import arcana.ArcanaRegistry;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
@@ -14,10 +15,16 @@ import net.minecraft.world.World;
 @SuppressWarnings("deprecation")
 public class NitorBlock extends Block{
 	
-	protected static final VoxelShape shape = createCuboidShape(5, 5, 5, 11, 11, 11);
+	private static final MapCodec<NitorBlock> CODEC = createCodec(NitorBlock::new);
+	
+	protected static final VoxelShape SHAPE = createCuboidShape(5, 5, 5, 11, 11, 11);
 	
 	public NitorBlock(Settings settings){
 		super(settings);
+	}
+	
+	protected MapCodec<? extends Block> getCodec(){
+		return CODEC;
 	}
 	
 	public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random rng){
@@ -34,7 +41,7 @@ public class NitorBlock extends Block{
 	}
 	
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context){
-		return shape;
+		return SHAPE;
 	}
 	
 	public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context){

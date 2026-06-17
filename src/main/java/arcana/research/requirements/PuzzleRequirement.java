@@ -2,6 +2,7 @@ package arcana.research.requirements;
 
 import arcana.ArcanaRegistry;
 import arcana.cca_components.Researcher;
+import arcana.items.components.ArcanaItemComponentTypes;
 import arcana.network.PkGetNote;
 import arcana.research.*;
 import arcana.research.puzzles.Fieldwork;
@@ -12,6 +13,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 
 import java.util.Map;
+import java.util.Objects;
 
 import static arcana.Arcana.arcId;
 
@@ -65,9 +67,7 @@ public class PuzzleRequirement extends Requirement{
 	public static boolean alreadyHasNote(Puzzle puzzle, PlayerEntity player){
 		for(int i = 0; i < player.getInventory().size(); i++){
 			ItemStack stack = player.getInventory().getStack(i);
-			if(stack.isOf(ArcanaRegistry.RESEARCH_NOTES)
-					&& stack.hasNbt()
-					&& stack.getNbt().getString("puzzle_id").equals(puzzle.id().toString()))
+			if(stack.isOf(ArcanaRegistry.RESEARCH_NOTES) && Objects.equals(stack.get(ArcanaItemComponentTypes.RESEARCH_NOTE_PUZZLE_ID), puzzle.id()))
 				return true;
 		}
 		return false;

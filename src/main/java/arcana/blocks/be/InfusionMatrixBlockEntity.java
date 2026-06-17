@@ -69,7 +69,10 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 	public void tick(){
 		assert world != null;
 		if(lastRecipe != null){
-			curRecipe = (SimpleInfusionRecipe)world.getRecipeManager().get(lastRecipe).orElse(null);
+			RecipeEntry<?> entry = world.getRecipeManager().get(lastRecipe).orElse(null);
+			if(entry == null || !(entry.value() instanceof InfusionRecipe))
+				entry = null;
+			curRecipe = (RecipeEntry<InfusionRecipe>)entry;
 			BlockState state = world.getBlockState(pos);
 			world.updateListeners(pos, state, state, Block.NOTIFY_LISTENERS);
 			lastRecipe = null;

@@ -75,7 +75,7 @@ public class ClusterSeedItem extends Item{
 	
 	protected BlockState getPlacementState(ItemPlacementContext context){
 		BlockState state = block.getPlacementState(context);
-		return state != null && canPlace(context, state) ? state.with(CrystalClusterBlock.size, 0) : null;
+		return state != null && canPlace(context, state) ? state.with(CrystalClusterBlock.SIZE, 0) : null;
 	}
 	
 	protected boolean canPlace(ItemPlacementContext cx, BlockState state){

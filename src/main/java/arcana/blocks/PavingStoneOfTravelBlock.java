@@ -1,5 +1,6 @@
 package arcana.blocks;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
@@ -10,10 +11,16 @@ import net.minecraft.world.BlockView;
 
 public class PavingStoneOfTravelBlock extends Block{
 	
+	private static final MapCodec<PavingStoneOfTravelBlock> CODEC = createCodec(PavingStoneOfTravelBlock::new);
+	
 	protected static final VoxelShape collisionShape = Block.createCuboidShape(0, 0, 0, 16, 14, 16);
 	
 	public PavingStoneOfTravelBlock(Settings settings){
 		super(settings);
+	}
+	
+	protected MapCodec<? extends Block> getCodec(){
+		return CODEC;
 	}
 	
 	public float getVelocityMultiplier(){

@@ -157,12 +157,12 @@ public class RenderHelper{
 	
 	//
 	
-	private static void colVertex(VertexConsumer cons, MatrixStack ms, int colour, float x, float y, float z, int nX, int nY, int nZ, Sprite sprite, boolean isFx){
+	private static void colVertex(VertexConsumer cons, MatrixStack ms, int colour, float x, float y, float z, int nX, int nY, int nZ, float minU, float minV, float maxU, float maxV, boolean isFx){
 		// use face normals and cube positions to pick UVs (note |nX| + |nY| + |nZ| = 1)
 		// on side faces (|nX| + |nZ| = 1), use the other coordinate to decide U, and Y for V
 		// otherwise use X for U and Z for V
 		float localU = Math.abs(nX * z + nZ * x + nY * x), localV = Math.abs(nX * y + nZ * y + nY * z);
-		float u = MathHelper.lerp(localU, sprite.getMinU(), sprite.getMaxU()), v = MathHelper.lerp(localV, sprite.getMinV(), sprite.getMaxV());
+		float u = MathHelper.lerp(localU, minU, maxU), v = MathHelper.lerp(localV, minV, maxV);
 		if(isFx){
 			// TODO: shaders
 			throw new UnsupportedOperationException("unimplemented");
@@ -189,46 +189,50 @@ public class RenderHelper{
 	}
 	
 	public static void colCuboid(VertexConsumer cons, MatrixStack ms, int colour, Vec3d pos, float xSize, float ySize, float zSize, Sprite sprite, boolean isFx){
+		colCuboid(cons, ms, colour, pos, xSize, ySize, zSize, sprite.getMinU(), sprite.getMinV(), sprite.getMaxU(), sprite.getMaxV(), isFx);
+	}
+	
+	public static void colCuboid(VertexConsumer cons, MatrixStack ms, int colour, Vec3d pos, float xSize, float ySize, float zSize, float minU, float minV, float maxU, float maxV, boolean isFx){
 		ms.push();
 		ms.translate(pos.x, pos.y, pos.z);
 		ms.scale(xSize, ySize, zSize);
 		
 		// top
 		int darker = ColorHelper.Argb.mixColor(colour, 0xFFCCCCCC);
-		colVertex(cons, ms, darker, 0, 1, 1, 0, 1, 0, sprite, isFx);
-		colVertex(cons, ms, darker, 1, 1, 1, 0, 1, 0, sprite, isFx);
-		colVertex(cons, ms, darker, 1, 1, 0, 0, 1, 0, sprite, isFx);
-		colVertex(cons, ms, darker, 0, 1, 0, 0, 1, 0, sprite, isFx);
+		colVertex(cons, ms, darker, 0, 1, 1, 0, 1, 0, minU, minV, maxU, maxV, isFx);
+		colVertex(cons, ms, darker, 1, 1, 1, 0, 1, 0, minU, minV, maxU, maxV, isFx);
+		colVertex(cons, ms, darker, 1, 1, 0, 0, 1, 0, minU, minV, maxU, maxV, isFx);
+		colVertex(cons, ms, darker, 0, 1, 0, 0, 1, 0, minU, minV, maxU, maxV, isFx);
 		
 		// bottom
-		colVertex(cons, ms, darker, 0, 0, 0, 0, -1, 0, sprite, isFx);
-		colVertex(cons, ms, darker, 1, 0, 0, 0, -1, 0, sprite, isFx);
-		colVertex(cons, ms, darker, 1, 0, 1, 0, -1, 0, sprite, isFx);
-		colVertex(cons, ms, darker, 0, 0, 1, 0, -1, 0, sprite, isFx);
+		colVertex(cons, ms, darker, 0, 0, 0, 0, -1, 0, minU, minV, maxU, maxV, isFx);
+		colVertex(cons, ms, darker, 1, 0, 0, 0, -1, 0, minU, minV, maxU, maxV, isFx);
+		colVertex(cons, ms, darker, 1, 0, 1, 0, -1, 0, minU, minV, maxU, maxV, isFx);
+		colVertex(cons, ms, darker, 0, 0, 1, 0, -1, 0, minU, minV, maxU, maxV, isFx);
 		
 		// east (+X) face
-		colVertex(cons, ms, colour, 1, 1, 0, 1, 0, 0, sprite, isFx);
-		colVertex(cons, ms, colour, 1, 1, 1, 1, 0, 0, sprite, isFx);
-		colVertex(cons, ms, colour, 1, 0, 1, 1, 0, 0, sprite, isFx);
-		colVertex(cons, ms, colour, 1, 0, 0, 1, 0, 0, sprite, isFx);
+		colVertex(cons, ms, colour, 1, 1, 0, 1, 0, 0, minU, minV, maxU, maxV, isFx);
+		colVertex(cons, ms, colour, 1, 1, 1, 1, 0, 0, minU, minV, maxU, maxV, isFx);
+		colVertex(cons, ms, colour, 1, 0, 1, 1, 0, 0, minU, minV, maxU, maxV, isFx);
+		colVertex(cons, ms, colour, 1, 0, 0, 1, 0, 0, minU, minV, maxU, maxV, isFx);
 		
 		// west (-X) face
-		colVertex(cons, ms, colour, 0, 1, 0, -1, 0, 0, sprite, isFx);
-		colVertex(cons, ms, colour, 0, 0, 0, -1, 0, 0, sprite, isFx);
-		colVertex(cons, ms, colour, 0, 0, 1, -1, 0, 0, sprite, isFx);
-		colVertex(cons, ms, colour, 0, 1, 1, -1, 0, 0, sprite, isFx);
+		colVertex(cons, ms, colour, 0, 1, 0, -1, 0, 0, minU, minV, maxU, maxV, isFx);
+		colVertex(cons, ms, colour, 0, 0, 0, -1, 0, 0, minU, minV, maxU, maxV, isFx);
+		colVertex(cons, ms, colour, 0, 0, 1, -1, 0, 0, minU, minV, maxU, maxV, isFx);
+		colVertex(cons, ms, colour, 0, 1, 1, -1, 0, 0, minU, minV, maxU, maxV, isFx);
 		
 		// north (-Z) face
-		colVertex(cons, ms, colour, 1, 0, 0, 0, 0, -1, sprite, isFx);
-		colVertex(cons, ms, colour, 0, 0, 0, 0, 0, -1, sprite, isFx);
-		colVertex(cons, ms, colour, 0, 1, 0, 0, 0, -1, sprite, isFx);
-		colVertex(cons, ms, colour, 1, 1, 0, 0, 0, -1, sprite, isFx);
+		colVertex(cons, ms, colour, 1, 0, 0, 0, 0, -1, minU, minV, maxU, maxV, isFx);
+		colVertex(cons, ms, colour, 0, 0, 0, 0, 0, -1, minU, minV, maxU, maxV, isFx);
+		colVertex(cons, ms, colour, 0, 1, 0, 0, 0, -1, minU, minV, maxU, maxV, isFx);
+		colVertex(cons, ms, colour, 1, 1, 0, 0, 0, -1, minU, minV, maxU, maxV, isFx);
 		
 		// south (+Z) face
-		colVertex(cons, ms, colour, 0, 0, 1, 0, 0, 1, sprite, isFx);
-		colVertex(cons, ms, colour, 1, 0, 1, 0, 0, 1, sprite, isFx);
-		colVertex(cons, ms, colour, 1, 1, 1, 0, 0, 1, sprite, isFx);
-		colVertex(cons, ms, colour, 0, 1, 1, 0, 0, 1, sprite, isFx);
+		colVertex(cons, ms, colour, 0, 0, 1, 0, 0, 1, minU, minV, maxU, maxV, isFx);
+		colVertex(cons, ms, colour, 1, 0, 1, 0, 0, 1, minU, minV, maxU, maxV, isFx);
+		colVertex(cons, ms, colour, 1, 1, 1, 0, 0, 1, minU, minV, maxU, maxV, isFx);
+		colVertex(cons, ms, colour, 0, 1, 1, 0, 0, 1, minU, minV, maxU, maxV, isFx);
 		
 		ms.pop();
 	}

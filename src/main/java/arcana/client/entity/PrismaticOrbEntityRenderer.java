@@ -1,19 +1,17 @@
 package arcana.client.entity;
 
-import arcana.client.ArcanaClient;
 import arcana.client.RenderHelper;
 import arcana.entities.PrismaticOrbEntity;
 import arcana.util.MathUtil;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.texture.Sprite;
-import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.ColorHelper;
+
+import static arcana.Arcana.arcId;
 
 public class PrismaticOrbEntityRenderer extends EntityRenderer<PrismaticOrbEntity>{
 	
@@ -28,19 +26,17 @@ public class PrismaticOrbEntityRenderer extends EntityRenderer<PrismaticOrbEntit
 	public void render(PrismaticOrbEntity entity, float yaw, float dt, MatrixStack ms, VertexConsumerProvider vcs, int light){
 		super.render(entity, yaw, dt, ms, vcs, light);
 		
-		var atlas = MinecraftClient.getInstance().getSpriteAtlas(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE);
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
 		RenderSystem.enableDepthTest();
 		RenderSystem.setShader(GameRenderer::getPositionColorTexLightmapProgram);
 		RenderSystem.setShaderColor(1, 1, 1, 1);
-		RenderSystem.setShaderTexture(0, SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE);
 		BufferBuilder vc = Tessellator.getInstance().begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL);
 		
 		ms.push();
 		ms.translate(-0.0625, -0.0625, -0.0625);
 		float time = entity.age + dt;
-		Sprite whiteSprite = atlas.apply(ArcanaClient.WHITE_TEX);
+		RenderSystem.setShaderTexture(0, arcId("textures/misc/white.png"));
 		// 6 orbs following paths that look like rotating around the diagonal of a sphere,
 		// with either dimension's frequency scaled, and the object's size scaled
 		for(int xf = 1; xf < 4; xf++)
@@ -54,14 +50,14 @@ public class PrismaticOrbEntityRenderer extends EntityRenderer<PrismaticOrbEntit
 						MathUtil.facingToVec(
 								(float)(Math.sin(time * xf / 7f) * Math.PI),
 								(float)(Math.cos(time * yf / 7f) * Math.PI)).multiply(cDist),
-						cSize,
-						whiteSprite,
+						cSize, cSize, cSize,
+						0, 0, 1, 1,
 						false);
 			}
 		ms.pop();
 		
 		RenderSystem.setShaderColor(1, 1, 1, 1);
-		 RenderHelper.drawBuffer(vc);
+		RenderHelper.drawBuffer(vc);
 		RenderSystem.disableBlend();
 	}
 }

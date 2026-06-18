@@ -9,7 +9,6 @@ import arcana.aura.NodeTypes;
 import arcana.cca_components.Researcher;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Box;
 
@@ -115,7 +114,7 @@ public final class BuiltinResearch{
 		}
 		
 		// TODO: set bonus addenda should really be in SetBonusStatusEffect::handleArmourSetBonus
-		if(player.hasStatusEffect(RegistryEntry.of(ArcanaRegistry.ARCANE_AURA)) && !researcher.isAddendumComplete(arcaniumSetBonusAddendum)){
+		if(player.hasStatusEffect(ArcanaRegistry.ARCANE_AURA.entry()) && !researcher.isAddendumComplete(arcaniumSetBonusAddendum)){
 			researcher.completeAddendum(arcaniumSetBonusAddendum);
 			researcher.doSync();
 		}

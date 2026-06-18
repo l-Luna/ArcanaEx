@@ -2,11 +2,13 @@ package arcana.cca_components;
 
 import arcana.ArcanaRegistry;
 import arcana.ArcanaSounds;
+import arcana.Registerable;
 import arcana.aspects.Aspects;
 import arcana.items.WandItem;
 import arcana.mixin.accessor.EntityAccessor;
 import arcana.mixin.accessor.LivingEntityAccessor;
 import arcana.util.InventoryUtil;
+import dev.emi.trinkets.api.TrinketsAttributeModifiersComponent;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.entity.LivingEntity;
@@ -18,8 +20,8 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
@@ -39,7 +41,7 @@ public class RunicShielding implements Component, AutoSyncedComponent, ServerTic
 	
 	public static final ComponentKey<RunicShielding> KEY = ComponentRegistryV3.INSTANCE.getOrCreate(arcId("runic_shielding_user"), RunicShielding.class);
 	
-	public static final EntityAttribute MAX_SHIELDING = new ClampedEntityAttribute("attribute.name.generic.arcana.max_shielding", 0, 0, 100).setTracked(true);
+	public static final Registerable<EntityAttribute> MAX_SHIELDING = new Registerable<>(new ClampedEntityAttribute("attribute.name.generic.arcana.max_shielding", 0, 0, 100).setTracked(true)).register(Registries.ATTRIBUTE, "max_shielding");
 	
 	private static final int MAX_RECHARGE_TIMER = 7 * 20;
 	private static final Identifier MODIFIER_ID = arcId("trinket_runic_shielding");
@@ -49,15 +51,24 @@ public class RunicShielding implements Component, AutoSyncedComponent, ServerTic
 	}
 	
 	public static int getMaxShielding(LivingEntity entity){
-		return (int)entity.getAttributeValue(RegistryEntry.of(MAX_SHIELDING));
+		return (int)entity.getAttributeValue(MAX_SHIELDING.entry());
 	}
 	
 	public static AttributeModifiersComponent createAttributeModifiers(float shielding){
 		return AttributeModifiersComponent.builder()
 				.add(
-						RegistryEntry.of(RunicShielding.MAX_SHIELDING),
+						RunicShielding.MAX_SHIELDING.entry(),
 						new EntityAttributeModifier(MODIFIER_ID, shielding, EntityAttributeModifier.Operation.ADD_VALUE),
 						AttributeModifierSlot.MAINHAND
+				)
+				.build();
+	}
+	
+	public static TrinketsAttributeModifiersComponent createTrinketModifiers(float shielding){
+		return TrinketsAttributeModifiersComponent.builder()
+				.add(
+						RunicShielding.MAX_SHIELDING.entry(),
+						new EntityAttributeModifier(MODIFIER_ID, shielding, EntityAttributeModifier.Operation.ADD_VALUE)
 				)
 				.build();
 	}
@@ -103,7 +114,7 @@ public class RunicShielding implements Component, AutoSyncedComponent, ServerTic
 			return false;
 		float frac = MathHelper.clamp(amount / player.getHealth(), 0, 1);
 		float chance = MathHelper.sqrt(frac);
-		if(player.getRandom().nextFloat() <= chance || player.hasStatusEffect(RegistryEntry.of(ArcanaRegistry.WARP_FRAIL))){
+		if(player.getRandom().nextFloat() <= chance || player.hasStatusEffect(ArcanaRegistry.WARP_FRAIL.entry())){
 			boolean hasHeartTrinket = InventoryUtil.hasTrinket(player, ArcanaRegistry.RING_OF_TWIN_HEARTBEATS);
 			halfPoints -= 2;
 			rechargeTimer = (hasHeartTrinket ? -17 : -10) * 20;

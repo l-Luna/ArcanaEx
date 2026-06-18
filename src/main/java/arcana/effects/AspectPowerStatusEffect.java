@@ -9,6 +9,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.entry.RegistryEntry;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class AspectPowerStatusEffect extends ArcanaStatusEffect{
 	
@@ -18,18 +19,18 @@ public class AspectPowerStatusEffect extends ArcanaStatusEffect{
 	
 	public static void handleExclusivity(PlayerEntity player){
 		// find the effect with the highest time remaining, and remove all others
-		StatusEffect best = null;
+		RegistryEntry<StatusEffect> best = null;
 		int bestTime = -1;
 		for(StatusEffectInstance effectInst : player.getStatusEffects()){
-			StatusEffect type = effectInst.getEffectType().value();
-			if(ArcanaTags.isOf(type, ArcanaTags.ASPECT_CANDY_EFFECTS) && effectInst.getDuration() > bestTime){
+			RegistryEntry<StatusEffect> type = effectInst.getEffectType();
+			if(type.isIn(ArcanaTags.ASPECT_CANDY_EFFECTS) && effectInst.getDuration() > bestTime){
 				best = type;
 				bestTime = effectInst.getDuration();
 			}
 		}
 		
 		for(RegistryEntry<StatusEffect> effect : new ArrayList<>(player.getActiveStatusEffects().keySet()))
-			if(ArcanaTags.isOf(effect.value(), ArcanaTags.ASPECT_CANDY_EFFECTS) && effect != best)
+			if(effect.isIn(ArcanaTags.ASPECT_CANDY_EFFECTS) && !Objects.equals(effect, best))
 				player.removeStatusEffect(effect);
 	}
 }

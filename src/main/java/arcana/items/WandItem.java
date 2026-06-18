@@ -32,7 +32,6 @@ import net.minecraft.item.ItemUsageContext;
 import net.minecraft.item.tooltip.TooltipData;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -337,7 +336,7 @@ public class WandItem extends Item implements FabricItem, WarpingItem, CustomCre
 	
 	public static int focusStrength(ItemStack stack, @Nullable PlayerEntity player){
 		int strength = capFrom(stack).strength() + coreFrom(stack).strength();
-		if(player != null && player.hasStatusEffect(RegistryEntry.of(ArcanaRegistry.ARCANE_AURA)))
+		if(player != null && player.hasStatusEffect(ArcanaRegistry.ARCANE_AURA.entry()))
 			strength += (int)(strength * 0.2);
 		return strength;
 	}

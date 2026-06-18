@@ -10,7 +10,6 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
@@ -35,7 +34,7 @@ public final class WarpEvents{
 	
 	public static void tickWarp(ServerWorld world){
 		for(ServerPlayerEntity player : world.getPlayers()){
-			if(player.isSpectator() || player.hasStatusEffect(RegistryEntry.of(ArcanaRegistry.WARP_WARD)))
+			if(player.isSpectator() || player.hasStatusEffect(ArcanaRegistry.WARP_WARD.entry()))
 				continue;
 			Researcher researcher = Researcher.from(player);
 			long elapsed = world.getTime() - researcher.getLastWarpEventTime();

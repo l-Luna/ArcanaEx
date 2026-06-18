@@ -105,7 +105,7 @@ public abstract class LivingEntityMixin extends Entity implements ArcanaLivingEn
 			method = "createLivingAttributes()Lnet/minecraft/entity/attribute/DefaultAttributeContainer$Builder;",
 			require = 1, allow = 1, at = @At("RETURN"))
 	private static void addAttributes(final CallbackInfoReturnable<DefaultAttributeContainer.Builder> info){
-		info.getReturnValue().add(RegistryEntry.of(RunicShielding.MAX_SHIELDING));
+		info.getReturnValue().add(RunicShielding.MAX_SHIELDING.entry());
 	}
 	
 	// putrefaction: mark on death, reduce iframes, drop with fortune 1, and drop as a player kill

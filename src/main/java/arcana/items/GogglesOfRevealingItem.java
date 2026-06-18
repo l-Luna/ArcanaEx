@@ -5,13 +5,12 @@ import dev.emi.trinkets.api.TrinketsApi;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
-import net.minecraft.registry.entry.RegistryEntry;
 import org.jetbrains.annotations.Nullable;
 
 public class GogglesOfRevealingItem extends ArmorItem{
 	
 	public GogglesOfRevealingItem(Settings settings){
-		super(RegistryEntry.of(ArcanaArmorMaterials.GOGGLES_OF_REVEALING), Type.HELMET, settings);
+		super(ArcanaArmorMaterials.GOGGLES_OF_REVEALING.entry(), Type.HELMET, settings);
 	}
 	
 	public static boolean hasRevealing(@Nullable PlayerEntity player){

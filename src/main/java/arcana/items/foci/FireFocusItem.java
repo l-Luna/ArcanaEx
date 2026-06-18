@@ -14,7 +14,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -75,7 +74,7 @@ public class FireFocusItem extends FocusItem{
 		float damage = Math.round(0.12f * strength + 3);
 		
 		// bonus damage if the user has ignis power
-		if(user.hasStatusEffect(RegistryEntry.of(ArcanaRegistry.FIRE_POWER)))
+		if(user.hasStatusEffect(ArcanaRegistry.FIRE_POWER.entry()))
 			damage += 4;
 		
 		target.setOnFireFor((int)(damage + 2));

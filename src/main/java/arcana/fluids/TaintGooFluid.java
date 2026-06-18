@@ -64,7 +64,7 @@ public class TaintGooFluid extends ArcanaFluid{
 	}
 	
 	public void onEntityInteractTick(Entity entity){
-		RegistryEntry<StatusEffect> e = RegistryEntry.of(ArcanaRegistry.TAINTED);
+		RegistryEntry<StatusEffect> e = ArcanaRegistry.TAINTED.entry();
 		if(entity instanceof LivingEntity lem && (lem.getWorld().getTime() % 80 == 0 || !lem.hasStatusEffect(e)))
 			lem.addStatusEffect(new StatusEffectInstance(e, 5 * 20));
 	}

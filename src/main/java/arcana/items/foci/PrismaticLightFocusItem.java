@@ -11,7 +11,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -45,7 +44,7 @@ public class PrismaticLightFocusItem extends FocusItem{
 			PrismaticOrbEntity orb = new PrismaticOrbEntity(ArcanaRegistry.PRISMATIC_ORB, w);
 			orb.setOwner(user);
 			orb.setPosition(hoverPosition(user));
-			orb.setBurning(user.hasStatusEffect(RegistryEntry.of(ArcanaRegistry.FIRE_POWER)));
+			orb.setBurning(user.hasStatusEffect(ArcanaRegistry.FIRE_POWER.entry()));
 			w.spawnEntity(orb);
 			state.putUuid("orbId", orb.getUuid());
 		}

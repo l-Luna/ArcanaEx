@@ -26,15 +26,15 @@ public class LivingEntityMixin{
 	
 	@Inject(method = "hasStatusEffect", at = @At("HEAD"), cancellable = true)
 	private void hasStatusEffect(RegistryEntry<StatusEffect> effect, CallbackInfoReturnable<Boolean> cir){
-		if(effect == StatusEffects.JUMP_BOOST && actuallyHasStatusEffect(RegistryEntry.of(ArcanaRegistry.AIR_POWER))){
+		if(effect == StatusEffects.JUMP_BOOST && actuallyHasStatusEffect(ArcanaRegistry.AIR_POWER.entry())){
 			cir.setReturnValue(true);
 			return;
 		}
-		if(effect == StatusEffects.FIRE_RESISTANCE && actuallyHasStatusEffect(RegistryEntry.of(ArcanaRegistry.FIRE_POWER))){
+		if(effect == StatusEffects.FIRE_RESISTANCE && actuallyHasStatusEffect(ArcanaRegistry.FIRE_POWER.entry())){
 			cir.setReturnValue(true);
 			return;
 		}
-		if(effect == StatusEffects.WATER_BREATHING && actuallyHasStatusEffect(RegistryEntry.of(ArcanaRegistry.WATER_POWER))){
+		if(effect == StatusEffects.WATER_BREATHING && actuallyHasStatusEffect(ArcanaRegistry.WATER_POWER.entry())){
 			cir.setReturnValue(true);
 			return;
 		}
@@ -45,15 +45,15 @@ public class LivingEntityMixin{
 	
 	@Inject(method = "getStatusEffect", at = @At("HEAD"), cancellable = true)
 	private void getStatusEffect(RegistryEntry<StatusEffect> effect, CallbackInfoReturnable<StatusEffectInstance> cir){
-		if(actuallyHasStatusEffect(RegistryEntry.of(ArcanaRegistry.AIR_POWER)) && effect == StatusEffects.JUMP_BOOST && !actuallyHasStatusEffect(StatusEffects.JUMP_BOOST)){
+		if(actuallyHasStatusEffect(ArcanaRegistry.AIR_POWER.entry()) && effect == StatusEffects.JUMP_BOOST && !actuallyHasStatusEffect(StatusEffects.JUMP_BOOST)){
 			cir.setReturnValue(new StatusEffectInstance(StatusEffects.JUMP_BOOST, 0, 0));
 			return;
 		}
-		if(actuallyHasStatusEffect(RegistryEntry.of(ArcanaRegistry.FIRE_POWER)) && effect == StatusEffects.FIRE_RESISTANCE && !actuallyHasStatusEffect(StatusEffects.FIRE_RESISTANCE)){
+		if(actuallyHasStatusEffect(ArcanaRegistry.FIRE_POWER.entry()) && effect == StatusEffects.FIRE_RESISTANCE && !actuallyHasStatusEffect(StatusEffects.FIRE_RESISTANCE)){
 			cir.setReturnValue(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE));
 			return;
 		}
-		if(actuallyHasStatusEffect(RegistryEntry.of(ArcanaRegistry.WATER_POWER)) && effect == StatusEffects.WATER_BREATHING && !actuallyHasStatusEffect(StatusEffects.WATER_BREATHING)){
+		if(actuallyHasStatusEffect(ArcanaRegistry.WATER_POWER.entry()) && effect == StatusEffects.WATER_BREATHING && !actuallyHasStatusEffect(StatusEffects.WATER_BREATHING)){
 			cir.setReturnValue(new StatusEffectInstance(StatusEffects.WATER_BREATHING));
 			return;
 		}

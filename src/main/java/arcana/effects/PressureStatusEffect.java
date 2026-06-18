@@ -5,7 +5,6 @@ import arcana.ArcanaTags;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
-import net.minecraft.registry.entry.RegistryEntry;
 
 public class PressureStatusEffect extends ArcanaStatusEffect{
 	
@@ -16,7 +15,7 @@ public class PressureStatusEffect extends ArcanaStatusEffect{
 	public static boolean suppresses(LivingEntity entity, StatusEffect effect){
 		return effect.isBeneficial()
 				&& entity != null
-				&& entity.hasStatusEffect(RegistryEntry.of(ArcanaRegistry.PRESSURE))
+				&& entity.hasStatusEffect(ArcanaRegistry.PRESSURE.entry())
 				&& !ArcanaTags.isOf(effect, ArcanaTags.BYPASSES_PRESSURE);
 	}
 }

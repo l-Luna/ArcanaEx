@@ -49,6 +49,7 @@ import com.unascribed.lib39.weld.api.BigBlock;
 import com.unascribed.lib39.weld.api.BigBlockItem;
 import de.dafuqs.fractal.api.ItemSubGroup;
 import dev.emi.trinkets.api.TrinketItem;
+import dev.emi.trinkets.api.TrinketsAttributeModifiersComponent;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
@@ -143,26 +144,26 @@ public final class ArcanaRegistry{
 	public static final FlowableFluid FLOWING_PUTREFACTION = new PutrefactionFluid(false);
 	
 	// status effects...
-	public static final StatusEffect TAINTED = new TaintedStatusEffect();
-	public static final StatusEffect WARP_FRAIL = new FrailWarpStatusEffect();
+	public static final Registerable<StatusEffect> TAINTED = new Registerable<StatusEffect>(new TaintedStatusEffect()).register(Registries.STATUS_EFFECT, "tainted");
+	public static final Registerable<StatusEffect> WARP_FRAIL = new Registerable<StatusEffect>(new FrailWarpStatusEffect()).register(Registries.STATUS_EFFECT, "warp_frail");
 	
-	public static final StatusEffect ARCANE_AURA = new SetBonusStatusEffect();
+	public static final Registerable<StatusEffect> ARCANE_AURA = new Registerable<StatusEffect>(new SetBonusStatusEffect()).register(Registries.STATUS_EFFECT, "arcane_aura");
 	
-	public static final StatusEffect ARCANE_DISCHARGE = new ArcanaStatusEffect(StatusEffectCategory.BENEFICIAL, 0xF881D6);
-	public static final StatusEffect WARP_WARD = new ArcanaStatusEffect(StatusEffectCategory.BENEFICIAL, 0xBFEBF8);
-	public static final StatusEffect AIR_POWER = new AspectPowerStatusEffect(Aspects.AIR)
-			.addAttributeModifier(EntityAttributes.GENERIC_MOVEMENT_SPEED, arcId("air_power/movement_speed"), .1f, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
-	public static final StatusEffect FIRE_POWER = new AspectPowerStatusEffect(Aspects.FIRE);
-	public static final StatusEffect WATER_POWER = new AspectPowerStatusEffect(Aspects.WATER);
-	public static final StatusEffect EARTH_POWER = new AspectPowerStatusEffect(Aspects.EARTH)
-			.addAttributeModifier(EntityAttributes.GENERIC_ATTACK_SPEED, arcId("earth_power/attack_speed"), .1f, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
-	public static final StatusEffect ORDER_POWER = new AspectPowerStatusEffect(Aspects.ORDER)
+	public static final Registerable<StatusEffect> ARCANE_DISCHARGE = new Registerable<StatusEffect>(new ArcanaStatusEffect(StatusEffectCategory.BENEFICIAL, 0xF881D6)).register(Registries.STATUS_EFFECT, "arcane_discharge");
+	public static final Registerable<StatusEffect> WARP_WARD = new Registerable<StatusEffect>(new ArcanaStatusEffect(StatusEffectCategory.BENEFICIAL, 0xBFEBF8)).register(Registries.STATUS_EFFECT, "warp_ward");
+	public static final Registerable<StatusEffect> AIR_POWER = new Registerable<StatusEffect>(new AspectPowerStatusEffect(Aspects.AIR)
+			.addAttributeModifier(EntityAttributes.GENERIC_MOVEMENT_SPEED, arcId("air_power/movement_speed"), .1f, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)).register(Registries.STATUS_EFFECT, "air_power");
+	public static final Registerable<StatusEffect> FIRE_POWER = new Registerable<StatusEffect>(new AspectPowerStatusEffect(Aspects.FIRE)).register(Registries.STATUS_EFFECT, "fire_power");
+	public static final Registerable<StatusEffect> WATER_POWER = new Registerable<StatusEffect>(new AspectPowerStatusEffect(Aspects.WATER)).register(Registries.STATUS_EFFECT, "water_power");
+	public static final Registerable<StatusEffect> EARTH_POWER = new Registerable<StatusEffect>(new AspectPowerStatusEffect(Aspects.EARTH)
+			.addAttributeModifier(EntityAttributes.GENERIC_ATTACK_SPEED, arcId("earth_power/attack_speed"), .1f, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)).register(Registries.STATUS_EFFECT, "earth_power");
+	public static final Registerable<StatusEffect> ORDER_POWER = new Registerable<StatusEffect>(new AspectPowerStatusEffect(Aspects.ORDER)
 			.addAttributeModifier(EntityAttributes.GENERIC_ARMOR, arcId("order_power/armor"), 2, EntityAttributeModifier.Operation.ADD_VALUE)
-			.addAttributeModifier(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, arcId("ordo_power/knockback_resistance"), .1f, EntityAttributeModifier.Operation.ADD_VALUE);
-	public static final StatusEffect ENTROPY_POWER = new AspectPowerStatusEffect(Aspects.ENTROPY)
-			.addAttributeModifier(EntityAttributes.GENERIC_ATTACK_DAMAGE, arcId("entropy_power/attack_damage"), .1f, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+			.addAttributeModifier(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, arcId("ordo_power/knockback_resistance"), .1f, EntityAttributeModifier.Operation.ADD_VALUE)).register(Registries.STATUS_EFFECT, "order_power");
+	public static final Registerable<StatusEffect> ENTROPY_POWER = new Registerable<StatusEffect>(new AspectPowerStatusEffect(Aspects.ENTROPY)
+			.addAttributeModifier(EntityAttributes.GENERIC_ATTACK_DAMAGE, arcId("entropy_power/attack_damage"), .1f, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)).register(Registries.STATUS_EFFECT, "entropy_power");
 	
-	public static final StatusEffect PRESSURE = new PressureStatusEffect();
+	public static final Registerable<StatusEffect> PRESSURE = new Registerable<StatusEffect>(new PressureStatusEffect()).register(Registries.STATUS_EFFECT, "pressure");
 	
 	// items...
 	public static final Item SCRIBBLED_NOTES = new ScribbledNotesItem(GROUPED_SINGLE);
@@ -189,23 +190,23 @@ public final class ArcanaRegistry{
 	public static final Item DRINKABLE_TAINT = new DrinkableTaintItem(new ArcanaItemSettings().group(Tab.MAIN).maxCount(1).food(new FoodComponent.Builder()
 			.nutrition(4)
 			.saturationModifier(1.1f)
-			.statusEffect(new StatusEffectInstance(RegistryEntry.of(TAINTED), 40 * 20, 1), 1)
+			.statusEffect(new StatusEffectInstance(TAINTED.entry(), 40 * 20, 1), 1)
 			.build()));
 	
 	public static final Item PERSONAL_MAGIC_MIRROR = new PersonalMagicMirrorItem(new ArcanaItemSettings().group(Tab.MAIN).maxCount(1));
 	
-	public static final Item RAREFIED_SHERBERT = new Item(new ArcanaItemSettings().group(Tab.MAIN).food(aspectCandyFood(AIR_POWER)));
-	public static final Item SOBERING_SYRUP = new Item(new ArcanaItemSettings().group(Tab.MAIN).food(aspectCandyFood(FIRE_POWER)));
-	public static final Item SEAFOAM_SODA = new Item(new ArcanaItemSettings().group(Tab.MAIN).food(aspectCandyFood(WATER_POWER)));
-	public static final Item BEDROCK_CANDY = new Item(new ArcanaItemSettings().group(Tab.MAIN).food(aspectCandyFood(EARTH_POWER)));
-	public static final Item GUMMY_CUBES = new Item(new ArcanaItemSettings().group(Tab.MAIN).food(aspectCandyFood(ORDER_POWER)));
-	public static final Item TWISTED_LIQUORICE = new Item(new ArcanaItemSettings().group(Tab.MAIN).food(aspectCandyFood(ENTROPY_POWER)));
+	public static final Item RAREFIED_SHERBERT = new Item(new ArcanaItemSettings().group(Tab.MAIN).food(aspectCandyFood(AIR_POWER.entry())));
+	public static final Item SOBERING_SYRUP = new Item(new ArcanaItemSettings().group(Tab.MAIN).food(aspectCandyFood(FIRE_POWER.entry())));
+	public static final Item SEAFOAM_SODA = new Item(new ArcanaItemSettings().group(Tab.MAIN).food(aspectCandyFood(WATER_POWER.entry())));
+	public static final Item BEDROCK_CANDY = new Item(new ArcanaItemSettings().group(Tab.MAIN).food(aspectCandyFood(EARTH_POWER.entry())));
+	public static final Item GUMMY_CUBES = new Item(new ArcanaItemSettings().group(Tab.MAIN).food(aspectCandyFood(ORDER_POWER.entry())));
+	public static final Item TWISTED_LIQUORICE = new Item(new ArcanaItemSettings().group(Tab.MAIN).food(aspectCandyFood(ENTROPY_POWER.entry())));
 	
 	public static final Item SILVERLEAF_BREW = new DrinkItem(new ArcanaItemSettings().group(Tab.MAIN).maxCount(1).food(new FoodComponent.Builder()
 			.nutrition(2)
 			.saturationModifier(0.25f)
 			.alwaysEdible()
-			.statusEffect(new StatusEffectInstance(RegistryEntry.of(WARP_WARD), 8 * 60 * 20, 0, true, true), 1)
+			.statusEffect(new StatusEffectInstance(WARP_WARD.entry(), 8 * 60 * 20, 0, true, true), 1)
 			.build()));
 	
 	public static final Item ARCANIUM_INGOT = new Item(GROUPED_RES);
@@ -275,17 +276,17 @@ public final class ArcanaRegistry{
 	public static final Item RING_OF_TWIN_HEARTBEATS = new WarpingTrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1).rarity(Rarity.UNCOMMON));
 	public static final Item RING_OF_THE_VOIDGAZER = new WarpBasedDiscountTrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1).rarity(Rarity.UNCOMMON));
 	public static final Item EMERALD_NECKLACE = new TrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1));
-	public static final Item AMULET_OF_RUNIC_SHIELDING = new TrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1).attributeModifiers(RunicShielding.createAttributeModifiers(2)));
-	public static final Item AMULET_OF_UNBURDENED_TRAVEL = new TrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1).attributeModifiers(RunicShielding.createAttributeModifiers(6)));
-	public static final Item AMULET_OF_DEAFENING_SHIELDING = new TrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1).attributeModifiers(RunicShielding.createAttributeModifiers(1)));
+	public static final Item AMULET_OF_RUNIC_SHIELDING = new TrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1).component(TrinketsAttributeModifiersComponent.TYPE, RunicShielding.createTrinketModifiers(2)));
+	public static final Item AMULET_OF_UNBURDENED_TRAVEL = new TrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1).component(TrinketsAttributeModifiersComponent.TYPE, RunicShielding.createTrinketModifiers(6)));
+	public static final Item AMULET_OF_DEAFENING_SHIELDING = new TrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1).component(TrinketsAttributeModifiersComponent.TYPE, RunicShielding.createTrinketModifiers(1)));
 	
 	public static final Item CRIMSON_BLADE = new SwordItem(ArcanaToolMaterials.CRIMSON, new ArcanaItemSettings().group(Tab.EQUIPMENT).attributeModifiers(SwordItem.createAttributeModifiers(ArcanaToolMaterials.CRIMSON, 3, -2.4f)));
 	public static final Item CRIMSON_LONGBOW = new CrimsonLongbowItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxDamage(564));
 	public static final Item CRIMSON_LEECH = new CrimsonLeechItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).rarity(Rarity.UNCOMMON).maxDamage(874).attributeModifiers(CrimsonLeechItem.createAttributeModifiers()));
 	
-	public static final Item BOOTS_OF_THE_TRAVELLER = new BootsOfTheTravellerItem(RegistryEntry.of(ArcanaArmorMaterials.BOOTS_OF_THE_TRAVELLER), new ArcanaItemSettings().group(Tab.EQUIPMENT).attributeModifiers(BootsOfTheTravellerItem.createAttributeModifiers()));
-	public static final Item BOOTS_OF_THE_SAILOR = new BootsOfTheTravellerItem(RegistryEntry.of(ArcanaArmorMaterials.BOOTS_OF_THE_SAILOR), new ArcanaItemSettings().group(Tab.EQUIPMENT).attributeModifiers(BootsOfTheTravellerItem.createAttributeModifiers()));
-	public static final Item BOOTS_OF_THE_REAPER = new BootsOfTheTravellerItem(RegistryEntry.of(ArcanaArmorMaterials.BOOTS_OF_THE_REAPER), new ArcanaItemSettings().group(Tab.EQUIPMENT).attributeModifiers(BootsOfTheTravellerItem.createAttributeModifiers()));
+	public static final Item BOOTS_OF_THE_TRAVELLER = new BootsOfTheTravellerItem(ArcanaArmorMaterials.BOOTS_OF_THE_TRAVELLER.entry(), new ArcanaItemSettings().group(Tab.EQUIPMENT).attributeModifiers(BootsOfTheTravellerItem.createAttributeModifiers()));
+	public static final Item BOOTS_OF_THE_SAILOR = new BootsOfTheTravellerItem(ArcanaArmorMaterials.BOOTS_OF_THE_SAILOR.entry(), new ArcanaItemSettings().group(Tab.EQUIPMENT).attributeModifiers(BootsOfTheTravellerItem.createAttributeModifiers()));
+	public static final Item BOOTS_OF_THE_REAPER = new BootsOfTheTravellerItem(ArcanaArmorMaterials.BOOTS_OF_THE_REAPER.entry(), new ArcanaItemSettings().group(Tab.EQUIPMENT).attributeModifiers(BootsOfTheTravellerItem.createAttributeModifiers()));
 	
 	public static final Item ALCHEMICAL_IRON = new Item(GROUPED_RES);
 	public static final Item ALCHEMICAL_GOLD = new Item(GROUPED_RES);
@@ -1391,27 +1392,9 @@ public final class ArcanaRegistry{
 		register("crimson_jester", CRIMSON_JESTER);
 		register("crimson_heavy_knight", CRIMSON_HEAVY_KNIGHT);
 		
-		// status effects
-		register("tainted", TAINTED);
-		register("warp_frail", WARP_FRAIL);
-		register("arcane_aura", ARCANE_AURA);
-		register("arcane_discharge", ARCANE_DISCHARGE);
-		register("warp_ward", WARP_WARD);
-		register("air_power", AIR_POWER);
-		register("fire_power", FIRE_POWER);
-		register("water_power", WATER_POWER);
-		register("earth_power", EARTH_POWER);
-		register("order_power", ORDER_POWER);
-		register("entropy_power", ENTROPY_POWER);
-		register("pressure", PRESSURE);
-		
 		// loot pool types
 		Registry.register(Registries.LOOT_POOL_ENTRY_TYPE, arcId("tag_gift"), TagGiftLootEntry.TYPE);
 		Registry.register(Registries.LOOT_CONDITION_TYPE, arcId("random_chance_once"), RandomChanceOnceLootCondition.TYPE);
-		
-		// entity attributes
-		// TODO: move elsewhere?
-		Registry.register(Registries.ATTRIBUTE, arcId("max_shielding"), RunicShielding.MAX_SHIELDING);
 		
 		// and finally, the creative tab
 		Registry.register(Registries.ITEM_GROUP, arcId("main"), MAIN_GROUP);
@@ -1485,10 +1468,6 @@ public final class ArcanaRegistry{
 		Registry.register(Registries.ENTITY_TYPE, arcId(name), entityType);
 	}
 	
-	private static void register(String name, StatusEffect effect){
-		Registry.register(Registries.STATUS_EFFECT, arcId(name), effect);
-	}
-	
 	private static void registerCapOnly(Cap cap){
 		Cap.caps.put(cap.id(), cap);
 	}
@@ -1501,13 +1480,13 @@ public final class ArcanaRegistry{
 		return state -> state.get(Properties.LIT) ? litLevel : 0;
 	}
 	
-	private static FoodComponent aspectCandyFood(StatusEffect effect){
+	private static FoodComponent aspectCandyFood(RegistryEntry<StatusEffect> effect){
 		return new FoodComponent.Builder()
 				.nutrition(3)
 				.saturationModifier(0.5f)
 				.alwaysEdible()
 				.snack()
-				.statusEffect(new StatusEffectInstance(RegistryEntry.of(effect), 135 * 20, 0, true, true), 1)
+				.statusEffect(new StatusEffectInstance(effect, 135 * 20, 0, true, true), 1)
 				.build();
 	}
 	

@@ -9,7 +9,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.sound.SoundEvents;
 import org.jetbrains.annotations.Nullable;
 
@@ -35,7 +34,7 @@ public class CrystalCapacitorFocusItem extends FocusItem{
 				recharge.add(primal, ccc.user.getWorld().random.nextBetween(50, 88));
 			ccc.user.playSound(SoundEvents.BLOCK_AMETHYST_BLOCK_BREAK, 0.7f, 1.2f);
 			ccc.rechargeDeci(recharge);
-			ccc.user.addStatusEffect(new StatusEffectInstance(RegistryEntry.of(ArcanaRegistry.ARCANE_DISCHARGE), 30, 0, true, true));
+			ccc.user.addStatusEffect(new StatusEffectInstance(ArcanaRegistry.ARCANE_DISCHARGE.entry(), 30, 0, true, true));
 			ccc.focus.damage(1, ccc.user, LivingEntity.getSlotForHand(ccc.user.getActiveHand()));
 		}
 	}

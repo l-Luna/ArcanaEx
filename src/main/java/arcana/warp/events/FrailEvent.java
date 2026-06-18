@@ -8,7 +8,6 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.text.Text;
 
 public class FrailEvent extends WarpEvent{
@@ -19,7 +18,7 @@ public class FrailEvent extends WarpEvent{
 	}
 	
 	public void perform(PlayerEntity player, boolean hadPrecursor){
-		player.addStatusEffect(new StatusEffectInstance(RegistryEntry.of(ArcanaRegistry.WARP_FRAIL), 60 * 20, 0, true, false, true));
+		player.addStatusEffect(new StatusEffectInstance(ArcanaRegistry.WARP_FRAIL.entry(), 60 * 20, 0, true, false, true));
 	}
 	
 	public boolean isPrecursor(){

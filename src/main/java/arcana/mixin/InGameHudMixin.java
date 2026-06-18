@@ -46,7 +46,7 @@ public class InGameHudMixin{
 	
 	@WrapMethod(method = "renderHealthBar")
 	void applyFrailEffect(DrawContext ctx, PlayerEntity player, int x, int y, int lines, int regeneratingHeartIndex, float maxHealth, int lastHealth, int health, int absorption, boolean blinking, Operation<Void> original){
-		if(player.hasStatusEffect(RegistryEntry.of(ArcanaRegistry.WARP_FRAIL)))
+		if(player.hasStatusEffect(ArcanaRegistry.WARP_FRAIL.entry()))
 			lastHealth = health = 0;
 		original.call(ctx, player, x, y, lines, regeneratingHeartIndex, maxHealth, lastHealth, health, absorption, blinking);
 	}

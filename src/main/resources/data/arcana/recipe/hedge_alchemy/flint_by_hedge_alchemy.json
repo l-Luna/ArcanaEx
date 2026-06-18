@@ -1,0 +1,14 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "minecraft:quartz"
+  },
+  "aspects": [
+    "10*earth",
+    "exchange"
+  ],
+  "research": "hedge_alchemy",
+  "result": {
+    "id": "minecraft:flint"
+  }
+}

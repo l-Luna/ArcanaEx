@@ -3,6 +3,7 @@ package arcana.recipes.arcane_crafting;
 import arcana.api.RenamableRecipe;
 import arcana.aspects.AspectMap;
 import arcana.recipes.ArcanaRecipe;
+import arcana.util.PacketCodecUtil;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -81,9 +82,9 @@ public class ShapedArcaneCraftingRecipe extends ShapedRecipe implements ArcaneCr
 						Codec.STRING.optionalFieldOf("name").forGetter(recipe -> Optional.ofNullable(recipe.translationKey))
 				)
 				.apply(i, (a, b, c, d, e) -> new ShapedArcaneCraftingRecipe(a, b, c, d, e.orElse(null))));
-		public static final PacketCodec<RegistryByteBuf, ShapedArcaneCraftingRecipe> PACKET_CODEC = PacketCodec.ofStatic(
+		public static final PacketCodec<RegistryByteBuf, ShapedArcaneCraftingRecipe> PACKET_CODEC = PacketCodecUtil.descriptive("shaped arcane crafting recipe", PacketCodec.ofStatic(
 				ShapedArcaneCraftingRecipe.Serializer::write, ShapedArcaneCraftingRecipe.Serializer::read
-		);
+		));
 		
 		@Override
 		public MapCodec<ShapedArcaneCraftingRecipe> codec(){
@@ -96,12 +97,12 @@ public class ShapedArcaneCraftingRecipe extends ShapedRecipe implements ArcaneCr
 		}
 		
 		private static ShapedArcaneCraftingRecipe read(RegistryByteBuf buf){
-			String string = buf.readString();
+			String group = buf.readString();
 			RawShapedRecipe rawShapedRecipe = RawShapedRecipe.PACKET_CODEC.decode(buf);
 			ItemStack itemStack = ItemStack.PACKET_CODEC.decode(buf);
 			AspectMap aspects = AspectMap.PACKET_CODEC.decode(buf);
 			String translationKey = buf.readBoolean() ? buf.readString() : null;
-			return new ShapedArcaneCraftingRecipe(string, rawShapedRecipe, itemStack, aspects, translationKey);
+			return new ShapedArcaneCraftingRecipe(group, rawShapedRecipe, itemStack, aspects, translationKey);
 		}
 		
 		private static void write(RegistryByteBuf buf, ShapedArcaneCraftingRecipe recipe){

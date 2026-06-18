@@ -1,0 +1,33 @@
+{
+  "type": "arcana:infusion",
+  "central": {
+    "item": "arcana:broken_amulet"
+  },
+  "outer_ingredients": [
+    {
+      "item": "minecraft:phantom_membrane"
+    },
+    {
+      "item": "arcana:nitor"
+    },
+    {
+      "item": "arcana:alchemical_gold"
+    },
+    {
+      "item": "arcana:silverleaf"
+    },
+    {
+      "item": "minecraft:ender_eye"
+    }
+  ],
+  "aspects": [
+    "111*senses",
+    "99*mind",
+    "88*void",
+    "66*taint"
+  ],
+  "instability": 5,
+  "result": {
+    "id": "arcana:challengers_amulet"
+  }
+}

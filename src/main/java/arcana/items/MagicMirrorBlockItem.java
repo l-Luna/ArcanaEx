@@ -1,5 +1,6 @@
 package arcana.items;
 
+import arcana.api.CustomCreativePresentationItem;
 import arcana.blocks.be.MagicMirrorBlockEntity;
 import arcana.items.components.ArcanaItemComponentTypes;
 import arcana.util.MathUtil;
@@ -8,6 +9,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipData;
 import net.minecraft.util.math.BlockPos;
@@ -17,7 +19,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 import java.util.UUID;
 
-public class MagicMirrorBlockItem extends BlockItem{
+public class MagicMirrorBlockItem extends BlockItem implements CustomCreativePresentationItem{
 	
 	public MagicMirrorBlockItem(Block block, Settings settings){
 		super(block, settings);
@@ -39,13 +41,11 @@ public class MagicMirrorBlockItem extends BlockItem{
 		setTag(stack, MathUtil.randomUuid(world.random));
 	}
 	
-	/*public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks){
-		if(isIn(group)){
-			ItemStack stack = getDefaultStack();
-			stack.getOrCreateNbt().putBoolean("bundled", true);
-			stacks.add(stack);
-		}
-	}*/
+	public void addToTab(ItemGroup.Entries entries){
+		ItemStack stack = getDefaultStack();
+		stack.set(ArcanaItemComponentTypes.MAGIC_MIRROR_BUNDLED_FLAG, true);
+		entries.add(stack);
+	}
 	
 	protected boolean postPlacement(BlockPos pos, World world, @Nullable PlayerEntity player, ItemStack stack, BlockState state){
 		if(!world.isClient && world.getBlockEntity(pos) instanceof MagicMirrorBlockEntity mm){

@@ -1,6 +1,7 @@
 package arcana.items;
 
 import arcana.ArcanaRegistry;
+import arcana.items.components.ArcanaItemComponentTypes;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.item.Item;
 import net.minecraft.registry.entry.RegistryEntry;
@@ -27,7 +28,7 @@ public class ArcanaItemSettings extends Item.Settings{
 	//
 	
 	public ArcanaItemSettings group(ArcanaRegistry.Tab tab){
-		// TODO
+		component(ArcanaItemComponentTypes.SUBTAB, tab);
 		return this;
 	}
 	

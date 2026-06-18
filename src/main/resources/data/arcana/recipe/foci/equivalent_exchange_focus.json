@@ -1,0 +1,15 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "tag": "c:diamonds"
+  },
+  "aspects": [
+    "12*exchange",
+    "6*order",
+    "3*magic"
+  ],
+  "research": "equivalent_exchange_focus",
+  "result": {
+    "id": "arcana:equivalent_exchange_focus"
+  }
+}

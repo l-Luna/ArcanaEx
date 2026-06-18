@@ -61,7 +61,7 @@ public class PrismaticOrbEntityRenderer extends EntityRenderer<PrismaticOrbEntit
 		ms.pop();
 		
 		RenderSystem.setShaderColor(1, 1, 1, 1);
-		BufferRenderer.draw(vc.end());
+		 RenderHelper.drawBuffer(vc);
 		RenderSystem.disableBlend();
 	}
 }

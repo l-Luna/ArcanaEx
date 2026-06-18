@@ -1,0 +1,15 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "minecraft:raw_iron"
+  },
+  "aspects": [
+    "metal",
+    "order",
+    "crystal"
+  ],
+  "research": "purification@1",
+  "result": {
+    "id": "arcana:alchemical_iron"
+  }
+}

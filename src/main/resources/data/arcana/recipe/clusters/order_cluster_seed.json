@@ -1,0 +1,15 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "arcana:crystals/order"
+  },
+  "aspects": [
+    "order",
+    "plant",
+    "exchange"
+  ],
+  "research": "crystal_farmer",
+  "result": {
+    "id": "arcana:cluster_seeds/order"
+  }
+}

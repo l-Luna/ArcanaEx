@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "T": {
+      "item": "arcana:arcane_stone_tiles"
+    },
+    "A": {
+      "item": "arcana:arcanium_ingot"
+    }
+  },
+  "pattern": [
+    "TA",
+    "AT"
+  ],
+  "result": {
+    "id": "arcana:arcane_stone_inscribed_tiles",
+    "count": 3
+  }
+}

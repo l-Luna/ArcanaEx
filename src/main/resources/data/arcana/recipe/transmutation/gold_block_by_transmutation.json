@@ -1,0 +1,15 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "minecraft:copper_block"
+  },
+  "aspects": [
+    "25*exchange",
+    "8*metal",
+    "8*greed"
+  ],
+  "research": "transmutation@5",
+  "result": {
+    "id": "minecraft:gold_block"
+  }
+}

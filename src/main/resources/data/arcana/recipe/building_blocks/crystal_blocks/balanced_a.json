@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "A": {
+      "item": "arcana:crystals/air"
+    },
+    "F": {
+      "item": "arcana:crystals/fire"
+    },
+    "W": {
+      "item": "arcana:crystals/water"
+    },
+    "E": {
+      "item": "arcana:crystals/earth"
+    }
+  },
+  "pattern": [
+    "AF",
+    "WE"
+  ],
+  "result": {
+    "id": "arcana:balanced_crystal"
+  }
+}

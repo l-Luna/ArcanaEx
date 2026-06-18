@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "G": {
+      "item": "arcana:gleaming_lamplight"
+    }
+  },
+  "pattern": [
+    "GG",
+    "GG"
+  ],
+  "result": {
+    "id": "arcana:chiseled_gleaming_lamplight",
+    "count": 4
+  }
+}

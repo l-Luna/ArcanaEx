@@ -1,0 +1,30 @@
+{
+  "type": "arcana:infusion",
+  "central": {
+    "item": "arcana:void_metal_ingot"
+  },
+  "outer_ingredients": [
+    {
+      "item": "arcana:bloodlet_ruby"
+    },
+    {
+      "tag": "arcana:raw_meat"
+    },
+    {
+      "item": "arcana:bloodlet_ruby"
+    },
+    {
+      "item": "minecraft:egg"
+    }
+  ],
+  "aspects": [
+    "160*life",
+    "100*flesh",
+    "27*envy"
+  ],
+  "instability": 4,
+  "name": "item.arcana.ring_of_twin_heartbeats.recipe",
+  "result": {
+    "id": "arcana:ring_of_twin_heartbeats"
+  }
+}

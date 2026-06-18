@@ -1,0 +1,17 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "arcana:alumentum"
+  },
+  "aspects": [
+    "20*light",
+    "20*weapon",
+    "3*flight",
+    "3*wrath",
+    "3*magic"
+  ],
+  "research": "prismatic_light_focus",
+  "result": {
+    "id": "arcana:prismatic_light_focus"
+  }
+}

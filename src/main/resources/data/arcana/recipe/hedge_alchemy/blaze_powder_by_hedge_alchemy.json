@@ -1,0 +1,16 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "minecraft:gunpowder"
+  },
+  "aspects": [
+    "2*energy",
+    "2*fire",
+    "light",
+    "exchange"
+  ],
+  "research": "hedge_alchemy",
+  "result": {
+    "id": "minecraft:blaze_powder"
+  }
+}

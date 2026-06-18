@@ -42,7 +42,7 @@ public class ArcanaLootTablesProvider extends FabricBlockLootTableProvider{
 	public void generate(){
 		RegistryWrapper.Impl<Enchantment> enchantments = registryLookup.getWrapperOrThrow(RegistryKeys.ENCHANTMENT);
 		
-		for(Block block : ArcanaRegistry.blocks)
+		for(Block block : ArcanaRegistry.BLOCKS)
 			if(block.getSettings() instanceof ArcanaBlockSettings abs)
 				if(abs.getDropsSelf())
 					if(block instanceof SlabBlock)

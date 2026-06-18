@@ -1,0 +1,22 @@
+{
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "X": {
+      "item": "minecraft:gold_nugget"
+    },
+    "E": {
+      "item": "minecraft:emerald"
+    }
+  },
+  "pattern": [
+    " X ",
+    "X X",
+    "EX "
+  ],
+  "aspects": [
+    "12*order"
+  ],
+  "result": {
+    "id": "arcana:emerald_necklace"
+  }
+}

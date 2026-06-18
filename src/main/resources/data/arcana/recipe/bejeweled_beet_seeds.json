@@ -1,0 +1,14 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "minecraft:beetroot_seeds"
+  },
+  "aspects": [
+    "40*plant",
+    "30*crystal",
+    "20*magic"
+  ],
+  "result": {
+    "id": "arcana:bejeweled_beet_seeds"
+  }
+}

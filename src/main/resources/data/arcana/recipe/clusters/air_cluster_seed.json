@@ -1,0 +1,15 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "arcana:crystals/air"
+  },
+  "aspects": [
+    "air",
+    "plant",
+    "exchange"
+  ],
+  "research": "crystal_farmer",
+  "result": {
+    "id": "arcana:cluster_seeds/air"
+  }
+}

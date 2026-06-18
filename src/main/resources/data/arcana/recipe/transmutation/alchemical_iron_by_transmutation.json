@@ -1,0 +1,14 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "arcana:alchemical_gold"
+  },
+  "aspects": [
+    "3*exchange",
+    "2*metal"
+  ],
+  "research": "transmutation_shortcut",
+  "result": {
+    "id": "arcana:alchemical_iron"
+  }
+}

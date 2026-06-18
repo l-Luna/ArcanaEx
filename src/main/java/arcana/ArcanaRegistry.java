@@ -2,6 +2,7 @@ package arcana;
 
 import arcana.api.Cap;
 import arcana.api.Core;
+import arcana.api.CustomCreativePresentationItem;
 import arcana.aspects.Aspect;
 import arcana.aspects.Aspects;
 import arcana.blocks.*;
@@ -27,6 +28,7 @@ import arcana.fluids.ArcanaFluid;
 import arcana.fluids.PutrefactionFluid;
 import arcana.fluids.TaintGooFluid;
 import arcana.items.*;
+import arcana.items.components.ArcanaItemComponentTypes;
 import arcana.items.creative.FluxSpongeItem;
 import arcana.items.creative.NodePlacerItem;
 import arcana.items.creative.NodeRemoverItem;
@@ -45,7 +47,9 @@ import arcana.worldgen.silverwood.SilverwoodFoliagePlacer;
 import arcana.worldgen.silverwood.SilverwoodTrunkPlacer;
 import com.unascribed.lib39.weld.api.BigBlock;
 import com.unascribed.lib39.weld.api.BigBlockItem;
+import de.dafuqs.fractal.api.ItemSubGroup;
 import dev.emi.trinkets.api.TrinketItem;
+import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
@@ -84,6 +88,7 @@ import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
+import net.minecraft.text.Text;
 import net.minecraft.util.ColorCode;
 import net.minecraft.util.Rarity;
 import net.minecraft.world.gen.chunk.placement.RandomSpreadStructurePlacement;
@@ -94,9 +99,7 @@ import net.minecraft.world.gen.foliage.FoliagePlacerType;
 import net.minecraft.world.gen.trunk.TrunkPlacerType;
 import net.minecraft.world.poi.PointOfInterestType;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.ToIntFunction;
 
 import static arcana.Arcana.arcId;
@@ -119,6 +122,8 @@ public final class ArcanaRegistry{
 		TAINTED,
 		CREATIVE
 	}
+	
+	private static final Map<Tab, List<Item>> ITEMS_BY_TAB = new EnumMap<>(Tab.class);
 	
 	private static final ArcanaItemSettings GROUPED = new ArcanaItemSettings().group(Tab.MAIN);
 	private static final ArcanaItemSettings GROUPED_SINGLE = new ArcanaItemSettings().group(Tab.MAIN).maxCount(1);
@@ -809,9 +814,26 @@ public final class ArcanaRegistry{
 			.dimensions(EntityDimensions.fixed(1, 1.8f).withEyeHeight(1.74f))
 			.build();
 	
-	public static final List<Item> items = new ArrayList<>();
-	public static final List<Block> blocks = new ArrayList<>();
-	public static final List<ArcanaFluid> stillFluids = new ArrayList<>();
+	// and finally, the item group
+	
+	public static final ItemGroup MAIN_GROUP = FabricItemGroup.builder()
+			.icon(() -> new ItemStack(ARCANUM))
+			.entries((ctx, entries) -> {
+				for(Item item : ITEMS_BY_TAB.get(Tab.MAIN))
+					if(item instanceof CustomCreativePresentationItem presentation)
+						presentation.addToTab(entries);
+					else
+						entries.add(item, ItemGroup.StackVisibility.PARENT_AND_SEARCH_TABS);
+				for(ItemSubGroup subGroup : smuggleTab().fractal$getChildren())
+					entries.addAll(subGroup.getSearchTabStacks(), ItemGroup.StackVisibility.SEARCH_TAB_ONLY);
+			})
+			.displayName(Text.translatable("item_group.arcana.arcana"))
+			.noRenderedName()
+			.build();
+	
+	public static final List<Item> ITEMS = new ArrayList<>();
+	public static final List<Block> BLOCKS = new ArrayList<>();
+	public static final List<ArcanaFluid> STILL_FLUIDS = new ArrayList<>();
 	
 	public static void setup(){
 		// fluids
@@ -1389,15 +1411,28 @@ public final class ArcanaRegistry{
 		// entity attributes
 		// TODO: move elsewhere?
 		Registry.register(Registries.ATTRIBUTE, arcId("max_shielding"), RunicShielding.MAX_SHIELDING);
+		
+		// and finally, the creative tab
+		Registry.register(Registries.ITEM_GROUP, arcId("main"), MAIN_GROUP);
+		for(Tab t : Tab.values())
+			createSubTab(t);
 	}
 	
 	private static void register(String name, Item item){
 		Registry.register(Registries.ITEM, arcId(name), item);
-		items.add(item);
+		ITEMS.add(item);
 		if(item instanceof Cap c)
 			registerCapOnly(c);
 		if(item instanceof Core c)
 			registerCoreOnly(c);
+		
+		Tab tab = item.getComponents().getOrDefault(ArcanaItemComponentTypes.SUBTAB, Tab.MAIN);
+		ITEMS_BY_TAB.compute(tab, (__, b) -> {
+			if(b == null)
+				b = new ArrayList<>();
+			b.add(item);
+			return b;
+		});
 	}
 	
 	private static void register(String name, Block block){
@@ -1406,7 +1441,7 @@ public final class ArcanaRegistry{
 	
 	private static void register(String name, Block block, boolean andItem){
 		Registry.register(Registries.BLOCK, arcId(name), block);
-		blocks.add(block);
+		BLOCKS.add(block);
 		if(andItem){
 			ArcanaItemSettings settings = new ArcanaItemSettings().group(Tab.MAIN);
 			if(block.getSettings() instanceof ArcanaBlockSettings abs && abs.getGroup() != null)
@@ -1418,7 +1453,7 @@ public final class ArcanaRegistry{
 	private static void register(String name, Fluid fluid){
 		Registry.register(Registries.FLUID, arcId(name), fluid);
 		if(fluid instanceof ArcanaFluid af && af.isStill())
-			stillFluids.add(af);
+			STILL_FLUIDS.add(af);
 	}
 	
 	private static void register(String name, ScreenHandlerType<?> type){
@@ -1473,5 +1508,21 @@ public final class ArcanaRegistry{
 				.snack()
 				.statusEffect(new StatusEffectInstance(RegistryEntry.of(effect), 135 * 20, 0, true, true), 1)
 				.build();
+	}
+	
+	private static ItemGroup smuggleTab(){
+		return MAIN_GROUP;
+	}
+	
+	private static ItemSubGroup createSubTab(Tab tab){
+		String lowercase = tab.name().toLowerCase(Locale.ROOT);
+		return new ItemSubGroup.Builder(MAIN_GROUP, arcId(lowercase), Text.translatable("item_group.arcana." + lowercase)).entries((ctx, entries) -> {
+			for(Item item : ITEMS_BY_TAB.get(tab)){
+				if(item instanceof CustomCreativePresentationItem presentation)
+					presentation.addToTab(entries);
+				else
+					entries.add(item.getDefaultStack());
+			}
+		}).build();
 	}
 }

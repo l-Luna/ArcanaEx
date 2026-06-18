@@ -1,9 +1,9 @@
 {
   "values": [
-    "#c:shears",
-    "#c:bows",
-    "#c:shields",
-    "#c:spears",
+    "#c:tools/shears",
+    "#c:tools/bows",
+    "#c:tools/shields",
+    "#c:tools/spears",
     "minecraft:carrot_on_a_stick",
     "minecraft:warped_fungus_on_a_stick",
     "minecraft:fishing_rod",

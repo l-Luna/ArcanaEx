@@ -1,0 +1,30 @@
+{
+  "type": "arcana:infusion",
+  "central": {
+    "item": "arcana:arcanium_ring"
+  },
+  "outer_ingredients": [
+    {
+      "item": "arcana:bloodlet_ruby"
+    },
+    {
+      "item": "arcana:warded_campfire"
+    },
+    {
+      "item": "arcana:crystal_capacitor_focus"
+    },
+    {
+      "item": "minecraft:weeping_vines"
+    }
+  ],
+  "aspects": [
+    "100*energy",
+    "12*machine",
+    "8*aura"
+  ],
+  "instability": 2,
+  "name": "item.arcana.ring_of_the_surging_barrier.recipe",
+  "result": {
+    "id": "arcana:ring_of_the_surging_barrier"
+  }
+}

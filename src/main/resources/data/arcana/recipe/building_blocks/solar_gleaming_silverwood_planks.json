@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "P": {
+      "item": "arcana:silverwood_planks"
+    },
+    "G": {
+      "item": "arcana:chiseled_gleaming_lamplight"
+    }
+  },
+  "pattern": [
+    " P ",
+    "PGP",
+    " P "
+  ],
+  "result": {
+    "id": "arcana:solar_gleaming_silverwood_planks",
+    "count": 4
+  }
+}

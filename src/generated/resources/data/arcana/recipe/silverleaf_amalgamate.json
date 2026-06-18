@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "arcana:silverleaf_amalgamate_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "arcana:silverleaf_amalgamate"
+  }
+}

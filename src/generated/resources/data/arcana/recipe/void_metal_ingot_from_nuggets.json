@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "void_metal_ingot",
+  "key": {
+    "#": {
+      "item": "arcana:void_metal_nugget"
+    }
+  },
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "result": {
+    "count": 1,
+    "id": "arcana:void_metal_ingot"
+  }
+}

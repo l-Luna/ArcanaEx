@@ -256,6 +256,10 @@ public final class ResearchLoader extends JsonDataLoader implements Identifiable
 					ret.add(tagReq);
 				}else{
 					// it's an item
+					if(desc.contains("&")){
+						// TODO: warn & support components
+						desc = desc.split("&", 2)[0].trim();
+					}
 					Item item = Registries.ITEM.get(Identifier.of(desc));
 					ItemRequirement itemReq = new ItemRequirement(item);
 					itemReq.amount = amount;

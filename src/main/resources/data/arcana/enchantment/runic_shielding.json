@@ -11,7 +11,7 @@
           "base": 0.5,
           "per_level_above_first": 0.5
         },
-        "attribute": "arcana:generic.runic_shielding",
+        "attribute": "arcana:max_shielding",
         "id": "arcana:enchantment.runic_shielding",
         "operation": "add_value"
       }

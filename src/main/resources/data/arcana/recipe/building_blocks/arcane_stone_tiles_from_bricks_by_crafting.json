@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "T": {
+      "item": "arcana:arcane_stone_bricks"
+    }
+  },
+  "pattern": [
+    " T ",
+    "T T",
+    " T "
+  ],
+  "result": {
+    "id": "arcana:arcane_stone_tiles",
+    "count": 4
+  }
+}

@@ -183,7 +183,7 @@ public class MysticMistBlockEntityRenderer implements BlockEntityRenderer<Mystic
 				}
 			}
 		matrices.pop();
-		BufferRenderer.draw(vc.end());
+		 RenderHelper.drawBuffer(vc);
 		RenderSystem.disableBlend();
 	}
 	

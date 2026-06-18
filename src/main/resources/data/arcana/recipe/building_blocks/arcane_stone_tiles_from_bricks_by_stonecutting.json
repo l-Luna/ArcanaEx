@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 1,
+  "ingredient": {
+    "item": "arcana:arcane_stone_bricks"
+  },
+  "result": {
+    "id": "arcana:arcane_stone_tiles"
+}
+}

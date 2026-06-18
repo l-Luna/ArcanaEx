@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "arcana:motile"
+    }
+  ],
+  "result": {
+    "id": "arcana:motile_piece",
+    "count": 27
+  }
+}

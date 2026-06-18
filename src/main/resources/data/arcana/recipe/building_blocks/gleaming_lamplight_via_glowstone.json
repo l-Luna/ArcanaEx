@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "G": {
+      "item": "arcana:luminiferous_glass"
+    },
+    "L": {
+      "item": "minecraft:glowstone"
+    }
+  },
+  "pattern": [
+    " G ",
+    "GLG",
+    " G "
+  ],
+  "result": {
+    "id": "arcana:gleaming_lamplight",
+    "count": 4
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "minecraft:leather"
+  },
+  "aspects": [
+    "2*fabric",
+    "tool",
+    "exchange"
+  ],
+  "research": "hedge_alchemy",
+  "result": {
+    "id": "minecraft:rabbit_hide",
+    "count": 2
+  }
+}

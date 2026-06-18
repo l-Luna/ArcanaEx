@@ -5,6 +5,7 @@ import arcana.aspects.Aspects;
 import arcana.aura.*;
 import arcana.cca_components.Caster;
 import arcana.client.AspectRenderHelper;
+import arcana.client.RenderHelper;
 import arcana.items.GogglesOfRevealingItem;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -86,9 +87,9 @@ public final class NodeRenderer{
 		Node draining = drainingRef == null ? null : drainingRef.deref(world).orElse(null);
 		for(Node node : allVisible){
 			NodeState ns = stateFor(node);
-			ns.aspectLerp = MathHelper.lerp(1 - (float)Math.pow(2, -dt/3), ns.aspectLerp, node.equals(looking) ? 1 : 0);
+			ns.aspectLerp = MathHelper.lerp(1 - (float)Math.pow(2, -dt / 3), ns.aspectLerp, node.equals(looking) ? 1 : 0);
 			boolean isDT = node.equals(draining);
-			ns.drawLerp = MathHelper.lerp(1 - (float)Math.pow(2, -dt/(isDT ? 8 : 2)), ns.drawLerp, isDT ? 1 : 0);
+			ns.drawLerp = MathHelper.lerp(1 - (float)Math.pow(2, -dt / (isDT ? 8 : 2)), ns.drawLerp, isDT ? 1 : 0);
 			ns.shakeTimer = Math.max(0, ns.shakeTimer - 1);
 		}
 		
@@ -100,7 +101,7 @@ public final class NodeRenderer{
 			BufferBuilder buffer = tessellator.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);
 			for(Node node : nodes)
 				drawNode(camera, node, buffer, .12f, world);
-			BufferRenderer.draw(buffer.end());
+			RenderHelper.drawBuffer(buffer);
 		});
 		
 		// second pass, hidden by blocks, requires goggles
@@ -111,7 +112,7 @@ public final class NodeRenderer{
 				BufferBuilder buffer = tessellator.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);
 				for(Node node : nodes)
 					drawNode(camera, node, buffer, .85f, world);
-				BufferRenderer.draw(buffer.end());
+				RenderHelper.drawBuffer(buffer);
 			});
 			
 			Aspects.primals.forEach(primal -> {
@@ -119,7 +120,7 @@ public final class NodeRenderer{
 				BufferBuilder buffer = tessellator.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);
 				for(Node node : allVisible)
 					drawNodeAspect(camera, node, buffer, primal, world);
-				BufferRenderer.draw(buffer.end());
+				RenderHelper.drawBuffer(buffer);
 			});
 			
 			for(Node node : allVisible){
@@ -129,7 +130,7 @@ public final class NodeRenderer{
 						RenderSystem.setShaderTexture(0, AspectRenderHelper.texture(aspect));
 						BufferBuilder buffer = tessellator.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);
 						drawNodeAspect(camera, node, buffer, aspect, world);
-						BufferRenderer.draw(buffer.end());
+						RenderHelper.drawBuffer(buffer);
 					}
 			}
 			
@@ -145,7 +146,7 @@ public final class NodeRenderer{
 			BufferBuilder buffer = tessellator.begin(VertexFormat.DrawMode.LINES, VertexFormats.LINES);
 			for(Node node : allVisible)
 				WorldRenderer.drawBox(new MatrixStack(), buffer, node.bounds().offset(camera.getPos().negate()), 0f, 0.5f, 1f, 1f);
-			BufferRenderer.draw(buffer.end());
+			RenderHelper.drawBuffer(buffer);
 		}
 		
 		RenderSystem.depthMask(true);
@@ -230,7 +231,7 @@ public final class NodeRenderer{
 		String amount = node.getAspects().underlying().get(aspect).toString();
 		
 		double sqrDist = MinecraftClient.getInstance().player.squaredDistanceTo(node.getX(), node.getY(), node.getZ());
-		var alpha = (float)(1 - Math.sqrt(sqrDist) / 10);
+		float alpha = (float)(1 - Math.sqrt(sqrDist) / 10);
 		alpha *= ns.aspectLerp;
 		if(alpha < 4 / 255f) // text renderer treats zero/very low alpha as implicit full alpha
 			alpha = 4 / 255f;
@@ -240,19 +241,18 @@ public final class NodeRenderer{
 		offset.mul(1.2f * ns.aspectLerp);
 		offset.rotate(RotationAxis.POSITIVE_Z.rotation((float)((Math.PI * 2) * (node.getAspects().indexOf(aspect) / (float)node.getAspects().size()))));
 		
-		var vcp = VertexConsumerProvider.immediate(new BufferAllocator(512));
+		// TODO: fix text rendering
+		VertexConsumerProvider.Immediate vcp = VertexConsumerProvider.immediate(new BufferAllocator(512));
 		Matrix4fStack stack = RenderSystem.getModelViewStack();
 		stack.pushMatrix();
 		stack.rotate(camera.getRotation());
 		stack.translate((float)-node.getX(), (float)node.getY(), (float)-node.getZ());
 		stack.translate((float)camera.getPos().x, (float)-camera.getPos().y, (float)camera.getPos().z);
 		Vector3f o = camera.getRotation().getEulerAnglesXYZ(new Vector3f());
-		stack.rotate(RotationAxis.POSITIVE_Y.rotation(o.y()));
-		stack.rotate(RotationAxis.POSITIVE_X.rotation(-o.x()));
-		stack.rotate(RotationAxis.POSITIVE_Z.rotation(-o.z()));
+		stack.rotate(new Quaternionf().rotateXYZ(0, o.y(), 0));
+		stack.rotate(new Quaternionf().rotateXYZ(-o.x(), 0, -o.z()));
 		stack.translate(-offset.x(), offset.y(), offset.z());
-		stack.rotate(RotationAxis.POSITIVE_Y.rotation((float)Math.PI));
-		stack.rotate(RotationAxis.POSITIVE_Z.rotation((float)Math.PI));
+		stack.rotate(new Quaternionf().rotateXYZ(0, MathHelper.PI, MathHelper.PI));
 		stack.scale(.035f, .035f, .1f);
 		stack.translate(0, 0, -0.25f);
 		MinecraftClient.getInstance().textRenderer.draw(amount, 0, 0, 0xFFFFFF | intAlpha, false, stack.get(new Matrix4f()), vcp, TextRenderer.TextLayerType.POLYGON_OFFSET, 0, LightmapTextureManager.MAX_LIGHT_COORDINATE);
@@ -274,8 +274,8 @@ public final class NodeRenderer{
 			corner.add(offset);
 			corner.rotate(rot);
 			corner.add((float)(pos.getX() - camera.getPos().x),
-			           (float)(pos.getY() - camera.getPos().y),
-			           (float)(pos.getZ() - camera.getPos().z));
+					(float)(pos.getY() - camera.getPos().y),
+					(float)(pos.getZ() - camera.getPos().z));
 		}
 		
 		cons.vertex(corners[0].x(), corners[0].y(), corners[0].z())
@@ -298,8 +298,8 @@ public final class NodeRenderer{
 	
 	@SuppressWarnings("IntegerDivisionInFloatingPointContext") // intentional
 	private static float v(Node n, boolean max, World world){
-		float f = maxFrames(n.getType());
-		return (1 / f) * ((world.getTime() / 2 + n.getUuid().hashCode()) % (int)(f) + (max ? 1 : 0));
+		int f = maxFrames(n.getType());
+		return (1f / f) * ((world.getTime() / 2 + n.getUuid().hashCode()) % f + (max ? 1 : 0));
 	}
 	
 	//
@@ -315,7 +315,7 @@ public final class NodeRenderer{
 	private static void loadMeta(NodeType nt){
 		// this is incredibly stupid
 		try{
-			try(InputStream stream = MinecraftClient.getInstance().getResourceManager().getResource(getNodeResourceId(nt, ".png.mcmeta")).get().getInputStream()){
+			try(InputStream stream = MinecraftClient.getInstance().getResourceManager().getResource(getNodeResourceId(nt, ".png.nodemeta")).get().getInputStream()){
 				var metaObj = JsonHelper.deserialize(new BufferedReader(new InputStreamReader(stream)));
 				framesByType.put(nt, JsonHelper.getArray(JsonHelper.getObject(metaObj, "animation"), "frames").size());
 			}

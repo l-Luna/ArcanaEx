@@ -217,7 +217,7 @@ public final class ArcanaClient implements ClientModInitializer{
 		BlockEntityRendererRegistry.register(ArcanaRegistry.WARDED_CAMPFIRE_BE, ctx ->
 				(BlockEntityRenderer<WardedCampfireBlockEntity>)(BlockEntityRenderer<?>)new CampfireBlockEntityRenderer(ctx));
 		
-		for(ArcanaFluid fluid : ArcanaRegistry.stillFluids){
+		for(ArcanaFluid fluid : ArcanaRegistry.STILL_FLUIDS){
 			FluidRenderHandlerRegistry.INSTANCE.register(
 					fluid.getStill(),
 					fluid.getFlowing(),
@@ -243,7 +243,7 @@ public final class ArcanaClient implements ClientModInitializer{
 		EntityRendererRegistry.register(ArcanaRegistry.PURE_WISP, ctx -> new WispLikeEntityRenderer<>(ctx, 2, 34, false, 0.8f, arcId("textures/entity/pure_wisp.png")));
 		EntityRendererRegistry.register(ArcanaRegistry.COAGULATION, ctx -> new WispLikeEntityRenderer<>(ctx, 2, 12, true, 0.5f, null));
 		
-		for(Block block : ArcanaRegistry.blocks)
+		for(Block block : ArcanaRegistry.BLOCKS)
 			if(block.getSettings() instanceof ArcanaBlockSettings abs)
 				if(abs.getRenderLayer() != null)
 					BlockRenderLayerMap.INSTANCE.putBlock(block, switch(abs.getRenderLayer()){

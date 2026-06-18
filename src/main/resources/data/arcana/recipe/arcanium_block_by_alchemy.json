@@ -1,0 +1,13 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "minecraft:gold_block"
+  },
+  "aspects": [
+    "50*magic"
+  ],
+  "research": "magical_metallurgy",
+  "result": {
+    "id": "arcana:arcanium_block"
+  }
+}

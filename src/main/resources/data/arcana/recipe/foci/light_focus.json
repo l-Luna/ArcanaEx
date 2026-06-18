@@ -1,0 +1,16 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "arcana:nitor"
+  },
+  "aspects": [
+    "23*light",
+    "9*ice",
+    "4*senses",
+    "3*magic"
+  ],
+  "research": "light_focus",
+  "result": {
+    "id": "arcana:light_focus"
+  }
+}

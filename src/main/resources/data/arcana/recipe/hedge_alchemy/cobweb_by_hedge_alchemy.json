@@ -1,0 +1,15 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "minecraft:string"
+  },
+  "aspects": [
+    "4*order",
+    "armour",
+    "exchange"
+  ],
+  "research": "hedge_alchemy",
+  "result": {
+    "id": "minecraft:cobweb"
+  }
+}

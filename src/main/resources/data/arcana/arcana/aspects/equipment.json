@@ -1,14 +1,14 @@
 {
-  "+#arcana:equipment/helmets": [
+  "+#minecraft:head_armor": [
     "2*armour"
   ],
-  "+#arcana:equipment/chestplates": [
+  "+#minecraft:chest_armor": [
     "5*armour"
   ],
-  "+#arcana:equipment/leggings": [
+  "+#minecraft:leg_armor": [
     "4*armour"
   ],
-  "+#arcana:equipment/boots": [
+  "+#arcana:foot_armor": [
     "armour"
   ],
   "+#arcana:equipment/horse_armours": [
@@ -19,10 +19,10 @@
     "armour"
   ],
 
-  "+#c:swords": [
+  "+#minecraft:swords": [
     "5*weapon"
   ],
-  "+#c:bows": [
+  "+#c:tools/bows": [
     "3*weapon",
     "flight"
   ],
@@ -31,18 +31,18 @@
     "flight"
   ],
 
-  "+#c:pickaxes": [
+  "+#minecraft:pickaxes": [
     "5*mining"
   ],
-  "+#c:axes": [
+  "+#minecraft:axes": [
     "3*mining",
     "2*weapon"
   ],
-  "+#c:hoes": [
+  "+#minecraft:hoes": [
     "2*life",
     "2*order"
   ],
-  "+#c:shovels": [
+  "+#minecraft:shovels": [
     "4*mining"
   ],
 

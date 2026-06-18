@@ -1,0 +1,45 @@
+{
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "T": {
+      "item": "arcana:taint_in_a_bottle"
+    },
+    "R": {
+      "item": "minecraft:rabbit_foot"
+    },
+    "B": {
+      "item": "minecraft:milk_bucket"
+    },
+    "C": {
+      "item": "minecraft:carrot"
+    },
+    "W": {
+      "item": "minecraft:warped_fungus"
+    },
+    "G": {
+      "item": "arcana:greatwood_planks"
+    },
+    "K": {
+      "item": "arcana:crystals/life"
+    },
+    "P": {
+      "item": "arcana:phials/weather"
+    }
+  },
+  "pattern": [
+    "RGK",
+    "PTW",
+    "BCG"
+  ],
+  "aspects": [
+    "56*order",
+    "64*entropy",
+    "49*fire",
+    "12*air",
+    "41*water",
+    "2*earth"
+  ],
+  "result": {
+    "id": "arcana:drinkable_taint"
+  }
+}

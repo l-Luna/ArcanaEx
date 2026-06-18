@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "count": 1,
-  "ingredient": {
-    "item": "arcana:gleaming_lamplight"
-  },
-  "result": "arcana:chiseled_gleaming_lamplight"
-}

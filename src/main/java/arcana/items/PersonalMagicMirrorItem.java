@@ -2,6 +2,7 @@ package arcana.items;
 
 import arcana.ArcanaRegistry;
 import arcana.api.ContextCraftedItem;
+import arcana.api.CustomCreativePresentationItem;
 import arcana.cca_components.MagicMirrorQueue;
 import arcana.items.components.ArcanaItemComponentTypes;
 import arcana.util.MathUtil;
@@ -11,6 +12,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.StackReference;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipData;
 import net.minecraft.screen.slot.Slot;
@@ -21,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 import java.util.UUID;
 
-public class PersonalMagicMirrorItem extends Item implements ContextCraftedItem{
+public class PersonalMagicMirrorItem extends Item implements ContextCraftedItem, CustomCreativePresentationItem{
 	
 	public PersonalMagicMirrorItem(Settings settings){
 		super(settings);
@@ -58,13 +60,11 @@ public class PersonalMagicMirrorItem extends Item implements ContextCraftedItem{
 		}
 	}
 	
-	/*public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks){
-		if(isIn(group)){
-			ItemStack stack = getDefaultStack();
-			stack.getOrCreateNbt().putBoolean("bundled", true);
-			stacks.add(stack);
-		}
-	}*/
+	public void addToTab(ItemGroup.Entries entries){
+		ItemStack stack = getDefaultStack();
+		stack.set(ArcanaItemComponentTypes.MAGIC_MIRROR_BUNDLED_FLAG, true);
+		entries.add(stack);
+	}
 	
 	public boolean onClicked(ItemStack stack, ItemStack otherStack, Slot slot, ClickType clickType, PlayerEntity player, StackReference ref){
 		if(player.getWorld().isClient)

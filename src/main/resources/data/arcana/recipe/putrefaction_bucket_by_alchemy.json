@@ -1,0 +1,19 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "tag": "c:milk_buckets"
+  },
+  "aspects": [
+    "20*weapon",
+    "18*taint",
+    "12*undead",
+    "8*slime",
+    "7*tool",
+    "2*machine",
+    "envy"
+  ],
+  "name": "item.arcana.putrefaction_bucket.recipe",
+  "result": {
+    "id": "arcana:putrefaction_bucket"
+  }
+}

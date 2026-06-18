@@ -14,6 +14,6 @@ public interface WarpingItem{
 	
 	@Environment(EnvType.CLIENT)
 	static Text warpingTooltip(int amount){
-		return Text.translatable("tooltip.arcana.warping").append(Text.translatable("enchantment.level." + amount).formatted(Formatting.DARK_RED));
+		return Text.translatable("tooltip.arcana.warping", Text.translatable("enchantment.level." + amount)).formatted(Formatting.DARK_RED);
 	}
 }

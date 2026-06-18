@@ -13,7 +13,7 @@ public class WandDataComponent{
 	public static final Codec<WandDataComponent> CODEC = RecordCodecBuilder.create(i -> i.group(
 			Identifier.CODEC.fieldOf("cap").forGetter(x -> x.cap),
 			Identifier.CODEC.fieldOf("core").forGetter(x -> x.core),
-			ItemStack.CODEC.fieldOf("focus").forGetter(x -> x.focus),
+			ItemStack.OPTIONAL_CODEC.fieldOf("focus").forGetter(x -> x.focus),
 			AspectMap.CODEC.fieldOf("stored").forGetter(x -> x.stored)
 	).apply(i, WandDataComponent::new));
 	

@@ -153,7 +153,7 @@ public class SimpleInfusionRecipe implements InfusionRecipe, ArcanaRecipe, Renam
 				Codec.STRING.optionalFieldOf("name").forGetter(x -> Optional.ofNullable(x.name))
 		).apply(i, (a, b, c, d, e, f) -> new SimpleInfusionRecipe(a, b, c, d, e, f.orElse(null))));
 		
-		public static final PacketCodec<RegistryByteBuf, SimpleInfusionRecipe> PACKET_CODEC = PacketCodec.tuple(
+		public static final PacketCodec<RegistryByteBuf, SimpleInfusionRecipe> PACKET_CODEC = PacketCodecUtil.descriptive("simple infusion recipe", PacketCodec.tuple(
 				ItemStack.PACKET_CODEC, x -> x.result,
 				Ingredient.PACKET_CODEC.collect(PacketCodecs.toList()), x -> x.outerIngredients,
 				Ingredient.PACKET_CODEC, x -> x.centralIngredient,
@@ -161,7 +161,7 @@ public class SimpleInfusionRecipe implements InfusionRecipe, ArcanaRecipe, Renam
 				PacketCodecs.VAR_INT, x -> x.instability,
 				PacketCodecUtil.nullable(PacketCodecs.STRING), x -> x.name,
 				SimpleInfusionRecipe::new
-		);
+		));
 		
 		public MapCodec<SimpleInfusionRecipe> codec(){
 			return CODEC;

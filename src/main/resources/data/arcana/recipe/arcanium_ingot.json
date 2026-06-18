@@ -1,0 +1,13 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "tag": "c:gold_ingots"
+  },
+  "aspects": [
+    "6*magic"
+  ],
+  "research": "magical_metallurgy",
+  "result": {
+    "id": "arcana:arcanium_ingot"
+  }
+}

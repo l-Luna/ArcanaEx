@@ -10,6 +10,7 @@ import arcana.enchantments.ArcanaEnchantmentComponents;
 import arcana.enchantments.LootSwapEffect;
 import arcana.items.CrimsonLeechItem;
 import arcana.items.components.ArcanaItemComponentTypes;
+import arcana.network.Networking;
 import arcana.recipes.alchemy.AlchemyRecipe;
 import arcana.recipes.arcane_crafting.ShapedArcaneCraftingRecipe;
 import arcana.recipes.crafting.VoidPuttyRepairRecipe;
@@ -22,6 +23,7 @@ import arcana.research.ResearchLoader;
 import arcana.util.RegistryMappingLoader;
 import arcana.warp.WarpEvents;
 import arcana.worldgen.ArcanaFeatures;
+import arcana.worldgen.ArcanaOverworldBiomes;
 import com.unascribed.lib39.dessicant.api.DessicantControl;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
@@ -65,7 +67,10 @@ public final class Arcana implements ModInitializer{
 		Research.setup();
 		WarpEvents.setup();
 		
+		Networking.setup();
+		
 		ArcanaFeatures.addToWorldgen();
+		ArcanaOverworldBiomes.setup();
 		
 		ResourceManagerHelper serverResources = ResourceManagerHelper.get(ResourceType.SERVER_DATA);
 		serverResources.registerReloadListener(arcId("aspects"), ItemAspectRegistry::new);

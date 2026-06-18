@@ -1,0 +1,15 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "arcana:crystals/entropy"
+  },
+  "aspects": [
+    "entropy",
+    "plant",
+    "exchange"
+  ],
+  "research": "crystal_farmer",
+  "result": {
+    "id": "arcana:cluster_seeds/entropy"
+  }
+}

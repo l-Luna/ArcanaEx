@@ -1,0 +1,14 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "arcana:spiral_sugar"
+  },
+  "aspects": [
+    "20*order",
+    "8*senses",
+    "2*armour"
+  ],
+  "result": {
+    "id": "arcana:gummy_cubes"
+  }
+}

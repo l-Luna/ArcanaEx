@@ -1,0 +1,29 @@
+{
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "I": {
+      "item": "arcana:alchemical_iron"
+    },
+    "C": {
+      "item": "arcana:alchemical_copper"
+    },
+    "W": {
+      "item": "arcana:wispy_essence"
+    },
+    "X": {
+      "tag": "arcana:arcane_stones"
+    }
+  },
+  "pattern": [
+    "ICI",
+    "CWC",
+    "XXX"
+  ],
+  "result": {
+    "id": "arcana:thaumic_halo"
+  },
+  "aspects": [
+    "40*air",
+    "40*water"
+  ]
+}

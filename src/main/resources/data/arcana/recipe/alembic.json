@@ -1,0 +1,31 @@
+{
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "I": {
+      "tag": "c:gold_ingots"
+    },
+    "G": {
+      "item": "arcana:greatwood_planks"
+    },
+    "N": {
+      "item": "arcana:nitor"
+    },
+    "C": {
+      "item": "arcana:crucible"
+    }
+  },
+  "pattern": [
+    "I I",
+    "GCG",
+    "GNG"
+  ],
+  "result": {
+    "id": "arcana:alembic"
+  },
+  "aspects": [
+    "8*water",
+    "8*fire",
+    "8*order",
+    "8*entropy"
+  ]
+}

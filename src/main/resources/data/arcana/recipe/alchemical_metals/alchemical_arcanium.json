@@ -1,0 +1,13 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "arcana:alchemical_gold"
+  },
+  "aspects": [
+    "6*magic"
+  ],
+  "research": "metallurgy_shortcut",
+  "result": {
+    "id": "arcana:alchemical_arcanium"
+  }
+}

@@ -1,5 +1,5 @@
 {
   "exhaustion": 5,
-  "message": "arcana.putrefaction",
+  "message_id": "arcana.putrefaction",
   "scaling": "never"
 }

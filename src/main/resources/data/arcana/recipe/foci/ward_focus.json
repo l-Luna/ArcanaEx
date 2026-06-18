@@ -1,0 +1,43 @@
+{
+  "type": "arcana:infusion",
+  "central": {
+    "item": "minecraft:nether_star"
+  },
+  "outer_ingredients": [
+    {
+      "item": "arcana:crystals/order"
+    },
+    {
+      "item": "arcana:alchemical_iron"
+    },
+    {
+      "item": "arcana:crystals/order"
+    },
+    {
+      "item": "minecraft:diamond_chestplate"
+    },
+    {
+      "item": "arcana:crystals/order"
+    },
+    {
+      "item": "minecraft:obsidian"
+    },
+    {
+      "item": "arcana:crystals/order"
+    },
+    {
+      "item": "minecraft:potion",
+      "matches": "has_potion_type minecraft:regeneration"
+    }
+  ],
+  "aspects": [
+    "40*armour",
+    "40*order",
+    "20*earth",
+    "10*light"
+  ],
+  "instability": 3,
+  "result": {
+    "id": "arcana:ward_focus"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "X": {
+      "item": "arcana:arcanium_ingot"
+    }
+  },
+  "pattern": [
+    " X ",
+    "X X",
+    " X "
+  ],
+  "aspects": [
+    "12*water"
+  ],
+  "result": {
+    "id": "arcana:arcanium_ring"
+  }
+}

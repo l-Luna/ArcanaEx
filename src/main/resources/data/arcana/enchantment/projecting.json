@@ -18,9 +18,9 @@
     ],
     "arcana:dynamic_max_levels": {
       "max_level_tags": [
-        "arcana:max_projecting_level/1",
-        "arcana:max_projecting_level/2",
-        "arcana:max_projecting_level/3"
+        "#arcana:max_projecting_level/1",
+        "#arcana:max_projecting_level/2",
+        "#arcana:max_projecting_level/3"
       ]
     }
   },

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "B": {
+      "item": "minecraft:book"
+    },
+    "G": {
+      "tag": "c:glass_panes"
+    },
+    "C": {
+      "tag": "arcana:aspect_crystals"
+    }
+  },
+  "pattern": [
+    " G ",
+    "CBC",
+    " G "
+  ],
+  "result": {
+    "id": "arcana:tome_of_sharing"
+  }
+}

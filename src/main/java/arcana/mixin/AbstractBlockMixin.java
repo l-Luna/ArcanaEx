@@ -41,7 +41,7 @@ public class AbstractBlockMixin{
 		@ModifyReturnValue(method = "getDroppedStacks", at = @At("RETURN"))
 		public List<ItemStack> autoDrop(List<ItemStack> original, BlockState state, LootContextParameterSet.Builder builder){
 			LootContextParameterSet ctx = builder.build(LootContextTypes.BLOCK);
-			ItemStack stack = ctx.get(LootContextParameters.TOOL);
+			ItemStack stack = ctx.getOptional(LootContextParameters.TOOL);
 			return stack != null ? LootSwapEffect.applyLootSwaps(original, stack, ctx.getWorld().random) : original;
 		}
 	}

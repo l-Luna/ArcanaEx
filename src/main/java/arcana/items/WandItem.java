@@ -26,6 +26,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.StackReference;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.item.tooltip.TooltipData;
@@ -47,7 +48,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-public class WandItem extends Item implements FabricItem, WarpingItem{
+public class WandItem extends Item implements FabricItem, WarpingItem, CustomCreativePresentationItem{
 	
 	public WandItem(Item.Settings settings){
 		super(settings.component(ArcanaItemComponentTypes.WAND_DATA, WandDataComponent.createDefault()));
@@ -71,15 +72,12 @@ public class WandItem extends Item implements FabricItem, WarpingItem{
 				Text.translatable("wand.variant.arcana.wand"));
 	}
 	
-	// TODO
-	/*public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks){
-		if(isIn(group)){
-			stacks.add(withCapAndCore(ArcanaRegistry.IRON_WAND_CAP, ArcanaRegistry.STICK_CORE));
-			stacks.add(withCapAndCore(ArcanaRegistry.GOLD_WAND_CAP, ArcanaRegistry.GREATWOOD_WAND_CORE));
-			stacks.add(withCapAndCore(ArcanaRegistry.THAUMIUM_WAND_CAP, ArcanaRegistry.SILVERWOOD_WAND_CORE));
-			stacks.add(withCapAndCore(ArcanaRegistry.NETHERITE_WAND_CAP, ArcanaRegistry.ARCANIUM_WAND_CORE));
-		}
-	}*/
+	public void addToTab(ItemGroup.Entries entries){
+		entries.add(withCapAndCore(ArcanaRegistry.IRON_WAND_CAP, ArcanaRegistry.STICK_CORE));
+		entries.add(withCapAndCore(ArcanaRegistry.GOLD_WAND_CAP, ArcanaRegistry.GREATWOOD_WAND_CORE));
+		entries.add(withCapAndCore(ArcanaRegistry.THAUMIUM_WAND_CAP, ArcanaRegistry.SILVERWOOD_WAND_CORE));
+		entries.add(withCapAndCore(ArcanaRegistry.NETHERITE_WAND_CAP, ArcanaRegistry.ARCANIUM_WAND_CORE));
+	}
 	
 	public ActionResult useOnBlock(ItemUsageContext context){
 		World world = context.getWorld();

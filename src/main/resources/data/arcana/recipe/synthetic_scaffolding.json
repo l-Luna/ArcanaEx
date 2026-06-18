@@ -1,0 +1,26 @@
+{
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "S": {
+      "item": "minecraft:slime_ball"
+    },
+    "C": {
+      "tag": "arcana:aspect_crystals"
+    },
+    "E": {
+      "item": "minecraft:bone_meal"
+    }
+  },
+  "pattern": [
+    " S ",
+    "SC ",
+    "CSE"
+  ],
+  "aspects": [
+    "8*order"
+  ],
+  "result": {
+    "id": "arcana:synthetic_scaffolding",
+    "count": 2
+  }
+}

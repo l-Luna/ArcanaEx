@@ -1,0 +1,15 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "minecraft:raw_copper"
+  },
+  "aspects": [
+    "metal",
+    "order",
+    "crystal"
+  ],
+  "research": "purification@4",
+  "result": {
+    "id": "arcana:alchemical_copper"
+  }
+}

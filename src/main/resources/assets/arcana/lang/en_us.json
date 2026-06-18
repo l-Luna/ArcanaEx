@@ -1,9 +1,9 @@
 {
   "lib39:enable_enhanced_lang": true,
 
-  "itemGroup.arcana": {
-    "group": "Arcana",
-    "main": "Arcana",
+  "item_group.arcana": {
+    "arcana": "Arcana",
+    "main": "Main",
     "resources": "Resources",
     "wands": "Wands",
     "equipment": "Equipment",
@@ -671,7 +671,7 @@
     },
     "radius": "Radius: {}",
     "fragile": "Fragile",
-    "warping": "Warping"
+    "warping": "Warping {}"
   },
 
   // Enchantments

@@ -12,6 +12,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.NbtComponent;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipType;
@@ -89,7 +90,7 @@ public class WardedJarBlock extends BlockWithEntity implements AspectIo{
 	@Environment(EnvType.CLIENT)
 	public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType options){
 		super.appendTooltip(stack, context, tooltip, options);
-		NbtCompound nbt = stack.get(DataComponentTypes.BLOCK_ENTITY_DATA).copyNbt();
+		NbtCompound nbt = stack.getOrDefault(DataComponentTypes.BLOCK_ENTITY_DATA, NbtComponent.DEFAULT).copyNbt();
 		if(nbt != null && nbt.contains("stored")){
 			AspectStack stored = AspectStack.fromNbt(nbt.getCompound("stored"));
 			tooltip.add(Text.translatable("tooltip.arcana.wand.focus_cost.individual", stored.amount(), stored.type().name()));

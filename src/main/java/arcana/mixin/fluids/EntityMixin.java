@@ -30,7 +30,7 @@ public class EntityMixin implements ArcanaFluidEntity{
 		maxSubmergedFluid = null;
 		maxFluidHeight = 0;
 		boolean inAny = false;
-		for(ArcanaFluid fluid : ArcanaRegistry.stillFluids){
+		for(ArcanaFluid fluid : ArcanaRegistry.STILL_FLUIDS){
 			TagKey<Fluid> tag = fluid.getTag();
 			boolean submerged = self.updateMovementInFluid(tag, fluid.getEntityPushStrength(self));
 			if(submerged){

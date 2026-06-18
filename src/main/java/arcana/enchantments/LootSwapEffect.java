@@ -1,12 +1,23 @@
 package arcana.enchantments;
 
 import arcana.util.RegistryMapping;
+import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentLevelBasedValue;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.random.Random;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
+
+import static arcana.Arcana.arcId;
 
 public record LootSwapEffect(EnchantmentLevelBasedValue chance, Identifier mapping){
 
@@ -19,37 +30,44 @@ public record LootSwapEffect(EnchantmentLevelBasedValue chance, Identifier mappi
 			PURIFYING_MAP = new RegistryMapping<>(Registries.ITEM),
 			TRANSMUTATIVE_MAP = new RegistryMapping<>(Registries.ITEM);
 	
-	/*
-	
 	@NotNull
 	public static List<ItemStack> applyLootSwaps(@NotNull List<ItemStack> original, ItemStack stack, Random rng){
 		List<ItemStack> newDrops = null;
-		for(Map.Entry<Enchantment, Integer> enchant : EnchantmentHelper.get(stack).entrySet())
-			if(enchant.getKey() instanceof LootSwapEnchantment ls){
+		Pair<List<LootSwapEffect>, Integer> ench = EnchantmentHelper.getEffectListAndLevel(stack, ArcanaEnchantmentComponents.LOOT_SWAP);
+		if(ench != null)
+			for(LootSwapEffect effect : ench.getFirst()){
 				// only allocate new list if loot swaps are actually present
 				if(newDrops == null)
 					newDrops = new ArrayList<>(original);
 				// reverse loop for removal
 				for(int i = newDrops.size() - 1; i >= 0; i--)
-					processStack(ls, rng, enchant.getValue(), newDrops.remove(i), newDrops::add);
+					processStack(effect, rng, ench.getSecond(), newDrops.remove(i), newDrops::add);
 			}
 		return newDrops != null ? newDrops : original;
 	}
 	
 	public static Consumer<ItemStack> applyLootSwaps(Consumer<ItemStack> next, ItemStack stack, Random rng){
 		Consumer<ItemStack> it = next;
-		for(Map.Entry<Enchantment, Integer> enchant : EnchantmentHelper.get(stack).entrySet()){
-			if(enchant.getKey() instanceof LootSwapEnchantment ls){
+		Pair<List<LootSwapEffect>, Integer> ench = EnchantmentHelper.getEffectListAndLevel(stack, ArcanaEnchantmentComponents.LOOT_SWAP);
+		if(ench != null)
+			for(LootSwapEffect effect : ench.getFirst()){
 				Consumer<ItemStack> prev = it;
-				it = item -> processStack(ls, rng, enchant.getValue(), item, prev);
+				it = item -> processStack(effect, rng, ench.getSecond(), item, prev);
 			}
-		}
 		return it;
 	}
 	
 	public static void processStack(LootSwapEffect enchantment, Random rng, int level, ItemStack in, Consumer<ItemStack> out){
-		Item targetItem = enchantment.swaps.apply(in.getItem()).orElse(null);
-		float chance = level * enchantment.baseChance;
+		// TODO: allow custom ones
+		RegistryMapping<Item> mapping = enchantment.mapping().equals(arcId("purifying")) ? PURIFYING_MAP :
+				enchantment.mapping().equals(arcId("purifying")) ? PURIFYING_MAP :
+				null;
+		if(mapping == null){
+			out.accept(in);
+			return;
+		}
+		Item targetItem = mapping.apply(in.getItem()).orElse(null);
+		float chance = level * enchantment.chance.getValue(level);
 		if(targetItem != null){
 			if(chance >= 1)
 				out.accept(new ItemStack(targetItem, in.getCount()));
@@ -69,6 +87,4 @@ public record LootSwapEffect(EnchantmentLevelBasedValue chance, Identifier mappi
 		}else
 			out.accept(in);
 	}
-	
-	*/
 }

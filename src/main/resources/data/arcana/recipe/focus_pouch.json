@@ -1,0 +1,22 @@
+{
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "S": {
+      "item": "minecraft:string"
+    },
+    "H": {
+      "item": "minecraft:rabbit_hide"
+    }
+  },
+  "pattern": [
+    " SS",
+    "H H",
+    " H "
+  ],
+  "result": {
+    "id": "arcana:focus_pouch"
+  },
+  "aspects": [
+    "12*water"
+  ]
+}

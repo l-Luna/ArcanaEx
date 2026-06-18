@@ -1,0 +1,15 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "minecraft:blaze_rod"
+  },
+  "aspects": [
+    "25*fire",
+    "8*light",
+    "6*magic"
+  ],
+  "research": "blaze_wand_core",
+  "result": {
+    "id": "arcana:blaze_wand_core"
+  }
+}

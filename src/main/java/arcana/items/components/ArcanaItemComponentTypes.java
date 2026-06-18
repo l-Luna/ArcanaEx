@@ -1,5 +1,6 @@
 package arcana.items.components;
 
+import arcana.ArcanaRegistry;
 import arcana.aura.NodeType;
 import arcana.util.ArrayInventory;
 import com.mojang.serialization.Codec;
@@ -21,6 +22,8 @@ public class ArcanaItemComponentTypes{
 	// generic
 	public static final ComponentType<Integer> RADIUS = create(Codec.INT);
 	public static final ComponentType<NodeType> NODE_TYPE = create(NodeType.CODEC);
+	public static final ComponentType<ResearchCompletionComponent> RESEARCH_COMPLETION = create(ResearchCompletionComponent.CODEC);
+	public static final ComponentType<ArcanaRegistry.Tab> SUBTAB = create(Codec.STRING.xmap(ArcanaRegistry.Tab::valueOf, Enum::name));
 	
 	// item specific
 	public static final ComponentType<ArrayInventory> FOCUS_POUCH_INVENTORY = create(ArrayInventory.CODEC);
@@ -37,6 +40,8 @@ public class ArcanaItemComponentTypes{
 	public static void setup(){
 		register("radius", RADIUS);
 		register("node_type", NODE_TYPE);
+		register("research_completion", RESEARCH_COMPLETION);
+		register("subtab", SUBTAB);
 		
 		register("focus_pouch_inventory", FOCUS_POUCH_INVENTORY);
 		register("magic_mirror_tag", MAGIC_MIRROR_TAG);

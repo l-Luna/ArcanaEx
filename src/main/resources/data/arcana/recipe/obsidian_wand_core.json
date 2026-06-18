@@ -1,0 +1,15 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "minecraft:crying_obsidian"
+  },
+  "aspects": [
+    "25*earth",
+    "8*void",
+    "6*magic"
+  ],
+  "research": "obsidian_wand_core",
+  "result": {
+    "id": "arcana:obsidian_wand_core"
+  }
+}

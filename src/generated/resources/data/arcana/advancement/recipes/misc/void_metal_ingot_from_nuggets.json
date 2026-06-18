@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "arcana:void_metal_ingot_from_nuggets"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_void_metal_nugget": {
+      "conditions": {
+        "items": [
+          {
+            "items": "arcana:void_metal_nugget"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_void_metal_nugget"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "arcana:void_metal_ingot_from_nuggets"
+    ]
+  }
+}

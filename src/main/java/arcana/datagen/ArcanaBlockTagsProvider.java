@@ -17,7 +17,7 @@ public class ArcanaBlockTagsProvider extends FabricTagProvider<Block>{
 	}
 	
 	protected void configure(RegistryWrapper.WrapperLookup lookup){
-		for(Block block : ArcanaRegistry.blocks)
+		for(Block block : ArcanaRegistry.BLOCKS)
 			if(block.getSettings() instanceof ArcanaBlockSettings abs)
 				if(abs.getToolTag() != null)
 					getOrCreateTagBuilder(abs.getToolTag()).add(block);

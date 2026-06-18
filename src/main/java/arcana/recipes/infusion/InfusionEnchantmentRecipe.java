@@ -111,7 +111,7 @@ public class InfusionEnchantmentRecipe implements InfusionRecipe, ArcanaRecipe, 
 	}
 	
 	public RecipeSerializer<?> getSerializer(){
-		return null;
+		return SERIALIZER;
 	}
 	
 	public RecipeType<?> getType(){
@@ -129,7 +129,7 @@ public class InfusionEnchantmentRecipe implements InfusionRecipe, ArcanaRecipe, 
 				Codec.STRING.optionalFieldOf("name").forGetter(x -> Optional.ofNullable(x.name))
 		).apply(i, (a, b, c, d, e, f) -> new InfusionEnchantmentRecipe(a, b, c, d, e, f.orElse(null))));
 		
-		private static final PacketCodec<RegistryByteBuf, InfusionEnchantmentRecipe> PACKET_CODEC = PacketCodec.tuple(
+		private static final PacketCodec<RegistryByteBuf, InfusionEnchantmentRecipe> PACKET_CODEC = PacketCodecUtil.descriptive("infusion enchantment recipe", PacketCodec.tuple(
 				PacketCodecs.registryEntry(RegistryKeys.ENCHANTMENT), InfusionEnchantmentRecipe::getEnchantment,
 				Ingredient.PACKET_CODEC.collect(PacketCodecs.toList()), InfusionEnchantmentRecipe::getBaseIngredients,
 				AspectMap.PACKET_CODEC, InfusionEnchantmentRecipe::getBaseAspects,
@@ -137,7 +137,7 @@ public class InfusionEnchantmentRecipe implements InfusionRecipe, ArcanaRecipe, 
 				PacketCodecs.VAR_INT, InfusionEnchantmentRecipe::getBaseInstability,
 				PacketCodecUtil.nullable(PacketCodecs.STRING), x -> x.name,
 				InfusionEnchantmentRecipe::new
-		);
+		));
 		
 		public MapCodec<InfusionEnchantmentRecipe> codec(){
 			return CODEC;

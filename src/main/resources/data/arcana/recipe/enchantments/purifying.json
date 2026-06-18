@@ -1,0 +1,37 @@
+{
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "B": {
+      "item": "minecraft:book"
+    },
+    "E": {
+      "item": "arcana:phials/energy"
+    },
+    "F": {
+      "item": "arcana:phials/sloth"
+    },
+    "W": {
+      "item": "arcana:phials/mining"
+    },
+    "s": {
+      "item": "minecraft:redstone"
+    },
+    "d": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "pattern": [
+    " E ",
+    "dBd",
+    "FsW"
+  ],
+  "result": {
+    "id": "minecraft:enchanted_book"
+  },
+  "apply": "enchanted_with arcana:purifying",
+  "name": "enchantment.arcana.purifying.recipe",
+  "aspects": [
+    "35*fire",
+    "25*order"
+  ]
+}

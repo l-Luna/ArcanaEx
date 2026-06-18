@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "thaumium_ingot",
+  "ingredients": [
+    {
+      "item": "arcana:thaumium_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "arcana:thaumium_ingot"
+  }
+}

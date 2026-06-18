@@ -1,0 +1,25 @@
+{
+  "type": "arcana:infusion_enchantment",
+  "enchantment": "arcana:runic_shielding",
+  "preview": {
+    "id": "minecraft:iron_chestplate"
+  },
+  "base_ingredients": [
+    {
+      "item": "minecraft:enchanted_book",
+      "matches": "enchanted_with minecraft:protection"
+    },
+    {
+      "item": "arcana:bloodlet_ruby"
+    },
+    {
+      "item": "minecraft:crying_obsidian"
+    }
+  ],
+  "base_aspects": [
+    "30*armour",
+    "30*life",
+    "10*sloth"
+  ],
+  "name": "enchantment.arcana.runic_shielding.recipe"
+}

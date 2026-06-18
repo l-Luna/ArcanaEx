@@ -146,6 +146,8 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		noAutoGen.add(SILVERWOOD_SCRIBING_DESK.asItem());
 		noAutoGen.add(MAGIC_MIRROR.asItem());
 		noAutoGen.add(BEJEWELED_BEET_SEEDS);
+		noAutoGen.add(HUGE_CORDISPORA_CAP.asItem());
+		noAutoGen.add(HUGE_VISHROOM_CAP.asItem());
 		
 		itemGen.register(NITOR.asItem(), Models.GENERATED);
 		itemGen.register(MAGIC_MIRROR.asItem(), Models.GENERATED);
@@ -156,7 +158,7 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 			itemGen.register(value.asItem(), Models.GENERATED);
 		}
 		
-		for(Item item : items)
+		for(Item item : ITEMS)
 			if(!(noAutoGen.contains(item) || item instanceof BlockItem))
 				if(item instanceof ToolItem)
 					itemGen.register(item, Models.HANDHELD);
@@ -165,7 +167,7 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 				else
 					itemGen.register(item, Models.GENERATED);
 		
-		for(Block block : blocks)
+		for(Block block : BLOCKS)
 			if(!noAutoGen.contains(block.asItem()) && block.asItem() != Items.AIR)
 				itemGen.writer.accept(ModelIds.getItemModelId(block.asItem()), new SimpleModelSupplier(ModelIds.getBlockModelId(block)));
 	}

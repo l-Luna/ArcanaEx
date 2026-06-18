@@ -1,6 +1,8 @@
 package arcana.items;
 
 import arcana.cca_components.Researcher;
+import arcana.items.components.ArcanaItemComponentTypes;
+import arcana.items.components.ResearchCompletionComponent;
 import arcana.research.Research;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -8,10 +10,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.nbt.NbtList;
-import net.minecraft.nbt.NbtString;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
@@ -20,12 +19,14 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class TomeOfSharingItem extends Item{
 	
 	public TomeOfSharingItem(Settings settings){
-		super(settings);
+		super(settings.component(ArcanaItemComponentTypes.RESEARCH_COMPLETION, ResearchCompletionComponent.DEFAULT));
 	}
 	
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand){
@@ -33,19 +34,18 @@ public class TomeOfSharingItem extends Item{
 		ItemStack tome = user.getStackInHand(hand);
 		if(user.isSneaking()){
 			// teach it everything they know
-			NbtCompound researchTag = tome.getOrCreateSubNbt("research");
-			var boundResearch = getBoundResearch(tome);
+			ResearchCompletionComponent originalCompletion = tome.get(ArcanaItemComponentTypes.RESEARCH_COMPLETION);
+			ResearchCompletionComponent newCompletion = originalCompletion.mutableCopy();
+			Map<Identifier, Integer> boundResearch = originalCompletion.stages();
 			researcher.getAllResearch().forEach((entry, stage) -> {
 				if(boundResearch.getOrDefault(entry, 0) < stage)
-					researchTag.putInt(entry.toString(), stage);
+					newCompletion.stages().put(entry, stage);
 			});
-			NbtList puzzlesList = tome.getOrCreateNbt().getList("puzzles", NbtElement.STRING_TYPE);
-			var boundPuzzles = getBoundPuzzles(tome);
+			Set<Identifier> boundPuzzles = originalCompletion.puzzles();
 			for(Identifier puzzle : researcher.getAllCompletedPuzzles())
 				if(!boundPuzzles.contains(puzzle))
-					puzzlesList.add(NbtString.of(puzzle.toString()));
-			if(!tome.getNbt().contains("puzzles"))
-				tome.getNbt().put("puzzles", puzzlesList);
+					newCompletion.puzzles().add(puzzle);
+			tome.set(ArcanaItemComponentTypes.RESEARCH_COMPLETION, newCompletion);
 			return TypedActionResult.success(tome);
 		}else{
 			// teach them every puzzle it knows
@@ -56,7 +56,7 @@ public class TomeOfSharingItem extends Item{
 	}
 	
 	@Environment(EnvType.CLIENT)
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context){
+	public void appendTooltip(ItemStack stack, @Nullable TooltipContext ctx, List<Text> tooltip, TooltipType type){
 		if(getBoundPuzzles(stack).isEmpty() && getBoundResearch(stack).isEmpty()){
 			tooltip.add(Text.translatable("item.arcana.tome_of_sharing.unbound").formatted(Formatting.AQUA));
 			return;
@@ -78,27 +78,10 @@ public class TomeOfSharingItem extends Item{
 	// we don't store player UUIDs since the player could be offline, but droppers should still work
 	
 	public static Map<Identifier, Integer> getBoundResearch(ItemStack tome){
-		if(tome.isEmpty())
-			return Map.of();
-		NbtCompound researchTag = tome.getSubNbt("research");
-		if(researchTag != null){
-			Map<Identifier, Integer> research = new HashMap<>(researchTag.getKeys().size());
-			for(String key : researchTag.getKeys())
-				research.put(Identifier.of(key), researchTag.getInt(key));
-			return research;
-		}
-		return Map.of();
+		return tome.get(ArcanaItemComponentTypes.RESEARCH_COMPLETION).stages();
 	}
 	
 	public static Set<Identifier> getBoundPuzzles(ItemStack tome){
-		NbtCompound tag = tome.getNbt();
-		if(tag != null){
-			NbtList puzzleList = tag.getList("puzzles", NbtElement.STRING_TYPE);
-			Set<Identifier> puzzles = new HashSet<>(puzzleList.size());
-			for(NbtElement element : puzzleList)
-				puzzles.add(Identifier.of(element.asString())); // NbtString returns its value
-			return puzzles;
-		}
-		return Set.of();
+		return tome.get(ArcanaItemComponentTypes.RESEARCH_COMPLETION).puzzles();
 	}
 }

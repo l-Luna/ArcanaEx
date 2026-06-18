@@ -1,6 +1,5 @@
 package arcana.research;
 
-import arcana.network.Networking;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
 
@@ -16,7 +15,6 @@ public final class Research{
 	public static void setup(){
 		EntrySection.setup();
 		Requirement.setup();
-		Networking.setup();
 		Puzzle.setup();
 	}
 	

@@ -1,0 +1,19 @@
+{
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "S": {
+      "tag": "arcana:arcane_stones"
+    }
+  },
+  "pattern": [
+    " S ",
+    "S S"
+  ],
+  "aspects": [
+    "4*water"
+  ],
+  "result":{
+    "id": "arcana:pedestal",
+    "count": 3
+  }
+}

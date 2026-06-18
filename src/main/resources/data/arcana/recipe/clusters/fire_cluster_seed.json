@@ -1,0 +1,15 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "arcana:crystals/fire"
+  },
+  "aspects": [
+    "fire",
+    "plant",
+    "exchange"
+  ],
+  "research": "crystal_farmer",
+  "result": {
+    "id": "arcana:cluster_seeds/fire"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "minecraft:snow_block"
+  },
+  "aspects": [
+    "6*ice",
+    "exchange"
+  ],
+  "research": "hedge_alchemy",
+  "result": {
+    "id": "minecraft:ice"
+  }
+}

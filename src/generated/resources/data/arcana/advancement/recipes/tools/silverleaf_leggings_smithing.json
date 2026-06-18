@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_silverleaf_amalgamate": {
+      "conditions": {
+        "items": [
+          {
+            "items": "arcana:silverleaf_amalgamate"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "arcana:silverleaf_leggings_smithing"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_silverleaf_amalgamate"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "arcana:silverleaf_leggings_smithing"
+    ]
+  }
+}

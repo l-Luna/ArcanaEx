@@ -1,0 +1,26 @@
+{
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "G": {
+      "item": "arcana:greatwood_planks"
+    },
+    "C": {
+      "item": "arcana:crystals/senses"
+    },
+    "X": {
+      "item": "minecraft:amethyst_shard"
+    }
+  },
+  "pattern": [
+    " G ",
+    "CGX",
+    "GGG"
+  ],
+  "result": {
+    "id": "arcana:speak_no_evil_statue"
+  },
+  "aspects": [
+    "5*earth",
+    "5*order"
+  ]
+}

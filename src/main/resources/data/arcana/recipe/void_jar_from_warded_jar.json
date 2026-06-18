@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "void_jar",
+  "ingredients": [
+    {
+      "item": "arcana:warded_jar"
+    },
+    {
+      "item": "arcana:crystals/void"
+    }
+  ],
+  "result": {
+    "id": "arcana:void_jar",
+    "count": 1
+  }
+}

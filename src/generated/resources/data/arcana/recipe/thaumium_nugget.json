@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "arcana:thaumium_ingot"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "arcana:thaumium_nugget"
+  }
+}

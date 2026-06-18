@@ -1,0 +1,23 @@
+{
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "S": {
+      "tag": "arcana:arcane_stones"
+    },
+    "D": {
+      "tag": "minecraft:dirt"
+    }
+  },
+  "pattern": [
+    "SDS",
+    "SDS",
+    " S "
+  ],
+  "aspects": [
+    "4*earth"
+  ],
+  "result":{
+    "id": "arcana:stone_vase",
+    "count": 2
+  }
+}

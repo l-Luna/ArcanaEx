@@ -1,0 +1,14 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "tag": "c:glass_blocks"
+  },
+  "aspects": [
+    "movement",
+    "tool"
+  ],
+  "research": "alchemical_glass@5",
+  "result": {
+    "id": "arcana:static_glass"
+  }
+}

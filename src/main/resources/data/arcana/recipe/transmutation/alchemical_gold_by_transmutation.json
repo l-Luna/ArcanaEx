@@ -1,0 +1,15 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "arcana:alchemical_copper"
+  },
+  "aspects": [
+    "3*exchange",
+    "metal",
+    "greed"
+  ],
+  "research": "transmutation_shortcut",
+  "result": {
+    "id": "arcana:alchemical_gold"
+  }
+}

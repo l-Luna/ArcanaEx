@@ -21,15 +21,17 @@ public class WandRecipe extends SpecialCraftingRecipe{
 	}
 	
 	public boolean matches(CraftingRecipeInput inventory, World world){
+		if(inventory.getSize() < 9)
+			return false;
 		Cap caps = null;
 		// cap in top left
-		if(inventory.getStackInSlot(0).getItem() instanceof Cap c)
+		if(inventory.getStackInSlot(0, 0).getItem() instanceof Cap c)
 			caps = c;
-		// same cap in top right
-		if(inventory.getStackInSlot(8).getItem() != caps)
+		// same cap in bottom right
+		if(inventory.getStackInSlot(2, 2).getItem() != caps)
 			return false;
 		// core in middle
-		if(Core.asCore(inventory.getStackInSlot(4).getItem()) == null)
+		if(Core.asCore(inventory.getStackInSlot(1, 1).getItem()) == null)
 			return false;
 		// nothing else
 		for(int i = 0; i < 9; i++)

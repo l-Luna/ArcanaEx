@@ -283,11 +283,13 @@ public final class Researcher implements Component, AutoSyncedComponent{
 		float total = 0;
 		if(!stack.isEmpty()){
 			Pair<List<EnchantmentLevelBasedValue>, Integer> warpingEffect = EnchantmentHelper.getEffectListAndLevel(stack, ArcanaEnchantmentComponents.WARPING);
-			List<EnchantmentLevelBasedValue> first = warpingEffect.getFirst();
-			for(EnchantmentLevelBasedValue value : first)
-				total += value.getValue(warpingEffect.getSecond());
-			if(stack.getItem() instanceof WarpingItem wi)
-				total += wi.warping(stack, player);
+			if(warpingEffect != null){
+				List<EnchantmentLevelBasedValue> first = warpingEffect.getFirst();
+				for(EnchantmentLevelBasedValue value : first)
+					total += value.getValue(warpingEffect.getSecond());
+				if(stack.getItem() instanceof WarpingItem wi)
+					total += wi.warping(stack, player);
+			}
 		}
 		return (int)total;
 	}

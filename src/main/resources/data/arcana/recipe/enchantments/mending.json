@@ -1,0 +1,36 @@
+{
+  "type": "arcana:infusion_enchantment",
+  "enchantment": "minecraft:mending",
+  "preview": {
+    "id": "minecraft:flint_and_steel"
+  },
+  "base_ingredients": [
+    {
+      "item": "arcana:synthetic_scaffolding"
+    },
+    {
+      "item": "arcana:crystals/tool"
+    },
+    {
+      "item": "arcana:crystals/mining"
+    },
+    {
+      "item": "arcana:crystals/armour"
+    },
+    {
+      "item": "arcana:crystals/weapon"
+    },
+    {
+      "item": "arcana:crystals/machine"
+    }
+  ],
+  "base_aspects": [
+    "15*tool",
+    "15*mining",
+    "15*armour",
+    "15*weapon",
+    "15*machine"
+  ],
+  "base_instability": 3,
+  "name": "enchantment.arcana.mending.recipe"
+}

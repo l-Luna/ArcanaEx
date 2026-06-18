@@ -4,6 +4,7 @@ import arcana.api.AspectRecipe;
 import arcana.api.RenamableRecipe;
 import arcana.aspects.AspectMap;
 import arcana.recipes.ArcanaRecipe;
+import arcana.util.PacketCodecUtil;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -141,14 +142,14 @@ public class AlchemyRecipe implements Recipe<AlchemyInput>, ArcanaRecipe, Aspect
 				ItemStack.CODEC.fieldOf("result").forGetter(x->x.result)
 		).apply(i, AlchemyRecipe::new));
 		
-		private static final PacketCodec<RegistryByteBuf, AlchemyRecipe> PACKET_CODEC = PacketCodec.tuple(
+		private static final PacketCodec<RegistryByteBuf, AlchemyRecipe> PACKET_CODEC = PacketCodecUtil.descriptive("alchemy recipe", PacketCodec.tuple(
 				PacketCodecs.optional(Identifier.PACKET_CODEC), AlchemyRecipe::getResearchId,
 				PacketCodecs.optional(PacketCodecs.VAR_INT), x -> x.researchStage,
 				PacketCodecs.optional(PacketCodecs.STRING), x -> Optional.ofNullable(x.translationKey),
 				Ingredient.PACKET_CODEC, AlchemyRecipe::getIngredient,
 				AspectMap.PACKET_CODEC, x -> x.aspects,
 				ItemStack.PACKET_CODEC, x -> x.result,
-		AlchemyRecipe::new);
+		AlchemyRecipe::new));
 		
 		public MapCodec<AlchemyRecipe> codec(){
 			return CODEC;

@@ -62,7 +62,7 @@ public class RenderHelper{
 		bufferBuilder.vertex(matrix, (float)x1, (float)y1, z).color(r, g, b, a).texture(u1, v1);
 		bufferBuilder.vertex(matrix, (float)x1, (float)y0, z).color(r, g, b, a).texture(u1, v0);
 		bufferBuilder.vertex(matrix, (float)x0, (float)y0, z).color(r, g, b, a).texture(u0, v0);
-		BufferRenderer.draw(bufferBuilder.end());
+		 RenderHelper.drawBuffer(bufferBuilder);
 		RenderSystem.disableBlend();
 	}
 	
@@ -164,16 +164,18 @@ public class RenderHelper{
 		float localU = Math.abs(nX * z + nZ * x + nY * x), localV = Math.abs(nX * y + nZ * y + nY * z);
 		float u = MathHelper.lerp(localU, sprite.getMinU(), sprite.getMaxU()), v = MathHelper.lerp(localV, sprite.getMinV(), sprite.getMaxV());
 		if(isFx){
-			if(!(cons instanceof BufferBuilder bvc))
+			// TODO: shaders
+			throw new UnsupportedOperationException("unimplemented");
+			/*if(!(cons instanceof BufferBuilder bvc))
 				throw new IllegalArgumentException("Can only render FX vertices directly to tesselator!");
 			bvc.vertex(ms.peek().getPositionMatrix(), x, y, z);
 			bvc.texture(u, v);
 			bvc.color(colour);
 			bvc.light(LightmapTextureManager.MAX_LIGHT_COORDINATE);
 			// manually insert localUV... a bit messy, see BufferVertexConsumer#texture for reference
-			// TODO: agony
+		
 			bvc.putFloat(0, localU);
-			bvc.putFloat(4, localV);
+			bvc.putFloat(4, localV);*/
 		}else
 			cons.vertex(ms.peek().getPositionMatrix(), x, y, z)
 					.color(colour)
@@ -308,5 +310,13 @@ public class RenderHelper{
 		
 		matrices.popMatrix();
 		RenderSystem.applyModelViewMatrix();
+	}
+	
+	// "safe" version of BufferRenderer.draw(buffer.end())
+	
+	public static void drawBuffer(BufferBuilder builder){
+		BuiltBuffer built = builder.endNullable();
+		if(built != null)
+			BufferRenderer.drawWithGlobalProgram(built);
 	}
 }

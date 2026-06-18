@@ -1,0 +1,25 @@
+{
+  "type": "arcana:infusion_enchantment",
+  "enchantment": "minecraft:swift_sneak",
+  "preview": {
+    "id": "minecraft:iron_leggings"
+  },
+  "base_ingredients": [
+    {
+      "item": "minecraft:echo_shard"
+    },
+    {
+      "item": "arcana:crystals/movement"
+    },
+    {
+      "item": "arcana:spiral_sugar"
+    }
+  ],
+  "base_aspects": [
+    "30*movement",
+    "10*sloth",
+    "5*senses"
+  ],
+  "base_instability": 1,
+  "name": "enchantment.arcana.swift_sneak.recipe"
+}

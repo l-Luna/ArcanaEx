@@ -56,7 +56,7 @@ public class WandItem extends Item implements FabricItem, WarpingItem, CustomCre
 	
 	public static ItemStack withCapAndCore(Cap cap, Core core){
 		ItemStack stack = new ItemStack(ArcanaRegistry.WAND);
-		stack.set(ArcanaItemComponentTypes.WAND_DATA, WandDataComponent.withCapAndCore(cap.id(), core.id()));
+		stack.set(ArcanaItemComponentTypes.WAND_DATA, WandDataComponent.withCapAndCore(cap, core));
 		return stack;
 	}
 	
@@ -146,11 +146,11 @@ public class WandItem extends Item implements FabricItem, WarpingItem, CustomCre
 		return super.useOnEntity(stack, user, entity, hand);
 	}
 	
-	public int getMaxUseTime(ItemStack stack){
+	public int getMaxUseTime(ItemStack stack, LivingEntity user){
 		return 72000;
 	}
 	
-	public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks){
+	public void usageTick(World world, LivingEntity user, ItemStack wandStack, int remainingUseTicks){
 		if(world.isClient || !(user instanceof PlayerEntity pe))
 			return;
 		
@@ -158,7 +158,8 @@ public class WandItem extends Item implements FabricItem, WarpingItem, CustomCre
 		Optional<Node> nodeO = aura.raycastNodes(user, false);
 		nodeO.ifPresent(node -> Caster.from(pe).beginDraining(node, user.getActiveHand()));
 		
-		if(focusFrom(stack).getItem() instanceof Focus fi && fi.isContinuous())
+		ItemStack focusStack = focusFrom(wandStack);
+		if(focusStack.getItem() instanceof Focus fi && fi.isContinuous() && aspectsFrom(wandStack).contains(fi.castCost(wandStack, focusStack, pe)))
 			Caster.from(pe).beginContinuousCasting(user.getActiveHand());
 	}
 	
@@ -245,7 +246,7 @@ public class WandItem extends Item implements FabricItem, WarpingItem, CustomCre
 		return Text.translatable("tooltip.arcana.wand.focus_cost.total", costs).formatted(Formatting.GRAY);
 	}
 	
-	public boolean allowNbtUpdateAnimation(PlayerEntity player, Hand hand, ItemStack oldStack, ItemStack newStack){
+	public boolean allowComponentsUpdateAnimation(PlayerEntity player, Hand hand, ItemStack oldStack, ItemStack newStack){
 		return !focusFrom(oldStack).getItem().equals(focusFrom(newStack).getItem());
 	}
 	
@@ -262,24 +263,30 @@ public class WandItem extends Item implements FabricItem, WarpingItem, CustomCre
 		return focusStack.getMaxDamage() > 0 ? Math.round(13 - focusStack.getDamage() * 13f / focusStack.getMaxDamage()) : 0;
 	}
 	
-	// TODO: NBT-backed aspect map?
+	// TODO: cleanup, most of these are fairly redundant
 	
 	public static ScaledAspectMap aspectsFrom(ItemStack stack){
-		return new ScaledAspectMap(stack.get(ArcanaItemComponentTypes.WAND_DATA).stored, 0.1f);
+		return new ScaledAspectMap(dataFrom(stack).stored, 0.1f);
 	}
 	
 	public static void updateAspects(ItemStack stack, Consumer<ScaledAspectMap> updater){
-		ScaledAspectMap map = aspectsFrom(stack);
-		updater.accept(map);
-		dataFrom(stack).stored = map.underlying();
+		WandDataComponent.run(stack, component -> {
+			ScaledAspectMap map = new ScaledAspectMap(component.stored, 0.1f);
+			updater.accept(map);
+			component.stored = map.underlying();
+		});
+	}
+	
+	public static void updateFocus(ItemStack wand, Consumer<ItemStack> updater){
+		WandDataComponent.run(wand, component -> updater.accept(component.focus));
 	}
 	
 	public static Cap capFrom(ItemStack stack){
-		return Cap.byName(dataFrom(stack).cap);
+		return dataFrom(stack).cap;
 	}
 	
 	public static Core coreFrom(ItemStack stack){
-		return Core.byName(dataFrom(stack).core);
+		return dataFrom(stack).core;
 	}
 	
 	public static @NotNull ItemStack focusFrom(ItemStack stack){
@@ -287,17 +294,11 @@ public class WandItem extends Item implements FabricItem, WarpingItem, CustomCre
 	}
 	
 	public static void putFocus(ItemStack wand, ItemStack focus){
-		dataFrom(wand).focus = focus;
+		WandDataComponent.run(wand, component -> component.focus = focus);
 	}
 	
 	public static WandDataComponent dataFrom(ItemStack stack){
 		return stack.get(ArcanaItemComponentTypes.WAND_DATA);
-	}
-	
-	public static void updateFocus(ItemStack wand, Consumer<ItemStack> updater){
-		ItemStack focusStack = focusFrom(wand);
-		updater.accept(focusStack);
-		putFocus(wand, focusStack);
 	}
 	
 	public int warping(ItemStack stack, PlayerEntity player){

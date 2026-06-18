@@ -4,10 +4,13 @@ import arcana.ArcanaRegistry;
 import arcana.aspects.Aspect;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+import com.mojang.serialization.Codec;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 public interface Cap{
+	
+	Codec<Cap> CODEC = Identifier.CODEC.xmap(Cap::byName, Cap::id);
 	
 	// statics
 	

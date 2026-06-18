@@ -158,10 +158,6 @@ public class ScalpelItem extends Item implements AnimatedUseItem{
 		return 30;
 	}
 	
-	/*public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(EquipmentSlot slot){
-		return slot == EquipmentSlot.MAINHAND ? this.attributeModifiers : super.getAttributeModifiers(slot);
-	}*/
-	
 	public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker){
 		stack.damage(1, attacker, EquipmentSlot.MAINHAND);
 		return true;

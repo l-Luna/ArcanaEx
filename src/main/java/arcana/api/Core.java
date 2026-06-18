@@ -4,12 +4,15 @@ import arcana.ArcanaRegistry;
 import arcana.aspects.Aspect;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+import com.mojang.serialization.Codec;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 public interface Core{
+	
+	Codec<Core> CODEC = Identifier.CODEC.xmap(Core::byName, Core::id);
 	
 	// statics
 	

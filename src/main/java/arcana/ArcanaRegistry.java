@@ -1209,6 +1209,9 @@ public final class ArcanaRegistry{
 		
 		for(Block block : Set.of(SILVERWOOD_SIGN, SILVERWOOD_WALL_SIGN, GREATWOOD_SIGN, GREATWOOD_WALL_SIGN))
 			BlockEntityType.SIGN.addSupportedBlock(block);
+		// these have their own BEs, but *briefly* have the vanilla BE during initialisation
+		for(Block block : Set.of(WARDED_CAMPFIRE, CRIMSON_CAMPFIRE))
+			BlockEntityType.CAMPFIRE.addSupportedBlock(block);
 		
 		register("vishroom", VISHROOM);
 		register("cordispora", CORDISPORA);

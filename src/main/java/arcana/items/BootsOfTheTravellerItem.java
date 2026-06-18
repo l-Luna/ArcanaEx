@@ -24,13 +24,13 @@ public class BootsOfTheTravellerItem extends ArmorItem{
 		return AttributeModifiersComponent.builder()
 				.add(
 						EntityAttributes.GENERIC_MOVEMENT_SPEED,
-						new EntityAttributeModifier(SPEED_MOD_ID, 0.16f, EntityAttributeModifier.Operation.ADD_VALUE),
-						AttributeModifierSlot.MAINHAND
+						new EntityAttributeModifier(SPEED_MOD_ID, 0.17f, EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE),
+						AttributeModifierSlot.FEET
 				)
 				.add(
 						EntityAttributes.GENERIC_STEP_HEIGHT,
 						new EntityAttributeModifier(STEP_HEIGHT_MOD_ID, 0.4f, EntityAttributeModifier.Operation.ADD_VALUE),
-						AttributeModifierSlot.MAINHAND
+						AttributeModifierSlot.FEET
 				)
 				.build();
 	}

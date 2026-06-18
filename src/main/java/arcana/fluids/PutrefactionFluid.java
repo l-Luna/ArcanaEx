@@ -39,7 +39,7 @@ public class PutrefactionFluid extends ArcanaFluid{
 	}
 	
 	public String getTexturePath(){
-		return "fluid/putrefaction";
+		return "block/putrefaction";
 	}
 	
 	public void onEntityInteractTick(Entity entity){

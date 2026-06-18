@@ -44,7 +44,7 @@ public class TaintGooFluid extends ArcanaFluid{
 	}
 	
 	public String getTexturePath(){
-		return "fluid/taint_goo";
+		return "block/taint_goo";
 	}
 	
 	public Optional<BlockState> interact(FluidState self, FluidState other){

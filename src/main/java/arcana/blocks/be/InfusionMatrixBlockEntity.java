@@ -253,8 +253,8 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 		if(curRecipe != null){
 			nbt.putString("currentRecipe", curRecipe.id().toString());
 			nbt.put("remainingEssentia", remainingEssentia.toNbt());
-			nbt.put("remainingItems", remainingItems.stream().map(x -> x.encode(registryLookup)).collect(NbtUtil.toNbtList()));
-			nbt.put("result", result.encode(registryLookup));
+			nbt.put("remainingItems", remainingItems.stream().map(x -> x.encodeAllowEmpty(registryLookup)).collect(NbtUtil.toNbtList()));
+			nbt.put("result", result.encodeAllowEmpty(registryLookup));
 			nbt.putInt("instabilityRate", instabilityRate);
 			nbt.putString("state", curState.name());
 			nbt.putInt("cooldown", cooldown);

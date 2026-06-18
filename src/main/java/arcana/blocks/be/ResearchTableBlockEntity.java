@@ -29,8 +29,8 @@ public class ResearchTableBlockEntity extends BlockEntity{
 	
 	protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){
 		super.writeNbt(nbt, registryLookup);
-		nbt.put("scribingTools", scribingTools.getStack(0).encode(registryLookup));
-		nbt.put("note", note.getStack(0).encode(registryLookup));
+		nbt.put("scribingTools", scribingTools.getStack(0).encodeAllowEmpty(registryLookup));
+		nbt.put("note", note.getStack(0).encodeAllowEmpty(registryLookup));
 	}
 	
 	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){

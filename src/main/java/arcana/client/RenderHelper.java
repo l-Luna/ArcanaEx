@@ -272,7 +272,7 @@ public class RenderHelper{
 		RenderSystem.setShaderColor(1, 1, 1, 1);
 	}
 	
-	// coloured version of ItemRenderer::renderGuiItemMode
+	// coloured version of DrawContext::drawItem
 	
 	private static void renderGuiItemModel(ItemRenderer self, ItemStack stack, int x, int y, BakedModel model, float r, float g, float b, float a){
 //		self.textureManager.getTexture(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE).setFilter(false, false);

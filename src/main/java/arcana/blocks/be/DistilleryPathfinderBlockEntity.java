@@ -75,8 +75,8 @@ public class DistilleryPathfinderBlockEntity extends BlockEntity implements Name
 	
 	protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){
 		super.writeNbt(nbt, registryLookup);
-		nbt.put("material", material.getStack(0).encode(registryLookup));
-		nbt.put("fuel", fuel.getStack(0).encode(registryLookup));
+		nbt.put("material", material.getStack(0).encodeAllowEmpty(registryLookup));
+		nbt.put("fuel", fuel.getStack(0).encodeAllowEmpty(registryLookup));
 		
 		nbt.putInt("burnTime", burnTime);
 		nbt.putInt("maxBurnTime", maxBurnTime);
@@ -87,8 +87,8 @@ public class DistilleryPathfinderBlockEntity extends BlockEntity implements Name
 	
 	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){
 		super.readNbt(nbt, registryLookup);
-		material.setStack(0, ItemStack.fromNbt(registryLookup, nbt.getCompound("material")).get());
-		fuel.setStack(0, ItemStack.fromNbt(registryLookup, nbt.getCompound("fuel")).get());
+		material.setStack(0, ItemStack.fromNbtOrEmpty(registryLookup, nbt.getCompound("material")));
+		fuel.setStack(0, ItemStack.fromNbtOrEmpty(registryLookup, nbt.getCompound("fuel")));
 		
 		burnTime = nbt.getInt("burnTime");
 		maxBurnTime = nbt.getInt("maxBurnTime");

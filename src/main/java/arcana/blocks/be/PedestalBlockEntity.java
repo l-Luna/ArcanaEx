@@ -30,7 +30,7 @@ public class PedestalBlockEntity extends BlockEntity{
 	
 	protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){
 		super.writeNbt(nbt, registryLookup);
-		nbt.put("stack", stack.encode(registryLookup));
+		nbt.put("stack", stack.encodeAllowEmpty(registryLookup));
 	}
 	
 	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){

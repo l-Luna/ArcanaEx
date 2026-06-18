@@ -29,7 +29,7 @@ public class KnowledgeableDropperBlockEntity extends DispenserBlockEntity{
 	
 	protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){
 		super.writeNbt(nbt, registryLookup);
-		nbt.put("tome", tomeSlot.getStack(0).encode(registryLookup));
+		nbt.put("tome", tomeSlot.getStack(0).encodeAllowEmpty(registryLookup));
 	}
 	
 	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){

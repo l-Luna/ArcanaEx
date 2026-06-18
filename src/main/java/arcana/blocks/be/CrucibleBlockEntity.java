@@ -105,11 +105,11 @@ public class CrucibleBlockEntity extends BlockEntity{
 					List<AspectStack> itemAspects = ItemAspectRegistry.get(stack).asStacks();
 					if(!itemAspects.isEmpty()){
 						item.remove(Entity.RemovalReason.KILLED);
+						for(AspectStack aspectStack : itemAspects)
+							aspects.add(aspectStack.type(), aspectStack.amount() * stack.getCount());
 						world.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, 1.0F);
 						markDirty();
 						world.updateListeners(pos, world.getBlockState(pos), world.getBlockState(pos), Block.NOTIFY_LISTENERS);
-						for(AspectStack aspectStack : itemAspects)
-							aspects.add(aspectStack.type(), aspectStack.amount() * stack.getCount());
 					}
 				}
 			}
@@ -134,11 +134,11 @@ public class CrucibleBlockEntity extends BlockEntity{
 		aspects.clear();
 	}
 	
-	protected void writeNbt(NbtCompound nbt){
+	protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup){
 		nbt.put("aspects", aspects.toNbt());
 	}
 	
-	public void readNbt(NbtCompound nbt){
+	public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup){
 		aspects = AspectMap.fromNbt(nbt.getCompound("aspects"));
 	}
 	

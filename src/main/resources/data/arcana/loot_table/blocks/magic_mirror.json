@@ -8,13 +8,9 @@
           "type": "minecraft:item",
           "functions": [
             {
-              "function": "minecraft:copy_nbt",
-              "ops": [
-                {
-                  "op": "replace",
-                  "source": "tag",
-                  "target": "tag"
-                }
+              "function": "minecraft:copy_components",
+              "include": [
+                "arcana:magic_mirror_tag"
               ],
               "source": "block_entity"
             }

@@ -3,9 +3,11 @@ package arcana.blocks.be;
 import arcana.ArcanaRegistry;
 import arcana.blocks.MagicMirrorBlock;
 import arcana.cca_components.MagicMirrorQueue;
+import arcana.items.components.ArcanaItemComponentTypes;
 import arcana.util.MathUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.component.ComponentMap;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -66,5 +68,21 @@ public class MagicMirrorBlockEntity extends BlockEntity{
 		tag = nbt.getUuid("tag");
 		if(nbt.containsUuid("m_id"))
 			id = nbt.getUuid("m_id");
+	}
+	
+	protected void readComponents(ComponentsAccess components){
+		super.readComponents(components);
+		setTag(components.get(ArcanaItemComponentTypes.MAGIC_MIRROR_TAG));
+	}
+	
+	protected void addComponents(ComponentMap.Builder componentMapBuilder){
+		super.addComponents(componentMapBuilder);
+		componentMapBuilder.add(ArcanaItemComponentTypes.MAGIC_MIRROR_TAG, getTag());
+	}
+	
+	public void removeFromCopiedStackNbt(NbtCompound nbt){
+		super.removeFromCopiedStackNbt(nbt);
+		nbt.remove("tag");
+		nbt.remove("m_id");
 	}
 }

@@ -11,13 +11,9 @@
           "name": "arcana:warded_jar",
           "functions": [
             {
-              "function": "minecraft:copy_nbt",
-              "ops": [
-                {
-                  "op": "replace",
-                  "source": "stored",
-                  "target": "BlockEntityTag.stored"
-                }
+              "function": "minecraft:copy_components",
+              "include": [
+                "arcana:stored_single_aspect"
               ],
               "source": "block_entity"
             }

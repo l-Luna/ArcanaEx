@@ -223,7 +223,7 @@
               "function": "minecraft:set_enchantments",
               "add": false,
               "enchantments": {
-                "arcana:warping": 1,
+                "arcana:warping_curse": 1,
                 "arcana:projecting": 1
               }
             }

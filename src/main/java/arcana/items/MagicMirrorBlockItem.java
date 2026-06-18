@@ -1,18 +1,15 @@
 package arcana.items;
 
 import arcana.api.CustomCreativePresentationItem;
-import arcana.blocks.be.MagicMirrorBlockEntity;
 import arcana.items.components.ArcanaItemComponentTypes;
 import arcana.util.MathUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipData;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -45,15 +42,6 @@ public class MagicMirrorBlockItem extends BlockItem implements CustomCreativePre
 		ItemStack stack = getDefaultStack();
 		stack.set(ArcanaItemComponentTypes.MAGIC_MIRROR_BUNDLED_FLAG, true);
 		entries.add(stack);
-	}
-	
-	protected boolean postPlacement(BlockPos pos, World world, @Nullable PlayerEntity player, ItemStack stack, BlockState state){
-		if(!world.isClient && world.getBlockEntity(pos) instanceof MagicMirrorBlockEntity mm){
-			UUID tag = getTag(stack);
-			mm.setTag(tag != null ? tag : MathUtil.randomUuid(world.random));
-			return true;
-		}
-		return super.postPlacement(pos, world, player, stack, state);
 	}
 	
 	public static @Nullable UUID getTag(ItemStack mirrorStack){

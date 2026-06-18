@@ -3,8 +3,10 @@ package arcana.blocks.be;
 import arcana.ArcanaRegistry;
 import arcana.api.AspectIo;
 import arcana.aspects.AspectStack;
+import arcana.items.components.ArcanaItemComponentTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.component.ComponentMap;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
@@ -88,5 +90,20 @@ public class WardedJarBlockEntity extends BlockEntity implements AspectIo{
 	@Nullable
 	public AspectStack getStored(){
 		return stored;
+	}
+	
+	protected void readComponents(ComponentsAccess components){
+		super.readComponents(components);
+		stored = components.get(ArcanaItemComponentTypes.STORED_SINGLE_ASPECT);
+	}
+	
+	protected void addComponents(ComponentMap.Builder componentMapBuilder){
+		super.addComponents(componentMapBuilder);
+		componentMapBuilder.add(ArcanaItemComponentTypes.STORED_SINGLE_ASPECT, stored);
+	}
+	
+	public void removeFromCopiedStackNbt(NbtCompound nbt){
+		super.removeFromCopiedStackNbt(nbt);
+		nbt.remove("stored");
 	}
 }

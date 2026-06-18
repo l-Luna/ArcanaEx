@@ -1,6 +1,8 @@
 package arcana.items.components;
 
 import arcana.ArcanaRegistry;
+import arcana.aspects.AspectMap;
+import arcana.aspects.AspectStack;
 import arcana.aura.NodeType;
 import arcana.util.ArrayInventory;
 import com.mojang.serialization.Codec;
@@ -25,6 +27,9 @@ public class ArcanaItemComponentTypes{
 	public static final ComponentType<ResearchCompletionComponent> RESEARCH_COMPLETION = create(ResearchCompletionComponent.CODEC);
 	public static final ComponentType<ArcanaRegistry.Tab> SUBTAB = create(Codec.STRING.xmap(ArcanaRegistry.Tab::valueOf, Enum::name));
 	
+	public static final ComponentType<AspectMap> STORED_ASPECTS = create(AspectMap.CODEC);
+	public static final ComponentType<AspectStack> STORED_SINGLE_ASPECT = create(AspectStack.CODEC);
+	
 	// item specific
 	public static final ComponentType<ArrayInventory> FOCUS_POUCH_INVENTORY = create(ArrayInventory.CODEC);
 	
@@ -42,6 +47,8 @@ public class ArcanaItemComponentTypes{
 		register("node_type", NODE_TYPE);
 		register("research_completion", RESEARCH_COMPLETION);
 		register("subtab", SUBTAB);
+		register("stored_aspects", STORED_ASPECTS);
+		register("stored_single_aspect", STORED_SINGLE_ASPECT);
 		
 		register("focus_pouch_inventory", FOCUS_POUCH_INVENTORY);
 		register("magic_mirror_tag", MAGIC_MIRROR_TAG);

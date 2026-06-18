@@ -20,7 +20,7 @@ import java.util.function.Consumer;
 public class TagGiftLootEntry extends LeafEntry{
 
 	public static final MapCodec<TagGiftLootEntry> CODEC = RecordCodecBuilder.mapCodec(i -> i
-			.group(TagKey.codec(RegistryKeys.ITEM).fieldOf("tag").forGetter(x -> x.tag))
+			.group(TagKey.unprefixedCodec(RegistryKeys.ITEM).fieldOf("tag").forGetter(x -> x.tag))
 			.and(addLeafFields(i))
 			.apply(i, (tag, weight, quality, cond, fs) -> new TagGiftLootEntry(weight, quality, cond, fs, tag)));
 	

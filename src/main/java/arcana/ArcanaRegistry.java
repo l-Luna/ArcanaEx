@@ -1207,10 +1207,8 @@ public final class ArcanaRegistry{
 		register("hollowed_door", HOLLOWED_DOOR);
 		register("hollowed_trapdoor", HOLLOWED_TRAPDOOR);
 		
-		// HACKFIX, since fabric halfassed this API
-		// TODO: check if this sort of thing is still necessary
-		//BlockEntityType.SIGN.blocks = new HashSet<>(BlockEntityType.SIGN.blocks);
-		//BlockEntityType.SIGN.blocks.addAll(Set.of(SILVERWOOD_SIGN, SILVERWOOD_WALL_SIGN, GREATWOOD_SIGN, GREATWOOD_WALL_SIGN));
+		for(Block block : Set.of(SILVERWOOD_SIGN, SILVERWOOD_WALL_SIGN, GREATWOOD_SIGN, GREATWOOD_WALL_SIGN))
+			BlockEntityType.SIGN.addSupportedBlock(block);
 		
 		register("vishroom", VISHROOM);
 		register("cordispora", CORDISPORA);

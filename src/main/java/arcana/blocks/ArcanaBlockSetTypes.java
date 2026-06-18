@@ -12,8 +12,8 @@ public class ArcanaBlockSetTypes{
 	public static final BlockSetType GENERIC_WOOD = BlockSetTypeBuilder.copyOf(BlockSetType.OAK).register(arcId("generic_wood"));
 	public static final BlockSetType GENERIC_STONE = BlockSetTypeBuilder.copyOf(BlockSetType.STONE).register(arcId("generic_stone"));
 	
-	public static final WoodType SILVERWOOD = new WoodTypeBuilder().build(arcId("silverwood"), GENERIC_WOOD);
-	public static final WoodType GREATWOOD = new WoodTypeBuilder().build(arcId("greatwood"), GENERIC_WOOD);
-	public static final WoodType TAINTWOOD = new WoodTypeBuilder().build(arcId("taintwood"), GENERIC_WOOD);
-	public static final WoodType HOLLOWED = new WoodTypeBuilder().build(arcId("hollowed"), GENERIC_WOOD);
+	public static final WoodType SILVERWOOD = new WoodTypeBuilder().register(arcId("silverwood"), GENERIC_WOOD);
+	public static final WoodType GREATWOOD = new WoodTypeBuilder().register(arcId("greatwood"), GENERIC_WOOD);
+	public static final WoodType TAINTWOOD = new WoodTypeBuilder().register(arcId("taintwood"), GENERIC_WOOD);
+	public static final WoodType HOLLOWED = new WoodTypeBuilder().register(arcId("hollowed"), GENERIC_WOOD);
 }

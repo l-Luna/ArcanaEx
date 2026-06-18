@@ -5,7 +5,7 @@
       "item": "arcana:silverleaf"
     },
     "G": {
-      "tag": "c:gold_ingots"
+      "item": "minecraft:gold_ingot"
     },
     "A": {
       "item": "minecraft:amethyst_shard"

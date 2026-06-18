@@ -18,7 +18,7 @@ public class CookingRecipeSectionRenderer extends AbstractRecipeSectionRenderer<
 			int inputY = pageY + (screenHeight - bgHeight + pageHeight) / 2 + 8 - heightOffset;
 			ctx.drawTexture(overlayTexture(section), inputX - 9, inputY - 9, 101, 219, 1, 34, 48, 256, 256);
 			ItemStack[] stacks = cr.getIngredients().get(0).getMatchingStacks();
-			ctx.drawItem(stacks[displayIdx(stacks.length)], inputX, inputY);
+			ctx.drawItem(displayStack(stacks), inputX, inputY);
 		}
 	}
 	
@@ -28,7 +28,7 @@ public class CookingRecipeSectionRenderer extends AbstractRecipeSectionRenderer<
 			int inputX = x + (screenWidth - 256 + pageWidth) / 2 - 8;
 			int inputY = pageY + (screenHeight - bgHeight + pageHeight) / 2 + 8 - heightOffset;
 			ItemStack[] stacks = cr.getIngredients().get(0).getMatchingStacks();
-			tooltipArea(ctx, stacks[displayIdx(stacks.length)], mouseX, mouseY, inputX, inputY);
+			tooltipArea(ctx, displayStack(stacks), mouseX, mouseY, inputX, inputY);
 		}
 	}
 }

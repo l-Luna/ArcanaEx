@@ -30,7 +30,7 @@ public class CraftingRecipeSectionRenderer extends AbstractRecipeSectionRenderer
 						int itemY = ulY + yy * 24;
 						ItemStack[] stacks = recipe.getIngredients().get(index).getMatchingStacks();
 						if(stacks.length > 0)
-							ctx.drawItem(stacks[displayIdx(stacks.length)], itemX, itemY);
+							ctx.drawItem(displayStack(stacks), itemX, itemY);
 					}
 				}
 		}
@@ -52,7 +52,7 @@ public class CraftingRecipeSectionRenderer extends AbstractRecipeSectionRenderer
 						int itemY = ulY + yy * 24;
 						ItemStack[] stacks = recipe.getIngredients().get(index).getMatchingStacks();
 						if(stacks.length > 0)
-							tooltipArea(ctx, stacks[displayIdx(stacks.length)], mouseX, mouseY, itemX, itemY);
+							tooltipArea(ctx, displayStack(stacks), mouseX, mouseY, itemX, itemY);
 					}
 				}
 		}

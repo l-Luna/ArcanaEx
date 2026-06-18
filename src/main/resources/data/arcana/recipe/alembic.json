@@ -2,7 +2,7 @@
   "type": "arcana:arcane_crafting",
   "key": {
     "I": {
-      "tag": "c:gold_ingots"
+      "item": "minecraft:gold_ingot"
     },
     "G": {
       "item": "arcana:greatwood_planks"

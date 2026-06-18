@@ -306,7 +306,10 @@ public class WandItem extends Item implements FabricItem, WarpingItem, CustomCre
 	}
 	
 	public static int percentOff(Aspect aspect, ItemStack stack, PlayerEntity player){
-		return capFrom(stack).percentOff(aspect) + coreFrom(stack).percentOff(aspect);
+		WandDataComponent component = dataFrom(stack);
+		if(component != null)
+			return component.cap.percentOff(aspect) + component.core.percentOff(aspect);
+		return 0;
 	}
 	
 	public static int percentOffFromEquipment(Aspect aspect, PlayerEntity player){

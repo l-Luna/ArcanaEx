@@ -1,7 +1,7 @@
 {
   "type": "arcana:alchemy",
   "ingredient": {
-    "tag": "c:diamonds"
+    "item": "minecraft:diamond"
   },
   "aspects": [
     "12*exchange",

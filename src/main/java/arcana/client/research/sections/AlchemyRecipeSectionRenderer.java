@@ -32,7 +32,7 @@ public class AlchemyRecipeSectionRenderer extends AbstractRecipeSectionRenderer<
 			
 			int inputX = ulX + 1, inputY = ulY - 5;
 			ItemStack[] stacks = ar.getIngredients().get(0).getMatchingStacks();
-			ctx.drawItem(stacks[displayIdx(stacks.length)], inputX, inputY);
+			ctx.drawItem(displayStack(stacks), inputX, inputY);
 			
 			// Display aspects
 			int aspectStartX = ulX + 12;
@@ -51,7 +51,7 @@ public class AlchemyRecipeSectionRenderer extends AbstractRecipeSectionRenderer<
 			
 			int inputX = ulX + 1, inputY = ulY - 5;
 			ItemStack[] stacks = ar.getIngredients().get(0).getMatchingStacks();
-			tooltipArea(ctx, stacks[displayIdx(stacks.length)], mouseX, mouseY, inputX, inputY);
+			tooltipArea(ctx, displayStack(stacks), mouseX, mouseY, inputX, inputY);
 			
 			// Display aspects
 			int aspectStartX = ulX + 12;

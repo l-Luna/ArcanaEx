@@ -819,13 +819,14 @@ public final class ArcanaRegistry{
 	public static final ItemGroup MAIN_GROUP = FabricItemGroup.builder()
 			.icon(() -> new ItemStack(ARCANUM))
 			.entries((ctx, entries) -> {
-				for(Item item : ITEMS_BY_TAB.get(Tab.MAIN))
-					if(item instanceof CustomCreativePresentationItem presentation)
-						presentation.addToTab(entries);
-					else
-						entries.add(item, ItemGroup.StackVisibility.PARENT_AND_SEARCH_TABS);
+				/*for(var items : ITEMS_BY_TAB.values())
+					for(Item item : items)
+						if(item instanceof CustomCreativePresentationItem presentation)
+							presentation.addToTab(entries);
+						else
+							entries.add(item, ItemGroup.StackVisibility.PARENT_AND_SEARCH_TABS);*/
 				for(ItemSubGroup subGroup : smuggleTab().fractal$getChildren())
-					entries.addAll(subGroup.getSearchTabStacks(), ItemGroup.StackVisibility.SEARCH_TAB_ONLY);
+					entries.addAll(subGroup.getSearchTabStacks(), ItemGroup.StackVisibility.PARENT_AND_SEARCH_TABS);
 			})
 			.displayName(Text.translatable("item_group.arcana.arcana"))
 			.noRenderedName()

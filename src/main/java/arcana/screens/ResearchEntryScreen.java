@@ -12,6 +12,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
@@ -81,10 +82,10 @@ public class ResearchEntryScreen extends Screen{
 			ArcanaClient.sendTryAdvance(entry);
 		}, Supplier::get){
 			public void renderWidget(DrawContext matrices, int mouseX, int mouseY, float delta){
-				var player = mc.player;
-				var researcher = Researcher.from(player);
+				ClientPlayerEntity player = mc.player;
+				Researcher researcher = Researcher.from(player);
 				active = researcher.entryStage(entry) < entry.sections().size() && entry.sections().get(researcher.entryStage(entry)).getRequirements().stream().allMatch(it -> it.satisfiedBy(player));
-				super.render(matrices, mouseX, mouseY, delta);
+				super.renderWidget(matrices, mouseX, mouseY, delta);
 			}
 		});
 		pins = new ArrayList<>();

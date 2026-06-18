@@ -1,7 +1,7 @@
 {
   "type": "arcana:alchemy",
   "ingredient": {
-    "tag": "c:milk_buckets"
+    "item": "minecraft:milk_bucket"
   },
   "aspects": [
     "20*weapon",

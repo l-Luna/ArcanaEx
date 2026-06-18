@@ -2,13 +2,13 @@
   "type": "arcana:arcane_crafting",
   "key": {
     "I": {
-      "tag": "c:iron_ingots"
+      "item": "minecraft:iron_ingot"
     },
     "G": {
       "item": "arcana:static_glass"
     },
     "C": {
-      "tag": "c:copper_ingots"
+      "item": "minecraft:copper_ingot"
     }
   },
   "pattern": [

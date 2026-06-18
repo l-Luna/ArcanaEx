@@ -1,7 +1,7 @@
 {
   "type": "arcana:alchemy",
   "ingredient": {
-    "tag": "c:gold_ingots"
+    "item": "minecraft:gold_ingot"
   },
   "aspects": [
     "6*magic"

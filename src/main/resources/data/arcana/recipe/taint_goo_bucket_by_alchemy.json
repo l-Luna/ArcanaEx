@@ -1,7 +1,7 @@
 {
   "type": "arcana:alchemy",
   "ingredient": {
-    "tag": "c:water_buckets"
+    "item": "minecraft:water_bucket"
   },
   "aspects": [
     "33*taint",

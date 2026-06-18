@@ -2,7 +2,7 @@
   "type": "arcana:arcane_crafting",
   "key": {
     "I": {
-      "tag": "c:iron_ingots"
+      "item": "minecraft:iron_ingot"
     },
     "G": {
       "item": "arcana:hardened_glass"

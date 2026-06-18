@@ -39,7 +39,7 @@ public class InfusionRecipeSectionRenderer extends AbstractRecipeSectionRenderer
 			
 			ItemStack[] centralStacks = ir.centralIngredient().getMatchingStacks();
 			if(centralStacks.length > 0)
-				ctx.drawItem(centralStacks[displayIdx(centralStacks.length)], midX, midY);
+				ctx.drawItem(displayStack(centralStacks), midX, midY);
 			
 			List<Ingredient> outers = ir.outerIngredients();
 			for(int i = 0; i < outers.size(); i++){
@@ -47,7 +47,7 @@ public class InfusionRecipeSectionRenderer extends AbstractRecipeSectionRenderer
 				if(stacks.length > 0){
 					int offX = (int)(32 * Math.sin(2 * Math.PI * (i / (float)outers.size())));
 					int offY = (int)(32 * Math.cos(2 * Math.PI * (i / (float)outers.size())));
-					ctx.drawItem(stacks[displayIdx(stacks.length)], midX + offX, midY + offY);
+					ctx.drawItem(displayStack(stacks), midX + offX, midY + offY);
 				}
 			}
 			
@@ -83,7 +83,7 @@ public class InfusionRecipeSectionRenderer extends AbstractRecipeSectionRenderer
 			
 			ItemStack[] centralStacks = ir.centralIngredient().getMatchingStacks();
 			if(centralStacks.length > 0)
-				tooltipArea(ctx, centralStacks[displayIdx(centralStacks.length)], mouseX, mouseY, midX, midY);
+				tooltipArea(ctx, displayStack(centralStacks), mouseX, mouseY, midX, midY);
 			
 			List<Ingredient> outers = ir.outerIngredients();
 			for(int i = 0; i < outers.size(); i++){
@@ -91,7 +91,7 @@ public class InfusionRecipeSectionRenderer extends AbstractRecipeSectionRenderer
 				if(stacks.length > 0){
 					int offX = (int)(32 * Math.sin(2 * Math.PI * (i / (float)outers.size())));
 					int offY = (int)(32 * Math.cos(2 * Math.PI * (i / (float)outers.size())));
-					tooltipArea(ctx, stacks[displayIdx(stacks.length)], mouseX, mouseY, midX + offX, midY + offY);
+					tooltipArea(ctx, displayStack(stacks), mouseX, mouseY, midX + offX, midY + offY);
 				}
 			}
 			

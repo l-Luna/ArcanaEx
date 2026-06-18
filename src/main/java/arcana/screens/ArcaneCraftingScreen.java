@@ -86,7 +86,7 @@ public class ArcaneCraftingScreen extends HandledScreen<ArcaneCraftingScreen.Han
 			ScaledAspectMap stored = wand.getItem() instanceof WandItem ? WandItem.aspectsFrom(wand) : new ScaledAspectMap(new AspectMap(), 1);
 			for(Aspect aspect : recipe.value().aspects().aspectSet()){
 				int amount = recipe.value().aspects().get(aspect);
-				amount *= WandItem.costMultiplier(aspect, wand, client.player);
+				amount = (int)(amount * WandItem.costMultiplier(aspect, wand, client.player));
 				boolean blink = !stored.contains(aspect, amount);
 				context.getMatrices().push();
 				context.getMatrices().translate(x, y, 1);

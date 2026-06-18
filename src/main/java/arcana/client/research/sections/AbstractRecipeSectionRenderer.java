@@ -12,6 +12,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.recipe.Recipe;
 
 import java.util.Optional;
@@ -92,6 +93,12 @@ public abstract class AbstractRecipeSectionRenderer<T extends AbstractRecipeSect
 	
 	protected int displayIdx(int max){
 		return (int)((client().world.getTime() / 30) % max);
+	}
+	
+	protected ItemStack displayStack(ItemStack[] stacks){
+		if(stacks.length == 0)
+			return Items.BARRIER.getDefaultStack();
+		return stacks[displayIdx(stacks.length)];
 	}
 	
 	public int span(T section, PlayerEntity player){

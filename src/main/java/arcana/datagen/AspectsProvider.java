@@ -18,7 +18,6 @@ import net.minecraft.item.ItemConvertible;
 import net.minecraft.registry.Registries;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -37,15 +36,10 @@ public class AspectsProvider implements DataProvider{
 	
 	public final CompletableFuture<?> run(DataWriter writer){
 		generateAspects();
-		try{
-			writeJsons(writer);
-		}catch(IOException e){
-			throw new RuntimeException(e);
-		}
-		return CompletableFuture.completedFuture(null);
+		return writeJsons(writer);
 	}
 	
-	private void writeJsons(DataWriter writer) throws IOException{
+	private CompletableFuture<?> writeJsons(DataWriter writer){
 		JsonObject obj = new JsonObject();
 		aspects.forEach((item, map) -> {
 			JsonArray arr = new JsonArray();
@@ -56,7 +50,7 @@ public class AspectsProvider implements DataProvider{
 					arr.add(stack.amount() + "*" + stack.type().id().toString());
 			obj.add(Registries.ITEM.getId(item).toString(), arr);
 		});
-		DataProvider.writeToPath(writer, obj, aspectsResolver.resolveJson(arcId("generated")));
+		return DataProvider.writeToPath(writer, obj, aspectsResolver.resolveJson(arcId("generated")));
 	}
 	
 	public void generateAspects(){

@@ -66,14 +66,14 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 	}
 	
 	public static AspectMap get(ItemStack stack){
-		var fromItem = get(stack.getItem());
+		AspectMap fromItem = get(stack.getItem());
 		for(var fn : stackModifiers)
 			fn.accept(stack, fromItem);
 		return fromItem;
 	}
 	
 	public static AspectMap get(Item item){
-		var orig = itemAspects.get(item);
+		AspectMap orig = itemAspects.get(item);
 		return orig != null ? orig.copy() : new AspectMap();
 	}
 	

@@ -287,9 +287,9 @@ public final class Researcher implements Component, AutoSyncedComponent{
 				List<EnchantmentLevelBasedValue> first = warpingEffect.getFirst();
 				for(EnchantmentLevelBasedValue value : first)
 					total += value.getValue(warpingEffect.getSecond());
-				if(stack.getItem() instanceof WarpingItem wi)
-					total += wi.warping(stack, player);
 			}
+			if(stack.getItem() instanceof WarpingItem wi)
+				total += wi.warping(stack, player);
 		}
 		return (int)total;
 	}

@@ -10,9 +10,13 @@ import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
+import static arcana.Arcana.arcId;
+
 public interface Core{
 	
 	Codec<Core> CODEC = Identifier.CODEC.xmap(Core::byName, Core::id);
+	
+	Core MISSING_CORE = new Core.Impl(arcId("missing"), 0, 0);
 	
 	// statics
 	
@@ -23,7 +27,7 @@ public interface Core{
 	}
 	
 	static @NotNull Core byName(Identifier name){
-		return cores.getOrDefault(name, ArcanaRegistry.MISSING_CORE);
+		return cores.getOrDefault(name, MISSING_CORE);
 	}
 	
 	// members

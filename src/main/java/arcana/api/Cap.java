@@ -1,6 +1,5 @@
 package arcana.api;
 
-import arcana.ArcanaRegistry;
 import arcana.aspects.Aspect;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
@@ -8,9 +7,13 @@ import com.mojang.serialization.Codec;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
+import static arcana.Arcana.arcId;
+
 public interface Cap{
 	
 	Codec<Cap> CODEC = Identifier.CODEC.xmap(Cap::byName, Cap::id);
+	
+	Cap MISSING_CAP = new Cap.Impl(arcId("missing"), 0, 0);
 	
 	// statics
 	
@@ -21,7 +24,7 @@ public interface Cap{
 	}
 	
 	static @NotNull Cap byName(Identifier name){
-		return caps.getOrDefault(name, ArcanaRegistry.MISSING_CAP);
+		return caps.getOrDefault(name, Cap.MISSING_CAP);
 	}
 	
 	// members

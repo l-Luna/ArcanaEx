@@ -338,8 +338,6 @@ public final class ArcanaRegistry{
 	public static final CapItem VOID_WAND_CAP = new CapItem(GROUPED_WAND, capProperties().capacity(50).complexity(80).warping(1));
 	public static final CapItem CRIMSON_WAND_CAP = new CapItem(GROUPED_WAND, capProperties().capacity(75).complexity(70).warping(2));
 	
-	public static final Cap MISSING_CAP = new Cap.Impl(arcId("missing"), 0, 0);
-	
 	// cores...
 	public static final Core STICK_CORE = new Core.Impl(arcId("stick_wand_core"), 20, 3);
 	
@@ -359,8 +357,6 @@ public final class ArcanaRegistry{
 	public static final CoreItem MECHANICAL_WAND_CORE = new CoreItem(GROUPED_WAND, coreProperties().capacity(100).strength(30));
 	public static final CoreItem TAINTED_WAND_CORE = new CoreItem(GROUPED_WAND, coreProperties().capacity(110).strength(58).warping(1));
 	public static final CoreItem ELDRITCH_WAND_CORE = new CoreItem(GROUPED_WAND, coreProperties().capacity(165).strength(35).warping(2));
-	
-	public static final Core MISSING_CORE = new Core.Impl(arcId("missing"), 0, 0);
 	
 	// banner patterns...
 	public static final BannerPattern ELDRITCH_BANNER_PATTERN_SHAPE = new BannerPattern(arcId("eldritch"), "block.arcana.banner.eldritch");
@@ -1007,7 +1003,7 @@ public final class ArcanaRegistry{
 		register("mechanical_wand_cap", MECHANICAL_WAND_CAP);
 		register("void_wand_cap", VOID_WAND_CAP);
 		register("crimson_wand_cap", CRIMSON_WAND_CAP);
-		registerCapOnly(MISSING_CAP);
+		registerCapOnly(Cap.MISSING_CAP);
 		
 		registerCoreOnly(STICK_CORE);
 		register("greatwood_wand_core", GREATWOOD_WAND_CORE);
@@ -1024,7 +1020,7 @@ public final class ArcanaRegistry{
 		register("mechanical_wand_core", MECHANICAL_WAND_CORE);
 		register("tainted_wand_core", TAINTED_WAND_CORE);
 		register("eldritch_wand_core", ELDRITCH_WAND_CORE);
-		registerCoreOnly(MISSING_CORE);
+		registerCoreOnly(Core.MISSING_CORE);
 		
 		// TODO: banner pattern data
 		//Registry.register(Registries.BANNER_PATTERN, arcId("eldritch"), ELDRITCH_BANNER_PATTERN_SHAPE);

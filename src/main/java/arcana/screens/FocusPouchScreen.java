@@ -2,6 +2,7 @@ package arcana.screens;
 
 import arcana.ArcanaRegistry;
 import arcana.items.FocusItem;
+import arcana.items.FocusPouchItem;
 import arcana.util.ArrayInventory;
 import arcana.util.InventoryUtil;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -11,12 +12,12 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.Nullable;
 
 import static arcana.Arcana.arcId;
 
@@ -57,33 +58,45 @@ public class FocusPouchScreen extends HandledScreen<FocusPouchScreen.Handler>{
 	public static class Handler extends ScreenHandler{
 		
 		private static class FocusSlot extends Slot{
-			public FocusSlot(Inventory inventory, int index, int x, int y){
+			@Nullable
+			private final ItemStack pouchStack;
+			private final ArrayInventory inventory;
+			
+			public FocusSlot(ArrayInventory inventory, int index, int x, int y, @Nullable ItemStack pouchStack){
 				super(inventory, index, x, y);
+				this.inventory = inventory;
+				this.pouchStack = pouchStack;
 			}
 			
 			public boolean canInsert(ItemStack stack){
 				return stack.getItem() instanceof FocusItem;
+			}
+			
+			public void setStack(ItemStack stack, ItemStack previousStack){
+				super.setStack(stack, previousStack);
+				if(pouchStack != null)
+					FocusPouchItem.setInventory(pouchStack, inventory);
 			}
 		}
 		
 		private final ArrayInventory inventory;
 		
 		public Handler(int syncId, PlayerInventory pInv){
-			this(syncId, pInv, new ArrayInventory(9*3));
+			this(syncId, pInv, new ArrayInventory(9*3), null);
 		}
 		
-		public Handler(int syncId, PlayerInventory pInv, ArrayInventory inventory){
+		public Handler(int syncId, PlayerInventory pInv, ArrayInventory inventory, @Nullable ItemStack pouchStack){
 			super(ArcanaRegistry.FOCUS_POUCH_SCREEN_HANDLER, syncId);
 			this.inventory = inventory;
 			
 			// quick access slots
 			for(int idx = 0; idx < 9; idx++)
-				addSlot(new FocusSlot(inventory, idx, 10 + idx * 18, 14));
+				addSlot(new FocusSlot(inventory, idx, 10 + idx * 18, 14, pouchStack));
 			
 			// storage slots
 			for(int row = 0; row < 2; ++row)
 				for(int col = 0; col < 9; col++)
-					addSlot(new FocusSlot(inventory, col + row * 9 + 9, 10 + col * 18, 41 + row * 18));
+					addSlot(new FocusSlot(inventory, col + row * 9 + 9, 10 + col * 18, 41 + row * 18, pouchStack));
 			
 			// player inventory slots
 			for(int row = 0; row < 3; ++row)

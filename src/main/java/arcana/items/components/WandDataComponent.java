@@ -1,6 +1,5 @@
 package arcana.items.components;
 
-import arcana.ArcanaRegistry;
 import arcana.api.Cap;
 import arcana.api.Core;
 import arcana.aspects.AspectMap;
@@ -14,8 +13,8 @@ import java.util.function.Function;
 public class WandDataComponent{
 	
 	public static final Codec<WandDataComponent> CODEC = RecordCodecBuilder.create(i -> i.group(
-			Cap.CODEC.lenientOptionalFieldOf("cap", ArcanaRegistry.MISSING_CAP).forGetter(x -> x.cap),
-			Core.CODEC.lenientOptionalFieldOf("core", ArcanaRegistry.MISSING_CORE).forGetter(x -> x.core),
+			Cap.CODEC.lenientOptionalFieldOf("cap", Cap.MISSING_CAP).forGetter(x -> x.cap),
+			Core.CODEC.lenientOptionalFieldOf("core", Core.MISSING_CORE).forGetter(x -> x.core),
 			ItemStack.OPTIONAL_CODEC.fieldOf("focus").forGetter(x -> x.focus),
 			AspectMap.CODEC.fieldOf("stored").forGetter(x -> x.stored)
 	).apply(i, WandDataComponent::new));
@@ -26,8 +25,8 @@ public class WandDataComponent{
 	public AspectMap stored;
 	
 	public WandDataComponent(Cap cap, Core core, ItemStack focus, AspectMap stored){
-		this.cap = cap;
-		this.core = core;
+		this.cap = cap != null ? cap : Cap.MISSING_CAP;
+		this.core = core != null ? core : Core.MISSING_CORE;
 		this.focus = focus;
 		this.stored = stored;
 	}
@@ -37,7 +36,7 @@ public class WandDataComponent{
 	}
 	
 	public static WandDataComponent createDefault(){
-		return new WandDataComponent(ArcanaRegistry.MISSING_CAP, ArcanaRegistry.MISSING_CORE, ItemStack.EMPTY, new AspectMap());
+		return new WandDataComponent(Cap.MISSING_CAP, Core.MISSING_CORE, ItemStack.EMPTY, new AspectMap());
 	}
 	
 	public static WandDataComponent withCapAndCore(Cap cap, Core core){

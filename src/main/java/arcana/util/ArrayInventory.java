@@ -1,6 +1,5 @@
 package arcana.util;
 
-import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
@@ -14,27 +13,24 @@ import java.util.List;
 // SimpleInventory with fixed NBT (de)serialization; the name means "obvious inventory"
 public class ArrayInventory extends SimpleInventory{
 	
-	public static final Codec<ArrayInventory> CODEC = Codec.compoundList(Codec.INT, ItemStack.CODEC).xmap(
+	// i really do apologise
+	public static final Codec<ArrayInventory> CODEC = Both.codec(Codec.INT, Both.codec(Codec.INT, ItemStack.CODEC).listOf()).xmap(
 			x -> {
-				ArrayInventory inventory = new ArrayInventory(x.size());
-				for(Pair<Integer, ItemStack> pair : x)
-					inventory.setStack(pair.getFirst(), pair.getSecond());
+				ArrayInventory inventory = new ArrayInventory(x.fst());
+				for(Both<Integer, ItemStack> pair : x.snd())
+					inventory.setStack(pair.fst(), pair.snd());
 				return inventory;
 			},
 			x -> {
-				List<Pair<Integer, ItemStack>> ret = new ArrayList<>();
+				List<Both<Integer, ItemStack>> ret = new ArrayList<>();
 				for(int i = 0; i < x.size(); i++){
 					ItemStack there = x.getStack(i);
 					if(!there.isEmpty())
-						ret.add(Pair.of(i, there));
+						ret.add(Both.of(i, there));
 				}
-				return ret;
+				return Both.of(x.size(), ret);
 			}
 	);
-	
-	public ArrayInventory(){
-		super();
-	}
 	
 	public ArrayInventory(int size){
 		super(size);
@@ -72,5 +68,12 @@ public class ArrayInventory extends SimpleInventory{
 		}
 		
 		return list;
+	}
+	
+	public ArrayInventory copy(){
+		ArrayInventory ret = new ArrayInventory(size());
+		for(int i = 0; i < heldStacks.size(); i++)
+			ret.setStack(i, heldStacks.get(i));
+		return ret;
 	}
 }

@@ -15,8 +15,6 @@ public class SidedArrayInventory extends ArrayInventory implements SidedInventor
 	private final Map<Direction, int[]> slotsBySide = new EnumMap<>(Direction.class);
 	private final IntSet nonInsertableSlots = new IntOpenHashSet();
 	
-	public SidedArrayInventory(){}
-	
 	public SidedArrayInventory(int size){
 		super(size);
 	}

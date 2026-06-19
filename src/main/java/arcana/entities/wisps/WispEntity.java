@@ -86,7 +86,7 @@ public class WispEntity extends WispLikeEntity implements Angerable, ScalpelSlas
 			return false;
 		// TODO: use custom damage type for reifying damage
 		ItemStack stack = eds.getWeaponStack();
-		return eds.getAttacker() instanceof WispLikeEntity || (stack != null && stack.isIn(ArcanaTags.WISP_ATTACK_WHITELIST));
+		return !(eds.getAttacker() instanceof WispLikeEntity || stack != null && stack.isIn(ArcanaTags.WISP_ATTACK_WHITELIST));
 	}
 	
 	// start items with no velocity

@@ -51,7 +51,6 @@ public class WispLikeEntityRenderer<T extends WispLikeEntity> extends EntityRend
 		matrices.translate(0, 0.75f, 0);
 		matrices.scale(0.08f, 0.08f, 0.08f);
 		matrices.multiply(dispatcher.getRotation());
-		matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180));
 		float birthLerp = entityTime > 60 ? 1 : 1 - (float)Math.pow(2, -entityTime / 10);
 		float deathLerp = entity.deathTime > 0 ? 1 - (entity.deathTime + tickDelta) / 20f : 1;
 		float hurtLerp = entity.hurtTime > 0 ? MathHelper.clamp(entity.hurtTime - tickDelta - 1, 0, 8) / 8f : 0;

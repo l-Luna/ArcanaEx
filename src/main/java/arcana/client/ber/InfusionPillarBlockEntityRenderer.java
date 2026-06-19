@@ -13,8 +13,8 @@ import net.minecraft.client.render.block.BlockRenderManager;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.BakedModelManager;
-import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
@@ -25,9 +25,9 @@ import static arcana.Arcana.arcId;
 
 public class InfusionPillarBlockEntityRenderer implements BlockEntityRenderer<InfusionPillarBlockEntity>{
 	
-	public static final ModelIdentifier BASE_ID = new ModelIdentifier(arcId("infusion_pillar_base"), "");
-	public static final ModelIdentifier UPPER_ID = new ModelIdentifier(arcId("infusion_pillar_upper"), "");
-	public static final ModelIdentifier PEAK_ID = new ModelIdentifier(arcId("infusion_pillar_peak"), "");
+	public static final Identifier BASE_ID = arcId("block/infusion_pillar_base");
+	public static final Identifier UPPER_ID = arcId("block/infusion_pillar_upper");
+	public static final Identifier PEAK_ID = arcId("block/infusion_pillar_peak");
 	
 	public void render(InfusionPillarBlockEntity entity,
 	                   float tickDelta,

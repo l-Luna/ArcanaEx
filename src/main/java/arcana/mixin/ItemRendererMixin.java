@@ -8,7 +8,6 @@ import net.minecraft.client.render.item.ItemModels;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.json.ModelTransformationMode;
-import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
@@ -57,7 +56,7 @@ public class ItemRendererMixin{
 			Hand hand = entity.getMainArm() == arm ? Hand.MAIN_HAND : arm != null ? Hand.OFF_HAND : null;
 			if(!isInventory)
 				if(stack.isOf(ArcanaRegistry.CRIMSON_LEECH) && entity.handSwinging && entity.preferredHand == hand)
-					return models.getModelManager().getModel(new ModelIdentifier(arcId("crimson_leech_attacking"), "inventory"));
+					return models.getModelManager().getModel(arcId("item/crimson_leech_attacking"));
 		}
 		return original.call(instance, stack, world, entity, seed);
 	}

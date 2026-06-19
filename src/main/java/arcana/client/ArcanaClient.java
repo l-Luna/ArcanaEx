@@ -115,7 +115,14 @@ public final class ArcanaClient implements ClientModInitializer{
 		
 		ModelLoadingPlugin.register(new WandModel.Provider());
 		
-		// TODO: should be unnecessary, but check!
+		ModelLoadingPlugin.register(ctx -> {
+			ctx.addModels(arcId("item/crimson_leech_attacking"));
+			ctx.addModels(arcId("block/infusion_matrix_active"));
+			
+			ctx.addModels(InfusionPillarBlockEntityRenderer.BASE_ID);
+			ctx.addModels(InfusionPillarBlockEntityRenderer.UPPER_ID);
+			ctx.addModels(InfusionPillarBlockEntityRenderer.PEAK_ID);
+		});
 		/*
 		ModelLoadingRegistry.INSTANCE.registerModelProvider((manager, out) -> {
 			out.accept(InfusionPillarBlockEntityRenderer.BASE_ID);
@@ -123,28 +130,6 @@ public final class ArcanaClient implements ClientModInitializer{
 			out.accept(InfusionPillarBlockEntityRenderer.PEAK_ID);
 			out.accept(new ModelIdentifier(arcId("infusion_matrix_active"), ""));
 			out.accept(new ModelIdentifier(arcId("crimson_leech_attacking"), "inventory"));
-		});
-		ClientSpriteRegistryCallback.event(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE).register((atlasTexture, registry) -> {
-			registry.register(WHITE_TEX);
-			registry.register(SUPPRESSED_EFFECT_TEX);
-			
-			registry.register(RunicShieldingRenderer.iconsTexture);
-			registry.register(RunicShieldingRenderer.overlayTexture);
-			
-			registry.register(WardedJarBlockEntityRenderer.topTexture);
-			registry.register(WardedJarBlockEntityRenderer.sideTexture);
-			registry.register(WardedJarBlockEntityRenderer.bottomTexture);
-			registry.register(MysticMistBlockEntityRenderer.RAIN);
-			registry.register(MysticMistBlockEntityRenderer.SNOW);
-			registry.register(EssentiaValveBlockEntityRenderer.GEAR_TEX);
-			
-			for(ArcanaFluid fluid : ArcanaRegistry.stillFluids){
-				registry.register(arcId(fluid.getTexturePath()));
-				registry.register(arcId(fluid.getTexturePath() + "_flowing"));
-			}
-			
-			registry.register(arcId("block/warded"));
-			// registry.register(arcId("block/infested"));
 		});*/
 		// TODO: veiling
 		/*CoreShaderRegistrationCallback.EVENT.register(context -> {

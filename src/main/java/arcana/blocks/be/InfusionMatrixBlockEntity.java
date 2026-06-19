@@ -3,6 +3,7 @@ package arcana.blocks.be;
 import arcana.ArcanaRegistry;
 import arcana.aspects.Aspect;
 import arcana.aspects.AspectMap;
+import arcana.aspects.AspectStack;
 import arcana.cca_components.Researcher;
 import arcana.client.particles.AspectParticleEffect;
 import arcana.recipes.infusion.BakedInfusionRecipe;
@@ -158,12 +159,15 @@ public class InfusionMatrixBlockEntity extends BlockEntity{
 			ItemStack centre = pbe.getStack();
 			List<ItemStack> outers = outerStacks();
 			AspectMap aspects = new AspectMap();
-			inRange(world::getBlockEntity)
-					.filter(WardedJarBlockEntity.class::isInstance)
-					.map(WardedJarBlockEntity.class::cast)
-					.map(WardedJarBlockEntity::getStored)
-					.filter(Objects::nonNull)
-					.forEach(aspects::add);
+			List<BlockEntity> list = inRange(world::getBlockEntity).toList();
+			for(BlockEntity entity : list){
+				if(entity instanceof WardedJarBlockEntity){
+					WardedJarBlockEntity blockEntity = (WardedJarBlockEntity)entity;
+					AspectStack stored = blockEntity.getStored();
+					if(stored != null)
+						aspects.add(stored);
+				}
+			}
 			
 			InfusionInput inv = new InfusionInput(centre, outers, aspects);
 			world.getRecipeManager().getFirstMatch(SimpleInfusionRecipe.TYPE, inv, world).ifPresent(recipe -> {

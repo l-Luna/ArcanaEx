@@ -228,6 +228,8 @@ public final class NodeRenderer{
 			return;
 		
 		NodeState ns = stateFor(node);
+		if(ns.aspectLerp == 0)
+			return;
 		String amount = node.getAspects().underlying().get(aspect).toString();
 		
 		double sqrDist = MinecraftClient.getInstance().player.squaredDistanceTo(node.getX(), node.getY(), node.getZ());
@@ -235,29 +237,26 @@ public final class NodeRenderer{
 		alpha *= ns.aspectLerp;
 		if(alpha < 4 / 255f) // text renderer treats zero/very low alpha as implicit full alpha
 			alpha = 4 / 255f;
-		var intAlpha = (int)(alpha * 255) << 24;
+		int intAlpha = (int)(alpha * 255) << 24;
 		
 		Vector3f offset = new Vector3f(0, 1, 0);
 		offset.mul(1.2f * ns.aspectLerp);
 		offset.rotate(RotationAxis.POSITIVE_Z.rotation((float)((Math.PI * 2) * (node.getAspects().indexOf(aspect) / (float)node.getAspects().size()))));
 		
-		// TODO: fix text rendering
 		VertexConsumerProvider.Immediate vcp = VertexConsumerProvider.immediate(new BufferAllocator(512));
 		Matrix4fStack stack = RenderSystem.getModelViewStack();
 		stack.pushMatrix();
 		stack.rotate(camera.getRotation());
-		stack.translate((float)-node.getX(), (float)node.getY(), (float)-node.getZ());
-		stack.translate((float)camera.getPos().x, (float)-camera.getPos().y, (float)camera.getPos().z);
-		Vector3f o = camera.getRotation().getEulerAnglesXYZ(new Vector3f());
-		stack.rotate(new Quaternionf().rotateXYZ(0, o.y(), 0));
-		stack.rotate(new Quaternionf().rotateXYZ(-o.x(), 0, -o.z()));
-		stack.translate(-offset.x(), offset.y(), offset.z());
+		stack.translate((float)node.getX(), (float)node.getY(), (float)node.getZ());
+		stack.translate((float)-camera.getPos().x, (float)-camera.getPos().y, (float)-camera.getPos().z);
+		stack.rotate(camera.getRotation());
+		stack.translate(offset.x(), offset.y(), offset.z());
 		stack.rotate(new Quaternionf().rotateXYZ(0, MathHelper.PI, MathHelper.PI));
 		stack.scale(.035f, .035f, .1f);
 		stack.translate(0, 0, -0.25f);
 		MinecraftClient.getInstance().textRenderer.draw(amount, 0, 0, 0xFFFFFF | intAlpha, false, stack.get(new Matrix4f()), vcp, TextRenderer.TextLayerType.POLYGON_OFFSET, 0, LightmapTextureManager.MAX_LIGHT_COORDINATE);
 		stack.translate(1, 1, 0.1f);
-		MinecraftClient.getInstance().textRenderer.draw(amount, 0, 0, 0xFFFFFF | intAlpha, false, stack.get(new Matrix4f()), vcp, TextRenderer.TextLayerType.POLYGON_OFFSET, 0, LightmapTextureManager.MAX_LIGHT_COORDINATE);
+		MinecraftClient.getInstance().textRenderer.draw(amount, 0, 0, 0x666666 | intAlpha, false, stack.get(new Matrix4f()), vcp, TextRenderer.TextLayerType.POLYGON_OFFSET, 0, LightmapTextureManager.MAX_LIGHT_COORDINATE);
 		stack.popMatrix();
 		vcp.draw();
 	}
@@ -267,7 +266,7 @@ public final class NodeRenderer{
 			return;
 		
 		// based on BillboardParticle
-		Vector3f[] corners = { new Vector3f(0, 0, 0), new Vector3f(0, height, 0), new Vector3f(1, height, 0), new Vector3f(1, 0, 0) };
+		Vector3f[] corners = { new Vector3f(1, 0, 0), new Vector3f(1, height, 0), new Vector3f(0, height, 0), new Vector3f(0, 0, 0) };
 		Quaternionf rot = camera.getRotation();
 		for(Vector3f corner : corners){
 			corner.mul(scale);

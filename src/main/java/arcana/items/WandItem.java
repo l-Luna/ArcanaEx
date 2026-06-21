@@ -25,10 +25,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.StackReference;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUsageContext;
+import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipData;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
@@ -143,6 +140,26 @@ public class WandItem extends Item implements FabricItem, WarpingItem, CustomCre
 			}
 		}
 		return super.useOnEntity(stack, user, entity, hand);
+	}
+	
+	public boolean onStackClicked(ItemStack stack, Slot slot, ClickType clickType, PlayerEntity player){
+		ItemStack there = slot.getStack();
+		if(clickType == ClickType.RIGHT && !there.isEmpty()){
+			Item slotItem = there.getItem();
+			ItemStack result = null;
+			if(slotItem.equals(Items.CRAFTING_TABLE))
+				result = there.copyComponentsToNewStack(ArcanaRegistry.ARCANE_CRAFTING_TABLE.asItem(), there.getCount());
+			else if(slotItem.equals(Items.CAULDRON))
+				result = there.copyComponentsToNewStack(ArcanaRegistry.CRUCIBLE.asItem(), there.getCount());
+			if(result != null){
+				slot.setStack(result);
+				// TODO: screen particles, sfx
+				return true;
+			}
+			// TODO: wand interaction recipes?
+			// TODO: primal repair
+		}
+		return super.onStackClicked(stack, slot, clickType, player);
 	}
 	
 	public int getMaxUseTime(ItemStack stack, LivingEntity user){

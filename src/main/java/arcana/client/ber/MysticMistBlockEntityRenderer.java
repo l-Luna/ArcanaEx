@@ -11,7 +11,6 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
-import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
@@ -22,8 +21,6 @@ import net.minecraft.util.math.noise.PerlinNoiseSampler;
 import net.minecraft.util.math.random.LocalRandom;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
-
-import java.util.function.Function;
 
 import static arcana.Arcana.arcId;
 
@@ -72,7 +69,6 @@ public class MysticMistBlockEntityRenderer implements BlockEntityRenderer<Mystic
 		LocalRandom rng = new LocalRandom(entity.hashCode());
 		PerlinNoiseSampler p = new PerlinNoiseSampler(rng);
 		
-		Function<Identifier, Sprite> atlas = MinecraftClient.getInstance().getSpriteAtlas(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE);
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
 		RenderSystem.enableDepthTest();
@@ -86,15 +82,20 @@ public class MysticMistBlockEntityRenderer implements BlockEntityRenderer<Mystic
 		RenderSystem.setShaderTexture(0, arcId("textures/misc/white.png"));
 		for(int x = 0; x < lim; x++)
 			for(int z = 0; z < lim; z++){
-				if(p.sample((x + diff) * .3, 0, (z + diff) * .3) >= 0.13){
-					float opacity = 1;
-					if(x == 0 || z == 0)
-						opacity = offset;
-					else if(x == lim - 1 || z == lim - 1)
-						opacity = 1 - offset;
+				if(p.sample((x + diff) * .3, 0, (z + diff) * .3) >= 0.08){
+					float fracInX = 1, fracOutX = 1, fracInZ = 1, fracOutZ = 1;
+					if(x == 0)
+						fracInX = offset;
+					else if(x == lim - 1)
+						fracOutX = 1 - offset;
+					if(z == 0)
+						fracInZ = offset;
+					else if(z == lim - 1)
+						fracOutZ = 1 - offset;
+					float fracX = Math.min(fracInX, fracOutX), fracZ = Math.min(fracInZ, fracOutZ);
 					
 					// clouds
-					RenderHelper.colCuboid(vc, matrices, ((int)(opacity * 255) << 24) + 0x00EEEEFE, new Vec3d(x + offset, 1.2f, z + offset), 1, 0.35f, 1, 0, 0, 1, 1, false);
+					RenderHelper.colCuboid(vc, matrices, 0xFFEEEEFE, new Vec3d(x + offset - fracInX + 1, 1.2f, z + offset - fracInZ + 1), fracX, 0.35f, fracZ, 0, 0, 1, 1, false);
 				}
 			}
 		
@@ -105,82 +106,80 @@ public class MysticMistBlockEntityRenderer implements BlockEntityRenderer<Mystic
 		RenderSystem.setShaderTexture(0, isRain || isThunder ? RAIN : SNOW);
 		
 		final float sqrt2 = MathHelper.SQUARE_ROOT_OF_TWO;
-		final float fallrate = isRain ? 32 : isThunder ? 16 : 256;
+		final float fallrate = isRain ? 16 : isThunder ? 12 : 256;
 		
 		for(int x = 0; x < lim; x++)
 			for(int z = 0; z < lim; z++){
-				if(p.sample((x + diff) * .3, 0, (z + diff) * .3) >= 0.13){
-					// need two parts to animate it on an atlas
-					for(int part = 0; part < 2; part++){
-						float lOffset = (float)(((time / fallrate) % 1) + Math.abs(p.sample((x + diff), 0, (z + diff)))) % 1;
-						float itv = MathHelper.lerp(1 - lOffset, 0f, 1f);
-						float startY = (part == 0) ? 0 : lOffset,
-						      endY   = (part == 0) ? lOffset : 1;
-						float minV = (part == 0) ? itv : 0f,
-						      maxV = (part == 0) ? 1f : itv;
-						// X-shape
-						for(int direction = 0; direction < 2; direction++){
-							matrices.push();
-							matrices.translate(x + offset, 1.2f, z + offset);
-							matrices.translate(1, 0, 0);
-							if(direction == 1)
-								matrices.translate(0, 0, 1);
-							matrices.scale(4 * sqrt2, 4 * sqrt2, 4 * sqrt2);
-							matrices.multiply(RotationAxis.POSITIVE_Y.rotation(MathHelper.HALF_PI / 2f));
-							matrices.multiply(RotationAxis.POSITIVE_Z.rotation(3 * MathHelper.HALF_PI));
-							
-							if(direction == 1)
-								matrices.multiply(RotationAxis.POSITIVE_X.rotation(MathHelper.HALF_PI));
-							
-							// and rain
-							Matrix4f mat = matrices.peek().getPositionMatrix();
-							
-							// forward
-							vc.vertex(mat, endY, 0, 0)
-									.color(0xFFFFFFFF)
-									.texture(0f, maxV)
-									.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
-									.normal(1, 0, 0);
-							vc.vertex(mat, endY, -1 / 4f, 0)
-									.color(0xFFFFFFFF)
-									.texture(1f, maxV)
-									.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
-									.normal(1, 0, 0);
-							vc.vertex(mat, startY, -1 / 4f, 0)
-									.color(0xFFFFFFFF)
-									.texture(1f, minV)
-									.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
-									.normal(1, 0, 0);
-							vc.vertex(mat, startY, 0, 0)
-									.color(0xFFFFFFFF)
-									.texture(0f, minV)
-									.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
-									.normal(1, 0, 0);
-							
-							// and back
-							vc.vertex(mat, startY, 0, 0)
-									.color(0xFFFFFFFF)
-									.texture(0f, minV)
-									.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
-									.normal(1, 0, 0);
-							vc.vertex(mat, startY, -1 / 4f, 0)
-									.color(0xFFFFFFFF)
-									.texture(1f, minV)
-									.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
-									.normal(1, 0, 0);
-							vc.vertex(mat, endY, -1 / 4f, 0)
-									.color(0xFFFFFFFF)
-									.texture(1f, maxV)
-									.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
-									.normal(1, 0, 0);
-							vc.vertex(mat, endY, 0, 0)
-									.color(0xFFFFFFFF)
-									.texture(0f, maxV)
-									.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
-									.normal(1, 0, 0);
-							
-							matrices.pop();
-						}
+				// need two parts to animate it on an atlas
+				for(int part = 0; part < 2; part++){
+					float lOffset = (float)(((time / fallrate) % 1) + Math.abs(p.sample((x + diff), 0, (z + diff)))) % 1;
+					float itv = MathHelper.lerp(1 - lOffset, 0f, 1f);
+					float startY = (part == 0) ? 0 : lOffset,
+					      endY   = (part == 0) ? lOffset : 1;
+					float minV = (part == 0) ? itv : 0f,
+					      maxV = (part == 0) ? 1f : itv;
+					// X-shape
+					for(int direction = 0; direction < 2; direction++){
+						matrices.push();
+						matrices.translate(x, 1.2f, z);
+						matrices.translate(1, 0, 0);
+						if(direction == 1)
+							matrices.translate(0, 0, 1);
+						matrices.scale(4 * sqrt2, 6 * sqrt2, 4 * sqrt2);
+						matrices.multiply(RotationAxis.POSITIVE_Y.rotation(MathHelper.HALF_PI / 2f));
+						matrices.multiply(RotationAxis.POSITIVE_Z.rotation(3 * MathHelper.HALF_PI));
+						
+						if(direction == 1)
+							matrices.multiply(RotationAxis.POSITIVE_X.rotation(MathHelper.HALF_PI));
+						
+						// and rain
+						Matrix4f mat = matrices.peek().getPositionMatrix();
+						
+						// forward
+						vc.vertex(mat, endY, 0, 0)
+								.color(1f, 1f, 1f, 0.4f)
+								.texture(0f, maxV)
+								.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
+								.normal(1, 0, 0);
+						vc.vertex(mat, endY, -1 / 4f, 0)
+								.color(1f, 1f, 1f, 0.4f)
+								.texture(1f, maxV)
+								.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
+								.normal(1, 0, 0);
+						vc.vertex(mat, startY, -1 / 4f, 0)
+								.color(1f, 1f, 1f, 0.4f)
+								.texture(1f, minV)
+								.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
+								.normal(1, 0, 0);
+						vc.vertex(mat, startY, 0, 0)
+								.color(1f, 1f, 1f, 0.4f)
+								.texture(0f, minV)
+								.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
+								.normal(1, 0, 0);
+						
+						// and back
+						vc.vertex(mat, startY, 0, 0)
+								.color(1f, 1f, 1f, 0.4f)
+								.texture(0f, minV)
+								.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
+								.normal(1, 0, 0);
+						vc.vertex(mat, startY, -1 / 4f, 0)
+								.color(1f, 1f, 1f, 0.4f)
+								.texture(1f, minV)
+								.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
+								.normal(1, 0, 0);
+						vc.vertex(mat, endY, -1 / 4f, 0)
+								.color(1f, 1f, 1f, 0.4f)
+								.texture(1f, maxV)
+								.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
+								.normal(1, 0, 0);
+						vc.vertex(mat, endY, 0, 0)
+								.color(1f, 1f, 1f, 0.4f)
+								.texture(0f, maxV)
+								.light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
+								.normal(1, 0, 0);
+						
+						matrices.pop();
 					}
 				}
 			}

@@ -80,7 +80,7 @@ public class MysticMistBlockEntity extends BlockEntity implements AspectIo{
 		
 		// update vertical free space
 		int newVspace = 0;
-		for(int i = 1; i < 6; i++){
+		for(int i = 1; i < 10; i++){
 			if(world.getBlockState(pos.up(i)).isOpaque())
 				break;
 			newVspace = i;

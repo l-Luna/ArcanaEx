@@ -5,10 +5,8 @@
     "arcana": "Arcana",
     "main": "Main",
     "resources": "Resources",
-    "wands": "Wands",
     "equipment": "Equipment",
-    "crystals": "Crystals",
-    "phials": "Phials",
+    "aspects": "Aspects",
     "tainted": "Tainted/Dead",
     "creative": "Creative"
   },
@@ -631,7 +629,7 @@
     "hollowed_ore": "Hollowed Ore"
   },
 
-  "block.minecraft.banner.arcana": {
+  "block.arcana.banner": {
     "eldritch": {
       "black": "Black Eldritch Sigil",
       "red": "Red Eldritch Sigil",

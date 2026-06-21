@@ -57,7 +57,6 @@ public class InfusionMatrixBlockEntityRenderer implements BlockEntityRenderer<In
 		BakedModelManager modelManager = MinecraftClient.getInstance().getBakedModelManager();
 		BlockRenderManager renderManager = MinecraftClient.getInstance().getBlockRenderManager();
 		
-		//BakedModel model = modelManager.getModel(new ModelIdentifier(crafting ? arcId("block/infusion_matrix_active") : arcId("infusion_matrix"), ""));
 		BakedModel model = crafting ? modelManager.getModel(arcId("block/infusion_matrix_active")) : modelManager.getModel(new ModelIdentifier(arcId("infusion_matrix"), ""));
 		VertexConsumer buffer = vertexConsumers.getBuffer(TexturedRenderLayers.getEntitySolid());
 		renderManager.getModelRenderer().render(entity.getWorld(), model, state, entity.getPos(), matrices, buffer, false, Random.create(), state.getRenderingSeed(entity.getPos()), overlay);

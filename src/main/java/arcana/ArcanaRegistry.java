@@ -59,7 +59,6 @@ import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
 import net.minecraft.block.*;
-import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.FoodComponent;
@@ -117,9 +116,7 @@ public final class ArcanaRegistry{
 		MAIN,
 		RESOURCES,
 		EQUIPMENT,
-		WANDS,
-		CRYSTALS,
-		PHIALS,
+		ASPECTS,
 		TAINTED,
 		CREATIVE
 	}
@@ -129,10 +126,10 @@ public final class ArcanaRegistry{
 	private static final ArcanaItemSettings GROUPED = new ArcanaItemSettings().group(Tab.MAIN);
 	private static final ArcanaItemSettings GROUPED_SINGLE = new ArcanaItemSettings().group(Tab.MAIN).maxCount(1);
 	
-	private static final ArcanaItemSettings GROUPED_RES = new ArcanaItemSettings().group(Tab.RESOURCES);
+	private static final ArcanaItemSettings GROUPED_EQUIPMENT_SINGLE = new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1);
 	
-	private static final ArcanaItemSettings GROUPED_WAND = new ArcanaItemSettings().group(Tab.WANDS);
-	private static final ArcanaItemSettings GROUPED_WAND_SINGLE = new ArcanaItemSettings().group(Tab.WANDS).maxCount(1);
+	private static final ArcanaItemSettings GROUPED_RES = new ArcanaItemSettings().group(Tab.RESOURCES);
+	private static final ArcanaItemSettings GROUPED_RES_SINGLE = new ArcanaItemSettings().group(Tab.RESOURCES).maxCount(1);
 	
 	private static final ArcanaItemSettings GROUPED_CREATIVE_SINGLE = new ArcanaItemSettings().group(Tab.CREATIVE).maxCount(1).rarity(Rarity.EPIC);
 	
@@ -300,70 +297,69 @@ public final class ArcanaRegistry{
 	
 	public static final Item VOID_PUTTY = new Item(GROUPED);
 	
-	public static final Item WAND = new WandItem(GROUPED_WAND_SINGLE);
+	public static final Item WAND = new WandItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1));
 	
-	public static final Item FOCUS_POUCH = new FocusPouchItem(GROUPED_WAND_SINGLE);
+	public static final Item FOCUS_POUCH = new FocusPouchItem(GROUPED_EQUIPMENT_SINGLE);
 	
 	// foci...
-	public static final Item FIRE_FOCUS = new FireFocusItem(GROUPED_WAND_SINGLE);
-	public static final Item SOLAR_FLARE_FOCUS = new SolarFlareFocusItem(GROUPED_WAND_SINGLE);
-	public static final Item FETCH_FOCUS = new FetchFocusItem(GROUPED_WAND_SINGLE);
-	public static final Item PORTABLE_HOLE_FOCUS = new PortableHoleFocusItem(GROUPED_WAND_SINGLE);
-	public static final Item LIGHT_FOCUS = new LightFocusItem(GROUPED_WAND_SINGLE);
-	public static final Item PRISMATIC_LIGHT_FOCUS = new PrismaticLightFocusItem(GROUPED_WAND_SINGLE);
-	public static final Item LIGHTNING_FOCUS = new LightningFocusItem(GROUPED_WAND_SINGLE);
-	public static final Item EQUIVALENT_EXCHANGE_FOCUS = new EquivalentExchangeFocusItem(GROUPED_WAND_SINGLE);
-	public static final Item COAGULATION_FOCUS = new CoagulationFocusItem(GROUPED_WAND_SINGLE);
-	public static final Item CRYSTAL_CAPACITOR_FOCUS = new CrystalCapacitorFocusItem(new ArcanaItemSettings().group(Tab.WANDS).maxCount(1).maxDamage(6));
-	public static final Item WARD_FOCUS = new WardFocusItem(new ArcanaItemSettings().group(Tab.WANDS).maxCount(1).rarity(Rarity.UNCOMMON));
-	public static final Item CONSUME_REBUKE_FOCUS = new ConsumeRebukeFocus(GROUPED_WAND_SINGLE);
+	public static final Item FIRE_FOCUS = new FireFocusItem(GROUPED_EQUIPMENT_SINGLE);
+	public static final Item SOLAR_FLARE_FOCUS = new SolarFlareFocusItem(GROUPED_EQUIPMENT_SINGLE);
+	public static final Item FETCH_FOCUS = new FetchFocusItem(GROUPED_EQUIPMENT_SINGLE);
+	public static final Item PORTABLE_HOLE_FOCUS = new PortableHoleFocusItem(GROUPED_EQUIPMENT_SINGLE);
+	public static final Item LIGHT_FOCUS = new LightFocusItem(GROUPED_EQUIPMENT_SINGLE);
+	public static final Item PRISMATIC_LIGHT_FOCUS = new PrismaticLightFocusItem(GROUPED_EQUIPMENT_SINGLE);
+	public static final Item LIGHTNING_FOCUS = new LightningFocusItem(GROUPED_EQUIPMENT_SINGLE);
+	public static final Item EQUIVALENT_EXCHANGE_FOCUS = new EquivalentExchangeFocusItem(GROUPED_EQUIPMENT_SINGLE);
+	public static final Item COAGULATION_FOCUS = new CoagulationFocusItem(GROUPED_EQUIPMENT_SINGLE);
+	public static final Item CRYSTAL_CAPACITOR_FOCUS = new CrystalCapacitorFocusItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1).maxDamage(6));
+	public static final Item WARD_FOCUS = new WardFocusItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1).rarity(Rarity.UNCOMMON));
+	public static final Item CONSUME_REBUKE_FOCUS = new ConsumeRebukeFocus(GROUPED_EQUIPMENT_SINGLE);
 	
 	// caps...
-	public static final CapItem IRON_WAND_CAP = new CapItem(GROUPED_WAND, capProperties().capacity(5).complexity(3));
+	public static final CapItem IRON_WAND_CAP = new CapItem(GROUPED_RES, capProperties().capacity(5).complexity(3));
 	
-	public static final CapItem GOLD_WAND_CAP = new CapItem(GROUPED_WAND, capProperties().capacity(14).complexity(15));
-	public static final CapItem COPPER_WAND_CAP = new CapItem(GROUPED_WAND, capProperties().capacity(10).complexity(12).strBonus(5));
-	public static final CapItem LEATHER_WAND_CAP = new CapItem(GROUPED_WAND, capProperties().capacity(10).complexity(12).discountAll(8));
+	public static final CapItem GOLD_WAND_CAP = new CapItem(GROUPED_RES, capProperties().capacity(14).complexity(15));
+	public static final CapItem COPPER_WAND_CAP = new CapItem(GROUPED_RES, capProperties().capacity(10).complexity(12).strBonus(5));
+	public static final CapItem LEATHER_WAND_CAP = new CapItem(GROUPED_RES, capProperties().capacity(10).complexity(12).discountAll(8));
 	
-	public static final CapItem THAUMIUM_WAND_CAP = new CapItem(GROUPED_WAND, capProperties().capacity(25).complexity(35));
-	public static final CapItem BAMBOO_WAND_CAP = new CapItem(GROUPED_WAND, capProperties().capacity(20).complexity(30).discountFor(Aspects.AIR, 12));
-	public static final CapItem QUARTZ_WAND_CAP = new CapItem(GROUPED_WAND, capProperties().capacity(20).complexity(30).discountFor(Aspects.FIRE, 12));
-	public static final CapItem PRISMARINE_WAND_CAP = new CapItem(GROUPED_WAND, capProperties().capacity(20).complexity(30).discountFor(Aspects.WATER, 12));
-	public static final CapItem AMBER_WAND_CAP = new CapItem(GROUPED_WAND, capProperties().capacity(20).complexity(30).discountFor(Aspects.EARTH, 12));
-	public static final CapItem HONEYCOMB_WAND_CAP = new CapItem(GROUPED_WAND, capProperties().capacity(20).complexity(30).discountFor(Aspects.ORDER, 12));
+	public static final CapItem THAUMIUM_WAND_CAP = new CapItem(GROUPED_RES, capProperties().capacity(25).complexity(35));
+	public static final CapItem BAMBOO_WAND_CAP = new CapItem(GROUPED_RES, capProperties().capacity(20).complexity(30).discountFor(Aspects.AIR, 12));
+	public static final CapItem QUARTZ_WAND_CAP = new CapItem(GROUPED_RES, capProperties().capacity(20).complexity(30).discountFor(Aspects.FIRE, 12));
+	public static final CapItem PRISMARINE_WAND_CAP = new CapItem(GROUPED_RES, capProperties().capacity(20).complexity(30).discountFor(Aspects.WATER, 12));
+	public static final CapItem AMBER_WAND_CAP = new CapItem(GROUPED_RES, capProperties().capacity(20).complexity(30).discountFor(Aspects.EARTH, 12));
+	public static final CapItem HONEYCOMB_WAND_CAP = new CapItem(GROUPED_RES, capProperties().capacity(20).complexity(30).discountFor(Aspects.ORDER, 12));
 	// TODO: chaos elemental cap
 	
-	public static final CapItem NETHERITE_WAND_CAP = new CapItem(GROUPED_WAND, capProperties().capacity(55).complexity(75));
-	public static final CapItem MECHANICAL_WAND_CAP = new CapItem(GROUPED_WAND, capProperties().capacity(40).complexity(55)/*.mechanical()?*/);
-	public static final CapItem VOID_WAND_CAP = new CapItem(GROUPED_WAND, capProperties().capacity(50).complexity(80).warping(1));
-	public static final CapItem CRIMSON_WAND_CAP = new CapItem(GROUPED_WAND, capProperties().capacity(75).complexity(70).warping(2));
+	public static final CapItem NETHERITE_WAND_CAP = new CapItem(GROUPED_RES, capProperties().capacity(55).complexity(75));
+	public static final CapItem MECHANICAL_WAND_CAP = new CapItem(GROUPED_RES, capProperties().capacity(40).complexity(55)/*.mechanical()?*/);
+	public static final CapItem VOID_WAND_CAP = new CapItem(GROUPED_RES, capProperties().capacity(50).complexity(80).warping(1));
+	public static final CapItem CRIMSON_WAND_CAP = new CapItem(GROUPED_RES, capProperties().capacity(75).complexity(70).warping(2));
 	
 	// cores...
 	public static final Core STICK_CORE = new Core.Impl(arcId("stick_wand_core"), 20, 3);
 	
-	public static final CoreItem GREATWOOD_WAND_CORE = new CoreItem(GROUPED_WAND, coreProperties().capacity(45).strength(10));
-	public static final CoreItem NETHER_STEM_WAND_CORE = new CoreItem(GROUPED_WAND, coreProperties().capacity(37).strength(8).cmplxBonus(6));
-	public static final CoreItem VARNISHED_WOOD_WAND_CORE = new CoreItem(GROUPED_WAND, coreProperties().capacity(37).strength(8).discountAll(12));
+	public static final CoreItem GREATWOOD_WAND_CORE = new CoreItem(GROUPED_RES, coreProperties().capacity(45).strength(10));
+	public static final CoreItem NETHER_STEM_WAND_CORE = new CoreItem(GROUPED_RES, coreProperties().capacity(37).strength(8).cmplxBonus(6));
+	public static final CoreItem VARNISHED_WOOD_WAND_CORE = new CoreItem(GROUPED_RES, coreProperties().capacity(37).strength(8).discountAll(12));
 	
-	public static final CoreItem SILVERWOOD_WAND_CORE = new CoreItem(GROUPED_WAND, coreProperties().capacity(78).strength(20));
-	public static final CoreItem SUGAR_CANE_WAND_CORE = new CoreItem(GROUPED_WAND, coreProperties().capacity(63).strength(15).discountFor(Aspects.AIR, 16));
-	public static final CoreItem BLAZE_WAND_CORE = new CoreItem(GROUPED_WAND, coreProperties().capacity(63).strength(15).discountFor(Aspects.FIRE, 16));
-	public static final CoreItem ICE_WAND_CORE = new CoreItem(GROUPED_WAND, coreProperties().capacity(63).strength(15).discountFor(Aspects.WATER, 16));
-	public static final CoreItem OBSIDIAN_WAND_CORE = new CoreItem(GROUPED_WAND, coreProperties().capacity(63).strength(15).discountFor(Aspects.EARTH, 16));
-	public static final CoreItem ARCANE_STONE_WAND_CORE = new CoreItem(GROUPED_WAND, coreProperties().capacity(63).strength(15).discountFor(Aspects.ORDER, 16));
-	public static final CoreItem BONE_WAND_CORE = new CoreItem(GROUPED_WAND, coreProperties().capacity(63).strength(15).discountFor(Aspects.ENTROPY, 16));
+	public static final CoreItem SILVERWOOD_WAND_CORE = new CoreItem(GROUPED_RES, coreProperties().capacity(78).strength(20));
+	public static final CoreItem SUGAR_CANE_WAND_CORE = new CoreItem(GROUPED_RES, coreProperties().capacity(63).strength(15).discountFor(Aspects.AIR, 16));
+	public static final CoreItem BLAZE_WAND_CORE = new CoreItem(GROUPED_RES, coreProperties().capacity(63).strength(15).discountFor(Aspects.FIRE, 16));
+	public static final CoreItem ICE_WAND_CORE = new CoreItem(GROUPED_RES, coreProperties().capacity(63).strength(15).discountFor(Aspects.WATER, 16));
+	public static final CoreItem OBSIDIAN_WAND_CORE = new CoreItem(GROUPED_RES, coreProperties().capacity(63).strength(15).discountFor(Aspects.EARTH, 16));
+	public static final CoreItem ARCANE_STONE_WAND_CORE = new CoreItem(GROUPED_RES, coreProperties().capacity(63).strength(15).discountFor(Aspects.ORDER, 16));
+	public static final CoreItem BONE_WAND_CORE = new CoreItem(GROUPED_RES, coreProperties().capacity(63).strength(15).discountFor(Aspects.ENTROPY, 16));
 	
-	public static final CoreItem ARCANIUM_WAND_CORE = new CoreItem(GROUPED_WAND, coreProperties().capacity(130).strength(40));
-	public static final CoreItem MECHANICAL_WAND_CORE = new CoreItem(GROUPED_WAND, coreProperties().capacity(100).strength(30));
-	public static final CoreItem TAINTED_WAND_CORE = new CoreItem(GROUPED_WAND, coreProperties().capacity(110).strength(58).warping(1));
-	public static final CoreItem ELDRITCH_WAND_CORE = new CoreItem(GROUPED_WAND, coreProperties().capacity(165).strength(35).warping(2));
+	public static final CoreItem ARCANIUM_WAND_CORE = new CoreItem(GROUPED_RES, coreProperties().capacity(130).strength(40));
+	public static final CoreItem MECHANICAL_WAND_CORE = new CoreItem(GROUPED_RES, coreProperties().capacity(100).strength(30));
+	public static final CoreItem TAINTED_WAND_CORE = new CoreItem(GROUPED_RES, coreProperties().capacity(110).strength(58).warping(1));
+	public static final CoreItem ELDRITCH_WAND_CORE = new CoreItem(GROUPED_RES, coreProperties().capacity(165).strength(35).warping(2));
 	
 	// banner patterns...
-	public static final BannerPattern ELDRITCH_BANNER_PATTERN_SHAPE = new BannerPattern(arcId("eldritch"), "block.arcana.banner.eldritch");
 	public static final Item ELDRITCH_BANNER_PATTERN = new BannerPatternItem(ArcanaTags.ELDRITCH_BANNER_PATTERNS, new ArcanaItemSettings().group(Tab.MAIN).maxCount(1).rarity(Rarity.UNCOMMON));
 	
 	// other...?
-	public static final Item EMPTY_PHIAL = new PhialItem(new ArcanaItemSettings().group(Tab.PHIALS), null);
+	public static final Item EMPTY_PHIAL = new PhialItem(new ArcanaItemSettings().group(Tab.ASPECTS), null);
 	public static final Item PRIMORDIAL_PEARL = new PrimordialPearlItem(new ArcanaItemSettings().group(Tab.RESOURCES).maxCount(1).rarity(Rarity.EPIC));
 	public static final Item BROKEN_AMULET = new TrinketItem(new ArcanaItemSettings().group(Tab.RESOURCES).maxCount(1));
 	public static final Item CHALLENGERS_AMULET = new TrinketItem(GROUPED_SINGLE);
@@ -1022,8 +1018,6 @@ public final class ArcanaRegistry{
 		register("eldritch_wand_core", ELDRITCH_WAND_CORE);
 		registerCoreOnly(Core.MISSING_CORE);
 		
-		// TODO: banner pattern data
-		//Registry.register(Registries.BANNER_PATTERN, arcId("eldritch"), ELDRITCH_BANNER_PATTERN_SHAPE);
 		register("eldritch_banner_pattern", ELDRITCH_BANNER_PATTERN);
 		
 		register("empty_phial", EMPTY_PHIAL);
@@ -1042,11 +1036,11 @@ public final class ArcanaRegistry{
 		
 		for(Aspect aspect : Aspects.getOrderedAspects()){
 			var shortName = aspect.id().getPath();
-			CrystalItem crystalItem = new CrystalItem(new ArcanaItemSettings().group(Tab.CRYSTALS), aspect);
+			CrystalItem crystalItem = new CrystalItem(new ArcanaItemSettings().group(Tab.ASPECTS), aspect);
 			register("crystals/" + shortName, crystalItem);
 			Aspects.crystals.put(aspect, crystalItem);
 			
-			PhialItem phialItem = new PhialItem(new ArcanaItemSettings().fragile(aspect.colour()).group(Tab.PHIALS), aspect);
+			PhialItem phialItem = new PhialItem(new ArcanaItemSettings().fragile(aspect.colour()).group(Tab.ASPECTS), aspect);
 			register("phials/" + shortName, phialItem);
 			Aspects.phials.put(aspect, phialItem);
 			

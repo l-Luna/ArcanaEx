@@ -44,9 +44,8 @@ public class GameRendererMixin{
 				&& instance instanceof PlayerEntity player
 				&& (hasExtendedPlacement(player.getMainHandStack()) || hasExtendedPlacement(player.getOffHandStack()))
 				&& InventoryUtil.hasTrinket(player, ArcanaRegistry.PLANE_PROJECTION_RING)){
-			if(player.isSneaking() && player.raycast(2, tickDelta, includeFluids) instanceof BlockHitResult bhrMini)
-				return new ProjectedBlockHitResult(bhrMini);
-			return new ProjectedBlockHitResult(bhr);
+			if(player.raycast(player.isSneaking() ? 2 : maxDistance - 1, tickDelta, includeFluids) instanceof BlockHitResult target)
+				return new ProjectedBlockHitResult(target);
 		}
 		return value;
 	}

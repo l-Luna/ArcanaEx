@@ -16,8 +16,7 @@
     "armor"
   ],
   "max_level": 4,
-  // TODO: ensure this applies to trinkets too
-  "supported_items": "#minecraft:enchantable/vanishing",
+  "supported_items": "#arcana:enchantable/warping",
   "primary_items": [],
   "weight": 1,
   "max_cost": {

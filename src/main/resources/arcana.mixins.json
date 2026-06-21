@@ -28,6 +28,7 @@
     "effects.LivingEntityMixin",
     "effects.StatusEffectUtilMixin",
     "enchantments.LivingEntityMixin",
+    "enchantments.TrinketMixin",
     "fluids.EntityMixin",
     "fluids.FluidBlockMixin",
     "fluids.LivingEntityMixin",

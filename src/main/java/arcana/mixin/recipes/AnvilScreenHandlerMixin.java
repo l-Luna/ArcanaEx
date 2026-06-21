@@ -48,7 +48,7 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler{
 		}
 	}
 	
-	// TODO: cap levels in anvil for infusion enchants & dynamic max levels
+	// TODO: cap levels in anvil for infusion enchants
 	@WrapOperation(method = "updateResult", at = @At(value = "INVOKE", target = "Lnet/minecraft/enchantment/Enchantment;getMaxLevel()I"))
 	int capRunicShieldingLevel(Enchantment enchantment, Operation<Integer> original, @Local(ordinal = 0) RegistryEntry<Enchantment> self){
 		if(self.isIn(ArcanaTags.CANT_ANVIL_COMBINE))

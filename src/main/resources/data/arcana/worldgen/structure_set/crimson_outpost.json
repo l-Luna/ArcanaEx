@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "arcana:crimson_outpost",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 48,
+    "separation": 12,
+    "salt": 1256
+  }
+}

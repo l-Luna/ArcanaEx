@@ -1,0 +1,15 @@
+{
+  "structures": [
+    {
+      "structure": "arcana:floral_archive",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spread_type": "triangular",
+    "spacing": 18,
+    "separation": 4,
+    "salt": 856294
+  }
+}

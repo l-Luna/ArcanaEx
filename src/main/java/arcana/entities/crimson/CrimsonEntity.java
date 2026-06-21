@@ -38,7 +38,6 @@ public class CrimsonEntity extends HostileEntity implements GeoEntity{
 		EntityData i = super.initialize(world, difficulty, spawnReason, entityData);
 		initEquipment(world.getRandom(), difficulty);
 		updateEnchantments(world, random, difficulty);
-		setLeftHanded(true);
 		setEquipmentDropChance(EquipmentSlot.MAINHAND, 0.25f);
 		return i;
 	}

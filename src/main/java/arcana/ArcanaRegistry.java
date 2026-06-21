@@ -626,28 +626,6 @@ public final class ArcanaRegistry{
 	public static BlockEntityType<MagicMirrorBlockEntity> MAGIC_MIRROR_BE = FabricBlockEntityTypeBuilder.create(MagicMirrorBlockEntity::new, MAGIC_MIRROR).build();
 	
 	// structures
-	/*public static final RegistryEntry<StructurePool> CRIMSON_OUTPOST_STRUCTURE_POOL = StructurePools.register(
-			new StructurePool(
-					arcId("crimson_outpost"),
-					Identifier.of("empty"),
-					ImmutableList.of(Pair.of(StructurePoolElement.ofLegacySingle("arcana:crimson_outpost"), 1)),
-					StructurePool.Projection.RIGID
-			)
-	);
-	
-	public static final Structure CRIMSON_OUTPOST = new JigsawStructure(
-			createStructureConfig(
-					ArcanaTags.GREATWOOD_SPAWNABLE,
-					Map.of(),
-					GenerationStep.Feature.SURFACE_STRUCTURES,
-					StructureTerrainAdaptation.BEARD_THIN
-			),
-			CRIMSON_OUTPOST_STRUCTURE_POOL,
-			1,
-			ConstantHeightProvider.create(YOffset.fixed(0)),
-			false,
-			Heightmap.Type.WORLD_SURFACE_WG
-	);*/
 	
 	public static final StructurePlacement CRIMSON_OUTPOST_PLACEMENT = new RandomSpreadStructurePlacement(48, 12, SpreadType.LINEAR, 1256);
 	
@@ -683,19 +661,6 @@ public final class ArcanaRegistry{
 					ImmutableList.of(Pair.of(StructurePoolElement.ofSingle("arcana:floral_archive"), 1)),
 					StructurePool.Projection.RIGID
 			)
-	);
-	
-	public static final Structure FLORAL_ARCHIVE = new JigsawStructure(
-			createStructureConfig(
-					ConventionalBiomeTags.CAVES,
-					Map.of(),
-					GenerationStep.Feature.UNDERGROUND_STRUCTURES,
-					StructureTerrainAdaptation.BURY
-			),
-			FLORAL_ARCHIVE_STRUCTURE_POOL,
-			1,
-			UniformHeightProvider.create(YOffset.aboveBottom(10), YOffset.aboveBottom(60)),
-			false
 	);*/
 	
 	public static final StructurePlacement FLORAL_ARCHIVE_PLACEMENT = new RandomSpreadStructurePlacement(18, 4, SpreadType.TRIANGULAR, 856294);

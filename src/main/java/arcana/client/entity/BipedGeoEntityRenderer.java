@@ -14,6 +14,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Arm;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
@@ -72,22 +73,25 @@ public class BipedGeoEntityRenderer<T extends LivingEntity & GeoEntity> extends 
 		copy(rightLegBone, base.rightLeg);
 		copy(leftLegBone, base.leftLeg);
 		
-		boolean isLeft = true;
-		ItemStack stack = entity.getStackInHand(isLeft ? Hand.MAIN_HAND : Hand.OFF_HAND);
+		boolean isLeft = entity.getMainArm() == Arm.LEFT;
+		ItemStack stack = entity.getStackInHand(Hand.MAIN_HAND);
 		if(!stack.isEmpty()){
 			matrices.push();
-			
-			Optional<GeoBone> bone = model.getBone(leftArmBone);
-			RenderUtil.translateAndRotateMatrixForBone(matrices, bone.get());
-			
-			matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(90));
-			matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180));
-			matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(180));
+			// LivingEntityRenderer transforms
+			float lx = entity.getScale();
+			matrices.scale(lx, lx, lx);
+			matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180f - bodyYaw));
+			matrices.scale(-1.0F, -1.0F, 1.0F);
+			matrices.translate(0.0F, -1.501F, 0.0F);
+			// HeldItemFeatureRenderer transforms
+			base.setArmAngle(isLeft ? Arm.LEFT : Arm.RIGHT, matrices);
+			matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(-90.0F));
+			matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180.0F));
 			matrices.translate((isLeft ? -1 : 1) / 16f, 0.125, -0.625);
 			
 			MinecraftClient.getInstance().getItemRenderer().renderItem(entity,
 					stack,
-					/*isLeft ? ModelTransformation.Mode.THIRD_PERSON_LEFT_HAND :*/ ModelTransformationMode.THIRD_PERSON_RIGHT_HAND,
+					isLeft ? ModelTransformationMode.THIRD_PERSON_RIGHT_HAND : ModelTransformationMode.THIRD_PERSON_RIGHT_HAND,
 					false,
 					matrices,
 					vcp,
@@ -105,9 +109,7 @@ public class BipedGeoEntityRenderer<T extends LivingEntity & GeoEntity> extends 
 	}
 	
 	private void copy(String boneName, ModelPart vbone){
-		GeoBone toBone = model.getBone(boneName).get();
-		// TODO: check for correctness
-		//toBone.updatePivot(vbone.pivotX, vbone.pivotY, vbone.pivotZ);
-		toBone.updateRotation(vbone.pitch, vbone.yaw, vbone.roll);
+		Optional<GeoBone> toBone = model.getBone(boneName);
+		toBone.ifPresent(bone -> RenderUtil.matchModelPartRot(vbone, bone));
 	}
 }

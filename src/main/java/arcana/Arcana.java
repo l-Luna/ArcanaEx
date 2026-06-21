@@ -27,6 +27,7 @@ import arcana.worldgen.ArcanaOverworldBiomes;
 import com.unascribed.lib39.dessicant.api.DessicantControl;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.CommonLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.loader.api.FabricLoader;
@@ -79,6 +80,11 @@ public final class Arcana implements ModInitializer{
 		serverResources.registerReloadListener(new RegistryMappingLoader<>("untaint_maps", Taint.UNTAINT_MAP));
 		serverResources.registerReloadListener(new RegistryMappingLoader<>("purifying_maps", LootSwapEffect.PURIFYING_MAP));
 		serverResources.registerReloadListener(new RegistryMappingLoader<>("transmutative_maps", LootSwapEffect.TRANSMUTATIVE_MAP));
+		
+		CommonLifecycleEvents.TAGS_LOADED.register((registries, client) -> {
+			if(!client)
+				ItemAspectRegistry.applyAssociations();
+		});
 		
 		ArcanaCommands.register();
 		

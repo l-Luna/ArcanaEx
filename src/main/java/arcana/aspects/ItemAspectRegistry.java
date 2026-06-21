@@ -50,11 +50,12 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 	
 	// TODO: would rather not do this
 	public static RecipeManager recipes;
-	private final RegistryWrapper.WrapperLookup lookup;
+	// need to thread this through events...
+	private static RegistryWrapper.WrapperLookup lookup;
 	
 	public ItemAspectRegistry(RegistryWrapper.WrapperLookup lookup){
 		super(gson, "arcana/aspects");
-		this.lookup = lookup;
+		ItemAspectRegistry.lookup = lookup;
 	}
 	
 	public Identifier getFabricId(){
@@ -104,13 +105,10 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 		
 		// load associations
 		prepared.forEach(this::applyJson);
-		
-		// TODO (just in case): if tags don't load, think about resource listener event again
-		applyAssociations();
 	}
 	
 	// applied after tag load event
-	public void applyAssociations(){
+	public static void applyAssociations(){
 		Stopwatch sw = Stopwatch.createStarted();
 		for(Item item : Registries.ITEM){
 			if(itemAssociations.containsKey(item))
@@ -222,7 +220,7 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 		return Optional.empty();
 	}
 	
-	private void computeInheritedAspects(){
+	private static void computeInheritedAspects(){
 		// TODO: this is a naive approach
 		for(RecipeEntry<?> recipe : recipes.values()){
 			var output = recipe.value().getResult(lookup).getItem();
@@ -232,12 +230,12 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 		}
 	}
 	
-	private AspectMap getOrGenerate(ItemStack stack){
+	private static AspectMap getOrGenerate(ItemStack stack){
 		// TODO: apply stack modifiers to generated items here
 		return itemAspects.containsKey(stack.getItem()) ? get(stack) : generate(stack.getItem());
 	}
 	
-	private AspectMap generate(Item item){
+	private static AspectMap generate(Item item){
 		if(item == Items.AIR)
 			return new AspectMap();
 		if(generating.contains(item)){
@@ -261,7 +259,7 @@ public final class ItemAspectRegistry extends JsonDataLoader implements Identifi
 				}
 				// collect aspects from every ingredient
 				for(Ingredient ingredient : ingredients){
-					var stacks = ingredient.getMatchingStacks();
+					ItemStack[] stacks = ingredient.getMatchingStacks();
 					if(stacks.length > 0){
 						// currently only look at the first possible stack
 						var stack = stacks[0];

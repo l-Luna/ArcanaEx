@@ -12,6 +12,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.screen.*;
 import org.spongepowered.asm.mixin.Final;
@@ -48,14 +49,15 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler{
 		}
 	}
 	
-	// TODO: cap levels in anvil for infusion enchants
 	@WrapOperation(method = "updateResult", at = @At(value = "INVOKE", target = "Lnet/minecraft/enchantment/Enchantment;getMaxLevel()I"))
 	int capRunicShieldingLevel(Enchantment enchantment, Operation<Integer> original, @Local(ordinal = 0) RegistryEntry<Enchantment> self){
 		if(self.isIn(ArcanaTags.CANT_ANVIL_COMBINE))
 			return 1;
 		ItemStack stack = input.getStack(0);
-		DynamicMaxLevelsEffect levels = enchantment.effects().getOrDefault(ArcanaEnchantmentComponents.DYNAMIC_MAX_LEVELS, null);
 		int lvl = original.call(enchantment);
+		if(stack.isOf(Items.ENCHANTED_BOOK))
+			return lvl;
+		DynamicMaxLevelsEffect levels = enchantment.effects().getOrDefault(ArcanaEnchantmentComponents.DYNAMIC_MAX_LEVELS, null);
 		if(levels != null){
 			int possible = levels.maxLevelTags().size();
 			// start at the proposed level, walk down until a valid level is reached

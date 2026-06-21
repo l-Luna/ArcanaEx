@@ -49,7 +49,7 @@ public class StructureTemplateMixin{
 		stashedEntities = new ArrayList<>();
 		// hijack entries with "arcana:actually_a_node": true
 		for(int i = entities.size() - 1; i >= 0; i--){
-			var e = entities.get(i);
+			StructureTemplate.StructureEntityInfo e = entities.get(i);
 			if(e.nbt.getBoolean("arcana:actually_a_node")){
 				// add the respective node
 				String id = e.nbt.getString("id");
@@ -57,8 +57,13 @@ public class StructureTemplateMixin{
 				if(ty != null){
 					Vec3d transformed = StructureTemplate.transformAround(e.pos, mirror, rotation, pivot);
 					Vec3d offset = transformed.add(pos.getX(), pos.getY(), pos.getZ());
-					World w = world.toServerWorld();
-					AuraWorld.from(w).addNode(new Node(ty, offset, ty.randomCap(world.getRandom())));
+					if(area == null || area.contains(BlockPos.ofFloored(offset))){
+						World w = world.toServerWorld();
+						Node toAdd = new Node(ty, offset, ty.randomCap(world.getRandom()));
+						toAdd.getAspects().clear();
+						toAdd.getAspects().add(toAdd.getAspectCap());
+						AuraWorld.from(w).addNode(toAdd);
+					}
 				}else
 					Arcana.LOGGER.error("Found node in structure with invalid node type {}", id);
 				

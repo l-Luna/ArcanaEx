@@ -12,7 +12,9 @@ import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.command.argument.IdentifierArgumentType;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 
 import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
@@ -57,32 +59,32 @@ public final class WarpCommand{
 	}
 	
 	private static int performShow(CommandContext<ServerCommandSource> context) throws CommandSyntaxException{
-		var player = EntityArgumentType.getPlayer(context, "player");
+		ServerPlayerEntity player = EntityArgumentType.getPlayer(context, "player");
 		Researcher researcher = Researcher.from(player);
 		context.getSource().sendMessage(Text.translatable("message.arcana.command.warp.show", player.getDisplayName(), researcher.getWarp()));
 		return researcher.getWarp();
 	}
 	
 	private static int performShowEffective(CommandContext<ServerCommandSource> context) throws CommandSyntaxException{
-		var player = EntityArgumentType.getPlayer(context, "player");
+		ServerPlayerEntity player = EntityArgumentType.getPlayer(context, "player");
 		Researcher researcher = Researcher.from(player);
 		context.getSource().sendMessage(Text.translatable("message.arcana.command.warp.show.effective", player.getDisplayName(), researcher.getEffectiveWarp()));
 		return researcher.getWarp();
 	}
 	
 	private static int performAdd(CommandContext<ServerCommandSource> context) throws CommandSyntaxException{
-		var player = EntityArgumentType.getPlayer(context, "player");
+		ServerPlayerEntity player = EntityArgumentType.getPlayer(context, "player");
 		int amount = IntegerArgumentType.getInteger(context, "amount");
 		Researcher researcher = Researcher.from(player);
 		int had = researcher.getWarp();
-		var now = Math.max(0, had + amount);
+		int now = Math.max(0, had + amount);
 		researcher.setWarp(now);
 		context.getSource().sendMessage(Text.translatable("message.arcana.command.warp.add", player.getDisplayName(), amount, had, now));
 		return now != had ? 1 : 0;
 	}
 	
 	private static int performSet(CommandContext<ServerCommandSource> context) throws CommandSyntaxException{
-		var player = EntityArgumentType.getPlayer(context, "player");
+		ServerPlayerEntity player = EntityArgumentType.getPlayer(context, "player");
 		int amount = IntegerArgumentType.getInteger(context, "amount");
 		Researcher researcher = Researcher.from(player);
 		int had = researcher.getWarp();
@@ -92,17 +94,17 @@ public final class WarpCommand{
 	}
 	
 	private static int performTriggerRandom(CommandContext<ServerCommandSource> context) throws CommandSyntaxException{
-		var player = EntityArgumentType.getPlayer(context, "player");
+		ServerPlayerEntity player = EntityArgumentType.getPlayer(context, "player");
 		WarpEvents.triggerEligible(player);
 		context.getSource().sendMessage(Text.translatable("message.arcana.command.warp.trigger", player.getDisplayName()));
 		return 1;
 	}
 	
 	private static int performTriggerSpecific(CommandContext<ServerCommandSource> context) throws CommandSyntaxException{
-		var player = EntityArgumentType.getPlayer(context, "player");
-		var id = IdentifierArgumentType.getIdentifier(context, "event");
+		ServerPlayerEntity player = EntityArgumentType.getPlayer(context, "player");
+		Identifier id = IdentifierArgumentType.getIdentifier(context, "event");
 		WarpEvents.triggerEvent(player, WarpEvents.EVENTS.get(id));
-		context.getSource().sendMessage(Text.translatable("message.arcana.command.warp.trigger.specific", id, player.getDisplayName()));
+		context.getSource().sendMessage(Text.translatable("message.arcana.command.warp.trigger.specific", Text.literal(id.toString()), player.getDisplayName()));
 		return 1;
 	}
 }

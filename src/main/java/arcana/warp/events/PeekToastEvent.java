@@ -41,7 +41,7 @@ public class PeekToastEvent extends WarpEvent{
 		
 		public Visibility draw(DrawContext ctx, ToastManager manager, long startTime){
 			RenderSystem.setShaderColor(1, 1, 1, 1);
-			ctx.drawTexture(TEXTURE, 0, 0, 0, 0, getWidth(), getHeight());
+			ctx.drawGuiTexture(TEXTURE, 0, 0, getWidth(), getHeight());
 			
 			var text = manager.getClient().textRenderer;
 			List<OrderedText> lines = text.wrapLines(Text.translatable("message.arcana.warp.peek"), 125);

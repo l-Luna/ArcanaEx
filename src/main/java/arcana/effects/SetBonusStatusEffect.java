@@ -8,6 +8,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 
+import java.util.Optional;
+
 public class SetBonusStatusEffect extends ArcanaStatusEffect{
 	
 	public SetBonusStatusEffect(){
@@ -18,11 +20,13 @@ public class SetBonusStatusEffect extends ArcanaStatusEffect{
 		Identifier setBonus = null;
 		int matched = 0;
 		for(ItemStack item : player.getArmorItems())
-			if(item.getItem() instanceof ArcanaArmorItem armor)
-				if(setBonus == null || setBonus.equals(armor.material.setBonus().orElse(null))){
-					setBonus = armor.material.setBonus().get();
+			if(item.getItem() instanceof ArcanaArmorItem armor){
+				Optional<Identifier> armorBonus = armor.material.setBonus();
+				if(armorBonus.isPresent() && (setBonus == null || setBonus.equals(armorBonus.get()))){
+					setBonus = armorBonus.get();
 					matched++;
 				}
+			}
 		if(matched >= 4){
 			Registries.STATUS_EFFECT.getEntry(setBonus).ifPresent(effect -> player.addStatusEffect(new StatusEffectInstance(
 					effect,

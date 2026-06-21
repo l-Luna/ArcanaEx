@@ -231,7 +231,7 @@ public final class ArcanaRegistry{
 	public static final Item VOID_METAL_HELMET = new ArcanaArmorItem(ArcanaArmorMaterials.VOID_METAL, ArmorItem.Type.HELMET, new ArcanaItemSettings().group(Tab.EQUIPMENT));
 	public static final Item VOID_METAL_CHESTPLATE = new ArcanaArmorItem(ArcanaArmorMaterials.VOID_METAL, ArmorItem.Type.CHESTPLATE, new ArcanaItemSettings().group(Tab.EQUIPMENT));
 	public static final Item VOID_METAL_LEGGINGS = new ArcanaArmorItem(ArcanaArmorMaterials.VOID_METAL, ArmorItem.Type.LEGGINGS, new ArcanaItemSettings().group(Tab.EQUIPMENT));
-	public static final Item VOID_METAL_BOOTS = new ArcanaArmorItem(ArcanaArmorMaterials.VOID_METAL, ArmorItem.Type.HELMET, new ArcanaItemSettings().group(Tab.EQUIPMENT));
+	public static final Item VOID_METAL_BOOTS = new ArcanaArmorItem(ArcanaArmorMaterials.VOID_METAL, ArmorItem.Type.BOOTS, new ArcanaItemSettings().group(Tab.EQUIPMENT));
 	
 	public static final Item SILVERLEAF = new Item(GROUPED_RES);
 	public static final Item SILVERLEAF_AMALGAMATE = new Item(GROUPED_RES);

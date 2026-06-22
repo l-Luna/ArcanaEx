@@ -28,7 +28,7 @@ public class EssentiaStreamParticle extends SpriteBillboardParticle{
 		gravityStrength = 0;
 		collidesWithWorld = false;
 		origin = new Vector3f((float)x, (float)y, (float)z);
-		rotation = new Matrix3f().rotationXYZ((float)angleX, (float)angleY, 0);
+		rotation = new Matrix3f().rotationXYZ((float)angleY, (float)angleX, 0);
 		maxAge = 80;
 		setSpriteForAge(spr);
 		var newPos = posWhen(age);

@@ -35,19 +35,19 @@ public class InfusionItemParticle extends SpriteBillboardParticle{
 	}
 	
 	protected float getMinU() {
-		return sprite.getFrameU((sampleU + 1) / 4 * 16);
+		return sprite.getFrameU(sampleU / 4);
 	}
 	
 	protected float getMaxU() {
-		return sprite.getFrameU(sampleU / 4 * 16);
+		return sprite.getFrameU((sampleU + 1) / 4);
 	}
 	
 	protected float getMinV() {
-		return sprite.getFrameV(sampleV / 4 * 16);
+		return sprite.getFrameV(sampleV / 4);
 	}
 	
 	protected float getMaxV() {
-		return sprite.getFrameV((sampleV + 1) / 4 * 16);
+		return sprite.getFrameV((sampleV + 1) / 4);
 	}
 	
 	public static class Factory implements ParticleFactory<ItemStackParticleEffect>{

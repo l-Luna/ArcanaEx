@@ -57,8 +57,8 @@ public class PedestalBlock extends WaterloggableBlock implements BlockEntityProv
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit){
 		BlockEntity at = world.getBlockEntity(pos);
 		if(at instanceof PedestalBlockEntity pedestal){
-			if(!pedestal.getStack().isEmpty()){
-				player.setStackInHand(player.preferredHand, pedestal.getStack());
+			if(!pedestal.getStack().isEmpty() && player.getStackInHand(Hand.MAIN_HAND).isEmpty()){
+				player.setStackInHand(Hand.MAIN_HAND, pedestal.getStack());
 				pedestal.setStack(ItemStack.EMPTY);
 				return ActionResult.SUCCESS;
 			}

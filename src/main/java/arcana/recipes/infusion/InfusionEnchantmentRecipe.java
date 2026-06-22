@@ -2,6 +2,8 @@ package arcana.recipes.infusion;
 
 import arcana.api.RenamableRecipe;
 import arcana.aspects.AspectMap;
+import arcana.enchantments.ArcanaEnchantmentComponents;
+import arcana.enchantments.DynamicMaxLevelsEffect;
 import arcana.recipes.ArcanaRecipe;
 import arcana.util.PacketCodecUtil;
 import com.mojang.serialization.Codec;
@@ -25,9 +27,7 @@ import net.minecraft.registry.entry.RegistryElementCodec;
 import net.minecraft.registry.entry.RegistryEntry;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static arcana.Arcana.arcId;
 
@@ -67,10 +67,19 @@ public class InfusionEnchantmentRecipe implements InfusionRecipe, ArcanaRecipe, 
 	public BakedInfusionRecipe craftInfusion(InfusionInput inventory){
 		ItemStack central = inventory.centre().copy();
 		int currentLevel = EnchantmentHelper.getLevel(enchantment, central);
-		// TODO: check incompatible enchantments
-		// TODO: check dynamic max levels
-		if(!(enchantment.value().isAcceptableItem(central) || central.isOf(Items.BOOK)))
+		int maxLevel = enchantment.value().getMaxLevel();
+		// check applicability
+		DynamicMaxLevelsEffect dynLevels = enchantment.value().effects().getOrDefault(ArcanaEnchantmentComponents.DYNAMIC_MAX_LEVELS, null);
+		if(dynLevels != null)
+			maxLevel = dynLevels.limit(maxLevel, central);
+		if(!(enchantment.value().isAcceptableItem(central) || central.isOf(Items.BOOK) || central.isOf(Items.ENCHANTED_BOOK) || currentLevel >= maxLevel))
 			return null;
+		// check incompatible enchantments
+		Set<RegistryEntry<Enchantment>> otherEnchantments = new HashSet<>(central.getEnchantments().getEnchantments());
+		otherEnchantments.remove(enchantment);
+		if(!EnchantmentHelper.isCompatible(otherEnchantments, enchantment))
+			return null;
+		// charge cost
 		int multiplier = 1 << currentLevel;
 		AspectMap cost = baseAspects.copy();
 		cost.multiply(__ -> (float)multiplier);

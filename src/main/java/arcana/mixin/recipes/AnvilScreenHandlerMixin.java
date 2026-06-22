@@ -50,22 +50,17 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler{
 	}
 	
 	@WrapOperation(method = "updateResult", at = @At(value = "INVOKE", target = "Lnet/minecraft/enchantment/Enchantment;getMaxLevel()I"))
-	int capRunicShieldingLevel(Enchantment enchantment, Operation<Integer> original, @Local(ordinal = 0) RegistryEntry<Enchantment> self){
+	int capMaxLevels(Enchantment enchantment, Operation<Integer> original, @Local(ordinal = 0) RegistryEntry<Enchantment> self){
 		if(self.isIn(ArcanaTags.CANT_ANVIL_COMBINE))
 			return 1;
 		ItemStack stack = input.getStack(0);
-		int lvl = original.call(enchantment);
+		int maxLevel = original.call(enchantment);
 		if(stack.isOf(Items.ENCHANTED_BOOK))
-			return lvl;
-		DynamicMaxLevelsEffect levels = enchantment.effects().getOrDefault(ArcanaEnchantmentComponents.DYNAMIC_MAX_LEVELS, null);
-		if(levels != null){
-			int possible = levels.maxLevelTags().size();
-			// start at the proposed level, walk down until a valid level is reached
-			for(lvl = Math.min(lvl, possible); lvl > 0; lvl--)
-				if(stack.isIn(levels.maxLevelTags().get(lvl - 1)))
-					break;
-		}
-		return lvl;
+			return maxLevel;
+		DynamicMaxLevelsEffect dynLevels = enchantment.effects().getOrDefault(ArcanaEnchantmentComponents.DYNAMIC_MAX_LEVELS, null);
+		if(dynLevels != null)
+			maxLevel = dynLevels.limit(maxLevel, stack);
+		return maxLevel;
 	}
 	
 	@Inject(method = "canTakeOutput", at = @At("HEAD"), cancellable = true)

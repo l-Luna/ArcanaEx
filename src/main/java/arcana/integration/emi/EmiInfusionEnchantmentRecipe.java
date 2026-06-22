@@ -72,18 +72,20 @@ public class EmiInfusionEnchantmentRecipe extends AbstractEmiInfusionRecipe{
 	
 	public void addWidgets(WidgetHolder widgets){
 		widgets.add(new DynamicWidgets(this, widgets, (group, key) -> {
-			int reps = (int)(key % enchantment.value().getMaxLevel()) + 1;
+			int currentLevel = (int)(key % enchantment.value().getMaxLevel());
+			int targetLevel = currentLevel + 1;
+			int multiplier = 1 << currentLevel;
 			ItemStack input = previewCental.copy();
 			ItemStack output = previewCental.copy();
-			if(reps > 1)
-				EnchantmentHelper.apply(input, b -> b.add(enchantment, reps - 1));
-			EnchantmentHelper.apply(output, b -> b.add(enchantment, reps));
-			List<EmiIngredient> outers = new ArrayList<>(baseOuters.size() * reps);
-			for(int i = 0; i < reps; i++)
+			if(targetLevel > 1)
+				EnchantmentHelper.apply(input, b -> b.add(enchantment, targetLevel - 1));
+			EnchantmentHelper.apply(output, b -> b.add(enchantment, targetLevel));
+			List<EmiIngredient> outers = new ArrayList<>(baseOuters.size() * targetLevel);
+			for(int i = 0; i < multiplier; i++)
 				outers.addAll(baseOuters);
 			AspectMap aspects = baseAspects.copy();
-			aspects.multiply(__ -> (float)reps);
-			addBaseWidgets(group, EmiStack.of(input), outers, baseInstability + reps, aspects, EmiStack.of(output));
+			aspects.multiply(__ -> (float)multiplier);
+			addBaseWidgets(group, EmiStack.of(input), outers, baseInstability + targetLevel, aspects, EmiStack.of(output));
 		}));
 	}
 }

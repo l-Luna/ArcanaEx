@@ -125,7 +125,7 @@ public final class NodeRenderer{
 			
 			for(Node node : allVisible){
 				// can't batch non-primals, so avoid these if we can
-				for(Aspect aspect : node.getAspects().aspectSet())
+				for(Aspect aspect : node.getAspectCap().aspectSet())
 					if(!Aspects.primals.contains(aspect)){
 						RenderSystem.setShaderTexture(0, AspectRenderHelper.texture(aspect));
 						BufferBuilder buffer = tessellator.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);
@@ -202,14 +202,14 @@ public final class NodeRenderer{
 	
 	private static void drawNodeAspect(Camera camera, Node node, BufferBuilder buffer, Aspect aspect, World world){
 		NodeState ns = stateFor(node);
-		if(!node.getAspects().contains(aspect) || ns.aspectLerp < 0.00001)
+		if(!node.getAspectCap().contains(aspect) || ns.aspectLerp < 0.00001)
 			return;
 		float scale = .7f;
 		// calculate positions in a circle around the node
 		Vector3f offset = new Vector3f(0, 1, 0);
 		offset.mul(1.2f * ns.aspectLerp);
 		offset.add(0, 0, -0.01f);
-		offset.rotate(RotationAxis.POSITIVE_Z.rotation((float)((Math.PI * 2) * (node.getAspects().indexOf(aspect) / (float)node.getAspects().size()))));
+		offset.rotate(RotationAxis.POSITIVE_Z.rotation((float)((Math.PI * 2) * (node.getAspectCap().indexOf(aspect) / (float)node.getAspectCap().size()))));
 		// centre, face to camera
 		offset.add(-scale / 2, -scale / 2, 0);
 		
@@ -224,7 +224,7 @@ public final class NodeRenderer{
 	}
 	
 	private static void drawNodeAspectCount(Camera camera, Node node, Aspect aspect){
-		if(!node.getAspects().contains(aspect))
+		if(!node.getAspectCap().contains(aspect))
 			return;
 		
 		NodeState ns = stateFor(node);
@@ -241,7 +241,7 @@ public final class NodeRenderer{
 		
 		Vector3f offset = new Vector3f(0, 1, 0);
 		offset.mul(1.2f * ns.aspectLerp);
-		offset.rotate(RotationAxis.POSITIVE_Z.rotation((float)((Math.PI * 2) * (node.getAspects().indexOf(aspect) / (float)node.getAspects().size()))));
+		offset.rotate(RotationAxis.POSITIVE_Z.rotation((float)((Math.PI * 2) * (node.getAspectCap().indexOf(aspect) / (float)node.getAspectCap().size()))));
 		
 		VertexConsumerProvider.Immediate vcp = VertexConsumerProvider.immediate(new BufferAllocator(512));
 		Matrix4fStack stack = RenderSystem.getModelViewStack();

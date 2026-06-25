@@ -58,16 +58,17 @@ public class CrystalClusterBlock extends WaterloggableBlock{
 	
 	@Nullable
 	public BlockState getPlacementState(ItemPlacementContext ctx){
-		var world = ctx.getWorld();
-		var pos = ctx.getBlockPos().offset(ctx.getSide().getOpposite());
-		if(!world.getBlockState(pos).isOpaqueFullCube(world, pos))
+		World world = ctx.getWorld();
+		BlockPos pos = ctx.getBlockPos().offset(ctx.getSide().getOpposite());
+		if(!world.getBlockState(pos).isSideSolidFullSquare(world, pos, ctx.getSide()))
 			return null;
 		return super.getPlacementState(ctx).with(FACING, ctx.getSide()).with(SIZE, 3);
 	}
 	
 	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos){
-		BlockPos support = pos.offset(state.get(FACING).getOpposite());
-		return world.getBlockState(support).isOpaqueFullCube(world, support);
+		Direction direction = state.get(FACING);
+		BlockPos support = pos.offset(direction.getOpposite());
+		return world.getBlockState(support).isSideSolidFullSquare(world, support, direction);
 	}
 	
 	public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos){

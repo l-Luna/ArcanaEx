@@ -6,9 +6,9 @@
     "arcana:config/aspect_blacklist",
     "arcana:config/crucible_reagent_blacklist",
     "arcana:config/arcane_furnace_blacklist",
-    "arcana:config/max_projecting_level/1",
-    "arcana:config/max_projecting_level/2",
-    "arcana:config/max_projecting_level/3",
+    "arcana:config/max_projecting_level/level_1",
+    "arcana:config/max_projecting_level/level_2",
+    "arcana:config/max_projecting_level/level_3",
 
     "arcana:equipment/helmets",
     "arcana:equipment/chestplates",
@@ -17,6 +17,8 @@
     "arcana:equipment/horse_armours",
     "arcana:equipment/rings",
     "arcana:equipment/scalpels",
+
+    "arcana:enchantable/warping",
 
     "arcana:floats"
   ]

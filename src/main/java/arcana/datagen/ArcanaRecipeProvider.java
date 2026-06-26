@@ -42,6 +42,21 @@ public class ArcanaRecipeProvider extends FabricRecipeProvider{
 		
 		offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ARCANE_STONE_BRICKS, ARCANE_STONE);
 		offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ARCANE_STONE_TILES, ARCANE_STONE);
+		offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ARCANE_STONE_PILLAR, ARCANE_STONE);
+		offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ARCANE_STONE_SLATE, ARCANE_STONE);
+		
+		offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ARCANE_STONE_AIR_SLATE, ARCANE_STONE);
+		offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ARCANE_STONE_FIRE_SLATE, ARCANE_STONE);
+		offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ARCANE_STONE_WATER_SLATE, ARCANE_STONE);
+		offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ARCANE_STONE_EARTH_SLATE, ARCANE_STONE);
+		offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ARCANE_STONE_ORDER_SLATE, ARCANE_STONE);
+		offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ARCANE_STONE_ENTROPY_SLATE, ARCANE_STONE);
+		offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ARCANE_STONE_AIR_SLATE, ARCANE_STONE_SLATE);
+		offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ARCANE_STONE_FIRE_SLATE, ARCANE_STONE_SLATE);
+		offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ARCANE_STONE_WATER_SLATE, ARCANE_STONE_SLATE);
+		offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ARCANE_STONE_EARTH_SLATE, ARCANE_STONE_SLATE);
+		offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ARCANE_STONE_ORDER_SLATE, ARCANE_STONE_SLATE);
+		offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ARCANE_STONE_ENTROPY_SLATE, ARCANE_STONE_SLATE);
 		
 		offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ARCANE_STONE_SLAB, ARCANE_STONE, 2);
 		offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ARCANE_STONE_STAIRS, ARCANE_STONE);

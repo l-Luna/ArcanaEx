@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_arcane_stone_slate": {
+      "conditions": {
+        "items": [
+          {
+            "items": "arcana:arcane_stone_slate"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "arcana:arcane_stone_entropy_slate_from_arcane_stone_slate_stonecutting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_arcane_stone_slate"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "arcana:arcane_stone_entropy_slate_from_arcane_stone_slate_stonecutting"
+    ]
+  }
+}

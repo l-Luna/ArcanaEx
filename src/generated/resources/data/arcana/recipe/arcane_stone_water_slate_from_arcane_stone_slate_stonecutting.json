@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "arcana:arcane_stone_slate"
+  },
+  "result": {
+    "count": 1,
+    "id": "arcana:arcane_stone_water_slate"
+  }
+}

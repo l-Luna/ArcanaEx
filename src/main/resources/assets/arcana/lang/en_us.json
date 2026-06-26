@@ -470,6 +470,15 @@
     "arcane_stone_tiles_button": "Arcane Stone Tile Button",
     "arcane_stone_tiles_wall": "Arcane Stone Tile Wall",
 
+    "arcane_stone_pillar": "Arcane Stone Pillar",
+    "arcane_stone_slate": "Arcane Stone Slate",
+    "arcane_stone_air_slate": "Aer-Emblazoned Arcane Stone Slate",
+    "arcane_stone_fire_slate": "Ignis-Emblazoned Arcane Stone Slate",
+    "arcane_stone_water_slate": "Aqua-Emblazoned Arcane Stone Slate",
+    "arcane_stone_earth_slate": "Terra-Emblazoned Arcane Stone Slate",
+    "arcane_stone_order_slate": "Ordo-Emblazoned Arcane Stone Slate",
+    "arcane_stone_entropy_slate": "Perditio-Emblazoned Arcane Stone Slate",
+
     "silverwood_sapling": "Silverwood Sapling",
     "silverwood_log": "Silverwood Log",
     "silverwood_leaves": "Silverwood Leaves",

@@ -91,9 +91,6 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.text.Text;
 import net.minecraft.util.ColorCode;
 import net.minecraft.util.Rarity;
-import net.minecraft.world.gen.chunk.placement.RandomSpreadStructurePlacement;
-import net.minecraft.world.gen.chunk.placement.SpreadType;
-import net.minecraft.world.gen.chunk.placement.StructurePlacement;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.foliage.FoliagePlacerType;
 import net.minecraft.world.gen.trunk.TrunkPlacerType;
@@ -441,6 +438,15 @@ public final class ArcanaRegistry{
 	public static final Block ARCANE_STONE_TILES_BUTTON = new ButtonBlock(ArcanaBlockSetTypes.GENERIC_STONE, 20, of(Material.STONE).dropsSelf().noCollision().strength(.5f));
 	public static final Block ARCANE_STONE_TILES_WALL = new WallBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(2));
 	
+	public static final Block ARCANE_STONE_PILLAR = new ConnectingPillarBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3, 7));
+	public static final Block ARCANE_STONE_SLATE = new Block(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3, 7));
+	public static final Block ARCANE_STONE_AIR_SLATE = new Block(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3, 7));
+	public static final Block ARCANE_STONE_FIRE_SLATE = new Block(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3, 7));
+	public static final Block ARCANE_STONE_WATER_SLATE = new Block(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3, 7));
+	public static final Block ARCANE_STONE_EARTH_SLATE = new Block(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3, 7));
+	public static final Block ARCANE_STONE_ORDER_SLATE = new Block(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3, 7));
+	public static final Block ARCANE_STONE_ENTROPY_SLATE = new Block(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3, 7));
+	
 	public static final SaplingGenerator SILVERWOOD_SAPLING_GEN = new SaplingGenerator(
 			"arcana:silverwood_sapling", Optional.of(RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, arcId("silverwood_tree"))), Optional.empty(), Optional.empty()
 	);
@@ -624,46 +630,6 @@ public final class ArcanaRegistry{
 	public static BlockEntityType<DistilleryPathfinderBlockEntity> DISTILLERY_PATHFINDER_BE = FabricBlockEntityTypeBuilder.create(DistilleryPathfinderBlockEntity::new, DISTILLERY_PATHFINDER).build();
 	public static BlockEntityType<ThaumicHaloBlockEntity> THAUMIC_HALO_BE = FabricBlockEntityTypeBuilder.create(ThaumicHaloBlockEntity::new, THAUMIC_HALO).build();
 	public static BlockEntityType<MagicMirrorBlockEntity> MAGIC_MIRROR_BE = FabricBlockEntityTypeBuilder.create(MagicMirrorBlockEntity::new, MAGIC_MIRROR).build();
-	
-	// structures
-	
-	public static final StructurePlacement CRIMSON_OUTPOST_PLACEMENT = new RandomSpreadStructurePlacement(48, 12, SpreadType.LINEAR, 1256);
-	
-	/*public static final RegistryEntry<StructurePool> CRIMSON_CAMP_STRUCTURE_POOL = StructurePools.register(
-			new StructurePool(
-					arcId("crimson_camp"),
-					Identifier.of("empty"),
-					ImmutableList.of(Pair.of(StructurePoolElement.ofSingle("arcana:crimson_camp"), 1)),
-					StructurePool.Projection.RIGID
-			)
-	);
-	
-	public static final Structure CRIMSON_CAMP = new JigsawStructure(
-			createStructureConfig(
-					ArcanaTags.GREATWOOD_SPAWNABLE,
-					Map.of(),
-					GenerationStep.Feature.SURFACE_STRUCTURES,
-					StructureTerrainAdaptation.BEARD_THIN
-			),
-			CRIMSON_CAMP_STRUCTURE_POOL,
-			1,
-			ConstantHeightProvider.create(YOffset.fixed(0)),
-			false,
-			Heightmap.Type.WORLD_SURFACE_WG
-	);*/
-	
-	public static final StructurePlacement CRIMSON_CAMP_PLACEMENT = new RandomSpreadStructurePlacement(38, 12, SpreadType.LINEAR, 1356);
-	
-	/*public static final RegistryEntry<StructurePool> FLORAL_ARCHIVE_STRUCTURE_POOL = StructurePools.register(
-			new StructurePool(
-					arcId("floral_archive"),
-					Identifier.of("empty"),
-					ImmutableList.of(Pair.of(StructurePoolElement.ofSingle("arcana:floral_archive"), 1)),
-					StructurePool.Projection.RIGID
-			)
-	);*/
-	
-	public static final StructurePlacement FLORAL_ARCHIVE_PLACEMENT = new RandomSpreadStructurePlacement(18, 4, SpreadType.TRIANGULAR, 856294);
 	
 	// particle types...
 	public static SimpleParticleType TAINT_BUBBLE = FabricParticleTypes.simple();
@@ -1081,6 +1047,15 @@ public final class ArcanaRegistry{
 		register("arcane_stone_tiles_pressure_plate", ARCANE_STONE_TILES_PRESSURE_PLATE);
 		register("arcane_stone_tiles_button", ARCANE_STONE_TILES_BUTTON);
 		register("arcane_stone_tiles_wall", ARCANE_STONE_TILES_WALL);
+		
+		register("arcane_stone_pillar", ARCANE_STONE_PILLAR);
+		register("arcane_stone_slate", ARCANE_STONE_SLATE);
+		register("arcane_stone_air_slate", ARCANE_STONE_AIR_SLATE);
+		register("arcane_stone_fire_slate", ARCANE_STONE_FIRE_SLATE);
+		register("arcane_stone_water_slate", ARCANE_STONE_WATER_SLATE);
+		register("arcane_stone_earth_slate", ARCANE_STONE_EARTH_SLATE);
+		register("arcane_stone_order_slate", ARCANE_STONE_ORDER_SLATE);
+		register("arcane_stone_entropy_slate", ARCANE_STONE_ENTROPY_SLATE);
 		
 		register("silverwood_sapling", SILVERWOOD_SAPLING);
 		register("silverwood_log", SILVERWOOD_LOG);

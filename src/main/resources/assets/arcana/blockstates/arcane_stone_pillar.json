@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "up=true,down=true": {
+      "model": "arcana:block/arcane_stone_pillar_middle"
+    },
+    "up=false,down=false": {
+      "model": "arcana:block/arcane_stone_pillar"
+    },
+    "up=false,down=true": {
+      "model": "arcana:block/arcane_stone_pillar_top"
+    },
+    "up=true,down=false": {
+      "model": "arcana:block/arcane_stone_pillar_bottom"
+    }
+  }
+}

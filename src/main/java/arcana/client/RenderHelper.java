@@ -2,7 +2,6 @@ package arcana.client;
 
 import arcana.research.Icon;
 import arcana.util.TintingVertexConsumerProvider;
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -19,7 +18,6 @@ import net.minecraft.util.math.ColorHelper;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import org.joml.Matrix4f;
-import org.joml.Matrix4fStack;
 
 import static arcana.Arcana.arcId;
 
@@ -141,17 +139,16 @@ public class RenderHelper{
 				tex = Identifier.of(tex.getNamespace(), "textures/" + tex.getPath());
 			frames = Math.max(1, frames);
 			int v = (int)((MinecraftClient.getInstance().world.getTime() / 2) % frames) * 16;
-			ctx.drawTexture(tex, x, y, zOffset, 0, v, 16, 16, 16, 16 * frames);
+			RenderSystem.setShaderTexture(0, tex);
+			drawTexture(ctx, x, y, zOffset, 0, v, 16, 16, 16, 16 * frames, r, g, b, a);
 		}else if(icon.stack() != null){
-			Matrix4fStack matrices2 = RenderSystem.getModelViewStack();
-			matrices2.pushMatrix();
-			matrices2.scale(itemZoom, itemZoom, 1);
+			MatrixStack matrices = ctx.getMatrices();
+			matrices.push();
+			matrices.translate(0, 0, zOffset);
 			ItemRenderer renderer = MinecraftClient.getInstance().getItemRenderer();
 			ItemStack stack = icon.stack();
-			renderGuiItemModel(renderer, stack, x, y, renderer.getModel(stack, null, null, 0), r, g, b, a);
-			//renderer.renderGuiItemOverlay(MinecraftClient.getInstance().textRenderer, icon.stack(), x, y);
-			matrices2.popMatrix();
-			RenderSystem.applyModelViewMatrix();
+			renderGuiItemModel(renderer, stack, matrices, x, y, renderer.getModel(stack, null, null, 0), r, g, b, a);
+			matrices.pop();
 		}
 	}
 	
@@ -278,20 +275,13 @@ public class RenderHelper{
 	
 	// coloured version of DrawContext::drawItem
 	
-	private static void renderGuiItemModel(ItemRenderer self, ItemStack stack, int x, int y, BakedModel model, float r, float g, float b, float a){
-//		self.textureManager.getTexture(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE).setFilter(false, false);
+	private static void renderGuiItemModel(ItemRenderer self, ItemStack stack, MatrixStack matrices, int x, int y, BakedModel model, float r, float g, float b, float a){
 		RenderSystem.setShaderTexture(0, SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE);
 		RenderSystem.enableBlend();
-		RenderSystem.blendFunc(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA);
-		RenderSystem.setShaderColor(r, g, b, a);
-		Matrix4fStack matrices = RenderSystem.getModelViewStack();
-		matrices.pushMatrix();
-		matrices.translate(x, y, 100);
-		matrices.translate(8, 8, 0);
-		matrices.scale(1, -1, 1);
-		matrices.scale(16, 16, 16);
-		RenderSystem.applyModelViewMatrix();
-		MatrixStack matrixStack2 = new MatrixStack();
+		RenderSystem.setShaderColor(1, 1, 1, 1);
+		matrices.push();
+		matrices.translate(x + 8, y + 8, 150 + (model.hasDepth() ? 50 : 0));
+		matrices.scale(16, -16, 16);
 		VertexConsumerProvider.Immediate immediate = MinecraftClient.getInstance().getBufferBuilders().getEntityVertexConsumers();
 		boolean unlit = !model.isSideLit();
 		if(unlit)
@@ -301,7 +291,7 @@ public class RenderHelper{
 				stack,
 				ModelTransformationMode.GUI,
 				false,
-				matrixStack2,
+				matrices,
 				new TintingVertexConsumerProvider(immediate, r, g, b, a),
 				LightmapTextureManager.MAX_LIGHT_COORDINATE,
 				OverlayTexture.DEFAULT_UV,
@@ -312,8 +302,7 @@ public class RenderHelper{
 		if(unlit)
 			DiffuseLighting.enableGuiDepthLighting();
 		
-		matrices.popMatrix();
-		RenderSystem.applyModelViewMatrix();
+		matrices.pop();
 	}
 	
 	// "safe" version of BufferRenderer.draw(buffer.end())

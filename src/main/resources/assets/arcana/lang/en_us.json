@@ -985,7 +985,6 @@
 
     // Fundamentals Tab: Info research
     "silverwood_trees": "Silverwood Trees",
-    "silverwood_trees.desc": "Purity in Practice",
     "silverwood_trees.text": "Silverwood trees are wide and stubby, noticeable for their bright colouration, high rarity, and incredible magical potential.\nEvery author of these notes could agree on one thing: silverwood trees are the key to many inventions. Their wood is one of the few things capable of resisting {i}purified essentia{r}; every part of the plant is completely immune to, and even repels, taint; and occasionally, their growth can even create a new Pure Node.\nIt should go without saying that growing and studying these trees wherever possible is a high priority.",
 
     "greatwood_trees": "Greatwood Trees",

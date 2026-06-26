@@ -448,7 +448,6 @@
     {
       "key": "arcana:silverwood_trees",
       "name": "research.arcana.silverwood_trees",
-      "desc": "research.arcana.silverwood_trees.desc",
       "icons": [
         "arcana:silverwood_log"
       ],

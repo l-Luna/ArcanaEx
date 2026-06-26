@@ -2,8 +2,8 @@ package arcana.mixin;
 
 import arcana.ArcanaRegistry;
 import arcana.ArcanaTags;
-import arcana.duck.ArcanaItem;
-import arcana.items.FragileComponent;
+import arcana.items.components.ArcanaItemComponentTypes;
+import arcana.items.components.FragileComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
@@ -48,14 +48,14 @@ public abstract class ItemEntityMixin extends Entity{
 					0,
 					0.02,
 					0);
-		FragileComponent c = ((ArcanaItem)stack.getItem()).arcana$getFragileComponent();
+		FragileComponent c = stack.get(ArcanaItemComponentTypes.FRAGILE);
 		if(!world.isClient && c != null && (horizontalCollision || verticalCollision)){
 			world.syncWorldEvent(WorldEvents.INSTANT_SPLASH_POTION_SPLASHED, getBlockPos(), c.colour());
-			if(c.effect() != null)
+			if(c.effect().isPresent())
 				// see PotionEntity
 				for(LivingEntity entity : world.getNonSpectatingEntities(LivingEntity.class, getBoundingBox().expand(4, 2, 4)))
 					if(entity.isAffectedBySplashPotions())
-						c.effect().value().applyInstantEffect(this, null, entity, 0, 1);
+						c.effect().get().value().applyInstantEffect(this, null, entity, 0, 1);
 			discard();
 		}
 	}

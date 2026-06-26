@@ -25,10 +25,13 @@ public class ArcanaItemComponentTypes{
 	public static final ComponentType<Integer> RADIUS = create(Codec.INT);
 	public static final ComponentType<NodeType> NODE_TYPE = create(NodeType.CODEC);
 	public static final ComponentType<ResearchCompletionComponent> RESEARCH_COMPLETION = create(ResearchCompletionComponent.CODEC);
-	public static final ComponentType<ArcanaRegistry.Tab> SUBTAB = create(Codec.STRING.xmap(ArcanaRegistry.Tab::valueOf, Enum::name));
 	
 	public static final ComponentType<AspectMap> STORED_ASPECTS = create(AspectMap.CODEC);
 	public static final ComponentType<AspectStack> STORED_SINGLE_ASPECT = create(AspectStack.CODEC);
+	
+	// behavioral
+	public static final ComponentType<ArcanaRegistry.Tab> SUBTAB = create(Codec.STRING.xmap(ArcanaRegistry.Tab::valueOf, Enum::name));
+	public static final ComponentType<FragileComponent> FRAGILE = create(FragileComponent.CODEC);
 	
 	// item specific
 	public static final ComponentType<ArrayInventory> FOCUS_POUCH_INVENTORY = create(ArrayInventory.CODEC);
@@ -46,9 +49,11 @@ public class ArcanaItemComponentTypes{
 		register("radius", RADIUS);
 		register("node_type", NODE_TYPE);
 		register("research_completion", RESEARCH_COMPLETION);
-		register("subtab", SUBTAB);
 		register("stored_aspects", STORED_ASPECTS);
 		register("stored_single_aspect", STORED_SINGLE_ASPECT);
+		
+		register("subtab", SUBTAB);
+		register("fragile", FRAGILE);
 		
 		register("focus_pouch_inventory", FOCUS_POUCH_INVENTORY);
 		register("magic_mirror_tag", MAGIC_MIRROR_TAG);

@@ -24,9 +24,9 @@ import arcana.client.research.sections.TextSectionRenderer;
 import arcana.client.tooltip.ItemAspectsTooltipComponent;
 import arcana.client.tooltip.MagicMirrorTooltipComponent;
 import arcana.client.tooltip.WandAspectsTooltipComponent;
-import arcana.duck.ArcanaItem;
 import arcana.fluids.ArcanaFluid;
 import arcana.items.MagicMirrorTooltipData;
+import arcana.items.components.ArcanaItemComponentTypes;
 import arcana.network.PkModifyPins;
 import arcana.network.PkTryAdvance;
 import arcana.research.*;
@@ -99,7 +99,7 @@ public final class ArcanaClient implements ClientModInitializer{
 			return null;
 		});
 		ItemTooltipCallback.EVENT.register(arcId("early"), (stack, ctx, type, lines) -> {
-			if(((ArcanaItem)stack.getItem()).arcana$getFragileComponent() != null)
+			if(stack.get(ArcanaItemComponentTypes.FRAGILE) != null)
 				lines.add(1, Text.translatable("tooltip.arcana.fragile").formatted(Formatting.GRAY));
 		});
 		

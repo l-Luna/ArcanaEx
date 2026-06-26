@@ -13,7 +13,6 @@
     "HorizontalConnectingBlockMixin",
     "InventoryChangedCriterionMixin",
     "ItemEntityMixin",
-    "ItemMixin",
     "LivingEntityMixin",
     "PlantBlockMixin",
     "PlayerEntityMixin",

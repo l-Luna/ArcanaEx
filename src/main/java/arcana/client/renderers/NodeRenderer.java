@@ -96,6 +96,8 @@ public final class NodeRenderer{
 		// first pass, visible through blocks if you have goggles of revealing
 		if(hasGoggles)
 			RenderSystem.disableDepthTest();
+		else
+			RenderSystem.enableDepthTest();
 		nodesByType.forEach((type, nodes) -> {
 			RenderSystem.setShaderTexture(0, loadTexture(type));
 			BufferBuilder buffer = tessellator.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);
@@ -141,12 +143,14 @@ public final class NodeRenderer{
 		
 		// show node hitboxes
 		if(showNodeHitboxes){
+			RenderSystem.disableDepthTest();
 			RenderSystem.setShader(GameRenderer::getRenderTypeLinesProgram);
 			RenderSystem.lineWidth(1f);
 			BufferBuilder buffer = tessellator.begin(VertexFormat.DrawMode.LINES, VertexFormats.LINES);
 			for(Node node : allVisible)
 				WorldRenderer.drawBox(new MatrixStack(), buffer, node.bounds().offset(camera.getPos().negate()), 0f, 0.5f, 1f, 1f);
 			RenderHelper.drawBuffer(buffer);
+			RenderSystem.enableDepthTest();
 		}
 		
 		RenderSystem.depthMask(true);

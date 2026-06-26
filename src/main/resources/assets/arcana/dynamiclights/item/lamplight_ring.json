@@ -1,4 +1,6 @@
 {
-  "item": "arcana:lamplight_ring",
+  "match": {
+    "items": "arcana:lamplight_ring"
+  },
   "luminance": 15
 }

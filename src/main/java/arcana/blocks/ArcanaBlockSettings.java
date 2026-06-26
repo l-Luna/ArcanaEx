@@ -1,15 +1,16 @@
 package arcana.blocks;
 
 import arcana.ArcanaRegistry;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.MapColor;
+import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.sound.BlockSoundGroup;
 
 // TODO: use AW instead
 // TODO: once the block codecs are actually used, The Horrors ensue
-public class ArcanaBlockSettings extends FabricBlockSettings{
+public class ArcanaBlockSettings extends AbstractBlock.Settings{
 	
 	private boolean dropsSelf = false;
 	private BlockLayer renderLayer = null;
@@ -18,15 +19,19 @@ public class ArcanaBlockSettings extends FabricBlockSettings{
 	
 	protected ArcanaBlockSettings(MapColor color){
 		super();
-		((AbstractBlock.Settings)this).mapColor(color);
+		mapColor(color);
 	}
 	
 	public static ArcanaBlockSettings of(Material material){
-		return new ArcanaBlockSettings(MapColor.CYAN /*material.getColor()*/);
+		ArcanaBlockSettings settings = new ArcanaBlockSettings(material.color());
+		settings.sounds(material.sounds()).pistonBehavior(material.crushable() ? PistonBehavior.DESTROY : PistonBehavior.NORMAL);
+		return settings;
 	}
 	
 	public static ArcanaBlockSettings of(Material material, MapColor color){
-		return new ArcanaBlockSettings(color);
+		ArcanaBlockSettings settings = of(material);
+		settings.mapColor(color);
+		return settings;
 	}
 	
 	//
@@ -54,6 +59,26 @@ public class ArcanaBlockSettings extends FabricBlockSettings{
 	
 	public ArcanaBlockSettings group(ArcanaRegistry.Tab group){
 		this.group = group;
+		return this;
+	}
+	
+	public ArcanaBlockSettings strength(float strength){
+		super.strength(strength);
+		return this;
+	}
+	
+	public ArcanaBlockSettings strength(float strength, float resistance){
+		super.strength(strength, resistance);
+		return this;
+	}
+	
+	public ArcanaBlockSettings sounds(BlockSoundGroup soundGroup){
+		super.sounds(soundGroup);
+		return this;
+	}
+	
+	public ArcanaBlockSettings luminance(int lumi){
+		luminance(__ -> lumi);
 		return this;
 	}
 	

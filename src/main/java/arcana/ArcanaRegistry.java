@@ -405,7 +405,7 @@ public final class ArcanaRegistry{
 	public static final BigBlock THAUMIC_HALO = new ThaumicHaloBlock(of(Material.METAL).dropsSelf().requiresTool(PICKAXE_MINEABLE).renderLayer(CUTOUT).strength(3).nonOpaque());
 	public static final Block CRYSTALLIZATION_PRESS = new CrystallizationPressBlock(of(Material.METAL).dropsSelf().requiresTool(PICKAXE_MINEABLE).sounds(BlockSoundGroup.ANCIENT_DEBRIS).strength(4).nonOpaque());
 	public static final Block MYSTIC_MIST = new MysticMistBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).sounds(BlockSoundGroup.METAL).strength(2.5f).nonOpaque());
-	public static final Block MAGIC_MIRROR = new MagicMirrorBlock(of(Material.METAL).usesTool(PICKAXE_MINEABLE).strength(0.7f).sounds(BlockSoundGroup.GLASS).nonOpaque().noCollision().luminance(2));
+	public static final Block MAGIC_MIRROR = new MagicMirrorBlock(of(Material.METAL).usesTool(PICKAXE_MINEABLE).strength(0.7f).sounds(BlockSoundGroup.GLASS).luminance(2).nonOpaque().noCollision());
 	public static final Block WARDED_CAMPFIRE = new WardedCampfireBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).renderLayer(CUTOUT).strength(2).sounds(BlockSoundGroup.WOOD).luminance(whenLit(15)).nonOpaque());
 	public static final Block CRIMSON_CAMPFIRE = new CrimsonCampfireBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).renderLayer(CUTOUT).strength(2).sounds(BlockSoundGroup.WOOD).luminance(whenLit(15)).nonOpaque());
 	
@@ -551,7 +551,7 @@ public final class ArcanaRegistry{
 	public static final WoodenStatueBlock HEAR_NO_EVIL_STATUE = new WoodenStatueBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD).nonOpaque(), WoodenStatueBlock.Type.HEAR);
 	public static final StoneVaseBlock STONE_VASE = new StoneVaseBlock(of(Material.STONE).dropsSelf().usesTool(PICKAXE_MINEABLE).strength(2).nonOpaque());
 	
-	public static final Block CRIMSON_LANTERN = new CrimsonLanternBlock(of(Material.METAL).renderLayer(CUTOUT).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3.5f).sounds(BlockSoundGroup.LANTERN).luminance(__ -> 12).nonOpaque());
+	public static final Block CRIMSON_LANTERN = new CrimsonLanternBlock(of(Material.METAL).renderLayer(CUTOUT).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3.5f).sounds(BlockSoundGroup.LANTERN).luminance(12).nonOpaque());
 	public static final Block CHAIN_WALL = new PaneBlock(of(Material.METAL, MapColor.CLEAR).renderLayer(CUTOUT).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(2.5f).sounds(BlockSoundGroup.METAL).nonOpaque());
 	public static final Block METAL_LADDER = new LadderBlock(of(Material.WOOD).renderLayer(CUTOUT).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(2.5f).sounds(BlockSoundGroup.LADDER).nonOpaque());
 	
@@ -1175,7 +1175,7 @@ public final class ArcanaRegistry{
 		for(Aspect aspect : Aspects.hasCluster){
 			var shortName = aspect.id().getPath();
 			if(Aspects.primals.contains(aspect)){
-				FabricBlockSettings settings = of(Material.AMETHYST, MapColor.WHITE)
+				ArcanaBlockSettings settings = of(Material.AMETHYST, MapColor.WHITE)
 						.usesTool(PICKAXE_MINEABLE)
 						.sounds(BlockSoundGroup.AMETHYST_CLUSTER)
 						.strength(0.9f)
@@ -1193,12 +1193,12 @@ public final class ArcanaRegistry{
 					of(Material.GLASS)
 							.renderLayer(CUTOUT)
 							.usesTool(PICKAXE_MINEABLE)
+							.luminance(5)
 							.nonOpaque()
 							.noCollision()
 							.ticksRandomly()
 							.sounds(BlockSoundGroup.AMETHYST_CLUSTER)
-							.strength(1.5f)
-							.luminance(5),
+							.strength(1.5f),
 					aspect);
 			register("clusters/" + shortName, clusterBlock);
 			Aspects.clusters.put(aspect, clusterBlock);

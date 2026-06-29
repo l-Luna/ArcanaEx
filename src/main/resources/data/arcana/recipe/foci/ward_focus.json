@@ -26,8 +26,8 @@
       "item": "arcana:crystals/order"
     },
     {
-      "item": "minecraft:potion",
-      "matches": "has_potion_type minecraft:regeneration"
+      "fabric:type": "arcana:potion_effect",
+      "effect": "minecraft:regeneration"
     }
   ],
   "aspects": [

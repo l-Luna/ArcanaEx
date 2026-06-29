@@ -6,8 +6,8 @@
   },
   "base_ingredients": [
     {
-      "item": "minecraft:enchanted_book",
-      "matches": "enchanted_with minecraft:protection"
+      "fabric:type": "arcana:enchanted_book",
+      "enchantment": "minecraft:protection"
     },
     {
       "item": "arcana:bloodlet_ruby"

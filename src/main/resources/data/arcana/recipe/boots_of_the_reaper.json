@@ -8,8 +8,8 @@
       "item": "minecraft:netherite_ingot"
     },
     {
-      "item": "minecraft:enchanted_book",
-      "matches": "enchanted_with minecraft:soul_speed"
+      "fabric:type": "arcana:enchanted_book",
+      "enchantment": "minecraft:soul_speed"
     },
     {
       "item": "arcana:crystals/fire"

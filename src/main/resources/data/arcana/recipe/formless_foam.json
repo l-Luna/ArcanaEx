@@ -1,8 +1,15 @@
 {
   "type": "arcana:alchemy",
   "ingredient": {
-    "item": "minecraft:potion",
-    "matches": "has_potion_type minecraft:water"
+    "fabric:type": "fabric:components",
+    "base": {
+      "item": "minecraft:potion"
+    },
+    "components": {
+      "minecraft:potion_contents": {
+        "potion": "minecraft:water"
+      }
+    }
   },
   "aspects": [
     "3*arcana:slime",

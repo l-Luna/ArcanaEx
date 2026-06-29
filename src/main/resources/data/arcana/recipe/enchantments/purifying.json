@@ -26,9 +26,13 @@
     "FsW"
   ],
   "result": {
-    "id": "minecraft:enchanted_book"
+    "id": "minecraft:enchanted_book",
+    "components": {
+      "minecraft:stored_enchantments": {
+        "arcana:purifying": 1
+      }
+    }
   },
-  "apply": "enchanted_with arcana:purifying",
   "name": "enchantment.arcana.purifying.recipe",
   "aspects": [
     "35*fire",

@@ -5,26 +5,26 @@
   },
   "outer_ingredients": [
     {
-      "item": "minecraft:enchanted_book",
-      "matches": "enchanted_with minecraft:protection"
+      "fabric:type": "arcana:enchanted_book",
+      "enchantment": "minecraft:protection"
     },
     {
       "item": "minecraft:shield"
     },
     {
-      "item": "minecraft:enchanted_book",
-      "matches": "enchanted_with minecraft:fire_protection"
+      "fabric:type": "arcana:enchanted_book",
+      "enchantment": "minecraft:fire_protection"
     },
     {
-      "item": "minecraft:enchanted_book",
-      "matches": "enchanted_with minecraft:projectile_protection"
+      "fabric:type": "arcana:enchanted_book",
+      "enchantment": "minecraft:projectile_protection"
     },
     {
       "item": "arcana:bloodlet_ruby"
     },
     {
-      "item": "minecraft:enchanted_book",
-      "matches": "enchanted_with minecraft:blast_protection"
+      "fabric:type": "arcana:enchanted_book",
+      "enchantment": "minecraft:blast_protection"
     }
   ],
   "aspects": [

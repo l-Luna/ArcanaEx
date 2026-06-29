@@ -26,9 +26,13 @@
     "FsW"
   ],
   "result": {
-    "id": "minecraft:enchanted_book"
+    "id": "minecraft:enchanted_book",
+    "components": {
+      "minecraft:stored_enchantments": {
+        "arcana:transmutative": 1
+      }
+    }
   },
-  "apply": "enchanted_with arcana:transmutative",
   "name": "enchantment.arcana.transmutative.recipe",
   "aspects": [
     "50*order",

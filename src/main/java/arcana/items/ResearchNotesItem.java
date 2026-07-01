@@ -2,7 +2,7 @@ package arcana.items;
 
 import arcana.cca_components.Researcher;
 import arcana.client.research.requirements.PuzzleRequirementRenderer;
-import arcana.items.components.ArcanaItemComponentTypes;
+import arcana.items.components.ArcanaDataComponents;
 import arcana.research.Puzzle;
 import arcana.research.Research;
 import net.fabricmc.api.EnvType;
@@ -34,7 +34,7 @@ public class ResearchNotesItem extends Item{
 	@Environment(EnvType.CLIENT) // must access I18n to provide alternative translations
 	public void appendTooltip(ItemStack stack, @Nullable TooltipContext ctx, List<Text> tooltip, TooltipType type){
 		super.appendTooltip(stack, ctx, tooltip, type);
-		Identifier puzzleId = stack.getOrDefault(ArcanaItemComponentTypes.RESEARCH_NOTE_PUZZLE_ID, null);
+		Identifier puzzleId = stack.getOrDefault(ArcanaDataComponents.RESEARCH_NOTE_PUZZLE_ID, null);
 		if(puzzleId != null){
 			Puzzle puzzle = Research.getPuzzle(puzzleId);
 			if(puzzle != null)
@@ -46,7 +46,7 @@ public class ResearchNotesItem extends Item{
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand){
 		if(complete){
 			ItemStack stack = user.getStackInHand(hand);
-			Identifier puzzleId = stack.getOrDefault(ArcanaItemComponentTypes.RESEARCH_NOTE_PUZZLE_ID, null);
+			Identifier puzzleId = stack.getOrDefault(ArcanaDataComponents.RESEARCH_NOTE_PUZZLE_ID, null);
 			if(puzzleId != null){
 				Puzzle puzzle = Research.getPuzzle(puzzleId);
 				Researcher researcher = Researcher.from(user);

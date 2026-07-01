@@ -3,10 +3,7 @@ package arcana.client;
 import arcana.Arcana;
 import arcana.ArcanaRegistry;
 import arcana.ReflectivelyUtilized;
-import arcana.aspects.Aspect;
-import arcana.aspects.Aspects;
-import arcana.aspects.ItemAspectsTooltipData;
-import arcana.aspects.WandAspectsTooltipData;
+import arcana.aspects.*;
 import arcana.blocks.ArcanaBlockSettings;
 import arcana.blocks.be.WardedCampfireBlockEntity;
 import arcana.cca_components.Researcher;
@@ -26,7 +23,8 @@ import arcana.client.tooltip.MagicMirrorTooltipComponent;
 import arcana.client.tooltip.WandAspectsTooltipComponent;
 import arcana.fluids.ArcanaFluid;
 import arcana.items.MagicMirrorTooltipData;
-import arcana.items.components.ArcanaItemComponentTypes;
+import arcana.items.components.ArcanaDataComponents;
+import arcana.items.components.HoldingJugContentsComponent;
 import arcana.network.PkModifyPins;
 import arcana.network.PkTryAdvance;
 import arcana.research.*;
@@ -59,6 +57,7 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.CampfireBlockEntityRenderer;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.BundleTooltipData;
 import net.minecraft.item.tooltip.TooltipData;
 import net.minecraft.resource.ResourceManager;
@@ -69,7 +68,9 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.profiler.Profiler;
 import net.minecraft.world.biome.FoliageColors;
 
+import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
@@ -88,18 +89,21 @@ public final class ArcanaClient implements ClientModInitializer{
 		Arcana.CONFIG.registerCallback(config -> TextSectionRenderer.clearCache());
 		
 		TooltipComponentCallback.EVENT.register(data ->
-				data instanceof ItemAspectsTooltipData itd
-						? new ItemAspectsTooltipComponent(itd.aspects(), dataToComponent(itd.inner()))
+				data instanceof ItemAspectsTooltipData(List<AspectStack> aspects, TooltipData inner)
+						? new ItemAspectsTooltipComponent(aspects, dataToComponent(inner))
 						: null);
 		TooltipComponentCallback.EVENT.register(d -> {
-			if(d instanceof WandAspectsTooltipData w)
-				return new WandAspectsTooltipComponent(w.wand());
-			if(d instanceof MagicMirrorTooltipData mm)
-				return new MagicMirrorTooltipComponent(mm.tag());
+			// TODO: combine data/component classes (like holding jug)? use marker interface for pass through?
+			if(d instanceof WandAspectsTooltipData(ItemStack wand))
+				return new WandAspectsTooltipComponent(wand);
+			if(d instanceof MagicMirrorTooltipData(UUID tag))
+				return new MagicMirrorTooltipComponent(tag);
+			if(d instanceof HoldingJugContentsComponent h)
+				return h;
 			return null;
 		});
 		ItemTooltipCallback.EVENT.register(arcId("early"), (stack, ctx, type, lines) -> {
-			if(stack.get(ArcanaItemComponentTypes.FRAGILE) != null)
+			if(stack.get(ArcanaDataComponents.FRAGILE) != null)
 				lines.add(1, Text.translatable("tooltip.arcana.fragile").formatted(Formatting.GRAY));
 		});
 		
@@ -123,14 +127,6 @@ public final class ArcanaClient implements ClientModInitializer{
 			ctx.addModels(InfusionPillarBlockEntityRenderer.UPPER_ID);
 			ctx.addModels(InfusionPillarBlockEntityRenderer.PEAK_ID);
 		});
-		/*
-		ModelLoadingRegistry.INSTANCE.registerModelProvider((manager, out) -> {
-			out.accept(InfusionPillarBlockEntityRenderer.BASE_ID);
-			out.accept(InfusionPillarBlockEntityRenderer.UPPER_ID);
-			out.accept(InfusionPillarBlockEntityRenderer.PEAK_ID);
-			out.accept(new ModelIdentifier(arcId("infusion_matrix_active"), ""));
-			out.accept(new ModelIdentifier(arcId("crimson_leech_attacking"), "inventory"));
-		});*/
 		// TODO: veiling
 		/*CoreShaderRegistrationCallback.EVENT.register(context -> {
 			context.register(arcId("particle_turbulent"), ArcanaShaders.FX, shader -> ArcanaShaders.fxTurbulent = shader);
@@ -179,6 +175,8 @@ public final class ArcanaClient implements ClientModInitializer{
 				-> e == null ? 0 : e.getActiveItem() != stack ? 0 : (stack.getMaxUseTime(e) - e.getItemUseTimeLeft()) / 20f);
 		ModelPredicateProviderRegistry.register(ArcanaRegistry.CRIMSON_LONGBOW, arcId("pulling"), (stack, w, e, s)
 				-> e == null ? 0 : e.isUsingItem() && e.getActiveItem() == stack ? 1 : 0);
+		ModelPredicateProviderRegistry.register(ArcanaRegistry.HOLDING_JUG, arcId("empty"), (stack, w, e, s)
+				-> stack.getOrDefault(ArcanaDataComponents.HOLDING_JUG_CONTENTS, HoldingJugContentsComponent.DEFAULT).stacks().isEmpty() ? 1 : 0);
 		
 		HandledScreens.register(ArcanaRegistry.ARCANE_CRAFTING_SCREEN_HANDLER, ArcaneCraftingScreen::new);
 		HandledScreens.register(ArcanaRegistry.RESEARCH_TABLE_SCREEN_HANDLER, ResearchTableScreen::new);

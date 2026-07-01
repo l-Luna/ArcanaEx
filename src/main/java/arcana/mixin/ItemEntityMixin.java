@@ -2,7 +2,7 @@ package arcana.mixin;
 
 import arcana.ArcanaRegistry;
 import arcana.ArcanaTags;
-import arcana.items.components.ArcanaItemComponentTypes;
+import arcana.items.components.ArcanaDataComponents;
 import arcana.items.components.FragileComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -48,7 +48,7 @@ public abstract class ItemEntityMixin extends Entity{
 					0,
 					0.02,
 					0);
-		FragileComponent c = stack.get(ArcanaItemComponentTypes.FRAGILE);
+		FragileComponent c = stack.get(ArcanaDataComponents.FRAGILE);
 		if(!world.isClient && c != null && (horizontalCollision || verticalCollision)){
 			world.syncWorldEvent(WorldEvents.INSTANT_SPLASH_POTION_SPLASHED, getBlockPos(), c.colour());
 			if(c.effect().isPresent())

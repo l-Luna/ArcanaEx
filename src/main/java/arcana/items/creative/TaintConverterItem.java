@@ -5,7 +5,7 @@ import arcana.aura.InfestedChunk;
 import arcana.aura.Taint;
 import arcana.client.particles.CubeParticleEffect;
 import arcana.client.particles.CubeParticleStyle;
-import arcana.items.components.ArcanaItemComponentTypes;
+import arcana.items.components.ArcanaDataComponents;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -69,11 +69,11 @@ public class TaintConverterItem extends Item{
 	}
 	
 	private static int radiusFor(ItemStack stack){
-		return stack.getOrDefault(ArcanaItemComponentTypes.RADIUS, 1);
+		return stack.getOrDefault(ArcanaDataComponents.RADIUS, 1);
 	}
 	
 	private static void setRadiusFor(ItemStack stack, int radius){
-		stack.set(ArcanaItemComponentTypes.RADIUS, radius);
+		stack.set(ArcanaDataComponents.RADIUS, radius);
 	}
 	
 	public void appendTooltip(ItemStack stack, @Nullable TooltipContext ctx, List<Text> tooltip, TooltipType type){

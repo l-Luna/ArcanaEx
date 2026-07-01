@@ -3,7 +3,7 @@ package arcana.blocks.be;
 import arcana.ArcanaRegistry;
 import arcana.blocks.MagicMirrorBlock;
 import arcana.cca_components.MagicMirrorQueue;
-import arcana.items.components.ArcanaItemComponentTypes;
+import arcana.items.components.ArcanaDataComponents;
 import arcana.util.MathUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -72,12 +72,12 @@ public class MagicMirrorBlockEntity extends BlockEntity{
 	
 	protected void readComponents(ComponentsAccess components){
 		super.readComponents(components);
-		setTag(components.get(ArcanaItemComponentTypes.MAGIC_MIRROR_TAG));
+		setTag(components.get(ArcanaDataComponents.MAGIC_MIRROR_TAG));
 	}
 	
 	protected void addComponents(ComponentMap.Builder componentMapBuilder){
 		super.addComponents(componentMapBuilder);
-		componentMapBuilder.add(ArcanaItemComponentTypes.MAGIC_MIRROR_TAG, getTag());
+		componentMapBuilder.add(ArcanaDataComponents.MAGIC_MIRROR_TAG, getTag());
 	}
 	
 	public void removeFromCopiedStackNbt(NbtCompound nbt){

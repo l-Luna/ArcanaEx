@@ -1,7 +1,7 @@
 package arcana.items;
 
 import arcana.ArcanaRegistry;
-import arcana.items.components.ArcanaItemComponentTypes;
+import arcana.items.components.ArcanaDataComponents;
 import arcana.items.components.FragileComponent;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.item.Item;
@@ -11,19 +11,19 @@ import net.minecraft.util.Rarity;
 public class ArcanaItemSettings extends Item.Settings{
 	
 	public ArcanaItemSettings fragile(int colour){
-		component(ArcanaItemComponentTypes.FRAGILE, new FragileComponent(colour));
+		component(ArcanaDataComponents.FRAGILE, new FragileComponent(colour));
 		return this;
 	}
 	
 	public ArcanaItemSettings fragile(int colour, RegistryEntry<StatusEffect> impactEffect){
-		component(ArcanaItemComponentTypes.FRAGILE, new FragileComponent(colour, impactEffect));
+		component(ArcanaDataComponents.FRAGILE, new FragileComponent(colour, impactEffect));
 		return this;
 	}
 	
 	//
 	
 	public ArcanaItemSettings group(ArcanaRegistry.Tab tab){
-		component(ArcanaItemComponentTypes.SUBTAB, tab);
+		component(ArcanaDataComponents.SUBTAB, tab);
 		return this;
 	}
 	

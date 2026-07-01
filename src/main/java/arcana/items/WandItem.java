@@ -12,7 +12,7 @@ import arcana.blocks.be.InfusionMatrixBlockEntity;
 import arcana.cca_components.Caster;
 import arcana.cca_components.Researcher;
 import arcana.client.ArcanaClient;
-import arcana.items.components.ArcanaItemComponentTypes;
+import arcana.items.components.ArcanaDataComponents;
 import arcana.items.components.WandDataComponent;
 import dev.emi.trinkets.api.SlotReference;
 import dev.emi.trinkets.api.TrinketsApi;
@@ -47,12 +47,12 @@ import java.util.function.Consumer;
 public class WandItem extends Item implements FabricItem, WarpingItem, CustomCreativePresentationItem{
 	
 	public WandItem(Item.Settings settings){
-		super(settings.component(ArcanaItemComponentTypes.WAND_DATA, WandDataComponent.createDefault()));
+		super(settings.component(ArcanaDataComponents.WAND_DATA, WandDataComponent.createDefault()));
 	}
 	
 	public static ItemStack withCapAndCore(Cap cap, Core core){
 		ItemStack stack = new ItemStack(ArcanaRegistry.WAND);
-		stack.set(ArcanaItemComponentTypes.WAND_DATA, WandDataComponent.withCapAndCore(cap, core));
+		stack.set(ArcanaDataComponents.WAND_DATA, WandDataComponent.withCapAndCore(cap, core));
 		return stack;
 	}
 	
@@ -314,7 +314,7 @@ public class WandItem extends Item implements FabricItem, WarpingItem, CustomCre
 	}
 	
 	public static WandDataComponent dataFrom(ItemStack stack){
-		return stack.get(ArcanaItemComponentTypes.WAND_DATA);
+		return stack.get(ArcanaDataComponents.WAND_DATA);
 	}
 	
 	public int warping(ItemStack stack, PlayerEntity player){

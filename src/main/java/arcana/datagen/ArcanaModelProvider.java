@@ -145,6 +145,7 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		noAutoGen.add(GREATWOOD_SCRIBING_DESK.asItem());
 		noAutoGen.add(SILVERWOOD_SCRIBING_DESK.asItem());
 		noAutoGen.add(MAGIC_MIRROR.asItem());
+		noAutoGen.add(HOLDING_JUG);
 		noAutoGen.add(BEJEWELED_BEET_SEEDS);
 		noAutoGen.add(HUGE_CORDISPORA_CAP.asItem());
 		noAutoGen.add(HUGE_VISHROOM_CAP.asItem());

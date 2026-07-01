@@ -6,7 +6,7 @@ import arcana.aspects.Aspect;
 import arcana.aspects.AspectMap;
 import arcana.aspects.Aspects;
 import arcana.cca_components.Researcher;
-import arcana.items.components.ArcanaItemComponentTypes;
+import arcana.items.components.ArcanaDataComponents;
 import arcana.research.BuiltinResearch;
 import arcana.research.Research;
 import arcana.research.puzzles.Chemistry;
@@ -43,9 +43,9 @@ public class PkChemistryClick extends C2SMessage{
 		if(handler instanceof ResearchTableScreen.Handler rtsh){
 			ItemStack notes = rtsh.slots.get(37).getStack();
 			if(!notes.isEmpty()){
-				Chemistry puzzle = (Chemistry)Research.getPuzzle(notes.get(ArcanaItemComponentTypes.RESEARCH_NOTE_PUZZLE_ID));
+				Chemistry puzzle = (Chemistry)Research.getPuzzle(notes.get(ArcanaDataComponents.RESEARCH_NOTE_PUZZLE_ID));
 				// TODO: validate missing spaces
-				NbtCompound puzzleData =notes.get(ArcanaItemComponentTypes.RESEARCH_NOTE_PUZZLE_DATA);
+				NbtCompound puzzleData =notes.get(ArcanaDataComponents.RESEARCH_NOTE_PUZZLE_DATA);
 				AspectMap stored = AspectMap.fromNbt(puzzleData.getCompound("stored_aspects"));
 				NbtCompound grid = puzzleData.getCompound("grid_aspects");
 				Aspect toPlace = toSet == null ? null : Aspects.byName(toSet);
@@ -73,8 +73,8 @@ public class PkChemistryClick extends C2SMessage{
 				
 				if(puzzle.validate(puzzleData)){
 					ItemStack complete = new ItemStack(ArcanaRegistry.COMPLETE_RESEARCH_NOTES);
-					complete.set(ArcanaItemComponentTypes.RESEARCH_NOTE_PUZZLE_ID, notes.get(ArcanaItemComponentTypes.RESEARCH_NOTE_PUZZLE_ID));
-					complete.set(ArcanaItemComponentTypes.RESEARCH_NOTE_PUZZLE_DATA, notes.get(ArcanaItemComponentTypes.RESEARCH_NOTE_PUZZLE_DATA));
+					complete.set(ArcanaDataComponents.RESEARCH_NOTE_PUZZLE_ID, notes.get(ArcanaDataComponents.RESEARCH_NOTE_PUZZLE_ID));
+					complete.set(ArcanaDataComponents.RESEARCH_NOTE_PUZZLE_DATA, notes.get(ArcanaDataComponents.RESEARCH_NOTE_PUZZLE_DATA));
 					rtsh.slots.get(37).setStack(complete);
 				}
 				rtsh.updateToClient();

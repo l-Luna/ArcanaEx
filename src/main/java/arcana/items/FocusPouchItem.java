@@ -1,6 +1,6 @@
 package arcana.items;
 
-import arcana.items.components.ArcanaItemComponentTypes;
+import arcana.items.components.ArcanaDataComponents;
 import arcana.screens.FocusPouchScreen;
 import arcana.util.ArrayInventory;
 import net.fabricmc.fabric.api.item.v1.FabricItem;
@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 public class FocusPouchItem extends Item implements FabricItem{
 	
 	public FocusPouchItem(Item.Settings settings){
-		super(settings.component(ArcanaItemComponentTypes.FOCUS_POUCH_INVENTORY, new ArrayInventory(27)));
+		super(settings.component(ArcanaDataComponents.FOCUS_POUCH_INVENTORY, new ArrayInventory(27)));
 	}
 	
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand){
@@ -30,11 +30,11 @@ public class FocusPouchItem extends Item implements FabricItem{
 	}
 	
 	public static ArrayInventory inventoryFrom(ItemStack stack){
-		return stack.get(ArcanaItemComponentTypes.FOCUS_POUCH_INVENTORY).copy();
+		return stack.get(ArcanaDataComponents.FOCUS_POUCH_INVENTORY).copy();
 	}
 	
 	public static void setInventory(ItemStack stack, ArrayInventory inventory){
-		stack.set(ArcanaItemComponentTypes.FOCUS_POUCH_INVENTORY, inventory);
+		stack.set(ArcanaDataComponents.FOCUS_POUCH_INVENTORY, inventory);
 	}
 	
 	public boolean allowComponentsUpdateAnimation(PlayerEntity player, Hand hand, ItemStack oldStack, ItemStack newStack){

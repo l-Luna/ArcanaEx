@@ -4,7 +4,7 @@ import arcana.aura.AuraWorld;
 import arcana.aura.Node;
 import arcana.aura.NodeType;
 import arcana.aura.NodeTypes;
-import arcana.items.components.ArcanaItemComponentTypes;
+import arcana.items.components.ArcanaDataComponents;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -55,11 +55,11 @@ public class NodePlacerItem extends Item{
 	}
 	
 	private static void setTypeFor(ItemStack stack, NodeType type){
-		stack.set(ArcanaItemComponentTypes.NODE_TYPE, type);
+		stack.set(ArcanaDataComponents.NODE_TYPE, type);
 	}
 	
 	private static NodeType typeFor(ItemStack stack){
-		return stack.getOrDefault(ArcanaItemComponentTypes.NODE_TYPE, NodeTypes.NORMAL);
+		return stack.getOrDefault(ArcanaDataComponents.NODE_TYPE, NodeTypes.NORMAL);
 	}
 	
 	private static void cycleType(PlayerEntity user, ItemStack stack){

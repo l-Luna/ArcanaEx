@@ -9,7 +9,7 @@ import arcana.effects.SetBonusStatusEffect;
 import arcana.enchantments.ArcanaEnchantmentComponents;
 import arcana.enchantments.LootSwapEffect;
 import arcana.items.CrimsonLeechItem;
-import arcana.items.components.ArcanaItemComponentTypes;
+import arcana.items.components.ArcanaDataComponents;
 import arcana.network.Networking;
 import arcana.recipes.alchemy.AlchemyRecipe;
 import arcana.recipes.arcane_crafting.ShapedArcaneCraftingRecipe;
@@ -58,7 +58,7 @@ public final class Arcana implements ModInitializer{
 		
 		ArcanaSounds.setup();
 		ArcanaEnchantmentComponents.setup();
-		ArcanaItemComponentTypes.setup();
+		ArcanaDataComponents.setup();
 		ArcanaRegistry.setup();
 		
 		Registry.register(Registries.RECIPE_SERIALIZER, arcId("wand"), WandRecipe.SERIALIZER);

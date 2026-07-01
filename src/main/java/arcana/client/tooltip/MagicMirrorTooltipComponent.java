@@ -3,7 +3,6 @@ package arcana.client.tooltip;
 import arcana.aspects.Aspect;
 import arcana.aspects.Aspects;
 import arcana.client.AspectRenderHelper;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
@@ -32,7 +31,6 @@ public record MagicMirrorTooltipComponent(@Nullable UUID tag) implements Tooltip
 	public void drawItems(TextRenderer textRenderer, int x, int y, DrawContext ctx){
 		ctx.drawTexture(BG_TEXTURE, x, y, 0, 0, 175, 24, 256, 256);
 		if(tag == null){
-			RenderSystem.setShaderTexture(0, QUESTION_MARK_TEXTURE);
 			for(int g = 0; g < 2; g++)
 				for(int i = 0; i < 4; i++)
 					ctx.drawTexture(QUESTION_MARK_TEXTURE, x + 6 + i*20 + g*87, y + 4, 0, 0, 16, 16, 16, 16);

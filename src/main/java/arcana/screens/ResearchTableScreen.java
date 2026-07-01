@@ -5,7 +5,7 @@ import arcana.blocks.ResearchTableBlock;
 import arcana.blocks.be.ResearchTableBlockEntity;
 import arcana.client.research.PuzzleRenderer;
 import arcana.items.ResearchNotesItem;
-import arcana.items.components.ArcanaItemComponentTypes;
+import arcana.items.components.ArcanaDataComponents;
 import arcana.research.Puzzle;
 import arcana.research.Research;
 import net.minecraft.block.BlockState;
@@ -54,7 +54,7 @@ public class ResearchTableScreen extends HandledScreen<ResearchTableScreen.Handl
 		// don't draw item tooltips if e.g. an aspect is selected
 		ItemStack notes = handler.slots.get(37).getStack();
 		if(!notes.isEmpty()){
-			Puzzle puzzle = Research.getPuzzle(notes.get(ArcanaItemComponentTypes.RESEARCH_NOTE_PUZZLE_ID));
+			Puzzle puzzle = Research.getPuzzle(notes.get(ArcanaDataComponents.RESEARCH_NOTE_PUZZLE_ID));
 			var renderer = PuzzleRenderer.get(puzzle);
 			if(renderer == null || renderer.drawItemTooltips())
 				drawMouseoverTooltip(ctx, mouseX, mouseY);
@@ -74,10 +74,10 @@ public class ResearchTableScreen extends HandledScreen<ResearchTableScreen.Handl
 		matrices.translate(-x, -y, 0);
 		ItemStack notes = handler.slots.get(37).getStack();
 		if(!notes.isEmpty()){
-			Puzzle puzzle = Research.getPuzzle(notes.get(ArcanaItemComponentTypes.RESEARCH_NOTE_PUZZLE_ID));
+			Puzzle puzzle = Research.getPuzzle(notes.get(ArcanaDataComponents.RESEARCH_NOTE_PUZZLE_ID));
 			PuzzleRenderer<Puzzle> renderer = PuzzleRenderer.get(puzzle);
 			if(renderer != null){
-				NbtCompound data = notes.get(ArcanaItemComponentTypes.RESEARCH_NOTE_PUZZLE_DATA);
+				NbtCompound data = notes.get(ArcanaDataComponents.RESEARCH_NOTE_PUZZLE_DATA);
 				if(notes.getItem() == ArcanaRegistry.RESEARCH_NOTES){
 					renderer.render(ctx, puzzle, data, width, height, mouseX, mouseY);
 					renderer.renderAfter(ctx, puzzle, data, width, height, mouseX, mouseY);
@@ -93,10 +93,10 @@ public class ResearchTableScreen extends HandledScreen<ResearchTableScreen.Handl
 		
 		ItemStack notes = handler.slots.get(37).getStack();
 		if(!notes.isEmpty() && notes.getItem() == ArcanaRegistry.RESEARCH_NOTES){
-			Puzzle puzzle = Research.getPuzzle(notes.get(ArcanaItemComponentTypes.RESEARCH_NOTE_PUZZLE_ID));
+			Puzzle puzzle = Research.getPuzzle(notes.get(ArcanaDataComponents.RESEARCH_NOTE_PUZZLE_ID));
 			var renderer = PuzzleRenderer.get(puzzle);
 			if(renderer != null)
-				return renderer.onClick(button, puzzle, notes.get(ArcanaItemComponentTypes.RESEARCH_NOTE_PUZZLE_DATA), width, height, (int)mouseX, (int)mouseY);
+				return renderer.onClick(button, puzzle, notes.get(ArcanaDataComponents.RESEARCH_NOTE_PUZZLE_DATA), width, height, (int)mouseX, (int)mouseY);
 		}
 		
 		return false;
@@ -105,7 +105,7 @@ public class ResearchTableScreen extends HandledScreen<ResearchTableScreen.Handl
 	public void close(){
 		ItemStack notes = handler.slots.get(37).getStack();
 		if(!notes.isEmpty()){
-			Puzzle puzzle = Research.getPuzzle(notes.get(ArcanaItemComponentTypes.RESEARCH_NOTE_PUZZLE_ID));
+			Puzzle puzzle = Research.getPuzzle(notes.get(ArcanaDataComponents.RESEARCH_NOTE_PUZZLE_ID));
 			PuzzleRenderer<Puzzle> renderer = PuzzleRenderer.get(puzzle);
 			if(renderer != null)
 				renderer.onClose();

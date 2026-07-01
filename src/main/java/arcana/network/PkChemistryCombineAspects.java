@@ -4,7 +4,7 @@ import arcana.ReflectivelyUtilized;
 import arcana.aspects.Aspect;
 import arcana.aspects.AspectMap;
 import arcana.aspects.Aspects;
-import arcana.items.components.ArcanaItemComponentTypes;
+import arcana.items.components.ArcanaDataComponents;
 import arcana.screens.ResearchTableScreen;
 import com.unascribed.lib39.tunnel.api.C2SMessage;
 import com.unascribed.lib39.tunnel.api.NetworkContext;
@@ -34,7 +34,7 @@ public class PkChemistryCombineAspects extends C2SMessage{
 		ScreenHandler handler = player.currentScreenHandler;
 		if(handler instanceof ResearchTableScreen.Handler rtsh){
 			ItemStack notes = rtsh.slots.get(37).getStack();
-			NbtCompound puzzleData = notes.get(ArcanaItemComponentTypes.RESEARCH_NOTE_PUZZLE_DATA);
+			NbtCompound puzzleData = notes.get(ArcanaDataComponents.RESEARCH_NOTE_PUZZLE_DATA);
 			AspectMap stored = AspectMap.fromNbt(puzzleData.getCompound("stored_aspects"));
 			Aspect leftAsp = Aspects.byName(left), rightAsp = Aspects.byName(right);
 			

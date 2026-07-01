@@ -1,7 +1,7 @@
 package arcana.items;
 
 import arcana.cca_components.Researcher;
-import arcana.items.components.ArcanaItemComponentTypes;
+import arcana.items.components.ArcanaDataComponents;
 import arcana.items.components.ResearchCompletionComponent;
 import arcana.research.Research;
 import net.fabricmc.api.EnvType;
@@ -26,7 +26,7 @@ import java.util.Set;
 public class TomeOfSharingItem extends Item{
 	
 	public TomeOfSharingItem(Settings settings){
-		super(settings.component(ArcanaItemComponentTypes.RESEARCH_COMPLETION, ResearchCompletionComponent.DEFAULT));
+		super(settings.component(ArcanaDataComponents.RESEARCH_COMPLETION, ResearchCompletionComponent.DEFAULT));
 	}
 	
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand){
@@ -34,7 +34,7 @@ public class TomeOfSharingItem extends Item{
 		ItemStack tome = user.getStackInHand(hand);
 		if(user.isSneaking()){
 			// teach it everything they know
-			ResearchCompletionComponent originalCompletion = tome.get(ArcanaItemComponentTypes.RESEARCH_COMPLETION);
+			ResearchCompletionComponent originalCompletion = tome.get(ArcanaDataComponents.RESEARCH_COMPLETION);
 			ResearchCompletionComponent newCompletion = originalCompletion.mutableCopy();
 			Map<Identifier, Integer> boundResearch = originalCompletion.stages();
 			researcher.getAllResearch().forEach((entry, stage) -> {
@@ -45,7 +45,7 @@ public class TomeOfSharingItem extends Item{
 			for(Identifier puzzle : researcher.getAllCompletedPuzzles())
 				if(!boundPuzzles.contains(puzzle))
 					newCompletion.puzzles().add(puzzle);
-			tome.set(ArcanaItemComponentTypes.RESEARCH_COMPLETION, newCompletion);
+			tome.set(ArcanaDataComponents.RESEARCH_COMPLETION, newCompletion);
 			return TypedActionResult.success(tome);
 		}else{
 			// teach them every puzzle it knows
@@ -78,10 +78,10 @@ public class TomeOfSharingItem extends Item{
 	// we don't store player UUIDs since the player could be offline, but droppers should still work
 	
 	public static Map<Identifier, Integer> getBoundResearch(ItemStack tome){
-		return tome.get(ArcanaItemComponentTypes.RESEARCH_COMPLETION).stages();
+		return tome.get(ArcanaDataComponents.RESEARCH_COMPLETION).stages();
 	}
 	
 	public static Set<Identifier> getBoundPuzzles(ItemStack tome){
-		return tome.get(ArcanaItemComponentTypes.RESEARCH_COMPLETION).puzzles();
+		return tome.get(ArcanaDataComponents.RESEARCH_COMPLETION).puzzles();
 	}
 }

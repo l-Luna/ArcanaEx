@@ -28,7 +28,7 @@ import arcana.fluids.ArcanaFluid;
 import arcana.fluids.PutrefactionFluid;
 import arcana.fluids.TaintGooFluid;
 import arcana.items.*;
-import arcana.items.components.ArcanaItemComponentTypes;
+import arcana.items.components.ArcanaDataComponents;
 import arcana.items.creative.FluxSpongeItem;
 import arcana.items.creative.NodePlacerItem;
 import arcana.items.creative.NodeRemoverItem;
@@ -188,6 +188,7 @@ public final class ArcanaRegistry{
 			.build()));
 	
 	public static final Item PERSONAL_MAGIC_MIRROR = new PersonalMagicMirrorItem(new ArcanaItemSettings().group(Tab.MAIN).maxCount(1));
+	public static final Item HOLDING_JUG = new HoldingJugItem(new ArcanaItemSettings().group(Tab.MAIN).maxCount(1));
 	
 	public static final Item RAREFIED_SHERBERT = new Item(new ArcanaItemSettings().group(Tab.MAIN).food(aspectCandyFood(AIR_POWER.entry())));
 	public static final Item SOBERING_SYRUP = new Item(new ArcanaItemSettings().group(Tab.MAIN).food(aspectCandyFood(FIRE_POWER.entry())));
@@ -793,6 +794,7 @@ public final class ArcanaRegistry{
 		register("drinkable_taint", DRINKABLE_TAINT);
 		
 		register("personal_magic_mirror", PERSONAL_MAGIC_MIRROR);
+		register("holding_jug", HOLDING_JUG);
 		
 		register("rarefied_sherbert", RAREFIED_SHERBERT);
 		register("sobering_syrup", SOBERING_SYRUP);
@@ -1341,7 +1343,7 @@ public final class ArcanaRegistry{
 		if(item instanceof Core c)
 			registerCoreOnly(c);
 		
-		Tab tab = item.getComponents().getOrDefault(ArcanaItemComponentTypes.SUBTAB, Tab.MAIN);
+		Tab tab = item.getComponents().getOrDefault(ArcanaDataComponents.SUBTAB, Tab.MAIN);
 		ITEMS_BY_TAB.compute(tab, (__, b) -> {
 			if(b == null)
 				b = new ArrayList<>();

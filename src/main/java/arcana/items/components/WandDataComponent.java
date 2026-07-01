@@ -44,9 +44,9 @@ public class WandDataComponent{
 	}
 	
 	public static <T> T apply(ItemStack stack, Function<WandDataComponent, T> body){
-		WandDataComponent copy = stack.getOrDefault(ArcanaItemComponentTypes.WAND_DATA, WandDataComponent.createDefault()).copy();
+		WandDataComponent copy = stack.getOrDefault(ArcanaDataComponents.WAND_DATA, WandDataComponent.createDefault()).copy();
 		T ret = body.apply(copy);
-		stack.set(ArcanaItemComponentTypes.WAND_DATA, copy);
+		stack.set(ArcanaDataComponents.WAND_DATA, copy);
 		return ret;
 	}
 	

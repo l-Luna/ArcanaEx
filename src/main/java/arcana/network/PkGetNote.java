@@ -2,7 +2,7 @@ package arcana.network;
 
 import arcana.ArcanaRegistry;
 import arcana.ReflectivelyUtilized;
-import arcana.items.components.ArcanaItemComponentTypes;
+import arcana.items.components.ArcanaDataComponents;
 import arcana.research.Puzzle;
 import arcana.research.Research;
 import com.unascribed.lib39.tunnel.api.C2SMessage;
@@ -33,8 +33,8 @@ public class PkGetNote extends C2SMessage{
 			return;
 		Puzzle puzzle = Research.getPuzzle(puzzleId);
 		ItemStack noteStack = new ItemStack(ArcanaRegistry.RESEARCH_NOTES);
-		noteStack.set(ArcanaItemComponentTypes.RESEARCH_NOTE_PUZZLE_ID, puzzleId);
-		noteStack.set(ArcanaItemComponentTypes.RESEARCH_NOTE_PUZZLE_DATA, puzzle.getInitialNoteTag(player));
+		noteStack.set(ArcanaDataComponents.RESEARCH_NOTE_PUZZLE_ID, puzzleId);
+		noteStack.set(ArcanaDataComponents.RESEARCH_NOTE_PUZZLE_DATA, puzzle.getInitialNoteTag(player));
 		if(!player.giveItemStack(noteStack)){
 			ItemEntity itemEntity = player.dropItem(noteStack, false);
 			if(itemEntity != null){

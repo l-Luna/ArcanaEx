@@ -4,7 +4,7 @@ import arcana.ArcanaRegistry;
 import arcana.api.ContextCraftedItem;
 import arcana.api.CustomCreativePresentationItem;
 import arcana.cca_components.MagicMirrorQueue;
-import arcana.items.components.ArcanaItemComponentTypes;
+import arcana.items.components.ArcanaDataComponents;
 import arcana.util.MathUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
@@ -37,10 +37,10 @@ public class PersonalMagicMirrorItem extends Item implements ContextCraftedItem,
 		if(!world.isClient){
 			if(getId(stack) == null)
 				setId(stack, MathUtil.randomUuid(world.random));
-			if(stack.getOrDefault(ArcanaItemComponentTypes.MAGIC_MIRROR_BUNDLED_FLAG, false)){
+			if(stack.getOrDefault(ArcanaDataComponents.MAGIC_MIRROR_BUNDLED_FLAG, false)){
 				UUID tag = MathUtil.randomUuid(world.random);
 				MagicMirrorBlockItem.setTag(stack, tag);
-				stack.set(ArcanaItemComponentTypes.MAGIC_MIRROR_BUNDLED_FLAG, false);
+				stack.set(ArcanaDataComponents.MAGIC_MIRROR_BUNDLED_FLAG, false);
 				if(entity instanceof PlayerEntity player)
 					player.giveItemStack(MagicMirrorBlockItem.setTag(new ItemStack(ArcanaRegistry.MAGIC_MIRROR), tag));
 			}
@@ -62,7 +62,7 @@ public class PersonalMagicMirrorItem extends Item implements ContextCraftedItem,
 	
 	public void addToTab(ItemGroup.Entries entries){
 		ItemStack stack = getDefaultStack();
-		stack.set(ArcanaItemComponentTypes.MAGIC_MIRROR_BUNDLED_FLAG, true);
+		stack.set(ArcanaDataComponents.MAGIC_MIRROR_BUNDLED_FLAG, true);
 		entries.add(stack);
 	}
 	
@@ -82,11 +82,11 @@ public class PersonalMagicMirrorItem extends Item implements ContextCraftedItem,
 	}
 	
 	public static @Nullable UUID getId(ItemStack mirrorStack){
-		return mirrorStack.getOrDefault(ArcanaItemComponentTypes.MAGIC_MIRROR_ID, null);
+		return mirrorStack.getOrDefault(ArcanaDataComponents.MAGIC_MIRROR_ID, null);
 	}
 	
 	public static ItemStack setId(ItemStack mirrorStack, UUID uuid){
-		mirrorStack.set(ArcanaItemComponentTypes.MAGIC_MIRROR_ID, uuid);
+		mirrorStack.set(ArcanaDataComponents.MAGIC_MIRROR_ID, uuid);
 		return mirrorStack;
 	}
 	

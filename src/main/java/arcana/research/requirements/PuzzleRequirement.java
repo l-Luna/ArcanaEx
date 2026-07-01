@@ -2,7 +2,7 @@ package arcana.research.requirements;
 
 import arcana.ArcanaRegistry;
 import arcana.cca_components.Researcher;
-import arcana.items.components.ArcanaItemComponentTypes;
+import arcana.items.components.ArcanaDataComponents;
 import arcana.network.PkGetNote;
 import arcana.research.*;
 import arcana.research.puzzles.Fieldwork;
@@ -67,7 +67,7 @@ public class PuzzleRequirement extends Requirement{
 	public static boolean alreadyHasNote(Puzzle puzzle, PlayerEntity player){
 		for(int i = 0; i < player.getInventory().size(); i++){
 			ItemStack stack = player.getInventory().getStack(i);
-			if(stack.isOf(ArcanaRegistry.RESEARCH_NOTES) && Objects.equals(stack.get(ArcanaItemComponentTypes.RESEARCH_NOTE_PUZZLE_ID), puzzle.id()))
+			if(stack.isOf(ArcanaRegistry.RESEARCH_NOTES) && Objects.equals(stack.get(ArcanaDataComponents.RESEARCH_NOTE_PUZZLE_ID), puzzle.id()))
 				return true;
 		}
 		return false;

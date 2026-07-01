@@ -17,7 +17,7 @@ import java.util.UUID;
 
 import static arcana.Arcana.arcId;
 
-public class ArcanaItemComponentTypes{
+public class ArcanaDataComponents{
 	
 	// initialised before ArcanaRegistry, so items are still nonexistent
 	
@@ -35,6 +35,8 @@ public class ArcanaItemComponentTypes{
 	
 	// item specific
 	public static final ComponentType<ArrayInventory> FOCUS_POUCH_INVENTORY = create(ArrayInventory.CODEC);
+	
+	public static final ComponentType<HoldingJugContentsComponent> HOLDING_JUG_CONTENTS = create(HoldingJugContentsComponent.CODEC);
 	
 	public static final ComponentType<UUID> MAGIC_MIRROR_TAG = create(Uuids.CODEC);
 	public static final ComponentType<UUID> MAGIC_MIRROR_ID = create(Uuids.CODEC);
@@ -56,6 +58,7 @@ public class ArcanaItemComponentTypes{
 		register("fragile", FRAGILE);
 		
 		register("focus_pouch_inventory", FOCUS_POUCH_INVENTORY);
+		register("holding_jug_contents", HOLDING_JUG_CONTENTS);
 		register("magic_mirror_tag", MAGIC_MIRROR_TAG);
 		register("magic_mirror_id", MAGIC_MIRROR_ID);
 		register("magic_mirror_bundled_flag", MAGIC_MIRROR_BUNDLED_FLAG);

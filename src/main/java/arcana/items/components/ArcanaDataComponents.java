@@ -36,7 +36,7 @@ public class ArcanaDataComponents{
 	// item specific
 	public static final ComponentType<ArrayInventory> FOCUS_POUCH_INVENTORY = create(ArrayInventory.CODEC);
 	
-	public static final ComponentType<HoldingJugContentsComponent> HOLDING_JUG_CONTENTS = create(HoldingJugContentsComponent.CODEC);
+	public static final ComponentType<StorageMapComponent> HOLDING_JUG_CONTENTS = create(StorageMapComponent.CODEC);
 	
 	public static final ComponentType<UUID> MAGIC_MIRROR_TAG = create(Uuids.CODEC);
 	public static final ComponentType<UUID> MAGIC_MIRROR_ID = create(Uuids.CODEC);

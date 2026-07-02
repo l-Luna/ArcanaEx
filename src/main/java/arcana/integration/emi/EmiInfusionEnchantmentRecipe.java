@@ -84,7 +84,7 @@ public class EmiInfusionEnchantmentRecipe extends AbstractEmiInfusionRecipe{
 			for(int i = 0; i < multiplier; i++)
 				outers.addAll(baseOuters);
 			AspectMap aspects = baseAspects.copy();
-			aspects.multiply(__ -> (float)multiplier);
+			aspects.multiply(multiplier);
 			addBaseWidgets(group, EmiStack.of(input), outers, baseInstability + targetLevel, aspects, EmiStack.of(output));
 		}));
 	}

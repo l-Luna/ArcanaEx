@@ -24,7 +24,7 @@ import arcana.client.tooltip.WandAspectsTooltipComponent;
 import arcana.fluids.ArcanaFluid;
 import arcana.items.MagicMirrorTooltipData;
 import arcana.items.components.ArcanaDataComponents;
-import arcana.items.components.HoldingJugContentsComponent;
+import arcana.items.components.StorageMapComponent;
 import arcana.network.PkModifyPins;
 import arcana.network.PkTryAdvance;
 import arcana.research.*;
@@ -98,7 +98,7 @@ public final class ArcanaClient implements ClientModInitializer{
 				return new WandAspectsTooltipComponent(wand);
 			if(d instanceof MagicMirrorTooltipData(UUID tag))
 				return new MagicMirrorTooltipComponent(tag);
-			if(d instanceof HoldingJugContentsComponent h)
+			if(d instanceof StorageMapComponent h)
 				return h;
 			return null;
 		});
@@ -176,7 +176,7 @@ public final class ArcanaClient implements ClientModInitializer{
 		ModelPredicateProviderRegistry.register(ArcanaRegistry.CRIMSON_LONGBOW, arcId("pulling"), (stack, w, e, s)
 				-> e == null ? 0 : e.isUsingItem() && e.getActiveItem() == stack ? 1 : 0);
 		ModelPredicateProviderRegistry.register(ArcanaRegistry.HOLDING_JUG, arcId("empty"), (stack, w, e, s)
-				-> stack.getOrDefault(ArcanaDataComponents.HOLDING_JUG_CONTENTS, HoldingJugContentsComponent.DEFAULT).stacks().isEmpty() ? 1 : 0);
+				-> stack.getOrDefault(ArcanaDataComponents.HOLDING_JUG_CONTENTS, StorageMapComponent.DEFAULT).stored().isEmpty() ? 1 : 0);
 		
 		HandledScreens.register(ArcanaRegistry.ARCANE_CRAFTING_SCREEN_HANDLER, ArcaneCraftingScreen::new);
 		HandledScreens.register(ArcanaRegistry.RESEARCH_TABLE_SCREEN_HANDLER, ResearchTableScreen::new);

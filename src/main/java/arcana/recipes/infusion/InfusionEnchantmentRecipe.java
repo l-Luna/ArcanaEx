@@ -82,7 +82,7 @@ public class InfusionEnchantmentRecipe implements InfusionRecipe, ArcanaRecipe, 
 		// charge cost
 		int multiplier = 1 << currentLevel;
 		AspectMap cost = baseAspects.copy();
-		cost.multiply(__ -> (float)multiplier);
+		cost.multiply(multiplier);
 		if(!inventory.aspects().contains(cost))
 			return null;
 		List<Ingredient> actualIngredients = new ArrayList<>(baseIngredients.size() * multiplier);

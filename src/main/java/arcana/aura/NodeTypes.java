@@ -138,7 +138,7 @@ public class NodeTypes{
 									// gain some of its aspects
 									for(ItemStack stack : Block.getDroppedStacks(state, sw, cursor, world.getBlockEntity(cursor))){
 										var aspects = ItemAspectRegistry.get(stack).copy();
-										aspects.multiply(__ -> hungryCarryFraction);
+										aspects.multiply(hungryCarryFraction);
 										node.getAspects().add(aspects);
 										node.markDirty();
 									}

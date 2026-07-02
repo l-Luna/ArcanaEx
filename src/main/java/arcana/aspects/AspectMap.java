@@ -124,6 +124,16 @@ public record AspectMap(Map<Aspect, Integer> underlying) implements Iterable<Asp
 		return other.asStacks().stream().allMatch(this::contains);
 	}
 	
+	public void multiply(int multiplier){
+		for(Aspect aspect : new HashSet<>(aspectSet()))
+			set(aspect, get(aspect) * multiplier);
+	}
+	
+	public void multiply(float multiplier){
+		for(Aspect aspect : new HashSet<>(aspectSet()))
+			set(aspect, (int)(get(aspect) * multiplier));
+	}
+	
 	public void multiply(Function<Aspect, Float> multiplier){
 		for(Aspect aspect : new HashSet<>(aspectSet()))
 			set(aspect, (int)(get(aspect) * multiplier.apply(aspect)));

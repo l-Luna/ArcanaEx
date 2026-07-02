@@ -42,9 +42,14 @@
     "5*magic",
     "5*armour"
   ],
-  "#c:water_buckets": [
+  "minecraft:water_bucket": [
     "5*metal",
     "5*water"
+  ],
+  "#c:buckets/entity_water": [
+    "5*metal",
+    "5*water",
+    "3*flesh"
   ],
   "minecraft:lava_bucket": [
     "8*fire",

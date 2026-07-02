@@ -68,7 +68,7 @@
     "10*crystal"
   ],
 
-  "#c:shulker_boxes": [
+  "#minecraft:shulker_boxes": [
     "27*ice",
     "12*plant",
     "3*void",

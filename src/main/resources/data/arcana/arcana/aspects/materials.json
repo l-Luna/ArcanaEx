@@ -1,32 +1,32 @@
 {
-  "#c:iron_ingots": [
+  "minecraft:iron_ingot": [
     "4*metal"
   ],
-  "#c:gold_ingots": [
+  "minecraft:gold_ingot": [
     "3*metal",
     "greed"
   ],
-  "#c:copper_ingots": [
+  "minecraft:copper_ingot": [
     "3*metal",
     "tool"
   ],
-  "#c:diamonds": [
+  "minecraft:diamond": [
     "7*crystal",
     "greed"
   ],
-  "#c:emeralds": [
+  "minecraft:emerald": [
     "7*crystal",
     "envy"
   ],
-  "#c:redstone_dusts": [
+  "minecraft:redstone": [
     "4*energy"
   ],
-  "#c:lapis": [
+  "minecraft:lapis_lazuli": [
     "3*crystal",
     "2*envy",
     "2*magic"
   ],
-  "#c:quartz": [
+  "minecraft:quartz": [
     "4*crystal"
   ],
   "minecraft:amethyst_shard": [
@@ -79,7 +79,7 @@
     "fire",
     "earth"
   ],
-  "#c:quartz_ores": [
+  "minecraft:nether_quartz_ore": [
     "3*crystal",
     "earth"
   ],

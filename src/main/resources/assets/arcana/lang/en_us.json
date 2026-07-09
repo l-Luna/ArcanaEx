@@ -1428,6 +1428,11 @@
       "text": "My long voyages into the wild could do with some extra comfort. The heat of a campfire is always a welcome feeling, but I'm sure I can make it better.\nA Warded Campfire provides additional comfort and protection on-the-go. Alongside the usual functions, while nearby:\n- Monsters will not target me (except for revenge).\n- All food is more filling.\n- The night passes twice as quickly.\nThe campfire only provides benefits when lit, which requires casting Wand Focus: Flame at a higher vis cost."
     },
 
+    "holding_jug": {
+      "title": "Holding Jug",
+      "text": "A bubbling crucible can compactly hold a huge amount of mass, dissolved in its basin. Unfortunately, I can't exactly reach my hand in and pluck things out, even if I could survive attempting such a thing: the items' aspects are thoroughly mixed together with no way of recovering their shape, after even a few seconds of heat.\nMaking a functional storage solution using alchemy is possible, but requires some concessions. A Holding Jug can store a large amount of items, with the following limits:\n- All stored items must contain some aspects.\n- There are at most 4 aspect types in the jug.\n- The aspect total of all items is below 2,048.\n- At most 25 item types are stored.\nThe jug is interacted with inside of my inventory. Hovering over it shows the contained items and aspects. Right-clicking with an empty cursor will extract a stack of items from the jug and place it in the cursor; right-clicking with a full cursor will attempt to insert the held stack instead."
+    },
+
     "fluid_forming": {
       "title": "Fluid Forming",
       "text": "Stabilizing vis suspended in fluid is... difficult. My best attempt came away with nothing but this to show: a disgusting, putrid-smelling solvent capable of breaking down most living (and many non-living) materials.\nNeedless to say, Putrefaction deals rapid damage to anything caught in it. The remains that drop from them are occasionally more valuable, and sometimes altered entirely."

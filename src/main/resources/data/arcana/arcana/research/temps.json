@@ -50,6 +50,33 @@
         }
       ]
     },
+    {
+      "key": "arcana:tmp/holding_jug",
+      "name": "research.arcana.holding_jug.title",
+      "icons": [
+        "arcana:holding_jug"
+      ],
+      "category": "arcana:artifice",
+      "parents": [
+        "&/arcana:artifice_root",
+        "arcana:alchemical_glass"
+      ],
+      "meta": [
+        "tmp_base"
+      ],
+      "x": 2,
+      "y": 1,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.holding_jug.text"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:holding_jug"
+        }
+      ]
+    },
 
     {
       "key": "arcana:tmp/fluid_forming",

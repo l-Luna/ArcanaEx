@@ -1,0 +1,26 @@
+{
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "C": {
+      "item": "arcana:crucible"
+    },
+    "S": {
+      "item": "arcana:static_glass"
+    },
+    "A": {
+      "item": "arcana:arcanium_ingot"
+    }
+  },
+  "pattern": [
+    "  S",
+    "A A",
+    "SCS"
+  ],
+  "result": {
+    "id": "arcana:holding_jug"
+  },
+  "aspects": [
+    "25*water",
+    "35*fire"
+  ]
+}

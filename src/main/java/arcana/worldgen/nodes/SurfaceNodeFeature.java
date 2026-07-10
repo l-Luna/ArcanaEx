@@ -1,4 +1,4 @@
-package arcana.worldgen;
+package arcana.worldgen.nodes;
 
 import arcana.aspects.Aspect;
 import arcana.aspects.AspectMap;

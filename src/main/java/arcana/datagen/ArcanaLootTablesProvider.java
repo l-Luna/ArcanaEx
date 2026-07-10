@@ -8,6 +8,7 @@ import arcana.blocks.CrystalClusterBlock;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.FlowerPotBlock;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.enchantment.Enchantment;
@@ -67,6 +68,7 @@ public class ArcanaLootTablesProvider extends FabricBlockLootTableProvider{
 		addPottedPlantDrops(POTTED_LILIUM);
 		
 		addDrop(TAINTED_GRASS_BLOCK, it -> drops(it, TAINTED_SOIL));
+		addDrop(CRYSTAL_EMBEDDED_ROCK, it -> drops(it, Blocks.COBBLED_DEEPSLATE));
 		
 		Aspects.clusters.forEach((aspect, cluster) -> {
 			var drop = Aspects.crystals.get(aspect);

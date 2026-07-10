@@ -1,0 +1,50 @@
+{
+  "type": "minecraft:random_patch",
+  "config": {
+    "tries": 20,
+    "xz_spread": 5,
+    "y_spread": 2,
+    "feature": {
+      "feature": {
+        "type": "arcana:column",
+        "config": {
+          "state_provider": {
+            "type": "minecraft:simple_state_provider",
+            "state": {
+              "Name": "arcana:crystal_embedded_rock"
+            }
+          },
+          "radius": {
+            "type": "minecraft:uniform",
+            "min_inclusive": 2,
+            "max_inclusive": 5
+          },
+          "height": {
+            "type": "minecraft:biased_to_bottom",
+            "min_inclusive": 2,
+            "max_inclusive": 4
+          }
+        }
+      },
+      "placement": [
+        {
+          "type": "minecraft:random_offset",
+          "xz_spread": 0,
+          "y_spread": -1
+        },
+        {
+          "type": "minecraft:block_predicate_filter",
+          "predicate": {
+            "type": "minecraft:matching_blocks",
+            "blocks": "#arcana:worldgen/crystal_formation_replaceables"
+          }
+        },
+        {
+          "type": "minecraft:random_offset",
+          "xz_spread": 0,
+          "y_spread": 1
+        }
+      ]
+    }
+  }
+}

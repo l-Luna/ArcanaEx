@@ -1,4 +1,4 @@
-package arcana.worldgen.silverwood;
+package arcana.worldgen.vegetation;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

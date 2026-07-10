@@ -37,14 +37,12 @@ import arcana.items.foci.*;
 import arcana.screens.*;
 import arcana.util.RandomChanceOnceLootCondition;
 import arcana.util.TagGiftLootEntry;
-import arcana.worldgen.HangingNodeFeature;
-import arcana.worldgen.SurfaceNodeFeature;
-import arcana.worldgen.geodes.NodalGeodeFeature;
-import arcana.worldgen.greatwood.GreatwoodFoliagePlacer;
-import arcana.worldgen.greatwood.GreatwoodTrunkPlacer;
-import arcana.worldgen.mushroom.StructureMushroomFeature;
-import arcana.worldgen.silverwood.SilverwoodFoliagePlacer;
-import arcana.worldgen.silverwood.SilverwoodTrunkPlacer;
+import arcana.worldgen.nodes.HangingNodeFeature;
+import arcana.worldgen.nodes.SurfaceNodeFeature;
+import arcana.worldgen.underground.ColumnFeature;
+import arcana.worldgen.underground.NodalGeodeFeature;
+import arcana.worldgen.underground.SpikeFeature;
+import arcana.worldgen.vegetation.*;
 import com.unascribed.lib39.weld.api.BigBlock;
 import com.unascribed.lib39.weld.api.BigBlockItem;
 import de.dafuqs.fractal.api.ItemSubGroup;
@@ -504,6 +502,7 @@ public final class ArcanaRegistry{
 	
 	public static final Block BALANCED_CRYSTAL = new Block(of(Material.AMETHYST, MapColor.WHITE).dropsSelf().usesTool(PICKAXE_MINEABLE).sounds(BlockSoundGroup.AMETHYST_CLUSTER).strength(0.9f).luminance(3));
 	public static final Block BALANCED_CRYSTAL_PILLAR = new CrystalPillarBlock(of(Material.AMETHYST, MapColor.WHITE).usesTool(PICKAXE_MINEABLE).sounds(BlockSoundGroup.AMETHYST_CLUSTER).strength(0.9f).luminance(3));
+	public static final Block CRYSTAL_EMBEDDED_ROCK = new ConnectingPillarBlock(of(Material.AMETHYST, MapColor.STONE_GRAY).requiresTool(PICKAXE_MINEABLE).renderLayer(CUTOUT).sounds(BlockSoundGroup.GILDED_BLACKSTONE).strength(2, 3).luminance(2));
 	
 	public static final Block TAINTWOOD_LOG = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.FUNGUS));
 	public static final Block TAINTWOOD_PLANKS = new Block(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.FUNGUS));
@@ -1173,6 +1172,7 @@ public final class ArcanaRegistry{
 		
 		register("balanced_crystal", BALANCED_CRYSTAL);
 		register("balanced_crystal_pillar", BALANCED_CRYSTAL_PILLAR);
+		register("crystal_embedded_rock", CRYSTAL_EMBEDDED_ROCK);
 		
 		for(Aspect aspect : Aspects.hasCluster){
 			var shortName = aspect.id().getPath();
@@ -1283,16 +1283,13 @@ public final class ArcanaRegistry{
 		register("surface_node", new SurfaceNodeFeature());
 		register("nodal_geode", new NodalGeodeFeature());
 		register("structure_mushroom", new StructureMushroomFeature());
+		register("column", new ColumnFeature());
+		register("spike", new SpikeFeature());
 		
 		register("silverwood_foliage", SilverwoodFoliagePlacer.TYPE);
 		register("silverwood_trunk", SilverwoodTrunkPlacer.TYPE);
 		register("greatwood_foliage", GreatwoodFoliagePlacer.TYPE);
 		register("greatwood_trunk", GreatwoodTrunkPlacer.TYPE);
-		
-		// structures
-		/*register("crimson_outpost", CRIMSON_OUTPOST, CRIMSON_OUTPOST_PLACEMENT);
-		register("crimson_camp", CRIMSON_CAMP, CRIMSON_CAMP_PLACEMENT);
-		register("floral_archive", FLORAL_ARCHIVE, FLORAL_ARCHIVE_PLACEMENT);*/
 		
 		// particle types
 		register("taint_bubble", TAINT_BUBBLE);

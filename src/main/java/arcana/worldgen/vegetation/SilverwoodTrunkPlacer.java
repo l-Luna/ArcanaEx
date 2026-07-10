@@ -1,4 +1,4 @@
-package arcana.worldgen.silverwood;
+package arcana.worldgen.vegetation;
 
 import arcana.aura.AuraWorld;
 import arcana.aura.Node;

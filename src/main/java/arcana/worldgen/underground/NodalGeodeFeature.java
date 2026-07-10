@@ -1,4 +1,4 @@
-package arcana.worldgen.geodes;
+package arcana.worldgen.underground;
 
 import arcana.aspects.Aspect;
 import arcana.aspects.AspectMap;
@@ -7,24 +7,33 @@ import arcana.aura.AuraWorld;
 import arcana.aura.Node;
 import arcana.aura.NodeType;
 import arcana.aura.NodeTypes;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.GeodeFeature;
-import net.minecraft.world.gen.feature.GeodeFeatureConfig;
+import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.feature.util.FeatureContext;
 
-import static arcana.worldgen.SurfaceNodeFeature.randomType;
+import static arcana.worldgen.nodes.SurfaceNodeFeature.randomType;
 
-public class NodalGeodeFeature extends Feature<NodalGeodeFeatureConfig>{
+public class NodalGeodeFeature extends Feature<NodalGeodeFeature.Config>{
 	
-	public NodalGeodeFeature(){
-		super(NodalGeodeFeatureConfig.CODEC);
+	public record Config(GeodeFeatureConfig geodeConfig, Aspect primaryAspect) implements FeatureConfig{
+		
+		public static final Codec<Config> CODEC = RecordCodecBuilder.create(
+				i -> i.group(
+						GeodeFeatureConfig.CODEC.fieldOf("geode_config").forGetter(x -> x.geodeConfig),
+						Aspect.CODEC.fieldOf("primary_aspect").forGetter(x -> x.primaryAspect)
+				).apply(i, Config::new)
+		);
 	}
 	
-	public boolean generate(FeatureContext<NodalGeodeFeatureConfig> context){
+	public NodalGeodeFeature(){
+		super(Config.CODEC);
+	}
+	
+	public boolean generate(FeatureContext<Config> context){
 		// delegate to GeodeFeature, add node on top
 		GeodeFeature delegate = new GeodeFeature(GeodeFeatureConfig.CODEC);
 		GeodeFeatureConfig geodeConfig = context.getConfig().geodeConfig();

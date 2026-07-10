@@ -149,6 +149,7 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		noAutoGen.add(BEJEWELED_BEET_SEEDS);
 		noAutoGen.add(HUGE_CORDISPORA_CAP.asItem());
 		noAutoGen.add(HUGE_VISHROOM_CAP.asItem());
+		noAutoGen.add(CRYSTAL_EMBEDDED_ROCK.asItem());
 		
 		itemGen.register(NITOR.asItem(), Models.GENERATED);
 		itemGen.register(MAGIC_MIRROR.asItem(), Models.GENERATED);

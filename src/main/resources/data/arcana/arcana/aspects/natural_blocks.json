@@ -436,5 +436,10 @@
     "1*exchange",
     "1*magic",
     "1*crystal"
+  ],
+  "arcana:crystal_embedded_rock": [
+    "3*earth",
+    "1*magic",
+    "1*crystal"
   ]
 }

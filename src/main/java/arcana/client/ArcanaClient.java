@@ -162,6 +162,7 @@ public final class ArcanaClient implements ClientModInitializer{
 		};
 		ColorProviderRegistry.BLOCK.register(balancedCrystalColourer, ArcanaRegistry.BALANCED_CRYSTAL);
 		ColorProviderRegistry.BLOCK.register(balancedCrystalColourer, ArcanaRegistry.BALANCED_CRYSTAL_PILLAR);
+		ColorProviderRegistry.BLOCK.register(balancedCrystalColourer, ArcanaRegistry.CRYSTAL_EMBEDDED_ROCK);
 		
 		ColorProviderRegistry.ITEM.register(
 				(stack, tintIndex) -> {

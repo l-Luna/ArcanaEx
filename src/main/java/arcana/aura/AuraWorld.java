@@ -91,7 +91,9 @@ public final class AuraWorld implements Component, ServerTickingComponent, AutoS
 		if(there != null)
 			there.addNode(node);
 		else{
-			pendingNodes.add(node);
+			synchronized(this){
+				pendingNodes.add(node);
+			}
 			sync();
 		}
 	}

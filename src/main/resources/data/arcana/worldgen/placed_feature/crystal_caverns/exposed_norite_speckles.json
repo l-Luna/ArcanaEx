@@ -1,0 +1,37 @@
+{
+  "feature": "arcana:crystal_caverns/exposed_norite_speckles",
+  "placement": [
+    {
+      "type": "minecraft:count",
+      "count": 120
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:height_range",
+      "height": {
+        "type": "minecraft:uniform",
+        "max_inclusive": {
+          "absolute": 256
+        },
+        "min_inclusive": {
+          "above_bottom": 0
+        }
+      }
+    },
+    {
+      "type": "minecraft:block_predicate_filter",
+      "predicate": {
+        "type": "minecraft:matching_blocks",
+        "blocks": "arcana:norite"
+      }
+    },
+    {
+      "type": "arcana:exposed"
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

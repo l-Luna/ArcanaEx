@@ -40,6 +40,7 @@ import arcana.util.TagGiftLootEntry;
 import arcana.worldgen.nodes.HangingNodeFeature;
 import arcana.worldgen.nodes.SurfaceNodeFeature;
 import arcana.worldgen.underground.ColumnFeature;
+import arcana.worldgen.underground.ExposedPlacementModifier;
 import arcana.worldgen.underground.NodalGeodeFeature;
 import arcana.worldgen.underground.SpikeFeature;
 import arcana.worldgen.vegetation.*;
@@ -91,6 +92,7 @@ import net.minecraft.util.ColorCode;
 import net.minecraft.util.Rarity;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.foliage.FoliagePlacerType;
+import net.minecraft.world.gen.placementmodifier.PlacementModifierType;
 import net.minecraft.world.gen.trunk.TrunkPlacerType;
 import net.minecraft.world.poi.PointOfInterestType;
 
@@ -502,7 +504,9 @@ public final class ArcanaRegistry{
 	
 	public static final Block BALANCED_CRYSTAL = new Block(of(Material.AMETHYST, MapColor.WHITE).dropsSelf().usesTool(PICKAXE_MINEABLE).sounds(BlockSoundGroup.AMETHYST_CLUSTER).strength(0.9f).luminance(3));
 	public static final Block BALANCED_CRYSTAL_PILLAR = new CrystalPillarBlock(of(Material.AMETHYST, MapColor.WHITE).usesTool(PICKAXE_MINEABLE).sounds(BlockSoundGroup.AMETHYST_CLUSTER).strength(0.9f).luminance(3));
-	public static final Block CRYSTAL_EMBEDDED_ROCK = new ConnectingPillarBlock(of(Material.AMETHYST, MapColor.STONE_GRAY).requiresTool(PICKAXE_MINEABLE).renderLayer(CUTOUT).sounds(BlockSoundGroup.GILDED_BLACKSTONE).strength(2, 3).luminance(2));
+	public static final Block CRYSTAL_EMBEDDED_ROCK = new ConnectingPillarBlock(of(Material.AMETHYST, MapColor.STONE_GRAY).requiresTool(PICKAXE_MINEABLE).renderLayer(CUTOUT).sounds(BlockSoundGroup.GILDED_BLACKSTONE).strength(2, 3).luminance(4));
+	public static final Block NORITE = new Block(of(Material.AMETHYST, MapColor.STONE_GRAY).dropsSelf().requiresTool(PICKAXE_MINEABLE).renderLayer(CUTOUT).sounds(BlockSoundGroup.GILDED_BLACKSTONE).strength(2, 3).luminance(1));
+	public static final Block EXPOSED_NORITE = new Block(of(Material.AMETHYST, MapColor.STONE_GRAY).dropsSelf().requiresTool(PICKAXE_MINEABLE).renderLayer(CUTOUT).sounds(BlockSoundGroup.GILDED_BLACKSTONE).strength(2, 3).luminance(13));
 	
 	public static final Block TAINTWOOD_LOG = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.FUNGUS));
 	public static final Block TAINTWOOD_PLANKS = new Block(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.FUNGUS));
@@ -1173,6 +1177,8 @@ public final class ArcanaRegistry{
 		register("balanced_crystal", BALANCED_CRYSTAL);
 		register("balanced_crystal_pillar", BALANCED_CRYSTAL_PILLAR);
 		register("crystal_embedded_rock", CRYSTAL_EMBEDDED_ROCK);
+		register("norite", NORITE);
+		register("exposed_norite", EXPOSED_NORITE);
 		
 		for(Aspect aspect : Aspects.hasCluster){
 			var shortName = aspect.id().getPath();
@@ -1278,7 +1284,7 @@ public final class ArcanaRegistry{
 		register("thaumic_halo", THAUMIC_HALO_BE);
 		register("magic_mirror", MAGIC_MIRROR_BE);
 		
-		// features
+		// worldgen
 		register("hanging_node", new HangingNodeFeature());
 		register("surface_node", new SurfaceNodeFeature());
 		register("nodal_geode", new NodalGeodeFeature());
@@ -1290,6 +1296,8 @@ public final class ArcanaRegistry{
 		register("silverwood_trunk", SilverwoodTrunkPlacer.TYPE);
 		register("greatwood_foliage", GreatwoodFoliagePlacer.TYPE);
 		register("greatwood_trunk", GreatwoodTrunkPlacer.TYPE);
+		
+		register("exposed", ExposedPlacementModifier.TYPE);
 		
 		// particle types
 		register("taint_bubble", TAINT_BUBBLE);
@@ -1388,6 +1396,10 @@ public final class ArcanaRegistry{
 	
 	private static void register(String name, TrunkPlacerType<?> trunkPlacer){
 		Registry.register(Registries.TRUNK_PLACER_TYPE, arcId(name), trunkPlacer);
+	}
+	
+	private static void register(String name, PlacementModifierType<?> placementMod){
+		Registry.register(Registries.PLACEMENT_MODIFIER_TYPE, arcId(name), placementMod);
 	}
 	
 	private static void register(String name, ParticleType<?> particleType){

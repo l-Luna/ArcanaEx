@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "arcana:block/norite"
+      },
+      {
+        "model": "arcana:block/norite",
+        "x": 180
+      },
+      {
+        "model": "arcana:block/norite",
+        "y": 180
+      },
+      {
+        "model": "arcana:block/norite",
+        "z": 180
+      }
+    ]
+  }
+}

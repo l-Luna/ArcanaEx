@@ -1,0 +1,8 @@
+{
+  "parent": "arcana:block/template/partial_tinted_cube_all",
+  "textures": {
+    "particle": "arcana:block/exposed_norite",
+    "all": "arcana:block/exposed_norite_rock",
+    "all_tinted": "arcana:block/exposed_norite_crystal"
+  }
+}

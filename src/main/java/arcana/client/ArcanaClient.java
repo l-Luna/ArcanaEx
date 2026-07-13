@@ -78,9 +78,6 @@ import static arcana.Arcana.arcId;
 
 public final class ArcanaClient implements ClientModInitializer{
 	
-	public static final Identifier WHITE_TEX = arcId("misc/white");
-	
-	public static final Identifier SUPPRESSED_EFFECT_TEX = arcId("gui/suppressed_effect");
 	public static final Identifier SUPPRESSED_EFFECT_TEX_PATH = arcId("textures/gui/suppressed_effect.png");
 	
 	private static final int[] BALANCED_CRYSTAL_GRADIENT = new int[]{ 0xebd4b9, 0xedf2c2, 0xbcebc7, 0x6fdff2, 0xc7b9ed, 0xedb9e6, 0xf0c4c0 };
@@ -163,6 +160,8 @@ public final class ArcanaClient implements ClientModInitializer{
 		ColorProviderRegistry.BLOCK.register(balancedCrystalColourer, ArcanaRegistry.BALANCED_CRYSTAL);
 		ColorProviderRegistry.BLOCK.register(balancedCrystalColourer, ArcanaRegistry.BALANCED_CRYSTAL_PILLAR);
 		ColorProviderRegistry.BLOCK.register(balancedCrystalColourer, ArcanaRegistry.CRYSTAL_EMBEDDED_ROCK);
+		ColorProviderRegistry.BLOCK.register(balancedCrystalColourer, ArcanaRegistry.NORITE);
+		ColorProviderRegistry.BLOCK.register(balancedCrystalColourer, ArcanaRegistry.EXPOSED_NORITE);
 		
 		ColorProviderRegistry.ITEM.register(
 				(stack, tintIndex) -> {

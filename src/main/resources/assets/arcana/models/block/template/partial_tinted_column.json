@@ -1,0 +1,13 @@
+{
+  "parent": "arcana:block/template/partial_tinted_cube",
+  "textures": {
+    "north_tinted": "#side_tinted",
+    "south_tinted": "#side_tinted",
+    "east_tinted": "#side_tinted",
+    "west_tinted": "#side_tinted",
+    "north": "#side",
+    "south": "#side",
+    "east": "#side",
+    "west": "#side"
+  }
+}

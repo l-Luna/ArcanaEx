@@ -1,0 +1,17 @@
+{
+  "parent": "arcana:block/template/partial_tinted_cube",
+  "textures": {
+    "up_tinted": "#all_tinted",
+    "down_tinted": "#all_tinted",
+    "north_tinted": "#all_tinted",
+    "south_tinted": "#all_tinted",
+    "east_tinted": "#all_tinted",
+    "west_tinted": "#all_tinted",
+    "up": "#all",
+    "down": "#all",
+    "north": "#all",
+    "south": "#all",
+    "east": "#all",
+    "west": "#all"
+  }
+}

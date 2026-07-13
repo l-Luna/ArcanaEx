@@ -18,10 +18,10 @@ public class ArcanaOverworldBiomes{
 		BiomePlacement.addOverworld(arcBiomeKey("crystal_caverns"), MultiNoiseUtil.createNoiseHypercube(
 				MultiNoiseUtil.ParameterRange.of(-1, 1),
 				MultiNoiseUtil.ParameterRange.of(-1, 1),
-				MultiNoiseUtil.ParameterRange.of(0.25f, 1), // requires some continentalness
+				MultiNoiseUtil.ParameterRange.of(0.3f, 1), // requires some continentalness
 				MultiNoiseUtil.ParameterRange.of(-1, 1),
 				MultiNoiseUtil.ParameterRange.of(0.3f, 0.9f), // caves depth
-				MultiNoiseUtil.ParameterRange.of(0.6f, 1), // requires weirdness
+				MultiNoiseUtil.ParameterRange.of(0.7f, 1), // requires weirdness
 				0
 		));
 	}

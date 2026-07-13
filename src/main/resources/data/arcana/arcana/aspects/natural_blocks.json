@@ -441,5 +441,14 @@
     "3*earth",
     "1*magic",
     "1*crystal"
+  ],
+  "arcana:norite": [
+    "3*earth",
+    "1*crystal"
+  ],
+  "arcana:exposed_norite": [
+    "2*earth",
+    "2*crystal",
+    "light"
   ]
 }

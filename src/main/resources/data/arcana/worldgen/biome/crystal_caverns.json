@@ -74,10 +74,12 @@
       "arcana:crystal_caverns/crystal_spike"
     ],
     [
+      "arcana:crystal_caverns/norite_disk"
     ],
     [
       "minecraft:spring_water",
-      "minecraft:spring_lava"
+      "minecraft:spring_lava",
+      "arcana:crystal_caverns/exposed_norite_speckles"
     ],
     [
       "minecraft:glow_lichen",

@@ -56,6 +56,15 @@ public class WispEntity extends WispLikeEntity implements Angerable, ScalpelSlas
 				.add(EntityAttributes.GENERIC_FOLLOW_RANGE, 60);
 	}
 	
+	public static DefaultAttributeContainer.Builder createLesserAttributes(){
+		return MobEntity.createMobAttributes()
+				.add(EntityAttributes.GENERIC_MAX_HEALTH, 8)
+				.add(EntityAttributes.GENERIC_FLYING_SPEED, 0.7f)
+				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.7f)
+				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 2)
+				.add(EntityAttributes.GENERIC_FOLLOW_RANGE, 40);
+	}
+	
 	public void setAnchorPos(BlockPos anchor){
 		this.anchor = anchor;
 	}

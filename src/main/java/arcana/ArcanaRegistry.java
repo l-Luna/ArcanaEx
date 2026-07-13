@@ -698,6 +698,14 @@ public final class ArcanaRegistry{
 			.dimensions(EntityDimensions.fixed(1.2f, 1.2f))
 			.fireImmune()
 			.build();
+	public static final EntityType<WispEntity> LESSER_WISP = FabricEntityTypeBuilder
+			.<WispEntity>createMob()
+			.entityFactory(WispEntity::new)
+			.spawnGroup(SpawnGroup.MONSTER)
+			.defaultAttributes(WispEntity::createLesserAttributes)
+			.dimensions(EntityDimensions.fixed(0.9f, 0.9f))
+			.fireImmune()
+			.build();
 	
 	public static final EntityType<CrimsonKnightEntity> CRIMSON_KNIGHT = FabricEntityTypeBuilder
 			.createLiving()
@@ -1322,6 +1330,7 @@ public final class ArcanaRegistry{
 		register("tainted_wisp", TAINTED_WISP);
 		register("pure_wisp", PURE_WISP);
 		register("coagulation", COAGULATION);
+		register("lesser_wisp", LESSER_WISP);
 		
 		register("crimson_knight", CRIMSON_KNIGHT);
 		register("crimson_archer", CRIMSON_ARCHER);

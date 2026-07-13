@@ -97,7 +97,12 @@
     ]
   ],
   "has_precipitation": true,
-  "spawn_costs": {},
+  "spawn_costs": {
+    "arcana:lesser_wisp": {
+      "energy_budget": 20,
+      "charge": 15
+    }
+  },
   "spawners": {
     "ambient": [
       {
@@ -115,55 +120,61 @@
         "type": "minecraft:spider",
         "maxCount": 4,
         "minCount": 4,
-        "weight": 100
+        "weight": 60
       },
       {
         "type": "minecraft:zombie",
         "maxCount": 4,
         "minCount": 4,
-        "weight": 95
+        "weight": 49
       },
       {
         "type": "minecraft:zombie_villager",
         "maxCount": 1,
         "minCount": 1,
-        "weight": 5
+        "weight": 1
       },
       {
         "type": "minecraft:skeleton",
         "maxCount": 4,
         "minCount": 4,
-        "weight": 100
+        "weight": 40
       },
       {
         "type": "minecraft:creeper",
         "maxCount": 4,
         "minCount": 4,
-        "weight": 100
+        "weight": 40
       },
       {
         "type": "minecraft:slime",
         "maxCount": 4,
         "minCount": 4,
-        "weight": 100
+        "weight": 50
       },
       {
         "type": "minecraft:enderman",
         "maxCount": 4,
         "minCount": 1,
-        "weight": 10
+        "weight": 13
       },
       {
         "type": "minecraft:witch",
         "maxCount": 1,
         "minCount": 1,
-        "weight": 5
+        "weight": 12
       },
       {
         "type": "minecraft:drowned",
         "maxCount": 4,
         "minCount": 4,
-        "weight": 95
+        "weight": 8
+      },
+      {
+        "type": "arcana:lesser_wisp",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 90
       }
     ],
     "underground_water_creature": [

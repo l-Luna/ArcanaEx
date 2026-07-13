@@ -225,6 +225,7 @@ public final class ArcanaClient implements ClientModInitializer{
 		EntityRendererRegistry.register(ArcanaRegistry.TAINTED_WISP, ctx -> new WispLikeEntityRenderer<>(ctx, 3, 6, false, 1.1f, arcId("textures/entity/tainted_wisp.png")));
 		EntityRendererRegistry.register(ArcanaRegistry.PURE_WISP, ctx -> new WispLikeEntityRenderer<>(ctx, 2, 34, false, 0.8f, arcId("textures/entity/pure_wisp.png")));
 		EntityRendererRegistry.register(ArcanaRegistry.COAGULATION, ctx -> new WispLikeEntityRenderer<>(ctx, 2, 12, true, 0.5f, null));
+		EntityRendererRegistry.register(ArcanaRegistry.LESSER_WISP, ctx -> new WispLikeEntityRenderer<>(ctx, 1, 8, false, 0.33f, arcId("textures/entity/lesser_wisp.png")));
 		
 		for(Block block : ArcanaRegistry.BLOCKS)
 			if(block.getSettings() instanceof ArcanaBlockSettings abs)

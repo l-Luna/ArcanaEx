@@ -1,0 +1,26 @@
+{
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "X": {
+      "item": "arcana:gold_ring"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "T": {
+      "item": "minecraft:ghast_tear"
+    }
+  },
+  "pattern": [
+    "TD",
+    "DX"
+  ],
+  "name": "item.arcana.claw_ring.recipe",
+  "aspects": [
+    "27*fire",
+    "43*entropy"
+  ],
+  "result": {
+    "id": "arcana:claw_ring"
+  }
+}

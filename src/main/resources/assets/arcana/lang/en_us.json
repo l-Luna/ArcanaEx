@@ -281,10 +281,12 @@
     "adorned_ring": "Adorned Ring",
     "lamplight_ring": "Lamplight Ring",
     "claw_ring": "Diamond-Tipped Claw Ring",
+    "claw_ring.recipe": "Diamond-Tipped\nClaw Ring",
     "plane_projection_ring": "Plane-Projection Ring",
     "ring_of_the_surging_barrier": "Ring of the Surging Barrier",
     "ring_of_the_surging_barrier.recipe": "Ring of the\nSurging Barrier",
     "ruby_claw_ring": "Ruby-Tipped Feral Claw Ring",
+    "ruby_claw_ring.tip": ["§o\"eating the flesh or internal organs of another\"§r"],
     "ring_of_twin_heartbeats": "Ring of Twin Heartbeats",
     "ring_of_twin_heartbeats.recipe": "Ring of\nTwin Heartbeats",
     "ring_of_twin_heartbeats.tip": ["§o\"rapid, irregular beating of the atria\"§r"],
@@ -680,6 +682,7 @@
       "unbound": "Unbound",
       "bound": "Bound"
     },
+    "unarmed_damage": "+{} Unarmed Damage",
     "radius": "Radius: {}",
     "fragile": "Fragile",
     "warping": "Warping {}"
@@ -1536,6 +1539,11 @@
       "title": "Lamplight Ring",
       "desc": "8,000+ lumens",
       "text": "Is it such a crime to want to see clearly?\nWhile equipped, the Lamplight Ring places lights around me as I travel."
+    },
+    "claw_ring": {
+      "title": "Diamond-Tipped Claw Ring",
+      "desc": "With bare, bloodied hands",
+      "text": "Weapons are slow, heavy, and take up space. Why not use magic to enhance my own natural ability?\nWhile equipped, the Diamond-Tipped Claw Ring grants me claws with which to attack. Unarmed attacks (where I hold nothing in my main hand) have increased damage, and killing creatures this way is enough to sustain me - if they have any flesh to eat, at least."
     },
 
     "plane_projection_ring": {

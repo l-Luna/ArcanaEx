@@ -10,6 +10,7 @@ import arcana.enchantments.ArcanaEnchantmentComponents;
 import arcana.enchantments.LootSwapEffect;
 import arcana.items.CrimsonLeechItem;
 import arcana.items.components.ArcanaDataComponents;
+import arcana.items.trinkets.ClawTrinketItem;
 import arcana.network.Networking;
 import arcana.recipes.alchemy.AlchemyRecipe;
 import arcana.recipes.arcane_crafting.ShapedArcaneCraftingRecipe;
@@ -29,6 +30,7 @@ import arcana.worldgen.ArcanaOverworldBiomes;
 import com.unascribed.lib39.dessicant.api.DessicantControl;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
+import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.CommonLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.recipe.v1.ingredient.CustomIngredientSerializer;
@@ -99,6 +101,8 @@ public final class Arcana implements ModInitializer{
 		ServerTickEvents.END_WORLD_TICK.register(world -> world.getPlayers().forEach(AspectPowerStatusEffect::handleExclusivity));
 		ServerTickEvents.END_WORLD_TICK.register(WardedCampfireBlock::handleTime);
 		ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register(CrimsonLeechItem::handleEntityDeath);
+		ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register(ClawTrinketItem::handleEntityDeath);
+		ServerLivingEntityEvents.AFTER_DAMAGE.register(ClawTrinketItem::handleEntityHit);
 		
 		DispenserBlock.registerBehavior(ArcanaRegistry.TAINT_IN_A_BOTTLE, new ProjectileDispenserBehavior(ArcanaRegistry.TAINT_IN_A_BOTTLE));
 	}

@@ -4,6 +4,7 @@ import com.mojang.datafixers.util.Pair;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
@@ -39,7 +40,6 @@ public final class ArcanaTags{
 	public static final TagKey<Item> TAINTWOOD_LOGS = TagKey.of(RegistryKeys.ITEM, arcId("taintwood_logs"));
 	public static final TagKey<Item> HOLLOWED_LOGS = TagKey.of(RegistryKeys.ITEM, arcId("hollowed_logs"));
 	public static final TagKey<Item> SUBSTRATES = TagKey.of(RegistryKeys.ITEM, arcId("substrates"));
-	public static final TagKey<Item> SCRIBING_TOOLS = TagKey.of(RegistryKeys.ITEM, arcId("scribing_tools"));
 	public static final TagKey<Item> FLOATS = TagKey.of(RegistryKeys.ITEM, arcId("floats"));
 	
 	public static final TagKey<Item> VOID_PUTTY_REPAIR_WHITELIST = TagKey.of(RegistryKeys.ITEM, arcId("config/void_putty_repair_whitelist"));
@@ -47,10 +47,6 @@ public final class ArcanaTags{
 	public static final TagKey<Item> WISP_ATTACK_WHITELIST = TagKey.of(RegistryKeys.ITEM, arcId("config/wisp_attack_whitelist"));
 	public static final TagKey<Item> CRUCIBLE_REAGENT_BLACKLIST = TagKey.of(RegistryKeys.ITEM, arcId("config/crucible_reagent_blacklist"));
 	public static final TagKey<Item> ARCANE_FURNACE_BLACKLIST = TagKey.of(RegistryKeys.ITEM, arcId("config/arcane_furnace_blacklist"));
-	
-	public static final TagKey<Item> PROJECTING_LEVEL_1 = TagKey.of(RegistryKeys.ITEM, arcId("config/max_projecting_level/1"));
-	public static final TagKey<Item> PROJECTING_LEVEL_2 = TagKey.of(RegistryKeys.ITEM, arcId("config/max_projecting_level/2"));
-	public static final TagKey<Item> PROJECTING_LEVEL_3 = TagKey.of(RegistryKeys.ITEM, arcId("config/max_projecting_level/3"));
 	
 	public static final TagKey<Biome> SILVERWOOD_SPAWNABLE = TagKey.of(RegistryKeys.BIOME, arcId("silverwood_spawnable"));
 	public static final TagKey<Biome> GREATWOOD_SPAWNABLE = TagKey.of(RegistryKeys.BIOME, arcId("greatwood_spawnable"));
@@ -62,6 +58,8 @@ public final class ArcanaTags{
 	
 	public static final TagKey<Enchantment> UNLOCKS_PROJECTING_ENTRY = TagKey.of(RegistryKeys.ENCHANTMENT, arcId("unlocks_projecting_entry"));
 	public static final TagKey<Enchantment> CANT_ANVIL_COMBINE = TagKey.of(RegistryKeys.ENCHANTMENT, arcId("cant_anvil_combine"));
+	
+	public static final TagKey<EntityType<?>> CANNOT_STEAL_LIFE_FROM = TagKey.of(RegistryKeys.ENTITY_TYPE, arcId("cannot_steal_life_from"));
 	
 	// status effect tags are under mob_effects
 	public static final TagKey<StatusEffect> ASPECT_CANDY_EFFECTS = TagKey.of(RegistryKeys.STATUS_EFFECT, arcId("aspect_candy_effects"));

@@ -9,8 +9,6 @@ import arcana.mixin.accessor.EntityAccessor;
 import arcana.mixin.accessor.LivingEntityAccessor;
 import arcana.util.InventoryUtil;
 import dev.emi.trinkets.api.TrinketsAttributeModifiersComponent;
-import net.minecraft.component.type.AttributeModifierSlot;
-import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.ClampedEntityAttribute;
 import net.minecraft.entity.attribute.EntityAttribute;
@@ -44,7 +42,6 @@ public class RunicShielding implements Component, AutoSyncedComponent, ServerTic
 	public static final Registerable<EntityAttribute> MAX_SHIELDING = new Registerable<>(new ClampedEntityAttribute("attribute.name.generic.arcana.max_shielding", 0, 0, 100).setTracked(true)).register(Registries.ATTRIBUTE, "max_shielding");
 	
 	private static final int MAX_RECHARGE_TIMER = 7 * 20;
-	private static final Identifier MODIFIER_ID = arcId("trinket_runic_shielding");
 	
 	public static RunicShielding from(PlayerEntity entity){
 		return entity.getComponent(KEY);
@@ -54,21 +51,11 @@ public class RunicShielding implements Component, AutoSyncedComponent, ServerTic
 		return (int)entity.getAttributeValue(MAX_SHIELDING.entry());
 	}
 	
-	public static AttributeModifiersComponent createAttributeModifiers(float shielding){
-		return AttributeModifiersComponent.builder()
-				.add(
-						RunicShielding.MAX_SHIELDING.entry(),
-						new EntityAttributeModifier(MODIFIER_ID, shielding, EntityAttributeModifier.Operation.ADD_VALUE),
-						AttributeModifierSlot.MAINHAND
-				)
-				.build();
-	}
-	
-	public static TrinketsAttributeModifiersComponent createTrinketModifiers(float shielding){
+	public static TrinketsAttributeModifiersComponent createTrinketModifiers(float shielding, Identifier id){
 		return TrinketsAttributeModifiersComponent.builder()
 				.add(
 						RunicShielding.MAX_SHIELDING.entry(),
-						new EntityAttributeModifier(MODIFIER_ID, shielding, EntityAttributeModifier.Operation.ADD_VALUE)
+						new EntityAttributeModifier(id, shielding, EntityAttributeModifier.Operation.ADD_VALUE)
 				)
 				.build();
 	}
@@ -98,6 +85,12 @@ public class RunicShielding implements Component, AutoSyncedComponent, ServerTic
 	
 	public long getLastActivateTime(){
 		return lastActivateTime;
+	}
+	
+	public void recharge(int halfPoints){
+		int maxHalfPoints = getMaxShielding(player) * 2;
+		this.halfPoints = Math.min(this.halfPoints + halfPoints, maxHalfPoints);
+		sync();
 	}
 	
 	public boolean handleDamage(DamageSource source, float amount){

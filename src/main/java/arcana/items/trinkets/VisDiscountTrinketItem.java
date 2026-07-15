@@ -1,4 +1,4 @@
-package arcana.items;
+package arcana.items.trinkets;
 
 import arcana.api.VisDiscountingItem;
 import arcana.aspects.Aspect;

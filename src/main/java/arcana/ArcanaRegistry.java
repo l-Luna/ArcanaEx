@@ -34,6 +34,7 @@ import arcana.items.creative.NodePlacerItem;
 import arcana.items.creative.NodeRemoverItem;
 import arcana.items.creative.TaintConverterItem;
 import arcana.items.foci.*;
+import arcana.items.trinkets.*;
 import arcana.screens.*;
 import arcana.util.RandomChanceOnceLootCondition;
 import arcana.util.TagGiftLootEntry;
@@ -265,15 +266,17 @@ public final class ArcanaRegistry{
 	public static final Item GOLD_RING = new TrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1));
 	public static final Item ARCANIUM_RING = new TrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1));
 	public static final Item ADORNED_RING = new VisDiscountTrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1), 5);
+	public static final Item CLAW_RING = new ClawTrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1), 3, false);
 	public static final Item LAMPLIGHT_RING = new LamplightTrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1));
 	public static final Item PLANE_PROJECTION_RING = new TrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1));
 	public static final Item RING_OF_THE_SURGING_BARRIER = new TrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1).rarity(Rarity.UNCOMMON));
 	public static final Item RING_OF_TWIN_HEARTBEATS = new WarpingTrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1).rarity(Rarity.UNCOMMON));
+	public static final Item RUBY_CLAW_RING = new ClawTrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1).rarity(Rarity.UNCOMMON).component(TrinketsAttributeModifiersComponent.TYPE, RunicShielding.createTrinketModifiers(1, arcId("claw_ring/shielding"))), 6, true);
 	public static final Item RING_OF_THE_VOIDGAZER = new WarpBasedDiscountTrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1).rarity(Rarity.UNCOMMON));
 	public static final Item EMERALD_NECKLACE = new TrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1));
-	public static final Item AMULET_OF_RUNIC_SHIELDING = new TrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1).component(TrinketsAttributeModifiersComponent.TYPE, RunicShielding.createTrinketModifiers(2)));
-	public static final Item AMULET_OF_UNBURDENED_TRAVEL = new TrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1).component(TrinketsAttributeModifiersComponent.TYPE, RunicShielding.createTrinketModifiers(6)));
-	public static final Item AMULET_OF_DEAFENING_SHIELDING = new TrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1).component(TrinketsAttributeModifiersComponent.TYPE, RunicShielding.createTrinketModifiers(1)));
+	public static final Item AMULET_OF_RUNIC_SHIELDING = new TrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1).component(TrinketsAttributeModifiersComponent.TYPE, RunicShielding.createTrinketModifiers(2, arcId("amulet_of_runic_shielding/shielding"))));
+	public static final Item AMULET_OF_UNBURDENED_TRAVEL = new TrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1).component(TrinketsAttributeModifiersComponent.TYPE, RunicShielding.createTrinketModifiers(6, arcId("amulet_of_unburdened_travel/shielding"))));
+	public static final Item AMULET_OF_DEAFENING_SHIELDING = new TrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1).component(TrinketsAttributeModifiersComponent.TYPE, RunicShielding.createTrinketModifiers(1, arcId("amulet_of_deafening_shielding/shielding"))));
 	
 	public static final Item CRIMSON_BLADE = new SwordItem(ArcanaToolMaterials.CRIMSON, new ArcanaItemSettings().group(Tab.EQUIPMENT).attributeModifiers(SwordItem.createAttributeModifiers(ArcanaToolMaterials.CRIMSON, 3, -2.4f)));
 	public static final Item CRIMSON_LONGBOW = new CrimsonLongbowItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxDamage(564));
@@ -640,6 +643,8 @@ public final class ArcanaRegistry{
 	public static SimpleParticleType FLAME = FabricParticleTypes.simple();
 	public static SimpleParticleType LIGHTNING = FabricParticleTypes.simple();
 	public static SimpleParticleType TAINT_SPORE = FabricParticleTypes.simple();
+	public static SimpleParticleType CLAW = FabricParticleTypes.simple();
+	public static SimpleParticleType CLAW_RUBY = FabricParticleTypes.simple();
 	
 	public static ParticleType<CubeParticleEffect> WARDING_EFFECT = FabricParticleTypes.complex(CubeParticleEffect::createCodec, CubeParticleEffect::createPacketCodec);
 	public static ParticleType<CubeParticleEffect> INFESTED_EFFECT = FabricParticleTypes.complex(CubeParticleEffect::createCodec, CubeParticleEffect::createPacketCodec);
@@ -878,10 +883,12 @@ public final class ArcanaRegistry{
 		register("gold_ring", GOLD_RING);
 		register("arcanium_ring", ARCANIUM_RING);
 		register("adorned_ring", ADORNED_RING);
+		register("claw_ring", CLAW_RING);
 		register("lamplight_ring", LAMPLIGHT_RING);
 		register("plane_projection_ring", PLANE_PROJECTION_RING);
 		register("ring_of_the_surging_barrier", RING_OF_THE_SURGING_BARRIER);
 		register("ring_of_twin_heartbeats", RING_OF_TWIN_HEARTBEATS);
+		register("ruby_claw_ring", RUBY_CLAW_RING);
 		register("ring_of_the_voidgazer", RING_OF_THE_VOIDGAZER);
 		register("emerald_necklace", EMERALD_NECKLACE);
 		register("amulet_of_runic_shielding", AMULET_OF_RUNIC_SHIELDING);
@@ -1312,6 +1319,8 @@ public final class ArcanaRegistry{
 		register("flame", FLAME);
 		register("lightning", LIGHTNING);
 		register("taint_spore", TAINT_SPORE);
+		register("claw", CLAW);
+		register("claw_ruby", CLAW_RUBY);
 		
 		register("warding_effect", WARDING_EFFECT);
 		register("infested_effect", INFESTED_EFFECT);

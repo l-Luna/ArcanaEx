@@ -9,6 +9,7 @@ import org.jetbrains.annotations.Nullable;
 public class SimpleSpriteParticle extends SpriteBillboardParticle{
 	
 	private final SpriteProvider spr;
+	private float shrink;
 	
 	protected SimpleSpriteParticle(ClientWorld world,
 	                               double x,
@@ -29,6 +30,12 @@ public class SimpleSpriteParticle extends SpriteBillboardParticle{
 	public void tick(){
 		super.tick();
 		setSpriteForAge(spr);
+		if(shrink > 0)
+			scale -= shrink;
+	}
+	
+	public float getSize(float tickDelta){
+		return super.getSize(tickDelta) - shrink * tickDelta;
 	}
 	
 	public ParticleTextureSheet getType(){
@@ -47,6 +54,7 @@ public class SimpleSpriteParticle extends SpriteBillboardParticle{
 		private float minScale = 1, maxScale = 1;
 		private float r = 1, g = 1, b = 1;
 		private boolean randomiseAngle = false;
+		private float shrink = 0;
 		
 		public Factory(SpriteProvider spr, float gravity, float drag){
 			this.spr = spr;
@@ -83,6 +91,11 @@ public class SimpleSpriteParticle extends SpriteBillboardParticle{
 			return this;
 		}
 		
+		public Factory shrink(float shrink){
+			this.shrink = shrink;
+			return this;
+		}
+		
 		public Factory randomAngle(){
 			randomiseAngle = true;
 			return this;
@@ -104,6 +117,7 @@ public class SimpleSpriteParticle extends SpriteBillboardParticle{
 			particle.collidesWithWorld = collidable;
 			if(randomiseAngle)
 				particle.prevAngle = particle.angle = 0.5f * MathHelper.PI * world.random.nextInt(4);
+			particle.shrink = shrink;
 			return particle;
 		}
 	}

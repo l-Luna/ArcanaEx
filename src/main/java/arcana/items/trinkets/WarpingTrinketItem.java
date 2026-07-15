@@ -1,4 +1,4 @@
-package arcana.items;
+package arcana.items.trinkets;
 
 import arcana.api.WarpingItem;
 import dev.emi.trinkets.api.TrinketItem;

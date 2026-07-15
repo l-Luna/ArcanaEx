@@ -3,6 +3,9 @@ package arcana.mixin;
 import arcana.blocks.WardedCampfireBlock;
 import arcana.cca_components.RunicShielding;
 import arcana.items.BootsOfTheTravellerItem;
+import arcana.items.trinkets.ClawTrinketItem;
+import arcana.util.InventoryUtil;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import net.minecraft.component.type.FoodComponent;
@@ -22,6 +25,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.Optional;
+
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin extends LivingEntity{
 	
@@ -39,6 +44,7 @@ public abstract class PlayerEntityMixin extends LivingEntity{
 			getHungerManager().add(food.nutrition() / 2, food.saturation() / 2);
 	}
 	
+	// TODO: use ServerLivingEntityEvents for better compat
 	@WrapMethod(method = "damage")
 	private boolean applyDamage(DamageSource source, float amount, Operation<Boolean> original){
 		if(source.isIn(DamageTypeTags.IS_FALL)){
@@ -56,5 +62,19 @@ public abstract class PlayerEntityMixin extends LivingEntity{
 	private int effectiveFallDamageReduction(){
 		boolean boostFromBoots = getEquippedStack(EquipmentSlot.FEET).getItem() instanceof BootsOfTheTravellerItem;
 		return boostFromBoots ? 3 : 0;
+	}
+	
+	@ModifyExpressionValue(method = "attack",
+	                       at = @At(value = "INVOKE",
+	                                target = "Lnet/minecraft/entity/player/PlayerEntity;getAttributeValue(Lnet/minecraft/registry/entry/RegistryEntry;)D",
+	                                ordinal = 0))
+	double applyAttackDamage(double original){
+		if(getWeaponStack().isEmpty()){
+			Optional<Float> unarmedDamage = InventoryUtil.fromFirstTrinket((PlayerEntity)(Object)this, it -> it.getItem() instanceof ClawTrinketItem c ? c.getUnarmedAttackBonus() : null);
+			if(unarmedDamage.isPresent())
+				return original + unarmedDamage.get();
+		}
+		
+		return original;
 	}
 }

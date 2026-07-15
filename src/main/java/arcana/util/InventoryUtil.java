@@ -12,6 +12,8 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.Pair;
 
+import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -35,6 +37,14 @@ public final class InventoryUtil{
 	public static boolean hasTrinket(LivingEntity entity, Item item){
 		TrinketComponent trinkets = TrinketsApi.getTrinketComponent(entity).orElse(null);
 		return trinkets != null && trinkets.isEquipped(item);
+	}
+	
+	public static <T> Optional<T> fromFirstTrinket(LivingEntity entity, Function<ItemStack, T> f){
+		return TrinketsApi.getTrinketComponent(entity)
+				.flatMap(it -> it.getAllEquipped().stream()
+						.map(Pair::getRight)
+						.flatMap(x -> Stream.ofNullable(f.apply(x)))
+						.findFirst());
 	}
 	
 	public static ItemStack quickMove(ScreenHandler self, Inventory inventory, int index){

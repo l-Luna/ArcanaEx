@@ -375,7 +375,7 @@
       "meta": [
         "tmp_base"
       ],
-      "x": 2,
+      "x": 1,
       "y": -5,
       "sections": [
         {
@@ -385,6 +385,33 @@
         {
           "type": "arcane_crafting",
           "content": "arcana:equipment/lamplight_ring"
+        }
+      ]
+    },
+    {
+      "key": "arcana:tmp/claw_ring",
+      "name": "research.arcana.claw_ring.title",
+      "desc": "research.arcana.claw_ring.desc",
+      "icons": [
+        "arcana:claw_ring"
+      ],
+      "category": "arcana:artifice",
+      "parents": [
+        "&arcana:adorned_ring"
+      ],
+      "meta": [
+        "tmp_base"
+      ],
+      "x": 3,
+      "y": -5,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.claw_ring.text"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:equipment/claw_ring"
         }
       ]
     },

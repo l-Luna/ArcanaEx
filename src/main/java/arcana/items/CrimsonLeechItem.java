@@ -1,6 +1,7 @@
 package arcana.items;
 
 import arcana.ArcanaRegistry;
+import arcana.ArcanaTags;
 import arcana.api.AnimatedSwingItem;
 import arcana.api.WarpingItem;
 import net.fabricmc.api.EnvType;
@@ -17,7 +18,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.registry.tag.EntityTypeTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -70,10 +70,10 @@ public class CrimsonLeechItem extends Item implements AnimatedSwingItem, Warping
 	public static void handleEntityDeath(ServerWorld world, Entity killerEntity, LivingEntity killed){
 		if(killerEntity instanceof LivingEntity killer
 				&& killer.getStackInHand(Hand.MAIN_HAND).isOf(ArcanaRegistry.CRIMSON_LEECH)
-				&& !killed.getType().isIn(EntityTypeTags.UNDEAD)){
+				&& !killed.getType().isIn(ArcanaTags.CANNOT_STEAL_LIFE_FROM)){
 			killer.heal(world.random.nextBetween(1, 4));
+			// TODO: custom lifesteal sound, vfx
 			world.playSound(null, killed.getX(), killed.getY(), killed.getZ(), SoundEvents.ENTITY_CAT_HISS, SoundCategory.HOSTILE, 0.5f, 0.5f, 0);
-			// particles...
 		}
 	}
 	

@@ -1,4 +1,4 @@
-package arcana.items;
+package arcana.items.trinkets;
 
 import arcana.ArcanaRegistry;
 import arcana.util.SearchUtil;

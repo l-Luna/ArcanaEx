@@ -81,6 +81,12 @@ public class BipedGeoEntityRenderer<T extends LivingEntity & GeoEntity> extends 
 			float lx = entity.getScale();
 			matrices.scale(lx, lx, lx);
 			matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180f - bodyYaw));
+			if(entity.deathTime > 0){
+				float f = MathHelper.sqrt((entity.deathTime + delta - 1) / 20f * 1.6f);
+				if(f > 1)
+					f = 1;
+				matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(f * 90));
+			}
 			matrices.scale(-1.0F, -1.0F, 1.0F);
 			matrices.translate(0.0F, -1.501F, 0.0F);
 			// HeldItemFeatureRenderer transforms

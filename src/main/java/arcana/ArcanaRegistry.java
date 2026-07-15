@@ -19,6 +19,7 @@ import arcana.effects.*;
 import arcana.entities.PrismaticOrbEntity;
 import arcana.entities.ThrownAlumentumEntity;
 import arcana.entities.ThrownTaintBottleEntity;
+import arcana.entities.ZombieThaumaturgeEntity;
 import arcana.entities.crimson.*;
 import arcana.entities.wisps.CoagulationEntity;
 import arcana.entities.wisps.PureWispEntity;
@@ -712,47 +713,55 @@ public final class ArcanaRegistry{
 			.fireImmune()
 			.build();
 	
+	public static final EntityType<ZombieThaumaturgeEntity> ZOMBIE_THAUMATURGE = FabricEntityTypeBuilder
+			.createLiving()
+			.entityFactory(ZombieThaumaturgeEntity::new)
+			.spawnGroup(SpawnGroup.MONSTER)
+			.defaultAttributes(ZombieThaumaturgeEntity::createAttributes)
+			.dimensions(EntityDimensions.fixed(0.6f, 1.8f).withEyeHeight(1.74f))
+			.build();
+	
 	public static final EntityType<CrimsonKnightEntity> CRIMSON_KNIGHT = FabricEntityTypeBuilder
 			.createLiving()
 			.entityFactory(CrimsonKnightEntity::new)
 			.spawnGroup(SpawnGroup.MONSTER)
 			.defaultAttributes(CrimsonKnightEntity::createKnightAttributes)
-			.dimensions(EntityDimensions.fixed(1, 1.8f).withEyeHeight(1.74f))
+			.dimensions(EntityDimensions.fixed(0.8f, 1.8f).withEyeHeight(1.74f))
 			.build();
 	public static final EntityType<CrimsonArcherEntity> CRIMSON_ARCHER = FabricEntityTypeBuilder
 			.createLiving()
 			.entityFactory(CrimsonArcherEntity::new)
 			.spawnGroup(SpawnGroup.MONSTER)
 			.defaultAttributes(CrimsonArcherEntity::createArcherAttributes)
-			.dimensions(EntityDimensions.fixed(1, 1.8f).withEyeHeight(1.74f))
+			.dimensions(EntityDimensions.fixed(0.8f, 1.8f).withEyeHeight(1.74f))
 			.build();
 	public static final EntityType<CrimsonProtectorEntity> CRIMSON_PROTECTOR = FabricEntityTypeBuilder
 			.createLiving()
 			.entityFactory(CrimsonProtectorEntity::new)
 			.spawnGroup(SpawnGroup.MONSTER)
 			.defaultAttributes(CrimsonProtectorEntity::createProtectorAttributes)
-			.dimensions(EntityDimensions.fixed(1, 1.8f).withEyeHeight(1.74f))
+			.dimensions(EntityDimensions.fixed(0.8f, 1.8f).withEyeHeight(1.74f))
 			.build();
 	public static final EntityType<CrimsonMissionaryEntity> CRIMSON_MISSIONARY = FabricEntityTypeBuilder
 			.createLiving()
 			.entityFactory(CrimsonMissionaryEntity::new)
 			.spawnGroup(SpawnGroup.MONSTER)
 			.defaultAttributes(CrimsonMissionaryEntity::createMissionaryAttributes)
-			.dimensions(EntityDimensions.fixed(1, 1.8f).withEyeHeight(1.74f))
+			.dimensions(EntityDimensions.fixed(0.8f, 1.8f).withEyeHeight(1.74f))
 			.build();
 	public static final EntityType<CrimsonHeavyKnightEntity> CRIMSON_HEAVY_KNIGHT = FabricEntityTypeBuilder
 			.createLiving()
 			.entityFactory(CrimsonHeavyKnightEntity::new)
 			.spawnGroup(SpawnGroup.MONSTER)
 			.defaultAttributes(CrimsonHeavyKnightEntity::createHeavyKnightAttributes)
-			.dimensions(EntityDimensions.fixed(1, 1.8f).withEyeHeight(1.74f))
+			.dimensions(EntityDimensions.fixed(0.8f, 1.8f).withEyeHeight(1.74f))
 			.build();
 	public static final EntityType<CrimsonJesterEntity> CRIMSON_JESTER = FabricEntityTypeBuilder
 			.createLiving()
 			.entityFactory(CrimsonJesterEntity::new)
 			.spawnGroup(SpawnGroup.MONSTER)
 			.defaultAttributes(CrimsonJesterEntity::createJesterAttributes)
-			.dimensions(EntityDimensions.fixed(1, 1.8f).withEyeHeight(1.74f))
+			.dimensions(EntityDimensions.fixed(0.8f, 1.8f).withEyeHeight(1.74f))
 			.build();
 	
 	// and finally, the item group
@@ -760,12 +769,6 @@ public final class ArcanaRegistry{
 	public static final ItemGroup MAIN_GROUP = FabricItemGroup.builder()
 			.icon(() -> new ItemStack(ARCANUM))
 			.entries((ctx, entries) -> {
-				/*for(var items : ITEMS_BY_TAB.values())
-					for(Item item : items)
-						if(item instanceof CustomCreativePresentationItem presentation)
-							presentation.addToTab(entries);
-						else
-							entries.add(item, ItemGroup.StackVisibility.PARENT_AND_SEARCH_TABS);*/
 				for(ItemSubGroup subGroup : smuggleTab().fractal$getChildren())
 					entries.addAll(subGroup.getSearchTabStacks(), ItemGroup.StackVisibility.PARENT_AND_SEARCH_TABS);
 			})
@@ -1340,6 +1343,8 @@ public final class ArcanaRegistry{
 		register("pure_wisp", PURE_WISP);
 		register("coagulation", COAGULATION);
 		register("lesser_wisp", LESSER_WISP);
+		
+		register("zombie_thaumaturge", ZOMBIE_THAUMATURGE);
 		
 		register("crimson_knight", CRIMSON_KNIGHT);
 		register("crimson_archer", CRIMSON_ARCHER);

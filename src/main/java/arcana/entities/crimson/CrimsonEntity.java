@@ -47,7 +47,7 @@ public class CrimsonEntity extends HostileEntity implements GeoEntity{
 		goalSelector.add(5, new WanderAroundFarGoal(this, 1));
 		goalSelector.add(6, new LookAtEntityGoal(this, PlayerEntity.class, 8));
 		goalSelector.add(6, new LookAroundGoal(this));
-		targetSelector.add(1, new RevengeGoal(this));
+		targetSelector.add(1, new RevengeGoal(this, CrimsonEntity.class));
 		targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
 	}
 	
@@ -61,10 +61,6 @@ public class CrimsonEntity extends HostileEntity implements GeoEntity{
 	
 	public boolean canUseRangedWeapon(RangedWeaponItem weapon){
 		return weapon instanceof BowItem;
-	}
-	
-	public double getHeightOffset(){
-		return -0.6;
 	}
 	
 	// animation - not really used, geckolib is used here primarily for models

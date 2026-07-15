@@ -8,10 +8,7 @@ import arcana.blocks.ArcanaBlockSettings;
 import arcana.blocks.be.WardedCampfireBlockEntity;
 import arcana.cca_components.Researcher;
 import arcana.client.ber.*;
-import arcana.client.entity.CrimsonEntityRenderer;
-import arcana.client.entity.PrismaticOrbEntityRenderer;
-import arcana.client.entity.ThrownAlumentumEntityRenderer;
-import arcana.client.entity.WispLikeEntityRenderer;
+import arcana.client.entity.*;
 import arcana.client.particles.*;
 import arcana.client.renderers.*;
 import arcana.client.research.EntrySectionRenderer;
@@ -226,6 +223,7 @@ public final class ArcanaClient implements ClientModInitializer{
 		EntityRendererRegistry.register(ArcanaRegistry.PURE_WISP, ctx -> new WispLikeEntityRenderer<>(ctx, 2, 34, false, 0.8f, arcId("textures/entity/pure_wisp.png")));
 		EntityRendererRegistry.register(ArcanaRegistry.COAGULATION, ctx -> new WispLikeEntityRenderer<>(ctx, 2, 12, true, 0.5f, null));
 		EntityRendererRegistry.register(ArcanaRegistry.LESSER_WISP, ctx -> new WispLikeEntityRenderer<>(ctx, 1, 8, false, 0.33f, arcId("textures/entity/lesser_wisp.png")));
+		EntityRendererRegistry.register(ArcanaRegistry.ZOMBIE_THAUMATURGE, ctx -> new BipedGeoEntityRenderer<>(ctx, new PlainGeoModel<>(arcId("geo/zombie_thaumaturge.geo.json"), arcId("textures/entity/zombie_thaumaturge.png"), arcId("animations/zombie_thaumaturge.animation.json"))));
 		
 		for(Block block : ArcanaRegistry.BLOCKS)
 			if(block.getSettings() instanceof ArcanaBlockSettings abs)

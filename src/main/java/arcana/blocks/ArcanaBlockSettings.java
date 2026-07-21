@@ -8,7 +8,6 @@ import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.sound.BlockSoundGroup;
 
-// TODO: use AW instead
 // TODO: once the block codecs are actually used, The Horrors ensue
 public class ArcanaBlockSettings extends AbstractBlock.Settings{
 	

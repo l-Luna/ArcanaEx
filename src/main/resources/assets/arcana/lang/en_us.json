@@ -704,7 +704,8 @@
   // Entities
   "entity.arcana": {
     "thrown_alumentum": "Thrown Alumentum",
-    "suspension_engine": "Levitational Locomotive",
+    "flame_orb": "Burning Orb",
+    "prismatic_orb": "Orb of Prismatic Light",
 
     "wisp": "Wisp",
     "tainted_wisp": "Tainted Wisp",
@@ -834,11 +835,19 @@
 
   // Damage Sources
   "death.attack.arcana": {
+    // Hazards
     "hungry_node": "{} was consumed by a hungry node",
     "hungry_node.player": "{} was thrown into a hungry node by {}",
 
     "putrefaction": "{} was dissolved",
-    "putrefaction.player": "{} was destined for dissolution by {}"
+    "putrefaction.player": "{} was destined for dissolution by {}",
+
+    // Attacks
+    "prismatic_light": "{} was seared and dazzled by {}'s prismatic light",
+    "prismatic_light.item": "{} was seared and dazzled by {}'s prismatic light using {}",
+
+    "flame_orb": "{} was seared and burnt by {}",
+    "flame_orb.item": "{} was seared and burnt by {}'s using {}"
   },
 
   // Entity Attributes
@@ -848,7 +857,12 @@
 
   // Subtitles
   "subtitles.arcana": {
-    "runic_shielding_hit": "Runic shielding activates"
+    "runic_shielding_hit": "Runic shielding activates",
+    "hurt": {
+      "prismatic_light": "Player burns from light",
+      "burning_powerful": "Player burns badly",
+      "putrefaction": "Player hurts from corrosion"
+    }
   },
 
   // Research UI

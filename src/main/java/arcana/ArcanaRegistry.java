@@ -16,10 +16,7 @@ import arcana.cca_components.RunicShielding;
 import arcana.client.particles.AspectParticleEffect;
 import arcana.client.particles.CubeParticleEffect;
 import arcana.effects.*;
-import arcana.entities.PrismaticOrbEntity;
-import arcana.entities.ThrownAlumentumEntity;
-import arcana.entities.ThrownTaintBottleEntity;
-import arcana.entities.ZombieThaumaturgeEntity;
+import arcana.entities.*;
 import arcana.entities.crimson.*;
 import arcana.entities.wisps.CoagulationEntity;
 import arcana.entities.wisps.PureWispEntity;
@@ -667,6 +664,12 @@ public final class ArcanaRegistry{
 			.build();
 	public static final EntityType<PrismaticOrbEntity> PRISMATIC_ORB = FabricEntityTypeBuilder
 			.create(SpawnGroup.MISC, PrismaticOrbEntity::new)
+			.trackRangeChunks(4)
+			.trackedUpdateRate(10)
+			.dimensions(EntityDimensions.fixed(0.1f, 0.1f))
+			.build();
+	public static final EntityType<FlameOrbEntity> FLAME_ORB = FabricEntityTypeBuilder
+			.create(SpawnGroup.MISC, FlameOrbEntity::new)
 			.trackRangeChunks(4)
 			.trackedUpdateRate(10)
 			.dimensions(EntityDimensions.fixed(0.1f, 0.1f))
@@ -1337,6 +1340,7 @@ public final class ArcanaRegistry{
 		register("thrown_alumentum", THROWN_ALUMENTUM);
 		register("thrown_taint_bottle", THROWN_TAINT_BOTTLE);
 		register("prismatic_orb", PRISMATIC_ORB);
+		register("flame_orb", FLAME_ORB);
 		
 		register("wisp", WISP);
 		register("tainted_wisp", TAINTED_WISP);

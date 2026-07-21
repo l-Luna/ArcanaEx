@@ -5,6 +5,7 @@ import arcana.aspects.AspectStack;
 import arcana.aspects.Aspects;
 import arcana.entities.wisps.CoagulationEntity;
 import arcana.items.FocusItem;
+import arcana.util.MathUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3d;
@@ -28,7 +29,7 @@ public class CoagulationFocusItem extends FocusItem{
 	public void tickContinuousCast(ContinuousCastContext ccc){
 		PlayerEntity user = ccc.user;
 		World w = user.getWorld();
-		Vec3d target = PrismaticLightFocusItem.hoverPosition(user);
+		Vec3d target = MathUtil.hoverPosition(user);
 		if(ccc.castTime >= 30){
 			ccc.stop();
 			CoagulationEntity ce = new CoagulationEntity(w, user.getUuid());

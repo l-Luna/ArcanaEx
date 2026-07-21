@@ -1,11 +1,14 @@
 package arcana.mixin;
 
+import arcana.ArcanaDamageSources;
+import arcana.ArcanaSounds;
 import arcana.blocks.WardedCampfireBlock;
 import arcana.cca_components.RunicShielding;
 import arcana.items.BootsOfTheTravellerItem;
 import arcana.items.trinkets.ClawTrinketItem;
 import arcana.util.InventoryUtil;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import net.minecraft.component.type.FoodComponent;
@@ -17,6 +20,7 @@ import net.minecraft.entity.player.HungerManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.tag.DamageTypeTags;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -75,6 +79,17 @@ public abstract class PlayerEntityMixin extends LivingEntity{
 				return original + unarmedDamage.get();
 		}
 		
+		return original;
+	}
+	
+	@ModifyReturnValue(method = "getHurtSound", at = @At("RETURN"))
+	protected SoundEvent getHurtSound(SoundEvent original, DamageSource source){
+		if(source.getTypeRegistryEntry().matchesKey(ArcanaDamageSources.PRISMATIC_LIGHT_KEY))
+			return ArcanaSounds.HURT_PRISMATIC_LIGHT;
+		else if(source.getTypeRegistryEntry().matchesKey(ArcanaDamageSources.FLAME_ORB_KEY))
+			return ArcanaSounds.HURT_BURNING_POWERFUL;
+		else if(source.getTypeRegistryEntry().matchesKey(ArcanaDamageSources.PUTREFACTION_KEY))
+			return ArcanaSounds.HURT_PUTREFACTION;
 		return original;
 	}
 }

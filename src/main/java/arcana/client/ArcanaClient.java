@@ -211,7 +211,12 @@ public final class ArcanaClient implements ClientModInitializer{
 		
 		EntityRendererRegistry.register(ArcanaRegistry.THROWN_ALUMENTUM, ThrownAlumentumEntityRenderer::new);
 		EntityRendererRegistry.register(ArcanaRegistry.THROWN_TAINT_BOTTLE, FlyingItemEntityRenderer::new);
-		EntityRendererRegistry.register(ArcanaRegistry.PRISMATIC_ORB, PrismaticOrbEntityRenderer::new);
+		EntityRendererRegistry.register(ArcanaRegistry.PRISMATIC_ORB, ctx -> new MagicOrbEntityRenderer<>(ctx, List.of(
+				0xFF7F3FFF, 0xFF7F7FFF, 0xFF7FBFFF, 0xFF7FFFFF, 0xFFBF3FFF, 0xFFBF7FFF, 0xFFBFBFFF, 0xFFBFFFFF, 0xFFFF3FFF, 0xFFFF7FFF, 0xFFFFBFFF, 0xFFFFFFFF))
+		);
+		EntityRendererRegistry.register(ArcanaRegistry.FLAME_ORB, ctx -> new MagicOrbEntityRenderer<>(ctx, List.of(
+				0xFF990000, 0xFF995500, 0xFF99AA00, 0xFF99FF00, 0xFFCC0000, 0xFFCC5500, 0xFFCCAA00, 0xFFCCFF00, 0xFFFF0000, 0xFFFF5500, 0xFFFFAA00, 0xFFFFFF00))
+		);
 		EntityRendererRegistry.register(ArcanaRegistry.CRIMSON_KNIGHT, ctx -> new CrimsonEntityRenderer<>(ctx, "knight"));
 		EntityRendererRegistry.register(ArcanaRegistry.CRIMSON_ARCHER, ctx -> new CrimsonEntityRenderer<>(ctx, "archer"));
 		EntityRendererRegistry.register(ArcanaRegistry.CRIMSON_PROTECTOR, ctx -> new CrimsonEntityRenderer<>(ctx, "protector"));

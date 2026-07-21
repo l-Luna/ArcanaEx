@@ -4,5 +4,23 @@
     "sounds": [
       "arcana:runic_shielding_hit"
     ]
+  },
+  "hurt_burning_powerful": {
+    "subtitle": "subtitles.arcana.hurt.burning_powerful",
+    "sounds": [
+      "arcana:hurt/burning_powerful"
+    ]
+  },
+  "hurt_prismatic_light": {
+    "subtitle": "subtitles.arcana.hurt.prismatic_light",
+    "sounds": [
+      "arcana:hurt/prismatic_light"
+    ]
+  },
+  "hurt_putrefaction": {
+    "subtitle": "subtitles.arcana.hurt.putrefaction",
+    "sounds": [
+      "arcana:hurt/putrefaction"
+    ]
   }
 }

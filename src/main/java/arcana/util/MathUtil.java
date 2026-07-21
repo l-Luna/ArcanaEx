@@ -1,6 +1,6 @@
 package arcana.util;
 
-import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ColorHelper.Argb;
@@ -21,10 +21,6 @@ public final class MathUtil{
 				-Math.sin(pitch),
 				Math.cos(yaw) * Math.cos(pitch)
 		);
-	}
-	
-	public static Vec3d facingToVec(Entity entity){
-		return facingToVec((float)Math.toRadians(entity.getPitch()), (float)Math.toRadians(entity.getYaw()));
 	}
 	
 	public static Vec3d randomDir(Random rng){
@@ -89,5 +85,13 @@ public final class MathUtil{
 			n -= bc;
 		}
 		return -1;
+	}
+	
+	public static Vec3d hoverPosition(LivingEntity entity){
+		return entity.getEyePos().add(entity.getRotationVector().multiply(1.3));
+	}
+	
+	public static Vec3d hoverPosition(LivingEntity entity, float delta){
+		return entity.getLerpedPos(delta).add(0, entity.getStandingEyeHeight(), 0).add(entity.getRotationVector().multiply(1.3));
 	}
 }

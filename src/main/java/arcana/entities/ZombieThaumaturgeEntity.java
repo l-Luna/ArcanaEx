@@ -15,11 +15,14 @@ import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animation.AnimatableManager;
@@ -28,6 +31,8 @@ import software.bernie.geckolib.animation.PlayState;
 import software.bernie.geckolib.animation.RawAnimation;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
+import java.util.UUID;
+
 public class ZombieThaumaturgeEntity extends HostileEntity implements GeoEntity{
 	
 	private static final RawAnimation IDLE_ANIM = RawAnimation.begin().thenPlay("idle");
@@ -35,7 +40,7 @@ public class ZombieThaumaturgeEntity extends HostileEntity implements GeoEntity{
 	
 	private static final FlameOrbAttack FLAME_ORB_ATTACK = new FlameOrbAttack();
 	
-	private MagicOrbEntity curProjectile = null;
+	private UUID curProjectileId = null;
 	
 	public ZombieThaumaturgeEntity(EntityType<? extends HostileEntity> entityType, World world){
 		super(entityType, world);
@@ -79,6 +84,15 @@ public class ZombieThaumaturgeEntity extends HostileEntity implements GeoEntity{
 				.add(EntityAttributes.GENERIC_FOLLOW_RANGE, 36);
 	}
 	
+	@Nullable
+	public Entity getCurProjectile(){
+		return curProjectileId != null && getEntityWorld() instanceof ServerWorld sw ? sw.getEntity(curProjectileId) : null;
+	}
+	
+	public void setCurProjectile(@Nullable Entity entity){
+		curProjectileId = entity == null ? null : entity.getUuid();
+	}
+	
 	//
 	
 	public void tickMovement(){
@@ -113,6 +127,19 @@ public class ZombieThaumaturgeEntity extends HostileEntity implements GeoEntity{
 	
 	//
 	
+	public void readCustomDataFromNbt(NbtCompound nbt){
+		super.readCustomDataFromNbt(nbt);
+		curProjectileId = nbt.containsUuid("cur_projectile_id") ? nbt.getUuid("cur_projectile_id") : null;
+	}
+	
+	public void writeCustomDataToNbt(NbtCompound nbt){
+		super.writeCustomDataToNbt(nbt);
+		if(curProjectileId != null)
+			nbt.putUuid("cur_projectile_id", curProjectileId);
+	}
+	
+	//
+	
 	private static class FlameOrbAttack implements ChargedAttack<ZombieThaumaturgeEntity>{
 		
 		public boolean canUse(ZombieThaumaturgeEntity entity){
@@ -121,17 +148,20 @@ public class ZombieThaumaturgeEntity extends HostileEntity implements GeoEntity{
 		
 		public void begin(ZombieThaumaturgeEntity entity){
 			entity.setCurrentHand(Hand.MAIN_HAND);
-			
-			World w = entity.getEntityWorld();
-			MagicOrbEntity orb = new FlameOrbEntity(ArcanaRegistry.FLAME_ORB, w);
-			orb.setOwner(entity);
-			orb.setPosition(MathUtil.hoverPosition(entity));
-			w.spawnEntity(orb);
-			entity.curProjectile = orb;
+			// only create a new orb if there isn't already one (e.g. if reopening a world that already had an attack in progress)
+			if(!(entity.getCurProjectile() instanceof MagicOrbEntity)){
+				World w = entity.getEntityWorld();
+				MagicOrbEntity orb = new FlameOrbEntity(ArcanaRegistry.FLAME_ORB, w);
+				orb.setOwner(entity);
+				orb.setPosition(MathUtil.hoverPosition(entity));
+				w.spawnEntity(orb);
+				entity.setCurProjectile(orb);
+			}
 		}
 		
 		public boolean hasFinishedCharging(ZombieThaumaturgeEntity entity, int chargedTicks){
-			return entity.curProjectile != null && entity.curProjectile.getSize() >= 1;
+			Entity projectile = entity.getCurProjectile();
+			return projectile instanceof MagicOrbEntity orb && orb.getSize() >= 1;
 		}
 		
 		public void finishCharging(ZombieThaumaturgeEntity entity){
@@ -139,16 +169,16 @@ public class ZombieThaumaturgeEntity extends HostileEntity implements GeoEntity{
 		}
 		
 		public void shootAt(ZombieThaumaturgeEntity entity, LivingEntity target, float time){
-			if(entity.curProjectile != null)
-				entity.curProjectile.release(target);
-			entity.curProjectile = null;
+			if(entity.getCurProjectile() instanceof MagicOrbEntity orb)
+				orb.release(target);
+			entity.setCurProjectile(null);
 		}
 		
 		public void cancel(ZombieThaumaturgeEntity entity){
 			ChargedAttack.super.cancel(entity);
-			if(entity.curProjectile != null)
-				entity.curProjectile.burst();
-			entity.curProjectile = null;
+			if(entity.getCurProjectile() instanceof MagicOrbEntity orb)
+				orb.burst();
+			entity.setCurProjectile(null);
 		}
 	}
 }

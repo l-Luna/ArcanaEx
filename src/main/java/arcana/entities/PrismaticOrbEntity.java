@@ -11,7 +11,6 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.tag.EntityTypeTags;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
 
 public class PrismaticOrbEntity extends MagicOrbEntity{
@@ -30,7 +29,7 @@ public class PrismaticOrbEntity extends MagicOrbEntity{
 		super.tick();
 	}
 	
-	protected void onCollision(HitResult hit){
+	public void burst(){
 		// particle burst
 		ServerWorld sw = (ServerWorld)getWorld();
 		sw.spawnParticles(ParticleTypes.END_ROD,
@@ -44,7 +43,7 @@ public class PrismaticOrbEntity extends MagicOrbEntity{
 					getPos().getY(),
 					getPos().getZ(),
 					7, 0, 0, 0, 0.2f);
-		super.onCollision(hit);
+		super.burst();
 	}
 	
 	protected void damageEntity(LivingEntity target, Entity owner){

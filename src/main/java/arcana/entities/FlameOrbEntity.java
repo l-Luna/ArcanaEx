@@ -9,7 +9,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -28,7 +27,7 @@ public class FlameOrbEntity extends MagicOrbEntity{
 		super.tick();
 	}
 	
-	protected void onCollision(HitResult hit){
+	public void burst(){
 		// particle burst
 		ServerWorld sw = (ServerWorld)getWorld();
 		sw.spawnParticles(ArcanaRegistry.FLAME,
@@ -37,7 +36,7 @@ public class FlameOrbEntity extends MagicOrbEntity{
 				getPos().getZ(),
 				20, 0.1, 0.1, 0.1, 0.02f);
 		// randomly placed fire
-		for(int i = 0; i < 4; i++){
+		for(int i = 0; i < 2; i++){
 			SearchUtil.vRandomSearch(sw, getBlockPos(), 3, 3, 6, (where, what) -> {
 				BlockPos up = where.up();
 				if(what.isAir() || !what.getFluidState().isEmpty() || !sw.getBlockState(up).isAir())
@@ -46,12 +45,12 @@ public class FlameOrbEntity extends MagicOrbEntity{
 				return true;
 			});
 		}
-		super.onCollision(hit);
+		super.burst();
 	}
 	
 	protected void damageEntity(LivingEntity target, Entity owner){
-		// 3 base damage + 3 charged damage
-		target.damage(ArcanaDamageSources.flameOrb(getEntityWorld(), this), 3 + 3 * getSize());
-		target.setOnFireFor(5);
+		// 2 base damage + 2 charged damage
+		target.damage(ArcanaDamageSources.flameOrb(getEntityWorld(), this), 2 + 2 * getSize());
+		target.setOnFireFor(3);
 	}
 }

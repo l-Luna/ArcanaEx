@@ -57,7 +57,7 @@ public class PrismaticLightFocusItem extends FocusItem{
 			UUID orbId = state.getUuid("orbId");
 			Entity e = sw.getEntity(orbId);
 			if(e instanceof MagicOrbEntity poe)
-				poe.release();
+				poe.release(null);
 		}
 	}
 }

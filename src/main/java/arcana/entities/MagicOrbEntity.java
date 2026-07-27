@@ -13,6 +13,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 public abstract class MagicOrbEntity extends ProjectileEntity{
 	
@@ -23,18 +24,20 @@ public abstract class MagicOrbEntity extends ProjectileEntity{
 		super(entityType, world);
 	}
 	
-	public void release(){
+	public void release(@Nullable Entity target){
 		setShot(true);
 		Entity owner = getOwner();
-		if(owner != null)
+		if(target != null)
+			setVelocity(target.getPos().subtract(getPos()).normalize().multiply(1.8f));
+		else if(owner != null)
 			setVelocity(owner, owner.getPitch(), owner.getYaw(), 0, 1.8f, 0.7f);
 		else
 			setVelocity(getWorld().random.nextDouble(), getWorld().random.nextDouble(), getWorld().random.nextDouble(), 1f, 0f);
 	}
 	
 	public void tick(){
+		Entity ownerEntity = getOwner();
 		if(!hasShot()){
-			Entity ownerEntity = getOwner();
 			if(ownerEntity instanceof LivingEntity owner){
 				setPosition(MathUtil.hoverPosition(owner));
 				velocityDirty = true;
@@ -45,6 +48,9 @@ public abstract class MagicOrbEntity extends ProjectileEntity{
 		}
 		
 		if(!getWorld().isClient){
+			if(ownerEntity == null || !ownerEntity.isAlive())
+				burst();
+			
 			HitResult hitResult = ProjectileUtil.getCollision(this, this::canHit);
 			if(hitResult.getType() != HitResult.Type.MISS)
 				onCollision(hitResult);
@@ -56,8 +62,10 @@ public abstract class MagicOrbEntity extends ProjectileEntity{
 	}
 	
 	protected void onCollision(HitResult hit){
-		super.onCollision(hit);
-		
+		burst();
+	}
+	
+	public void burst(){
 		Entity owner = getOwner();
 		float rad = radius();
 		for(Entity entity : getWorld().getOtherEntities(this, new Box(getPos().subtract(rad, rad, rad), getPos().add(rad, rad, rad))))

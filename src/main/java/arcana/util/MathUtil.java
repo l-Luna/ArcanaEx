@@ -88,10 +88,10 @@ public final class MathUtil{
 	}
 	
 	public static Vec3d hoverPosition(LivingEntity entity){
-		return entity.getEyePos().add(entity.getRotationVector().multiply(1.3));
+		return entity.getEyePos().add(entity.getRotationVector(entity.getPitch(), entity.getHeadYaw()).multiply(1.3));
 	}
 	
 	public static Vec3d hoverPosition(LivingEntity entity, float delta){
-		return entity.getLerpedPos(delta).add(0, entity.getStandingEyeHeight(), 0).add(entity.getRotationVector().multiply(1.3));
+		return entity.getLerpedPos(delta).add(0, entity.getStandingEyeHeight(), 0).add(entity.getRotationVector(entity.getPitch(delta), entity.getYaw(delta)).multiply(1.3));
 	}
 }

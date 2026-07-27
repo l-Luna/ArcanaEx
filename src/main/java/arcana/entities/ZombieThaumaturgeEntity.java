@@ -1,10 +1,11 @@
 package arcana.entities;
 
+import arcana.ArcanaRegistry;
+import arcana.entities.goal.ChargedAttack;
+import arcana.entities.goal.ChargedAttackGoal;
 import arcana.items.WandItem;
-import net.minecraft.entity.EntityData;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.SpawnReason;
+import arcana.util.MathUtil;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -14,6 +15,7 @@ import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
@@ -30,6 +32,10 @@ public class ZombieThaumaturgeEntity extends HostileEntity implements GeoEntity{
 	
 	private static final RawAnimation IDLE_ANIM = RawAnimation.begin().thenPlay("idle");
 	private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+	
+	private static final FlameOrbAttack FLAME_ORB_ATTACK = new FlameOrbAttack();
+	
+	private MagicOrbEntity curProjectile = null;
 	
 	public ZombieThaumaturgeEntity(EntityType<? extends HostileEntity> entityType, World world){
 		super(entityType, world);
@@ -53,7 +59,8 @@ public class ZombieThaumaturgeEntity extends HostileEntity implements GeoEntity{
 	protected void initGoals(){
 		goalSelector.add(2, new AvoidSunlightGoal(this));
 		goalSelector.add(3, new EscapeSunlightGoal(this, 1));
-		goalSelector.add(4, new MeleeAttackGoal(this, 1, false));
+		goalSelector.add(4, new ChargedAttackGoal<>(this, 1, 8, FLAME_ORB_ATTACK));
+		goalSelector.add(5, new MeleeAttackGoal(this, 1, false));
 		goalSelector.add(6, new MoveThroughVillageGoal(this, 1, true, 4, () -> false));
 		goalSelector.add(7, new WanderAroundFarGoal(this, 1));
 		goalSelector.add(8, new LookAtEntityGoal(this, PlayerEntity.class, 8));
@@ -91,7 +98,6 @@ public class ZombieThaumaturgeEntity extends HostileEntity implements GeoEntity{
 		super.tickMovement();
 	}
 	
-	
 	//
 	
 	public void registerControllers(AnimatableManager.ControllerRegistrar controllers){
@@ -103,5 +109,46 @@ public class ZombieThaumaturgeEntity extends HostileEntity implements GeoEntity{
 	
 	public AnimatableInstanceCache getAnimatableInstanceCache(){
 		return cache;
+	}
+	
+	//
+	
+	private static class FlameOrbAttack implements ChargedAttack<ZombieThaumaturgeEntity>{
+		
+		public boolean canUse(ZombieThaumaturgeEntity entity){
+			return entity.getMainHandStack().isOf(ArcanaRegistry.WAND);
+		}
+		
+		public void begin(ZombieThaumaturgeEntity entity){
+			entity.setCurrentHand(Hand.MAIN_HAND);
+			
+			World w = entity.getEntityWorld();
+			MagicOrbEntity orb = new FlameOrbEntity(ArcanaRegistry.FLAME_ORB, w);
+			orb.setOwner(entity);
+			orb.setPosition(MathUtil.hoverPosition(entity));
+			w.spawnEntity(orb);
+			entity.curProjectile = orb;
+		}
+		
+		public boolean hasFinishedCharging(ZombieThaumaturgeEntity entity, int chargedTicks){
+			return entity.curProjectile != null && entity.curProjectile.getSize() >= 1;
+		}
+		
+		public void finishCharging(ZombieThaumaturgeEntity entity){
+			// particle effects...
+		}
+		
+		public void shootAt(ZombieThaumaturgeEntity entity, LivingEntity target, float time){
+			if(entity.curProjectile != null)
+				entity.curProjectile.release(target);
+			entity.curProjectile = null;
+		}
+		
+		public void cancel(ZombieThaumaturgeEntity entity){
+			ChargedAttack.super.cancel(entity);
+			if(entity.curProjectile != null)
+				entity.curProjectile.burst();
+			entity.curProjectile = null;
+		}
 	}
 }

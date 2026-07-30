@@ -1,8 +1,11 @@
 package arcana.worldgen;
 
+import arcana.ArcanaRegistry;
 import arcana.ArcanaTags;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnGroup;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.world.gen.GenerationStep;
@@ -50,6 +53,15 @@ public final class ArcanaFeatures{
 				BiomeSelectors.foundInTheNether(),
 				GenerationStep.Feature.VEGETAL_DECORATION,
 				RegistryKey.of(RegistryKeys.PLACED_FEATURE, arcId("hanging_node"))
+		);
+		
+		// mob spawns
+		// (perhaps better elsewhere?)
+		BiomeModifications.addSpawn(
+				BiomeSelectors.spawnsOneOf(EntityType.ZOMBIE).and(BiomeSelectors.tag(ArcanaTags.ZOMBIE_THAUMATURGE_SPAWN_BLACKLIST).negate()),
+				SpawnGroup.MONSTER,
+				ArcanaRegistry.ZOMBIE_THAUMATURGE,
+				5, 1, 1
 		);
 	}
 }

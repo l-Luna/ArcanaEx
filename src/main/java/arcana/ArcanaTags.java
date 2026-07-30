@@ -50,6 +50,7 @@ public final class ArcanaTags{
 	
 	public static final TagKey<Biome> SILVERWOOD_SPAWNABLE = TagKey.of(RegistryKeys.BIOME, arcId("silverwood_spawnable"));
 	public static final TagKey<Biome> GREATWOOD_SPAWNABLE = TagKey.of(RegistryKeys.BIOME, arcId("greatwood_spawnable"));
+	public static final TagKey<Biome> ZOMBIE_THAUMATURGE_SPAWN_BLACKLIST = TagKey.of(RegistryKeys.BIOME, arcId("zombie_thaumaturge_spawn_blacklist"));
 	
 	public static final TagKey<Fluid> TAINT_GOO_FLUID = TagKey.of(RegistryKeys.FLUID, arcId("taint_goo"));
 	public static final TagKey<Fluid> PUTREFACTION_FLUID = TagKey.of(RegistryKeys.FLUID, arcId("putrefaction"));

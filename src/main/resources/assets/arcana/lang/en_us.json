@@ -403,7 +403,20 @@
     "taint_injector": "Taint Injector",
     "taint_eraser": "Taint Eraser",
     "infestation_injector": "Infestation Injector",
-    "infestation_eraser": "Infestation Eraser"
+    "infestation_eraser": "Infestation Eraser",
+
+    "wisp_spawn_egg": "Wisp Spawn Egg",
+    "tainted_wisp_spawn_egg": "Tainted Wisp Spawn Egg",
+    "pure_wisp_spawn_egg": "Pure Wisp Spawn Egg",
+    "coagulation_spawn_egg": "Coagulation Spawn Egg",
+    "lesser_wisp_spawn_egg": "Mite Spawn Egg",
+    "zombie_thaumaturge_spawn_egg": "Zombified Thaumaturge Spawn Egg",
+    "crimson_knight_spawn_egg": "Crimson Knight Spawn Egg",
+    "crimson_archer_spawn_egg": "Crimson Archer Spawn Egg",
+    "crimson_protector_spawn_egg": "Crimson Protector Spawn Egg",
+    "crimson_missionary_spawn_egg": "Crimson Missionary Spawn Egg",
+    "crimson_jester_spawn_egg": "Crimson Jester Spawn Egg",
+    "crimson_heavy_knight_spawn_egg": "Crimson Heavy Knight Spawn Egg"
   },
 
   // Blocks

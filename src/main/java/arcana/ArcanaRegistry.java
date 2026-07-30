@@ -69,6 +69,7 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.fluid.FlowableFluid;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.*;
@@ -1337,25 +1338,25 @@ public final class ArcanaRegistry{
 		registerParticleType("essentia_stream", ESSENTIA_STREAM);
 		
 		// entity types
-		registerEntityType("thrown_alumentum", THROWN_ALUMENTUM);
-		registerEntityType("thrown_taint_bottle", THROWN_TAINT_BOTTLE);
-		registerEntityType("prismatic_orb", PRISMATIC_ORB);
-		registerEntityType("flame_orb", FLAME_ORB);
+		registerEntity("thrown_alumentum", THROWN_ALUMENTUM);
+		registerEntity("thrown_taint_bottle", THROWN_TAINT_BOTTLE);
+		registerEntity("prismatic_orb", PRISMATIC_ORB);
+		registerEntity("flame_orb", FLAME_ORB);
 		
-		registerEntityType("wisp", WISP);
-		registerEntityType("tainted_wisp", TAINTED_WISP);
-		registerEntityType("pure_wisp", PURE_WISP);
-		registerEntityType("coagulation", COAGULATION);
-		registerEntityType("lesser_wisp", LESSER_WISP);
+		registerEntityAndEgg("wisp", WISP, 0xFFFFFF, 0xD1C2CE);
+		registerEntityAndEgg("tainted_wisp", TAINTED_WISP, 0xFFFFFF, 0xC2B5CE);
+		registerEntityAndEgg("pure_wisp", PURE_WISP, 0xFFFFFF, 0xC0CECE);
+		registerEntityAndEgg("coagulation", COAGULATION, 0xE8E8E8, 0xA5CCCC);
+		registerEntityAndEgg("lesser_wisp", LESSER_WISP, 0xE8E8E8, 0xC0CCBF);
 		
-		registerEntityType("zombie_thaumaturge", ZOMBIE_THAUMATURGE);
+		registerEntityAndEgg("zombie_thaumaturge", ZOMBIE_THAUMATURGE, 0x00AFAF, 0x694A8C);
 		
-		registerEntityType("crimson_knight", CRIMSON_KNIGHT);
-		registerEntityType("crimson_archer", CRIMSON_ARCHER);
-		registerEntityType("crimson_protector", CRIMSON_PROTECTOR);
-		registerEntityType("crimson_missionary", CRIMSON_MISSIONARY);
-		registerEntityType("crimson_jester", CRIMSON_JESTER);
-		registerEntityType("crimson_heavy_knight", CRIMSON_HEAVY_KNIGHT);
+		registerEntityAndEgg("crimson_knight", CRIMSON_KNIGHT, 0x89111F, 0x836A8C);
+		registerEntityAndEgg("crimson_archer", CRIMSON_ARCHER, 0x89111F, 0x17101B);
+		registerEntityAndEgg("crimson_protector", CRIMSON_PROTECTOR, 0x89111F, 0xCFC2B0);
+		registerEntityAndEgg("crimson_missionary", CRIMSON_MISSIONARY, 0x89111F, 0xEDC05A);
+		registerEntityAndEgg("crimson_jester", CRIMSON_JESTER, 0x89111F, 0x120911);
+		registerEntityAndEgg("crimson_heavy_knight", CRIMSON_HEAVY_KNIGHT, 0x89111F, 0x342D38);
 		
 		// loot pool types
 		Registry.register(Registries.LOOT_POOL_ENTRY_TYPE, arcId("tag_gift"), TagGiftLootEntry.TYPE);
@@ -1433,7 +1434,12 @@ public final class ArcanaRegistry{
 		Registry.register(Registries.PARTICLE_TYPE, arcId(name), particleType);
 	}
 	
-	private static void registerEntityType(String name, EntityType<?> entityType){
+	private static void registerEntityAndEgg(String name, EntityType<? extends MobEntity> entityType, int primaryColor, int secondaryColor){
+		registerEntity(name, entityType);
+		registerItem(name + "_spawn_egg", new SpawnEggItem(entityType, primaryColor, secondaryColor, new ArcanaItemSettings().group(Tab.CREATIVE)));
+	}
+	
+	private static void registerEntity(String name, EntityType<?> entityType){
 		Registry.register(Registries.ENTITY_TYPE, arcId(name), entityType);
 	}
 	

@@ -8,15 +8,13 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.block.Block;
 import net.minecraft.data.client.*;
 import net.minecraft.data.family.BlockFamily;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.item.ToolItem;
+import net.minecraft.item.*;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static arcana.ArcanaRegistry.*;
 
@@ -166,6 +164,8 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 					itemGen.register(item, Models.HANDHELD);
 				else if(item instanceof ScalpelItem) // TODO: custom template for 3rd person view
 					itemGen.register(item, Models.HANDHELD);
+				else if(item instanceof SpawnEggItem)
+					itemGen.register(item, new Model(Optional.of(Identifier.ofVanilla("item/template_spawn_egg")), Optional.empty()));
 				else
 					itemGen.register(item, Models.GENERATED);
 		

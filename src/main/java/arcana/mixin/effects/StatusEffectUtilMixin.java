@@ -14,7 +14,7 @@ public class StatusEffectUtilMixin{
 	
 	@Inject(method = "getDurationText", at = @At("HEAD"), cancellable = true)
 	private static void durationToString(StatusEffectInstance effect, float multiplier, float tickRate, CallbackInfoReturnable<Text> cir){
-		if(effect.getEffectType() instanceof SetBonusStatusEffect)
+		if(effect.getEffectType().value() instanceof SetBonusStatusEffect)
 			cir.setReturnValue(Text.translatable("effect.arcana.set_bonus"));
 	}
 }

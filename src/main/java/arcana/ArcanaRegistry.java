@@ -785,220 +785,220 @@ public final class ArcanaRegistry{
 	
 	public static void setup(){
 		// fluids
-		register("taint_goo", STILL_TAINT_GOO);
-		register("flowing_taint_goo", FLOWING_TAINT_GOO);
+		registerFluid("taint_goo", STILL_TAINT_GOO);
+		registerFluid("flowing_taint_goo", FLOWING_TAINT_GOO);
 		
-		register("putrefaction", STILL_PUTREFACTION);
-		register("flowing_putrefaction", FLOWING_PUTREFACTION);
+		registerFluid("putrefaction", STILL_PUTREFACTION);
+		registerFluid("flowing_putrefaction", FLOWING_PUTREFACTION);
 		
 		// items + wand components
-		register("scribbled_notes", SCRIBBLED_NOTES);
-		register("scribing_tools", SCRIBING_TOOLS);
-		register("goggles_of_revealing", GOGGLES_OF_REVEALING);
-		register("monocle_of_revealing", MONOCLE_OF_REVEALING);
-		register("introspective_lens", INTROSPECTIVE_LENS);
-		register("revelatory_lens", REVELATORY_LENS);
-		register("flux_lens", FLUX_LENS);
+		registerItem("scribbled_notes", SCRIBBLED_NOTES);
+		registerItem("scribing_tools", SCRIBING_TOOLS);
+		registerItem("goggles_of_revealing", GOGGLES_OF_REVEALING);
+		registerItem("monocle_of_revealing", MONOCLE_OF_REVEALING);
+		registerItem("introspective_lens", INTROSPECTIVE_LENS);
+		registerItem("revelatory_lens", REVELATORY_LENS);
+		registerItem("flux_lens", FLUX_LENS);
 		
-		register("arcanum", ARCANUM);
-		register("crimson_rites", CRIMSON_RITES);
-		register("tome_of_sharing", TOME_OF_SHARING);
-		register("cheaters_arcanum", CHEATERS_ARCANUM);
+		registerItem("arcanum", ARCANUM);
+		registerItem("crimson_rites", CRIMSON_RITES);
+		registerItem("tome_of_sharing", TOME_OF_SHARING);
+		registerItem("cheaters_arcanum", CHEATERS_ARCANUM);
 		
-		register("research_notes", RESEARCH_NOTES);
-		register("complete_research_notes", COMPLETE_RESEARCH_NOTES);
+		registerItem("research_notes", RESEARCH_NOTES);
+		registerItem("complete_research_notes", COMPLETE_RESEARCH_NOTES);
 		
-		register("taint_goo_bucket", TAINT_GOO_BUCKET);
-		register("putrefaction_bucket", PUTREFACTION_BUCKET);
+		registerItem("taint_goo_bucket", TAINT_GOO_BUCKET);
+		registerItem("putrefaction_bucket", PUTREFACTION_BUCKET);
 		
-		register("flux_meter", FLUX_METER);
-		register("taint_in_a_bottle", TAINT_IN_A_BOTTLE);
-		register("drinkable_taint", DRINKABLE_TAINT);
+		registerItem("flux_meter", FLUX_METER);
+		registerItem("taint_in_a_bottle", TAINT_IN_A_BOTTLE);
+		registerItem("drinkable_taint", DRINKABLE_TAINT);
 		
-		register("personal_magic_mirror", PERSONAL_MAGIC_MIRROR);
-		register("holding_jug", HOLDING_JUG);
+		registerItem("personal_magic_mirror", PERSONAL_MAGIC_MIRROR);
+		registerItem("holding_jug", HOLDING_JUG);
 		
-		register("rarefied_sherbert", RAREFIED_SHERBERT);
-		register("sobering_syrup", SOBERING_SYRUP);
-		register("seafoam_soda", SEAFOAM_SODA);
-		register("bedrock_candy", BEDROCK_CANDY);
-		register("gummy_cubes", GUMMY_CUBES);
-		register("twisted_liquorice", TWISTED_LIQUORICE);
+		registerItem("rarefied_sherbert", RAREFIED_SHERBERT);
+		registerItem("sobering_syrup", SOBERING_SYRUP);
+		registerItem("seafoam_soda", SEAFOAM_SODA);
+		registerItem("bedrock_candy", BEDROCK_CANDY);
+		registerItem("gummy_cubes", GUMMY_CUBES);
+		registerItem("twisted_liquorice", TWISTED_LIQUORICE);
 		
-		register("silverleaf_brew", SILVERLEAF_BREW);
+		registerItem("silverleaf_brew", SILVERLEAF_BREW);
 		
-		register("arcanium_ingot", ARCANIUM_INGOT);
-		register("arcanium_sword", ARCANIUM_SWORD);
-		register("arcanium_shovel", ARCANIUM_SHOVEL);
-		register("arcanium_pickaxe", ARCANIUM_PICKAXE);
-		register("arcanium_axe", ARCANIUM_AXE);
-		register("arcanium_hoe", ARCANIUM_HOE);
-		register("arcanium_helmet", ARCANIUM_HELMET);
-		register("arcanium_chestplate", ARCANIUM_CHESTPLATE);
-		register("arcanium_leggings", ARCANIUM_LEGGINGS);
-		register("arcanium_boots", ARCANIUM_BOOTS);
+		registerItem("arcanium_ingot", ARCANIUM_INGOT);
+		registerItem("arcanium_sword", ARCANIUM_SWORD);
+		registerItem("arcanium_shovel", ARCANIUM_SHOVEL);
+		registerItem("arcanium_pickaxe", ARCANIUM_PICKAXE);
+		registerItem("arcanium_axe", ARCANIUM_AXE);
+		registerItem("arcanium_hoe", ARCANIUM_HOE);
+		registerItem("arcanium_helmet", ARCANIUM_HELMET);
+		registerItem("arcanium_chestplate", ARCANIUM_CHESTPLATE);
+		registerItem("arcanium_leggings", ARCANIUM_LEGGINGS);
+		registerItem("arcanium_boots", ARCANIUM_BOOTS);
 		
-		register("thaumium_ingot", THAUMIUM_INGOT);
-		register("thaumium_nugget", THAUMIUM_NUGGET);
+		registerItem("thaumium_ingot", THAUMIUM_INGOT);
+		registerItem("thaumium_nugget", THAUMIUM_NUGGET);
 		
-		register("void_metal_ingot", VOID_METAL_INGOT);
-		register("void_metal_nugget", VOID_METAL_NUGGET);
-		register("void_seed", VOID_SEED);
-		register("void_metal_sword", VOID_METAL_SWORD);
-		register("void_metal_shovel", VOID_METAL_SHOVEL);
-		register("void_metal_pickaxe", VOID_METAL_PICKAXE);
-		register("void_metal_axe", VOID_METAL_AXE);
-		register("void_metal_hoe", VOID_METAL_HOE);
-		register("void_metal_helmet", VOID_METAL_HELMET);
-		register("void_metal_chestplate", VOID_METAL_CHESTPLATE);
-		register("void_metal_leggings", VOID_METAL_LEGGINGS);
-		register("void_metal_boots", VOID_METAL_BOOTS);
+		registerItem("void_metal_ingot", VOID_METAL_INGOT);
+		registerItem("void_metal_nugget", VOID_METAL_NUGGET);
+		registerItem("void_seed", VOID_SEED);
+		registerItem("void_metal_sword", VOID_METAL_SWORD);
+		registerItem("void_metal_shovel", VOID_METAL_SHOVEL);
+		registerItem("void_metal_pickaxe", VOID_METAL_PICKAXE);
+		registerItem("void_metal_axe", VOID_METAL_AXE);
+		registerItem("void_metal_hoe", VOID_METAL_HOE);
+		registerItem("void_metal_helmet", VOID_METAL_HELMET);
+		registerItem("void_metal_chestplate", VOID_METAL_CHESTPLATE);
+		registerItem("void_metal_leggings", VOID_METAL_LEGGINGS);
+		registerItem("void_metal_boots", VOID_METAL_BOOTS);
 		
-		register("silverleaf", SILVERLEAF);
-		register("silverleaf_amalgamate", SILVERLEAF_AMALGAMATE);
-		register("silverleaf_sword", SILVERLEAF_SWORD);
-		register("silverleaf_shovel", SILVERLEAF_SHOVEL);
-		register("silverleaf_pickaxe", SILVERLEAF_PICKAXE);
-		register("silverleaf_axe", SILVERLEAF_AXE);
-		register("silverleaf_hoe", SILVERLEAF_HOE);
-		register("silverleaf_helmet", SILVERLEAF_HELMET);
-		register("silverleaf_chestplate", SILVERLEAF_CHESTPLATE);
-		register("silverleaf_leggings", SILVERLEAF_LEGGINGS);
-		register("silverleaf_boots", SILVERLEAF_BOOTS);
+		registerItem("silverleaf", SILVERLEAF);
+		registerItem("silverleaf_amalgamate", SILVERLEAF_AMALGAMATE);
+		registerItem("silverleaf_sword", SILVERLEAF_SWORD);
+		registerItem("silverleaf_shovel", SILVERLEAF_SHOVEL);
+		registerItem("silverleaf_pickaxe", SILVERLEAF_PICKAXE);
+		registerItem("silverleaf_axe", SILVERLEAF_AXE);
+		registerItem("silverleaf_hoe", SILVERLEAF_HOE);
+		registerItem("silverleaf_helmet", SILVERLEAF_HELMET);
+		registerItem("silverleaf_chestplate", SILVERLEAF_CHESTPLATE);
+		registerItem("silverleaf_leggings", SILVERLEAF_LEGGINGS);
+		registerItem("silverleaf_boots", SILVERLEAF_BOOTS);
 		
-		register("wispy_essence", WISPY_ESSENCE);
-		register("twisted_essence", TWISTED_ESSENCE);
-		register("bejeweled_beet_seeds", BEJEWELED_BEET_SEEDS);
-		register("bejeweled_beet", BEJEWELED_BEET);
-		register("spiral_sugar", SPIRAL_SUGAR);
-		register("aberrant_flora", ABERRANT_FLORA);
-		register("bloodlet_ruby", BLOODLET_RUBY);
-		register("motile", MOTILE);
-		register("motile_piece", MOTILE_PIECE);
+		registerItem("wispy_essence", WISPY_ESSENCE);
+		registerItem("twisted_essence", TWISTED_ESSENCE);
+		registerItem("bejeweled_beet_seeds", BEJEWELED_BEET_SEEDS);
+		registerItem("bejeweled_beet", BEJEWELED_BEET);
+		registerItem("spiral_sugar", SPIRAL_SUGAR);
+		registerItem("aberrant_flora", ABERRANT_FLORA);
+		registerItem("bloodlet_ruby", BLOODLET_RUBY);
+		registerItem("motile", MOTILE);
+		registerItem("motile_piece", MOTILE_PIECE);
 		
-		register("sword_of_the_zephyr", SWORD_OF_THE_ZEPHYR);
-		register("shovel_of_the_earthmover", SHOVEL_OF_THE_EARTHMOVER);
-		register("pickaxe_of_the_core", PICKAXE_OF_THE_CORE);
-		register("axe_of_the_stream", AXE_OF_THE_STREAM);
-		register("hoe_of_the_cycle", HOE_OF_THE_CYCLE);
+		registerItem("sword_of_the_zephyr", SWORD_OF_THE_ZEPHYR);
+		registerItem("shovel_of_the_earthmover", SHOVEL_OF_THE_EARTHMOVER);
+		registerItem("pickaxe_of_the_core", PICKAXE_OF_THE_CORE);
+		registerItem("axe_of_the_stream", AXE_OF_THE_STREAM);
+		registerItem("hoe_of_the_cycle", HOE_OF_THE_CYCLE);
 		
-		register("arcanium_scalpel", ARCANIUM_SCALPEL);
-		register("silverleaf_scalpel", SILVERLEAF_SCALPEL);
-		register("void_metal_scalpel", VOID_METAL_SCALPEL);
+		registerItem("arcanium_scalpel", ARCANIUM_SCALPEL);
+		registerItem("silverleaf_scalpel", SILVERLEAF_SCALPEL);
+		registerItem("void_metal_scalpel", VOID_METAL_SCALPEL);
 		
-		register("gold_ring", GOLD_RING);
-		register("arcanium_ring", ARCANIUM_RING);
-		register("adorned_ring", ADORNED_RING);
-		register("claw_ring", CLAW_RING);
-		register("lamplight_ring", LAMPLIGHT_RING);
-		register("plane_projection_ring", PLANE_PROJECTION_RING);
-		register("ring_of_the_surging_barrier", RING_OF_THE_SURGING_BARRIER);
-		register("ring_of_twin_heartbeats", RING_OF_TWIN_HEARTBEATS);
-		register("ruby_claw_ring", RUBY_CLAW_RING);
-		register("ring_of_the_voidgazer", RING_OF_THE_VOIDGAZER);
-		register("emerald_necklace", EMERALD_NECKLACE);
-		register("amulet_of_runic_shielding", AMULET_OF_RUNIC_SHIELDING);
-		register("amulet_of_unburdened_travel", AMULET_OF_UNBURDENED_TRAVEL);
-		register("amulet_of_deafening_shielding", AMULET_OF_DEAFENING_SHIELDING);
+		registerItem("gold_ring", GOLD_RING);
+		registerItem("arcanium_ring", ARCANIUM_RING);
+		registerItem("adorned_ring", ADORNED_RING);
+		registerItem("claw_ring", CLAW_RING);
+		registerItem("lamplight_ring", LAMPLIGHT_RING);
+		registerItem("plane_projection_ring", PLANE_PROJECTION_RING);
+		registerItem("ring_of_the_surging_barrier", RING_OF_THE_SURGING_BARRIER);
+		registerItem("ring_of_twin_heartbeats", RING_OF_TWIN_HEARTBEATS);
+		registerItem("ruby_claw_ring", RUBY_CLAW_RING);
+		registerItem("ring_of_the_voidgazer", RING_OF_THE_VOIDGAZER);
+		registerItem("emerald_necklace", EMERALD_NECKLACE);
+		registerItem("amulet_of_runic_shielding", AMULET_OF_RUNIC_SHIELDING);
+		registerItem("amulet_of_unburdened_travel", AMULET_OF_UNBURDENED_TRAVEL);
+		registerItem("amulet_of_deafening_shielding", AMULET_OF_DEAFENING_SHIELDING);
 		
-		register("crimson_blade", CRIMSON_BLADE);
-		register("crimson_longbow", CRIMSON_LONGBOW);
-		register("crimson_leech", CRIMSON_LEECH);
+		registerItem("crimson_blade", CRIMSON_BLADE);
+		registerItem("crimson_longbow", CRIMSON_LONGBOW);
+		registerItem("crimson_leech", CRIMSON_LEECH);
 		
-		register("boots_of_the_traveller", BOOTS_OF_THE_TRAVELLER);
-		register("boots_of_the_sailor", BOOTS_OF_THE_SAILOR);
-		register("boots_of_the_reaper", BOOTS_OF_THE_REAPER);
+		registerItem("boots_of_the_traveller", BOOTS_OF_THE_TRAVELLER);
+		registerItem("boots_of_the_sailor", BOOTS_OF_THE_SAILOR);
+		registerItem("boots_of_the_reaper", BOOTS_OF_THE_REAPER);
 		
-		register("alchemical_iron", ALCHEMICAL_IRON);
-		register("alchemical_gold", ALCHEMICAL_GOLD);
-		register("alchemical_copper", ALCHEMICAL_COPPER);
-		register("alchemical_arcanium", ALCHEMICAL_ARCANIUM);
-		register("alumentum", ALUMENTUM);
+		registerItem("alchemical_iron", ALCHEMICAL_IRON);
+		registerItem("alchemical_gold", ALCHEMICAL_GOLD);
+		registerItem("alchemical_copper", ALCHEMICAL_COPPER);
+		registerItem("alchemical_arcanium", ALCHEMICAL_ARCANIUM);
+		registerItem("alumentum", ALUMENTUM);
 		FuelRegistry.INSTANCE.add(ALUMENTUM, 1600 * 4); // 4x coal = half stack
 		
-		register("shattered_husk", SHATTERED_HUSK);
-		register("synthetic_scaffolding", SYNTHETIC_SCAFFOLDING);
-		register("formless_foam", FORMLESS_FOAM);
+		registerItem("shattered_husk", SHATTERED_HUSK);
+		registerItem("synthetic_scaffolding", SYNTHETIC_SCAFFOLDING);
+		registerItem("formless_foam", FORMLESS_FOAM);
 		ArcaneFurnaceBlock.SUBSTRATE_TIMES.put(SYNTHETIC_SCAFFOLDING, new ArcaneFurnaceBlock.SubstrateData(15, 0x43FC48));
 		ArcaneFurnaceBlock.SUBSTRATE_TIMES.put(FORMLESS_FOAM, new ArcaneFurnaceBlock.SubstrateData(40, 0x2FD8C2));
 		
-		register("void_putty", VOID_PUTTY);
+		registerItem("void_putty", VOID_PUTTY);
 		ArcaneFurnaceBlock.SUBSTRATE_TIMES.put(VOID_PUTTY, new ArcaneFurnaceBlock.SubstrateData(200, 0x852797));
 		
-		register("wand", WAND);
+		registerItem("wand", WAND);
 		
-		register("focus_pouch", FOCUS_POUCH);
+		registerItem("focus_pouch", FOCUS_POUCH);
 		
-		register("fire_focus", FIRE_FOCUS);
-		register("solar_flare_focus", SOLAR_FLARE_FOCUS);
-		register("fetch_focus", FETCH_FOCUS);
-		register("portable_hole_focus", PORTABLE_HOLE_FOCUS);
-		register("light_focus", LIGHT_FOCUS);
-		register("prismatic_light_focus", PRISMATIC_LIGHT_FOCUS);
-		register("lightning_focus", LIGHTNING_FOCUS);
-		register("equivalent_exchange_focus", EQUIVALENT_EXCHANGE_FOCUS);
-		register("coagulation_focus", COAGULATION_FOCUS);
-		register("crystal_capacitor_focus", CRYSTAL_CAPACITOR_FOCUS);
-		register("ward_focus", WARD_FOCUS);
-		register("consume_rebuke_focus", CONSUME_REBUKE_FOCUS);
+		registerItem("fire_focus", FIRE_FOCUS);
+		registerItem("solar_flare_focus", SOLAR_FLARE_FOCUS);
+		registerItem("fetch_focus", FETCH_FOCUS);
+		registerItem("portable_hole_focus", PORTABLE_HOLE_FOCUS);
+		registerItem("light_focus", LIGHT_FOCUS);
+		registerItem("prismatic_light_focus", PRISMATIC_LIGHT_FOCUS);
+		registerItem("lightning_focus", LIGHTNING_FOCUS);
+		registerItem("equivalent_exchange_focus", EQUIVALENT_EXCHANGE_FOCUS);
+		registerItem("coagulation_focus", COAGULATION_FOCUS);
+		registerItem("crystal_capacitor_focus", CRYSTAL_CAPACITOR_FOCUS);
+		registerItem("ward_focus", WARD_FOCUS);
+		registerItem("consume_rebuke_focus", CONSUME_REBUKE_FOCUS);
 		
-		register("iron_wand_cap", IRON_WAND_CAP);
-		register("gold_wand_cap", GOLD_WAND_CAP);
-		register("copper_wand_cap", COPPER_WAND_CAP);
-		register("leather_wand_cap", LEATHER_WAND_CAP);
-		register("thaumium_wand_cap", THAUMIUM_WAND_CAP);
-		register("bamboo_wand_cap", BAMBOO_WAND_CAP);
-		register("quartz_wand_cap", QUARTZ_WAND_CAP);
-		register("prismarine_wand_cap", PRISMARINE_WAND_CAP);
-		register("amber_wand_cap", AMBER_WAND_CAP);
-		register("honeycomb_wand_cap", HONEYCOMB_WAND_CAP);
-		register("netherite_wand_cap", NETHERITE_WAND_CAP);
-		register("mechanical_wand_cap", MECHANICAL_WAND_CAP);
-		register("void_wand_cap", VOID_WAND_CAP);
-		register("crimson_wand_cap", CRIMSON_WAND_CAP);
-		registerCapOnly(Cap.MISSING_CAP);
+		registerItem("iron_wand_cap", IRON_WAND_CAP);
+		registerItem("gold_wand_cap", GOLD_WAND_CAP);
+		registerItem("copper_wand_cap", COPPER_WAND_CAP);
+		registerItem("leather_wand_cap", LEATHER_WAND_CAP);
+		registerItem("thaumium_wand_cap", THAUMIUM_WAND_CAP);
+		registerItem("bamboo_wand_cap", BAMBOO_WAND_CAP);
+		registerItem("quartz_wand_cap", QUARTZ_WAND_CAP);
+		registerItem("prismarine_wand_cap", PRISMARINE_WAND_CAP);
+		registerItem("amber_wand_cap", AMBER_WAND_CAP);
+		registerItem("honeycomb_wand_cap", HONEYCOMB_WAND_CAP);
+		registerItem("netherite_wand_cap", NETHERITE_WAND_CAP);
+		registerItem("mechanical_wand_cap", MECHANICAL_WAND_CAP);
+		registerItem("void_wand_cap", VOID_WAND_CAP);
+		registerItem("crimson_wand_cap", CRIMSON_WAND_CAP);
+		registerCap(Cap.MISSING_CAP);
 		
-		registerCoreOnly(STICK_CORE);
-		register("greatwood_wand_core", GREATWOOD_WAND_CORE);
-		register("nether_stem_wand_core", NETHER_STEM_WAND_CORE);
-		register("varnished_wood_wand_core", VARNISHED_WOOD_WAND_CORE);
-		register("silverwood_wand_core", SILVERWOOD_WAND_CORE);
-		register("sugar_cane_wand_core", SUGAR_CANE_WAND_CORE);
-		register("blaze_wand_core", BLAZE_WAND_CORE);
-		register("ice_wand_core", ICE_WAND_CORE);
-		register("obsidian_wand_core", OBSIDIAN_WAND_CORE);
-		register("arcane_stone_wand_core", ARCANE_STONE_WAND_CORE);
-		register("bone_wand_core", BONE_WAND_CORE);
-		register("arcanium_wand_core", ARCANIUM_WAND_CORE);
-		register("mechanical_wand_core", MECHANICAL_WAND_CORE);
-		register("tainted_wand_core", TAINTED_WAND_CORE);
-		register("eldritch_wand_core", ELDRITCH_WAND_CORE);
-		registerCoreOnly(Core.MISSING_CORE);
+		registerCore(STICK_CORE);
+		registerItem("greatwood_wand_core", GREATWOOD_WAND_CORE);
+		registerItem("nether_stem_wand_core", NETHER_STEM_WAND_CORE);
+		registerItem("varnished_wood_wand_core", VARNISHED_WOOD_WAND_CORE);
+		registerItem("silverwood_wand_core", SILVERWOOD_WAND_CORE);
+		registerItem("sugar_cane_wand_core", SUGAR_CANE_WAND_CORE);
+		registerItem("blaze_wand_core", BLAZE_WAND_CORE);
+		registerItem("ice_wand_core", ICE_WAND_CORE);
+		registerItem("obsidian_wand_core", OBSIDIAN_WAND_CORE);
+		registerItem("arcane_stone_wand_core", ARCANE_STONE_WAND_CORE);
+		registerItem("bone_wand_core", BONE_WAND_CORE);
+		registerItem("arcanium_wand_core", ARCANIUM_WAND_CORE);
+		registerItem("mechanical_wand_core", MECHANICAL_WAND_CORE);
+		registerItem("tainted_wand_core", TAINTED_WAND_CORE);
+		registerItem("eldritch_wand_core", ELDRITCH_WAND_CORE);
+		registerCore(Core.MISSING_CORE);
 		
-		register("eldritch_banner_pattern", ELDRITCH_BANNER_PATTERN);
+		registerItem("eldritch_banner_pattern", ELDRITCH_BANNER_PATTERN);
 		
-		register("empty_phial", EMPTY_PHIAL);
-		register("primordial_pearl", PRIMORDIAL_PEARL);
-		register("broken_amulet", BROKEN_AMULET);
-		register("challengers_amulet", CHALLENGERS_AMULET);
-		register("victors_medallion", VICTORS_MEDALLION);
+		registerItem("empty_phial", EMPTY_PHIAL);
+		registerItem("primordial_pearl", PRIMORDIAL_PEARL);
+		registerItem("broken_amulet", BROKEN_AMULET);
+		registerItem("challengers_amulet", CHALLENGERS_AMULET);
+		registerItem("victors_medallion", VICTORS_MEDALLION);
 		
-		register("node_placer", NODE_PLACER);
-		register("node_remover", NODE_REMOVER);
-		register("flux_sponge", FLUX_SPONGE);
-		register("taint_injector", TAINT_INJECTOR);
-		register("taint_eraser", TAINT_ERASER);
-		register("infestation_injector", INFESTATION_INJECTOR);
-		register("infestation_eraser", INFESTATION_ERASER);
+		registerItem("node_placer", NODE_PLACER);
+		registerItem("node_remover", NODE_REMOVER);
+		registerItem("flux_sponge", FLUX_SPONGE);
+		registerItem("taint_injector", TAINT_INJECTOR);
+		registerItem("taint_eraser", TAINT_ERASER);
+		registerItem("infestation_injector", INFESTATION_INJECTOR);
+		registerItem("infestation_eraser", INFESTATION_ERASER);
 		
 		for(Aspect aspect : Aspects.getOrderedAspects()){
 			var shortName = aspect.id().getPath();
 			CrystalItem crystalItem = new CrystalItem(new ArcanaItemSettings().group(Tab.ASPECTS), aspect);
-			register("crystals/" + shortName, crystalItem);
+			registerItem("crystals/" + shortName, crystalItem);
 			Aspects.crystals.put(aspect, crystalItem);
 			
 			PhialItem phialItem = new PhialItem(new ArcanaItemSettings().fragile(aspect.colour()).group(Tab.ASPECTS), aspect);
-			register("phials/" + shortName, phialItem);
+			registerItem("phials/" + shortName, phialItem);
 			Aspects.phials.put(aspect, phialItem);
 			
 			if(Aspects.primals.contains(aspect))
@@ -1006,162 +1006,162 @@ public final class ArcanaRegistry{
 		}
 		
 		// blocks
-		register("arcane_crafting_table", ARCANE_CRAFTING_TABLE);
-		register("crucible", CRUCIBLE);
-		register("research_table", RESEARCH_TABLE, false);
-		register("research_table", new ResearchTableItem(GROUPED)); // it's a block item, it doesn't count
-		register("knowledgeable_dropper", KNOWLEDGEABLE_DROPPER);
+		registerBlock("arcane_crafting_table", ARCANE_CRAFTING_TABLE);
+		registerBlock("crucible", CRUCIBLE);
+		registerBlock("research_table", RESEARCH_TABLE, false);
+		registerItem("research_table", new ResearchTableItem(GROUPED)); // it's a block item, it doesn't count
+		registerBlock("knowledgeable_dropper", KNOWLEDGEABLE_DROPPER);
 		
-		register("arcane_furnace", ARCANE_FURNACE);
-		register("alembic", ALEMBIC);
-		register("essentia_tube", ESSENTIA_TUBE);
-		register("essentia_valve", ESSENTIA_VALVE);
-		register("essentia_window", ESSENTIA_WINDOW);
-		register("essentia_pump", ESSENTIA_PUMP);
-		register("essentia_redirect", ESSENTIA_REDIRECT);
-		register("essentia_router", ESSENTIA_ROUTER);
-		register("warded_jar", WARDED_JAR);
-		register("void_jar", VOID_JAR);
-		register("distillery_pathfinder", DISTILLERY_PATHFINDER);
+		registerBlock("arcane_furnace", ARCANE_FURNACE);
+		registerBlock("alembic", ALEMBIC);
+		registerBlock("essentia_tube", ESSENTIA_TUBE);
+		registerBlock("essentia_valve", ESSENTIA_VALVE);
+		registerBlock("essentia_window", ESSENTIA_WINDOW);
+		registerBlock("essentia_pump", ESSENTIA_PUMP);
+		registerBlock("essentia_redirect", ESSENTIA_REDIRECT);
+		registerBlock("essentia_router", ESSENTIA_ROUTER);
+		registerBlock("warded_jar", WARDED_JAR);
+		registerBlock("void_jar", VOID_JAR);
+		registerBlock("distillery_pathfinder", DISTILLERY_PATHFINDER);
 		
-		register("infusion_pillar", INFUSION_PILLAR);
-		register("infusion_matrix", INFUSION_MATRIX);
+		registerBlock("infusion_pillar", INFUSION_PILLAR);
+		registerBlock("infusion_matrix", INFUSION_MATRIX);
 		
-		register("nitor", NITOR);
-		register("hardened_glass", HARDENED_GLASS);
-		register("luminiferous_glass", LUMINIFEROUS_GLASS);
-		register("static_glass", STATIC_GLASS);
-		register("paving_stone_of_travel", PAVING_STONE_OF_TRAVEL);
-		register("paving_stone_of_warding", PAVING_STONE_OF_WARDING);
-		register("pedestal", PEDESTAL);
-		register("greatwood_scribing_desk", GREATWOOD_SCRIBING_DESK);
-		register("silverwood_scribing_desk", SILVERWOOD_SCRIBING_DESK);
-		register("arcane_levitator", ARCANE_LEVITATOR);
-		register("thaumic_halo", THAUMIC_HALO);
-		register("crystallization_press", CRYSTALLIZATION_PRESS);
-		register("mystic_mist", MYSTIC_MIST);
-		register("magic_mirror", MAGIC_MIRROR, false);
-		register("magic_mirror", new MagicMirrorBlockItem(MAGIC_MIRROR, new ArcanaItemSettings().group(Tab.MAIN).maxCount(2)));
-		register("warded_campfire", WARDED_CAMPFIRE);
-		register("crimson_campfire", CRIMSON_CAMPFIRE);
+		registerBlock("nitor", NITOR);
+		registerBlock("hardened_glass", HARDENED_GLASS);
+		registerBlock("luminiferous_glass", LUMINIFEROUS_GLASS);
+		registerBlock("static_glass", STATIC_GLASS);
+		registerBlock("paving_stone_of_travel", PAVING_STONE_OF_TRAVEL);
+		registerBlock("paving_stone_of_warding", PAVING_STONE_OF_WARDING);
+		registerBlock("pedestal", PEDESTAL);
+		registerBlock("greatwood_scribing_desk", GREATWOOD_SCRIBING_DESK);
+		registerBlock("silverwood_scribing_desk", SILVERWOOD_SCRIBING_DESK);
+		registerBlock("arcane_levitator", ARCANE_LEVITATOR);
+		registerBlock("thaumic_halo", THAUMIC_HALO);
+		registerBlock("crystallization_press", CRYSTALLIZATION_PRESS);
+		registerBlock("mystic_mist", MYSTIC_MIST);
+		registerBlock("magic_mirror", MAGIC_MIRROR, false);
+		registerItem("magic_mirror", new MagicMirrorBlockItem(MAGIC_MIRROR, new ArcanaItemSettings().group(Tab.MAIN).maxCount(2)));
+		registerBlock("warded_campfire", WARDED_CAMPFIRE);
+		registerBlock("crimson_campfire", CRIMSON_CAMPFIRE);
 		
-		register("arcanium_block", ARCANIUM_BLOCK);
-		register("thaumium_block", THAUMIUM_BLOCK);
-		register("void_metal_block", VOID_METAL_BLOCK);
-		register("silverleaf_amalgamate_block", SILVERLEAF_AMALGAMATE_BLOCK);
+		registerBlock("arcanium_block", ARCANIUM_BLOCK);
+		registerBlock("thaumium_block", THAUMIUM_BLOCK);
+		registerBlock("void_metal_block", VOID_METAL_BLOCK);
+		registerBlock("silverleaf_amalgamate_block", SILVERLEAF_AMALGAMATE_BLOCK);
 		
-		register("arcane_stone", ARCANE_STONE);
-		register("arcane_stone_bricks", ARCANE_STONE_BRICKS);
-		register("arcane_stone_tiles", ARCANE_STONE_TILES);
-		register("arcane_stone_gleaming_tiles", ARCANE_STONE_GLEAMING_TILES);
-		register("arcane_stone_inscribed_tiles", ARCANE_STONE_INSCRIBED_TILES);
+		registerBlock("arcane_stone", ARCANE_STONE);
+		registerBlock("arcane_stone_bricks", ARCANE_STONE_BRICKS);
+		registerBlock("arcane_stone_tiles", ARCANE_STONE_TILES);
+		registerBlock("arcane_stone_gleaming_tiles", ARCANE_STONE_GLEAMING_TILES);
+		registerBlock("arcane_stone_inscribed_tiles", ARCANE_STONE_INSCRIBED_TILES);
 		
-		register("arcane_stone_slab", ARCANE_STONE_SLAB);
-		register("arcane_stone_stairs", ARCANE_STONE_STAIRS);
-		register("arcane_stone_pressure_plate", ARCANE_STONE_PRESSURE_PLATE);
-		register("arcane_stone_button", ARCANE_STONE_BUTTON);
-		register("arcane_stone_wall", ARCANE_STONE_WALL);
+		registerBlock("arcane_stone_slab", ARCANE_STONE_SLAB);
+		registerBlock("arcane_stone_stairs", ARCANE_STONE_STAIRS);
+		registerBlock("arcane_stone_pressure_plate", ARCANE_STONE_PRESSURE_PLATE);
+		registerBlock("arcane_stone_button", ARCANE_STONE_BUTTON);
+		registerBlock("arcane_stone_wall", ARCANE_STONE_WALL);
 		
-		register("arcane_stone_bricks_slab", ARCANE_STONE_BRICKS_SLAB);
-		register("arcane_stone_bricks_stairs", ARCANE_STONE_BRICKS_STAIRS);
-		register("arcane_stone_bricks_pressure_plate", ARCANE_STONE_BRICKS_PRESSURE_PLATE);
-		register("arcane_stone_bricks_button", ARCANE_STONE_BRICKS_BUTTON);
-		register("arcane_stone_bricks_wall", ARCANE_STONE_BRICKS_WALL);
+		registerBlock("arcane_stone_bricks_slab", ARCANE_STONE_BRICKS_SLAB);
+		registerBlock("arcane_stone_bricks_stairs", ARCANE_STONE_BRICKS_STAIRS);
+		registerBlock("arcane_stone_bricks_pressure_plate", ARCANE_STONE_BRICKS_PRESSURE_PLATE);
+		registerBlock("arcane_stone_bricks_button", ARCANE_STONE_BRICKS_BUTTON);
+		registerBlock("arcane_stone_bricks_wall", ARCANE_STONE_BRICKS_WALL);
 		
-		register("arcane_stone_tiles_slab", ARCANE_STONE_TILES_SLAB);
-		register("arcane_stone_tiles_stairs", ARCANE_STONE_TILES_STAIRS);
-		register("arcane_stone_tiles_pressure_plate", ARCANE_STONE_TILES_PRESSURE_PLATE);
-		register("arcane_stone_tiles_button", ARCANE_STONE_TILES_BUTTON);
-		register("arcane_stone_tiles_wall", ARCANE_STONE_TILES_WALL);
+		registerBlock("arcane_stone_tiles_slab", ARCANE_STONE_TILES_SLAB);
+		registerBlock("arcane_stone_tiles_stairs", ARCANE_STONE_TILES_STAIRS);
+		registerBlock("arcane_stone_tiles_pressure_plate", ARCANE_STONE_TILES_PRESSURE_PLATE);
+		registerBlock("arcane_stone_tiles_button", ARCANE_STONE_TILES_BUTTON);
+		registerBlock("arcane_stone_tiles_wall", ARCANE_STONE_TILES_WALL);
 		
-		register("arcane_stone_pillar", ARCANE_STONE_PILLAR);
-		register("arcane_stone_slate", ARCANE_STONE_SLATE);
-		register("arcane_stone_air_slate", ARCANE_STONE_AIR_SLATE);
-		register("arcane_stone_fire_slate", ARCANE_STONE_FIRE_SLATE);
-		register("arcane_stone_water_slate", ARCANE_STONE_WATER_SLATE);
-		register("arcane_stone_earth_slate", ARCANE_STONE_EARTH_SLATE);
-		register("arcane_stone_order_slate", ARCANE_STONE_ORDER_SLATE);
-		register("arcane_stone_entropy_slate", ARCANE_STONE_ENTROPY_SLATE);
+		registerBlock("arcane_stone_pillar", ARCANE_STONE_PILLAR);
+		registerBlock("arcane_stone_slate", ARCANE_STONE_SLATE);
+		registerBlock("arcane_stone_air_slate", ARCANE_STONE_AIR_SLATE);
+		registerBlock("arcane_stone_fire_slate", ARCANE_STONE_FIRE_SLATE);
+		registerBlock("arcane_stone_water_slate", ARCANE_STONE_WATER_SLATE);
+		registerBlock("arcane_stone_earth_slate", ARCANE_STONE_EARTH_SLATE);
+		registerBlock("arcane_stone_order_slate", ARCANE_STONE_ORDER_SLATE);
+		registerBlock("arcane_stone_entropy_slate", ARCANE_STONE_ENTROPY_SLATE);
 		
-		register("silverwood_sapling", SILVERWOOD_SAPLING);
-		register("silverwood_log", SILVERWOOD_LOG);
-		register("silverwood_leaves", SILVERWOOD_LEAVES);
-		register("silverwood_planks", SILVERWOOD_PLANKS);
+		registerBlock("silverwood_sapling", SILVERWOOD_SAPLING);
+		registerBlock("silverwood_log", SILVERWOOD_LOG);
+		registerBlock("silverwood_leaves", SILVERWOOD_LEAVES);
+		registerBlock("silverwood_planks", SILVERWOOD_PLANKS);
 		
-		register("silverwood_wood", SILVERWOOD_WOOD);
-		register("stripped_silverwood_log", STRIPPED_SILVERWOOD_LOG);
-		register("stripped_silverwood_wood", STRIPPED_SILVERWOOD_WOOD);
+		registerBlock("silverwood_wood", SILVERWOOD_WOOD);
+		registerBlock("stripped_silverwood_log", STRIPPED_SILVERWOOD_LOG);
+		registerBlock("stripped_silverwood_wood", STRIPPED_SILVERWOOD_WOOD);
 		StrippableBlockRegistry.register(SILVERWOOD_LOG, STRIPPED_SILVERWOOD_LOG);
 		StrippableBlockRegistry.register(SILVERWOOD_WOOD, STRIPPED_SILVERWOOD_WOOD);
 		
-		register("silverwood_slab", SILVERWOOD_SLAB);
-		register("silverwood_stairs", SILVERWOOD_STAIRS);
-		register("silverwood_fence", SILVERWOOD_FENCE);
-		register("silverwood_fence_gate", SILVERWOOD_FENCE_GATE);
-		register("silverwood_pressure_plate", SILVERWOOD_PRESSURE_PLATE);
-		register("silverwood_button", SILVERWOOD_BUTTON);
+		registerBlock("silverwood_slab", SILVERWOOD_SLAB);
+		registerBlock("silverwood_stairs", SILVERWOOD_STAIRS);
+		registerBlock("silverwood_fence", SILVERWOOD_FENCE);
+		registerBlock("silverwood_fence_gate", SILVERWOOD_FENCE_GATE);
+		registerBlock("silverwood_pressure_plate", SILVERWOOD_PRESSURE_PLATE);
+		registerBlock("silverwood_button", SILVERWOOD_BUTTON);
 		
-		register("silverwood_door", SILVERWOOD_DOOR);
-		register("silverwood_trapdoor", SILVERWOOD_TRAPDOOR);
-		register("silverwood_sign", SILVERWOOD_SIGN, false);
-		register("silverwood_wall_sign", SILVERWOOD_WALL_SIGN, false);
-		register("silverwood_sign", new SignItem(new ArcanaItemSettings().group(Tab.MAIN).maxCount(16), SILVERWOOD_SIGN, SILVERWOOD_WALL_SIGN));
+		registerBlock("silverwood_door", SILVERWOOD_DOOR);
+		registerBlock("silverwood_trapdoor", SILVERWOOD_TRAPDOOR);
+		registerBlock("silverwood_sign", SILVERWOOD_SIGN, false);
+		registerBlock("silverwood_wall_sign", SILVERWOOD_WALL_SIGN, false);
+		registerItem("silverwood_sign", new SignItem(new ArcanaItemSettings().group(Tab.MAIN).maxCount(16), SILVERWOOD_SIGN, SILVERWOOD_WALL_SIGN));
 		
-		register("gleaming_silverwood_planks", GLEAMING_SILVERWOOD_PLANKS);
-		register("solar_gleaming_silverwood_planks", SOLAR_GLEAMING_SILVERWOOD_PLANKS);
+		registerBlock("gleaming_silverwood_planks", GLEAMING_SILVERWOOD_PLANKS);
+		registerBlock("solar_gleaming_silverwood_planks", SOLAR_GLEAMING_SILVERWOOD_PLANKS);
 		
-		register("greatwood_sapling", GREATWOOD_SAPLING);
-		register("greatwood_log", GREATWOOD_LOG);
-		register("greatwood_leaves", GREATWOOD_LEAVES);
-		register("greatwood_planks", GREATWOOD_PLANKS);
+		registerBlock("greatwood_sapling", GREATWOOD_SAPLING);
+		registerBlock("greatwood_log", GREATWOOD_LOG);
+		registerBlock("greatwood_leaves", GREATWOOD_LEAVES);
+		registerBlock("greatwood_planks", GREATWOOD_PLANKS);
 		
-		register("greatwood_wood", GREATWOOD_WOOD);
-		register("stripped_greatwood_log", STRIPPED_GREATWOOD_LOG);
-		register("stripped_greatwood_wood", STRIPPED_GREATWOOD_WOOD);
+		registerBlock("greatwood_wood", GREATWOOD_WOOD);
+		registerBlock("stripped_greatwood_log", STRIPPED_GREATWOOD_LOG);
+		registerBlock("stripped_greatwood_wood", STRIPPED_GREATWOOD_WOOD);
 		StrippableBlockRegistry.register(GREATWOOD_LOG, STRIPPED_GREATWOOD_LOG);
 		StrippableBlockRegistry.register(GREATWOOD_WOOD, STRIPPED_GREATWOOD_WOOD);
 		
-		register("greatwood_slab", GREATWOOD_SLAB);
-		register("greatwood_stairs", GREATWOOD_STAIRS);
-		register("greatwood_fence", GREATWOOD_FENCE);
-		register("greatwood_fence_gate", GREATWOOD_FENCE_GATE);
-		register("greatwood_pressure_plate", GREATWOOD_PRESSURE_PLATE);
-		register("greatwood_button", GREATWOOD_BUTTON);
+		registerBlock("greatwood_slab", GREATWOOD_SLAB);
+		registerBlock("greatwood_stairs", GREATWOOD_STAIRS);
+		registerBlock("greatwood_fence", GREATWOOD_FENCE);
+		registerBlock("greatwood_fence_gate", GREATWOOD_FENCE_GATE);
+		registerBlock("greatwood_pressure_plate", GREATWOOD_PRESSURE_PLATE);
+		registerBlock("greatwood_button", GREATWOOD_BUTTON);
 		
-		register("greatwood_door", GREATWOOD_DOOR);
-		register("greatwood_trapdoor", GREATWOOD_TRAPDOOR);
-		register("greatwood_sign", GREATWOOD_SIGN, false);
-		register("greatwood_wall_sign", GREATWOOD_WALL_SIGN, false);
-		register("greatwood_sign", new SignItem(new ArcanaItemSettings().group(Tab.MAIN).maxCount(16), GREATWOOD_SIGN, GREATWOOD_WALL_SIGN));
+		registerBlock("greatwood_door", GREATWOOD_DOOR);
+		registerBlock("greatwood_trapdoor", GREATWOOD_TRAPDOOR);
+		registerBlock("greatwood_sign", GREATWOOD_SIGN, false);
+		registerBlock("greatwood_wall_sign", GREATWOOD_WALL_SIGN, false);
+		registerItem("greatwood_sign", new SignItem(new ArcanaItemSettings().group(Tab.MAIN).maxCount(16), GREATWOOD_SIGN, GREATWOOD_WALL_SIGN));
 		
-		register("gleaming_greatwood_planks", GLEAMING_GREATWOOD_PLANKS);
-		register("solar_gleaming_greatwood_planks", SOLAR_GLEAMING_GREATWOOD_PLANKS);
+		registerBlock("gleaming_greatwood_planks", GLEAMING_GREATWOOD_PLANKS);
+		registerBlock("solar_gleaming_greatwood_planks", SOLAR_GLEAMING_GREATWOOD_PLANKS);
 		
-		register("taintwood_log", TAINTWOOD_LOG);
-		register("taintwood_planks", TAINTWOOD_PLANKS);
-		register("taintwood_wood", TAINTWOOD_WOOD);
+		registerBlock("taintwood_log", TAINTWOOD_LOG);
+		registerBlock("taintwood_planks", TAINTWOOD_PLANKS);
+		registerBlock("taintwood_wood", TAINTWOOD_WOOD);
 		
-		register("taintwood_slab", TAINTWOOD_SLAB);
-		register("taintwood_stairs", TAINTWOOD_STAIRS);
-		register("taintwood_fence", TAINTWOOD_FENCE);
-		register("taintwood_fence_gate", TAINTWOOD_FENCE_GATE);
-		register("taintwood_pressure_plate", TAINTWOOD_PRESSURE_PLATE);
-		register("taintwood_button", TAINTWOOD_BUTTON);
-		register("taintwood_door", TAINTWOOD_DOOR);
-		register("taintwood_trapdoor", TAINTWOOD_TRAPDOOR);
+		registerBlock("taintwood_slab", TAINTWOOD_SLAB);
+		registerBlock("taintwood_stairs", TAINTWOOD_STAIRS);
+		registerBlock("taintwood_fence", TAINTWOOD_FENCE);
+		registerBlock("taintwood_fence_gate", TAINTWOOD_FENCE_GATE);
+		registerBlock("taintwood_pressure_plate", TAINTWOOD_PRESSURE_PLATE);
+		registerBlock("taintwood_button", TAINTWOOD_BUTTON);
+		registerBlock("taintwood_door", TAINTWOOD_DOOR);
+		registerBlock("taintwood_trapdoor", TAINTWOOD_TRAPDOOR);
 		
-		register("hollowed_log", HOLLOWED_LOG);
-		register("hollowed_planks", HOLLOWED_PLANKS);
-		register("hollowed_wood", HOLLOWED_WOOD);
+		registerBlock("hollowed_log", HOLLOWED_LOG);
+		registerBlock("hollowed_planks", HOLLOWED_PLANKS);
+		registerBlock("hollowed_wood", HOLLOWED_WOOD);
 		
-		register("hollowed_slab", HOLLOWED_SLAB);
-		register("hollowed_stairs", HOLLOWED_STAIRS);
-		register("hollowed_fence", HOLLOWED_FENCE);
-		register("hollowed_fence_gate", HOLLOWED_FENCE_GATE);
-		register("hollowed_pressure_plate", HOLLOWED_PRESSURE_PLATE);
-		register("hollowed_button", HOLLOWED_BUTTON);
-		register("hollowed_door", HOLLOWED_DOOR);
-		register("hollowed_trapdoor", HOLLOWED_TRAPDOOR);
+		registerBlock("hollowed_slab", HOLLOWED_SLAB);
+		registerBlock("hollowed_stairs", HOLLOWED_STAIRS);
+		registerBlock("hollowed_fence", HOLLOWED_FENCE);
+		registerBlock("hollowed_fence_gate", HOLLOWED_FENCE_GATE);
+		registerBlock("hollowed_pressure_plate", HOLLOWED_PRESSURE_PLATE);
+		registerBlock("hollowed_button", HOLLOWED_BUTTON);
+		registerBlock("hollowed_door", HOLLOWED_DOOR);
+		registerBlock("hollowed_trapdoor", HOLLOWED_TRAPDOOR);
 		
 		for(Block block : Set.of(SILVERWOOD_SIGN, SILVERWOOD_WALL_SIGN, GREATWOOD_SIGN, GREATWOOD_WALL_SIGN))
 			BlockEntityType.SIGN.addSupportedBlock(block);
@@ -1169,37 +1169,37 @@ public final class ArcanaRegistry{
 		for(Block block : Set.of(WARDED_CAMPFIRE, CRIMSON_CAMPFIRE))
 			BlockEntityType.CAMPFIRE.addSupportedBlock(block);
 		
-		register("vishroom", VISHROOM);
-		register("cordispora", CORDISPORA);
-		register("snowdrop", SNOWDROP);
-		register("firewheel", FIREWHEEL);
-		register("lilium", LILIUM);
+		registerBlock("vishroom", VISHROOM);
+		registerBlock("cordispora", CORDISPORA);
+		registerBlock("snowdrop", SNOWDROP);
+		registerBlock("firewheel", FIREWHEEL);
+		registerBlock("lilium", LILIUM);
 		
-		register("huge_vishroom_stem", HUGE_VISHROOM_STEM);
-		register("huge_vishroom_cap", HUGE_VISHROOM_CAP);
-		register("huge_cordispora_stem", HUGE_CORDISPORA_STEM);
-		register("huge_cordispora_cap", HUGE_CORDISPORA_CAP);
+		registerBlock("huge_vishroom_stem", HUGE_VISHROOM_STEM);
+		registerBlock("huge_vishroom_cap", HUGE_VISHROOM_CAP);
+		registerBlock("huge_cordispora_stem", HUGE_CORDISPORA_STEM);
+		registerBlock("huge_cordispora_cap", HUGE_CORDISPORA_CAP);
 		
-		register("bejeweled_beets", BEJEWELED_BEETS_BLOCK, false);
-		register("void_growth", VOID_GROWTH, false);
+		registerBlock("bejeweled_beets", BEJEWELED_BEETS_BLOCK, false);
+		registerBlock("void_growth", VOID_GROWTH, false);
 		
-		register("speak_no_evil_statue", SPEAK_NO_EVIL_STATUE);
-		register("see_no_evil_statue", SEE_NO_EVIL_STATUE);
-		register("hear_no_evil_statue", HEAR_NO_EVIL_STATUE);
-		register("stone_vase", STONE_VASE);
+		registerBlock("speak_no_evil_statue", SPEAK_NO_EVIL_STATUE);
+		registerBlock("see_no_evil_statue", SEE_NO_EVIL_STATUE);
+		registerBlock("hear_no_evil_statue", HEAR_NO_EVIL_STATUE);
+		registerBlock("stone_vase", STONE_VASE);
 		
-		register("crimson_lantern", CRIMSON_LANTERN);
-		register("chain_wall", CHAIN_WALL);
-		register("metal_ladder", METAL_LADDER);
+		registerBlock("crimson_lantern", CRIMSON_LANTERN);
+		registerBlock("chain_wall", CHAIN_WALL);
+		registerBlock("metal_ladder", METAL_LADDER);
 		
-		register("gleaming_lamplight", GLEAMING_LAMPLIGHT);
-		register("chiseled_gleaming_lamplight", CHISELED_GLEAMING_LAMPLIGHT);
+		registerBlock("gleaming_lamplight", GLEAMING_LAMPLIGHT);
+		registerBlock("chiseled_gleaming_lamplight", CHISELED_GLEAMING_LAMPLIGHT);
 		
-		register("balanced_crystal", BALANCED_CRYSTAL);
-		register("balanced_crystal_pillar", BALANCED_CRYSTAL_PILLAR);
-		register("crystal_embedded_rock", CRYSTAL_EMBEDDED_ROCK);
-		register("norite", NORITE);
-		register("exposed_norite", EXPOSED_NORITE);
+		registerBlock("balanced_crystal", BALANCED_CRYSTAL);
+		registerBlock("balanced_crystal_pillar", BALANCED_CRYSTAL_PILLAR);
+		registerBlock("crystal_embedded_rock", CRYSTAL_EMBEDDED_ROCK);
+		registerBlock("norite", NORITE);
+		registerBlock("exposed_norite", EXPOSED_NORITE);
 		
 		for(Aspect aspect : Aspects.hasCluster){
 			var shortName = aspect.id().getPath();
@@ -1210,11 +1210,11 @@ public final class ArcanaRegistry{
 						.strength(0.9f)
 						.luminance(3);
 				Block crystalBlock = new Block(settings);
-				register("crystal_blocks/" + shortName, crystalBlock);
+				registerBlock("crystal_blocks/" + shortName, crystalBlock);
 				Aspects.crystalBlocks.put(aspect, crystalBlock);
 				
 				Block pillarBlock = new CrystalPillarBlock(settings);
-				register("crystal_pillars/" + shortName, pillarBlock);
+				registerBlock("crystal_pillars/" + shortName, pillarBlock);
 				Aspects.crystalPillars.put(aspect, pillarBlock);
 			}
 			
@@ -1229,133 +1229,133 @@ public final class ArcanaRegistry{
 							.sounds(BlockSoundGroup.AMETHYST_CLUSTER)
 							.strength(1.5f),
 					aspect);
-			register("clusters/" + shortName, clusterBlock);
+			registerBlock("clusters/" + shortName, clusterBlock);
 			Aspects.clusters.put(aspect, clusterBlock);
 			
 			ClusterSeedItem seed = new ClusterSeedItem(clusterBlock, GROUPED, aspect);
-			register("cluster_seeds/" + shortName, seed);
+			registerItem("cluster_seeds/" + shortName, seed);
 			Aspects.clusterSeeds.put(aspect, seed);
 		}
 		
-		register("light_block", TEMPORARY_LIGHT_BLOCK, false);
-		register("taint_goo", TAINT_GOO, false);
-		register("putrefaction", PUTREFACTION, false);
+		registerBlock("light_block", TEMPORARY_LIGHT_BLOCK, false);
+		registerBlock("taint_goo", TAINT_GOO, false);
+		registerBlock("putrefaction", PUTREFACTION, false);
 		
-		register("potted_greatwood_sapling", POTTED_GREATWOOD_SAPLING, false);
-		register("potted_silverwood_sapling", POTTED_SILVERWOOD_SAPLING, false);
-		register("potted_vishroom", POTTED_VISHROOM, false);
-		register("potted_cordispora", POTTED_CORDISPORA, false);
-		register("potted_snowdrop", POTTED_SNOWDROP, false);
-		register("potted_firewheel", POTTED_FIREWHEEL, false);
-		register("potted_lilium", POTTED_LILIUM, false);
+		registerBlock("potted_greatwood_sapling", POTTED_GREATWOOD_SAPLING, false);
+		registerBlock("potted_silverwood_sapling", POTTED_SILVERWOOD_SAPLING, false);
+		registerBlock("potted_vishroom", POTTED_VISHROOM, false);
+		registerBlock("potted_cordispora", POTTED_CORDISPORA, false);
+		registerBlock("potted_snowdrop", POTTED_SNOWDROP, false);
+		registerBlock("potted_firewheel", POTTED_FIREWHEEL, false);
+		registerBlock("potted_lilium", POTTED_LILIUM, false);
 		
-		register("tainted_rock", TAINTED_ROCK);
-		register("tainted_andesite", TAINTED_ANDESITE);
-		register("tainted_granite", TAINTED_GRANITE);
-		register("tainted_diorite", TAINTED_DIORITE);
+		registerBlock("tainted_rock", TAINTED_ROCK);
+		registerBlock("tainted_andesite", TAINTED_ANDESITE);
+		registerBlock("tainted_granite", TAINTED_GRANITE);
+		registerBlock("tainted_diorite", TAINTED_DIORITE);
 		
-		register("tainted_soil", TAINTED_SOIL);
-		register("tainted_grass_block", TAINTED_GRASS_BLOCK);
-		register("tainted_sand", TAINTED_SAND);
-		register("tainted_sandstone", TAINTED_SANDSTONE);
-		register("tainted_gravel", TAINTED_GRAVEL);
-		register("tainted_snow_block", TAINTED_SNOW_BLOCK);
+		registerBlock("tainted_soil", TAINTED_SOIL);
+		registerBlock("tainted_grass_block", TAINTED_GRASS_BLOCK);
+		registerBlock("tainted_sand", TAINTED_SAND);
+		registerBlock("tainted_sandstone", TAINTED_SANDSTONE);
+		registerBlock("tainted_gravel", TAINTED_GRAVEL);
+		registerBlock("tainted_snow_block", TAINTED_SNOW_BLOCK);
 		
-		register("tainted_hollowed_ore", TAINTED_HOLLOWED_ORE);
+		registerBlock("tainted_hollowed_ore", TAINTED_HOLLOWED_ORE);
 		
-		register("taint_crust", TAINT_CRUST);
+		registerBlock("taint_crust", TAINT_CRUST);
 		
-		register("hollowed_ore", HOLLOWED_ORE);
+		registerBlock("hollowed_ore", HOLLOWED_ORE);
 		
 		// points of interest
 		WARDED_CAMPFIRE_POI = PointOfInterestHelper.register(arcId("warded_campfire"), 0, 2, WARDED_CAMPFIRE.getStateManager().getStates().stream().filter(x -> x.get(Properties.LIT)).toList());
 		
 		// screen handlers
-		register("arcane_crafting", ARCANE_CRAFTING_SCREEN_HANDLER);
-		register("research_table", RESEARCH_TABLE_SCREEN_HANDLER);
-		register("knowledgeable_dropper", KNOWLEDGEABLE_DROPPER_SCREEN_HANDLER);
-		register("arcane_furnace", ARCANE_FURNACE_SCREEN_HANDLER);
-		register("distillery_pathfinder", DISTILLERY_PATHFINDER_SCREEN_HANDLER);
-		register("crystallization_press", CRYSTALLIZATION_PRESS_SCREEN_HANDLER);
-		register("focus_pouch", FOCUS_POUCH_SCREEN_HANDLER);
+		registerScreenHandler("arcane_crafting", ARCANE_CRAFTING_SCREEN_HANDLER);
+		registerScreenHandler("research_table", RESEARCH_TABLE_SCREEN_HANDLER);
+		registerScreenHandler("knowledgeable_dropper", KNOWLEDGEABLE_DROPPER_SCREEN_HANDLER);
+		registerScreenHandler("arcane_furnace", ARCANE_FURNACE_SCREEN_HANDLER);
+		registerScreenHandler("distillery_pathfinder", DISTILLERY_PATHFINDER_SCREEN_HANDLER);
+		registerScreenHandler("crystallization_press", CRYSTALLIZATION_PRESS_SCREEN_HANDLER);
+		registerScreenHandler("focus_pouch", FOCUS_POUCH_SCREEN_HANDLER);
 		
 		// block entities
-		register("crucible", CRUCIBLE_BE);
-		register("research_table", RESEARCH_TABLE_BE);
-		register("knowledgeable_dropper", KNOWLEDGEABLE_DROPPER_BE);
-		register("pedestal", PEDESTAL_BE);
-		register("arcane_levitator", ARCANE_LEVITATOR_BE);
-		register("infusion_pillar", INFUSION_PILLAR_BE);
-		register("infusion_matrix", INFUSION_MATRIX_BE);
-		register("warded_jar", WARDED_JAR_BE);
-		register("void_jar", VOID_JAR_BE);
-		register("crystallization_press", CRYSTALLIZATION_PRESS_BE);
-		register("mystic_mist", MYSTIC_MIST_BE);
-		register("warded_campfire", WARDED_CAMPFIRE_BE);
-		register("crimson_campfire", CRIMSON_CAMPFIRE_BE);
-		register("essentia_tube", ESSENTIA_TUBE_BE);
-		register("essentia_pump", ESSENTIA_PUMP_BE);
-		register("essentia_valve", ESSENTIA_VALVE_BE);
-		register("essentia_redirect", ESSENTIA_REDIRECT_BE);
-		register("essentia_router", ESSENTIA_ROUTER_BE);
-		register("arcane_furnace", ARCANE_FURNACE_BE);
-		register("alembic", ALEMBIC_BE);
-		register("crimson_lantern", CRIMSON_LANTERN_BE);
-		register("distillery_pathfinder", DISTILLERY_PATHFINDER_BE);
-		register("thaumic_halo", THAUMIC_HALO_BE);
-		register("magic_mirror", MAGIC_MIRROR_BE);
+		registerBlockEntity("crucible", CRUCIBLE_BE);
+		registerBlockEntity("research_table", RESEARCH_TABLE_BE);
+		registerBlockEntity("knowledgeable_dropper", KNOWLEDGEABLE_DROPPER_BE);
+		registerBlockEntity("pedestal", PEDESTAL_BE);
+		registerBlockEntity("arcane_levitator", ARCANE_LEVITATOR_BE);
+		registerBlockEntity("infusion_pillar", INFUSION_PILLAR_BE);
+		registerBlockEntity("infusion_matrix", INFUSION_MATRIX_BE);
+		registerBlockEntity("warded_jar", WARDED_JAR_BE);
+		registerBlockEntity("void_jar", VOID_JAR_BE);
+		registerBlockEntity("crystallization_press", CRYSTALLIZATION_PRESS_BE);
+		registerBlockEntity("mystic_mist", MYSTIC_MIST_BE);
+		registerBlockEntity("warded_campfire", WARDED_CAMPFIRE_BE);
+		registerBlockEntity("crimson_campfire", CRIMSON_CAMPFIRE_BE);
+		registerBlockEntity("essentia_tube", ESSENTIA_TUBE_BE);
+		registerBlockEntity("essentia_pump", ESSENTIA_PUMP_BE);
+		registerBlockEntity("essentia_valve", ESSENTIA_VALVE_BE);
+		registerBlockEntity("essentia_redirect", ESSENTIA_REDIRECT_BE);
+		registerBlockEntity("essentia_router", ESSENTIA_ROUTER_BE);
+		registerBlockEntity("arcane_furnace", ARCANE_FURNACE_BE);
+		registerBlockEntity("alembic", ALEMBIC_BE);
+		registerBlockEntity("crimson_lantern", CRIMSON_LANTERN_BE);
+		registerBlockEntity("distillery_pathfinder", DISTILLERY_PATHFINDER_BE);
+		registerBlockEntity("thaumic_halo", THAUMIC_HALO_BE);
+		registerBlockEntity("magic_mirror", MAGIC_MIRROR_BE);
 		
 		// worldgen
-		register("hanging_node", new HangingNodeFeature());
-		register("surface_node", new SurfaceNodeFeature());
-		register("nodal_geode", new NodalGeodeFeature());
-		register("structure_mushroom", new StructureMushroomFeature());
-		register("column", new ColumnFeature());
-		register("spike", new SpikeFeature());
+		registerFeature("hanging_node", new HangingNodeFeature());
+		registerFeature("surface_node", new SurfaceNodeFeature());
+		registerFeature("nodal_geode", new NodalGeodeFeature());
+		registerFeature("structure_mushroom", new StructureMushroomFeature());
+		registerFeature("column", new ColumnFeature());
+		registerFeature("spike", new SpikeFeature());
 		
-		register("silverwood_foliage", SilverwoodFoliagePlacer.TYPE);
-		register("silverwood_trunk", SilverwoodTrunkPlacer.TYPE);
-		register("greatwood_foliage", GreatwoodFoliagePlacer.TYPE);
-		register("greatwood_trunk", GreatwoodTrunkPlacer.TYPE);
+		registerFoliagePlacer("silverwood_foliage", SilverwoodFoliagePlacer.TYPE);
+		registerTrunkPlacer("silverwood_trunk", SilverwoodTrunkPlacer.TYPE);
+		registerFoliagePlacer("greatwood_foliage", GreatwoodFoliagePlacer.TYPE);
+		registerTrunkPlacer("greatwood_trunk", GreatwoodTrunkPlacer.TYPE);
 		
-		register("exposed", ExposedPlacementModifier.TYPE);
+		registerPlacementModifier("exposed", ExposedPlacementModifier.TYPE);
 		
 		// particle types
-		register("taint_bubble", TAINT_BUBBLE);
-		register("flame", FLAME);
-		register("lightning", LIGHTNING);
-		register("taint_spore", TAINT_SPORE);
-		register("claw", CLAW);
-		register("claw_ruby", CLAW_RUBY);
+		registerParticleType("taint_bubble", TAINT_BUBBLE);
+		registerParticleType("flame", FLAME);
+		registerParticleType("lightning", LIGHTNING);
+		registerParticleType("taint_spore", TAINT_SPORE);
+		registerParticleType("claw", CLAW);
+		registerParticleType("claw_ruby", CLAW_RUBY);
 		
-		register("warding_effect", WARDING_EFFECT);
-		register("infested_effect", INFESTED_EFFECT);
+		registerParticleType("warding_effect", WARDING_EFFECT);
+		registerParticleType("infested_effect", INFESTED_EFFECT);
 		
-		register("hungry_node_disc", HUNGRY_NODE_DISC);
-		register("hungry_node_block", HUNGRY_NODE_BLOCK);
-		register("infusion_item", INFUSION_ITEM);
-		register("essentia_stream", ESSENTIA_STREAM);
+		registerParticleType("hungry_node_disc", HUNGRY_NODE_DISC);
+		registerParticleType("hungry_node_block", HUNGRY_NODE_BLOCK);
+		registerParticleType("infusion_item", INFUSION_ITEM);
+		registerParticleType("essentia_stream", ESSENTIA_STREAM);
 		
 		// entity types
-		register("thrown_alumentum", THROWN_ALUMENTUM);
-		register("thrown_taint_bottle", THROWN_TAINT_BOTTLE);
-		register("prismatic_orb", PRISMATIC_ORB);
-		register("flame_orb", FLAME_ORB);
+		registerEntityType("thrown_alumentum", THROWN_ALUMENTUM);
+		registerEntityType("thrown_taint_bottle", THROWN_TAINT_BOTTLE);
+		registerEntityType("prismatic_orb", PRISMATIC_ORB);
+		registerEntityType("flame_orb", FLAME_ORB);
 		
-		register("wisp", WISP);
-		register("tainted_wisp", TAINTED_WISP);
-		register("pure_wisp", PURE_WISP);
-		register("coagulation", COAGULATION);
-		register("lesser_wisp", LESSER_WISP);
+		registerEntityType("wisp", WISP);
+		registerEntityType("tainted_wisp", TAINTED_WISP);
+		registerEntityType("pure_wisp", PURE_WISP);
+		registerEntityType("coagulation", COAGULATION);
+		registerEntityType("lesser_wisp", LESSER_WISP);
 		
-		register("zombie_thaumaturge", ZOMBIE_THAUMATURGE);
+		registerEntityType("zombie_thaumaturge", ZOMBIE_THAUMATURGE);
 		
-		register("crimson_knight", CRIMSON_KNIGHT);
-		register("crimson_archer", CRIMSON_ARCHER);
-		register("crimson_protector", CRIMSON_PROTECTOR);
-		register("crimson_missionary", CRIMSON_MISSIONARY);
-		register("crimson_jester", CRIMSON_JESTER);
-		register("crimson_heavy_knight", CRIMSON_HEAVY_KNIGHT);
+		registerEntityType("crimson_knight", CRIMSON_KNIGHT);
+		registerEntityType("crimson_archer", CRIMSON_ARCHER);
+		registerEntityType("crimson_protector", CRIMSON_PROTECTOR);
+		registerEntityType("crimson_missionary", CRIMSON_MISSIONARY);
+		registerEntityType("crimson_jester", CRIMSON_JESTER);
+		registerEntityType("crimson_heavy_knight", CRIMSON_HEAVY_KNIGHT);
 		
 		// loot pool types
 		Registry.register(Registries.LOOT_POOL_ENTRY_TYPE, arcId("tag_gift"), TagGiftLootEntry.TYPE);
@@ -1367,13 +1367,13 @@ public final class ArcanaRegistry{
 			createSubTab(t);
 	}
 	
-	private static void register(String name, Item item){
+	private static void registerItem(String name, Item item){
 		Registry.register(Registries.ITEM, arcId(name), item);
 		ITEMS.add(item);
 		if(item instanceof Cap c)
-			registerCapOnly(c);
+			registerCap(c);
 		if(item instanceof Core c)
-			registerCoreOnly(c);
+			registerCore(c);
 		
 		Tab tab = item.getComponents().getOrDefault(ArcanaDataComponents.SUBTAB, Tab.MAIN);
 		ITEMS_BY_TAB.compute(tab, (__, b) -> {
@@ -1384,64 +1384,64 @@ public final class ArcanaRegistry{
 		});
 	}
 	
-	private static void register(String name, Block block){
-		register(name, block, true);
+	private static void registerBlock(String name, Block block){
+		registerBlock(name, block, true);
 	}
 	
-	private static void register(String name, Block block, boolean andItem){
+	private static void registerBlock(String name, Block block, boolean andItem){
 		Registry.register(Registries.BLOCK, arcId(name), block);
 		BLOCKS.add(block);
 		if(andItem){
 			ArcanaItemSettings settings = new ArcanaItemSettings().group(Tab.MAIN);
 			if(block.getSettings() instanceof ArcanaBlockSettings abs && abs.getGroup() != null)
 				settings.group(abs.getGroup());
-			register(name, block instanceof BigBlock bb ? new BigBlockItem(bb, settings) : new BlockItem(block, settings));
+			registerItem(name, block instanceof BigBlock bb ? new BigBlockItem(bb, settings) : new BlockItem(block, settings));
 		}
 	}
 	
-	private static void register(String name, Fluid fluid){
+	private static void registerFluid(String name, Fluid fluid){
 		Registry.register(Registries.FLUID, arcId(name), fluid);
 		if(fluid instanceof ArcanaFluid af && af.isStill())
 			STILL_FLUIDS.add(af);
 	}
 	
-	private static void register(String name, ScreenHandlerType<?> type){
+	private static void registerScreenHandler(String name, ScreenHandlerType<?> type){
 		Registry.register(Registries.SCREEN_HANDLER, arcId(name), type);
 	}
 	
-	private static void register(String name, BlockEntityType<?> type){
+	private static void registerBlockEntity(String name, BlockEntityType<?> type){
 		Registry.register(Registries.BLOCK_ENTITY_TYPE, arcId(name), type);
 	}
 	
-	private static void register(String name, Feature<?> feature){
+	private static void registerFeature(String name, Feature<?> feature){
 		Registry.register(Registries.FEATURE, arcId(name), feature);
 	}
 	
-	private static void register(String name, FoliagePlacerType<?> foliagePlacer){
+	private static void registerFoliagePlacer(String name, FoliagePlacerType<?> foliagePlacer){
 		Registry.register(Registries.FOLIAGE_PLACER_TYPE, arcId(name), foliagePlacer);
 	}
 	
-	private static void register(String name, TrunkPlacerType<?> trunkPlacer){
+	private static void registerTrunkPlacer(String name, TrunkPlacerType<?> trunkPlacer){
 		Registry.register(Registries.TRUNK_PLACER_TYPE, arcId(name), trunkPlacer);
 	}
 	
-	private static void register(String name, PlacementModifierType<?> placementMod){
+	private static void registerPlacementModifier(String name, PlacementModifierType<?> placementMod){
 		Registry.register(Registries.PLACEMENT_MODIFIER_TYPE, arcId(name), placementMod);
 	}
 	
-	private static void register(String name, ParticleType<?> particleType){
+	private static void registerParticleType(String name, ParticleType<?> particleType){
 		Registry.register(Registries.PARTICLE_TYPE, arcId(name), particleType);
 	}
 	
-	private static void register(String name, EntityType<?> entityType){
+	private static void registerEntityType(String name, EntityType<?> entityType){
 		Registry.register(Registries.ENTITY_TYPE, arcId(name), entityType);
 	}
 	
-	private static void registerCapOnly(Cap cap){
+	private static void registerCap(Cap cap){
 		Cap.caps.put(cap.id(), cap);
 	}
 	
-	private static void registerCoreOnly(Core core){
+	private static void registerCore(Core core){
 		Core.cores.put(core.id(), core);
 	}
 	

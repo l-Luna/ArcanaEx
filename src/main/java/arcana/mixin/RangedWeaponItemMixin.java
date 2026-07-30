@@ -34,6 +34,6 @@ public class RangedWeaponItemMixin{
 	                     @Nullable LivingEntity target){
 		if(entity instanceof ArrowEntity ae && stack.getItem() instanceof CrimsonLongbowItem)
 			CaArrow.setProjected(ae, true);
-		return false;
+		return original.call(instance, entity);
 	}
 }

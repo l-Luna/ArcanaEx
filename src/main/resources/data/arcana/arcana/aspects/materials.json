@@ -33,6 +33,11 @@
     "3*crystal",
     "2*light"
   ],
+  "minecraft:echo_shard": [
+    "4*crystal",
+    "2*darkness",
+    "sloth"
+  ],
 
   "minecraft:raw_iron": [
     "3*metal",
@@ -154,7 +159,12 @@
   ],
   "minecraft:blaze_rod": [
     "12*fire",
-    "6*energy"
+    "8*energy"
+  ],
+  "minecraft:breeze_rod": [
+    "12*weather",
+    "8*energy",
+    "4*movement"
   ],
   "minecraft:ender_pearl": [
     "2*magic",
@@ -181,6 +191,11 @@
     "air",
     "flight"
   ],
+  "minecraft:phantom_membrane": [
+    "3*flight",
+    "void",
+    "fabric"
+  ],
   "minecraft:ink_sac": [
     "void",
     "senses",
@@ -193,10 +208,32 @@
   ],
   "minecraft:turtle_scute": [
     "water",
-    "life"
+    "armour"
+  ],
+  "minecraft:armadillo_scute": [
+    "earth",
+    "armour"
+  ],
+  "minecraft:nautilus_shell": [
+    "2*water",
+    "2*armour"
   ],
   "minecraft:egg": [
-    "2*life"
+    "2*life",
+    "exchange"
+  ],
+  "minecraft:sniffer_egg": [
+    "2*life",
+    "exchange"
+  ],
+  "minecraft:frogspawn": [
+    "2*life",
+    "exchange"
+  ],
+  "minecraft:ghast_tear": [
+    "5*wrath",
+    "3*air",
+    "slime"
   ],
 
   "minecraft:nether_star": [

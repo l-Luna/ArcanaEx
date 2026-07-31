@@ -54,6 +54,14 @@
     "3*armour",
     "3*metal"
   ],
+  "minecraft:heavy_core": [
+    "50*metal"
+  ],
+  "minecraft:mace": [
+    "30*metal",
+    "12*weapon",
+    "11*wrath"
+  ],
 
   "minecraft:goat_horn": [
     "3*senses",

@@ -82,6 +82,26 @@
     "6*sloth"
   ],
 
+  "#c:music_discs": [
+    "18*senses",
+    "9*cognito"
+  ],
+  "minecraft:disc_fragment_5": [
+    "cognito",
+    "senses",
+    "sloth",
+    "crystal"
+  ],
+  "minecraft:experience_bottle": [
+    "7*magic",
+    "2*crystal"
+  ],
+  "minecraft:dragon_breath": [
+    "24*fire",
+    "9*wrath",
+    "2*crystal"
+  ],
+
   "arcana:scribbled_notes": [
     "fabric",
     "mind",

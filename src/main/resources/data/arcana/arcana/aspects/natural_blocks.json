@@ -38,6 +38,10 @@
     "4*earth",
     "2*water"
   ],
+  "minecraft:pointed_dripstone": [
+    "2*earth",
+    "water"
+  ],
   "minecraft:dirt_path": [
     "3*earth",
     "tool"
@@ -319,6 +323,11 @@
     "2*plant",
     "weapon",
     "fire"
+  ],
+  "minecraft:warped_wart_block": [
+    "9*plant",
+    "9*fire",
+    "9*magic"
   ],
 
   "minecraft:sculk_sensor": [

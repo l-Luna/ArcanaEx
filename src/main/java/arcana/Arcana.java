@@ -4,6 +4,7 @@ import arcana.aspects.ItemAspectRegistry;
 import arcana.aura.Taint;
 import arcana.blocks.WardedCampfireBlock;
 import arcana.commands.ArcanaCommands;
+import arcana.duck.ArcanaPlayerEntity;
 import arcana.effects.AspectPowerStatusEffect;
 import arcana.effects.SetBonusStatusEffect;
 import arcana.enchantments.ArcanaEnchantmentComponents;
@@ -11,6 +12,7 @@ import arcana.enchantments.LootSwapEffect;
 import arcana.items.CrimsonLeechItem;
 import arcana.items.components.ArcanaDataComponents;
 import arcana.items.trinkets.ClawTrinketItem;
+import arcana.items.trinkets.MirrorTrinketItem;
 import arcana.network.Networking;
 import arcana.recipes.alchemy.AlchemyRecipe;
 import arcana.recipes.arcane_crafting.ShapedArcaneCraftingRecipe;
@@ -23,14 +25,17 @@ import arcana.recipes.ingredient.PotionEffectIngredient;
 import arcana.research.BuiltinResearch;
 import arcana.research.Research;
 import arcana.research.ResearchLoader;
+import arcana.util.InventoryUtil;
 import arcana.util.RegistryMappingLoader;
 import arcana.warp.WarpEvents;
 import arcana.worldgen.ArcanaFeatures;
 import arcana.worldgen.ArcanaOverworldBiomes;
 import com.unascribed.lib39.dessicant.api.DessicantControl;
+import dev.emi.trinkets.api.event.TrinketDropCallback;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
+import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.lifecycle.v1.CommonLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.recipe.v1.ingredient.CustomIngredientSerializer;
@@ -103,6 +108,16 @@ public final class Arcana implements ModInitializer{
 		ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register(CrimsonLeechItem::handleEntityDeath);
 		ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register(ClawTrinketItem::handleEntityDeath);
 		ServerLivingEntityEvents.AFTER_DAMAGE.register(ClawTrinketItem::handleEntityHit);
+		// TODO: move to somewhere more reasonable
+		Identifier latePhase = arcId("late");
+		TrinketDropCallback.EVENT.register(latePhase, MirrorTrinketItem::handleTrinketDrops);
+		TrinketDropCallback.EVENT.addPhaseOrdering(Event.DEFAULT_PHASE, latePhase);
+		ServerLivingEntityEvents.ALLOW_DEATH.register((entity, damageSource, damageAmount) -> {
+			// just stash the mirrored amulet before its dropped
+			if(entity instanceof ArcanaPlayerEntity player)
+				player.arcana$setDeathStashedMirrorStack(InventoryUtil.fromFirstTrinket(entity, it -> it.getItem() instanceof MirrorTrinketItem ? it : null).orElse(null));
+			return true;
+		});
 		
 		DispenserBlock.registerBehavior(ArcanaRegistry.TAINT_IN_A_BOTTLE, new ProjectileDispenserBehavior(ArcanaRegistry.TAINT_IN_A_BOTTLE));
 	}

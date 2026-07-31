@@ -276,6 +276,7 @@ public final class ArcanaRegistry{
 	public static final Item AMULET_OF_RUNIC_SHIELDING = new TrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1).component(TrinketsAttributeModifiersComponent.TYPE, RunicShielding.createTrinketModifiers(2, arcId("amulet_of_runic_shielding/shielding"))));
 	public static final Item AMULET_OF_UNBURDENED_TRAVEL = new TrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1).component(TrinketsAttributeModifiersComponent.TYPE, RunicShielding.createTrinketModifiers(6, arcId("amulet_of_unburdened_travel/shielding"))));
 	public static final Item AMULET_OF_DEAFENING_SHIELDING = new TrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1).component(TrinketsAttributeModifiersComponent.TYPE, RunicShielding.createTrinketModifiers(1, arcId("amulet_of_deafening_shielding/shielding"))));
+	public static final Item MIRRORED_AMULET = new MirrorTrinketItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1).rarity(Rarity.UNCOMMON));
 	
 	public static final Item CRIMSON_BLADE = new SwordItem(ArcanaToolMaterials.CRIMSON, new ArcanaItemSettings().group(Tab.EQUIPMENT).attributeModifiers(SwordItem.createAttributeModifiers(ArcanaToolMaterials.CRIMSON, 3, -2.4f)));
 	public static final Item CRIMSON_LONGBOW = new CrimsonLongbowItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxDamage(564));
@@ -901,6 +902,7 @@ public final class ArcanaRegistry{
 		registerItem("amulet_of_runic_shielding", AMULET_OF_RUNIC_SHIELDING);
 		registerItem("amulet_of_unburdened_travel", AMULET_OF_UNBURDENED_TRAVEL);
 		registerItem("amulet_of_deafening_shielding", AMULET_OF_DEAFENING_SHIELDING);
+		registerItem("mirrored_amulet", MIRRORED_AMULET);
 		
 		registerItem("crimson_blade", CRIMSON_BLADE);
 		registerItem("crimson_longbow", CRIMSON_LONGBOW);

@@ -16,6 +16,7 @@ import java.util.*;
 
 import static arcana.Arcana.arcId;
 
+// TODO: use level component/share across dimensions(?)
 public class MagicMirrorQueue implements Component{
 	
 	private record Entry(UUID senderId, ItemStack stack){}

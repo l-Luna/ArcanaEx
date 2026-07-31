@@ -4,11 +4,14 @@ import arcana.ArcanaDamageSources;
 import arcana.ArcanaSounds;
 import arcana.blocks.WardedCampfireBlock;
 import arcana.cca_components.RunicShielding;
+import arcana.duck.ArcanaPlayerEntity;
 import arcana.items.BootsOfTheTravellerItem;
 import arcana.items.trinkets.ClawTrinketItem;
+import arcana.items.trinkets.MirrorTrinketItem;
 import arcana.util.InventoryUtil;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import net.minecraft.component.type.FoodComponent;
@@ -18,10 +21,12 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.HungerManager;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.world.World;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -32,7 +37,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.Optional;
 
 @Mixin(PlayerEntity.class)
-public abstract class PlayerEntityMixin extends LivingEntity{
+public abstract class PlayerEntityMixin extends LivingEntity implements ArcanaPlayerEntity{
 	
 	protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world){
 		super(entityType, world);
@@ -41,6 +46,21 @@ public abstract class PlayerEntityMixin extends LivingEntity{
 	@Shadow public abstract HungerManager getHungerManager();
 	
 	@Shadow public abstract ItemStack getEquippedStack(EquipmentSlot slot);
+	
+	@Shadow
+	@Final
+	PlayerInventory inventory;
+	
+	@Unique
+	ItemStack deathStashedMirrorStack;
+	
+	public void arcana$setDeathStashedMirrorStack(ItemStack deathStashedMirrorStack){
+		this.deathStashedMirrorStack = deathStashedMirrorStack;
+	}
+	
+	public ItemStack arcana$getDeathStashedMirrorStack(){
+		return deathStashedMirrorStack;
+	}
 	
 	@Inject(method = "eatFood", at = @At("HEAD"))
 	private void applyWardedCampfireFoodBonus(World world, ItemStack stack, FoodComponent food, CallbackInfoReturnable<ItemStack> cir){
@@ -91,5 +111,14 @@ public abstract class PlayerEntityMixin extends LivingEntity{
 		else if(source.getTypeRegistryEntry().matchesKey(ArcanaDamageSources.PUTREFACTION_KEY))
 			return ArcanaSounds.HURT_PUTREFACTION;
 		return original;
+	}
+	
+	@WrapWithCondition(method = "dropInventory", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerInventory;dropAll()V"))
+	boolean tryDropInventory(PlayerInventory inv){
+		if(deathStashedMirrorStack != null){
+			MirrorTrinketItem.handleInventoryDrops(inv, deathStashedMirrorStack);
+			return false;
+		}
+		return true;
 	}
 }

@@ -39,6 +39,7 @@ public class MirrorTrinketItem extends PersonalMagicMirrorItem implements Trinke
 		     id = mirrorTrinketStack.get(ArcanaDataComponents.MAGIC_MIRROR_ID);
 		MagicMirrorQueue queue = MagicMirrorQueue.from(inventory.player.getWorld());
 		InventoryUtil.streamInventory(inventory).forEach(it -> queue.push(tag, id, it));
+		inventory.clear();
 	}
 	
 	// trinkets handling

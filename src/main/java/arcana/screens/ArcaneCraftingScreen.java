@@ -244,7 +244,7 @@ public class ArcaneCraftingScreen extends HandledScreen<ArcaneCraftingScreen.Han
 						Item item = itemStack2.getItem();
 						item.onCraftByPlayer(itemStack2, world, player);
 						if(item instanceof ContextCraftedItem cci)
-							cci.onCraft(itemStack2, inv, world, player);
+							cci.onCraft(itemStack2, inv);
 					});
 					if(!this.insertItem(itemStack2, 11, 47, true))
 						return ItemStack.EMPTY;
@@ -313,7 +313,7 @@ public class ArcaneCraftingScreen extends HandledScreen<ArcaneCraftingScreen.Han
 				// need to allow for *arcane* crafting too
 				this.onCrafted(stack);
 				if(stack.getItem() instanceof ContextCraftedItem cci)
-					cci.onCraft(stack, inv, player.getWorld(), player);
+					cci.onCraft(stack, inv);
 				DefaultedList<ItemStack> remains;
 				if(arcaneCrafting.isPresent())
 					remains = player.getWorld().getRecipeManager().getRemainingStacks(ShapedArcaneCraftingRecipe.TYPE, inv.createRecipeInput(), player.getWorld());

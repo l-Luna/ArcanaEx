@@ -759,8 +759,11 @@
         {
           "type": "text",
           "content": "research.arcana.mirrored_amulet.text"
+        },
+        {
+          "type": "infusion",
+          "content": "arcana:equipment/mirrored_amulet"
         }
-        // TODO
       ]
     },
 

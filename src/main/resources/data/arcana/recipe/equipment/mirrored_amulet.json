@@ -1,0 +1,25 @@
+{
+  "type": "arcana:infusion",
+  "central": {
+    "item": "arcana:emerald_necklace"
+  },
+  "outer_ingredients": [
+    {
+      "item": "minecraft:fishing_rod"
+    },
+    {
+      "item": "minecraft:lead"
+    },
+    {
+      "item": "arcana:magic_mirror"
+    }
+  ],
+  "aspects": [
+    "16*greed",
+    "16*fabric"
+  ],
+  "instability": 1,
+  "result": {
+    "id": "arcana:mirrored_amulet"
+  }
+}

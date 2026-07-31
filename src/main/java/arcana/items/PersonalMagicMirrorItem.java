@@ -90,7 +90,7 @@ public class PersonalMagicMirrorItem extends Item implements ContextCraftedItem,
 		return mirrorStack;
 	}
 	
-	public void onCraft(ItemStack stack, Inventory context, World world, PlayerEntity player){
+	public void onCraft(ItemStack stack, Inventory context){
 		for(int i = 0; i < context.size(); i++){
 			ItemStack there = context.getStack(i);
 			if(there.getItem() instanceof MagicMirrorBlockItem){

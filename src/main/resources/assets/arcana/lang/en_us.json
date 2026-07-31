@@ -1562,7 +1562,7 @@
 
     "mirrored_amulet": {
       "title": "Mirrored Amulet",
-      "text": "In amulet form, a mirror retains its prior functionality, as well as a defensive addition: if I die, my items will be sent to the linked mirror, rather than scattered on the floor. The amulet itself is left behind though, as it cannot fit through itself."
+      "text": "Even when reduced to such a small size, the mirror retains the functionality of a personal magic mirror, in a more convenient form factor. It also gains a protective function: upon death, instead of being spewed across the ground, the contents of my inventory will be sent to the mirror's target. This includes the amulet itself.\nIf the target mirror was lost or destroyed (or worse, in my inventory at the time of death), the items will be lost in transit."
     },
 
     "lamplight_amulet": {

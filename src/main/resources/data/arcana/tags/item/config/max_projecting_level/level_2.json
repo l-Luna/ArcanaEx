@@ -1,7 +1,6 @@
 {
   "values": [
     "#arcana:config/max_projecting_level/level_3",
-    "arcana:gold_ring",
-    "arcana:lamplight_ring"
+    "arcana:gold_ring"
   ]
 }

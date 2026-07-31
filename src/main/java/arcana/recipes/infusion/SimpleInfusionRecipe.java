@@ -1,8 +1,10 @@
 package arcana.recipes.infusion;
 
+import arcana.api.ContextCraftedItem;
 import arcana.api.RenamableRecipe;
 import arcana.aspects.AspectMap;
 import arcana.recipes.ArcanaRecipe;
+import arcana.util.ArrayInventory;
 import arcana.util.PacketCodecUtil;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -64,15 +66,24 @@ public class SimpleInfusionRecipe implements InfusionRecipe, ArcanaRecipe, Renam
 		this.name = name;
 	}
 	
-	public BakedInfusionRecipe craftInfusion(InfusionInput inventory){
+	public BakedInfusionRecipe craftInfusion(InfusionInput input){
 		// check main ingredients
-		if(!(centralIngredient.test(inventory.centre()) && inventory.aspects().contains(aspects)))
+		if(!(centralIngredient.test(input.centre()) && input.aspects().contains(aspects)))
 			return null;
 		// resolve outer ingredients to specific items
-		List<ItemStack> used = matchIngredients(inventory, outerIngredients);
+		List<ItemStack> used = matchIngredients(input, outerIngredients);
 		if(used == null)
 			return null;
-		return new BakedInfusionRecipe(result.copy(), used, aspects.copy(), instability);
+		ItemStack output = result.copy();
+		if(output.getItem() instanceof ContextCraftedItem cci){
+			// make an inventory for context crafting support
+			ArrayInventory craftInv = new ArrayInventory(used.size() + 1);
+			craftInv.setStack(0, input.centre());
+			for(int i = 0; i < used.size(); i++)
+				craftInv.setStack(i + 1, used.get(i));
+			cci.onCraft(output, new ArrayInventory(used.toArray(ItemStack[]::new)));
+		}
+		return new BakedInfusionRecipe(output, used, aspects.copy(), instability);
 	}
 	
 	@Nullable

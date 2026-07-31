@@ -279,7 +279,6 @@
     "gold_ring": "Gold Ring",
     "arcanium_ring": "Arcanium Ring",
     "adorned_ring": "Adorned Ring",
-    "lamplight_ring": "Lamplight Ring",
     "claw_ring": "Diamond-Tipped Claw Ring",
     "claw_ring.recipe": "Diamond-Tipped\nClaw Ring",
     "plane_projection_ring": "Plane-Projection Ring",
@@ -292,6 +291,7 @@
     "ring_of_twin_heartbeats.tip": ["§o\"rapid, irregular beating of the atria\"§r"],
     "ring_of_the_voidgazer": "Ring of the Void-Gazer",
     "ring_of_the_voidgazer.tip": ["§o\"seeing light without light entering the eye\"§r"],
+    "lamplight_amulet": "Lamplight Amulet",
     "amulet_of_runic_shielding": "Amulet of Runic Shielding",
     "amulet_of_runic_shielding.recipe": "Amulet of\nRunic Shielding",
     "amulet_of_unburdened_travel": "Amulet of Unburdened Travel",
@@ -1564,10 +1564,10 @@
       "text": "In amulet form, a mirror retains its prior functionality, as well as a defensive addition: if I die, my items will be sent to the linked mirror, rather than scattered on the floor. The amulet itself is left behind though, as it cannot fit through itself."
     },
 
-    "lamplight_ring": {
-      "title": "Lamplight Ring",
+    "lamplight_amulet": {
+      "title": "Lamplight Amulet",
       "desc": "8,000+ lumens",
-      "text": "Is it such a crime to want to see clearly?\nWhile equipped, the Lamplight Ring places lights around me as I travel."
+      "text": "Is it such a crime to want to see clearly?\nWhile equipped, the Lamplight Amulet places lights around me as I travel."
     },
     "claw_ring": {
       "title": "Diamond-Tipped Claw Ring",

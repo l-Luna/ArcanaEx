@@ -362,11 +362,11 @@
     },
 
     {
-      "key": "arcana:tmp/lamplight_ring",
-      "name": "research.arcana.lamplight_ring.title",
-      "desc": "research.arcana.lamplight_ring.desc",
+      "key": "arcana:tmp/lamplight_amulet",
+      "name": "research.arcana.lamplight_amulet.title",
+      "desc": "research.arcana.lamplight_amulet.desc",
       "icons": [
-        "arcana:lamplight_ring"
+        "arcana:lamplight_amulet"
       ],
       "category": "arcana:artifice",
       "parents": [
@@ -380,11 +380,11 @@
       "sections": [
         {
           "type": "text",
-          "content": "research.arcana.lamplight_ring.text"
+          "content": "research.arcana.lamplight_amulet.text"
         },
         {
           "type": "arcane_crafting",
-          "content": "arcana:equipment/lamplight_ring"
+          "content": "arcana:equipment/lamplight_amulet"
         }
       ]
     },

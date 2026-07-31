@@ -2,7 +2,7 @@
   "type": "arcana:arcane_crafting",
   "key": {
     "X": {
-      "item": "arcana:gold_ring"
+      "item": "arcana:emerald_necklace"
     },
     "G": {
       "item": "arcana:luminiferous_glass"
@@ -13,13 +13,13 @@
   },
   "pattern": [
     " G ",
-    "GFG",
-    " X "
+    "GXG",
+    " F "
   ],
   "aspects": [
     "8*air"
   ],
   "result": {
-    "id": "arcana:lamplight_ring"
+    "id": "arcana:lamplight_amulet"
   }
 }

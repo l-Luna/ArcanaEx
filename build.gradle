@@ -86,7 +86,7 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
 	modImplementation "dev.emi:emi-fabric:${emi_version}"
-	modImplementation "software.bernie.geckolib:geckolib-fabric-1.21.1:4.8.4"
+	modImplementation "software.bernie.geckolib:geckolib-fabric-1.21.1:${geckolib_version}"
 	modImplementation "com.terraformersmc:biolith-fabric:${biolith_version}"
 
 	// TODO: split up after unilib39 is published
@@ -111,10 +111,11 @@ processResources {
 
 	filesMatching("fabric.mod.json") {
 		expand "version": project.version,
-		       "lib39_version": lib39_version,
+				"lib39_version": lib39_version,
 				"trinkets_version": trinkets_version,
-				"cc_version": cardinal_comp_version
-		// TODO: reintroduce dependencies
+				"cc_version": cardinal_comp_version,
+				"biolith_version": biolith_version,
+				"geckolib_version": geckolib_version
 	}
 }
 

@@ -34,9 +34,6 @@
     ],
     "cardinal-components-chunk": [
       "arcana.cca_components.ComponentInit"
-    ],
-    "terrablender": [
-      "arcana.worldgen.ArcanaOverworldBiomes"
     ]
   },
   "mixins": [
@@ -57,7 +54,8 @@
     "cardinal-components-base": ">=${cc_version}",
     "cardinal-components-entity": ">=${cc_version}",
     "cardinal-components-world": ">=${cc_version}",
-    "geckolib": ">=4.8.4"
+    "biolith": ">=${biolith_version}",
+    "geckolib": ">=${geckolib_version}"
   },
   "suggests": {
     "emi": "*",

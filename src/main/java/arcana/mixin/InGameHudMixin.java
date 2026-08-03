@@ -69,6 +69,6 @@ public class InGameHudMixin{
 	@Inject(method = "renderStatusEffectOverlay",
 	        at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z", shift = At.Shift.AFTER))
 	void queuePressureOverlay(DrawContext ctx, RenderTickCounter tickCounter, CallbackInfo ci, @Local RegistryEntry<StatusEffect> effect){
-		suppressStack.add(PressureStatusEffect.suppresses(client.player, effect.value()));
+		suppressStack.add(PressureStatusEffect.suppresses(client.player, effect));
 	}
 }

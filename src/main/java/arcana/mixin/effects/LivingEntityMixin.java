@@ -39,7 +39,7 @@ public class LivingEntityMixin{
 			return;
 		}
 		
-		if(PressureStatusEffect.suppresses((LivingEntity)(Object)this, effect.value()))
+		if(PressureStatusEffect.suppresses((LivingEntity)(Object)this, effect))
 			cir.setReturnValue(false);
 	}
 	
@@ -58,7 +58,7 @@ public class LivingEntityMixin{
 			return;
 		}
 		
-		if(PressureStatusEffect.suppresses((LivingEntity)(Object)this, effect.value()))
+		if(PressureStatusEffect.suppresses((LivingEntity)(Object)this, effect))
 			cir.setReturnValue(null);
 	}
 	

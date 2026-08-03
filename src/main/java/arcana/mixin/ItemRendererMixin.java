@@ -3,6 +3,8 @@ package arcana.mixin;
 import arcana.ArcanaRegistry;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.item.ItemModels;
 import net.minecraft.client.render.item.ItemRenderer;
@@ -23,6 +25,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import static arcana.Arcana.arcId;
 
 @Mixin(ItemRenderer.class)
+@Environment(EnvType.CLIENT)
 public class ItemRendererMixin{
 	
 	@Shadow

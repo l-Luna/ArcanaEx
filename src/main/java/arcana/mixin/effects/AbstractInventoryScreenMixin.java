@@ -3,6 +3,8 @@ package arcana.mixin.effects;
 import arcana.client.ArcanaClient;
 import arcana.effects.PressureStatusEffect;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.AbstractInventoryScreen;
@@ -19,6 +21,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(AbstractInventoryScreen.class)
+@Environment(EnvType.CLIENT)
 public abstract class AbstractInventoryScreenMixin<T extends ScreenHandler> extends HandledScreen<T>{
 	
 	public AbstractInventoryScreenMixin(T handler, PlayerInventory inventory, Text title){

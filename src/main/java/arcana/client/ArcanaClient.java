@@ -212,11 +212,11 @@ public final class ArcanaClient implements ClientModInitializer{
 		EntityRendererRegistry.register(ArcanaRegistry.THROWN_ALUMENTUM, ThrownAlumentumEntityRenderer::new);
 		EntityRendererRegistry.register(ArcanaRegistry.THROWN_TAINT_BOTTLE, FlyingItemEntityRenderer::new);
 		EntityRendererRegistry.register(ArcanaRegistry.PRISMATIC_ORB, ctx -> new MagicOrbEntityRenderer<>(ctx, List.of(
-				0xFF7F3FFF, 0xFF7F7FFF, 0xFF7FBFFF, 0xFF7FFFFF, 0xFFBF3FFF, 0xFFBF7FFF, 0xFFBFBFFF, 0xFFBFFFFF, 0xFFFF3FFF, 0xFFFF7FFF, 0xFFFFBFFF, 0xFFFFFFFF))
-		);
+				0xECF8FE, 0xF8F8FF, 0xDAEAFE, 0xFDFDFF, 0xF5EDFF, 0xECD9FE
+		)));
 		EntityRendererRegistry.register(ArcanaRegistry.FLAME_ORB, ctx -> new MagicOrbEntityRenderer<>(ctx, List.of(
-				0xFF990000, 0xFF995500, 0xFF99AA00, 0xFF99FF00, 0xFFCC0000, 0xFFCC5500, 0xFFCCAA00, 0xFFCCFF00, 0xFFFF0000, 0xFFFF5500, 0xFFFFAA00, 0xFFFFFF00))
-		);
+				0xFFFFFF, 0xEFA95D, 0xFBF780, 0xED8A50, 0xF4F2C6, 0xF4F2C6
+		)));
 		EntityRendererRegistry.register(ArcanaRegistry.CRIMSON_KNIGHT, ctx -> new CrimsonEntityRenderer<>(ctx, "knight"));
 		EntityRendererRegistry.register(ArcanaRegistry.CRIMSON_ARCHER, ctx -> new CrimsonEntityRenderer<>(ctx, "archer"));
 		EntityRendererRegistry.register(ArcanaRegistry.CRIMSON_PROTECTOR, ctx -> new CrimsonEntityRenderer<>(ctx, "protector"));
@@ -249,6 +249,7 @@ public final class ArcanaClient implements ClientModInitializer{
 		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.TAINT_SPORE, spr -> new SimpleSpriteParticle.Factory(spr, -0.003f, 0.04f).lifetime(16, 80).collidable(false).scale(0.2f, 0.8f).tint(0.8f, 0, 0.9f));
 		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.CLAW, spr -> new SimpleSpriteParticle.Factory(spr, 0, 0).scale(3, 3.4f).shrink(0.02f).lifetime(5, 8));
 		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.CLAW_RUBY, spr -> new SimpleSpriteParticle.Factory(spr, 0, 0).scale(3, 3.4f).shrink(0.02f).lifetime(5, 8));
+		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.PRISM_GLITTER, spr -> new SimpleSpriteParticle.Factory(spr, 0.0125f, 0.09f).scale(0.75f).lifetime(60, 72).shrink(0.001f).randomSprite().randomAngle());
 		
 		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.WARDING_EFFECT, u -> new CubeParticle.Factory(u, 1, 1, 1));
 		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.INFESTED_EFFECT, u -> new CubeParticle.Factory(u, 0.1f, 0.1f, 0.1f));

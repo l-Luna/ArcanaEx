@@ -10,6 +10,7 @@ public class SimpleSpriteParticle extends SpriteBillboardParticle{
 	
 	private final SpriteProvider spr;
 	private float shrink;
+	private boolean randomiseSprite;
 	
 	protected SimpleSpriteParticle(ClientWorld world,
 	                               double x,
@@ -29,9 +30,10 @@ public class SimpleSpriteParticle extends SpriteBillboardParticle{
 	
 	public void tick(){
 		super.tick();
-		setSpriteForAge(spr);
+		if(!randomiseSprite)
+			setSpriteForAge(spr);
 		if(shrink > 0)
-			scale -= shrink;
+			scale = Math.max(0.01f, scale - shrink);
 	}
 	
 	public float getSize(float tickDelta){
@@ -53,7 +55,7 @@ public class SimpleSpriteParticle extends SpriteBillboardParticle{
 		private int minLifetime = 30, maxLifetime = 30;
 		private float minScale = 1, maxScale = 1;
 		private float r = 1, g = 1, b = 1;
-		private boolean randomiseAngle = false;
+		private boolean randomiseAngle = false, randomiseSprite = false;
 		private float shrink = 0;
 		
 		public Factory(SpriteProvider spr, float gravity, float drag){
@@ -101,6 +103,11 @@ public class SimpleSpriteParticle extends SpriteBillboardParticle{
 			return this;
 		}
 		
+		public Factory randomSprite(){
+			randomiseSprite = true;
+			return this;
+		}
+		
 		public Factory collidable(boolean collidable){
 			this.collidable = collidable;
 			return this;
@@ -117,6 +124,10 @@ public class SimpleSpriteParticle extends SpriteBillboardParticle{
 			particle.collidesWithWorld = collidable;
 			if(randomiseAngle)
 				particle.prevAngle = particle.angle = 0.5f * MathHelper.PI * world.random.nextInt(4);
+			if(randomiseSprite){
+				particle.randomiseSprite = true;
+				particle.setSprite(spr);
+			}
 			particle.shrink = shrink;
 			return particle;
 		}

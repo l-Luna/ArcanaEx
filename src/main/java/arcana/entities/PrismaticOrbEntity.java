@@ -1,6 +1,8 @@
 package arcana.entities;
 
 import arcana.ArcanaDamageSources;
+import arcana.ArcanaRegistry;
+import arcana.util.MathUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -11,6 +13,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.tag.EntityTypeTags;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class PrismaticOrbEntity extends MagicOrbEntity{
@@ -22,21 +25,36 @@ public class PrismaticOrbEntity extends MagicOrbEntity{
 	}
 	
 	public void tick(){
-		if(getWorld().isClient && isBurning() && getWorld().random.nextFloat() < 0.2f)
-			getWorld().addParticle(ParticleTypes.DRIPPING_LAVA,
-					getPos().x, getPos().y, getPos().z,
-					getVelocity().x, getVelocity().y, getVelocity().z);
+		if(getWorld().isClient){
+			if(isBurning() && random.nextFloat() < 0.2f)
+				getWorld().addParticle(ParticleTypes.DRIPPING_LAVA,
+						getPos().x, getPos().y, getPos().z,
+						getVelocity().x, getVelocity().y, getVelocity().z);
+			if(hasShot())
+				for(int i = 0; i < 3; i++){
+					Vec3d surfacePos = MathUtil.randomDir(random).multiply(0.2f).add(getPos());
+					getWorld().addParticle(ArcanaRegistry.PRISM_GLITTER,
+							surfacePos.x, surfacePos.y, surfacePos.z,
+							getVelocity().x / 3, getVelocity().y / 3, getVelocity().z / 3);
+				}
+			else if(random.nextFloat() < 0.1f){
+				Vec3d surfacePos = MathUtil.randomDir(random).multiply(0.2f).add(getPos());
+				getWorld().addParticle(ArcanaRegistry.PRISM_GLITTER,
+						surfacePos.x, surfacePos.y, surfacePos.z,
+						0, 0, 0);
+			}
+		}
 		super.tick();
 	}
 	
 	public void burst(){
 		// particle burst
 		ServerWorld sw = (ServerWorld)getWorld();
-		sw.spawnParticles(ParticleTypes.END_ROD,
+		sw.spawnParticles(ArcanaRegistry.PRISM_GLITTER,
 				getPos().getX(),
 				getPos().getY(),
 				getPos().getZ(),
-				30, 0, 0, 0, 0.08f);
+				30, 0, 0, 0, 0.07f);
 		if(isBurning())
 			sw.spawnParticles(ParticleTypes.FLAME,
 					getPos().getX(),

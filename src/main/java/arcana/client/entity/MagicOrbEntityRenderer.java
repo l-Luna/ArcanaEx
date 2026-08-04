@@ -59,7 +59,7 @@ public class MagicOrbEntityRenderer<E extends MagicOrbEntity> extends EntityRend
 				float cSize = 0.05f + 0.13f * eSize;
 				RenderHelper.colCuboid(vc,
 						ms,
-						colours.get((xf - 1) + yf * 3),
+						colours.get(((xf - 1) + yf * 3) % colours.size()) | 0xFF000000,
 						MathUtil.facingToVec(
 								(float)(Math.sin(time * xf / 7f) * Math.PI),
 								(float)(Math.cos(time * yf / 7f) * Math.PI)).multiply(cDist),

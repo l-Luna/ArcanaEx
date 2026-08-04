@@ -3,6 +3,8 @@ package arcana.mixin.effects;
 import arcana.client.ArcanaClient;
 import arcana.effects.PressureStatusEffect;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.AbstractInventoryScreen;
@@ -19,6 +21,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(AbstractInventoryScreen.class)
+@Environment(EnvType.CLIENT)
 public abstract class AbstractInventoryScreenMixin<T extends ScreenHandler> extends HandledScreen<T>{
 	
 	public AbstractInventoryScreenMixin(T handler, PlayerInventory inventory, Text title){
@@ -28,7 +31,7 @@ public abstract class AbstractInventoryScreenMixin<T extends ScreenHandler> exte
 	@ModifyReturnValue(method = "getStatusEffectDescription", at = @At("TAIL"))
 	Text getStatusEffectDescription(Text original, StatusEffectInstance effect){
 		PlayerEntity player = MinecraftClient.getInstance().player;
-		if(PressureStatusEffect.suppresses(player, effect.getEffectType().value()))
+		if(PressureStatusEffect.suppresses(player, effect.getEffectType()))
 			return original.copy().formatted(Formatting.STRIKETHROUGH, Formatting.GRAY);
 		return original;
 	}
@@ -38,7 +41,7 @@ public abstract class AbstractInventoryScreenMixin<T extends ScreenHandler> exte
 		// copied and adjusted from the original
 		int i = y;
 		for(StatusEffectInstance effect : effects){
-			if(PressureStatusEffect.suppresses(client.player, effect.getEffectType().value()))
+			if(PressureStatusEffect.suppresses(client.player, effect.getEffectType()))
 				ctx.drawTexture(ArcanaClient.SUPPRESSED_EFFECT_TEX_PATH, x + (wide ? 6 : 7) - 2, i + 7 - 2, 0, 0, 0, 22, 22, 22, 22);
 			i += height;
 		}

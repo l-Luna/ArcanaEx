@@ -2,6 +2,8 @@ package arcana.mixin;
 
 import arcana.items.BootsOfTheTravellerItem;
 import com.mojang.authlib.GameProfile;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
@@ -12,6 +14,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(ClientPlayerEntity.class)
+@Environment(EnvType.CLIENT)
 public abstract class ClientPlayerEntityMixin extends PlayerEntity{
 	
 	public ClientPlayerEntityMixin(World world, BlockPos pos, float yaw, GameProfile gameProfile){

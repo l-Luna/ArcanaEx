@@ -5,6 +5,7 @@ import arcana.aura.AuraWorld;
 import arcana.aura.Node;
 import arcana.aura.NodeType;
 import arcana.aura.NodeTypes;
+import com.unascribed.lib39.core.mixinsupport.AutoMixinEligible;
 import net.minecraft.structure.StructureTemplate;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
@@ -26,7 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Mixin(StructureTemplate.class)
-public class StructureTemplateMixin{
+@AutoMixinEligible(unlessModPresent = "connector")
+public class StructureTemplateMixinFabric{
 	
 	@Shadow
 	@Final

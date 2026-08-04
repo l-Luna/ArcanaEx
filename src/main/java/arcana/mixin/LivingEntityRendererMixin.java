@@ -2,6 +2,8 @@ package arcana.mixin;
 
 import arcana.duck.ArcanaLivingEntity;
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
@@ -14,6 +16,7 @@ import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntityRenderer.class)
+@Environment(EnvType.CLIENT)
 public class LivingEntityRendererMixin{
 	
 	@WrapWithCondition(method = "setupTransforms",

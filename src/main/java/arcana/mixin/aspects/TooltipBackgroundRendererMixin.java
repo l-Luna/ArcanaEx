@@ -1,6 +1,8 @@
 package arcana.mixin.aspects;
 
 import arcana.duck.TooltipColourState;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.tooltip.TooltipBackgroundRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -9,6 +11,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 @Mixin(TooltipBackgroundRenderer.class)
+@Environment(EnvType.CLIENT)
 public class TooltipBackgroundRendererMixin{
 
 	@ModifyArgs(method = {

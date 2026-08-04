@@ -2,6 +2,8 @@ package arcana.mixin.zones;
 
 import arcana.client.ZoneEffects;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.math.BlockPos;
@@ -16,6 +18,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import java.util.Optional;
 
 @Mixin(ClientWorld.class)
+@Environment(EnvType.CLIENT)
 public class ClientWorldMixin{
 	
 	@ModifyExpressionValue(method = "getSkyColor",

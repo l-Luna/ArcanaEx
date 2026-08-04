@@ -78,10 +78,6 @@ public final class ArcanaTags{
 		return Registries.ITEM.getEntryList(tag).map(entries -> entries.get(rng.nextInt(entries.size())).value()).orElse(null);
 	}
 	
-	public static boolean isOf(StatusEffect effect, TagKey<StatusEffect> tag){
-		return isOf(effect, tag, Registries.STATUS_EFFECT);
-	}
-	
 	public static <T> boolean isOf(T value, TagKey<T> tag, Registry<T> registry){
 		return registry.getEntry(registry.getRawId(value)).get().isIn(tag);
 	}

@@ -49,7 +49,6 @@
     "lib39-phantom": ">=${lib39_version}",
     "lib39-tunnel": ">=${lib39_version}",
     "lib39-weld": ">=${lib39_version}",
-    "lib39": "${lib39_version}+2.21.1",
     "trinkets": ">=${trinkets_version}",
     "cardinal-components-base": ">=${cc_version}",
     "cardinal-components-entity": ">=${cc_version}",

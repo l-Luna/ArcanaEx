@@ -5,6 +5,8 @@ import arcana.aura.InfestedChunk;
 import arcana.aura.WardedChunk;
 import arcana.client.particles.CubeParticleEffect;
 import arcana.client.particles.CubeParticleStyle;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.client.world.ClientWorld;
@@ -17,6 +19,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ParticleManager.class)
+@Environment(EnvType.CLIENT)
 public abstract class ParticleManagerMixin{
 	
 	@Shadow

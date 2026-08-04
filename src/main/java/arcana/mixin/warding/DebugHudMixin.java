@@ -2,6 +2,8 @@ package arcana.mixin.warding;
 
 import arcana.aura.InfestedChunk;
 import arcana.aura.WardedChunk;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.DebugHud;
 import net.minecraft.util.hit.BlockHitResult;
@@ -17,6 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.List;
 
 @Mixin(DebugHud.class)
+@Environment(EnvType.CLIENT)
 public class DebugHudMixin{
 	
 	@Shadow

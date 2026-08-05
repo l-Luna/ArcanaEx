@@ -7,7 +7,7 @@ import com.mojang.serialization.Encoder;
 import com.unascribed.lib39.tunnel.api.Marshallable;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
 import org.jetbrains.annotations.NotNull;
@@ -219,7 +219,7 @@ public record AspectMap(Map<Aspect, Integer> underlying) implements Iterable<Asp
 		return asStacks().iterator();
 	}
 	
-	public void writeToNetwork(PacketByteBuf buf){
+	public void writeToNetwork(RegistryByteBuf buf){
 		buf.writeVarInt(size());
 		for(AspectStack stack : this){
 			buf.writeIdentifier(stack.type().id());
@@ -227,7 +227,7 @@ public record AspectMap(Map<Aspect, Integer> underlying) implements Iterable<Asp
 		}
 	}
 	
-	public void readFromNetwork(PacketByteBuf buf){
+	public void readFromNetwork(RegistryByteBuf buf){
 		clear();
 		int count = buf.readVarInt();
 		for(int i = 0; i < count; i++)

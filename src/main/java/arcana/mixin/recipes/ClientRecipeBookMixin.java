@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class ClientRecipeBookMixin{
 	
 	@Inject(method = "getGroupForRecipe",
-	        at = @At(value = "INVOKE", target = "Lorg/slf4j/Logger;warn(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V"), // TODO: should use `remap = false`?
+	        at = @At(value = "INVOKE", target = "Lorg/slf4j/Logger;warn(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V", remap = false),
 	        cancellable = true)
 	private static void hideRecipeBookWarning(RecipeEntry<?> recipe, CallbackInfoReturnable<RecipeBookGroup> cir){
 		if(recipe.value() instanceof ArcanaRecipe)

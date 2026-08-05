@@ -16,7 +16,7 @@ import java.util.function.Function;
 public class CookingRecipeSerializerMixin<T extends AbstractCookingRecipe>{
 	
 	// extend the codec with an `arcana:amount` field
-	@ModifyExpressionValue(method = "<init>", at = @At(value = "INVOKE", target = "Lcom/mojang/serialization/codecs/RecordCodecBuilder;mapCodec(Ljava/util/function/Function;)Lcom/mojang/serialization/MapCodec;"))
+	@ModifyExpressionValue(method = "<init>", at = @At(value = "INVOKE", target = "Lcom/mojang/serialization/codecs/RecordCodecBuilder;mapCodec(Ljava/util/function/Function;)Lcom/mojang/serialization/MapCodec;", remap = false))
 	MapCodec<T> addAmountField(MapCodec<T> original){
 		return RecordCodecBuilder.mapCodec(i -> i
 				.group(

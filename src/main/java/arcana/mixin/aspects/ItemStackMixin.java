@@ -15,10 +15,10 @@ import org.spongepowered.asm.mixin.injection.At;
 import java.util.Optional;
 
 @Mixin(ItemStack.class)
+@Environment(EnvType.CLIENT)
 public class ItemStackMixin{
 	
 	@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-	@Environment(EnvType.CLIENT)
 	@ModifyReturnValue(method = "getTooltipData", at = @At("RETURN"))
 	private Optional<TooltipData> applyAspectsTooltipData(Optional<TooltipData> original){
 		if(Screen.hasShiftDown()){

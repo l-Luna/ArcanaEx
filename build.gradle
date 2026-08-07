@@ -89,8 +89,11 @@ dependencies {
 	modImplementation "software.bernie.geckolib:geckolib-fabric-1.21.1:${geckolib_version}"
 	modImplementation "com.terraformersmc:biolith-fabric:${biolith_version}"
 
-	// TODO: split up after unilib39 is published
-	// TODO: include properly
+//	for(String lib39_module : ["core", "dessicant", "phantom", "tunnel", "weld"])
+//		modApi include("com.unascribed:lib39-${lib39_module}:${lib39_version}+${minecraft_version}"){
+//			exclude(group: "net.fabricmc.fabric-api")
+//			exclude(group: "net.fabricmc", module: "fabric-loader")
+//		}
 	modApi project(path: ":Lib39", configuration: "namedElements")
 	modApi include("dev.emi:trinkets:${trinkets_version}"){
 		exclude(group: "net.fabricmc.fabric-api")

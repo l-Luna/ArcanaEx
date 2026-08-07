@@ -94,7 +94,7 @@ dependencies {
 //			exclude(group: "net.fabricmc.fabric-api")
 //			exclude(group: "net.fabricmc", module: "fabric-loader")
 //		}
-	modApi project(path: ":Lib39", configuration: "namedElements")
+	modApi project(path: ":Lib39")
 	modApi include("dev.emi:trinkets:${trinkets_version}"){
 		exclude(group: "net.fabricmc.fabric-api")
 		exclude(group: "net.fabricmc", module: "fabric-loader")

@@ -174,7 +174,6 @@ public class ResearchBookScreen extends Screen{
 	}
 	
 	public void render(DrawContext ctx, int mouseX, int mouseY, float delta){
-		renderBackground(ctx, mouseX, mouseY, delta);
 		RenderSystem.enableBlend();
 		super.render(ctx, mouseX, mouseY, delta);
 		

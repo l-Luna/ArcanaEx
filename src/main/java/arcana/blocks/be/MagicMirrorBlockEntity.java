@@ -7,8 +7,10 @@ import arcana.items.components.ArcanaDataComponents;
 import arcana.util.MathUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.HopperBlockEntity;
 import net.minecraft.component.ComponentMap;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.RegistryWrapper;
@@ -26,6 +28,8 @@ public class MagicMirrorBlockEntity extends BlockEntity{
 		super(ArcanaRegistry.MAGIC_MIRROR_BE, pos, state);
 	}
 	
+	//
+	
 	public void tick(World world, BlockPos pos, BlockState state){
 		if(world.isClient)
 			return;
@@ -38,9 +42,21 @@ public class MagicMirrorBlockEntity extends BlockEntity{
 			return;
 		
 		Direction facing = state.get(MagicMirrorBlock.FACING);
-		ItemEntity entity = new ItemEntity(world, pos.getX() + .5 - facing.getOffsetX()*0.4, pos.getY() + .5, pos.getZ() + .5 - facing.getOffsetZ()*0.4, next.copy());
-		entity.setVelocity(facing.getOffsetX() * 0.2, 0, facing.getOffsetZ() * 0.2);
-		world.spawnEntity(entity);
+		// if directly above an inventory, try to insert directly
+		Inventory target = HopperBlockEntity.getInventoryAt(world, pos.down());
+		if(target != null)
+			next = HopperBlockEntity.transfer(null, target, next, null);
+		// then drop the excess
+		if(!next.isEmpty()){
+			ItemEntity entity = new ItemEntity(world, pos.getX() + .5 - facing.getOffsetX() * 0.4, pos.getY() + .5, pos.getZ() + .5 - facing.getOffsetZ() * 0.4, next.copy());
+			entity.setVelocity(facing.getOffsetX() * 0.2, 0, facing.getOffsetZ() * 0.2);
+			world.spawnEntity(entity);
+		}
+	}
+	
+	public void pushItem(ItemStack stack){
+		MagicMirrorQueue.from(getWorld()).push(getTag(), getId(), stack);
+		// TODO: SFX
 	}
 	
 	public UUID getTag(){
@@ -55,6 +71,8 @@ public class MagicMirrorBlockEntity extends BlockEntity{
 	public UUID getId(){
 		return id;
 	}
+	
+	//
 	
 	protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){
 		super.writeNbt(nbt, registryLookup);

@@ -1,17 +1,15 @@
 package arcana.blocks;
 
 import arcana.blocks.be.MagicMirrorBlockEntity;
-import arcana.cca_components.MagicMirrorQueue;
+import arcana.util.SinkInventory;
 import com.google.common.collect.Maps;
 import com.mojang.serialization.MapCodec;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockEntityProvider;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ShapeContext;
+import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateManager;
@@ -25,12 +23,13 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
-public class MagicMirrorBlock extends WaterloggableBlock implements BlockEntityProvider{
+public class MagicMirrorBlock extends WaterloggableBlock implements BlockEntityProvider, InventoryProvider{
 	
 	private static final MapCodec<MagicMirrorBlock> CODEC = createCodec(MagicMirrorBlock::new);
 	
@@ -61,9 +60,8 @@ public class MagicMirrorBlock extends WaterloggableBlock implements BlockEntityP
 	
 	protected ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit){
 		if(!stack.isEmpty() && world.getBlockEntity(pos) instanceof MagicMirrorBlockEntity mm){
-			MagicMirrorQueue.from(world).push(mm.getTag(), mm.getId(), stack);
+			mm.pushItem(stack);
 			player.setStackInHand(hand, ItemStack.EMPTY);
-			// TODO: SFX
 			return ItemActionResult.SUCCESS;
 		}
 		return super.onUseWithItem(stack, state, world, pos, player, hand, hit);
@@ -102,5 +100,11 @@ public class MagicMirrorBlock extends WaterloggableBlock implements BlockEntityP
 			if(be instanceof MagicMirrorBlockEntity mm)
 				mm.tick(w, p, s);
 		};
+	}
+	
+	public SidedInventory getInventory(BlockState state, WorldAccess world, BlockPos pos){
+		if(world.getBlockEntity(pos) instanceof MagicMirrorBlockEntity mm)
+			return new SinkInventory(mm::pushItem);
+		return null;
 	}
 }

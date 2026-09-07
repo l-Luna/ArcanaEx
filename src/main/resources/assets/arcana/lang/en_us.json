@@ -876,7 +876,8 @@
       "prismatic_light": "Player burns from light",
       "burning_powerful": "Player burns badly",
       "putrefaction": "Player hurts from corrosion"
-    }
+    },
+    "mirror_accept": "Magic Mirror wobbles"
   },
 
   // Research UI

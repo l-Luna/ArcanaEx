@@ -1,6 +1,7 @@
 package arcana.blocks.be;
 
 import arcana.ArcanaRegistry;
+import arcana.ArcanaSounds;
 import arcana.blocks.MagicMirrorBlock;
 import arcana.cca_components.MagicMirrorQueue;
 import arcana.items.components.ArcanaDataComponents;
@@ -14,6 +15,8 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
@@ -52,11 +55,15 @@ public class MagicMirrorBlockEntity extends BlockEntity{
 			entity.setVelocity(facing.getOffsetX() * 0.2, 0, facing.getOffsetZ() * 0.2);
 			world.spawnEntity(entity);
 		}
+		playMirrorEffect((ServerWorld)world, 0.5f);
 	}
 	
 	public void pushItem(ItemStack stack){
-		MagicMirrorQueue.from(getWorld()).push(getTag(), getId(), stack);
-		// TODO: SFX
+		World world = getWorld();
+		MagicMirrorQueue.from(world).push(getTag(), getId(), stack);
+		// TODO: VFX
+		if(world instanceof ServerWorld sw)
+			playMirrorEffect(sw, 1.1f);
 	}
 	
 	public UUID getTag(){
@@ -102,5 +109,9 @@ public class MagicMirrorBlockEntity extends BlockEntity{
 		super.removeFromCopiedStackNbt(nbt);
 		nbt.remove("tag");
 		nbt.remove("m_id");
+	}
+	
+	private void playMirrorEffect(ServerWorld sw, float pitch){
+		sw.playSound(null, pos.getX(), pos.getY(), pos.getZ(), ArcanaSounds.MIRROR_ACCEPT.entry(), SoundCategory.BLOCKS, 0.12f, pitch + sw.random.nextFloat()*0.1f, sw.random.nextLong());
 	}
 }

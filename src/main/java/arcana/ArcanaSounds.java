@@ -14,6 +14,8 @@ public class ArcanaSounds{
 	public static final SoundEvent HURT_PRISMATIC_LIGHT = SoundEvent.of(arcId("hurt_prismatic_light"));
 	public static final SoundEvent HURT_PUTREFACTION = SoundEvent.of(arcId("hurt_putrefaction"));
 	
+	public static final Registerable<SoundEvent> MIRROR_ACCEPT = new Registerable<>(SoundEvent.of(Arcana.arcId("mirror_accept"))).register(Registries.SOUND_EVENT, "mirror_accept");
+	
 	public static void setup(){
 		register(RUNIC_SHIELDING_HIT);
 		register(HURT_BURNING_POWERFUL);

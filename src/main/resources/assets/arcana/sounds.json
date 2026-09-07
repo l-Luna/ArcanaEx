@@ -22,5 +22,11 @@
     "sounds": [
       "arcana:hurt/putrefaction"
     ]
+  },
+  "mirror_accept": {
+    "subtitle": "subtitles.arcana.mirror_accept",
+    "sounds": [
+      "arcana:mirror_accept"
+    ]
   }
 }

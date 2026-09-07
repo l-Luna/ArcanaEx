@@ -10,6 +10,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -36,5 +37,9 @@ public class ArcaneLevitatorBlock extends BlockWithEntity{
 	
 	public BlockRenderType getRenderType(BlockState state){
 		return BlockRenderType.MODEL;
+	}
+	
+	public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random){
+		//
 	}
 }

@@ -20,7 +20,7 @@ public class ArcaneLevitatorBlockEntity extends BlockEntity{
 	public static void tick(World world, BlockPos pos, BlockState state, ArcaneLevitatorBlockEntity levitator){
 		int height = 0;
 		for(int i = 0; i < 5; i++){ // includes this block
-			var local = pos.down(i);
+			BlockPos local = pos.down(i);
 			if(world.getBlockEntity(local) instanceof ArcaneLevitatorBlockEntity && !world.isReceivingRedstonePower(local))
 				height += 10;
 			else
@@ -44,6 +44,13 @@ public class ArcaneLevitatorBlockEntity extends BlockEntity{
 				if(entity.getVelocity().y < targetY)
 					entity.addVelocity(0, .09, 0);
 			}
+		}
+		// particles
+		if(world.getTime() % 5 == 0){
+			// upwind particles exist for up to 16 ticks
+			int amnt = world.random.nextBetween(1, 3);
+			for(int i = 0; i < amnt; i++)
+				world.addParticle(ArcanaRegistry.UPWIND, pos.getX() + world.random.nextFloat(), pos.getY() + 1, pos.getZ() + world.random.nextFloat(), 0, height / 16f * (0.9f + world.random.nextFloat() * 0.2f), 0);
 		}
 	}
 }

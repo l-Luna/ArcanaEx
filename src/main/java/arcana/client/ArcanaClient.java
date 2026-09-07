@@ -250,6 +250,7 @@ public final class ArcanaClient implements ClientModInitializer{
 		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.CLAW, spr -> new SimpleSpriteParticle.Factory(spr, 0, 0).scale(3, 3.4f).shrink(0.02f).lifetime(5, 8));
 		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.CLAW_RUBY, spr -> new SimpleSpriteParticle.Factory(spr, 0, 0).scale(3, 3.4f).shrink(0.02f).lifetime(5, 8));
 		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.PRISM_GLITTER, spr -> new SimpleSpriteParticle.Factory(spr, 0.0125f, 0.09f).scale(0.75f).lifetime(60, 72).shrink(0.001f).randomSprite().randomAngle());
+		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.UPWIND, spr -> new SimpleSpriteParticle.Factory(spr, 0, 0.03f).scale(0.75f).lifetime(16));
 		
 		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.WARDING_EFFECT, u -> new CubeParticle.Factory(u, 1, 1, 1));
 		ParticleFactoryRegistry.getInstance().register(ArcanaRegistry.INFESTED_EFFECT, u -> new CubeParticle.Factory(u, 0.1f, 0.1f, 0.1f));

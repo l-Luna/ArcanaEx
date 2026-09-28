@@ -21,7 +21,18 @@ public class EmiVoidPuttyRepairRecipe extends EmiPatternCraftingRecipe{
 	public static List<EmiIngredient> REPAIRABLES_INGREDIENTS;
 	
 	private static void initRepairables(){
-		REPAIRABLES = Registries.ITEM.stream().map(Item::getDefaultStack).filter(VoidPuttyRepairRecipe::isRepairable).toList();
+		REPAIRABLES = Registries.ITEM.stream()
+				.map(Item::getDefaultStack)
+				.filter(item -> {
+					try{
+						return VoidPuttyRepairRecipe.isRepairable(item);
+					}catch(Exception e){
+						// some mods might not have fully initialised by now (e.g. buddycards) and throw an exception
+						// EMI wraps its repair recipes in a try-catch, and this is only a minor visual effect
+						return false;
+					}
+				})
+				.toList();
 		REPAIRABLES_INGREDIENTS = REPAIRABLES.stream().map(EmiStack::of).map(EmiIngredient.class::cast).toList();
 	}
 	

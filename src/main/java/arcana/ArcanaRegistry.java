@@ -54,6 +54,7 @@ import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityT
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.world.poi.PointOfInterestHelper;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
+import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
 import net.minecraft.block.*;
@@ -455,55 +456,55 @@ public final class ArcanaRegistry{
 			"arcana:silverwood_sapling", Optional.of(RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, arcId("silverwood_tree"))), Optional.empty(), Optional.empty()
 	);
 	public static final Block SILVERWOOD_SAPLING = new SaplingBlock(SILVERWOOD_SAPLING_GEN, of(Material.PLANT).dropsSelf().renderLayer(CUTOUT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
-	public static final Block SILVERWOOD_LOG = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
-	public static final Block SILVERWOOD_LEAVES = new LeavesBlock(of(Material.LEAVES).renderLayer(CUTOUT).strength(.2f).ticksRandomly().sounds(BlockSoundGroup.GRASS).nonOpaque().allowsSpawning(Blocks::canSpawnOnLeaves).suffocates(Blocks::never).blockVision(Blocks::never));
-	public static final Block SILVERWOOD_PLANKS = new Block(of(Material.WOOD).dropsSelf().strength(2, 3).sounds(BlockSoundGroup.WOOD));
+	public static final Block SILVERWOOD_LOG = new PillarBlock(of(Material.WOOD).dropsSelf().flammable(5, 5).usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
+	public static final Block SILVERWOOD_LEAVES = new LeavesBlock(of(Material.LEAVES).renderLayer(CUTOUT).flammable(30, 60).strength(.2f).ticksRandomly().sounds(BlockSoundGroup.GRASS).nonOpaque().allowsSpawning(Blocks::canSpawnOnLeaves).suffocates(Blocks::never).blockVision(Blocks::never));
+	public static final Block SILVERWOOD_PLANKS = new Block(of(Material.WOOD).dropsSelf().flammable(5, 20).strength(2, 3).sounds(BlockSoundGroup.WOOD));
 	
-	public static final Block SILVERWOOD_WOOD = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
-	public static final Block STRIPPED_SILVERWOOD_LOG = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
-	public static final Block STRIPPED_SILVERWOOD_WOOD = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
+	public static final Block SILVERWOOD_WOOD = new PillarBlock(of(Material.WOOD).dropsSelf().flammable(5, 5).usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
+	public static final Block STRIPPED_SILVERWOOD_LOG = new PillarBlock(of(Material.WOOD).dropsSelf().flammable(5, 5).usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
+	public static final Block STRIPPED_SILVERWOOD_WOOD = new PillarBlock(of(Material.WOOD).dropsSelf().flammable(5, 5).usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
 	
-	public static final Block SILVERWOOD_SLAB = new SlabBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
-	public static final Block SILVERWOOD_STAIRS = new StairsBlock(SILVERWOOD_PLANKS.getDefaultState(), of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
-	public static final Block SILVERWOOD_FENCE = new FenceBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
-	public static final Block SILVERWOOD_FENCE_GATE = new FenceGateBlock(ArcanaBlockSetTypes.SILVERWOOD, of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
-	public static final Block SILVERWOOD_PRESSURE_PLATE = new PressurePlateBlock(ArcanaBlockSetTypes.GENERIC_WOOD, of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(.5f).sounds(BlockSoundGroup.WOOD));
-	public static final Block SILVERWOOD_BUTTON = new ButtonBlock(ArcanaBlockSetTypes.GENERIC_WOOD, 30, of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(.5f).noCollision().sounds(BlockSoundGroup.WOOD));
+	public static final Block SILVERWOOD_SLAB = new SlabBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).flammable(5, 20).strength(2).sounds(BlockSoundGroup.WOOD));
+	public static final Block SILVERWOOD_STAIRS = new StairsBlock(SILVERWOOD_PLANKS.getDefaultState(), of(Material.WOOD).dropsSelf().flammable(5, 20).usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
+	public static final Block SILVERWOOD_FENCE = new FenceBlock(of(Material.WOOD).dropsSelf().flammable(5, 20).usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
+	public static final Block SILVERWOOD_FENCE_GATE = new FenceGateBlock(ArcanaBlockSetTypes.SILVERWOOD, of(Material.WOOD).dropsSelf().flammable(5, 20).usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
+	public static final Block SILVERWOOD_PRESSURE_PLATE = new PressurePlateBlock(ArcanaBlockSetTypes.GENERIC_WOOD, of(Material.WOOD).dropsSelf().flammable(5, 20).usesTool(AXE_MINEABLE).strength(.5f).sounds(BlockSoundGroup.WOOD));
+	public static final Block SILVERWOOD_BUTTON = new ButtonBlock(ArcanaBlockSetTypes.GENERIC_WOOD, 30, of(Material.WOOD).dropsSelf().flammable(5, 20).usesTool(AXE_MINEABLE).strength(.5f).noCollision().sounds(BlockSoundGroup.WOOD));
 	
-	public static final Block SILVERWOOD_DOOR = new DoorBlock(ArcanaBlockSetTypes.GENERIC_WOOD, of(Material.WOOD).usesTool(AXE_MINEABLE).renderLayer(CUTOUT).strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque());
-	public static final Block SILVERWOOD_TRAPDOOR = new TrapdoorBlock(ArcanaBlockSetTypes.GENERIC_WOOD, of(Material.WOOD).usesTool(AXE_MINEABLE).renderLayer(CUTOUT).dropsSelf().strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque().allowsSpawning(Blocks::never));
-	public static final Block SILVERWOOD_SIGN = new SignBlock(ArcanaBlockSetTypes.SILVERWOOD, of(Material.WOOD).usesTool(AXE_MINEABLE).renderLayer(CUTOUT).strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque());
-	public static final Block SILVERWOOD_WALL_SIGN = new WallSignBlock(ArcanaBlockSetTypes.SILVERWOOD, of(Material.WOOD).usesTool(AXE_MINEABLE).renderLayer(CUTOUT).dropsLike(SILVERWOOD_SIGN).strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque());
+	public static final Block SILVERWOOD_DOOR = new DoorBlock(ArcanaBlockSetTypes.GENERIC_WOOD, of(Material.WOOD).usesTool(AXE_MINEABLE).flammable(5, 20).renderLayer(CUTOUT).strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque());
+	public static final Block SILVERWOOD_TRAPDOOR = new TrapdoorBlock(ArcanaBlockSetTypes.GENERIC_WOOD, of(Material.WOOD).usesTool(AXE_MINEABLE).flammable(5, 20).renderLayer(CUTOUT).dropsSelf().strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque().allowsSpawning(Blocks::never));
+	public static final Block SILVERWOOD_SIGN = new SignBlock(ArcanaBlockSetTypes.SILVERWOOD, of(Material.WOOD).usesTool(AXE_MINEABLE).flammable(5, 20).renderLayer(CUTOUT).strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque());
+	public static final Block SILVERWOOD_WALL_SIGN = new WallSignBlock(ArcanaBlockSetTypes.SILVERWOOD, of(Material.WOOD).usesTool(AXE_MINEABLE).flammable(5, 20).renderLayer(CUTOUT).dropsLike(SILVERWOOD_SIGN).strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque());
 	
-	public static final Block GLEAMING_SILVERWOOD_PLANKS = new Block(of(Material.WOOD).dropsSelf().strength(2, 3).sounds(BlockSoundGroup.WOOD));
-	public static final Block SOLAR_GLEAMING_SILVERWOOD_PLANKS = new Block(of(Material.WOOD).dropsSelf().strength(2, 3).sounds(BlockSoundGroup.WOOD));
+	public static final Block GLEAMING_SILVERWOOD_PLANKS = new Block(of(Material.WOOD).dropsSelf().flammable(5, 20).strength(2, 3).sounds(BlockSoundGroup.WOOD));
+	public static final Block SOLAR_GLEAMING_SILVERWOOD_PLANKS = new Block(of(Material.WOOD).dropsSelf().flammable(5, 20).strength(2, 3).sounds(BlockSoundGroup.WOOD));
 	
 	public static final SaplingGenerator GREATWOOD_SAPLING_GEN = new SaplingGenerator(
 			"arcana:greatwood_sapling", Optional.of(RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, arcId("greatwood_tree"))), Optional.empty(), Optional.empty()
 	);
 	public static final Block GREATWOOD_SAPLING = new SaplingBlock(GREATWOOD_SAPLING_GEN, of(Material.PLANT).dropsSelf().renderLayer(CUTOUT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
-	public static final Block GREATWOOD_LOG = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
-	public static final Block GREATWOOD_LEAVES = new LeavesBlock(of(Material.LEAVES).renderLayer(CUTOUT).strength(.2f).ticksRandomly().sounds(BlockSoundGroup.GRASS).nonOpaque().allowsSpawning(Blocks::canSpawnOnLeaves).suffocates(Blocks::never).blockVision(Blocks::never));
-	public static final Block GREATWOOD_PLANKS = new Block(of(Material.WOOD).dropsSelf().strength(2, 3).sounds(BlockSoundGroup.WOOD));
+	public static final Block GREATWOOD_LOG = new PillarBlock(of(Material.WOOD).dropsSelf().flammable(5, 5).usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
+	public static final Block GREATWOOD_LEAVES = new LeavesBlock(of(Material.LEAVES).renderLayer(CUTOUT).flammable(30, 60).strength(.2f).ticksRandomly().sounds(BlockSoundGroup.GRASS).nonOpaque().allowsSpawning(Blocks::canSpawnOnLeaves).suffocates(Blocks::never).blockVision(Blocks::never));
+	public static final Block GREATWOOD_PLANKS = new Block(of(Material.WOOD).dropsSelf().flammable(5, 20).strength(2, 3).sounds(BlockSoundGroup.WOOD));
 	
-	public static final Block GREATWOOD_WOOD = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
-	public static final Block STRIPPED_GREATWOOD_LOG = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
-	public static final Block STRIPPED_GREATWOOD_WOOD = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
+	public static final Block GREATWOOD_WOOD = new PillarBlock(of(Material.WOOD).dropsSelf().flammable(5, 5).usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
+	public static final Block STRIPPED_GREATWOOD_LOG = new PillarBlock(of(Material.WOOD).dropsSelf().flammable(5, 5).usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
+	public static final Block STRIPPED_GREATWOOD_WOOD = new PillarBlock(of(Material.WOOD).dropsSelf().flammable(5, 5).usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
 	
-	public static final Block GREATWOOD_SLAB = new SlabBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
-	public static final Block GREATWOOD_STAIRS = new StairsBlock(GREATWOOD_PLANKS.getDefaultState(), of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
-	public static final Block GREATWOOD_FENCE = new FenceBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
-	public static final Block GREATWOOD_FENCE_GATE = new FenceGateBlock(ArcanaBlockSetTypes.GREATWOOD, of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
-	public static final Block GREATWOOD_PRESSURE_PLATE = new PressurePlateBlock(ArcanaBlockSetTypes.GENERIC_WOOD, of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(.5f).sounds(BlockSoundGroup.WOOD));
-	public static final Block GREATWOOD_BUTTON = new ButtonBlock(ArcanaBlockSetTypes.GENERIC_WOOD, 30, of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(.5f).noCollision().sounds(BlockSoundGroup.WOOD));
+	public static final Block GREATWOOD_SLAB = new SlabBlock(of(Material.WOOD).flammable(5, 20).usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
+	public static final Block GREATWOOD_STAIRS = new StairsBlock(GREATWOOD_PLANKS.getDefaultState(), of(Material.WOOD).dropsSelf().flammable(5, 20).usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
+	public static final Block GREATWOOD_FENCE = new FenceBlock(of(Material.WOOD).dropsSelf().flammable(5, 20).usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
+	public static final Block GREATWOOD_FENCE_GATE = new FenceGateBlock(ArcanaBlockSetTypes.GREATWOOD, of(Material.WOOD).dropsSelf().flammable(5, 20).usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD));
+	public static final Block GREATWOOD_PRESSURE_PLATE = new PressurePlateBlock(ArcanaBlockSetTypes.GENERIC_WOOD, of(Material.WOOD).dropsSelf().flammable(5, 20).usesTool(AXE_MINEABLE).strength(.5f).sounds(BlockSoundGroup.WOOD));
+	public static final Block GREATWOOD_BUTTON = new ButtonBlock(ArcanaBlockSetTypes.GENERIC_WOOD, 30, of(Material.WOOD).dropsSelf().flammable(5, 20).usesTool(AXE_MINEABLE).strength(.5f).noCollision().sounds(BlockSoundGroup.WOOD));
 	
-	public static final Block GREATWOOD_DOOR = new DoorBlock(ArcanaBlockSetTypes.GENERIC_WOOD, of(Material.WOOD).usesTool(AXE_MINEABLE).renderLayer(CUTOUT).strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque());
-	public static final Block GREATWOOD_TRAPDOOR = new TrapdoorBlock(ArcanaBlockSetTypes.GENERIC_WOOD, of(Material.WOOD).usesTool(AXE_MINEABLE).renderLayer(CUTOUT).dropsSelf().strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque().allowsSpawning(Blocks::never));
-	public static final Block GREATWOOD_SIGN = new SignBlock(ArcanaBlockSetTypes.GREATWOOD, of(Material.WOOD).usesTool(AXE_MINEABLE).renderLayer(CUTOUT).strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque());
-	public static final Block GREATWOOD_WALL_SIGN = new WallSignBlock(ArcanaBlockSetTypes.GREATWOOD, of(Material.WOOD).usesTool(AXE_MINEABLE).renderLayer(CUTOUT).dropsLike(GREATWOOD_SIGN).strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque());
+	public static final Block GREATWOOD_DOOR = new DoorBlock(ArcanaBlockSetTypes.GENERIC_WOOD, of(Material.WOOD).usesTool(AXE_MINEABLE).flammable(5, 20).renderLayer(CUTOUT).strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque());
+	public static final Block GREATWOOD_TRAPDOOR = new TrapdoorBlock(ArcanaBlockSetTypes.GENERIC_WOOD, of(Material.WOOD).usesTool(AXE_MINEABLE).flammable(5, 20).renderLayer(CUTOUT).dropsSelf().strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque().allowsSpawning(Blocks::never));
+	public static final Block GREATWOOD_SIGN = new SignBlock(ArcanaBlockSetTypes.GREATWOOD, of(Material.WOOD).usesTool(AXE_MINEABLE).flammable(5, 20).renderLayer(CUTOUT).strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque());
+	public static final Block GREATWOOD_WALL_SIGN = new WallSignBlock(ArcanaBlockSetTypes.GREATWOOD, of(Material.WOOD).usesTool(AXE_MINEABLE).flammable(5, 20).renderLayer(CUTOUT).dropsLike(GREATWOOD_SIGN).strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque());
 	
-	public static final Block GLEAMING_GREATWOOD_PLANKS = new Block(of(Material.WOOD).dropsSelf().strength(2, 3).sounds(BlockSoundGroup.WOOD));
-	public static final Block SOLAR_GLEAMING_GREATWOOD_PLANKS = new Block(of(Material.WOOD).dropsSelf().strength(2, 3).sounds(BlockSoundGroup.WOOD));
+	public static final Block GLEAMING_GREATWOOD_PLANKS = new Block(of(Material.WOOD).dropsSelf().flammable(5, 20).strength(2, 3).sounds(BlockSoundGroup.WOOD));
+	public static final Block SOLAR_GLEAMING_GREATWOOD_PLANKS = new Block(of(Material.WOOD).dropsSelf().flammable(5, 20).strength(2, 3).sounds(BlockSoundGroup.WOOD));
 	
 	public static final Block BALANCED_CRYSTAL = new Block(of(Material.AMETHYST, MapColor.WHITE).dropsSelf().usesTool(PICKAXE_MINEABLE).sounds(BlockSoundGroup.AMETHYST_CLUSTER).strength(0.9f).luminance(3));
 	public static final Block BALANCED_CRYSTAL_PILLAR = new CrystalPillarBlock(of(Material.AMETHYST, MapColor.WHITE).usesTool(PICKAXE_MINEABLE).sounds(BlockSoundGroup.AMETHYST_CLUSTER).strength(0.9f).luminance(3));
@@ -511,31 +512,31 @@ public final class ArcanaRegistry{
 	public static final Block NORITE = new Block(of(Material.AMETHYST, MapColor.STONE_GRAY).dropsSelf().requiresTool(PICKAXE_MINEABLE).renderLayer(CUTOUT).sounds(BlockSoundGroup.GILDED_BLACKSTONE).strength(2, 3).luminance(1));
 	public static final Block EXPOSED_NORITE = new Block(of(Material.AMETHYST, MapColor.STONE_GRAY).dropsSelf().requiresTool(PICKAXE_MINEABLE).renderLayer(CUTOUT).sounds(BlockSoundGroup.GILDED_BLACKSTONE).strength(2, 3).luminance(13));
 	
-	public static final Block TAINTWOOD_LOG = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.FUNGUS));
-	public static final Block TAINTWOOD_PLANKS = new Block(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.FUNGUS));
-	public static final Block TAINTWOOD_WOOD = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.FUNGUS));
+	public static final Block TAINTWOOD_LOG = new PillarBlock(of(Material.WOOD).dropsSelf().flammable(5, 5).usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.FUNGUS));
+	public static final Block TAINTWOOD_PLANKS = new Block(of(Material.WOOD).dropsSelf().flammable(5, 20).usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.FUNGUS));
+	public static final Block TAINTWOOD_WOOD = new PillarBlock(of(Material.WOOD).dropsSelf().flammable(5, 5).usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.FUNGUS));
 	
-	public static final Block TAINTWOOD_DOOR = new DoorBlock(ArcanaBlockSetTypes.GENERIC_WOOD, of(Material.WOOD).usesTool(AXE_MINEABLE).group(Tab.TAINTED).renderLayer(CUTOUT).strength(1.6f).sounds(BlockSoundGroup.FUNGUS).nonOpaque());
-	public static final Block TAINTWOOD_TRAPDOOR = new TrapdoorBlock(ArcanaBlockSetTypes.GENERIC_WOOD, of(Material.WOOD).usesTool(AXE_MINEABLE).group(Tab.TAINTED).renderLayer(CUTOUT).dropsSelf().strength(1.6f).sounds(BlockSoundGroup.FUNGUS).nonOpaque().allowsSpawning(Blocks::never));
-	public static final Block TAINTWOOD_SLAB = new SlabBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.FUNGUS));
-	public static final Block TAINTWOOD_STAIRS = new StairsBlock(TAINTWOOD_PLANKS.getDefaultState(), of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(2).sounds(BlockSoundGroup.FUNGUS));
-	public static final Block TAINTWOOD_FENCE = new FenceBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.FUNGUS));
-	public static final Block TAINTWOOD_FENCE_GATE = new FenceGateBlock(ArcanaBlockSetTypes.TAINTWOOD, of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.FUNGUS));
-	public static final Block TAINTWOOD_PRESSURE_PLATE = new PressurePlateBlock(ArcanaBlockSetTypes.GENERIC_WOOD, of(Material.WOOD).dropsSelf().group(Tab.TAINTED).usesTool(AXE_MINEABLE).strength(.5f).sounds(BlockSoundGroup.FUNGUS));
-	public static final Block TAINTWOOD_BUTTON = new ButtonBlock(ArcanaBlockSetTypes.GENERIC_WOOD, 30, of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(.5f).noCollision().sounds(BlockSoundGroup.FUNGUS));
+	public static final Block TAINTWOOD_DOOR = new DoorBlock(ArcanaBlockSetTypes.GENERIC_WOOD, of(Material.WOOD).usesTool(AXE_MINEABLE).flammable(5, 20).group(Tab.TAINTED).renderLayer(CUTOUT).strength(1.6f).sounds(BlockSoundGroup.FUNGUS).nonOpaque());
+	public static final Block TAINTWOOD_TRAPDOOR = new TrapdoorBlock(ArcanaBlockSetTypes.GENERIC_WOOD, of(Material.WOOD).usesTool(AXE_MINEABLE).flammable(5, 20).group(Tab.TAINTED).renderLayer(CUTOUT).dropsSelf().strength(1.6f).sounds(BlockSoundGroup.FUNGUS).nonOpaque().allowsSpawning(Blocks::never));
+	public static final Block TAINTWOOD_SLAB = new SlabBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).flammable(5, 20).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.FUNGUS));
+	public static final Block TAINTWOOD_STAIRS = new StairsBlock(TAINTWOOD_PLANKS.getDefaultState(), of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).flammable(5, 20).group(Tab.TAINTED).strength(2).sounds(BlockSoundGroup.FUNGUS));
+	public static final Block TAINTWOOD_FENCE = new FenceBlock(of(Material.WOOD).dropsSelf().flammable(5, 20).usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.FUNGUS));
+	public static final Block TAINTWOOD_FENCE_GATE = new FenceGateBlock(ArcanaBlockSetTypes.TAINTWOOD, of(Material.WOOD).dropsSelf().flammable(5, 20).usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.FUNGUS));
+	public static final Block TAINTWOOD_PRESSURE_PLATE = new PressurePlateBlock(ArcanaBlockSetTypes.GENERIC_WOOD, of(Material.WOOD).dropsSelf().flammable(5, 20).group(Tab.TAINTED).usesTool(AXE_MINEABLE).strength(.5f).sounds(BlockSoundGroup.FUNGUS));
+	public static final Block TAINTWOOD_BUTTON = new ButtonBlock(ArcanaBlockSetTypes.GENERIC_WOOD, 30, of(Material.WOOD).dropsSelf().flammable(5, 20).usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(.5f).noCollision().sounds(BlockSoundGroup.FUNGUS));
 	
-	public static final Block HOLLOWED_LOG = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.CORAL));
-	public static final Block HOLLOWED_PLANKS = new Block(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f, 3).sounds(BlockSoundGroup.CORAL));
-	public static final Block HOLLOWED_WOOD = new PillarBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.CORAL));
+	public static final Block HOLLOWED_LOG = new PillarBlock(of(Material.WOOD).dropsSelf().flammable(5, 5).usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.CORAL));
+	public static final Block HOLLOWED_PLANKS = new Block(of(Material.WOOD).dropsSelf().flammable(5, 20).usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f, 3).sounds(BlockSoundGroup.CORAL));
+	public static final Block HOLLOWED_WOOD = new PillarBlock(of(Material.WOOD).dropsSelf().flammable(5, 5).usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.CORAL));
 	
-	public static final Block HOLLOWED_DOOR = new DoorBlock(ArcanaBlockSetTypes.GENERIC_WOOD, of(Material.WOOD).usesTool(AXE_MINEABLE).group(Tab.TAINTED).renderLayer(CUTOUT).strength(1.6f).sounds(BlockSoundGroup.CORAL).nonOpaque());
-	public static final Block HOLLOWED_TRAPDOOR = new TrapdoorBlock(ArcanaBlockSetTypes.GENERIC_WOOD, of(Material.WOOD).usesTool(AXE_MINEABLE).group(Tab.TAINTED).renderLayer(CUTOUT).dropsSelf().strength(1.6f).sounds(BlockSoundGroup.CORAL).nonOpaque().allowsSpawning(Blocks::never));
-	public static final Block HOLLOWED_SLAB = new SlabBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.CORAL));
-	public static final Block HOLLOWED_STAIRS = new StairsBlock(HOLLOWED_PLANKS.getDefaultState(), of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(2).sounds(BlockSoundGroup.CORAL));
-	public static final Block HOLLOWED_FENCE = new FenceBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.CORAL));
-	public static final Block HOLLOWED_FENCE_GATE = new FenceGateBlock(ArcanaBlockSetTypes.HOLLOWED, of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.CORAL));
-	public static final Block HOLLOWED_PRESSURE_PLATE = new PressurePlateBlock(ArcanaBlockSetTypes.GENERIC_WOOD, of(Material.WOOD).dropsSelf().group(Tab.TAINTED).usesTool(AXE_MINEABLE).strength(.5f).sounds(BlockSoundGroup.CORAL));
-	public static final Block HOLLOWED_BUTTON = new ButtonBlock(ArcanaBlockSetTypes.GENERIC_WOOD, 30, of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(.5f).noCollision().sounds(BlockSoundGroup.CORAL));
+	public static final Block HOLLOWED_DOOR = new DoorBlock(ArcanaBlockSetTypes.GENERIC_WOOD, of(Material.WOOD).usesTool(AXE_MINEABLE).flammable(5, 20).group(Tab.TAINTED).renderLayer(CUTOUT).strength(1.6f).sounds(BlockSoundGroup.CORAL).nonOpaque());
+	public static final Block HOLLOWED_TRAPDOOR = new TrapdoorBlock(ArcanaBlockSetTypes.GENERIC_WOOD, of(Material.WOOD).usesTool(AXE_MINEABLE).flammable(5, 20).group(Tab.TAINTED).renderLayer(CUTOUT).dropsSelf().strength(1.6f).sounds(BlockSoundGroup.CORAL).nonOpaque().allowsSpawning(Blocks::never));
+	public static final Block HOLLOWED_SLAB = new SlabBlock(of(Material.WOOD).usesTool(AXE_MINEABLE).flammable(5, 20).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.CORAL));
+	public static final Block HOLLOWED_STAIRS = new StairsBlock(HOLLOWED_PLANKS.getDefaultState(), of(Material.WOOD).dropsSelf().flammable(5, 20).usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(2).sounds(BlockSoundGroup.CORAL));
+	public static final Block HOLLOWED_FENCE = new FenceBlock(of(Material.WOOD).dropsSelf().flammable(5, 20).usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.CORAL));
+	public static final Block HOLLOWED_FENCE_GATE = new FenceGateBlock(ArcanaBlockSetTypes.HOLLOWED, of(Material.WOOD).dropsSelf().flammable(5, 20).usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(1.2f).sounds(BlockSoundGroup.CORAL));
+	public static final Block HOLLOWED_PRESSURE_PLATE = new PressurePlateBlock(ArcanaBlockSetTypes.GENERIC_WOOD, of(Material.WOOD).dropsSelf().flammable(5, 20).group(Tab.TAINTED).usesTool(AXE_MINEABLE).strength(.5f).sounds(BlockSoundGroup.CORAL));
+	public static final Block HOLLOWED_BUTTON = new ButtonBlock(ArcanaBlockSetTypes.GENERIC_WOOD, 30, of(Material.WOOD).dropsSelf().flammable(5, 20).usesTool(AXE_MINEABLE).group(Tab.TAINTED).strength(.5f).noCollision().sounds(BlockSoundGroup.CORAL));
 	
 	public static final Block VISHROOM = new SizedPlantBlock(of(Material.PLANT).dropsSelf().renderLayer(CUTOUT).sounds(BlockSoundGroup.GRASS).noCollision().breakInstantly().offset(AbstractBlock.OffsetType.XZ), 14, 14);
 	public static final Block CORDISPORA = new SizedPlantBlock(of(Material.PLANT).dropsSelf().renderLayer(CUTOUT).sounds(BlockSoundGroup.GRASS).noCollision().breakInstantly().offset(AbstractBlock.OffsetType.XZ), 6, 6);
@@ -553,9 +554,9 @@ public final class ArcanaRegistry{
 	
 	public static final Block VOID_GROWTH = new Block(of(Material.PLANT).renderLayer(CUTOUT).nonOpaque().noCollision().breakInstantly().sounds(BlockSoundGroup.FROGSPAWN));
 	
-	public static final WoodenStatueBlock SPEAK_NO_EVIL_STATUE = new WoodenStatueBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD).nonOpaque(), WoodenStatueBlock.Type.SPEAK);
-	public static final WoodenStatueBlock SEE_NO_EVIL_STATUE = new WoodenStatueBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD).nonOpaque(), WoodenStatueBlock.Type.SEE);
-	public static final WoodenStatueBlock HEAR_NO_EVIL_STATUE = new WoodenStatueBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD).nonOpaque(), WoodenStatueBlock.Type.HEAR);
+	public static final WoodenStatueBlock SPEAK_NO_EVIL_STATUE = new WoodenStatueBlock(of(Material.WOOD).dropsSelf().flammable(5, 20).usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD).nonOpaque(), WoodenStatueBlock.Type.SPEAK);
+	public static final WoodenStatueBlock SEE_NO_EVIL_STATUE = new WoodenStatueBlock(of(Material.WOOD).dropsSelf().flammable(5, 20).usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD).nonOpaque(), WoodenStatueBlock.Type.SEE);
+	public static final WoodenStatueBlock HEAR_NO_EVIL_STATUE = new WoodenStatueBlock(of(Material.WOOD).dropsSelf().flammable(5, 20).usesTool(AXE_MINEABLE).strength(2).sounds(BlockSoundGroup.WOOD).nonOpaque(), WoodenStatueBlock.Type.HEAR);
 	public static final StoneVaseBlock STONE_VASE = new StoneVaseBlock(of(Material.STONE).dropsSelf().usesTool(PICKAXE_MINEABLE).strength(2).nonOpaque());
 	
 	public static final Block CRIMSON_LANTERN = new CrimsonLanternBlock(of(Material.METAL).renderLayer(CUTOUT).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3.5f).sounds(BlockSoundGroup.LANTERN).luminance(12).nonOpaque());
@@ -1398,6 +1399,12 @@ public final class ArcanaRegistry{
 	private static void registerBlock(String name, Block block, boolean andItem){
 		Registry.register(Registries.BLOCK, arcId(name), block);
 		BLOCKS.add(block);
+		if(block.getSettings() instanceof ArcanaBlockSettings abs){
+			FlammableBlockRegistry.Entry flammability = abs.getFlammability();
+			if(flammability != null)
+				FlammableBlockRegistry.getDefaultInstance().add(block, flammability.getBurnChance(), flammability.getSpreadChance());
+		}
+		
 		if(andItem){
 			ArcanaItemSettings settings = new ArcanaItemSettings().group(Tab.MAIN);
 			if(block.getSettings() instanceof ArcanaBlockSettings abs && abs.getGroup() != null)

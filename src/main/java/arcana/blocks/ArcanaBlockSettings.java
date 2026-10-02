@@ -1,6 +1,7 @@
 package arcana.blocks;
 
 import arcana.ArcanaRegistry;
+import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.MapColor;
@@ -15,6 +16,7 @@ public class ArcanaBlockSettings extends AbstractBlock.Settings{
 	private BlockLayer renderLayer = null;
 	private TagKey<Block> toolTag = null;
 	private ArcanaRegistry.Tab group = null;
+	private FlammableBlockRegistry.Entry flammableData = null;
 	
 	protected ArcanaBlockSettings(MapColor color){
 		super();
@@ -53,6 +55,11 @@ public class ArcanaBlockSettings extends AbstractBlock.Settings{
 	public ArcanaBlockSettings requiresTool(TagKey<Block> toolTag){
 		this.toolTag = toolTag;
 		requiresTool();
+		return this;
+	}
+	
+	public ArcanaBlockSettings flammable(int burn, int spread){
+		this.flammableData = new FlammableBlockRegistry.Entry(burn, spread);
 		return this;
 	}
 	
@@ -97,6 +104,10 @@ public class ArcanaBlockSettings extends AbstractBlock.Settings{
 	
 	public ArcanaRegistry.Tab getGroup(){
 		return group;
+	}
+	
+	public FlammableBlockRegistry.Entry getFlammability(){
+		return flammableData;
 	}
 	
 	//

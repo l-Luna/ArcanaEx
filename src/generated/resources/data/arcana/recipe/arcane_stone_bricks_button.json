@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    {
+      "item": "arcana:arcane_stone_bricks"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "arcana:arcane_stone_bricks_button"
+  }
+}

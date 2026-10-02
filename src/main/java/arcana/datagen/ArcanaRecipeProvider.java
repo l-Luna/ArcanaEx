@@ -11,7 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.resource.featuretoggle.FeatureSet;
+import net.minecraft.resource.featuretoggle.FeatureFlags;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -38,7 +38,7 @@ public class ArcanaRecipeProvider extends FabricRecipeProvider{
 		offerBarkBlockRecipe(exporter, HOLLOWED_WOOD, HOLLOWED_LOG);
 		
 		for(BlockFamily family : ArcanaBlockFamilies.ALL)
-			generateFamily(exporter, family, FeatureSet.empty());
+			generateFamily(exporter, family, FeatureFlags.VANILLA_FEATURES);
 		
 		offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ARCANE_STONE_BRICKS, ARCANE_STONE);
 		offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ARCANE_STONE_TILES, ARCANE_STONE);

@@ -734,8 +734,11 @@
         {
           "type": "text",
           "content": "research.arcana.runic_shielding_enchantment.text"
+        },
+        {
+          "type": "infusion",
+          "content": "arcana:enchantments/runic_shielding"
         }
-        // TODO
       ]
     },
 
@@ -818,6 +821,44 @@
         {
           "type": "infusion",
           "content": "arcana:boots_of_the_sailor"
+        }
+      ]
+    },
+    {
+      "key": "arcana:tmp/infusion_enchantments",
+      "name": "research.arcana.infusion_enchantments.title",
+      "icons": [
+        "minecraft:enchanted_book"
+      ],
+      "category": "arcana:artifice",
+      "parents": [
+        "arcana:tmp/study_of_infusion"
+      ],
+      "meta": [
+        "tmp_base"
+      ],
+      "x": -8,
+      "y": 4,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.infusion_enchantments.text"
+        },
+        {
+          "type": "infusion",
+          "content": "arcana:enchantments/projecting"
+        },
+        {
+          "type": "infusion",
+          "content": "arcana:enchantments/mending"
+        },
+        {
+          "type": "infusion",
+          "content": "arcana:enchantments/soul_speed"
+        },
+        {
+          "type": "infusion",
+          "content": "arcana:enchantments/swift_sneak"
         }
       ]
     },

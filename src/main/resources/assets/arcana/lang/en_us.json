@@ -712,7 +712,11 @@
 
     "purifying.recipe": "Arcane Enchantment: Purifying",
     "transmutative.recipe": "Arcane Enchantment: Transmutative",
-    "runic_shielding.recipe": "Arcane Enchantment: Runic Shielding"
+    "runic_shielding.recipe": "Infusion Enchantment: Runic Shielding",
+    "projecting.recipe": "Infusion Enchantment: Projecting",
+    "mending.recipe": "Infusion Enchantment: Mending",
+    "soul_speed.recipe": "Infusion Enchantment: Soul Speed",
+    "swift_sneak.recipe": "Infusion Enchantment: Swift Sneak"
   },
 
   // Entities
@@ -1504,12 +1508,12 @@
 
     "amulet_of_runic_shielding": {
       "title": "Amulet of Runic Shielding",
-      "text": "The Amulet of Runic Shielding straightforwardly provides two points of runic shielding. "
+      "text": "The Amulet of Runic Shielding straightforwardly provides two points of runic shielding."
     },
 
     "runic_shielding_enchantment": {
       "title": "Infusion Enchantment: Runic Shielding",
-      "text": "Each level of the Runic Shielding enchantment grants half a point of Runic Shielding. Half-points provided this way add up, so two pieces with Runic Shielding I provide one full point. The maximum level is III.\n(Proper infusion enchanting doesn't exist yet, so this will do.)"
+      "text": "Each level of the Runic Shielding enchantment grants half a point of Runic Shielding. Half-points provided this way add up, so two pieces with Runic Shielding I provide one full point. The maximum level is III."
     },
 
     "active_runic_shielding": {
@@ -1532,6 +1536,11 @@
       "title": "Boots of the Sailor",
       "desc": "These boots are made for swimming",
       "text": "The Boots of the Sailor inherit the behaviour of the Traveller's, as well as allowing me to walk on water."
+    },
+
+    "infusion_enchantments": {
+      "title": "Infusion Enchanting",
+      "text": "Some enchantments are very difficult to source, either due to rarity or being tangled up with curses. Reproducing them with simpler magic has been fruitless, but infusion seems to do the trick.\nInfusion enchanting applies an enchantment directly to an item, which should be placed on the central pedestal of the recipe.\nThe amount of essentia and other items required {u}doubles{r} each time an infusion enchantment is performed, and the level of the corresponding enchantment on the item increases by one. The process' instability also increases each level."
     },
 
     "aura_tampering": {

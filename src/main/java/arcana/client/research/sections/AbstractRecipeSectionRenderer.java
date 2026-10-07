@@ -14,6 +14,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.Recipe;
+import net.minecraft.recipe.RecipeEntry;
 
 import java.util.Optional;
 
@@ -27,10 +28,9 @@ public abstract class AbstractRecipeSectionRenderer<T extends AbstractRecipeSect
 	public void render(DrawContext ctx, T section, int pageIdx, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right){
 		ClientWorld world = client().world;
 		world.getRecipeManager().get(section.getRecipeId()).ifPresent(recipe -> {
-			ItemStack result = recipe.value().getResult(world.getRegistryManager());
 			Optional<String> overrideName = recipe.value() instanceof RenamableRecipe rr ? rr.getTranslationKey() : Optional.empty();
 			overrideName = overrideName.map(I18n::translate);
-			renderResult(ctx, result, overrideName, right ? pageX + rightXOffset : pageX, pageY, screenWidth, screenHeight, section);
+			renderResult(ctx, getRecipeResult(recipe, world), overrideName, right ? pageX + rightXOffset : pageX, pageY, screenWidth, screenHeight, section);
 			renderRecipe(ctx, recipe.value(), section, pageIdx, screenWidth, screenHeight, mouseX, mouseY, right);
 		});
 	}
@@ -38,8 +38,7 @@ public abstract class AbstractRecipeSectionRenderer<T extends AbstractRecipeSect
 	public void renderAfter(DrawContext matrices, T section, int pageIdx, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right){
 		ClientWorld world = client().world;
 		world.getRecipeManager().get(section.getRecipeId()).ifPresent(recipe -> {
-			ItemStack result = recipe.value().getResult(world.getRegistryManager());
-			renderResultTooltip(matrices, result, right ? pageX + rightXOffset : pageX, pageY, mouseX, mouseY, screenWidth, screenHeight);
+			renderResultTooltip(matrices, getRecipeResult(recipe, world), right ? pageX + rightXOffset : pageX, pageY, mouseX, mouseY, screenWidth, screenHeight);
 			renderRecipeTooltips(matrices, recipe.value(), section, pageIdx, screenWidth, screenHeight, mouseX, mouseY, right);
 		});
 	}
@@ -89,6 +88,10 @@ public abstract class AbstractRecipeSectionRenderer<T extends AbstractRecipeSect
 		int rX = x + (screenWidth - 256) / 2 + (pageWidth - 58) / 2 + 21;
 		int rY = y + (screenHeight - bgHeight) / 2 + 18 - heightOffset;
 		tooltipArea(ctx, stack, mouseX, mouseY, rX, rY);
+	}
+	
+	protected ItemStack getRecipeResult(RecipeEntry<?> recipe, ClientWorld world){
+		return recipe.value().getResult(world.getRegistryManager());
 	}
 	
 	protected int displayIdx(int max){

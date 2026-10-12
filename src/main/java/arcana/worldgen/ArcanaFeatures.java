@@ -61,7 +61,7 @@ public final class ArcanaFeatures{
 				BiomeSelectors.spawnsOneOf(EntityType.ZOMBIE).and(BiomeSelectors.tag(ArcanaTags.ZOMBIE_THAUMATURGE_SPAWN_BLACKLIST).negate()),
 				SpawnGroup.MONSTER,
 				ArcanaRegistry.ZOMBIE_THAUMATURGE,
-				1, 1, 1
+				5, 1, 1
 		);
 	}
 }

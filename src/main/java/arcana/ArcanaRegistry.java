@@ -51,6 +51,7 @@ import dev.emi.trinkets.api.TrinketsAttributeModifiersComponent;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityType;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.world.poi.PointOfInterestHelper;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
@@ -64,12 +65,14 @@ import net.minecraft.component.type.FoodComponent;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
+import net.minecraft.entity.SpawnLocationTypes;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.fluid.FlowableFluid;
 import net.minecraft.fluid.Fluid;
@@ -91,6 +94,7 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.text.Text;
 import net.minecraft.util.ColorCode;
 import net.minecraft.util.Rarity;
+import net.minecraft.world.Heightmap;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.foliage.FoliagePlacerType;
 import net.minecraft.world.gen.placementmodifier.PlacementModifierType;
@@ -721,12 +725,12 @@ public final class ArcanaRegistry{
 			.fireImmune()
 			.build();
 	
-	public static final EntityType<ZombieThaumaturgeEntity> ZOMBIE_THAUMATURGE = FabricEntityTypeBuilder
-			.createLiving()
-			.entityFactory(ZombieThaumaturgeEntity::new)
-			.spawnGroup(SpawnGroup.MONSTER)
-			.defaultAttributes(ZombieThaumaturgeEntity::createAttributes)
-			.dimensions(EntityDimensions.fixed(0.6f, 1.8f).withEyeHeight(1.74f))
+	public static final EntityType<ZombieThaumaturgeEntity> ZOMBIE_THAUMATURGE = FabricEntityType.Builder
+			.createMob(ZombieThaumaturgeEntity::new, SpawnGroup.MONSTER, it -> it
+					.defaultAttributes(ZombieThaumaturgeEntity::createAttributes)
+					.spawnRestriction(SpawnLocationTypes.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, HostileEntity::canSpawnInDark))
+			.dimensions(0.6f, 1.8f)
+			.eyeHeight(1.74f)
 			.build();
 	
 	public static final EntityType<CrimsonKnightEntity> CRIMSON_KNIGHT = FabricEntityTypeBuilder

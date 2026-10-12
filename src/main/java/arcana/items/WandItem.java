@@ -314,7 +314,7 @@ public class WandItem extends Item implements FabricItem, WarpingItem, CustomCre
 	}
 	
 	public static WandDataComponent dataFrom(ItemStack stack){
-		return stack.get(ArcanaDataComponents.WAND_DATA);
+		return stack.getOrDefault(ArcanaDataComponents.WAND_DATA, WandDataComponent.createDefault());
 	}
 	
 	public int warping(ItemStack stack, PlayerEntity player){

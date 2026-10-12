@@ -78,6 +78,7 @@ public class ZombieThaumaturgeEntity extends HostileEntity implements GeoEntity{
 	
 	public static DefaultAttributeContainer.Builder createAttributes(){
 		return HostileEntity.createHostileAttributes()
+				.add(EntityAttributes.GENERIC_MAX_HEALTH, 16)
 				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.2f)
 				.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 3)
 				.add(EntityAttributes.GENERIC_ARMOR, 2)
@@ -177,7 +178,7 @@ public class ZombieThaumaturgeEntity extends HostileEntity implements GeoEntity{
 		public void cancel(ZombieThaumaturgeEntity entity){
 			ChargedAttack.super.cancel(entity);
 			if(entity.getCurProjectile() instanceof MagicOrbEntity orb)
-				orb.burst();
+				orb.discard();
 			entity.setCurProjectile(null);
 		}
 	}

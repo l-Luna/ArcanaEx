@@ -2,8 +2,10 @@ package arcana.entities;
 
 import arcana.ArcanaDamageSources;
 import arcana.ArcanaRegistry;
-import arcana.util.SearchUtil;
 import net.minecraft.block.AbstractFireBlock;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.FireBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -35,15 +37,15 @@ public class FlameOrbEntity extends MagicOrbEntity{
 				getPos().getY(),
 				getPos().getZ(),
 				20, 0.1, 0.1, 0.1, 0.02f);
-		// randomly placed fire
-		for(int i = 0; i < 2; i++){
-			SearchUtil.vRandomSearch(sw, getBlockPos(), 3, 3, 6, (where, what) -> {
-				BlockPos up = where.up();
-				if(what.isAir() || !what.getFluidState().isEmpty() || !sw.getBlockState(up).isAir())
-					return false;
-				sw.setBlockState(up, AbstractFireBlock.getState(sw, up));
-				return true;
-			});
+		// weak fire
+		BlockPos here = getBlockPos();
+		if(sw.getBlockState(here).isAir()){
+			BlockState fireState = AbstractFireBlock.getState(sw, here);
+			if(fireState.canPlaceAt(sw, here)){
+				if(fireState.isOf(Blocks.FIRE))
+					fireState = fireState.with(FireBlock.AGE, 15);
+				sw.setBlockState(here, fireState);
+			}
 		}
 		super.burst();
 	}

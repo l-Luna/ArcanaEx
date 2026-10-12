@@ -36,7 +36,7 @@ public class MysticMistBlockEntity extends BlockEntity implements AspectIo{
 	
 	public static final int
 			capacity = 6,
-			baseAspectTime = 40,
+			baseAspectTime = 400,
 			radius = 16;
 	public static final List<Aspect> weatherAspects = List.of(
 			Aspects.WATER,
@@ -48,10 +48,6 @@ public class MysticMistBlockEntity extends BlockEntity implements AspectIo{
 	
 	public @Nullable AspectStack stored;
 	public int timer = 0, vspace;
-	
-	// transient
-	// public Aspect lastAspect;
-	// public float lerp;
 	
 	public MysticMistBlockEntity(BlockPos pos, BlockState state){
 		super(ArcanaRegistry.MYSTIC_MIST_BE, pos, state);

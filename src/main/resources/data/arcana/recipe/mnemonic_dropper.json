@@ -26,7 +26,7 @@
     "SCS"
   ],
   "result": {
-    "id": "arcana:knowledgeable_dropper"
+    "id": "arcana:mnemonic_dropper"
   },
   "aspects": [
     "30*order",

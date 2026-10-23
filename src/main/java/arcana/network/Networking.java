@@ -24,6 +24,7 @@ public final class Networking{
 		
 		context.register(PkChemistryClick.class);
 		context.register(PkChemistryCombineAspects.class);
+		context.register(PkUiRequest.class);
 		
 		context.register(PkSwapFocus.class);
 		context.register(PkEntityStatusEx.class);

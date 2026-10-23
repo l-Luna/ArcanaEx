@@ -242,6 +242,10 @@ public class RenderHelper{
 		drawTinyNumbers(ctx, str, x, y, 1, 1, 1, 1);
 	}
 	
+	public static void drawTinyNumbers(DrawContext ctx, String str, int x, int y, int colorPacked){
+		drawTinyNumbers(ctx, str, x, y, ColorHelper.Argb.getRed(colorPacked)/255f, ColorHelper.Argb.getGreen(colorPacked)/255f, ColorHelper.Argb.getBlue(colorPacked)/255f, 1);
+	}
+	
 	public static void drawTinyNumbers(DrawContext ctx, String str, int x, int y, float r, float g, float b, float a){
 		RenderSystem.setShaderTexture(0, TINY_NUMBERS);
 		for(int p = 0; p < 2; p++){

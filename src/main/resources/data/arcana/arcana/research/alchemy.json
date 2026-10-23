@@ -436,7 +436,7 @@
       "name": "research.arcana.automated_alchemy",
       "desc": "research.arcana.automated_alchemy.desc",
       "icons": [
-        "arcana:knowledgeable_dropper"
+        "arcana:mnemonic_dropper"
       ],
       "category": "arcana:alchemy",
       "parents": [
@@ -478,7 +478,7 @@
         },
         {
           "type": "arcane_crafting",
-          "content": "arcana:knowledgeable_dropper"
+          "content": "arcana:mnemonic_dropper"
         }
       ]
     },

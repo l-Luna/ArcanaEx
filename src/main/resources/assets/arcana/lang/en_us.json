@@ -426,7 +426,7 @@
     "crucible": "Crucible",
     "aware_crucible": "Aware Crucible",
     "research_table": "Research Table",
-    "knowledgeable_dropper": "Aware Dropper",
+    "mnemonic_dropper": "Mnemonic Dropper",
 
     "arcane_furnace": "Arcane Furnace",
     "alembic": "Alembic",
@@ -994,7 +994,17 @@
 
   // Other UIs
   "container.arcana": {
-    "knowledgeable_dropper": "Aware Dropper",
+    "mnemonic": {
+      "remembers": "Remembers {}",
+      "clear_hint": "Right-click to clear"
+    },
+    "mnemonic_dropper": {
+      "title": "Mnemonic Dropper",
+      "drop_0": "Slot ignored",
+      "drop_1": "Dropping 1 item",
+      "drop_n": "Dropping {} items",
+      "scroll_hint": "Scroll to change"
+    },
     "arcane_furnace": "Arcane Furnace"
   },
 

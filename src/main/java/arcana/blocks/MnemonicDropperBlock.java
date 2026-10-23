@@ -8,13 +8,11 @@ import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.dispenser.DispenserBehavior;
 import net.minecraft.block.dispenser.ItemDispenserBehavior;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.DispenserBlockEntity;
 import net.minecraft.block.entity.HopperBlockEntity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.math.BlockPointer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -38,31 +36,46 @@ public class MnemonicDropperBlock extends DispenserBlock{
 	
 	// from DropperBlock
 	protected void dispense(ServerWorld world, BlockState state, BlockPos pos){
-		DispenserBlockEntity be = world.getBlockEntity(pos, ArcanaRegistry.MNEMONIC_DROPPER_BE).orElseThrow();
+		MnemonicDropperBlockEntity be = world.getBlockEntity(pos, ArcanaRegistry.MNEMONIC_DROPPER_BE).orElseThrow();
 		BlockPointer pointer = new BlockPointer(world, pos, state, be);
-		int i = be.chooseNonEmptySlot(world.random);
-		if(i < 0)
-			world.syncWorldEvent(WorldEvents.DISPENSER_FAILS, pos, 0);
-		else{
-			ItemStack stack = be.getStack(i);
-			if(!stack.isEmpty()){
-				Direction direction = world.getBlockState(pos).get(FACING);
-				Inventory inventory = HopperBlockEntity.getInventoryAt(world, pos.offset(direction));
-				ItemStack itemStack2;
-				if(inventory == null)
-					itemStack2 = BEHAVIOR.dispense(pointer, stack);
-				else{
-					itemStack2 = HopperBlockEntity.transfer(be, inventory, stack.copy().split(1), direction.getOpposite());
-					if(itemStack2.isEmpty()){
-						itemStack2 = stack.copy();
-						itemStack2.decrement(1);
-					}else
-						itemStack2 = stack.copy();
-				}
-				
-				be.setStack(i, itemStack2);
+		int oldIdx = be.getDropIndex();
+		int idx = be.getDropIndex();
+		int count = be.getDropCount(idx);
+		// skip to the first non-0 slot, fail if revisiting original slot
+		while(count == 0){
+			idx = (idx + 1) % 9;
+			if(idx == oldIdx){
+				world.syncWorldEvent(WorldEvents.DISPENSER_FAILS, pos, 0);
+				return;
 			}
+			count = be.getDropCount(idx);
 		}
+		// ensure that the right count is used when dispensing
+		be.setDropIndex(idx);
+		ItemStack stack = be.getStack(idx);
+		// then attempt to dispense
+		if(!stack.isEmpty() && stack.getCount() >= count){
+			Direction direction = world.getBlockState(pos).get(FACING);
+			Inventory inventory = HopperBlockEntity.getInventoryAt(world, pos.offset(direction));
+			ItemStack leftover;
+			if(inventory == null)
+				leftover = BEHAVIOR.dispense(pointer, stack);
+			else{
+				// only attempt to transfer up to `count`
+				ItemStack overflow = HopperBlockEntity.transfer(be, inventory, stack.copy().split(count), direction.getOpposite());
+				// subtract the amount that was *successfully* transferred from the total
+				int transferred = count - overflow.getCount();
+				leftover = stack.copy();
+				leftover.decrement(transferred);
+			}
+			
+			// move to next slot after dispensing, try to move to a full one
+			do{
+				be.setDropIndex((be.getDropIndex() + 1) % 9);
+			}while(be.getDropCount(be.getDropIndex()) == 0);
+			be.setStack(idx, leftover);
+		}else
+			world.syncWorldEvent(WorldEvents.DISPENSER_FAILS, pos, 0);
 	}
 	
 	protected DispenserBehavior getBehaviorForItem(World world, ItemStack stack){
@@ -73,23 +86,14 @@ public class MnemonicDropperBlock extends DispenserBlock{
 		return new MnemonicDropperBlockEntity(pos, state);
 	}
 	
-	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved){
-		if(!state.isOf(newState.getBlock()))
-			if(world.getBlockEntity(pos) instanceof MnemonicDropperBlockEntity be)
-				ItemScatterer.spawn(world, pos, be.getTomeSlot());
-		
-		super.onStateReplaced(state, world, pos, newState, moved);
-	}
-	
 	public static class Behaviour extends ItemDispenserBehavior{
 		
 		// from ItemDispenserBehavior
-		// reduce variance & attach source position
 		protected ItemStack dispenseSilently(BlockPointer pointer, ItemStack stack){
 			Direction direction = pointer.state().get(DispenserBlock.FACING);
-			Position position = DispenserBlock.getOutputLocation(pointer);
-			ItemStack itemStack = stack.split(1);
-			spawnItem(pointer, itemStack, 6, direction, position);
+			MnemonicDropperBlockEntity be = (MnemonicDropperBlockEntity)pointer.blockEntity();
+			ItemStack split = stack.split(be.getDropCount(be.getDropIndex()));
+			spawnItem(pointer, split, 6, direction, DispenserBlock.getOutputLocation(pointer));
 			return stack;
 		}
 		
@@ -104,11 +108,11 @@ public class MnemonicDropperBlock extends DispenserBlock{
 				y -= 0.15625;
 			
 			ItemEntity entity = new ItemEntity(world, x, y, z, stack);
-			double rand = world.random.nextDouble() * 0.07 + 0.1;
+			double base = 0.12;
 			entity.setVelocity(
-					world.random.nextTriangular((double)side.getOffsetX() * rand, 0.005 * (double)speed),
-					world.random.nextTriangular(0.2, 0.017 * (double)speed),
-					world.random.nextTriangular((double)side.getOffsetZ() * rand, 0.005 * (double)speed)
+					world.random.nextTriangular((double)side.getOffsetX() * base, 0.003 * (double)speed),
+					world.random.nextTriangular(0.2, 0.008 * (double)speed),
+					world.random.nextTriangular((double)side.getOffsetZ() * base, 0.003 * (double)speed)
 			);
 			world.spawnEntity(entity);
 		}

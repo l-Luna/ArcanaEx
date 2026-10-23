@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "arcana:block/mnemonic_dropper"
+    },
+    "facing=south": {
+      "model": "arcana:block/mnemonic_dropper",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "arcana:block/mnemonic_dropper",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "arcana:block/mnemonic_dropper",
+      "y": 270
+    },
+    "facing=up": {
+      "model": "arcana:block/mnemonic_dropper",
+      "x": 270
+    },
+    "facing=down": {
+      "model": "arcana:block/mnemonic_dropper",
+      "x": 90
+    }
+  }
+}

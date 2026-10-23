@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "north": "arcana:block/mnemonic_dropper/front",
+    "south": "arcana:block/mnemonic_dropper/back",
+    "east": "arcana:block/mnemonic_dropper/side",
+    "west": "arcana:block/mnemonic_dropper/side",
+    "up": "arcana:block/mnemonic_dropper/top",
+    "down": "arcana:block/mnemonic_dropper/bottom",
+    "particle": "arcana:block/mnemonic_dropper/front"
+  }
+}

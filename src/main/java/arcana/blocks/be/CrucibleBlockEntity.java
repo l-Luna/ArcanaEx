@@ -40,7 +40,7 @@ import static arcana.blocks.CrucibleBlock.INSIDE;
 
 public class CrucibleBlockEntity extends BlockEntity{
 	
-	private static final int MAX_CAPACITY = 500, SOFT_MAX_CAPACITY = 300;
+	private static final int MAX_CAPACITY = 300, SOFT_MAX_CAPACITY = 150;
 	
 	private AspectMap aspects = new AspectMap();
 	

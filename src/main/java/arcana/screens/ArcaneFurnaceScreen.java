@@ -25,7 +25,7 @@ import static arcana.Arcana.arcId;
 
 public class ArcaneFurnaceScreen extends HandledScreen<ArcaneFurnaceScreen.Handler>{
 	
-	private static final Identifier texture = arcId("textures/gui/container/arcane_furnace.png");
+	private static final Identifier TEXTURE = arcId("textures/gui/container/arcane_furnace.png");
 	
 	public ArcaneFurnaceScreen(Handler handler, PlayerInventory inventory, Text title){
 		super(handler, inventory, title);
@@ -34,34 +34,33 @@ public class ArcaneFurnaceScreen extends HandledScreen<ArcaneFurnaceScreen.Handl
 	protected void init(){
 		backgroundHeight = 163;
 		super.init();
-		titleY = (backgroundWidth - textRenderer.getWidth(title)) / 2;
 	}
 	
 	protected void drawBackground(DrawContext ctx, float delta, int mouseX, int mouseY){
 		RenderSystem.setShaderColor(1, 1, 1, 1);
-		ctx.drawTexture(texture, x, y, 0, 0, backgroundWidth, backgroundHeight);
+		ctx.drawTexture(TEXTURE, x, y, 0, 0, backgroundWidth, backgroundHeight);
 		
 		if(handler.getBurnTime() > 0 && handler.getMaxBurnTime() > 0){
 			int pixels = (int)Math.ceil(14 * handler.getBurnTime() / (double)handler.getMaxBurnTime());
-			ctx.drawTexture(texture, x + 33, y + 30 + (14 - pixels), 176, 14 - pixels, 13, pixels);
+			ctx.drawTexture(TEXTURE, x + 33, y + 30 + (14 - pixels), 176, 14 - pixels, 13, pixels);
 		}
 		
 		if(handler.getSubstrateAmount() > 0 && handler.getMaxSubstrateAmount() > 0){
 			int pixels = (int)Math.ceil(12 * handler.getSubstrateAmount() / (double)handler.getMaxSubstrateAmount());
 			int colour = handler.getSubstrateColour();
 			RenderSystem.setShaderColor(Argb.getRed(colour) / 255f, Argb.getGreen(colour) / 255f, Argb.getBlue(colour) / 255f, 1f);
-			ctx.drawTexture(texture, x + 57, y + 32 + (12 - pixels), 202, 12 - pixels, 13, pixels);
+			ctx.drawTexture(TEXTURE, x + 57, y + 32 + (12 - pixels), 202, 12 - pixels, 13, pixels);
 		}
 		RenderSystem.setShaderColor(1, 1, 1, 1);
 		
 		if(handler.getProgress() > 0 && handler.getMaxProgress() > 0){
 			int pixels = (int)Math.ceil(20 * handler.getProgress() / (double)handler.getMaxProgress());
-			ctx.drawTexture(texture, x + 79, y + 30, 215, 0, pixels, 13);
+			ctx.drawTexture(TEXTURE, x + 79, y + 30, 215, 0, pixels, 13);
 		}
 		
 		if(handler.getAspectTotal() > 0){
 			int pixels = (int)Math.ceil(52 * handler.getAspectTotal() / (double)ArcaneFurnaceBlockEntity.capacity);
-			ctx.drawTexture(texture, x + 142, y + 11 + (52 - pixels), 176, 14 + (52 - pixels), 16, pixels);
+			ctx.drawTexture(TEXTURE, x + 142, y + 11 + (52 - pixels), 176, 14 + (52 - pixels), 16, pixels);
 		}
 	}
 	
@@ -88,9 +87,7 @@ public class ArcaneFurnaceScreen extends HandledScreen<ArcaneFurnaceScreen.Handl
 		
 		public Handler(int syncId, PlayerInventory pInv, Inventory inventory, PropertyDelegate props){
 			super(ArcanaRegistry.ARCANE_FURNACE_SCREEN_HANDLER, syncId);
-			
 			this.props = props;
-			
 			this.inventory = inventory;
 			inventory.onOpen(pInv.player);
 			

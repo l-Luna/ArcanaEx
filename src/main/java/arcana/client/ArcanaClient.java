@@ -5,7 +5,7 @@ import arcana.ArcanaRegistry;
 import arcana.ReflectivelyUtilized;
 import arcana.aspects.*;
 import arcana.blocks.ArcanaBlockSettings;
-import arcana.blocks.be.WardedCampfireBlockEntity;
+import arcana.blocks.be.CrucibleBlockEntity;
 import arcana.cca_components.Researcher;
 import arcana.client.ber.*;
 import arcana.client.entity.*;
@@ -41,8 +41,8 @@ import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.CampfireBlockEntity;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.color.block.BlockColorProvider;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
@@ -50,7 +50,7 @@ import net.minecraft.client.gui.tooltip.BundleTooltipComponent;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.block.entity.BlockEntityRenderer;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.render.block.entity.CampfireBlockEntityRenderer;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 import net.minecraft.item.BlockItem;
@@ -143,22 +143,17 @@ public final class ArcanaClient implements ClientModInitializer{
 		
 		ColorProviderRegistry.BLOCK.register(
 				(state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.getWaterColor(world, pos) : -1,
-				ArcanaRegistry.CRUCIBLE
+				ArcanaRegistry.CRUCIBLE, ArcanaRegistry.AWARE_CRUCIBLE
 		);
 		ColorProviderRegistry.BLOCK.register(
 				(state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.getFoliageColor(world, pos) : FoliageColors.getDefaultColor(),
 				ArcanaRegistry.GREATWOOD_LEAVES
 		);
-		BlockColorProvider balancedCrystalColourer = (state, world, pos, tintIndex) -> {
+		ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> {
 			if(pos != null)
 				return 0xFF000000 | MathUtil.interpGradient((float)(Math.abs(pos.getX() + pos.getZ() + 3*Math.sin((pos.getX() - pos.getZ()) / 6f)) / 4f), BALANCED_CRYSTAL_GRADIENT);
 			return -1;
-		};
-		ColorProviderRegistry.BLOCK.register(balancedCrystalColourer, ArcanaRegistry.BALANCED_CRYSTAL);
-		ColorProviderRegistry.BLOCK.register(balancedCrystalColourer, ArcanaRegistry.BALANCED_CRYSTAL_PILLAR);
-		ColorProviderRegistry.BLOCK.register(balancedCrystalColourer, ArcanaRegistry.CRYSTAL_EMBEDDED_ROCK);
-		ColorProviderRegistry.BLOCK.register(balancedCrystalColourer, ArcanaRegistry.NORITE);
-		ColorProviderRegistry.BLOCK.register(balancedCrystalColourer, ArcanaRegistry.EXPOSED_NORITE);
+		}, ArcanaRegistry.BALANCED_CRYSTAL, ArcanaRegistry.BALANCED_CRYSTAL_PILLAR, ArcanaRegistry.CRYSTAL_EMBEDDED_ROCK, ArcanaRegistry.NORITE, ArcanaRegistry.EXPOSED_NORITE);
 		
 		ColorProviderRegistry.ITEM.register(
 				(stack, tintIndex) -> {
@@ -177,6 +172,7 @@ public final class ArcanaClient implements ClientModInitializer{
 		
 		HandledScreens.register(ArcanaRegistry.ARCANE_CRAFTING_SCREEN_HANDLER, ArcaneCraftingScreen::new);
 		HandledScreens.register(ArcanaRegistry.RESEARCH_TABLE_SCREEN_HANDLER, ResearchTableScreen::new);
+		HandledScreens.register(ArcanaRegistry.AWARE_CRUCIBLE_SCREEN_HANDLER, AwareCrucibleScreen::new);
 		HandledScreens.register(ArcanaRegistry.MNEMONIC_DROPPER_SCREEN_HANDLER, MnemonicDropperScreen::new);
 		HandledScreens.register(ArcanaRegistry.ARCANE_FURNACE_SCREEN_HANDLER, ArcaneFurnaceScreen::new);
 		HandledScreens.register(ArcanaRegistry.DISTILLERY_PATHFINDER_SCREEN_HANDLER, DistilleryPathfinderScreen::new);
@@ -184,6 +180,7 @@ public final class ArcanaClient implements ClientModInitializer{
 		HandledScreens.register(ArcanaRegistry.FOCUS_POUCH_SCREEN_HANDLER, FocusPouchScreen::new);
 		
 		BlockEntityRendererRegistry.register(ArcanaRegistry.CRUCIBLE_BE, ctx -> new CrucibleBlockEntityRenderer());
+		BlockEntityRendererRegistry.register(ArcanaRegistry.AWARE_CRUCIBLE_BE, (BlockEntityRendererFactory<CrucibleBlockEntity>)ctx -> new CrucibleBlockEntityRenderer());
 		BlockEntityRendererRegistry.register(ArcanaRegistry.PEDESTAL_BE, PedestalBlockEntityRenderer::new);
 		BlockEntityRendererRegistry.register(ArcanaRegistry.INFUSION_PILLAR_BE, ctx -> new InfusionPillarBlockEntityRenderer());
 		BlockEntityRendererRegistry.register(ArcanaRegistry.INFUSION_MATRIX_BE, ctx -> new InfusionMatrixBlockEntityRenderer());
@@ -193,9 +190,7 @@ public final class ArcanaClient implements ClientModInitializer{
 		BlockEntityRendererRegistry.register(ArcanaRegistry.ESSENTIA_VALVE_BE, ctx -> new EssentiaValveBlockEntityRenderer());
 		BlockEntityRendererRegistry.register(ArcanaRegistry.ALEMBIC_BE, ctx -> new AlembicBlockEntityRenderer());
 		BlockEntityRendererRegistry.register(ArcanaRegistry.THAUMIC_HALO_BE, ctx -> new ThaumicHaloBlockEntityRenderer());
-		// ohhhh but the variance! the variance! it's so bad!
-		BlockEntityRendererRegistry.register(ArcanaRegistry.WARDED_CAMPFIRE_BE, ctx ->
-				(BlockEntityRenderer<WardedCampfireBlockEntity>)(BlockEntityRenderer<?>)new CampfireBlockEntityRenderer(ctx));
+		BlockEntityRendererRegistry.register(ArcanaRegistry.WARDED_CAMPFIRE_BE, (BlockEntityRendererFactory<CampfireBlockEntity>)CampfireBlockEntityRenderer::new);
 		
 		for(ArcanaFluid fluid : ArcanaRegistry.STILL_FLUIDS){
 			FluidRenderHandlerRegistry.INSTANCE.register(

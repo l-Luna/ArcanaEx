@@ -129,6 +129,13 @@ public class CrucibleBlock extends BlockWithEntity{
 		return super.onUse(state, world, pos, player, hit);
 	}
 	
+	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved){
+		if(!state.isOf(newState.getBlock()) && world.getBlockEntity(pos) instanceof CrucibleBlockEntity be)
+			be.setEmpty();
+		
+		super.onStateReplaced(state, world, pos, newState, moved);
+	}
+	
 	public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random rand){
 		BlockEntity be = world.getBlockEntity(pos);
 		if(be instanceof CrucibleBlockEntity cbe && cbe.isBubbling()){

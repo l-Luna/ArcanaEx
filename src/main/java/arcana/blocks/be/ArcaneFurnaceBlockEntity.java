@@ -40,7 +40,7 @@ import java.util.stream.Collectors;
 
 public class ArcaneFurnaceBlockEntity extends BlockEntity implements NamedScreenHandlerFactory{
 	
-	private static final Text title = Text.translatable("container.crafting");
+	private static final Text TITLE = Text.translatable("container.crafting");
 	
 	public static final int capacity = 100;
 	public static final int maxAlembics = 4;
@@ -231,7 +231,7 @@ public class ArcaneFurnaceBlockEntity extends BlockEntity implements NamedScreen
 	}
 	
 	public Text getDisplayName(){
-		return title;
+		return TITLE;
 	}
 	
 	@Nullable

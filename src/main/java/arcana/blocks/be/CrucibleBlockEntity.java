@@ -15,6 +15,7 @@ import arcana.recipes.alchemy.AlchemyRecipe;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -31,9 +32,11 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static arcana.blocks.CrucibleBlock.INSIDE;
@@ -44,8 +47,12 @@ public class CrucibleBlockEntity extends BlockEntity{
 	
 	private AspectMap aspects = new AspectMap();
 	
+	public CrucibleBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state){
+		super(type, pos, state);
+	}
+	
 	public CrucibleBlockEntity(BlockPos pos, BlockState state){
-		super(ArcanaRegistry.CRUCIBLE_BE, pos, state);
+		this(ArcanaRegistry.CRUCIBLE_BE, pos, state);
 	}
 	
 	public void tick(){
@@ -58,8 +65,9 @@ public class CrucibleBlockEntity extends BlockEntity{
 			for(ItemEntity item : items){
 				ItemStack stack = item.getStack();
 				boolean melt = true;
-				if(item.getOwner() instanceof PlayerEntity thrower){
-					AlchemyInput inventory = new AlchemyInput(this, stack, Researcher.from(thrower).getAllResearch());
+				PlayerEntity thrower = item.getOwner() instanceof PlayerEntity p ? p : null;
+				if(isValidCrafter(thrower)){
+					AlchemyInput inventory = createInput(stack, thrower);
 					Optional<RecipeEntry<AlchemyRecipe>> optionalRecipe = world.getRecipeManager().getFirstMatch(AlchemyRecipe.TYPE, inventory, world);
 					if(optionalRecipe.isPresent()){
 						melt = false;
@@ -70,8 +78,7 @@ public class CrucibleBlockEntity extends BlockEntity{
 							item.remove(Entity.RemovalReason.KILLED);
 						else
 							stack.decrement(1);
-						if(!thrower.giveItemStack(result))
-							thrower.dropItem(result, false);
+						outputStack(result, thrower);
 						markDirtyAndSync();
 					}
 				}
@@ -136,6 +143,21 @@ public class CrucibleBlockEntity extends BlockEntity{
 	protected void markDirtyAndSync(){
 		markDirty();
 		world.updateListeners(pos, world.getBlockState(pos), world.getBlockState(pos), Block.NOTIFY_LISTENERS);
+	}
+	
+	protected boolean isValidCrafter(@Nullable PlayerEntity thrower){
+		return thrower != null;
+	}
+	
+	protected AlchemyInput createInput(ItemStack reagent, @Nullable PlayerEntity thrower){
+		Objects.requireNonNull(thrower);
+		return new AlchemyInput(this, reagent, Researcher.from(thrower).getAllResearch());
+	}
+	
+	protected void outputStack(ItemStack result, @Nullable PlayerEntity thrower){
+		Objects.requireNonNull(thrower);
+		if(!thrower.giveItemStack(result))
+			thrower.dropItem(result, false);
 	}
 	
 	public AspectMap getAspects(){

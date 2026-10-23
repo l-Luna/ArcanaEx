@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
 public class SimpleSpriteParticle extends SpriteBillboardParticle{
 	
 	private final SpriteProvider spr;
-	private float shrink;
+	private float shrink, spin;
 	private boolean randomiseSprite;
 	
 	protected SimpleSpriteParticle(ClientWorld world,
@@ -34,6 +34,10 @@ public class SimpleSpriteParticle extends SpriteBillboardParticle{
 			setSpriteForAge(spr);
 		if(shrink > 0)
 			scale = Math.max(0.01f, scale - shrink);
+		if(spin != 0){
+			prevAngle = angle;
+			angle += spin;
+		}
 	}
 	
 	public float getSize(float tickDelta){
@@ -56,7 +60,7 @@ public class SimpleSpriteParticle extends SpriteBillboardParticle{
 		private float minScale = 1, maxScale = 1;
 		private float r = 1, g = 1, b = 1;
 		private boolean randomiseAngle = false, randomiseSprite = false;
-		private float shrink = 0;
+		private float shrink = 0, spin = 0;
 		
 		public Factory(SpriteProvider spr, float gravity, float drag){
 			this.spr = spr;
@@ -98,6 +102,11 @@ public class SimpleSpriteParticle extends SpriteBillboardParticle{
 			return this;
 		}
 		
+		public Factory spin(float spin){
+			this.spin = spin;
+			return this;
+		}
+		
 		public Factory randomAngle(){
 			randomiseAngle = true;
 			return this;
@@ -129,6 +138,7 @@ public class SimpleSpriteParticle extends SpriteBillboardParticle{
 				particle.setSprite(spr);
 			}
 			particle.shrink = shrink;
+			particle.spin = spin;
 			return particle;
 		}
 	}

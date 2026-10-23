@@ -1,8 +1,7 @@
 package arcana.blocks;
 
 import arcana.ArcanaRegistry;
-import arcana.blocks.be.KnowledgeableDropperBlockEntity;
-import arcana.cca_components.KdItem;
+import arcana.blocks.be.MnemonicDropperBlockEntity;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
@@ -23,13 +22,13 @@ import net.minecraft.util.math.Position;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldEvents;
 
-public class KnowledgeableDropperBlock extends DispenserBlock{
+public class MnemonicDropperBlock extends DispenserBlock{
 	
-	private static final MapCodec<KnowledgeableDropperBlock> CODEC = createCodec(KnowledgeableDropperBlock::new);
+	private static final MapCodec<MnemonicDropperBlock> CODEC = createCodec(MnemonicDropperBlock::new);
 	
 	private static final DispenserBehavior BEHAVIOR = new Behaviour();
 	
-	public KnowledgeableDropperBlock(Settings settings){
+	public MnemonicDropperBlock(Settings settings){
 		super(settings);
 	}
 	
@@ -39,7 +38,7 @@ public class KnowledgeableDropperBlock extends DispenserBlock{
 	
 	// from DropperBlock
 	protected void dispense(ServerWorld world, BlockState state, BlockPos pos){
-		DispenserBlockEntity be = world.getBlockEntity(pos, ArcanaRegistry.KNOWLEDGEABLE_DROPPER_BE).orElseThrow();
+		DispenserBlockEntity be = world.getBlockEntity(pos, ArcanaRegistry.MNEMONIC_DROPPER_BE).orElseThrow();
 		BlockPointer pointer = new BlockPointer(world, pos, state, be);
 		int i = be.chooseNonEmptySlot(world.random);
 		if(i < 0)
@@ -71,12 +70,12 @@ public class KnowledgeableDropperBlock extends DispenserBlock{
 	}
 	
 	public BlockEntity createBlockEntity(BlockPos pos, BlockState state){
-		return new KnowledgeableDropperBlockEntity(pos, state);
+		return new MnemonicDropperBlockEntity(pos, state);
 	}
 	
 	public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved){
 		if(!state.isOf(newState.getBlock()))
-			if(world.getBlockEntity(pos) instanceof KnowledgeableDropperBlockEntity be)
+			if(world.getBlockEntity(pos) instanceof MnemonicDropperBlockEntity be)
 				ItemScatterer.spawn(world, pos, be.getTomeSlot());
 		
 		super.onStateReplaced(state, world, pos, newState, moved);
@@ -111,7 +110,6 @@ public class KnowledgeableDropperBlock extends DispenserBlock{
 					world.random.nextTriangular(0.2, 0.017 * (double)speed),
 					world.random.nextTriangular((double)side.getOffsetZ() * rand, 0.005 * (double)speed)
 			);
-			KdItem.setSource(entity, from.pos());
 			world.spawnEntity(entity);
 		}
 	}

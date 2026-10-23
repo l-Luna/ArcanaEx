@@ -384,7 +384,7 @@ public final class ArcanaRegistry{
 	public static final Block ARCANE_CRAFTING_TABLE = new ArcaneCraftingTableBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).sounds(BlockSoundGroup.WOOD).strength(3).nonOpaque());
 	public static final Block CRUCIBLE = new CrucibleBlock(of(Material.METAL).dropsSelf().requiresTool(PICKAXE_MINEABLE).sounds(BlockSoundGroup.METAL).strength(2).nonOpaque());
 	public static final Block RESEARCH_TABLE = new ResearchTableBlock(of(Material.WOOD).dropsSelf().renderLayer(CUTOUT).usesTool(AXE_MINEABLE).nonOpaque().strength(3));
-	public static final Block KNOWLEDGEABLE_DROPPER = new KnowledgeableDropperBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3));
+	public static final Block MNEMONIC_DROPPER = new MnemonicDropperBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3));
 	
 	public static final Block ARCANE_FURNACE = new ArcaneFurnaceBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3).luminance(whenLit(14)));
 	public static final Block ALEMBIC = new AlembicBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).strength(3).sounds(BlockSoundGroup.WOOD));
@@ -611,7 +611,7 @@ public final class ArcanaRegistry{
 	// screen handlers...
 	public static final ScreenHandlerType<ArcaneCraftingScreen.Handler> ARCANE_CRAFTING_SCREEN_HANDLER = new ScreenHandlerType<>(ArcaneCraftingScreen.Handler::new, FeatureSet.empty());
 	public static final ScreenHandlerType<ResearchTableScreen.Handler> RESEARCH_TABLE_SCREEN_HANDLER = new ScreenHandlerType<>(ResearchTableScreen.Handler::new, FeatureSet.empty());
-	public static final ScreenHandlerType<KnowledgeableDropperScreen.Handler> KNOWLEDGEABLE_DROPPER_SCREEN_HANDLER = new ScreenHandlerType<>(KnowledgeableDropperScreen.Handler::new, FeatureSet.empty());
+	public static final ScreenHandlerType<MnemonicDropperScreen.Handler> MNEMONIC_DROPPER_SCREEN_HANDLER = new ScreenHandlerType<>(MnemonicDropperScreen.Handler::new, FeatureSet.empty());
 	public static final ScreenHandlerType<ArcaneFurnaceScreen.Handler> ARCANE_FURNACE_SCREEN_HANDLER = new ScreenHandlerType<>(ArcaneFurnaceScreen.Handler::new, FeatureSet.empty());
 	public static final ScreenHandlerType<DistilleryPathfinderScreen.Handler> DISTILLERY_PATHFINDER_SCREEN_HANDLER = new ScreenHandlerType<>(DistilleryPathfinderScreen.Handler::new, FeatureSet.empty());
 	public static final ScreenHandlerType<CrystallizationPressScreen.Handler> CRYSTALLIZATION_PRESS_SCREEN_HANDLER = new ScreenHandlerType<>(CrystallizationPressScreen.Handler::new, FeatureSet.empty());
@@ -620,7 +620,7 @@ public final class ArcanaRegistry{
 	// block entities...
 	public static BlockEntityType<CrucibleBlockEntity> CRUCIBLE_BE = FabricBlockEntityTypeBuilder.create(CrucibleBlockEntity::new, CRUCIBLE).build();
 	public static BlockEntityType<ResearchTableBlockEntity> RESEARCH_TABLE_BE = FabricBlockEntityTypeBuilder.create(ResearchTableBlockEntity::new, RESEARCH_TABLE).build();
-	public static BlockEntityType<KnowledgeableDropperBlockEntity> KNOWLEDGEABLE_DROPPER_BE = FabricBlockEntityTypeBuilder.create(KnowledgeableDropperBlockEntity::new, KNOWLEDGEABLE_DROPPER).build();
+	public static BlockEntityType<MnemonicDropperBlockEntity> MNEMONIC_DROPPER_BE = FabricBlockEntityTypeBuilder.create(MnemonicDropperBlockEntity::new, MNEMONIC_DROPPER).build();
 	public static BlockEntityType<PedestalBlockEntity> PEDESTAL_BE = FabricBlockEntityTypeBuilder.create(PedestalBlockEntity::new, PEDESTAL).build();
 	public static BlockEntityType<ArcaneLevitatorBlockEntity> ARCANE_LEVITATOR_BE = FabricBlockEntityTypeBuilder.create(ArcaneLevitatorBlockEntity::new, ARCANE_LEVITATOR).build();
 	public static BlockEntityType<InfusionPillarBlockEntity> INFUSION_PILLAR_BE = FabricBlockEntityTypeBuilder.create(InfusionPillarBlockEntity::new, INFUSION_PILLAR).build();
@@ -652,6 +652,7 @@ public final class ArcanaRegistry{
 	public static SimpleParticleType CLAW_RUBY = FabricParticleTypes.simple();
 	public static SimpleParticleType PRISM_GLITTER = FabricParticleTypes.simple();
 	public static SimpleParticleType UPWIND = FabricParticleTypes.simple();
+	public static SimpleParticleType FLUX_BUBBLE = FabricParticleTypes.simple();
 	
 	public static ParticleType<CubeParticleEffect> WARDING_EFFECT = FabricParticleTypes.complex(CubeParticleEffect::createCodec, CubeParticleEffect::createPacketCodec);
 	public static ParticleType<CubeParticleEffect> INFESTED_EFFECT = FabricParticleTypes.complex(CubeParticleEffect::createCodec, CubeParticleEffect::createPacketCodec);
@@ -1020,7 +1021,7 @@ public final class ArcanaRegistry{
 		registerBlock("crucible", CRUCIBLE);
 		registerBlock("research_table", RESEARCH_TABLE, false);
 		registerItem("research_table", new ResearchTableItem(GROUPED)); // it's a block item, it doesn't count
-		registerBlock("knowledgeable_dropper", KNOWLEDGEABLE_DROPPER);
+		registerBlock("mnemonic_dropper", MNEMONIC_DROPPER);
 		
 		registerBlock("arcane_furnace", ARCANE_FURNACE);
 		registerBlock("alembic", ALEMBIC);
@@ -1283,7 +1284,7 @@ public final class ArcanaRegistry{
 		// screen handlers
 		registerScreenHandler("arcane_crafting", ARCANE_CRAFTING_SCREEN_HANDLER);
 		registerScreenHandler("research_table", RESEARCH_TABLE_SCREEN_HANDLER);
-		registerScreenHandler("knowledgeable_dropper", KNOWLEDGEABLE_DROPPER_SCREEN_HANDLER);
+		registerScreenHandler("mnemonic_dropper", MNEMONIC_DROPPER_SCREEN_HANDLER);
 		registerScreenHandler("arcane_furnace", ARCANE_FURNACE_SCREEN_HANDLER);
 		registerScreenHandler("distillery_pathfinder", DISTILLERY_PATHFINDER_SCREEN_HANDLER);
 		registerScreenHandler("crystallization_press", CRYSTALLIZATION_PRESS_SCREEN_HANDLER);
@@ -1292,7 +1293,7 @@ public final class ArcanaRegistry{
 		// block entities
 		registerBlockEntity("crucible", CRUCIBLE_BE);
 		registerBlockEntity("research_table", RESEARCH_TABLE_BE);
-		registerBlockEntity("knowledgeable_dropper", KNOWLEDGEABLE_DROPPER_BE);
+		registerBlockEntity("mnemonic_dropper", MNEMONIC_DROPPER_BE);
 		registerBlockEntity("pedestal", PEDESTAL_BE);
 		registerBlockEntity("arcane_levitator", ARCANE_LEVITATOR_BE);
 		registerBlockEntity("infusion_pillar", INFUSION_PILLAR_BE);
@@ -1339,6 +1340,7 @@ public final class ArcanaRegistry{
 		registerParticleType("claw_ruby", CLAW_RUBY);
 		registerParticleType("prism_glitter", PRISM_GLITTER);
 		registerParticleType("upwind", UPWIND);
+		registerParticleType("flux_bubble", FLUX_BUBBLE);
 		
 		registerParticleType("warding_effect", WARDING_EFFECT);
 		registerParticleType("infested_effect", INFESTED_EFFECT);

@@ -20,11 +20,11 @@ import net.minecraft.util.Identifier;
 import static arcana.Arcana.arcId;
 
 @Environment(EnvType.CLIENT)
-public class KnowledgeableDropperScreen extends HandledScreen<KnowledgeableDropperScreen.Handler>{
+public class MnemonicDropperScreen extends HandledScreen<MnemonicDropperScreen.Handler>{
 	
 	private static final Identifier texture = arcId("textures/gui/container/knowledgeable_dropper.png");
 	
-	public KnowledgeableDropperScreen(Handler handler, PlayerInventory inventory, Text title){
+	public MnemonicDropperScreen(Handler handler, PlayerInventory inventory, Text title){
 		super(handler, inventory, title);
 	}
 	
@@ -63,7 +63,7 @@ public class KnowledgeableDropperScreen extends HandledScreen<KnowledgeableDropp
 		               PlayerInventory pInv,
 		               Inventory mainDropperInv,
 		               Inventory tomeSlotInv){
-			super(ArcanaRegistry.KNOWLEDGEABLE_DROPPER_SCREEN_HANDLER, syncId);
+			super(ArcanaRegistry.MNEMONIC_DROPPER_SCREEN_HANDLER, syncId);
 			
 			inventory = mainDropperInv;
 			inventory.onOpen(pInv.player);

@@ -1,7 +1,7 @@
 package arcana.blocks.be;
 
 import arcana.ArcanaRegistry;
-import arcana.screens.KnowledgeableDropperScreen;
+import arcana.screens.MnemonicDropperScreen;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.DispenserBlockEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -14,12 +14,12 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 
-public class KnowledgeableDropperBlockEntity extends DispenserBlockEntity{
+public class MnemonicDropperBlockEntity extends DispenserBlockEntity{
 	
 	private final SimpleInventory tomeSlot = new SimpleInventory(1);
 	
-	public KnowledgeableDropperBlockEntity(BlockPos pos, BlockState state){
-		super(ArcanaRegistry.KNOWLEDGEABLE_DROPPER_BE, pos, state);
+	public MnemonicDropperBlockEntity(BlockPos pos, BlockState state){
+		super(ArcanaRegistry.MNEMONIC_DROPPER_BE, pos, state);
 		tomeSlot.addListener(sender -> markDirty());
 	}
 	
@@ -38,7 +38,7 @@ public class KnowledgeableDropperBlockEntity extends DispenserBlockEntity{
 	}
 	
 	protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory){
-		return new KnowledgeableDropperScreen.Handler(syncId, playerInventory, this, tomeSlot);
+		return new MnemonicDropperScreen.Handler(syncId, playerInventory, this, tomeSlot);
 	}
 	
 	public Inventory getTomeSlot(){

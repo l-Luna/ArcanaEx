@@ -160,7 +160,7 @@
   "arcana.flux_origin": {
     "presentation": "{}: {}",
 
-    "crucible_empty": "Emptied Crucible",
+    "crucible_empty": "Crucible Emptying",
     "crucible_boiloff": "Crucible Boil-off",
     "distillery_failure": "Distillery Failure",
     "scalpel_tampering": "Scalpel Tampering"

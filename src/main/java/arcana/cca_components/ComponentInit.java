@@ -4,7 +4,6 @@ import arcana.aura.AuraChunk;
 import arcana.aura.AuraWorld;
 import arcana.aura.InfestedChunk;
 import arcana.aura.WardedChunk;
-import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
 import org.ladysnake.cca.api.v3.chunk.ChunkComponentFactoryRegistry;
 import org.ladysnake.cca.api.v3.chunk.ChunkComponentInitializer;
@@ -20,7 +19,6 @@ public class ComponentInit implements EntityComponentInitializer, WorldComponent
 		registry.registerForPlayers(Researcher.KEY, Researcher::new, RespawnCopyStrategy.ALWAYS_COPY);
 		registry.registerForPlayers(Caster.KEY, Caster::new, RespawnCopyStrategy.ALWAYS_COPY);
 		registry.registerForPlayers(RunicShielding.KEY, RunicShielding::new, RespawnCopyStrategy.LOSSLESS_ONLY);
-		registry.registerFor(ItemEntity.class, KdItem.KEY, __ -> new KdItem());
 		registry.registerFor(ArrowEntity.class, CaArrow.KEY, __ -> new CaArrow());
 	}
 	

@@ -96,7 +96,7 @@ public class ArcaneFurnaceBlockEntity extends BlockEntity implements NamedScreen
 	
 	protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){
 		super.writeNbt(nbt, registryLookup);
-		nbt.put("material", inventory.toNbtList(registryLookup));
+		nbt.put("inventory", inventory.toNbtList(registryLookup));
 		nbt.put("aspects", aspects.toNbt());
 		
 		nbt.putInt("burnTime", burnTime);

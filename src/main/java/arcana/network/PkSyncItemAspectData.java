@@ -19,8 +19,7 @@ import java.util.stream.Collectors;
 
 public class PkSyncItemAspectData extends S2CMessage{
 	
-	public record Entry(Identifier item, AspectMap aspects){
-	}
+	public record Entry(Identifier item, AspectMap aspects){}
 	
 	@MarshalledAs("arcana.network.PkSyncItemAspectData$Entry-list")
 	List<Entry> entries = new ArrayList<>();

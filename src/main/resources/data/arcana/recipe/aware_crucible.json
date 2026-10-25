@@ -1,0 +1,26 @@
+{
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "C": {
+      "item": "arcana:crystals/mind"
+    },
+    "I": {
+      "item": "arcana:alchemical_iron"
+    },
+    "R": {
+      "item": "arcana:crucible"
+    }
+  },
+  "pattern": [
+    "I I",
+    "I I",
+    "CRC"
+  ],
+  "result": {
+    "id": "arcana:aware_crucible"
+  },
+  "aspects": [
+    "35*fire",
+    "20*entropy"
+  ]
+}

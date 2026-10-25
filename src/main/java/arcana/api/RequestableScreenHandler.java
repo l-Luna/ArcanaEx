@@ -1,6 +1,8 @@
 package arcana.api;
 
+import org.jetbrains.annotations.Nullable;
+
 public interface RequestableScreenHandler{
 	
-	void handleRequest(int index, int data);
+	void handleRequest(@Nullable String tag, int index, int data);
 }

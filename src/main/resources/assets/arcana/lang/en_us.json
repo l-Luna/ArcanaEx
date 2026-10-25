@@ -426,6 +426,7 @@
     "crucible": "Crucible",
     "aware_crucible": "Aware Crucible",
     "research_table": "Research Table",
+    "mnemonic_chest": "Mnemonic Chest",
     "mnemonic_dropper": "Mnemonic Dropper",
 
     "arcane_furnace": "Arcane Furnace",
@@ -996,8 +997,9 @@
   "container.arcana": {
     "mnemonic": {
       "remembers": "Remembers {}",
-      "clear_hint": "Right-click to clear"
+      "clear_hint": "Click to clear"
     },
+    "mnemonic_chest": "Mnemonic Chest",
     "mnemonic_dropper": {
       "title": "Mnemonic Dropper",
       "drop_0": "Slot ignored",

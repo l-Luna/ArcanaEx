@@ -2,7 +2,7 @@ package arcana.screens;
 
 import arcana.ArcanaRegistry;
 import arcana.api.RequestableScreenHandler;
-import arcana.network.PkUiRequest;
+import arcana.network.PkScreenRequest;
 import arcana.util.InventoryUtil;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.api.EnvType;
@@ -28,6 +28,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -130,7 +131,7 @@ public class MnemonicDropperScreen extends HandledScreen<MnemonicDropperScreen.H
 				else if(verticalAmount < 0)
 					prop.set(Math.clamp(--newValue, 0, 64));
 				handler.sendContentUpdates();
-				new PkUiRequest(handler, index, newValue).sendToServer();
+				new PkScreenRequest(handler, "set_count", index, newValue).sendToServer();
 				return true;
 			}
 			return false;
@@ -208,8 +209,8 @@ public class MnemonicDropperScreen extends HandledScreen<MnemonicDropperScreen.H
 			inventory.onClose(player);
 		}
 		
-		public void handleRequest(int index, int data){
-			if(index >= 0 && index <= 8){
+		public void handleRequest(@Nullable String tag, int index, int data){
+			if("set_count".equals(tag) && index >= 0 && index <= 8){
 				data = Math.clamp(data, 0, 64);
 				properties.set(index + 1, data);
 			}

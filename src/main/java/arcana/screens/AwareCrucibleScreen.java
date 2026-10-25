@@ -3,6 +3,8 @@ package arcana.screens;
 import arcana.ArcanaRegistry;
 import arcana.util.InventoryUtil;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.entity.player.PlayerEntity;
@@ -17,6 +19,7 @@ import net.minecraft.util.Identifier;
 
 import static arcana.Arcana.arcId;
 
+@Environment(EnvType.CLIENT)
 public class AwareCrucibleScreen extends HandledScreen<AwareCrucibleScreen.Handler>{
 	
 	private static final Identifier TEXTURE = arcId("textures/gui/container/aware_crucible.png");

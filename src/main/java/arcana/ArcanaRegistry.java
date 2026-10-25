@@ -34,6 +34,7 @@ import arcana.items.creative.TaintConverterItem;
 import arcana.items.foci.*;
 import arcana.items.trinkets.*;
 import arcana.screens.*;
+import arcana.util.MnemonicInventoryData;
 import arcana.util.RandomChanceOnceLootCondition;
 import arcana.util.TagGiftLootEntry;
 import arcana.worldgen.nodes.HangingNodeFeature;
@@ -58,6 +59,7 @@ import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
+import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.component.DataComponentTypes;
@@ -385,6 +387,7 @@ public final class ArcanaRegistry{
 	public static final Block CRUCIBLE = new CrucibleBlock(of(Material.METAL).dropsSelf().requiresTool(PICKAXE_MINEABLE).sounds(BlockSoundGroup.METAL).strength(2).nonOpaque());
 	public static final Block AWARE_CRUCIBLE = new AwareCrucibleBlock(of(Material.METAL).dropsSelf().requiresTool(PICKAXE_MINEABLE).sounds(BlockSoundGroup.METAL).strength(2.7f).nonOpaque());
 	public static final Block RESEARCH_TABLE = new ResearchTableBlock(of(Material.WOOD).dropsSelf().renderLayer(CUTOUT).usesTool(AXE_MINEABLE).nonOpaque().strength(3));
+	public static final Block MNEMONIC_CHEST = new MnemonicChestBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3));
 	public static final Block MNEMONIC_DROPPER = new MnemonicDropperBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3));
 	
 	public static final Block ARCANE_FURNACE = new ArcaneFurnaceBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3).luminance(whenLit(14)));
@@ -613,6 +616,7 @@ public final class ArcanaRegistry{
 	public static final ScreenHandlerType<ArcaneCraftingScreen.Handler> ARCANE_CRAFTING_SCREEN_HANDLER = new ScreenHandlerType<>(ArcaneCraftingScreen.Handler::new, FeatureSet.empty());
 	public static final ScreenHandlerType<ResearchTableScreen.Handler> RESEARCH_TABLE_SCREEN_HANDLER = new ScreenHandlerType<>(ResearchTableScreen.Handler::new, FeatureSet.empty());
 	public static final ScreenHandlerType<AwareCrucibleScreen.Handler> AWARE_CRUCIBLE_SCREEN_HANDLER = new ScreenHandlerType<>(AwareCrucibleScreen.Handler::new, FeatureSet.empty());
+	public static final ExtendedScreenHandlerType<MnemonicChestScreen.Handler, MnemonicInventoryData> MNEMONIC_CHEST_SCREEN_HANDLER = new ExtendedScreenHandlerType<>(MnemonicChestScreen.Handler::new, MnemonicInventoryData.PACKET_CODEC);
 	public static final ScreenHandlerType<MnemonicDropperScreen.Handler> MNEMONIC_DROPPER_SCREEN_HANDLER = new ScreenHandlerType<>(MnemonicDropperScreen.Handler::new, FeatureSet.empty());
 	public static final ScreenHandlerType<ArcaneFurnaceScreen.Handler> ARCANE_FURNACE_SCREEN_HANDLER = new ScreenHandlerType<>(ArcaneFurnaceScreen.Handler::new, FeatureSet.empty());
 	public static final ScreenHandlerType<DistilleryPathfinderScreen.Handler> DISTILLERY_PATHFINDER_SCREEN_HANDLER = new ScreenHandlerType<>(DistilleryPathfinderScreen.Handler::new, FeatureSet.empty());
@@ -623,6 +627,7 @@ public final class ArcanaRegistry{
 	public static BlockEntityType<CrucibleBlockEntity> CRUCIBLE_BE = FabricBlockEntityTypeBuilder.create(CrucibleBlockEntity::new, CRUCIBLE).build();
 	public static BlockEntityType<AwareCrucibleBlockEntity> AWARE_CRUCIBLE_BE = FabricBlockEntityTypeBuilder.create(AwareCrucibleBlockEntity::new, AWARE_CRUCIBLE).build();
 	public static BlockEntityType<ResearchTableBlockEntity> RESEARCH_TABLE_BE = FabricBlockEntityTypeBuilder.create(ResearchTableBlockEntity::new, RESEARCH_TABLE).build();
+	public static BlockEntityType<MnemonicChestBlockEntity> MNEMONIC_CHEST_BE = FabricBlockEntityTypeBuilder.create(MnemonicChestBlockEntity::new, MNEMONIC_CHEST).build();
 	public static BlockEntityType<MnemonicDropperBlockEntity> MNEMONIC_DROPPER_BE = FabricBlockEntityTypeBuilder.create(MnemonicDropperBlockEntity::new, MNEMONIC_DROPPER).build();
 	public static BlockEntityType<PedestalBlockEntity> PEDESTAL_BE = FabricBlockEntityTypeBuilder.create(PedestalBlockEntity::new, PEDESTAL).build();
 	public static BlockEntityType<ArcaneLevitatorBlockEntity> ARCANE_LEVITATOR_BE = FabricBlockEntityTypeBuilder.create(ArcaneLevitatorBlockEntity::new, ARCANE_LEVITATOR).build();
@@ -1025,6 +1030,7 @@ public final class ArcanaRegistry{
 		registerBlock("aware_crucible", AWARE_CRUCIBLE);
 		registerBlock("research_table", RESEARCH_TABLE, false);
 		registerItem("research_table", new ResearchTableItem(GROUPED)); // it's a block item, it doesn't count
+		registerBlock("mnemonic_chest", MNEMONIC_CHEST);
 		registerBlock("mnemonic_dropper", MNEMONIC_DROPPER);
 		
 		registerBlock("arcane_furnace", ARCANE_FURNACE);
@@ -1289,6 +1295,7 @@ public final class ArcanaRegistry{
 		registerScreenHandler("arcane_crafting", ARCANE_CRAFTING_SCREEN_HANDLER);
 		registerScreenHandler("research_table", RESEARCH_TABLE_SCREEN_HANDLER);
 		registerScreenHandler("aware_crucible", AWARE_CRUCIBLE_SCREEN_HANDLER);
+		registerScreenHandler("mnemonic_chest", MNEMONIC_CHEST_SCREEN_HANDLER);
 		registerScreenHandler("mnemonic_dropper", MNEMONIC_DROPPER_SCREEN_HANDLER);
 		registerScreenHandler("arcane_furnace", ARCANE_FURNACE_SCREEN_HANDLER);
 		registerScreenHandler("distillery_pathfinder", DISTILLERY_PATHFINDER_SCREEN_HANDLER);
@@ -1299,6 +1306,7 @@ public final class ArcanaRegistry{
 		registerBlockEntity("crucible", CRUCIBLE_BE);
 		registerBlockEntity("aware_crucible", AWARE_CRUCIBLE_BE);
 		registerBlockEntity("research_table", RESEARCH_TABLE_BE);
+		registerBlockEntity("mnemonic_chest", MNEMONIC_CHEST_BE);
 		registerBlockEntity("mnemonic_dropper", MNEMONIC_DROPPER_BE);
 		registerBlockEntity("pedestal", PEDESTAL_BE);
 		registerBlockEntity("arcane_levitator", ARCANE_LEVITATOR_BE);

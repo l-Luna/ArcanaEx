@@ -1,0 +1,25 @@
+{
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "S": {
+      "item": "arcana:arcane_stone"
+    },
+    "A": {
+      "item": "arcana:arcanium_ingot"
+    },
+    "C": {
+      "item": "arcana:crystals/mind"
+    }
+  },
+  "pattern": [
+    "SSS",
+    "ACA",
+    "SSS"
+  ],
+  "result": {
+    "id": "arcana:mnemonic_chest"
+  },
+  "aspects": [
+    "18*order"
+  ]
+}

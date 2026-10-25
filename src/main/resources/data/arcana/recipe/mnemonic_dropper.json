@@ -7,30 +7,24 @@
     "A": {
       "item": "arcana:arcanium_ingot"
     },
-    "R": {
-      "item": "minecraft:redstone"
-    },
     "C": {
       "item": "arcana:crystals/mind"
     },
     "D": {
       "item": "minecraft:dropper"
-    },
-    "O": {
-      "item": "minecraft:observer"
     }
   },
   "pattern": [
-    "SAS",
-    "RDO",
-    "SCS"
+    "ASS",
+    "SCD",
+    "ASS"
   ],
   "result": {
     "id": "arcana:mnemonic_dropper"
   },
   "aspects": [
-    "30*order",
-    "20*fire",
-    "10*water"
+    "12*order",
+    "8*fire",
+    "5*water"
   ]
 }

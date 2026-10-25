@@ -1369,12 +1369,15 @@
       ]
     },
 
-    "automated_alchemy": "Automated Alchemy",
-    "automated_alchemy.desc": "On demand",
-    "automated_alchemy.stage.1": "There's nothing particularly remarkable about alchemy.{~sep}Sure, it takes a bit of know-how to figure out which reactions are possible, and gently guide the liquid concepts in the pot to approach that. But really, what's stopping me from simply... teaching a dropper how to do it?",
-    "automated_alchemy.stage.2": "Prototype after prototype wasted. Something odd is afoot here. Even getting a machine to perform identical actions to myself does not cause the proper reactions. Almost like some {i}intent{r} is necessary.",
-    "automated_alchemy.stage.3": "Now, a thinking machine. That would do it.",
-    "automated_alchemy.stage.4": "Giving a Dropper a basic level of \"understanding\" is a perfectly safe and simple method of automating alchemy.\nThe Aware Dropper can be given a Tome of Sharing within it's extra tenth slot. Items it drops will be eligible for any alchemy recipes stored within the research bound to the book. When an alchemy recipe is performed automatically, the result will be thrown from the crucible in a random, free horizontal direction (or just randomly if none are free).\nAnother minor feature is that these droppers have slightly less variation in how they drop items.\nIt turns out that Tomes of Sharing do remember research entries, but simply choose not to show them to players. The thought of my equipment colluding to snoop on my mind is unsettling... but what can a book really do?",
+    "automated_alchemy": {
+      "title": "Automated Alchemy",
+      "desc": "On demand",
+      "stages": [
+        "There's nothing particularly remarkable about alchemy.{~sep}Sure, it takes a bit of know-how to figure out which reactions are possible, and gently guide the liquid energy in the pot to approach that. But really, what's stopping me from simply... teaching a machine how to do it?",
+        "Prototype after prototype wasted. Something odd is afoot here. Even getting a machine to perform identical actions to myself does not cause the proper reactions. Almost like some {i}intention{r} is necessary.\nBut a thinking machine? That would do it.",
+        "Giving a Crucible a basic level of \"understanding\" is a perfectly amenable method of automating alchemy.\nThe Aware Crucible has an inventory to place a Translucent Tome inside, from which is will read recipes to perform automatically. When an item is crafted, the crucible will attempt to push the item into an adjacent container, choosing randomly if there are multiple, or throwing it outwards if there are none.\nOtherwise, it is identical to an ordinary crucible. As far as I can tell."
+      ]
+    },
 
     "alchemical_glass": "Alchemical Glass",
     "alchemical_glass.desc": "Advancing my material knowledge",
@@ -1486,6 +1489,13 @@
     "holding_jug": {
       "title": "Holding Jug",
       "text": "A bubbling crucible can compactly hold a huge amount of mass, dissolved in its basin. Unfortunately, I can't exactly reach my hand in and pluck things out, even if I could survive attempting such a thing: the items' aspects are thoroughly mixed together with no way of recovering their shape, after even a few seconds of heat.\nMaking a functional storage solution using alchemy is possible, but requires some concessions. A Holding Jug can store a large amount of items, with the following limits:\n- All stored items must contain some aspects.\n- There are at most 4 aspect types in the jug.\n- The aspect total of all items is below 2,048.\n- At most 25 item types are stored.\nThe jug is interacted with inside of my inventory. Hovering over it shows the contained items and aspects. Right-clicking with an empty cursor will extract a stack of items from the jug and place it in the cursor; right-clicking with a full cursor will attempt to insert the held stack instead."
+    },
+
+    "mnemonic_logic": {
+      "title": "Mnemonic Logic",
+      "desc": "Snaps back to shape",
+      "intro": "Keeping things organised manually is a challenge, and doubly so for my machinery. A lull in supply or output can clog up my systems, and the inaccuracy of my components often presents a problem. Magic, of course, proposes a solution or two.\nA Mnemonic Chest stores a similar amount of items to an ordinary chest, but provides more options for organising them.\nWhen an item is placed in a chest's slot, that slot will remember the item placed in it. Hoppers (and similar blocks) can only place items into slots that have a matching remembered item.\nA slot that remembers an item will show that item when empty, and I can click on it to clear the remembered item.\nA Mnemonic Dropper has several upgrades over its mundane counterpart, made possible by granting it a very limited level of cognition.",
+      "dropper_detail": "By virtue of its {i}concentration{r}, the Dropper will drop its contained items in left-to-right order, with little variation in speed. An arrow in its interface shows the item which will be dropped next.\nBy virtue of its {i}memory{r}, the Dropper will remember the item last placed in each slot, exactly like a Mnemonic Chest.\nBy virtue of its {i}intention{r}, the Dropper will drop a precise amount of each item, and refuse to drop an incorrect amount.\nThe number to drop is displayed underneath each slot inside of a gear, and by scrolling on that gear, I can increase or decrease the amount. If a slot does not have the requested amount, the Dropper will refuse to drop any items and stall. If a slot has a requested size of 0, it will be skipped entirely."
     },
 
     "fluid_forming": {

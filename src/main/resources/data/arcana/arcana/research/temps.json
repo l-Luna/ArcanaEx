@@ -77,6 +77,43 @@
         }
       ]
     },
+    {
+      "key": "arcana:tmp/mnemonic_logic",
+      "name": "research.arcana.mnemonic_logic.title",
+      "desc": "research.arcana.mnemonic_logic.desc",
+      "icons": [
+        "arcana:mnemonic_chest",
+        "arcana:mnemonic_dropper"
+      ],
+      "category": "arcana:artifice",
+      "parents": [
+        "&arcana:artifice_root"
+      ],
+      "x": 2,
+      "y": -1,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.mnemonic_logic.intro"
+        },
+        {
+          "type": "image",
+          "content": "arcana:textures/research/mnemonic_dropper_diagram.png"
+        },
+        {
+          "type": "text",
+          "content": "research.arcana.mnemonic_logic.dropper_detail"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:mnemonic_chest"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:mnemonic_dropper"
+        }
+      ]
+    },
 
     {
       "key": "arcana:tmp/fluid_forming",

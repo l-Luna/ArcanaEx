@@ -433,10 +433,10 @@
     },
     {
       "key": "arcana:automated_alchemy",
-      "name": "research.arcana.automated_alchemy",
+      "name": "research.arcana.automated_alchemy.title",
       "desc": "research.arcana.automated_alchemy.desc",
       "icons": [
-        "arcana:mnemonic_dropper"
+        "arcana:aware_crucible"
       ],
       "category": "arcana:alchemy",
       "parents": [
@@ -451,34 +451,28 @@
       "sections": [
         {
           "type": "text",
-          "content": "research.arcana.automated_alchemy.stage.1",
+          "content": "research.arcana.automated_alchemy.stages.1",
           "requirements": [
-            "10*minecraft:dropper",
-            "10*arcana:crucible",
-            "3*arcana::xp"
+            "3*minecraft:dropper",
+            "3*arcana:crucible",
+            "10*arcana::xp"
           ]
         },
         {
           "type": "text",
-          "content": "research.arcana.automated_alchemy.stage.2",
+          "content": "research.arcana.automated_alchemy.stages.2",
           "requirements": [
-            "0*arcana:crystals/mind"
-          ]
-        },
-        {
-          "type": "text",
-          "content": "research.arcana.automated_alchemy.stage.3",
-          "requirements": [
+            "0*arcana:crystals/mind",
             "arcana::puzzle{automated_alchemy}"
           ]
         },
         {
           "type": "text",
-          "content": "research.arcana.automated_alchemy.stage.4"
+          "content": "research.arcana.automated_alchemy.stages.3"
         },
         {
           "type": "arcane_crafting",
-          "content": "arcana:mnemonic_dropper"
+          "content": "arcana:aware_crucible"
         }
       ]
     },

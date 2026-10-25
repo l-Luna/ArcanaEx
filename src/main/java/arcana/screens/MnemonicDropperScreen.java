@@ -4,6 +4,7 @@ import arcana.ArcanaRegistry;
 import arcana.api.RequestableScreenHandler;
 import arcana.network.PkScreenRequest;
 import arcana.util.InventoryUtil;
+import arcana.util.MnemonicInventoryData;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -24,6 +25,7 @@ import net.minecraft.screen.Property;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
+import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
@@ -39,17 +41,17 @@ public class MnemonicDropperScreen extends HandledScreen<MnemonicDropperScreen.H
 	
 	private static final Identifier TEXTURE = arcId("textures/gui/container/mnemonic_dropper.png");
 	
-	public MnemonicDropperScreen(Handler handler, PlayerInventory inventory, Text title){
-		super(handler, inventory, title);
+	private final PlayerEntity player;
+	
+	public MnemonicDropperScreen(Handler handler, PlayerInventory pInv, Text title){
+		super(handler, pInv, title);
+		player = pInv.player;
 	}
 	
 	protected void init(){
 		super.init();
 		titleX = (backgroundWidth - textRenderer.getWidth(title)) / 2;
 		titleY -= 2;
-		
-		int x = (width - backgroundWidth) / 2;
-		int y = (height - backgroundHeight) / 2;
 		
 		for(int i = 0; i < 9; i++)
 			addDrawableChild(new SlotCountGear(i, x + 7 + 18 * i, y + 38));
@@ -59,7 +61,12 @@ public class MnemonicDropperScreen extends HandledScreen<MnemonicDropperScreen.H
 		renderBackground(ctx, mouseX, mouseY, delta);
 		super.render(ctx, mouseX, mouseY, delta);
 		drawMouseoverTooltip(ctx, mouseX, mouseY);
-		if(handler.getCursorStack().isEmpty())
+		
+		boolean cursorEmpty = handler.getCursorStack().isEmpty();
+		if(cursorEmpty){
+			if(focusedSlot instanceof MnemonicSlot mnSlot)
+				mnSlot.drawTooltip(ctx, textRenderer, player.isSpectator(), mouseX, mouseY);
+			
 			for(Element child : children())
 				if(child instanceof SlotCountGear gear && gear.hovered){
 					int count = handler.getDropCountProp(gear.index).get();
@@ -73,6 +80,8 @@ public class MnemonicDropperScreen extends HandledScreen<MnemonicDropperScreen.H
 							mouseX,
 							mouseY);
 				}
+		}
+		
 	}
 	
 	protected void drawBackground(DrawContext ctx, float delta, int mouseX, int mouseY){
@@ -85,6 +94,18 @@ public class MnemonicDropperScreen extends HandledScreen<MnemonicDropperScreen.H
 	
 	protected void drawForeground(DrawContext ctx, int mouseX, int mouseY){
 		ctx.drawText(textRenderer, title, titleX, titleY, 0xC0C0C0, false);
+	}
+	
+	protected void drawSlot(DrawContext context, Slot slot){
+		if(slot instanceof MnemonicSlot mnSlot)
+			mnSlot.drawContent(context, textRenderer);
+		super.drawSlot(context, slot);
+	}
+	
+	protected void onMouseClick(Slot slot, int slotId, int button, SlotActionType actionType){
+		if(slot instanceof MnemonicSlot mnSlot && !player.isSpectator())
+			mnSlot.onClick(handler, handler.mnemonics, actionType);
+		super.onMouseClick(slot, slotId, button, actionType);
 	}
 	
 	private class SlotCountGear implements Element, Drawable, Selectable{
@@ -158,27 +179,32 @@ public class MnemonicDropperScreen extends HandledScreen<MnemonicDropperScreen.H
 	
 	public static class Handler extends ScreenHandler implements RequestableScreenHandler{
 		
+		private final MnemonicInventoryData mnemonics;
 		private final Inventory inventory;
 		// [current index, 9 slot counts]
 		private final PropertyDelegate properties;
 		
-		public Handler(int syncId, PlayerInventory pInv){
-			this(syncId, pInv, new SimpleInventory(9), new ArrayPropertyDelegate(10));
+		public Handler(int syncId, PlayerInventory pInv, MnemonicInventoryData mnemonics){
+			this(syncId, pInv, new SimpleInventory(9), new ArrayPropertyDelegate(10), mnemonics);
+			// on the client side, `data` is a copy not attached to any inventory, so attach it to our local copy
+			((SimpleInventory)inventory).addListener(mnemonics);
 		}
 		
 		public Handler(int syncId,
 		               PlayerInventory pInv,
 		               Inventory inventory,
-		               PropertyDelegate properties){
+		               PropertyDelegate properties,
+		               MnemonicInventoryData mnemonics){
 			super(ArcanaRegistry.MNEMONIC_DROPPER_SCREEN_HANDLER, syncId);
 			
+			this.mnemonics = mnemonics;
 			this.inventory = inventory;
 			this.inventory.onOpen(pInv.player);
 			this.properties = properties;
 			addProperties(properties);
 			
 			for(int i = 0; i < 9; i++)
-				addSlot(new Slot(this.inventory, i, 8 + i * 18, 18));
+				addSlot(new MnemonicSlot(inventory, i, 8 + i * 18, 18, mnemonics));
 			
 			for(int row = 0; row < 3; ++row)
 				for(int col = 0; col < 9; col++)
@@ -200,6 +226,10 @@ public class MnemonicDropperScreen extends HandledScreen<MnemonicDropperScreen.H
 			return InventoryUtil.quickMove(this, inventory, index);
 		}
 		
+		public boolean insertItem(ItemStack stack, int startIndex, int endIndex, boolean fromLast){
+			return MnemonicSlot.insertItem(this, mnemonics, stack, startIndex, endIndex, fromLast);
+		}
+		
 		public boolean canUse(PlayerEntity player){
 			return inventory.canPlayerUse(player);
 		}
@@ -214,6 +244,7 @@ public class MnemonicDropperScreen extends HandledScreen<MnemonicDropperScreen.H
 				data = Math.clamp(data, 0, 64);
 				properties.set(index + 1, data);
 			}
+			mnemonics.handleRequest(tag, index);
 		}
 	}
 }

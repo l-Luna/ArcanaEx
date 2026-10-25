@@ -11,6 +11,7 @@ import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.registry.RegistryWrapper;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
@@ -49,6 +50,11 @@ public class MnemonicInventoryData implements InventoryChangedListener{
 	
 	public void clearRememberedStack(int slot){
 		rememberedShapes.remove(slot);
+	}
+	
+	public void handleRequest(@Nullable String tag, int index){
+		if("clear_slot".equals(tag))
+			clearRememberedStack(index);
 	}
 	
 	public NbtElement toNbt(RegistryWrapper.WrapperLookup lookup){

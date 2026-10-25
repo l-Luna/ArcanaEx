@@ -617,7 +617,7 @@ public final class ArcanaRegistry{
 	public static final ScreenHandlerType<ResearchTableScreen.Handler> RESEARCH_TABLE_SCREEN_HANDLER = new ScreenHandlerType<>(ResearchTableScreen.Handler::new, FeatureSet.empty());
 	public static final ScreenHandlerType<AwareCrucibleScreen.Handler> AWARE_CRUCIBLE_SCREEN_HANDLER = new ScreenHandlerType<>(AwareCrucibleScreen.Handler::new, FeatureSet.empty());
 	public static final ExtendedScreenHandlerType<MnemonicChestScreen.Handler, MnemonicInventoryData> MNEMONIC_CHEST_SCREEN_HANDLER = new ExtendedScreenHandlerType<>(MnemonicChestScreen.Handler::new, MnemonicInventoryData.PACKET_CODEC);
-	public static final ScreenHandlerType<MnemonicDropperScreen.Handler> MNEMONIC_DROPPER_SCREEN_HANDLER = new ScreenHandlerType<>(MnemonicDropperScreen.Handler::new, FeatureSet.empty());
+	public static final ExtendedScreenHandlerType<MnemonicDropperScreen.Handler, MnemonicInventoryData> MNEMONIC_DROPPER_SCREEN_HANDLER = new ExtendedScreenHandlerType<>(MnemonicDropperScreen.Handler::new, MnemonicInventoryData.PACKET_CODEC);
 	public static final ScreenHandlerType<ArcaneFurnaceScreen.Handler> ARCANE_FURNACE_SCREEN_HANDLER = new ScreenHandlerType<>(ArcaneFurnaceScreen.Handler::new, FeatureSet.empty());
 	public static final ScreenHandlerType<DistilleryPathfinderScreen.Handler> DISTILLERY_PATHFINDER_SCREEN_HANDLER = new ScreenHandlerType<>(DistilleryPathfinderScreen.Handler::new, FeatureSet.empty());
 	public static final ScreenHandlerType<CrystallizationPressScreen.Handler> CRYSTALLIZATION_PRESS_SCREEN_HANDLER = new ScreenHandlerType<>(CrystallizationPressScreen.Handler::new, FeatureSet.empty());

@@ -20,7 +20,7 @@ public class ResearchTableItem extends BlockItem{
 		// only handle the research table
 		int f = Block.NOTIFY_ALL | Block.REDRAW_ON_MAIN_THREAD;
 		BlockPos pos = context.getBlockPos();
-		Direction offset = context.getPlayerLookDirection().rotateYClockwise();
+		Direction offset = context.getHorizontalPlayerFacing().rotateYClockwise();
 		
 		// check if the right block is replaceable
 		// not that context.canPlace() offsets by hit side, which is not what we want, so we use state.canReplace

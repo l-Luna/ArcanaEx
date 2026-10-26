@@ -1,5 +1,7 @@
 {
   "textures": [
-    "arcana:upwind"
+    "arcana:upwind_0",
+    "arcana:upwind_1",
+    "arcana:upwind_2"
   ]
 }

@@ -1,7 +1,7 @@
 {
   "parent": "block/cube_bottom_top",
   "textures": {
-    "bottom": "arcana:block/arcane_stone",
+    "bottom": "arcana:block/arcane_levitator_bottom",
     "side": "arcana:block/arcane_levitator_side",
     "top": "arcana:block/arcane_levitator_top"
   }

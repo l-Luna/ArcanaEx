@@ -8,9 +8,9 @@ import org.jetbrains.annotations.Nullable;
 
 public class SimpleSpriteParticle extends SpriteBillboardParticle{
 	
-	private final SpriteProvider spr;
-	private float shrink, spin;
-	private boolean randomiseSprite;
+	protected final SpriteProvider spr;
+	protected float shrink, spin;
+	protected boolean randomiseSprite;
 	
 	protected SimpleSpriteParticle(ClientWorld world,
 	                               double x,
@@ -50,17 +50,17 @@ public class SimpleSpriteParticle extends SpriteBillboardParticle{
 	
 	public static class Factory implements ParticleFactory<SimpleParticleType>{
 		
-		private final SpriteProvider spr;
+		protected final SpriteProvider spr;
 		
-		private final float gravity;
-		private final float drag;
-		private boolean collidable = true;
+		protected final float gravity;
+		protected final float drag;
+		protected boolean collidable = true;
 		
-		private int minLifetime = 30, maxLifetime = 30;
-		private float minScale = 1, maxScale = 1;
-		private float r = 1, g = 1, b = 1;
-		private boolean randomiseAngle = false, randomiseSprite = false;
-		private float shrink = 0, spin = 0;
+		protected int minLifetime = 30, maxLifetime = 30;
+		protected float minScale = 1, maxScale = 1;
+		protected float r = 1, g = 1, b = 1;
+		protected boolean randomiseAngle = false, randomiseSprite = false;
+		protected float shrink = 0, spin = 0;
 		
 		public Factory(SpriteProvider spr, float gravity, float drag){
 			this.spr = spr;
@@ -124,7 +124,7 @@ public class SimpleSpriteParticle extends SpriteBillboardParticle{
 		
 		@Nullable
 		public Particle createParticle(SimpleParticleType params, ClientWorld world, double x, double y, double z, double vX, double vY, double vZ){
-			SimpleSpriteParticle particle = new SimpleSpriteParticle(world, x, y, z, vX, vY, vZ, spr);
+			SimpleSpriteParticle particle = createParticle(world, x, y, z, vX, vY, vZ);
 			particle.gravityStrength = gravity;
 			particle.velocityMultiplier = 1 - drag;
 			particle.maxAge = minLifetime + (int)(world.random.nextFloat() * (maxLifetime - minLifetime));
@@ -140,6 +140,10 @@ public class SimpleSpriteParticle extends SpriteBillboardParticle{
 			particle.shrink = shrink;
 			particle.spin = spin;
 			return particle;
+		}
+		
+		protected SimpleSpriteParticle createParticle(ClientWorld world, double x, double y, double z, double vX, double vY, double vZ){
+			return new SimpleSpriteParticle(world, x, y, z, vX, vY, vZ, spr);
 		}
 	}
 }

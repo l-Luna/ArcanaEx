@@ -1590,7 +1590,7 @@
 
     "magic_mirrors": {
       "title": "Magic Mirrors",
-      "text": "Using pairs of enchanted mirrors, I can send items across great distances. Magic Mirrors are always created in pairs, forever linked; right clicking on a placed mirror with an item will send it flying out of the other end.\nI can shrink mirrors down to a size more appropriate for on-the-go use. A Personal Magic Mirror can have items sent from the inventory, by right clicking on them with a stack in my cursor, and items they receive are placed directly into my inventory when carried."
+      "text": "Using pairs of enchanted mirrors, I can send items across great distances. Magic Mirrors are always created in pairs, forever linked.\nA placed mirror will send an item to its pair when right-clicked with an item (or inserted by hopper). The item will be sent flying out, unless there is a container just below the mirror to receive it.\nIf the other side is not loaded or placed, then the item will stay \"in transit\" until it is. If the paired mirror is destroyed, then... retrieving items from within may be difficult.\nI can shrink mirrors down to a size more appropriate for on-the-go use. A Personal Magic Mirror can have items sent from the inventory, by right clicking on them with a stack in my cursor, and items they receive are placed directly into my inventory when carried."
     },
 
     "mirrored_amulet": {

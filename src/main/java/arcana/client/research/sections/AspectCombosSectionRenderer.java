@@ -24,12 +24,13 @@ public class AspectCombosSectionRenderer implements EntrySectionRenderer<AspectC
 		for(int i = pageIdx * 5; i < aspects.size() && i < (pageIdx + 1) * 5; i++){
 			Aspect aspect = aspects.get(i);
 			int dIdx = i - pageIdx * 5;
-			AspectRenderHelper.renderAspect(aspect.left(), ctx, x, y + 30 * dIdx, 101);
-			AspectRenderHelper.renderAspect(aspect.right(), ctx, x + 40, y + 30 * dIdx, 101);
-			AspectRenderHelper.renderAspect(aspect, ctx, x + 80, y + 30 * dIdx, 101);
 			Identifier texture = overlayTexture(section);
-			ctx.drawTexture(texture, x + 20, y + 30 * dIdx, 101, 105, 161, 12, 13, 256, 256);
-			ctx.drawTexture(texture, x + 60, y + 30 * dIdx, 101, 118, 161, 12, 13, 256, 256);
+			if(i != pageIdx * 5)
+				ctx.drawTexture(texture, x - 2, y + 30 * dIdx - 17, 101, 1, 194, 100, 20, 256, 256);
+			ctx.drawTexture(texture, x - 2, y + 30 * dIdx - 2, 101, 1, 216, 100, 20, 256, 256);
+			AspectRenderHelper.renderAspect(aspect.left(), ctx, x, y + 30 * dIdx, 101);
+			AspectRenderHelper.renderAspect(aspect.right(), ctx, x + 34, y + 30 * dIdx, 101);
+			AspectRenderHelper.renderAspect(aspect, ctx, x + 80, y + 30 * dIdx, 101);
 		}
 	}
 	
@@ -42,7 +43,7 @@ public class AspectCombosSectionRenderer implements EntrySectionRenderer<AspectC
 			Aspect aspect = aspects.get(i);
 			int dIdx = i - pageIdx * 5;
 			tooltipArea(ctx, aspect.left(), mouseX, mouseY, x, y + 30 * dIdx);
-			tooltipArea(ctx, aspect.right(), mouseX, mouseY, x + 40, y + 30 * dIdx);
+			tooltipArea(ctx, aspect.right(), mouseX, mouseY, x + 34, y + 30 * dIdx);
 			tooltipArea(ctx, aspect, mouseX, mouseY, x + 80, y + 30 * dIdx);
 		}
 	}

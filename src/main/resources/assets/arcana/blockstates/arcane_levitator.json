@@ -1,0 +1,25 @@
+{
+  "variants": {
+    "facing=up": {
+      "model": "arcana:block/arcane_levitator"
+    },
+    "facing=north": {
+      "model": "arcana:block/arcane_levitator",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "arcana:block/arcane_levitator",
+      "x": 270
+    },
+    "facing=east": {
+      "model": "arcana:block/arcane_levitator",
+      "x": 90,
+      "y": 90
+    },
+    "facing=west": {
+      "model": "arcana:block/arcane_levitator",
+      "x": 270,
+      "y": 90
+    }
+  }
+}

@@ -660,6 +660,7 @@ public final class ArcanaRegistry{
 	public static SimpleParticleType CLAW_RUBY = FabricParticleTypes.simple();
 	public static SimpleParticleType PRISM_GLITTER = FabricParticleTypes.simple();
 	public static SimpleParticleType UPWIND = FabricParticleTypes.simple();
+	public static SimpleParticleType WIND = FabricParticleTypes.simple();
 	public static SimpleParticleType FLUX_BUBBLE = FabricParticleTypes.simple();
 	
 	public static ParticleType<CubeParticleEffect> WARDING_EFFECT = FabricParticleTypes.complex(CubeParticleEffect::createCodec, CubeParticleEffect::createPacketCodec);
@@ -1354,6 +1355,7 @@ public final class ArcanaRegistry{
 		registerParticleType("claw_ruby", CLAW_RUBY);
 		registerParticleType("prism_glitter", PRISM_GLITTER);
 		registerParticleType("upwind", UPWIND);
+		registerParticleType("wind", WIND);
 		registerParticleType("flux_bubble", FLUX_BUBBLE);
 		
 		registerParticleType("warding_effect", WARDING_EFFECT);

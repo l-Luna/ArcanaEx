@@ -19,8 +19,8 @@
   },
   "pattern": [
     "ACA",
-    "W W",
-    "SNS"
+    "S S",
+    "WNW"
   ],
   "result": {
     "id": "arcana:arcane_levitator"

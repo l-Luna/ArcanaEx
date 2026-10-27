@@ -30,7 +30,6 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		blockGen.registerSimpleState(ARCANE_CRAFTING_TABLE);
 		blockGen.registerSimpleState(NITOR);
 		blockGen.registerSimpleState(PEDESTAL);
-		blockGen.registerSimpleState(ARCANE_LEVITATOR);
 		blockGen.registerSimpleState(ALEMBIC);
 		blockGen.registerSimpleState(INFUSION_MATRIX);
 		blockGen.registerSimpleState(MNEMONIC_CHEST);

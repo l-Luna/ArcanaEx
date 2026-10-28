@@ -11,6 +11,7 @@ import arcana.client.ber.*;
 import arcana.client.entity.*;
 import arcana.client.particles.*;
 import arcana.client.renderers.*;
+import arcana.client.research.ArcanaPonderPlugin;
 import arcana.client.research.EntrySectionRenderer;
 import arcana.client.research.PuzzleRenderer;
 import arcana.client.research.RequirementRenderer;
@@ -27,6 +28,7 @@ import arcana.network.PkTryAdvance;
 import arcana.research.*;
 import arcana.screens.*;
 import arcana.util.MathUtil;
+import net.createmod.ponder.foundation.PonderIndex;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -81,6 +83,8 @@ public final class ArcanaClient implements ClientModInitializer{
 	
 	public void onInitializeClient(){
 		Arcana.CONFIG.registerCallback(config -> TextSectionRenderer.clearCache());
+		
+		PonderIndex.addPlugin(new ArcanaPonderPlugin());
 		
 		TooltipComponentCallback.EVENT.register(data ->
 				data instanceof ItemAspectsTooltipData(List<AspectStack> aspects, TooltipData inner)

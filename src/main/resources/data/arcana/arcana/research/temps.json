@@ -54,7 +54,7 @@
         },
         {
           "type": "ponder",
-          "content": "minecraft:spyglass"
+          "content": "arcana:warded_campfire_diagram"
         }
       ]
     },

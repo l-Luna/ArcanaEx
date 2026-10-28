@@ -47,6 +47,14 @@
         {
           "type": "arcane_crafting",
           "content": "arcana:warded_campfire"
+        },
+        {
+          "type": "text",
+          "content": ""
+        },
+        {
+          "type": "ponder",
+          "content": "minecraft:spyglass"
         }
       ]
     },

@@ -76,6 +76,9 @@ public abstract class EntrySection{
 		
 		factories.put(BannerPatternPreviewSection.TYPE, BannerPatternPreviewSection::new);
 		deserializers.put(BannerPatternPreviewSection.TYPE, BannerPatternPreviewSection::new);
+		
+		factories.put(PonderSection.TYPE, withContentsId(PonderSection::new));
+		deserializers.put(PonderSection.TYPE, nbt -> new PonderSection(Identifier.of(nbt.getString("scene"))));
 	}
 	
 	private static <T> Function<JsonObject, T> withContentsStr(Function<String, T> builder){

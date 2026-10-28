@@ -48,6 +48,8 @@ repositories {
 		// "Basic Math"
 		url = "https://maven.shedaniel.me/"
 	}
+	maven { url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/" }
+	maven { url = "https://maven.createmod.net" }
 }
 
 loom {
@@ -88,6 +90,7 @@ dependencies {
 	modImplementation "dev.emi:emi-fabric:${emi_version}"
 	modImplementation "software.bernie.geckolib:geckolib-fabric-1.21.1:${geckolib_version}"
 	modImplementation "com.terraformersmc:biolith-fabric:${biolith_version}"
+	modImplementation("net.createmod.ponder:ponder-fabric:${ponder_version}+mc${minecraft_version}")
 
 //	for(String lib39_module : ["core", "dessicant", "phantom", "tunnel", "weld"])
 //		modApi include("com.unascribed:lib39-${lib39_module}:${lib39_version}+${minecraft_version}"){

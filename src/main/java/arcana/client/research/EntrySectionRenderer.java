@@ -7,6 +7,8 @@ import arcana.research.EntrySection;
 import arcana.research.Research;
 import arcana.research.sections.*;
 import arcana.screens.ResearchEntryScreen;
+import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
+import net.fabricmc.fabric.api.client.screen.v1.ScreenKeyboardEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
@@ -41,6 +43,18 @@ public interface EntrySectionRenderer<T extends EntrySection>{
 		renderers.put(AspectCombosSection.TYPE, new AspectCombosSectionRenderer());
 		renderers.put(FluxStatsSection.TYPE, new FluxStatsSectionRenderer());
 		renderers.put(BannerPatternPreviewSection.TYPE, new BannerPatternPreviewSectionRenderer());
+		renderers.put(PonderSection.TYPE, new PonderSectionRenderer());
+		
+		// ponder screen specific hacks, remove in a non-experimental version
+		ScreenEvents.AFTER_INIT.register((client, screen, scaledWidth, scaledHeight) -> {
+			if(screen instanceof ResearchEntryScreen res){
+				ScreenKeyboardEvents.afterKeyRelease(res).register((screen1, key, scancode, modifiers) -> {
+					PonderSectionRenderer.onKeyReleased(key, scancode, modifiers);
+				});
+				ScreenEvents.remove(res).register(it -> PonderSectionRenderer.onRemoved());
+				ScreenEvents.afterTick(res).register(it -> PonderSectionRenderer.tick());
+			}
+		});
 	}
 	
 	@SuppressWarnings("unchecked")

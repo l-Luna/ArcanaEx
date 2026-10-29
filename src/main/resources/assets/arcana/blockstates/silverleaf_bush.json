@@ -1,0 +1,26 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "age": 0,
+        "x": 1,
+        "y": 0,
+        "z": 1
+      },
+      "apply": {
+        "model": "arcana:block/silverleaf_bush_0"
+      }
+    },
+    {
+      "when": {
+        "age": 1,
+        "x": 1,
+        "y": 0,
+        "z": 1
+      },
+      "apply": {
+        "model": "arcana:block/silverleaf_bush_1"
+      }
+    }
+  ]
+}

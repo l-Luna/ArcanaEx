@@ -1,9 +1,9 @@
 package arcana.blocks.deco;
 
+import arcana.blocks.ArcanaBigBlock;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.unascribed.lib39.weld.api.BigBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
@@ -30,7 +30,7 @@ import net.minecraft.world.BlockView;
 import java.util.List;
 import java.util.Locale;
 
-public class WoodenStatueBlock extends BigBlock{
+public class WoodenStatueBlock extends ArcanaBigBlock{
 	
 	public enum Type{
 		SPEAK,

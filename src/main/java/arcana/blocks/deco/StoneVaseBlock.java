@@ -1,7 +1,7 @@
 package arcana.blocks.deco;
 
+import arcana.blocks.ArcanaBigBlock;
 import com.mojang.serialization.MapCodec;
-import com.unascribed.lib39.weld.api.BigBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
@@ -16,7 +16,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 
-public class StoneVaseBlock extends BigBlock{
+public class StoneVaseBlock extends ArcanaBigBlock{
 	
 	private static final MapCodec<StoneVaseBlock> CODEC = createCodec(StoneVaseBlock::new);
 	

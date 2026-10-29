@@ -3,7 +3,6 @@ package arcana.blocks;
 import arcana.blocks.be.ResearchTableBlockEntity;
 import arcana.screens.ResearchTableScreen;
 import com.mojang.serialization.MapCodec;
-import com.unascribed.lib39.weld.api.BigBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -29,7 +28,7 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
-public class ResearchTableBlock extends BigBlock implements Waterloggable, BlockEntityProvider{
+public class ResearchTableBlock extends ArcanaBigBlock implements Waterloggable, BlockEntityProvider{
 	
 	private static final MapCodec<ResearchTableBlock> CODEC = createCodec(ResearchTableBlock::new);
 	

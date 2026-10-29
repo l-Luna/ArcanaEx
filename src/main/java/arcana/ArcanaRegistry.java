@@ -34,6 +34,7 @@ import arcana.items.creative.TaintConverterItem;
 import arcana.items.foci.*;
 import arcana.items.trinkets.*;
 import arcana.screens.*;
+import arcana.util.AmbientLightLootCondition;
 import arcana.util.MnemonicInventoryData;
 import arcana.util.RandomChanceOnceLootCondition;
 import arcana.util.TagGiftLootEntry;
@@ -559,6 +560,10 @@ public final class ArcanaRegistry{
 	
 	public static final Block BEJEWELED_BEETS_BLOCK = new BejeweledBeetsBlock(of(Material.PLANT).renderLayer(CUTOUT).nonOpaque().noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP));
 	public static final Item BEJEWELED_BEET_SEEDS = new AliasedBlockItem(BEJEWELED_BEETS_BLOCK, GROUPED_RES);
+	public static final Block SILVERLEAF_SAPLING = new SilverleafSaplingBlock(of(Material.PLANT).renderLayer(CUTOUT).requiresTool(HOE_MINEABLE).nonOpaque().noCollision().ticksRandomly().strength(0.2f, 0.2f).sounds(BlockSoundGroup.CROP));
+	public static final BigBlock SILVERLEAF_BUSH = new SilverleafBushBlock(of(Material.PLANT).renderLayer(CUTOUT).requiresTool(HOE_MINEABLE).nonOpaque().noCollision().ticksRandomly().strength(0.8f, 0.8f).sounds(BlockSoundGroup.CROP));
+	public static final Item SILVERLEAF_SEED = new AliasedBlockItem(SILVERLEAF_SAPLING, GROUPED_RES);
+	public static final Item DORMANT_SILVERLEAF_SEED = new Item(GROUPED_RES);
 	
 	public static final Block VOID_GROWTH = new Block(of(Material.PLANT).renderLayer(CUTOUT).nonOpaque().noCollision().breakInstantly().sounds(BlockSoundGroup.FROGSPAWN));
 	
@@ -873,6 +878,8 @@ public final class ArcanaRegistry{
 		registerItem("void_metal_leggings", VOID_METAL_LEGGINGS);
 		registerItem("void_metal_boots", VOID_METAL_BOOTS);
 		
+		registerItem("silverleaf_seed", SILVERLEAF_SEED);
+		registerItem("dormant_silverleaf_seed", DORMANT_SILVERLEAF_SEED);
 		registerItem("silverleaf", SILVERLEAF);
 		registerItem("silverleaf_amalgamate", SILVERLEAF_AMALGAMATE);
 		registerItem("silverleaf_sword", SILVERLEAF_SWORD);
@@ -1203,6 +1210,8 @@ public final class ArcanaRegistry{
 		registerBlock("huge_cordispora_cap", HUGE_CORDISPORA_CAP);
 		
 		registerBlock("bejeweled_beets", BEJEWELED_BEETS_BLOCK, false);
+		registerBlock("silverleaf_sapling", SILVERLEAF_SAPLING, false);
+		registerBlock("silverleaf_bush", SILVERLEAF_BUSH, false);
 		registerBlock("void_growth", VOID_GROWTH, false);
 		
 		registerBlock("speak_no_evil_statue", SPEAK_NO_EVIL_STATUE);
@@ -1390,6 +1399,7 @@ public final class ArcanaRegistry{
 		// loot pool types
 		Registry.register(Registries.LOOT_POOL_ENTRY_TYPE, arcId("tag_gift"), TagGiftLootEntry.TYPE);
 		Registry.register(Registries.LOOT_CONDITION_TYPE, arcId("random_chance_once"), RandomChanceOnceLootCondition.TYPE);
+		Registry.register(Registries.LOOT_CONDITION_TYPE, arcId("ambient_light"), AmbientLightLootCondition.TYPE);
 		
 		// and finally, the creative tab
 		Registry.register(Registries.ITEM_GROUP, arcId("main"), MAIN_GROUP);

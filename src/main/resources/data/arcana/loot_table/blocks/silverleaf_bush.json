@@ -1,0 +1,100 @@
+{
+  "type": "minecraft:block",
+  "functions": [
+    {
+      "function": "minecraft:explosion_decay"
+    }
+  ],
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "arcana:silverleaf",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 5,
+                "max": 12
+              }
+            }
+          ]
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:block_state_property",
+          "block": "arcana:silverleaf_bush",
+          "properties": {
+//            "x": "1",
+//            "y": "0",
+//            "z": "1",
+            "age": "1"
+          }
+        },
+        {
+          "condition": "arcana:ambient_light",
+          "light_filter": "sky",
+          "min_inclusive": 0,
+          "max_inclusive": 9
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "name": "arcana:dormant_silverleaf_seed",
+              "conditions": [
+                {
+                  "condition": "minecraft:random_chance",
+                  "chance": 0.5
+                }
+              ],
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "count": {
+                    "type": "minecraft:uniform",
+                    "min": 1,
+                    "max": 3
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "arcana:silverleaf_seed"
+            }
+          ]
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:block_state_property",
+          "block": "arcana:silverleaf_bush",
+          "properties": {
+//            "x": "1",
+//            "y": "0",
+//            "z": "1",
+            "age": "1"
+          }
+        },
+        {
+          "condition": "arcana:ambient_light",
+          "light_filter": "sky",
+          "min_inclusive": 10,
+          "max_inclusive": 15
+        }
+      ]
+    }
+  ],
+  "random_sequence": "arcana:blocks/silverleaf"
+}

@@ -1,11 +1,10 @@
 package arcana.util;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class CodecUtil{
 	
@@ -23,6 +22,17 @@ public class CodecUtil{
 						list.add(Both.of(entry.getKey(), entry.getValue()));
 					return list;
 				}
+		);
+	}
+	
+	public static <E extends Enum<E>> Codec<E> enumCodec(E[] values){
+		Map<String, E> map = Arrays.stream(values).collect(Collectors.toMap(x -> x.name().toLowerCase(Locale.ROOT), x -> x));
+		return Codec.STRING.flatXmap(
+				name -> {
+					String lower = name.toLowerCase(Locale.ROOT);
+					return map.containsKey(lower) ? DataResult.success(map.get(lower)) : DataResult.error(() -> "Invalid constant name \"" + lower + "\"");
+				},
+				value -> DataResult.success(value.name().toLowerCase(Locale.ROOT))
 		);
 	}
 }

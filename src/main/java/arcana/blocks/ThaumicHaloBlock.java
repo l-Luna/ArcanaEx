@@ -5,7 +5,6 @@ import arcana.api.AspectIo;
 import arcana.aspects.AspectStack;
 import arcana.blocks.be.ThaumicHaloBlockEntity;
 import com.mojang.serialization.MapCodec;
-import com.unascribed.lib39.weld.api.BigBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -19,7 +18,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-public class ThaumicHaloBlock extends BigBlock implements BlockEntityProvider, AspectIo{
+public class ThaumicHaloBlock extends ArcanaBigBlock implements BlockEntityProvider, AspectIo{
 	
 	private static final MapCodec<ThaumicHaloBlock> CODEC = createCodec(ThaumicHaloBlock::new);
 	

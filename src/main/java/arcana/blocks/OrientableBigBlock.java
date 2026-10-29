@@ -2,7 +2,6 @@ package arcana.blocks;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.unascribed.lib39.weld.api.BigBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemPlacementContext;
@@ -14,7 +13,7 @@ import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.Direction;
 import org.jetbrains.annotations.Nullable;
 
-public class OrientableBigBlock extends BigBlock{
+public class OrientableBigBlock extends ArcanaBigBlock{
 	
 	private static final MapCodec<OrientableBigBlock> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
 			PropertyCodecs.INT_CODEC.fieldOf("right").forGetter(x->x.right),

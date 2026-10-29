@@ -264,6 +264,8 @@
     "motile": "Motile",
     "motile_piece": "Fragment of Motile",
     "silverleaf_seed": "Silverleaf Seed",
+    "silverleaf_seed.initial_recipe": "Initial\nSilverleaf Seed",
+    "silverleaf_seed.renew_recipe": "Renewed\nSilverleaf Seed",
     "dormant_silverleaf_seed": "Dormant Silverleaf Seed",
 
     "sword_of_the_zephyr": "Sword of the Zephyr",
@@ -1581,7 +1583,7 @@
     "silverleaf": {
       "title": "Silverleaf",
       "desc": "Immaculate Bloom",
-      "text": "Rediscovering this ancient flora has unlocked understanding of some of the notes.{~sep}By combining a handful of magical plants, I can create an enchanted plant with natural aura fixating properties. Its touch repels taint, and its flavour brings calming to the mind.\nI just need to find a way to cultivate it..."
+      "text": "Rediscovering this ancient flora has unlocked understanding of some of the notes.{~sep}By combining a handful of magical plants, I can create an enchanted plant with natural aura fixating properties. Its touch repels taint, and its flavour brings calming to the mind.\nIt's cultivation is difficult, however. The plant will refuse to grow in the smallest presence of sunlight or flux, and demands a large growing area and bright light. The grown plant is painful to touch in any way.\nWhen harvested with a hoe, it will either shed usable leaves (in darkness) or seeds (in sunlight), and most seeds are unusable without additional nurture."
     },
 
     "self_reflection": {

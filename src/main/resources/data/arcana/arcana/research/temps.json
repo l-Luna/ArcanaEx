@@ -313,7 +313,11 @@
         },
         {
           "type": "alchemy",
-          "content": "arcana:silverleaf"
+          "content": "arcana:silverleaf_seed_initial"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:silverleaf_seed_renew"
         }
       ]
     },

@@ -281,6 +281,16 @@
     "aura",
     "metal"
   ],
+  "arcana:silverleaf_seed": [
+    "12*metal",
+    "9*aura",
+    "3*plant"
+  ],
+  "arcana:dormant_silverleaf_seed": [
+    "8*metal",
+    "3*plant",
+    "2*sloth"
+  ],
   "arcana:silverleaf_amalgamate": [
     "3*metal",
     "3*aura",

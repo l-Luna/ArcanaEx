@@ -9,7 +9,8 @@
     "8*life",
     "senses"
   ],
+  "name": "item.arcana.silverleaf_seed.initial_recipe",
   "result": {
-    "id": "arcana:silverleaf"
+    "id": "arcana:silverleaf_seed"
   }
 }

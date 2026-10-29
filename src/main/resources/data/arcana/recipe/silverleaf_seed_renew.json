@@ -1,0 +1,15 @@
+{
+  "type": "arcana:alchemy",
+  "ingredient": {
+    "item": "arcana:dormant_silverleaf_seed"
+  },
+  "aspects": [
+    "4*metal",
+    "3*aura",
+    "plant"
+  ],
+  "name": "item.arcana.silverleaf_seed.renew_recipe",
+  "result": {
+    "id": "arcana:silverleaf_seed"
+  }
+}

@@ -463,6 +463,7 @@
     "crystallization_press": "Crystallization Press",
     "mystic_mist": "Mystic Mist",
     "magic_mirror": "Magic Mirror",
+    "courier": "Levitational Courier",
     "warded_campfire": "Warded Campfire",
     "crimson_campfire": "Crimson Campfire",
 
@@ -640,7 +641,7 @@
     "gleaming_lamplight": "Gleaming Lamplight",
     "chiseled_gleaming_lamplight": "Solar Gleaming Lamplight",
 
-    "symbol": "Control Symbol: {}",
+    "control_symbol": "Control Symbol: {}",
 
     "light_block": "Light Block",
     "taint_goo": "Taint Goo",

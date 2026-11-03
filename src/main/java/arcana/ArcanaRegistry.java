@@ -7,6 +7,7 @@ import arcana.aspects.Aspect;
 import arcana.aspects.Aspects;
 import arcana.blocks.*;
 import arcana.blocks.be.*;
+import arcana.blocks.courier.CourierBlock;
 import arcana.blocks.deco.CrystalPillarBlock;
 import arcana.blocks.deco.NitorBlock;
 import arcana.blocks.deco.StoneVaseBlock;
@@ -422,6 +423,7 @@ public final class ArcanaRegistry{
 	public static final Block CRYSTALLIZATION_PRESS = new CrystallizationPressBlock(of(Material.METAL).dropsSelf().requiresTool(PICKAXE_MINEABLE).sounds(BlockSoundGroup.ANCIENT_DEBRIS).strength(4).nonOpaque());
 	public static final Block MYSTIC_MIST = new MysticMistBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).sounds(BlockSoundGroup.METAL).strength(2.5f).nonOpaque());
 	public static final Block MAGIC_MIRROR = new MagicMirrorBlock(of(Material.METAL).usesTool(PICKAXE_MINEABLE).strength(0.7f).sounds(BlockSoundGroup.GLASS).luminance(2).nonOpaque().noCollision());
+	public static final Block COURIER = new CourierBlock(of(Material.METAL).usesTool(PICKAXE_MINEABLE).renderLayer(CUTOUT).strength(1.8f).sounds(BlockSoundGroup.HEAVY_CORE).nonOpaque());
 	public static final Block WARDED_CAMPFIRE = new WardedCampfireBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).renderLayer(CUTOUT).strength(2).sounds(BlockSoundGroup.WOOD).luminance(whenLit(15)).nonOpaque());
 	public static final Block CRIMSON_CAMPFIRE = new CrimsonCampfireBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).renderLayer(CUTOUT).strength(2).sounds(BlockSoundGroup.WOOD).luminance(whenLit(15)).nonOpaque());
 	
@@ -665,6 +667,7 @@ public final class ArcanaRegistry{
 	public static BlockEntityType<DistilleryPathfinderBlockEntity> DISTILLERY_PATHFINDER_BE = FabricBlockEntityTypeBuilder.create(DistilleryPathfinderBlockEntity::new, DISTILLERY_PATHFINDER).build();
 	public static BlockEntityType<ThaumicHaloBlockEntity> THAUMIC_HALO_BE = FabricBlockEntityTypeBuilder.create(ThaumicHaloBlockEntity::new, THAUMIC_HALO).build();
 	public static BlockEntityType<MagicMirrorBlockEntity> MAGIC_MIRROR_BE = FabricBlockEntityTypeBuilder.create(MagicMirrorBlockEntity::new, MAGIC_MIRROR).build();
+	public static BlockEntityType<CourierBlock.BE> COURIER_BE = BlockEntityType.Builder.create(CourierBlock.BE::new, COURIER).build();
 	
 	// particle types...
 	public static SimpleParticleType TAINT_BUBBLE = FabricParticleTypes.simple();
@@ -1082,6 +1085,7 @@ public final class ArcanaRegistry{
 		registerBlock("mystic_mist", MYSTIC_MIST);
 		registerBlock("magic_mirror", MAGIC_MIRROR, false);
 		registerItem("magic_mirror", new MagicMirrorBlockItem(MAGIC_MIRROR, new ArcanaItemSettings().group(Tab.MAIN).maxCount(2)));
+		registerBlock("courier", COURIER);
 		registerBlock("warded_campfire", WARDED_CAMPFIRE);
 		registerBlock("crimson_campfire", CRIMSON_CAMPFIRE);
 		
@@ -1358,6 +1362,7 @@ public final class ArcanaRegistry{
 		registerBlockEntity("distillery_pathfinder", DISTILLERY_PATHFINDER_BE);
 		registerBlockEntity("thaumic_halo", THAUMIC_HALO_BE);
 		registerBlockEntity("magic_mirror", MAGIC_MIRROR_BE);
+		registerBlockEntity("courier", COURIER_BE);
 		
 		// worldgen
 		registerFeature("hanging_node", new HangingNodeFeature());

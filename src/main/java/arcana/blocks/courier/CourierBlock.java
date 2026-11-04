@@ -12,6 +12,8 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
@@ -20,6 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CourierBlock extends BlockWithEntity{
+	
+	private static final int STATE_TIME = 14;
 	
 	private static final MapCodec<CourierBlock> CODEC = createCodec(CourierBlock::new);
 	
@@ -41,8 +45,6 @@ public class CourierBlock extends BlockWithEntity{
 	
 	public static class BE extends BlockEntity{
 		
-		private static final int STATE_TIME = 14;
-		
 		// TODO: populate & serialise
 		private List<SymbolInstance> sourceSymbols = new ArrayList<>();
 		private List<SymbolInstance> sinkSymbols = new ArrayList<>();
@@ -54,6 +56,22 @@ public class CourierBlock extends BlockWithEntity{
 		public BE(BlockPos pos, BlockState state){
 			super(ArcanaRegistry.COURIER_BE, pos, state);
 		}
+		
+		public CourierState getState(){
+			return state;
+		}
+		
+		//
+		
+		protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){
+			super.readNbt(nbt, registryLookup);
+		}
+		
+		protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){
+			super.writeNbt(nbt, registryLookup);
+		}
+		
+		//
 		
 		private void tick(){
 			// check after a transfer is made, or if versions update

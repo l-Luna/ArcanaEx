@@ -1,6 +1,5 @@
 package arcana.blocks.courier;
 
-import arcana.blocks.courier.symbols.FabricBackedSymbolStorage;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -16,7 +15,7 @@ public class ControlSymbolBlock extends Block{
 	
 	public static class BE extends BlockEntity{
 		
-		FabricBackedSymbolStorage.StorageProvider symType;
+		SymbolInstance symbol;
 		BlockBox relativeVolume;
 		// linked courier...
 		

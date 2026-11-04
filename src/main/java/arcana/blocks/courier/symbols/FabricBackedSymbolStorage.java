@@ -99,6 +99,10 @@ public class FabricBackedSymbolStorage implements SymbolStorage{
 			}
 			return amountExtracted;
 		}
-	
+		
+		public boolean valid(){
+			// assume it won't stop existing
+			return true;
+		}
 	}
 }

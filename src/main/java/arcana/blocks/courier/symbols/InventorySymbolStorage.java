@@ -78,5 +78,10 @@ public class InventorySymbolStorage implements SymbolStorage, InventoryChangedLi
 		public long take(long amount, boolean simulate){
 			return inventory.removeStack(slot, (int)amount).getCount();
 		}
+		
+		public boolean valid(){
+			// an inventory slot won't stop existing
+			return true;
+		}
 	}
 }

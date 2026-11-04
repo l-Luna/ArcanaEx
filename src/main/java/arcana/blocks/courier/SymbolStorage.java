@@ -14,6 +14,8 @@ public interface SymbolStorage{
 		ResourceAmount<T> getStack();
 		
 		long take(long amount, boolean simulate);
+		
+		boolean valid();
 	}
 	
 	long version();
@@ -21,6 +23,14 @@ public interface SymbolStorage{
 	List<? extends ResourceHandle<ItemVariant>> getItems();
 	
 	List<? extends ResourceHandle<FluidVariant>> getFluids();
+	
+	default long insert(ResourceAmount<?> stack, boolean simulate){
+		if(stack.resource() instanceof ItemVariant)
+			return insertItem((ResourceAmount<ItemVariant>)stack, simulate);
+		else if(stack.resource() instanceof FluidVariant)
+			return insertFluid((ResourceAmount<FluidVariant>)stack, simulate);
+		throw new IllegalArgumentException();
+	}
 	
 	long insertItem(ResourceAmount<ItemVariant> stack, boolean simulate);
 	

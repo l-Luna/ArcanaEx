@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "key": {
     "X": {
-      "item": "minecraft:chain"
+      "item": "arcana:arcanium_chain"
     }
   },
   "pattern": [
@@ -10,7 +10,7 @@
     "XXX"
   ],
   "result": {
-    "id": "arcana:chain_wall",
+    "id": "arcana:arcanium_chain_wall",
     "count": 16
   }
 }

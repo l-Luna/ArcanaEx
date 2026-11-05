@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "P": {
+      "item": "arcana:silverwood_planks"
+    },
+    "B": {
+      "item": "minecraft:blaze_rod"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "pattern": [
+    " P ",
+    "PBP",
+    " R "
+  ],
+  "result": {
+    "id": "arcana:silverwood_bulb",
+    "count": 4
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "I": {
+      "item": "arcana:arcanium_ingot"
+    }
+  },
+  "pattern": [
+    " I ",
+    "I I",
+    " I "
+  ],
+  "result": {
+    "id": "arcana:arcanium_plating",
+    "count": 4
+  }
+}

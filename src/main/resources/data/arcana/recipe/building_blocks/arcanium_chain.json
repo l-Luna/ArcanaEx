@@ -1,16 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
   "key": {
-    "X": {
+    "I": {
       "item": "arcana:arcanium_ingot"
+    },
+    "N": {
+      "item": "arcana:arcanium_nugget"
     }
   },
   "pattern": [
-    "XXX",
-    "XXX",
-    "XXX"
+    "N",
+    "I",
+    "N"
   ],
   "result": {
-    "id": "arcana:arcanium_block"
+    "id": "arcana:arcanium_chain"
   }
 }

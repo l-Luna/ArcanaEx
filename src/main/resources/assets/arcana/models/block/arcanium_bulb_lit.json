@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "side": "arcana:block/arcanium_bulb_side_lit",
+    "end": "arcana:block/arcanium_bulb_top_lit"
+  }
+}

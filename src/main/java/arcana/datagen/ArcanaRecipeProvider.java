@@ -70,6 +70,8 @@ public class ArcanaRecipeProvider extends FabricRecipeProvider{
 		offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ARCANE_STONE_TILES_STAIRS, ARCANE_STONE_TILES);
 		offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, ARCANE_STONE_TILES_WALL, ARCANE_STONE_TILES);
 		
+		offerReversibleCompactingRecipesWithReverseRecipeGroup(exporter, RecipeCategory.MISC, ARCANIUM_INGOT, RecipeCategory.BUILDING_BLOCKS, ARCANIUM_BLOCK, "arcanium_ingot_from_arcanium_block", "arcanium_ingot");
+		offerReversibleCompactingRecipesWithCompactingRecipeGroup(exporter, RecipeCategory.MISC, ARCANIUM_NUGGET, RecipeCategory.MISC, ARCANIUM_INGOT, "arcanium_ingot_from_nuggets", "arcanium_ingot");
 		offerReversibleCompactingRecipesWithReverseRecipeGroup(exporter, RecipeCategory.MISC, THAUMIUM_INGOT, RecipeCategory.BUILDING_BLOCKS, THAUMIUM_BLOCK, "thaumium_ingot_from_thaumium_block", "thaumium_ingot");
 		offerReversibleCompactingRecipesWithCompactingRecipeGroup(exporter, RecipeCategory.MISC, THAUMIUM_NUGGET, RecipeCategory.MISC, THAUMIUM_INGOT, "thaumium_ingot_from_nuggets", "thaumium_ingot");
 		offerReversibleCompactingRecipesWithReverseRecipeGroup(exporter, RecipeCategory.MISC, VOID_METAL_INGOT, RecipeCategory.BUILDING_BLOCKS, VOID_METAL_BLOCK, "void_metal_ingot_from_void_metal_block", "void_metal_ingot");

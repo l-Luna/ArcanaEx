@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "arcanium_ingot",
+  "key": {
+    "#": {
+      "item": "arcana:arcanium_nugget"
+    }
+  },
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "result": {
+    "count": 1,
+    "id": "arcana:arcanium_ingot"
+  }
+}

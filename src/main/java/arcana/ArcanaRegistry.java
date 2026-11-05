@@ -213,6 +213,7 @@ public final class ArcanaRegistry{
 			.build()));
 	
 	public static final Item ARCANIUM_INGOT = new Item(GROUPED_RES);
+	public static final Item ARCANIUM_NUGGET = new Item(GROUPED_RES);
 	public static final Item ARCANIUM_SWORD = new SwordItem(ArcanaToolMaterials.ARCANIUM, new ArcanaItemSettings().group(Tab.EQUIPMENT).attributeModifiers(SwordItem.createAttributeModifiers(ArcanaToolMaterials.ARCANIUM, 3, -2.4f)));
 	public static final Item ARCANIUM_SHOVEL = new ShovelItem(ArcanaToolMaterials.ARCANIUM, new ArcanaItemSettings().group(Tab.EQUIPMENT).attributeModifiers(ShovelItem.createAttributeModifiers(ArcanaToolMaterials.ARCANIUM, 1.5f, -3)));
 	public static final Item ARCANIUM_PICKAXE = new PickaxeItem(ArcanaToolMaterials.ARCANIUM, new ArcanaItemSettings().group(Tab.EQUIPMENT).attributeModifiers(PickaxeItem.createAttributeModifiers(ArcanaToolMaterials.ARCANIUM, 1, -2.8f)));
@@ -461,6 +462,12 @@ public final class ArcanaRegistry{
 	public static final Block ARCANE_STONE_ORDER_SLATE = new Block(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3, 7));
 	public static final Block ARCANE_STONE_ENTROPY_SLATE = new Block(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(3, 7));
 	
+	public static final Block ARCANIUM_PLATING = new Block(of(Material.METAL, MapColor.PINK).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(4, 6).sounds(BlockSoundGroup.METAL));
+	public static final Block ARCANIUM_BULB = new BulbBlock(of(Material.METAL, MapColor.PINK).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(4, 6).sounds(BlockSoundGroup.METAL).luminance(whenLit(15)));
+	public static final Block ARCANIUM_CHAIN = new ChainBlock(of(Material.METAL, MapColor.CLEAR).renderLayer(CUTOUT).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(2.6f).sounds(BlockSoundGroup.METAL).nonOpaque());
+	public static final Block ARCANIUM_CHAIN_WALL = new PaneBlock(of(Material.METAL, MapColor.CLEAR).renderLayer(CUTOUT).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(2.6f).sounds(BlockSoundGroup.METAL).nonOpaque());
+	public static final Block ARCANIUM_BARS = new PaneBlock(of(Material.METAL, MapColor.CLEAR).renderLayer(CUTOUT).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(2.6f).sounds(BlockSoundGroup.METAL).nonOpaque());
+	
 	public static final SaplingGenerator SILVERWOOD_SAPLING_GEN = new SaplingGenerator(
 			"arcana:silverwood_sapling", Optional.of(RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, arcId("silverwood_tree"))), Optional.empty(), Optional.empty()
 	);
@@ -485,8 +492,9 @@ public final class ArcanaRegistry{
 	public static final Block SILVERWOOD_SIGN = new SignBlock(ArcanaBlockSetTypes.SILVERWOOD, of(Material.WOOD).usesTool(AXE_MINEABLE).flammable(5, 20).renderLayer(CUTOUT).strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque());
 	public static final Block SILVERWOOD_WALL_SIGN = new WallSignBlock(ArcanaBlockSetTypes.SILVERWOOD, of(Material.WOOD).usesTool(AXE_MINEABLE).flammable(5, 20).renderLayer(CUTOUT).dropsLike(SILVERWOOD_SIGN).strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque());
 	
-	public static final Block GLEAMING_SILVERWOOD_PLANKS = new Block(of(Material.WOOD).dropsSelf().flammable(5, 20).strength(2, 3).sounds(BlockSoundGroup.WOOD));
-	public static final Block SOLAR_GLEAMING_SILVERWOOD_PLANKS = new Block(of(Material.WOOD).dropsSelf().flammable(5, 20).strength(2, 3).sounds(BlockSoundGroup.WOOD));
+	public static final Block SILVERWOOD_BULB = new BulbBlock(of(Material.WOOD).dropsSelf().flammable(5, 20).usesTool(AXE_MINEABLE).strength(2, 3).sounds(BlockSoundGroup.WOOD).luminance(whenLit(15)));
+	public static final Block GLEAMING_SILVERWOOD_PLANKS = new Block(of(Material.WOOD).dropsSelf().flammable(5, 20).usesTool(AXE_MINEABLE).strength(2, 3).sounds(BlockSoundGroup.WOOD).luminance(15));
+	public static final Block SOLAR_GLEAMING_SILVERWOOD_PLANKS = new Block(of(Material.WOOD).dropsSelf().flammable(5, 20).usesTool(AXE_MINEABLE).strength(2, 3).sounds(BlockSoundGroup.WOOD).luminance(15));
 	
 	public static final SaplingGenerator GREATWOOD_SAPLING_GEN = new SaplingGenerator(
 			"arcana:greatwood_sapling", Optional.of(RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, arcId("greatwood_tree"))), Optional.empty(), Optional.empty()
@@ -512,8 +520,9 @@ public final class ArcanaRegistry{
 	public static final Block GREATWOOD_SIGN = new SignBlock(ArcanaBlockSetTypes.GREATWOOD, of(Material.WOOD).usesTool(AXE_MINEABLE).flammable(5, 20).renderLayer(CUTOUT).strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque());
 	public static final Block GREATWOOD_WALL_SIGN = new WallSignBlock(ArcanaBlockSetTypes.GREATWOOD, of(Material.WOOD).usesTool(AXE_MINEABLE).flammable(5, 20).renderLayer(CUTOUT).dropsLike(GREATWOOD_SIGN).strength(3).sounds(BlockSoundGroup.WOOD).nonOpaque());
 	
-	public static final Block GLEAMING_GREATWOOD_PLANKS = new Block(of(Material.WOOD).dropsSelf().flammable(5, 20).strength(2, 3).sounds(BlockSoundGroup.WOOD));
-	public static final Block SOLAR_GLEAMING_GREATWOOD_PLANKS = new Block(of(Material.WOOD).dropsSelf().flammable(5, 20).strength(2, 3).sounds(BlockSoundGroup.WOOD));
+	public static final Block GREATWOOD_BULB = new BulbBlock(of(Material.WOOD).dropsSelf().flammable(5, 20).usesTool(AXE_MINEABLE).strength(2, 3).sounds(BlockSoundGroup.WOOD).luminance(whenLit(15)));
+	public static final Block GLEAMING_GREATWOOD_PLANKS = new Block(of(Material.WOOD).dropsSelf().flammable(5, 20).usesTool(AXE_MINEABLE).strength(2, 3).sounds(BlockSoundGroup.WOOD).luminance(15));
+	public static final Block SOLAR_GLEAMING_GREATWOOD_PLANKS = new Block(of(Material.WOOD).dropsSelf().flammable(5, 20).usesTool(AXE_MINEABLE).strength(2, 3).sounds(BlockSoundGroup.WOOD).luminance(15));
 	
 	public static final Block BALANCED_CRYSTAL = new Block(of(Material.AMETHYST, MapColor.WHITE).dropsSelf().usesTool(PICKAXE_MINEABLE).sounds(BlockSoundGroup.AMETHYST_CLUSTER).strength(0.9f).luminance(3));
 	public static final Block BALANCED_CRYSTAL_PILLAR = new CrystalPillarBlock(of(Material.AMETHYST, MapColor.WHITE).usesTool(PICKAXE_MINEABLE).sounds(BlockSoundGroup.AMETHYST_CLUSTER).strength(0.9f).luminance(3));
@@ -852,6 +861,7 @@ public final class ArcanaRegistry{
 		registerItem("silverleaf_brew", SILVERLEAF_BREW);
 		
 		registerItem("arcanium_ingot", ARCANIUM_INGOT);
+		registerItem("arcanium_nugget", ARCANIUM_NUGGET);
 		registerItem("arcanium_sword", ARCANIUM_SWORD);
 		registerItem("arcanium_shovel", ARCANIUM_SHOVEL);
 		registerItem("arcanium_pickaxe", ARCANIUM_PICKAXE);
@@ -1112,6 +1122,12 @@ public final class ArcanaRegistry{
 		registerBlock("arcane_stone_order_slate", ARCANE_STONE_ORDER_SLATE);
 		registerBlock("arcane_stone_entropy_slate", ARCANE_STONE_ENTROPY_SLATE);
 		
+		registerBlock("arcanium_plating", ARCANIUM_PLATING);
+		registerBlock("arcanium_bulb", ARCANIUM_BULB);
+		registerBlock("arcanium_chain", ARCANIUM_CHAIN);
+		registerBlock("arcanium_chain_wall", ARCANIUM_CHAIN_WALL);
+		registerBlock("arcanium_bars", ARCANIUM_BARS);
+		
 		registerBlock("silverwood_sapling", SILVERWOOD_SAPLING);
 		registerBlock("silverwood_log", SILVERWOOD_LOG);
 		registerBlock("silverwood_leaves", SILVERWOOD_LEAVES);
@@ -1136,6 +1152,7 @@ public final class ArcanaRegistry{
 		registerBlock("silverwood_wall_sign", SILVERWOOD_WALL_SIGN, false);
 		registerItem("silverwood_sign", new SignItem(new ArcanaItemSettings().group(Tab.MAIN).maxCount(16), SILVERWOOD_SIGN, SILVERWOOD_WALL_SIGN));
 		
+		registerBlock("silverwood_bulb", SILVERWOOD_BULB);
 		registerBlock("gleaming_silverwood_planks", GLEAMING_SILVERWOOD_PLANKS);
 		registerBlock("solar_gleaming_silverwood_planks", SOLAR_GLEAMING_SILVERWOOD_PLANKS);
 		
@@ -1163,6 +1180,7 @@ public final class ArcanaRegistry{
 		registerBlock("greatwood_wall_sign", GREATWOOD_WALL_SIGN, false);
 		registerItem("greatwood_sign", new SignItem(new ArcanaItemSettings().group(Tab.MAIN).maxCount(16), GREATWOOD_SIGN, GREATWOOD_WALL_SIGN));
 		
+		registerBlock("greatwood_bulb", GREATWOOD_BULB);
 		registerBlock("gleaming_greatwood_planks", GLEAMING_GREATWOOD_PLANKS);
 		registerBlock("solar_gleaming_greatwood_planks", SOLAR_GLEAMING_GREATWOOD_PLANKS);
 		

@@ -1,13 +1,13 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "group": "arcanium_ingot",
+  "category": "misc",
   "ingredients": [
     {
-      "item": "arcana:arcanium_block"
+      "item": "arcana:arcanium_ingot"
     }
   ],
   "result": {
     "count": 9,
-    "id": "arcana:arcanium_ingot"
+    "id": "arcana:arcanium_nugget"
   }
 }

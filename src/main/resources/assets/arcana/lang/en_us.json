@@ -213,6 +213,7 @@
     "holding_jug": "Holding Jug",
 
     "arcanium_ingot": "Arcanium Ingot",
+    "arcanium_nugget": "Arcanium Nugget",
     "arcanium_axe": "Arcanium Axe",
     "arcanium_pickaxe": "Arcanium Pickaxe",
     "arcanium_sword": "Arcanium Sword",
@@ -502,6 +503,12 @@
     "arcane_stone_order_slate": "Ordo-Emblazoned Arcane Stone Slate",
     "arcane_stone_entropy_slate": "Perditio-Emblazoned Arcane Stone Slate",
 
+    "arcanium_plating": "Arcanium Plating",
+    "arcanium_bulb": "Arcanium Bulb",
+    "arcanium_chain": "Arcanium Chain",
+    "arcanium_chain_wall": "Arcanium Chain Wall",
+    "arcanium_bars": "Arcanium Bars",
+
     "silverwood_sapling": "Silverwood Sapling",
     "silverwood_log": "Silverwood Log",
     "silverwood_leaves": "Silverwood Leaves",
@@ -523,6 +530,7 @@
     "silverwood_sign": "Silverwood Sign",
     "silverwood_wall_sign": "Silverwood Sign",
 
+    "silverwood_bulb": "Silverwood Bulb",
     "gleaming_silverwood_planks": "Gleaming Silverwood Planks",
     "solar_gleaming_silverwood_planks": "Solar Gleaming Silverwood Planks",
 
@@ -547,6 +555,7 @@
     "greatwood_sign": "Greatwood Sign",
     "greatwood_wall_sign": "Greatwood Sign",
 
+    "greatwood_bulb": "Greatwood Bulb",
     "gleaming_greatwood_planks": "Gleaming Greatwood Planks",
     "solar_gleaming_greatwood_planks": "Solar Gleaming Greatwood Planks",
 

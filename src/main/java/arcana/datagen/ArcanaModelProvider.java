@@ -63,6 +63,7 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		blockGen.registerSimpleCubeAll(SOLAR_GLEAMING_SILVERWOOD_PLANKS);
 		blockGen.registerSimpleCubeAll(GLEAMING_GREATWOOD_PLANKS);
 		blockGen.registerSimpleCubeAll(SOLAR_GLEAMING_GREATWOOD_PLANKS);
+		blockGen.registerSimpleCubeAll(ARCANIUM_PLATING);
 		
 		// TODO: cleanup; these are mostly no-ops now
 		registerCross(SILVERWOOD_SAPLING, blockGen);
@@ -102,6 +103,8 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		blockGen.registerNorthDefaultHorizontalRotation(MAGIC_MIRROR);
 		
 		blockGen.registerLantern(CRIMSON_LANTERN);
+		registerBars(ARCANIUM_CHAIN_WALL, blockGen);
+		registerBars(ARCANIUM_BARS, blockGen);
 		registerBars(CHAIN_WALL, blockGen);
 		
 		for(CrystalClusterBlock value : Aspects.clusters.values()){
@@ -138,6 +141,10 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		noAutoGen.add(RESEARCH_TABLE.asItem());
 		noAutoGen.add(THAUMIC_HALO.asItem());
 		noAutoGen.add(CRIMSON_LANTERN.asItem());
+		noAutoGen.add(ARCANIUM_BULB.asItem());
+		noAutoGen.add(ARCANIUM_CHAIN.asItem());
+		noAutoGen.add(ARCANIUM_CHAIN_WALL.asItem());
+		noAutoGen.add(ARCANIUM_BARS.asItem());
 		noAutoGen.add(CHAIN_WALL.asItem());
 		noAutoGen.add(METAL_LADDER.asItem());
 		noAutoGen.add(GREATWOOD_SCRIBING_DESK.asItem());
@@ -149,6 +156,8 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		noAutoGen.add(HUGE_VISHROOM_CAP.asItem());
 		noAutoGen.add(CRYSTAL_EMBEDDED_ROCK.asItem());
 		noAutoGen.add(SILVERLEAF_SAPLING.asItem());
+		noAutoGen.add(SILVERWOOD_BULB.asItem());
+		noAutoGen.add(GREATWOOD_BULB.asItem());
 		
 		itemGen.register(NITOR.asItem(), Models.GENERATED);
 		itemGen.register(MAGIC_MIRROR.asItem(), Models.GENERATED);

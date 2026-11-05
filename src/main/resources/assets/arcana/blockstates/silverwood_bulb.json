@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=true": {
+      "model": "arcana:block/silverwood_bulb_lit"
+    },
+    "lit=false": {
+      "model": "arcana:block/silverwood_bulb"
+    }
+  }
+}

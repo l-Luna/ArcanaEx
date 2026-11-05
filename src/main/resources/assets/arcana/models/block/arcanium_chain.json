@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/chain",
+  "textures": {
+    "all": "arcana:block/arcanium_chain",
+    "particle": "arcana:block/arcanium_chain"
+  }
+}

@@ -22,6 +22,6 @@ public class CrimsonCampfireBlockEntity extends CampfireBlockEntity{
 			return;
 		if(world.getTime() % (20 * 14) != 0)
 			return;
-		CrimsonSpawns.trySpawn(world, pos, pos);
+		CrimsonSpawns.trySpawn(world, pos, pos.down());
 	}
 }

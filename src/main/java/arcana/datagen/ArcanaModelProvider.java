@@ -57,7 +57,6 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		blockGen.registerSimpleCubeAll(TAINTED_HOLLOWED_ORE);
 		blockGen.registerSimpleCubeAll(TAINT_CRUST);
 		blockGen.registerSimpleCubeAll(HOLLOWED_ORE);
-		blockGen.registerSimpleCubeAll(ARCANE_STONE_INSCRIBED_TILES);
 		blockGen.registerSimpleCubeAll(GLEAMING_LAMPLIGHT);
 		blockGen.registerSimpleCubeAll(CHISELED_GLEAMING_LAMPLIGHT);
 		blockGen.registerSimpleCubeAll(GLEAMING_SILVERWOOD_PLANKS);

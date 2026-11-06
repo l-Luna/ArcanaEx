@@ -29,15 +29,12 @@
           "condition": "minecraft:block_state_property",
           "block": "arcana:silverleaf_bush",
           "properties": {
-//            "x": "1",
-//            "y": "0",
-//            "z": "1",
             "age": "1"
           }
         },
         {
           "condition": "arcana:ambient_light",
-          "light_filter": "sky",
+          "light_filter": "overall",
           "min_inclusive": 0,
           "max_inclusive": 9
         }
@@ -81,9 +78,6 @@
           "condition": "minecraft:block_state_property",
           "block": "arcana:silverleaf_bush",
           "properties": {
-//            "x": "1",
-//            "y": "0",
-//            "z": "1",
             "age": "1"
           }
         },

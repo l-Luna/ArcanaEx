@@ -38,9 +38,9 @@
 		},
 		{
 			"name": "top",
-			"from": [-16, 32, -16],
-			"to": [32, 32, 32],
-			"rotation": {"angle": 0, "axis": "y", "origin": [0, 32, -8]},
+			"from": [-16, 31.7, -16],
+			"to": [32, 31.7, 32],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 31.7, -8]},
 			"faces": {
 				"north": {"uv": [0.875, 0.25, 4.875, 0.25], "texture": "#0"},
 				"east": {"uv": [0, 0.25, 4, 0.25], "texture": "#0"},
@@ -52,9 +52,9 @@
 		},
 		{
 			"name": "north",
-			"from": [-16, 9, -16],
-			"to": [32, 32, -16],
-			"rotation": {"angle": 0, "axis": "y", "origin": [0, 22, -16]},
+			"from": [-16, 9, -15.8],
+			"to": [32, 32, -15.8],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 22, -15.8]},
 			"faces": {
 				"north": {"uv": [4, 4, 10, 6.875], "texture": "#0"},
 				"east": {"uv": [0.25, 0, 0.25, 2.125], "texture": "#0"},
@@ -66,9 +66,9 @@
 		},
 		{
 			"name": "south",
-			"from": [-16, 9, 32],
-			"to": [32, 32, 32],
-			"rotation": {"angle": 0, "axis": "y", "origin": [0, 22, 32]},
+			"from": [-16, 9, 31.7],
+			"to": [32, 32, 31.7],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 22, 31.7]},
 			"faces": {
 				"north": {"uv": [4, 4, 10, 7.25], "texture": "#0"},
 				"east": {"uv": [0.25, 0, 0.25, 2.125], "texture": "#0"},
@@ -80,9 +80,9 @@
 		},
 		{
 			"name": "east",
-			"from": [32, 9, -16],
-			"to": [32, 32, 32],
-			"rotation": {"angle": 0, "axis": "y", "origin": [32, 22, 16]},
+			"from": [31.8, 9, -16],
+			"to": [31.8, 32, 32],
+			"rotation": {"angle": 0, "axis": "y", "origin": [31.8, 22, 16]},
 			"faces": {
 				"north": {"uv": [0.25, 0, 0.25, 2.125], "texture": "#0"},
 				"east": {"uv": [4, 4, 10, 6.875], "texture": "#0"},
@@ -94,9 +94,9 @@
 		},
 		{
 			"name": "west",
-			"from": [-16, 9, -16],
-			"to": [-16, 32, 32],
-			"rotation": {"angle": 0, "axis": "y", "origin": [-16, 22, 16]},
+			"from": [-15.8, 9, -16],
+			"to": [-15.8, 32, 32],
+			"rotation": {"angle": 0, "axis": "y", "origin": [-15.8, 22, 16]},
 			"faces": {
 				"north": {"uv": [0.25, 0, 0.25, 2.125], "texture": "#0"},
 				"east": {"uv": [4, 4, 10, 7.25], "texture": "#0"},
@@ -120,12 +120,14 @@
 		{
 			"name": "cross",
 			"origin": [8, 8, 8],
+			"scope": 0,
 			"color": 0,
 			"children": [0, 1]
 		},
 		{
 			"name": "leaves",
 			"origin": [8, 8, 8],
+			"scope": 0,
 			"color": 0,
 			"children": [2, 3, 4, 5, 6]
 		}

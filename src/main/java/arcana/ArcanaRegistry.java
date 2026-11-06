@@ -63,6 +63,7 @@ import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.FoodComponent;
 import net.minecraft.entity.EntityDimensions;
@@ -569,8 +570,8 @@ public final class ArcanaRegistry{
 	
 	public static final Block BEJEWELED_BEETS_BLOCK = new BejeweledBeetsBlock(of(Material.PLANT).renderLayer(CUTOUT).nonOpaque().noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP));
 	public static final Item BEJEWELED_BEET_SEEDS = new AliasedBlockItem(BEJEWELED_BEETS_BLOCK, GROUPED_RES);
-	public static final Block SILVERLEAF_SAPLING = new SilverleafSaplingBlock(of(Material.PLANT).renderLayer(CUTOUT).requiresTool(HOE_MINEABLE).nonOpaque().noCollision().ticksRandomly().strength(0.2f, 0.2f).sounds(BlockSoundGroup.CROP));
-	public static final BigBlock SILVERLEAF_BUSH = new SilverleafBushBlock(of(Material.PLANT).renderLayer(CUTOUT).requiresTool(HOE_MINEABLE).nonOpaque().noCollision().ticksRandomly().strength(0.8f, 0.8f).sounds(BlockSoundGroup.CROP));
+	public static final Block SILVERLEAF_SAPLING = new SilverleafSaplingBlock(of(Material.PLANT).renderLayer(CUTOUT).usesTool(HOE_MINEABLE).pistonBehavior(PistonBehavior.DESTROY).nonOpaque().noCollision().ticksRandomly().strength(0.6f, 0.2f).sounds(BlockSoundGroup.CROP));
+	public static final BigBlock SILVERLEAF_BUSH = new SilverleafBushBlock(of(Material.PLANT).renderLayer(CUTOUT).usesTool(HOE_MINEABLE).pistonBehavior(PistonBehavior.DESTROY).nonOpaque().noCollision().ticksRandomly().strength(1.4f, 0.8f).sounds(BlockSoundGroup.CROP));
 	public static final Item SILVERLEAF_SEED = new AliasedBlockItem(SILVERLEAF_SAPLING, GROUPED_RES);
 	public static final Item DORMANT_SILVERLEAF_SEED = new Item(GROUPED_RES);
 	

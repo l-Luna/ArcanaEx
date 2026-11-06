@@ -875,6 +875,9 @@
     "putrefaction": "{} was dissolved",
     "putrefaction.player": "{} was destined for dissolution by {}",
 
+    "silverleaf": "{} was poked to death by a silverleaf bush",
+    "silverleaf.player": "{} was poked to death by a silverleaf bush while trying to escape {}",
+
     // Attacks
     "prismatic_light": "{} was seared and dazzled by {}'s prismatic light",
     "prismatic_light.item": "{} was seared and dazzled by {}'s prismatic light using {}",
@@ -1592,7 +1595,7 @@
     "silverleaf": {
       "title": "Silverleaf",
       "desc": "Immaculate Bloom",
-      "text": "Rediscovering this ancient flora has unlocked understanding of some of the notes.{~sep}By combining a handful of magical plants, I can create an enchanted plant with natural aura fixating properties. Its touch repels taint, and its flavour brings calming to the mind.\nIt's cultivation is difficult, however. The plant will refuse to grow in the smallest presence of sunlight or flux, and demands a large growing area and bright light. The grown plant is painful to touch in any way.\nWhen harvested with a hoe, it will either shed usable leaves (in darkness) or seeds (in sunlight), and most seeds are unusable without additional nurture."
+      "text": "Rediscovering this ancient flora has unlocked understanding of some of the notes.{~sep}By combining a handful of magical plants, I can create an enchanted plant with natural aura fixating properties. Its touch repels taint, and its flavour brings calming to the mind.\nIt's cultivation is difficult, however. The plant will refuse to grow in the smallest presence of sunlight or flux, and demands a large growing area and bright light. The grown plant is painful to touch in any way.\nWhen harvested, it will either shed usable leaves (in darkness) or seeds (in sunlight), and most seeds are unusable without additional nurture.\nIts leaves can be brewed to make a sweet tea."
     },
 
     "self_reflection": {

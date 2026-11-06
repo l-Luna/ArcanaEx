@@ -1,16 +1,26 @@
 package arcana.blocks;
 
+import arcana.ArcanaDamageSources;
 import arcana.ArcanaRegistry;
 import arcana.aura.AuraChunk;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.LightType;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
+import net.minecraft.world.WorldView;
 
 public class SilverleafSaplingBlock extends Block{
 	
@@ -27,6 +37,27 @@ public class SilverleafSaplingBlock extends Block{
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder){
 		super.appendProperties(builder);
 		builder.add(AGE);
+	}
+	
+	protected BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos){
+		return !state.canPlaceAt(world, pos)
+				? Blocks.AIR.getDefaultState()
+				: super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
+	}
+	
+	protected boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos){
+		BlockState floor = world.getBlockState(pos.down());
+		return floor.isIn(BlockTags.DIRT) || floor.isOf(Blocks.FARMLAND);
+	}
+	
+	protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity){
+		if(entity instanceof LivingEntity){
+			entity.slowMovement(state, new Vec3d(0.8F, 0.75, 0.8F));
+			if(!world.isClient && state.get(AGE) > 0
+					&& (entity.lastRenderX != entity.getX() || entity.lastRenderZ != entity.getZ())
+					&& Math.max(Math.abs(entity.getX() - entity.lastRenderX), Math.abs(entity.getZ() - entity.lastRenderZ)) >= 0.003f)
+				entity.damage(ArcanaDamageSources.silverleaf(world), 3);
+		}
 	}
 	
 	protected boolean hasRandomTicks(BlockState state){

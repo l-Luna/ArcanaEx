@@ -83,7 +83,7 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		blockGen.registerFlowerPotPlant(LILIUM, POTTED_LILIUM, BlockStateModelGenerator.TintType.NOT_TINTED);
 		
 		blockGen.registerCrop(BEJEWELED_BEETS_BLOCK, Properties.AGE_3, 0, 1, 2, 3);
-		blockGen.registerCrop(SILVERLEAF_SAPLING, Properties.AGE_2, 0, 1, 2);
+		blockGen.registerTintableCrossBlockStateWithStages(SILVERLEAF_SAPLING, BlockStateModelGenerator.TintType.NOT_TINTED, Properties.AGE_2, 0, 1, 2);
 		
 		blockGen.registerLog(SILVERWOOD_LOG).log(SILVERWOOD_LOG).wood(SILVERWOOD_WOOD);
 		blockGen.registerLog(STRIPPED_SILVERWOOD_LOG).log(STRIPPED_SILVERWOOD_LOG).wood(STRIPPED_SILVERWOOD_WOOD);

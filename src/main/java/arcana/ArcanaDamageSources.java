@@ -16,6 +16,7 @@ public class ArcanaDamageSources{
 	
 	public static final RegistryKey<DamageType> PUTREFACTION_KEY = typeKey("putrefaction");
 	public static final RegistryKey<DamageType> HUNGRY_NODE_KEY = typeKey("hungry_node");
+	public static final RegistryKey<DamageType> SILVERLEAF_KEY = typeKey("silverleaf");
 	
 	public static final RegistryKey<DamageType> PRISMATIC_LIGHT_KEY = typeKey("prismatic_light");
 	public static final RegistryKey<DamageType> FLAME_ORB_KEY = typeKey("flame_orb");
@@ -26,6 +27,10 @@ public class ArcanaDamageSources{
 	
 	public static DamageSource hungryNode(World world){
 		return world.getDamageSources().create(HUNGRY_NODE_KEY);
+	}
+	
+	public static DamageSource silverleaf(World world){
+		return world.getDamageSources().create(SILVERLEAF_KEY);
 	}
 	
 	public static DamageSource prismaticLight(World world, PrismaticOrbEntity projectile){

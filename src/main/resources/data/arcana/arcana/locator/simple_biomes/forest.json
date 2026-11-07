@@ -1,0 +1,9 @@
+{
+  "input": {
+    "tag": "minecraft:oak_logs"
+  },
+  "destination": {
+    "type": "biome",
+    "biome": "minecraft:forest"
+  }
+}

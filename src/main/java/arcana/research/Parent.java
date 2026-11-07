@@ -1,5 +1,6 @@
 package arcana.research;
 
+import com.mojang.serialization.Codec;
 import net.minecraft.util.Identifier;
 
 public record Parent(
@@ -8,6 +9,8 @@ public record Parent(
 		boolean show,
 		boolean hasArrowhead,
 		boolean showReverse){
+	
+	public static final Codec<Parent> SIMPLE_CODEC = Codec.stringResolver(Parent::asString, Parent::parse);
 	
 	// ~ means don't show
 	// & means no arrowhead

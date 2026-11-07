@@ -1,0 +1,9 @@
+{
+  "input": {
+    "tag": "minecraft:birch_logs"
+  },
+  "destination": {
+    "type": "biome",
+    "biome": "#c:is_birch_forest"
+  }
+}

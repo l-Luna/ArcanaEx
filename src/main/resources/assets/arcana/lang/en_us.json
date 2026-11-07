@@ -384,6 +384,7 @@
     "ward_focus": "Wand Focus: Ward",
     "consume_rebuke_focus": "Wand Focus: Consume/Rebuke",
     "consume_rebuke_focus.tip": ["§4WIP§r"],
+    "follow_me_focus": "Wand Focus: Follow Me",
 
     "eldritch_banner_pattern": "Banner Pattern",
     "eldritch_banner_pattern.desc": "Eldritch",

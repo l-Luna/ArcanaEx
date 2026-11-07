@@ -124,11 +124,10 @@ public class WandItem extends Item implements FabricItem, WarpingItem, CustomCre
 		// creative mode "helpfully" copies the stack before use on entities, so we get the real thing here
 		ItemStack wandStack = user.getStackInHand(hand);
 		ItemStack focusStack = focusFrom(wandStack);
-		ScaledAspectMap stored = aspectsFrom(wandStack);
 		if(focusStack.getItem() instanceof FocusItem fi){
-			var cost = fi.castCost(wandStack, focusStack, user);
+			ScaledAspectMap cost = fi.castCost(wandStack, focusStack, user);
 			cost.multiply(aspect -> costMultiplier(aspect, stack, user));
-			if(stored.contains(cost)){
+			if(aspectsFrom(wandStack).contains(cost)){
 				ActionResult result = fi.castOnEntity(wandStack, focusStack, user, entity);
 				Researcher.from(user).markFocusCast(fi);
 				if(result != ActionResult.PASS && result != ActionResult.FAIL){
@@ -185,8 +184,23 @@ public class WandItem extends Item implements FabricItem, WarpingItem, CustomCre
 	}
 	
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand){
-		user.setCurrentHand(hand);
-		return TypedActionResult.consume(user.getStackInHand(hand));
+		boolean startUsing = true;
+		ItemStack wandStack = user.getStackInHand(hand);
+		ItemStack focusStack = focusFrom(wandStack);
+		if(focusStack.getItem() instanceof FocusItem fi){
+			ScaledAspectMap cost = fi.castCost(wandStack, focusStack, user);
+			cost.multiply(aspect -> costMultiplier(aspect, wandStack, user));
+			if(aspectsFrom(wandStack).contains(cost)){
+				ActionResult result = fi.cast(wandStack, focusStack, user);
+				Researcher.from(user).markFocusCast(fi);
+				if(result != ActionResult.PASS && result != ActionResult.FAIL)
+					updateAspects(wandStack, aspects -> aspects.take(cost));
+				startUsing = result == ActionResult.PASS;
+			}
+		}
+		if(startUsing)
+			user.setCurrentHand(hand);
+		return TypedActionResult.consume(wandStack);
 	}
 	
 	public Optional<TooltipData> getTooltipData(ItemStack stack){

@@ -314,17 +314,18 @@ public final class ArcanaRegistry{
 	
 	// foci...
 	public static final Item FIRE_FOCUS = new FireFocusItem(GROUPED_EQUIPMENT_SINGLE);
-	public static final Item SOLAR_FLARE_FOCUS = new SolarFlareFocusItem(GROUPED_EQUIPMENT_SINGLE);
+	//public static final Item SOLAR_FLARE_FOCUS = new SolarFlareFocusItem(GROUPED_EQUIPMENT_SINGLE);
 	public static final Item FETCH_FOCUS = new FetchFocusItem(GROUPED_EQUIPMENT_SINGLE);
 	public static final Item PORTABLE_HOLE_FOCUS = new PortableHoleFocusItem(GROUPED_EQUIPMENT_SINGLE);
 	public static final Item LIGHT_FOCUS = new LightFocusItem(GROUPED_EQUIPMENT_SINGLE);
 	public static final Item PRISMATIC_LIGHT_FOCUS = new PrismaticLightFocusItem(GROUPED_EQUIPMENT_SINGLE);
-	public static final Item LIGHTNING_FOCUS = new LightningFocusItem(GROUPED_EQUIPMENT_SINGLE);
+	//public static final Item LIGHTNING_FOCUS = new LightningFocusItem(GROUPED_EQUIPMENT_SINGLE);
 	public static final Item EQUIVALENT_EXCHANGE_FOCUS = new EquivalentExchangeFocusItem(GROUPED_EQUIPMENT_SINGLE);
 	public static final Item COAGULATION_FOCUS = new CoagulationFocusItem(GROUPED_EQUIPMENT_SINGLE);
 	public static final Item CRYSTAL_CAPACITOR_FOCUS = new CrystalCapacitorFocusItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1).maxDamage(6));
 	public static final Item WARD_FOCUS = new WardFocusItem(new ArcanaItemSettings().group(Tab.EQUIPMENT).maxCount(1).rarity(Rarity.UNCOMMON));
-	public static final Item CONSUME_REBUKE_FOCUS = new ConsumeRebukeFocus(GROUPED_EQUIPMENT_SINGLE);
+	public static final Item FOLLOW_ME_FOCUS = new FollowMeFocus(GROUPED_EQUIPMENT_SINGLE);
+	//public static final Item CONSUME_REBUKE_FOCUS = new ConsumeRebukeFocus(GROUPED_EQUIPMENT_SINGLE);
 	
 	// caps...
 	public static final CapItem IRON_WAND_CAP = new CapItem(GROUPED_RES, capProperties().capacity(5).complexity(3));
@@ -968,17 +969,18 @@ public final class ArcanaRegistry{
 		registerItem("focus_pouch", FOCUS_POUCH);
 		
 		registerItem("fire_focus", FIRE_FOCUS);
-		registerItem("solar_flare_focus", SOLAR_FLARE_FOCUS);
+		//registerItem("solar_flare_focus", SOLAR_FLARE_FOCUS);
 		registerItem("fetch_focus", FETCH_FOCUS);
 		registerItem("portable_hole_focus", PORTABLE_HOLE_FOCUS);
 		registerItem("light_focus", LIGHT_FOCUS);
 		registerItem("prismatic_light_focus", PRISMATIC_LIGHT_FOCUS);
-		registerItem("lightning_focus", LIGHTNING_FOCUS);
+		//registerItem("lightning_focus", LIGHTNING_FOCUS);
 		registerItem("equivalent_exchange_focus", EQUIVALENT_EXCHANGE_FOCUS);
 		registerItem("coagulation_focus", COAGULATION_FOCUS);
 		registerItem("crystal_capacitor_focus", CRYSTAL_CAPACITOR_FOCUS);
 		registerItem("ward_focus", WARD_FOCUS);
-		registerItem("consume_rebuke_focus", CONSUME_REBUKE_FOCUS);
+		registerItem("follow_me_focus", FOLLOW_ME_FOCUS);
+		//registerItem("consume_rebuke_focus", CONSUME_REBUKE_FOCUS);
 		
 		registerItem("iron_wand_cap", IRON_WAND_CAP);
 		registerItem("gold_wand_cap", GOLD_WAND_CAP);

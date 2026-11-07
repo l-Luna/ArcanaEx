@@ -102,6 +102,7 @@ public final class ArcanaClient implements ClientModInitializer{
 		});
 		
 		WorldRenderEvents.LAST.register(NodeRenderer::render);
+		WorldRenderEvents.LAST.register(FollowMeTargetRenderer::render);
 		WorldRenderEvents.BEFORE_BLOCK_OUTLINE.register((ctx1, hit) -> {
 			PlaneProjectionRenderer.renderPlaneProjection(ctx1, hit);
 			return true;

@@ -11,6 +11,10 @@ import arcana.enchantments.ArcanaEnchantmentComponents;
 import arcana.enchantments.LootSwapEffect;
 import arcana.items.CrimsonLeechItem;
 import arcana.items.components.ArcanaDataComponents;
+import arcana.items.foci.follow_me.BiomeDestination;
+import arcana.items.foci.follow_me.Destination;
+import arcana.items.foci.follow_me.Locator;
+import arcana.items.foci.follow_me.StructureDestination;
 import arcana.items.trinkets.ClawTrinketItem;
 import arcana.items.trinkets.MirrorTrinketItem;
 import arcana.network.Networking;
@@ -38,6 +42,7 @@ import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.lifecycle.v1.CommonLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.fabricmc.fabric.api.event.registry.DynamicRegistries;
 import net.fabricmc.fabric.api.recipe.v1.ingredient.CustomIngredientSerializer;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.loader.api.FabricLoader;
@@ -77,6 +82,10 @@ public final class Arcana implements ModInitializer{
 		InfusionEnchantmentRecipe.setup();
 		CustomIngredientSerializer.register(PotionEffectIngredient.SERIALIZER);
 		CustomIngredientSerializer.register(EnchantedBookIngredient.SERIALIZER);
+		
+		DynamicRegistries.registerSynced(Locator.REGISTRY_KEY, Locator.DIRECT_CODEC);
+		Destination.TYPES.put("biome", BiomeDestination.CODEC);
+		Destination.TYPES.put("structure", StructureDestination.CODEC);
 		
 		Research.setup();
 		WarpEvents.setup();

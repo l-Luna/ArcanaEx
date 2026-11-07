@@ -5,13 +5,18 @@ import arcana.aspects.AspectMap;
 import arcana.aspects.AspectStack;
 import arcana.aura.NodeType;
 import arcana.util.ArrayInventory;
+import arcana.util.CodecUtil;
 import com.mojang.serialization.Codec;
+import net.fabricmc.fabric.api.attachment.v1.AttachmentRegistry;
+import net.fabricmc.fabric.api.attachment.v1.AttachmentSyncPredicate;
+import net.fabricmc.fabric.api.attachment.v1.AttachmentType;
 import net.minecraft.component.ComponentType;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Uuids;
+import net.minecraft.util.math.BlockPos;
 
 import java.util.UUID;
 
@@ -30,7 +35,7 @@ public class ArcanaDataComponents{
 	public static final ComponentType<AspectStack> STORED_SINGLE_ASPECT = create(AspectStack.CODEC);
 	
 	// behavioral
-	public static final ComponentType<ArcanaRegistry.Tab> SUBTAB = create(Codec.STRING.xmap(ArcanaRegistry.Tab::valueOf, Enum::name));
+	public static final ComponentType<ArcanaRegistry.Tab> SUBTAB = create(CodecUtil.enumCodec(ArcanaRegistry.Tab.values()));
 	public static final ComponentType<FragileComponent> FRAGILE = create(FragileComponent.CODEC);
 	
 	// item specific
@@ -46,6 +51,10 @@ public class ArcanaDataComponents{
 	public static final ComponentType<NbtCompound> RESEARCH_NOTE_PUZZLE_DATA = create(NbtCompound.CODEC);
 	
 	public static final ComponentType<WandDataComponent> WAND_DATA = create(WandDataComponent.CODEC);
+	
+	public static final AttachmentType<BlockPos> FOLLOW_ME_TARGET = AttachmentRegistry.create(arcId("follow_me_target"), b -> b
+			.persistent(BlockPos.CODEC)
+			.syncWith(BlockPos.PACKET_CODEC, AttachmentSyncPredicate.targetOnly()));
 	
 	public static void setup(){
 		register("radius", RADIUS);

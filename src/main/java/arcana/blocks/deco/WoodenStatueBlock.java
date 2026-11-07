@@ -1,7 +1,7 @@
 package arcana.blocks.deco;
 
 import arcana.blocks.ArcanaBigBlock;
-import com.mojang.serialization.Codec;
+import arcana.util.CodecUtil;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.block.Block;
@@ -40,7 +40,7 @@ public class WoodenStatueBlock extends ArcanaBigBlock{
 	
 	private static final MapCodec<WoodenStatueBlock> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
 			createSettingsCodec(),
-			Codec.STRING.xmap(Type::valueOf, Enum::name).fieldOf("type").forGetter(x -> x.type)
+			CodecUtil.enumCodec(Type.values()).fieldOf("type").forGetter(x -> x.type)
 	).apply(i, WoodenStatueBlock::new));
 	
 	public static final IntProperty Y = IntProperty.of("y", 0, 1);

@@ -1,0 +1,9 @@
+{
+  "input": {
+    "item": "minecraft:ender_eye"
+  },
+  "destination": {
+    "type": "structure",
+    "structure_tag": "#minecraft:eye_of_ender_located"
+  }
+}

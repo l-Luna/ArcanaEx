@@ -103,6 +103,11 @@ public final class Researcher implements Component, AutoSyncedComponent{
 		return entryStage(entry) >= entry.sections().size();
 	}
 	
+	public boolean isEntryPartComplete(Parent parent){
+		Entry entry = Research.getEntry(parent.id());
+		return parent.stage() == -1 ? isEntryComplete(entry) : entryStage(entry) >= parent.stage();
+	}
+	
 	public boolean canAccess(Entry entry){
 		// TODO: check parents, or mark accessibility more explicitly than stages.contains
 		// since 0 is the default value already
@@ -124,14 +129,9 @@ public final class Researcher implements Component, AutoSyncedComponent{
 	// checks if all requirements are complete, takes requirements if so, and syncs with client if anything did happen
 	public void tryAdvance(Entry entry, boolean onlyFree){
 		if(entryStage(entry) < entry.sections().size()){
-			for(Parent parent : entry.parents()){
-				Entry pEntry = Research.getEntry(parent.id());
-				if(parent.stage() == -1){
-					if(!isEntryComplete(pEntry))
-						return; // missing a parent that must be complete
-				}else if(entryStage(pEntry) < parent.stage())
-					return; // not enough progress on that parent
-			}
+			for(Parent parent : entry.parents())
+				if(!isEntryPartComplete(parent))
+					return;
 			// mark this entry as having some progress for unread indicators
 			if(!stages.containsKey(entry.id()))
 				stages.put(entry.id(), 0);

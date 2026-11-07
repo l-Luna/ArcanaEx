@@ -265,7 +265,7 @@ public final class NodeRenderer{
 		vcp.draw();
 	}
 	
-	private static void drawQuad(Camera camera, Position pos, Vector3f offset, VertexConsumer cons, float alpha, float scale, float minV, float maxV, float height, int light){
+	public static void drawQuad(Camera camera, Position pos, Vector3f offset, VertexConsumer cons, float alpha, float scale, float minV, float maxV, float height, int light){
 		if(alpha <= 0)
 			return;
 		

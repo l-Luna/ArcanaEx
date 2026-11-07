@@ -1,6 +1,6 @@
 package arcana.client.particles;
 
-import com.mojang.serialization.Codec;
+import arcana.util.CodecUtil;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
@@ -11,7 +11,7 @@ import net.minecraft.particle.ParticleType;
 public record CubeParticleEffect(ParticleType<CubeParticleEffect> particleType, CubeParticleStyle style) implements ParticleEffect{
 	
 	public static MapCodec<CubeParticleEffect> createCodec(ParticleType<CubeParticleEffect> type){
-		return Codec.STRING.xmap(x -> new CubeParticleEffect(type, CubeParticleStyle.valueOf(x)), x -> x.style().name()).fieldOf("style");
+		return CodecUtil.enumCodec(CubeParticleStyle.values()).xmap(x -> new CubeParticleEffect(type, x), CubeParticleEffect::style).fieldOf("style");
 	}
 	
 	public static PacketCodec<? super RegistryByteBuf, CubeParticleEffect> createPacketCodec(ParticleType<CubeParticleEffect> type){
@@ -20,9 +20,5 @@ public record CubeParticleEffect(ParticleType<CubeParticleEffect> particleType, 
 	
 	public ParticleType<?> getType(){
 		return particleType;
-	}
-	
-	public String asString(){
-		return style.name();
 	}
 }

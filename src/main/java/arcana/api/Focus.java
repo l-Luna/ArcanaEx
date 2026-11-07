@@ -25,6 +25,10 @@ public interface Focus{
 	
 	AspectMap deciCastCost(@Nullable ItemStack wand, ItemStack focus, PlayerEntity user);
 	
+	default ActionResult cast(ItemStack wand, ItemStack focus, PlayerEntity user){
+		return ActionResult.PASS;
+	}
+	
 	default ActionResult castOnBlock(ItemUsageContext ctx){
 		return ActionResult.PASS;
 	}

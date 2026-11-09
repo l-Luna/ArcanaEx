@@ -25,6 +25,10 @@ public class BiomeDestination implements Destination{
 		this.biomes = biomes;
 	}
 	
+	public RegistryEntryList<Biome> getBiomes(){
+		return biomes;
+	}
+	
 	public MapCodec<? extends Destination> getCodec(){
 		return CODEC;
 	}

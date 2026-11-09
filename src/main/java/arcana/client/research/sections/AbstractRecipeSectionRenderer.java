@@ -94,11 +94,11 @@ public abstract class AbstractRecipeSectionRenderer<T extends AbstractRecipeSect
 		return recipe.value().getResult(world.getRegistryManager());
 	}
 	
-	protected int displayIdx(int max){
-		return (int)((client().world.getTime() / 30) % max);
+	protected static int displayIdx(int max){
+		return (int)((MinecraftClient.getInstance().world.getTime() / 30) % max);
 	}
 	
-	protected ItemStack displayStack(ItemStack[] stacks){
+	public static ItemStack displayStack(ItemStack[] stacks){
 		if(stacks.length == 0)
 			return Items.BARRIER.getDefaultStack();
 		return stacks[displayIdx(stacks.length)];

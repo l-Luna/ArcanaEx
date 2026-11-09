@@ -4,6 +4,6 @@
   },
   "destination": {
     "type": "structure",
-    "structure_tag": "#arcana:floral_archive"
+    "structure": "arcana:floral_archive"
   }
 }

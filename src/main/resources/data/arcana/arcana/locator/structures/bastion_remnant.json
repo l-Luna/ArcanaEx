@@ -4,6 +4,6 @@
   },
   "destination": {
     "type": "structure",
-    "structure_tag": "#arcana:bastion_remnant"
+    "structure": "minecraft:bastion_remnant"
   }
 }

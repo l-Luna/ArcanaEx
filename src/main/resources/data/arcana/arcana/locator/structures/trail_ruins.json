@@ -4,6 +4,6 @@
   },
   "destination": {
     "type": "structure",
-    "structure_tag": "#arcana:trail_ruins"
+    "structure": "minecraft:trail_ruins"
   }
 }

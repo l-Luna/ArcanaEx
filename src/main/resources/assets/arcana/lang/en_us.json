@@ -67,12 +67,7 @@
         "eye_of_ender_located": "Strongholds"
       },
       "arcana": {
-        "bastion_remnant": "Bastion Remnants",
-        "crimson": "Crimson Outposts",
-        "floral_archive": "Floral Archives",
-        "pillager_outpost": "Pillager Outposts",
-        "trail_ruins": "Trail Ruins",
-        "trial_chambers": "Trial Chambers"
+        "crimson": "Crimson Outposts"
       }
     },
     "arcana.locator": {
@@ -206,6 +201,18 @@
   "biome.arcana": {
     "magical_forest": "Magical Forest",
     "crystal_caverns": "Crystal Caverns"
+  },
+
+  "structure": {
+    "arcana": {
+      "floral_archive": "Floral Archive"
+    },
+    "minecraft": {
+      "bastion_remnant": "Bastion Remnant",
+      "pillager_outpost": "Pillager Outpost",
+      "trail_ruins": "Trail Ruins",
+      "trial_chambers": "Trial Chambers"
+    }
   },
 
   // Items

@@ -13,46 +13,51 @@
 
   "category.arcana": "Arcana",
 
-  // Tags
-  "tag.arcana": {
-    "aspect_crystals": "Primal Crystals",
-    "cluster_seeds": "Primal Cluster Seeds",
-    "primal_clusters": "Primal Clusters",
-    "secondary_phials": "Secondary Phials",
-    "arcane_stones": "Arcane Stones",
+  "tag": {
+    // Item tags
+    "arcana": {
+      "aspect_crystals": "Primal Crystals",
+      "cluster_seeds": "Primal Cluster Seeds",
+      "primal_clusters": "Primal Clusters",
+      "secondary_phials": "Secondary Phials",
+      "arcane_stones": "Arcane Stones",
+      "silverwood_logs": "Silverwood Logs",
+      "greatwood_logs": "Greatwood Logs",
+      "taintwood_logs": "Taintwood Logs",
+      "hollowed_logs": "Hollowed Logs",
+      "substrates": "Essentia Distillation Substrates",
+      "scribing_tools": "Research Tools",
+      "mineral_gifts": "Mineral Gifts",
+      "crucible_heating_blocks": "Crucible Heating Blocks",
+      "crucible_heating_fluids": "Crucible Heating Fluids",
+      "taint_goo": "Taint Goo",
+      "putrefaction": "Putrefaction",
+      "raw_tainted_blocks": "Raw Tainted Blocks",
+      "magical_plants": "Magical Plants",
+      "magical_flowers": "Magical Flowers",
+      "magical_mushrooms": "Magical Mushrooms",
+      "raw_meat": "Raw Meats"
+    },
+    "c": {
+      "woods": "Woods"
+    },
+    "trinkets": {
+      "head.face": "Face Equippables",
+      "hand.ring": "Ring Equippables",
+      "chest.necklace": "Necklace Equippables"
+    },
 
-    "silverwood_logs": "Silverwood Logs",
-    "greatwood_logs": "Greatwood Logs",
-    "taintwood_logs": "Taintwood Logs",
-    "hollowed_logs": "Hollowed Logs",
-
-    "substrates": "Essentia Distillation Substrates",
-    "scribing_tools": "Research Tools",
-
-    "mineral_gifts": "Mineral Gifts",
-
-    "crucible_heating_blocks": "Crucible Heating Blocks",
-    "crucible_heating_fluids": "Crucible Heating Fluids",
-
-    "taint_goo": "Taint Goo",
-    "putrefaction": "Putrefaction",
-    "raw_tainted_blocks": "Raw Tainted Blocks",
-
-    "magical_plants": "Magical Plants",
-    "magical_flowers": "Magical Flowers",
-    "magical_mushrooms": "Magical Mushrooms",
-    "raw_meat": "Raw Meats"
-  },
-
-  "tag.c": {
-    "woods": "Woods"
-  },
-
-  // if you say so
-  "tag.trinkets": {
-    "head.face": "Face Equippables",
-    "hand.ring": "Ring Equippables",
-    "chest.necklace": "Necklace Equippables"
+    // and everything else
+    "biome": {
+      "c": {
+        "is_birch_forest": "Birch Forests"
+      }
+    },
+    "structure": {
+      "minecraft": {
+        "eye_of_ender_located": "Strongholds"
+      }
+    }
   },
 
   // EMI
@@ -1651,6 +1656,11 @@
     "coagulation_focus": {
       "title": "Wand Focus: Coagulation",
       "text": "An immensely powerful focus that weaves together a fragment of the aura to create a {i}Coagulation{r}, a wisp-like entity.\n\nThe summoned Coagulation follows me and attacks on my behalf. It can pass through blocks, but can be hit by ordinary attacks."
+    },
+
+    "follow_me_focus": {
+      "title": "Wand Focus: Follow Me",
+      "text": "By burning a sample of material with Follow Me, I can create a trail to a destination of my liking. Typically the material must be sourced from that destination, but objects with very strong affinities to specific places will also work (like Eyes of Ender and strongholds).\nThe destinations initially available to me is listed at the {u}end{r} of this entry. I may gain access to more through further research."
     },
 
     "void_metal": {

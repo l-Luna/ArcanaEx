@@ -13,14 +13,14 @@ import java.util.Optional;
 
 import static arcana.Arcana.arcId;
 
-public record Locator(Ingredient input, boolean consumed, Destination target, @Nullable Parent requiredResearch){
+public record Locator(Ingredient input, boolean consumed, Destination destination, @Nullable Parent requiredResearch){
 	
 	public static final RegistryKey<Registry<Locator>> REGISTRY_KEY = RegistryKey.ofRegistry(arcId("locator"));
 	
 	public static final Codec<Locator> DIRECT_CODEC = RecordCodecBuilder.create(i -> i.group(
 			Ingredient.DISALLOW_EMPTY_CODEC.fieldOf("input").forGetter(Locator::input),
 			Codec.BOOL.optionalFieldOf("consumed", true).forGetter(Locator::consumed),
-			Destination.TYPE_CODEC.fieldOf("destination").forGetter(Locator::target),
+			Destination.TYPE_CODEC.fieldOf("destination").forGetter(Locator::destination),
 			Parent.SIMPLE_CODEC.optionalFieldOf("required_research").forGetter(it -> Optional.ofNullable(it.requiredResearch))
 	).apply(i, (input, consumed, target, requiredResearch) -> new Locator(input, consumed, target, requiredResearch.orElse(null))));
 	

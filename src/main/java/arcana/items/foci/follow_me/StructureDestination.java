@@ -22,6 +22,10 @@ public class StructureDestination implements Destination{
 		structureTag = tag;
 	}
 	
+	public TagKey<Structure> getStructureTag(){
+		return structureTag;
+	}
+	
 	public MapCodec<? extends Destination> getCodec(){
 		return CODEC;
 	}

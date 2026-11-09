@@ -404,6 +404,36 @@
         }
       ]
     },
+    {
+      "key": "arcana:tmp/follow_me_focus",
+      "name": "research.arcana.follow_me_focus.title",
+      "icons": [
+        "arcana:follow_me_focus"
+      ],
+      "category": "arcana:auromancy",
+      "parents": [
+        "&arcana:wand_foci"
+      ],
+      "meta": [
+        "tmp_base"
+      ],
+      "x": 3,
+      "y": 2,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.follow_me_focus.text"
+        },
+//        {
+//          "type": "arcane_crafting",
+//          "content": "arcana:equipment/arcanium_scalpel"
+//        }
+        {
+          "type": "locators",
+          "tag": "arcana:simple"
+        }
+      ]
+    },
 
     {
       "key": "arcana:tmp/lamplight_amulet",

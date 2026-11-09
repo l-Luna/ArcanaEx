@@ -36,7 +36,9 @@
       "magical_plants": "Magical Plants",
       "magical_flowers": "Magical Flowers",
       "magical_mushrooms": "Magical Mushrooms",
-      "raw_meat": "Raw Meats"
+      "raw_meat": "Raw Meats",
+      "crimson_signatures": "Crimson Signatures",
+      "lamplights": "Gleaming Lamplights"
     },
     "c": {
       "woods": "Woods"
@@ -49,13 +51,28 @@
 
     // and everything else
     "biome": {
+      "minecraft": {
+        "is_savanna": "Savannas",
+        "is_taiga": "Taigas",
+        "is_jungle": "Jungles",
+        "oceans": "Oceans"
+      },
       "c": {
-        "is_birch_forest": "Birch Forests"
+        "is_birch_forest": "Birch Forests",
+        "desert": "Deserts"
       }
     },
     "structure": {
       "minecraft": {
         "eye_of_ender_located": "Strongholds"
+      },
+      "arcana": {
+        "bastion_remnant": "Bastion Remnants",
+        "crimson": "Crimson Outposts",
+        "floral_archive": "Floral Archives",
+        "pillager_outpost": "Pillager Outposts",
+        "trail_ruins": "Trail Ruins",
+        "trial_chambers": "Trial Chambers"
       }
     }
   },
@@ -179,6 +196,11 @@
     "eldritch": "Eldritch",
     "pure": "Pure",
     "tainted": "Tainted"
+  },
+
+  "biome.arcana": {
+    "magical_forest": "Magical Forest",
+    "crystal_caverns": "Crystal Caverns"
   },
 
   // Items

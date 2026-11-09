@@ -14,10 +14,12 @@ import net.minecraft.registry.tag.TagKey;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.structure.Structure;
 
 import java.util.Optional;
 
 import static arcana.Arcana.arcId;
+import static arcana.client.research.sections.AbstractRecipeSectionRenderer.displayIdx;
 import static arcana.screens.ResearchEntryScreen.*;
 
 public class LocatorsSectionRenderer implements EntrySectionRenderer<LocatorsSection>{
@@ -41,17 +43,12 @@ public class LocatorsSectionRenderer implements EntrySectionRenderer<LocatorsSec
 				ctx.drawTexture(TEXTURE, x - 4, y + 30 * dIdx - 2, 0, 0, v, 105, 20, 256, 256);
 				ctx.drawItem(inputStack, x - 2, y + 30 * dIdx);
 				Text text = Text.translatable(switch(locator.destination()){
-					case StructureDestination sd -> "tag.structure." + sd.getStructureTag().id().toTranslationKey();
-					case BiomeDestination bd -> {
-						RegistryEntryList<Biome> biomes = bd.getBiomes();
-						if(biomes instanceof RegistryEntryList.Named<Biome> tag)
-							yield "tag.biome." + tag.getTag().id().toTranslationKey();
-						int bIdx = AbstractRecipeSectionRenderer.displayIdx(biomes.size());
-						yield "biome." + biomes.get(bIdx).getKey().get().getValue().toTranslationKey();
-					}
+					case StructureDestination(TagKey<Structure> tag) -> "tag.structure." + tag.id().toTranslationKey();
+					case BiomeDestination(RegistryEntryList.Named<Biome> biomes) -> "tag.biome." + biomes.getTag().id().toTranslationKey();
+					case BiomeDestination(RegistryEntryList<Biome> biomes) -> "biome." + biomes.get(displayIdx(biomes.size())).getKey().get().getValue().toTranslationKey();
 					default -> "";
 				});
-				ctx.drawText(textRenderer(), text, x + 98 - textRenderer().getWidth(text), y + 30 * dIdx + 7, 0x111111, false);
+				ctx.drawText(textRenderer(), text, x + 100 - textRenderer().getWidth(text), y + 30 * dIdx + 7, 0x111111, false);
 			}
 		});
 	}

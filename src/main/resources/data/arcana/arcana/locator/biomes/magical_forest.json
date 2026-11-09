@@ -1,0 +1,14 @@
+{
+  "input": [
+    {
+      "tag": "arcana:silverwood_logs"
+    },
+    {
+      "tag": "arcana:greatwood_logs"
+    }
+  ],
+  "destination": {
+    "type": "biome",
+    "biome": "arcana:magical_forest"
+  }
+}

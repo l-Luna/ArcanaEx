@@ -1,0 +1,9 @@
+{
+  "input": {
+    "tag": "minecraft:spruce_logs"
+  },
+  "destination": {
+    "type": "biome",
+    "biome": "#minecraft:is_taiga"
+  }
+}

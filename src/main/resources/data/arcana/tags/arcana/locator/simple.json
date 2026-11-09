@@ -1,8 +1,33 @@
 {
   "values": [
-    "arcana:simple_biomes/forest",
-    "arcana:simple_biomes/birch_forest",
+    "arcana:biomes/forest",
+    "arcana:biomes/birch_forest",
+    "arcana:biomes/dark_forest",
+    "arcana:biomes/cherry_grove",
+    "arcana:biomes/savanna",
+    "arcana:biomes/taiga",
+    "arcana:biomes/jungle",
+    "arcana:biomes/mangrove_swamp",
 
-    "arcana:advanced_structures/stronghold"
+    "arcana:biomes/ocean",
+    "arcana:biomes/desert",
+
+    "arcana:biomes/magical_forest",
+    "arcana:biomes/crystal_caverns",
+
+    "arcana:biomes/nether_wastes",
+    "arcana:biomes/soul_sand_valley",
+    "arcana:biomes/basalt_deltas",
+    "arcana:biomes/crimson_forest",
+    "arcana:biomes/warped_forest",
+
+    "arcana:structures/floral_archive",
+    "arcana:structures/crimson_structures",
+
+    "arcana:structures/pillager_outpost",
+    "arcana:structures/trail_ruins",
+    "arcana:structures/trial_chambers",
+    "arcana:structures/bastion_remnant",
+    "arcana:structures/stronghold"
   ]
 }

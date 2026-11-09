@@ -1,0 +1,9 @@
+{
+  "input": {
+    "item": "arcana:alchemical_gold"
+  },
+  "destination": {
+    "type": "structure",
+    "structure_tag": "#arcana:bastion_remnant"
+  }
+}

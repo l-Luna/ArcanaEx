@@ -10,21 +10,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.gen.structure.Structure;
 import org.jetbrains.annotations.Nullable;
 
-public class StructureDestination implements Destination{
+public record StructureDestination(TagKey<Structure> structureTag) implements Destination{
 	
 	public static final MapCodec<StructureDestination> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
 			TagKey.codec(RegistryKeys.STRUCTURE).fieldOf("structure_tag").forGetter(x -> x.structureTag)
 	).apply(i, StructureDestination::new));
 	
-	private final TagKey<Structure> structureTag;
-	
-	public StructureDestination(TagKey<Structure> tag){
-		structureTag = tag;
-	}
-	
-	public TagKey<Structure> getStructureTag(){
-		return structureTag;
-	}
 	
 	public MapCodec<? extends Destination> getCodec(){
 		return CODEC;

@@ -1,0 +1,9 @@
+{
+  "input": {
+    "tag": "minecraft:acacia_logs"
+  },
+  "destination": {
+    "type": "biome",
+    "biome": "#minecraft:is_savanna"
+  }
+}

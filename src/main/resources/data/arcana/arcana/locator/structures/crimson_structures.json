@@ -1,0 +1,9 @@
+{
+  "input": {
+    "tag": "arcana:crimson_signatures"
+  },
+  "destination": {
+    "type": "structure",
+    "structure_tag": "#arcana:crimson"
+  }
+}

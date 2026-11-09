@@ -43,9 +43,10 @@ public class LocatorsSectionRenderer implements EntrySectionRenderer<LocatorsSec
 				ctx.drawTexture(TEXTURE, x - 4, y + 30 * dIdx - 2, 0, 0, v, 105, 20, 256, 256);
 				ctx.drawItem(inputStack, x - 2, y + 30 * dIdx);
 				Text text = Text.translatable(switch(locator.destination()){
-					case StructureDestination(TagKey<Structure> tag) -> "tag.structure." + tag.id().toTranslationKey();
-					case BiomeDestination(RegistryEntryList.Named<Biome> biomes) -> "tag.biome." + biomes.getTag().id().toTranslationKey();
-					case BiomeDestination(RegistryEntryList<Biome> biomes) -> "biome." + biomes.get(displayIdx(biomes.size())).getKey().get().getValue().toTranslationKey();
+					case StructureDestination(RegistryEntryList.Named<Structure> structure) -> structure.getTag().id().toTranslationKey("tag.structure");
+					case StructureDestination(RegistryEntryList<Structure> structure) -> structure.get(displayIdx(structure.size())).getKey().get().getValue().toTranslationKey("structure");
+					case BiomeDestination(RegistryEntryList.Named<Biome> biomes) -> biomes.getTag().id().toTranslationKey("tag.biome");
+					case BiomeDestination(RegistryEntryList<Biome> biomes) -> biomes.get(displayIdx(biomes.size())).getKey().get().getValue().toTranslationKey("biome");
 					default -> "";
 				});
 				ctx.drawText(textRenderer(), text, x + 100 - textRenderer().getWidth(text), y + 30 * dIdx + 7, 0x111111, false);

@@ -4,6 +4,6 @@
   },
   "destination": {
     "type": "structure",
-    "structure_tag": "#minecraft:eye_of_ender_located"
+    "structure": "#minecraft:eye_of_ender_located"
   }
 }

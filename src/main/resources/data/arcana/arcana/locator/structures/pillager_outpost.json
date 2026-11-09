@@ -4,6 +4,6 @@
   },
   "destination": {
     "type": "structure",
-    "structure_tag": "#arcana:pillager_outpost"
+    "structure": "minecraft:pillager_outpost"
   }
 }

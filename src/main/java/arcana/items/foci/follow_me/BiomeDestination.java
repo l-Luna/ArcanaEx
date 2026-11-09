@@ -13,19 +13,18 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.biome.Biome;
 import org.jetbrains.annotations.Nullable;
 
-public record BiomeDestination(RegistryEntryList<Biome> biomes) implements Destination{
+public record BiomeDestination(RegistryEntryList<Biome> biome) implements Destination{
 	
 	public static final MapCodec<BiomeDestination> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
-			RegistryCodecs.entryList(RegistryKeys.BIOME).fieldOf("biome").forGetter(x -> x.biomes)
+			RegistryCodecs.entryList(RegistryKeys.BIOME).fieldOf("biome").forGetter(x -> x.biome)
 	).apply(i, BiomeDestination::new));
-	
 	
 	public MapCodec<? extends Destination> getCodec(){
 		return CODEC;
 	}
 	
 	public @Nullable BlockPos getLocation(ItemStack input, ServerWorld world, BlockPos origin){
-		Pair<BlockPos, RegistryEntry<Biome>> pair = world.locateBiome(biomes::contains, origin, 100, 32, 64);
+		Pair<BlockPos, RegistryEntry<Biome>> pair = world.locateBiome(biome::contains, origin, 1000, 32, 64);
 		return pair == null ? null : pair.getFirst();
 	}
 	

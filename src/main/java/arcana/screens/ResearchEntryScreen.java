@@ -15,6 +15,7 @@ import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
@@ -23,6 +24,7 @@ import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
@@ -419,15 +421,16 @@ public class ResearchEntryScreen extends Screen{
 		
 		public void renderAfter(DrawContext ctx, int mouseX, int mouseY){
 			hovered = mouseX >= getX() && mouseY >= getY() && mouseX < getX() + width && mouseY < getY() + height;
-			if(pin.icon().stack() != null)
-				if(hovered){
-					var stack = pin.icon().stack();
-					List<Text> tooltips = new ArrayList<>(getTooltipFromItem(client, stack));
-					List<Integer> pinned = Researcher.from(client.player).getPinned().get(entry.id());
-					boolean isPinned = pinned != null && pinned.contains(pin.stage());
-					tooltips.add(Text.translatable(isPinned ? "research.entry.unpin" : "research.entry.pin").formatted(Formatting.AQUA));
-					ctx.drawTooltip(textRenderer, tooltips, stack.getTooltipData(), mouseX, mouseY);
-				}
+			Optional<ItemStack> stack = Optional.ofNullable(pin.icon().stack());
+			if(hovered){
+				List<Text> tooltips = new ArrayList<>(stack.map(it -> getTooltipFromItem(client, it)).orElse(List.of()));
+				if(pin.tooltip() != null)
+					tooltips.addAll(pin.tooltip());
+				List<Integer> pinned = Researcher.from(client.player).getPinned().get(entry.id());
+				boolean isPinned = pinned != null && pinned.contains(pin.stage());
+				tooltips.add(Text.translatable(isPinned ? "research.entry.unpin" : "research.entry.pin").formatted(Formatting.AQUA));
+				ctx.drawTooltip(textRenderer, tooltips, stack.flatMap(ItemStack::getTooltipData), mouseX, mouseY);
+			}
 		}
 	}
 }

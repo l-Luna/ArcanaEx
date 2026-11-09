@@ -74,6 +74,11 @@
         "trail_ruins": "Trail Ruins",
         "trial_chambers": "Trial Chambers"
       }
+    },
+    "arcana.locator": {
+      "arcana": {
+        "simple": "Follow Me Destinations"
+      }
     }
   },
 

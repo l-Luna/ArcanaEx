@@ -53,7 +53,7 @@ public class WandInteractionSection extends EntrySection{
 	}
 	
 	public Stream<Pin> pins(int idx, World world, Entry entry){
-		return Stream.of(new Pin(new Icon(result), entry, idx, result));
+		return Stream.of(new Pin(new Icon(result), entry, idx, result, null));
 	}
 	
 	public Identifier type(){

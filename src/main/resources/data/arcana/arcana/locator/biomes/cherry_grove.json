@@ -1,0 +1,9 @@
+{
+  "input": {
+    "tag": "minecraft:cherry_logs"
+  },
+  "destination": {
+    "type": "biome",
+    "biome": "minecraft:cherry_grove"
+  }
+}

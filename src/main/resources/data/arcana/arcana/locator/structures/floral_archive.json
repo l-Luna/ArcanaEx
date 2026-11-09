@@ -1,0 +1,9 @@
+{
+  "input": {
+    "tag": "arcana:lamplights"
+  },
+  "destination": {
+    "type": "structure",
+    "structure_tag": "#arcana:floral_archive"
+  }
+}

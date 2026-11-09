@@ -1,0 +1,9 @@
+{
+  "input": {
+    "tag": "minecraft:warped_stems"
+  },
+  "destination": {
+    "type": "biome",
+    "biome": "minecraft:warped_forest"
+  }
+}

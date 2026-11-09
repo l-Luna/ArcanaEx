@@ -1,0 +1,9 @@
+{
+  "input": {
+    "tag": "minecraft:mangrove_logs"
+  },
+  "destination": {
+    "type": "biome",
+    "biome": "minecraft:mangrove_swamp"
+  }
+}

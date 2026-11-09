@@ -1,0 +1,9 @@
+{
+  "input": {
+    "tag": "minecraft:soul_fire_base_blocks"
+  },
+  "destination": {
+    "type": "biome",
+    "biome": "minecraft:soul_sand_valley"
+  }
+}

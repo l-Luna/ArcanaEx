@@ -1,0 +1,9 @@
+{
+  "input": {
+    "item": "minecraft:netherrack"
+  },
+  "destination": {
+    "type": "biome",
+    "biome": "minecraft:nether_wastes"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "input": {
+    "item": "arcana:alchemical_iron"
+  },
+  "destination": {
+    "type": "structure",
+    "structure_tag": "#arcana:trail_ruins"
+  }
+}

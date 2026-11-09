@@ -13,21 +13,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.biome.Biome;
 import org.jetbrains.annotations.Nullable;
 
-public class BiomeDestination implements Destination{
+public record BiomeDestination(RegistryEntryList<Biome> biomes) implements Destination{
 	
 	public static final MapCodec<BiomeDestination> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
 			RegistryCodecs.entryList(RegistryKeys.BIOME).fieldOf("biome").forGetter(x -> x.biomes)
 	).apply(i, BiomeDestination::new));
 	
-	private final RegistryEntryList<Biome> biomes;
-	
-	public BiomeDestination(RegistryEntryList<Biome> biomes){
-		this.biomes = biomes;
-	}
-	
-	public RegistryEntryList<Biome> getBiomes(){
-		return biomes;
-	}
 	
 	public MapCodec<? extends Destination> getCodec(){
 		return CODEC;

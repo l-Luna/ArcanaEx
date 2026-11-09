@@ -1,0 +1,9 @@
+{
+  "input": {
+    "tag": "minecraft:jungle_logs"
+  },
+  "destination": {
+    "type": "biome",
+    "biome": "#minecraft:is_jungle"
+  }
+}

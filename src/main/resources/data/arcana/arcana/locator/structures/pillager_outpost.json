@@ -1,0 +1,9 @@
+{
+  "input": {
+    "item": "minecraft:ominous_bottle"
+  },
+  "destination": {
+    "type": "structure",
+    "structure_tag": "#arcana:pillager_outpost"
+  }
+}

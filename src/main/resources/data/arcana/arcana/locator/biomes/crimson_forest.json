@@ -1,0 +1,9 @@
+{
+  "input": {
+    "tag": "minecraft:crimson_stems"
+  },
+  "destination": {
+    "type": "biome",
+    "biome": "minecraft:crimson_forest"
+  }
+}

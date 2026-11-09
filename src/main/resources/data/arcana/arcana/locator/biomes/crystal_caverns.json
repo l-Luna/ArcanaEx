@@ -1,0 +1,9 @@
+{
+  "input": {
+    "item": "arcana:balanced_crystal"
+  },
+  "destination": {
+    "type": "biome",
+    "biome": "arcana:crystal_caverns"
+  }
+}

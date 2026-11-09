@@ -1,0 +1,9 @@
+{
+  "input": {
+    "item": "arcana:alchemical_copper"
+  },
+  "destination": {
+    "type": "structure",
+    "structure_tag": "#arcana:trial_chambers"
+  }
+}

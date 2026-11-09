@@ -13,6 +13,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
@@ -915,13 +916,14 @@ public class ResearchBookScreen extends Screen{
 		}
 		
 		public void renderAfter(DrawContext ctx, int mouseX, int mouseY){
-			if(pin.icon().stack() != null)
-				if(hovered && visible){
-					var stack = pin.icon().stack();
-					List<Text> tooltips = new ArrayList<>(getTooltipFromItem(client, stack));
-					tooltips.add(Text.translatable("research.entry.unpin").formatted(Formatting.AQUA));
-					ctx.drawTooltip(textRenderer, tooltips, stack.getTooltipData(), mouseX, mouseY);
-				}
+			if(hovered && visible){
+				Optional<ItemStack> stack = Optional.ofNullable(pin.icon().stack());
+				List<Text> tooltips = new ArrayList<>(stack.map(it -> getTooltipFromItem(client, it)).orElse(List.of()));
+				if(pin.tooltip() != null)
+					tooltips.addAll(pin.tooltip());
+				tooltips.add(Text.translatable("research.entry.unpin").formatted(Formatting.AQUA));
+				ctx.drawTooltip(textRenderer, tooltips, stack.flatMap(ItemStack::getTooltipData), mouseX, mouseY);
+			}
 		}
 	}
 }

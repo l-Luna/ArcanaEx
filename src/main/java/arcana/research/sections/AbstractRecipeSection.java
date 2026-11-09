@@ -36,7 +36,7 @@ public abstract class AbstractRecipeSection extends EntrySection{
 		Optional<? extends Recipe<?>> recipe = world.getRecipeManager().get(recipeId).map(RecipeEntry::value);
 		if(recipe.isPresent()){
 			ItemStack output = recipe.get().getResult(world.getRegistryManager());
-			return Stream.of(new Pin(new Icon(output), entry, idx, output.getItem()));
+			return Stream.of(new Pin(new Icon(output), entry, idx, output.getItem(), null));
 		}
 		return super.pins(idx, world, entry);
 	}

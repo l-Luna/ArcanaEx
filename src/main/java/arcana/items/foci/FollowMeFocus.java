@@ -7,6 +7,7 @@ import arcana.aspects.Aspects;
 import arcana.cca_components.Researcher;
 import arcana.items.FocusItem;
 import arcana.items.components.ArcanaDataComponents;
+import arcana.items.components.FollowMeTargetComponent;
 import arcana.items.foci.follow_me.Locator;
 import arcana.research.Parent;
 import net.minecraft.entity.ItemEntity;
@@ -16,12 +17,16 @@ import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Pair;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.Heightmap;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Optional;
 
 public class FollowMeFocus extends FocusItem{
 	
@@ -48,10 +53,10 @@ public class FollowMeFocus extends FocusItem{
 				Parent research = locator.requiredResearch();
 				if(locator.input().test(stack) && (research == null || researcher.isEntryPartComplete(research))){
 					if(world instanceof ServerWorld sw){
-						BlockPos targetPos = locator.destination().getLocation(stack, sw, user.getBlockPos());
+						Pair<BlockPos, Optional<Heightmap.Type>> target = locator.destination().getLocation(stack, sw, user.getBlockPos());
 						// only consume item if locating was successful, may take many tries for e.g. rare biomes
-						if(targetPos != null){
-							user.setAttached(ArcanaDataComponents.FOLLOW_ME_TARGET, targetPos);
+						if(target != null){
+							user.setAttached(ArcanaDataComponents.FOLLOW_ME_TARGET, new FollowMeTargetComponent(itemEntity.getPos(), target.getLeft().toCenterPos(), world.getTime(), target.getRight()));
 							if(locator.consumed()){
 								stack.decrement(1);
 								if(stack.getCount() > 1)
@@ -67,8 +72,8 @@ public class FollowMeFocus extends FocusItem{
 								itemEntity.getY(),
 								itemEntity.getZ(),
 								8,
-								1, 1, 1,
-								0.2
+								0.1, 0.1, 0.1,
+								0.01
 						);
 					}
 					// locating happens on the server, but casting is successful on both sides

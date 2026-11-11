@@ -6,10 +6,13 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.Pair;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.Heightmap;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Function;
 
 public interface Destination{
@@ -21,7 +24,7 @@ public interface Destination{
 	
 	MapCodec<? extends Destination> getCodec();
 	
-	@Nullable BlockPos getLocation(ItemStack input, ServerWorld world, BlockPos origin);
+	@Nullable Pair<BlockPos, Optional<Heightmap.Type>> getLocation(ItemStack input, ServerWorld world, BlockPos origin);
 	
 	boolean isDynamic();
 }

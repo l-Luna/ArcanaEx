@@ -16,7 +16,6 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Uuids;
-import net.minecraft.util.math.BlockPos;
 
 import java.util.UUID;
 
@@ -52,9 +51,9 @@ public class ArcanaDataComponents{
 	
 	public static final ComponentType<WandDataComponent> WAND_DATA = create(WandDataComponent.CODEC);
 	
-	public static final AttachmentType<BlockPos> FOLLOW_ME_TARGET = AttachmentRegistry.create(arcId("follow_me_target"), b -> b
-			.persistent(BlockPos.CODEC)
-			.syncWith(BlockPos.PACKET_CODEC, AttachmentSyncPredicate.targetOnly()));
+	public static final AttachmentType<FollowMeTargetComponent> FOLLOW_ME_TARGET = AttachmentRegistry.create(arcId("follow_me_target"), b -> b
+			.persistent(FollowMeTargetComponent.CODEC)
+			.syncWith(FollowMeTargetComponent.PACKET_CODEC, AttachmentSyncPredicate.targetOnly()));
 	
 	public static void setup(){
 		register("radius", RADIUS);

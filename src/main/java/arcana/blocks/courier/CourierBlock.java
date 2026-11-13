@@ -46,8 +46,8 @@ public class CourierBlock extends BlockWithEntity{
 	public static class BE extends BlockEntity{
 		
 		// TODO: populate & serialise
-		private List<SymbolInstance> sourceSymbols = new ArrayList<>();
-		private List<SymbolInstance> sinkSymbols = new ArrayList<>();
+		/* package-private */ List<SymbolInstance> sourceSymbols = new ArrayList<>();
+		/* package-private */ List<SymbolInstance> sinkSymbols = new ArrayList<>();
 		
 		private QueuedTransfer<?> currentTransfer;
 		private CourierState state = CourierState.SLEEP;
@@ -79,7 +79,7 @@ public class CourierBlock extends BlockWithEntity{
 			
 			// continue current transfer
 			stateTicks++;
-			if(stateTicks >= STATE_TIME){
+			if(stateTicks >= STATE_TIME && state != CourierState.SLEEP){
 				switch(state){
 					case SPIN_UP -> state = CourierState.MOVE_TO_SOURCE;
 					case MOVE_TO_SOURCE -> {

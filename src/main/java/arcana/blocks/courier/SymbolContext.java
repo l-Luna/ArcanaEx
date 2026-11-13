@@ -11,8 +11,9 @@ import java.util.Optional;
 public record SymbolContext(World world, Direction symbolFacing, BlockBox volume){
 	
 	public Optional<BlockPos> getSingleBlock(){
-		if(volume.getDimensions().equals(new Vec3i(1, 1, 1)))
+		if(!volume.getDimensions().equals(new Vec3i(1, 1, 1)))
 			return Optional.empty();
-		return Optional.of(volume.getCenter());
+		BlockPos origin = new BlockPos(volume.getMinX(), volume.getMinY(), volume.getMinZ());
+		return Optional.of(origin.offset(symbolFacing));
 	}
 }

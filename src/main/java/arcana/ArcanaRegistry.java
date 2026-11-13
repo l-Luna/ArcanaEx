@@ -7,7 +7,9 @@ import arcana.aspects.Aspect;
 import arcana.aspects.Aspects;
 import arcana.blocks.*;
 import arcana.blocks.be.*;
+import arcana.blocks.courier.ControlSymbolBlock;
 import arcana.blocks.courier.CourierBlock;
+import arcana.blocks.courier.SymbolType;
 import arcana.blocks.deco.CrystalPillarBlock;
 import arcana.blocks.deco.NitorBlock;
 import arcana.blocks.deco.StoneVaseBlock;
@@ -98,6 +100,7 @@ import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.text.Text;
 import net.minecraft.util.ColorCode;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.gen.feature.Feature;
@@ -423,9 +426,10 @@ public final class ArcanaRegistry{
 	public static final Block CRYSTALLIZATION_PRESS = new CrystallizationPressBlock(of(Material.METAL).dropsSelf().requiresTool(PICKAXE_MINEABLE).sounds(BlockSoundGroup.ANCIENT_DEBRIS).strength(4).nonOpaque());
 	public static final Block MYSTIC_MIST = new MysticMistBlock(of(Material.STONE).dropsSelf().requiresTool(PICKAXE_MINEABLE).sounds(BlockSoundGroup.METAL).strength(2.5f).nonOpaque());
 	public static final Block MAGIC_MIRROR = new MagicMirrorBlock(of(Material.METAL).usesTool(PICKAXE_MINEABLE).strength(0.7f).sounds(BlockSoundGroup.GLASS).luminance(2).nonOpaque().noCollision());
-	public static final Block COURIER = new CourierBlock(of(Material.METAL).usesTool(PICKAXE_MINEABLE).renderLayer(CUTOUT).strength(1.8f).sounds(BlockSoundGroup.HEAVY_CORE).nonOpaque());
 	public static final Block WARDED_CAMPFIRE = new WardedCampfireBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).renderLayer(CUTOUT).strength(2).sounds(BlockSoundGroup.WOOD).luminance(whenLit(15)).nonOpaque());
 	public static final Block CRIMSON_CAMPFIRE = new CrimsonCampfireBlock(of(Material.WOOD).dropsSelf().usesTool(AXE_MINEABLE).renderLayer(CUTOUT).strength(2).sounds(BlockSoundGroup.WOOD).luminance(whenLit(15)).nonOpaque());
+	public static final Block COURIER = new CourierBlock(of(Material.METAL).usesTool(PICKAXE_MINEABLE).renderLayer(CUTOUT).strength(1.8f).sounds(BlockSoundGroup.HEAVY_CORE).nonOpaque());
+	public static final List<ControlSymbolBlock> CONTROL_SYMBOLS = SymbolType.TYPES.values().stream().map(ty -> new ControlSymbolBlock(of(Material.METAL).usesTool(PICKAXE_MINEABLE).renderLayer(CUTOUT).strength(0.3f).sounds(BlockSoundGroup.HEAVY_CORE).nonOpaque(), ty)).toList();
 	
 	public static final Block ARCANIUM_BLOCK = new Block(of(Material.METAL, MapColor.PINK).group(Tab.RESOURCES).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(5, 6).sounds(BlockSoundGroup.METAL));
 	public static final Block THAUMIUM_BLOCK = new Block(of(Material.METAL, MapColor.DARK_DULL_PINK).group(Tab.RESOURCES).dropsSelf().requiresTool(PICKAXE_MINEABLE).strength(5, 6).sounds(BlockSoundGroup.METAL));
@@ -628,6 +632,7 @@ public final class ArcanaRegistry{
 	// points of interest...
 	// created in register
 	public static PointOfInterestType WARDED_CAMPFIRE_POI;
+	public static PointOfInterestType COURIER_POI;
 	
 	// screen handlers...
 	public static final ScreenHandlerType<ArcaneCraftingScreen.Handler> ARCANE_CRAFTING_SCREEN_HANDLER = new ScreenHandlerType<>(ArcaneCraftingScreen.Handler::new, FeatureSet.empty());
@@ -668,6 +673,7 @@ public final class ArcanaRegistry{
 	public static BlockEntityType<ThaumicHaloBlockEntity> THAUMIC_HALO_BE = FabricBlockEntityTypeBuilder.create(ThaumicHaloBlockEntity::new, THAUMIC_HALO).build();
 	public static BlockEntityType<MagicMirrorBlockEntity> MAGIC_MIRROR_BE = FabricBlockEntityTypeBuilder.create(MagicMirrorBlockEntity::new, MAGIC_MIRROR).build();
 	public static BlockEntityType<CourierBlock.BE> COURIER_BE = BlockEntityType.Builder.create(CourierBlock.BE::new, COURIER).build();
+	public static BlockEntityType<ControlSymbolBlock.BE> CONTROL_SYMBOL_BE = BlockEntityType.Builder.create(ControlSymbolBlock.BE::new, CONTROL_SYMBOLS.toArray(Block[]::new)).build();
 	
 	// particle types...
 	public static SimpleParticleType TAINT_BUBBLE = FabricParticleTypes.simple();
@@ -1085,9 +1091,13 @@ public final class ArcanaRegistry{
 		registerBlock("mystic_mist", MYSTIC_MIST);
 		registerBlock("magic_mirror", MAGIC_MIRROR, false);
 		registerItem("magic_mirror", new MagicMirrorBlockItem(MAGIC_MIRROR, new ArcanaItemSettings().group(Tab.MAIN).maxCount(2)));
-		registerBlock("courier", COURIER);
 		registerBlock("warded_campfire", WARDED_CAMPFIRE);
 		registerBlock("crimson_campfire", CRIMSON_CAMPFIRE);
+		registerBlock("courier", COURIER);
+		for(ControlSymbolBlock block : CONTROL_SYMBOLS){
+			Identifier id = block.symbolType.id();
+			registerBlock("control_symbol/" + (id.getNamespace().equals(Arcana.MODID) ? "" : id.getNamespace() + "/") + id.getPath(), block);
+		}
 		
 		registerBlock("arcanium_block", ARCANIUM_BLOCK);
 		registerBlock("thaumium_block", THAUMIUM_BLOCK);
@@ -1323,6 +1333,7 @@ public final class ArcanaRegistry{
 		
 		// points of interest
 		WARDED_CAMPFIRE_POI = PointOfInterestHelper.register(arcId("warded_campfire"), 0, 2, WARDED_CAMPFIRE.getStateManager().getStates().stream().filter(x -> x.get(Properties.LIT)).toList());
+		COURIER_POI = PointOfInterestHelper.register(arcId("courier"), 0, 2, COURIER);
 		
 		// screen handlers
 		registerScreenHandler("arcane_crafting", ARCANE_CRAFTING_SCREEN_HANDLER);
@@ -1363,6 +1374,7 @@ public final class ArcanaRegistry{
 		registerBlockEntity("thaumic_halo", THAUMIC_HALO_BE);
 		registerBlockEntity("magic_mirror", MAGIC_MIRROR_BE);
 		registerBlockEntity("courier", COURIER_BE);
+		registerBlockEntity("control_symbol", CONTROL_SYMBOL_BE);
 		
 		// worldgen
 		registerFeature("hanging_node", new HangingNodeFeature());

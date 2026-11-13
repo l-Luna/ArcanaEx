@@ -1,6 +1,7 @@
 package arcana.blocks.courier.symbols;
 
 import arcana.blocks.courier.InventoryListenerHooks;
+import arcana.blocks.courier.SymbolContext;
 import arcana.blocks.courier.SymbolStorage;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage;
@@ -8,13 +9,16 @@ import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount;
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.HopperBlockEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.InventoryChangedListener;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class InventorySymbolStorage implements SymbolStorage, InventoryChangedListener{
 	
@@ -26,9 +30,20 @@ public class InventorySymbolStorage implements SymbolStorage, InventoryChangedLi
 		InventoryListenerHooks.addHook(inventory, this);
 	}
 	
-	public <T extends BlockEntity & Inventory> InventorySymbolStorage(T inventory){
-		this.inventory = inventory;
+	public InventorySymbolStorage(BlockEntity inventory){
+		this.inventory = (Inventory)inventory;
 		InventoryListenerHooks.addHook(inventory, this);
+	}
+	
+	public static @Nullable InventorySymbolStorage fromContext(SymbolContext ctx){
+		return ctx.getSingleBlock().flatMap(pos -> {
+			Inventory there = HopperBlockEntity.getInventoryAt(ctx.world(), pos);
+			if(there instanceof SimpleInventory si)
+				return Optional.of(new InventorySymbolStorage(si));
+			else if(there instanceof BlockEntity be)
+				return Optional.of(new InventorySymbolStorage(be));
+			return Optional.empty();
+		}).orElse(null);
 	}
 	
 	public long version(){
@@ -47,7 +62,7 @@ public class InventorySymbolStorage implements SymbolStorage, InventoryChangedLi
 		// slightly lazy, uses fabric-transfer just for easy simulate mode
 		long amountInserted;
 		try(Transaction transaction = Transaction.openOuter()){
-			amountInserted = InventoryStorage.of(inventory, null).insert(stack.resource(), stack.amount(), null);
+			amountInserted = InventoryStorage.of(inventory, null).insert(stack.resource(), stack.amount(), transaction);
 			if(!simulate)
 				transaction.commit();
 		}

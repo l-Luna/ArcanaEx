@@ -192,6 +192,7 @@ public final class ArcanaClient implements ClientModInitializer{
 		BlockEntityRendererRegistry.register(ArcanaRegistry.ALEMBIC_BE, ctx -> new AlembicBlockEntityRenderer());
 		BlockEntityRendererRegistry.register(ArcanaRegistry.THAUMIC_HALO_BE, ctx -> new ThaumicHaloBlockEntityRenderer());
 		BlockEntityRendererRegistry.register(ArcanaRegistry.WARDED_CAMPFIRE_BE, (BlockEntityRendererFactory<CampfireBlockEntity>)CampfireBlockEntityRenderer::new);
+		BlockEntityRendererRegistry.register(ArcanaRegistry.COURIER_BE, ctx -> new CourierBlockEntityRenderer());
 		
 		for(ArcanaFluid fluid : ArcanaRegistry.STILL_FLUIDS){
 			FluidRenderHandlerRegistry.INSTANCE.register(

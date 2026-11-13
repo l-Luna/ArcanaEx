@@ -425,6 +425,10 @@
           "content": "research.arcana.follow_me_focus.text"
         },
         {
+          "type": "arcane_crafting",
+          "content": "arcana:foci/follow_me_focus"
+        },
+        {
           "type": "locators",
           "tag": "arcana:simple"
         }
@@ -624,7 +628,7 @@
         },
         {
           "type": "arcane_crafting",
-          "content": "arcana:crystal_capacitor_focus"
+          "content": "arcana:foci/crystal_capacitor_focus"
         }
       ]
     },

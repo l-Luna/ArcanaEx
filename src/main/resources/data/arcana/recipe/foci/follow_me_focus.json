@@ -1,0 +1,29 @@
+{
+  "type": "arcana:arcane_crafting",
+  "key": {
+    "S": {
+      "item": "arcana:scribing_tools"
+    },
+    "F": {
+      "item": "arcana:fire_focus"
+    },
+    "E": {
+      "item": "minecraft:ender_pearl"
+    },
+    "G": {
+      "item": "arcana:hardened_glass"
+    }
+  },
+  "pattern": [
+    " S ",
+    "GFG",
+    "GEG"
+  ],
+  "aspects": [
+    "12*water",
+    "12*earth"
+  ],
+  "result": {
+    "id": "arcana:follow_me_focus"
+  }
+}

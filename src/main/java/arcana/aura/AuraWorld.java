@@ -69,10 +69,15 @@ public final class AuraWorld implements Component, ServerTickingComponent, AutoS
 	
 	public static AuraWorld from(StructureWorldAccess swa){
 		if(swa instanceof ServerWorld sw)
-			return from((World)sw);
+			return from(sw);
 		else if(swa instanceof ChunkRegion cr)
-			return from((World)cr.toServerWorld());
+			return from(cr.toServerWorld());
 		throw new IncompatibleClassChangeError();
+	}
+	
+	// overload disambiguation
+	public static AuraWorld from(ServerWorld world){
+		return from((World)world);
 	}
 	
 	// API

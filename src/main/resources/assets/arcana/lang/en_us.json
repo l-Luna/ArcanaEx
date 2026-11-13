@@ -72,7 +72,8 @@
     },
     "arcana.locator": {
       "arcana": {
-        "simple": "Follow Me Destinations"
+        "simple": "Follow Me Destinations",
+        "node_finding": "Node-Finding Destinations"
       }
     }
   },
@@ -976,6 +977,10 @@
       "puzzles_completed.progress": "{}/{} complete",
       "foci_cast": "Cast {} foci",
       "foci_cast.progress": "{}/{} cast"
+    },
+    "locators": {
+      "node": "Nearest Node",
+      "new_node": "Untapped Node"
     }
   },
   
@@ -1695,6 +1700,10 @@
     "follow_me_focus": {
       "title": "Wand Focus: Follow Me",
       "text": "By burning a sample of material with Follow Me, I can create a trail to a destination of my liking. Typically the material must be sourced from that destination, but objects with very strong affinities to specific places will also work (like Eyes of Ender and strongholds).\nThe destinations initially available to me is listed at the {u}end{r} of this entry. I may gain access to more through further research."
+    },
+    "node_finding": {
+      "title": "Node-Finding",
+      "text": "Tracking down new nodes is not too difficult, but it can be tedious and many nearby ones slip past unnoticed.\nBy tracking the signature of a wisp's essence, I can directly find pristine nodes nearby."
     },
 
     "void_metal": {

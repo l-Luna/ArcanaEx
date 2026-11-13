@@ -3,8 +3,12 @@ package arcana.aura;
 import arcana.aspects.Aspect;
 import arcana.aspects.AspectMap;
 import arcana.aspects.Aspects;
+import arcana.util.NbtUtil;
 import com.mojang.logging.LogUtils;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtList;
+import net.minecraft.nbt.NbtString;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
@@ -15,6 +19,8 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import org.slf4j.Logger;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 public class Node implements Position{
@@ -28,6 +34,7 @@ public class Node implements Position{
 	private int ticksUntilRecharge;
 	private AspectMap aspects, aspectCap;
 	private NbtCompound tag;
+	private Set<UUID> interactedPlayerIds;
 	
 	private UUID uuid;
 	
@@ -41,6 +48,7 @@ public class Node implements Position{
 		aspects = new AspectMap();
 		this.aspectCap = aspectCap;
 		tag = new NbtCompound();
+		interactedPlayerIds = new HashSet<>();
 		uuid = UUID.randomUUID();
 	}
 	
@@ -52,6 +60,7 @@ public class Node implements Position{
 		ticksUntilRecharge = node.ticksUntilRecharge;
 		aspects = node.aspects.copy();
 		aspectCap = node.aspectCap.copy();
+		interactedPlayerIds = new HashSet<>(node.interactedPlayerIds);
 		tag = node.tag.copy();
 		chunk = node.chunk;
 		uuid = UUID.randomUUID();
@@ -136,6 +145,7 @@ public class Node implements Position{
 		c.putInt("ticksUntilRecharge", ticksUntilRecharge);
 		c.put("aspects", aspects.toNbt());
 		c.put("aspectCap", aspectCap.toNbt());
+		c.put("interacted_player_ids", interactedPlayerIds.stream().map(x -> NbtString.of(x.toString())).collect(NbtUtil.toNbtList()));
 		if(tag != null)
 			c.put("tag", tag);
 		
@@ -151,6 +161,8 @@ public class Node implements Position{
 		node.ticksUntilRecharge = nbt.getInt("ticksUntilRecharge");
 		node.uuid = nbt.getUuid("uuid");
 		node.aspects = AspectMap.fromNbt(nbt.getCompound("aspects"));
+		NbtList idList = nbt.getList("interacted_player_ids", NbtElement.STRING_TYPE);
+		node.interactedPlayerIds = new HashSet<>(idList.stream().map(NbtElement::asString).map(UUID::fromString).toList());
 		if(nbt.contains("tag"))
 			node.tag = nbt.getCompound("tag");
 		return node;
@@ -207,6 +219,10 @@ public class Node implements Position{
 	
 	public AspectMap getAspectCap(){
 		return aspectCap;
+	}
+	
+	public Set<UUID> getInteractedPlayerIds(){
+		return interactedPlayerIds;
 	}
 	
 	public NbtCompound getOrCreateTag(){

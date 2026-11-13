@@ -100,7 +100,7 @@ public class CrystalClusterBlock extends WaterloggableBlock{
 		super.randomTick(state, world, pos, random);
 		// drain our aspect from nodes to grow
 		if(state.get(SIZE) != 3){
-			AuraWorld view = AuraWorld.from((World)world);
+			AuraWorld view = AuraWorld.from(world);
 			for(Node node : view.getNodesInBounds(new Box(pos.down(4).south(4).west(4).toCenterPos(), pos.up(4).north(4).east(4).toCenterPos()))){
 				var toDrain = getAspect();
 				boolean isAuram = toDrain == Aspects.AURA;

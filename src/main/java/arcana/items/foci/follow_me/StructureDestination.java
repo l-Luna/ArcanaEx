@@ -4,6 +4,7 @@ import arcana.mixin.accessor.JigsawStructureAccessor;
 import arcana.util.InertRegistryCodecs;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntryList;
@@ -32,7 +33,7 @@ public record StructureDestination(RegistryEntryList<Structure> structure) imple
 		return CODEC;
 	}
 	
-	public net.minecraft.util.@Nullable Pair<BlockPos, Optional<Heightmap.Type>> getLocation(ItemStack input, ServerWorld world, BlockPos origin){
+	public net.minecraft.util.@Nullable Pair<BlockPos, Optional<Heightmap.Type>> getLocation(ItemStack input, ServerWorld world, BlockPos origin, PlayerEntity caster){
 		ChunkGenerator gen = world.getChunkManager().getChunkGenerator();
 		var located = gen.locateStructure(world, structure, origin, 1000, false);
 		if(located == null)
@@ -47,10 +48,6 @@ public record StructureDestination(RegistryEntryList<Structure> structure) imple
 				yOffset = acc.arcana$getStartHeight().get(createChunkRandom(world, located.getFirst()), new HeightContext(gen, world));
 		}
 		return new Pair<>(located.getFirst().add(0, yOffset, 0), heightmap);
-	}
-	
-	public boolean isDynamic(){
-		return false;
 	}
 	
 	private static ChunkRandom createChunkRandom(ServerWorld world, BlockPos pos){

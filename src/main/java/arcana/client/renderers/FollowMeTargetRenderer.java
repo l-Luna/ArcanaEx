@@ -1,5 +1,6 @@
 package arcana.client.renderers;
 
+import arcana.client.ArcanaClient;
 import arcana.client.RenderHelper;
 import arcana.items.components.ArcanaDataComponents;
 import arcana.items.components.FollowMeTargetComponent;
@@ -84,6 +85,7 @@ public class FollowMeTargetRenderer{
 			markerPos = cameraPos.add(markerPos.subtract(cameraPos).normalize().multiply(30));
 		Tessellator tessellator = Tessellator.getInstance();
 		context.lightmapTextureManager().enable();
+		RenderSystem.enableBlend();
 		RenderSystem.setShader(GameRenderer::getParticleProgram);
 		RenderSystem.setShaderColor(1, 1, 1, 1);
 		RenderSystem.disableDepthTest();
@@ -112,7 +114,8 @@ public class FollowMeTargetRenderer{
 		// end marker
 		RenderSystem.setShaderTexture(0, TARGET_TEXTURE);
 		buffer = tessellator.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR_LIGHT);
-		NodeRenderer.drawQuad(context.camera(), markerPos, new Vector3f(-0.5f, -0.5f, -0.5f), buffer, 0.5f, 1, 0, 1, 1, LightmapTextureManager.MAX_LIGHT_COORDINATE);
+		for(int i = 0; i < 3; i++)
+			NodeRenderer.drawQuad(context.camera(), markerPos, new Vector3f(-0.5f + ArcanaClient.osc2(3, i / 3f) * 0.06f, -0.5f + ArcanaClient.osc2(3, 0.25f + i / 3f) * 0.06f, -0.5f), buffer, 0.45f / (i + 1) + 0.2f, 1, 0, 1, 1, LightmapTextureManager.MAX_LIGHT_COORDINATE);
 		RenderHelper.drawBuffer(buffer);
 		RenderSystem.enableDepthTest();
 	}

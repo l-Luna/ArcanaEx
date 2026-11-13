@@ -11,10 +11,7 @@ import arcana.enchantments.ArcanaEnchantmentComponents;
 import arcana.enchantments.LootSwapEffect;
 import arcana.items.CrimsonLeechItem;
 import arcana.items.components.ArcanaDataComponents;
-import arcana.items.foci.follow_me.BiomeDestination;
-import arcana.items.foci.follow_me.Destination;
-import arcana.items.foci.follow_me.Locator;
-import arcana.items.foci.follow_me.StructureDestination;
+import arcana.items.foci.follow_me.*;
 import arcana.items.trinkets.ClawTrinketItem;
 import arcana.items.trinkets.MirrorTrinketItem;
 import arcana.network.Networking;
@@ -86,6 +83,7 @@ public final class Arcana implements ModInitializer{
 		DynamicRegistries.registerSynced(Locator.REGISTRY_KEY, Locator.DIRECT_CODEC);
 		Destination.TYPES.put("biome", BiomeDestination.CODEC);
 		Destination.TYPES.put("structure", StructureDestination.CODEC);
+		Destination.TYPES.put("node", NodeDestination.CODEC);
 		
 		Research.setup();
 		WarpEvents.setup();

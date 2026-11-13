@@ -89,6 +89,8 @@ public class Caster implements Component, AutoSyncedComponent, ServerTickingComp
 			state = CasterState.DRAINING;
 			drainTargetNode = NodeReference.ref(from);
 			drainTargetAspect = drainAspect.orElse(Aspects.AIR);
+			from.getInteractedPlayerIds().add(player.getUuid());
+			from.markDirty();
 			sync();
 		});
 	}

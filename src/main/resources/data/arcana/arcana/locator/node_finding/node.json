@@ -1,0 +1,9 @@
+{
+  "input": {
+    "item": "arcana:twisted_essence"
+  },
+  "destination": {
+    "type": "node",
+    "only_new_nodes": false
+  }
+}

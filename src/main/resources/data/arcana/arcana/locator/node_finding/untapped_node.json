@@ -1,0 +1,9 @@
+{
+  "input": {
+    "item": "arcana:wispy_essence"
+  },
+  "destination": {
+    "type": "node",
+    "only_new_nodes": true
+  }
+}

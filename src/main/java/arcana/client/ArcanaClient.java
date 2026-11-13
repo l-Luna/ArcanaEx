@@ -62,6 +62,7 @@ import net.minecraft.resource.ResourceType;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Util;
 import net.minecraft.util.profiler.Profiler;
 import net.minecraft.world.biome.FoliageColors;
 
@@ -326,6 +327,11 @@ public final class ArcanaClient implements ClientModInitializer{
 		if(aspect.equals(Aspects.ENTROPY))
 			return Formatting.DARK_GRAY;
 		return Formatting.WHITE;
+	}
+	
+	public static float osc2(float period, float phase){
+		long periodMillis = (long)(1000 * period);
+		return (float)Math.sin((((Util.getMeasuringTimeMs() % periodMillis) / (float)periodMillis) + phase) * 2 * Math.PI);
 	}
 	
 	public static float osc(int period){

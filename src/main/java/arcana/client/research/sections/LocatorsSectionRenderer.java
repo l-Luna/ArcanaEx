@@ -3,6 +3,7 @@ package arcana.client.research.sections;
 import arcana.client.research.EntrySectionRenderer;
 import arcana.items.foci.follow_me.BiomeDestination;
 import arcana.items.foci.follow_me.Locator;
+import arcana.items.foci.follow_me.NodeDestination;
 import arcana.items.foci.follow_me.StructureDestination;
 import arcana.research.sections.LocatorsSection;
 import net.minecraft.client.MinecraftClient;
@@ -38,6 +39,7 @@ public class LocatorsSectionRenderer implements EntrySectionRenderer<LocatorsSec
 				int v = switch(locator.destination()){
 					case StructureDestination __ -> 22;
 					case BiomeDestination __ -> 43;
+					case NodeDestination __ -> 64;
 					default -> 1;
 				};
 				ctx.drawTexture(TEXTURE, x - 4, y + 30 * dIdx - 2, 0, 0, v, 105, 20, 256, 256);
@@ -47,6 +49,8 @@ public class LocatorsSectionRenderer implements EntrySectionRenderer<LocatorsSec
 					case StructureDestination(RegistryEntryList<Structure> structure) -> structure.get(displayIdx(structure.size())).getKey().get().getValue().toTranslationKey("structure");
 					case BiomeDestination(RegistryEntryList.Named<Biome> biomes) -> biomes.getTag().id().toTranslationKey("tag.biome");
 					case BiomeDestination(RegistryEntryList<Biome> biomes) -> biomes.get(displayIdx(biomes.size())).getKey().get().getValue().toTranslationKey("biome");
+					case NodeDestination(boolean onlyNew) when onlyNew -> "research.locators.new_node";
+					case NodeDestination __ -> "research.locators.node";
 					default -> "";
 				});
 				ctx.drawText(textRenderer(), text, x + 100 - textRenderer().getWidth(text), y + 30 * dIdx + 7, 0x111111, false);

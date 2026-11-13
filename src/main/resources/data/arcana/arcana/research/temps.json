@@ -424,13 +424,37 @@
           "type": "text",
           "content": "research.arcana.follow_me_focus.text"
         },
-//        {
-//          "type": "arcane_crafting",
-//          "content": "arcana:equipment/arcanium_scalpel"
-//        }
         {
           "type": "locators",
           "tag": "arcana:simple"
+        }
+      ]
+    },
+    {
+      "key": "arcana:tmp/node_finding",
+      "name": "research.arcana.node_finding.title",
+      "icons": [
+        "arcana:research/node_finding.png"
+      ],
+      "category": "arcana:fundamentals",
+      "parents": [
+        "&arcana:node_channelling_2",
+        "arcana:tmp/follow_me_focus",
+        "arcana:tmp/aura_tampering"
+      ],
+      "meta": [
+        "tmp_base"
+      ],
+      "x": -7,
+      "y": 5,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.node_finding.text"
+        },
+        {
+          "type": "locators",
+          "tag": "arcana:node_finding"
         }
       ]
     },

@@ -2,6 +2,7 @@ package arcana.items.foci.follow_me;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.RegistryCodecs;
 import net.minecraft.registry.RegistryKeys;
@@ -25,12 +26,8 @@ public record BiomeDestination(RegistryEntryList<Biome> biome) implements Destin
 		return CODEC;
 	}
 	
-	public @Nullable Pair<BlockPos, Optional<Heightmap.Type>> getLocation(ItemStack input, ServerWorld world, BlockPos origin){
+	public @Nullable Pair<BlockPos, Optional<Heightmap.Type>> getLocation(ItemStack input, ServerWorld world, BlockPos origin, PlayerEntity caster){
 		var pair = world.locateBiome(biome::contains, origin, 1000, 32, 64);
 		return pair == null ? null : new Pair<>(pair.getFirst(), Optional.empty());
-	}
-	
-	public boolean isDynamic(){
-		return false;
 	}
 }

@@ -53,10 +53,17 @@ public class FollowMeFocus extends FocusItem{
 				Parent research = locator.requiredResearch();
 				if(locator.input().test(stack) && (research == null || researcher.isEntryPartComplete(research))){
 					if(world instanceof ServerWorld sw){
-						Pair<BlockPos, Optional<Heightmap.Type>> target = locator.destination().getLocation(stack, sw, user.getBlockPos(), user);
+						Pair<BlockPos, Optional<Heightmap.Type>> end = locator.destination().getLocation(stack, sw, user.getBlockPos(), user);
 						// only consume item if locating was successful, may take many tries for e.g. rare biomes
-						if(target != null){
-							user.setAttached(ArcanaDataComponents.FOLLOW_ME_TARGET, new FollowMeTargetComponent(itemEntity.getPos(), target.getLeft().toCenterPos(), world.getTime(), target.getRight()));
+						if(end != null){
+							FollowMeTargetComponent target = new FollowMeTargetComponent(
+									itemEntity.getPos(),
+									end.getLeft().toCenterPos(),
+									world.getRegistryKey().getValue(),
+									world.getTime(),
+									end.getRight()
+							);
+							user.setAttached(ArcanaDataComponents.FOLLOW_ME_TARGET, target);
 							if(locator.consumed()){
 								stack.decrement(1);
 								if(stack.getCount() > 1)

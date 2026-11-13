@@ -43,6 +43,8 @@ public class FollowMeTargetRenderer{
 		FollowMeTargetComponent target = player.getAttached(ArcanaDataComponents.FOLLOW_ME_TARGET);
 		if(target == null)
 			return;
+		if(!world.getRegistryKey().getValue().equals(target.world()))
+			return;
 		
 		// reset temp data when a new target is chosen
 		if(lastTarget == null || lastTarget.get() != target){

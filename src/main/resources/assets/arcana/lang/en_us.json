@@ -73,7 +73,8 @@
     "arcana.locator": {
       "arcana": {
         "simple": "Follow Me Destinations",
-        "node_finding": "Node-Finding Destinations"
+        "node_finding": "Node-Finding Destinations",
+        "treasure_hunting": "Treasure Hunting Destinations"
       }
     }
   },
@@ -980,7 +981,8 @@
     },
     "locators": {
       "node": "Nearest Node",
-      "new_node": "Untapped Node"
+      "new_node": "Untapped Node",
+      "exploration_map_target": "Map's Target"
     }
   },
   
@@ -1700,6 +1702,10 @@
     "follow_me_focus": {
       "title": "Wand Focus: Follow Me",
       "text": "By burning a sample of material with Follow Me, I can create a trail to a destination of my liking. Typically the material must be sourced from that destination, but objects with very strong affinities to specific places will also work (like Eyes of Ender and strongholds).\nThe destinations initially available to me is listed at the {u}end{r} of this entry. I may gain access to more through further research."
+    },
+    "treasure_hunting": {
+      "title": "Treasure Hunting",
+      "text": "On rare occasion, I can find someone actually willing to guide me around the world. Almost always, the instructions they give are {i}painfully{r} vague, and come in the form of scrawling left behind by the long-dead who are unwilling to give further clarification. Not that I have any more need for them, anyway.\nI can simply cast Follow Me onto an Explorer Map to get a clear guide towards its target. The map is {u}not{r} consumed in the process."
     },
     "node_finding": {
       "title": "Node-Finding",

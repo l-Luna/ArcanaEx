@@ -1,10 +1,7 @@
 package arcana.client.research.sections;
 
 import arcana.client.research.EntrySectionRenderer;
-import arcana.items.foci.follow_me.BiomeDestination;
-import arcana.items.foci.follow_me.Locator;
-import arcana.items.foci.follow_me.NodeDestination;
-import arcana.items.foci.follow_me.StructureDestination;
+import arcana.items.foci.follow_me.*;
 import arcana.research.sections.LocatorsSection;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -40,10 +37,18 @@ public class LocatorsSectionRenderer implements EntrySectionRenderer<LocatorsSec
 					case StructureDestination __ -> 22;
 					case BiomeDestination __ -> 43;
 					case NodeDestination __ -> 64;
+					case ExplorerMapTargetDestination __ -> 85;
 					default -> 1;
 				};
 				ctx.drawTexture(TEXTURE, x - 4, y + 30 * dIdx - 2, 0, 0, v, 105, 20, 256, 256);
-				ctx.drawItem(inputStack, x - 2, y + 30 * dIdx);
+				int itemX = x - 2, itemY = y + 30 * dIdx;
+				ctx.drawItem(inputStack, itemX, itemY);
+				if(!locator.consumed()){
+					//ctx.drawItemInSlot(textRenderer(), inputStack, x - 2, y + 30 * dIdx, "x");
+					String lbl = "*";
+					ctx.drawText(textRenderer(), lbl, itemX + 17 + 1 - textRenderer().getWidth(lbl), itemY + 12 + 1, 0xAAAAAA, false);
+					ctx.drawText(textRenderer(), lbl, itemX + 17 - textRenderer().getWidth(lbl), itemY + 12, 0, false);
+				}
 				Text text = Text.translatable(switch(locator.destination()){
 					case StructureDestination(RegistryEntryList.Named<Structure> structure) -> structure.getTag().id().toTranslationKey("tag.structure");
 					case StructureDestination(RegistryEntryList<Structure> structure) -> structure.get(displayIdx(structure.size())).getKey().get().getValue().toTranslationKey("structure");
@@ -51,9 +56,10 @@ public class LocatorsSectionRenderer implements EntrySectionRenderer<LocatorsSec
 					case BiomeDestination(RegistryEntryList<Biome> biomes) -> biomes.get(displayIdx(biomes.size())).getKey().get().getValue().toTranslationKey("biome");
 					case NodeDestination(boolean onlyNew) when onlyNew -> "research.locators.new_node";
 					case NodeDestination __ -> "research.locators.node";
+					case ExplorerMapTargetDestination __ -> "research.locators.exploration_map_target";
 					default -> "";
 				});
-				ctx.drawText(textRenderer(), text, x + 100 - textRenderer().getWidth(text), y + 30 * dIdx + 7, 0x111111, false);
+				ctx.drawText(textRenderer(), text, x + 100 - textRenderer().getWidth(text), y + 30 * dIdx + 9, 0x111111, false);
 			}
 		});
 	}

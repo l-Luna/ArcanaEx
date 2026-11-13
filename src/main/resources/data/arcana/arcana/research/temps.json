@@ -417,8 +417,8 @@
       "meta": [
         "tmp_base"
       ],
-      "x": 4,
-      "y": -3,
+      "x": 3,
+      "y": -4,
       "sections": [
         {
           "type": "text",
@@ -431,6 +431,32 @@
         {
           "type": "locators",
           "tag": "arcana:simple"
+        }
+      ]
+    },
+    {
+      "key": "arcana:tmp/treasure_hunting",
+      "name": "research.arcana.treasure_hunting.title",
+      "icons": [
+        "arcana:research/treasure_hunting.png"
+      ],
+      "category": "arcana:auromancy",
+      "parents": [
+        "&arcana:tmp/follow_me_focus"
+      ],
+      "meta": [
+        "tmp_base"
+      ],
+      "x": 2,
+      "y": -5,
+      "sections": [
+        {
+          "type": "text",
+          "content": "research.arcana.treasure_hunting.text"
+        },
+        {
+          "type": "locators",
+          "tag": "arcana:treasure_hunting"
         }
       ]
     },
@@ -619,8 +645,8 @@
       "meta": [
         "tmp_base"
       ],
-      "x": 3,
-      "y": -4,
+      "x": 2,
+      "y": -2,
       "sections": [
         {
           "type": "text",

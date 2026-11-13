@@ -84,6 +84,7 @@ public final class Arcana implements ModInitializer{
 		Destination.TYPES.put("biome", BiomeDestination.CODEC);
 		Destination.TYPES.put("structure", StructureDestination.CODEC);
 		Destination.TYPES.put("node", NodeDestination.CODEC);
+		Destination.TYPES.put("exploration_map_target", ExplorerMapTargetDestination.CODEC);
 		
 		Research.setup();
 		WarpEvents.setup();

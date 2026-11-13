@@ -1,0 +1,9 @@
+{
+  "input": {
+    "item": "minecraft:filled_map"
+  },
+  "consumed": false,
+  "destination": {
+    "type": "exploration_map_target"
+  }
+}

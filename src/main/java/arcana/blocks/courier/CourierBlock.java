@@ -1,6 +1,8 @@
 package arcana.blocks.courier;
 
 import arcana.ArcanaRegistry;
+import arcana.blocks.courier.SymbolConfig.SymbolDirection;
+import arcana.blocks.courier.symbols.EmptySymbolStorage;
 import com.mojang.serialization.MapCodec;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
@@ -43,15 +45,27 @@ public class CourierBlock extends BlockWithEntity{
 		return BlockWithEntity.validateTicker(type, ArcanaRegistry.COURIER_BE, (_1, _2, _3, be) -> be.tick());
 	}
 	
+	protected void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved){
+		super.onStateReplaced(state, world, pos, newState, moved);
+		if(!state.isOf(newState.getBlock()) && world.getBlockEntity(pos) instanceof BE be)
+			be.onRemoved();
+	}
+	
 	public static class BE extends BlockEntity{
 		
-		// TODO: populate & serialise
-		/* package-private */ List<SymbolInstance> sourceSymbols = new ArrayList<>();
-		/* package-private */ List<SymbolInstance> sinkSymbols = new ArrayList<>();
+		// symbols
+		private List<SymbolInstance> symbols = new ArrayList<>();
+		// reloaded from `symbols` whenever symbol configs are updated
+		private List<SymbolInstance> sourceSymbols = new ArrayList<>();
+		private List<SymbolInstance> sinkSymbols = new ArrayList<>();
 		
+		// transfer progress
 		private QueuedTransfer<?> currentTransfer;
 		private CourierState state = CourierState.SLEEP;
 		private int stateTicks;
+		
+		// reloading
+		private List<BlockPos> symbolsToLoad = new ArrayList<>();
 		
 		public BE(BlockPos pos, BlockState state){
 			super(ArcanaRegistry.COURIER_BE, pos, state);
@@ -61,19 +75,64 @@ public class CourierBlock extends BlockWithEntity{
 			return state;
 		}
 		
-		//
-		
-		protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){
-			super.readNbt(nbt, registryLookup);
+		public SymbolInstance addSymbolFromBlock(ControlSymbolBlock.BE symbolBe, BlockState symbolState){
+			BlockPos pos = symbolBe.getPos();
+			SymbolInstance symInst = new SymbolInstance();
+			symInst.pos = pos;
+			SymbolStorage storage = symbolBe.symbolType.storage().apply(new SymbolContext(world, symbolState.get(ControlSymbolBlock.FACING), symbolBe.relativeVolume.offset(pos.getX(), pos.getY(), pos.getZ())));
+			symInst.storage = storage != null ? storage : new EmptySymbolStorage();
+			symInst.config = symbolBe.config;
+			symInst.lastVersion = 0;
+			addSymbol(symInst);
+			return symInst;
 		}
+		
+		public void addSymbol(SymbolInstance symbol){
+			symbols.add(symbol);
+			updateSymbol(symbol);
+		}
+		
+		public void updateSymbol(SymbolInstance symbol){
+			sourceSymbols.remove(symbol);
+			sinkSymbols.remove(symbol);
+			(symbol.config.direction == SymbolDirection.SOURCE ? sourceSymbols : sinkSymbols).add(symbol);
+		}
+		
+		public void removeSymbol(SymbolInstance symbol){
+			symbols.remove(symbol);
+			sourceSymbols.remove(symbol);
+			sinkSymbols.remove(symbol);
+		}
+		
+		public List<SymbolInstance> getSymbols(){
+			return symbols;
+		}
+		
+		//
 		
 		protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){
 			super.writeNbt(nbt, registryLookup);
+			nbt.putLongArray("symbol_positions", symbols.stream().mapToLong(x -> x.pos.asLong()).toArray());
+			// FIXME: store other state
+		}
+		
+		protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){
+			super.readNbt(nbt, registryLookup);
+			for(long posLong : nbt.getLongArray("symbol_positions"))
+				symbolsToLoad.add(BlockPos.fromLong(posLong));
 		}
 		
 		//
 		
 		private void tick(){
+			// wait until first tick to load symbols
+			if(!symbolsToLoad.isEmpty()){
+				for(BlockPos blockPos : symbolsToLoad)
+					if(world.getBlockEntity(blockPos) instanceof ControlSymbolBlock.BE symbolBe)
+						symbolBe.instance = addSymbolFromBlock(symbolBe, world.getBlockState(blockPos));
+				symbolsToLoad.clear();
+			}
+			
 			// check after a transfer is made, or if versions update
 			boolean shouldCheck = false, justFinished = false;
 			
@@ -149,6 +208,12 @@ public class CourierBlock extends BlockWithEntity{
 			else if(state == CourierState.SLEEP)
 				state = CourierState.SPIN_UP;
 		}
+		
+		private void onRemoved(){
+		
+		}
+		
+		//
 		
 		private void check(){
 			// scan other sources/sinks to check if a new transfer is possible

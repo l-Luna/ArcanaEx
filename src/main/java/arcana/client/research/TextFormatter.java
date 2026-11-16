@@ -136,7 +136,7 @@ public class TextFormatter{
 				if((curLineWidth + span.getWidth()) < getTextWidth()){
 					lines.get(curLine).add(span);
 					curLineWidth += span.getWidth() + 5;
-					curLineHeight = Math.max(curLineHeight, (span.getHeight() + 1));
+					curLineHeight = Math.max(curLineHeight, (span.getHeight() ));
 				}else{
 					curLine++;
 					lines.add(new ArrayList<>());
@@ -161,10 +161,10 @@ public class TextFormatter{
 			float curY = 0;
 			for(List<Span> line : lines){
 				float curX = 0;
-				// recaulculate width/height
+				// recalculate width/height
 				// maybe cache these in the future?
 				float lineWidth = (float)line.stream().mapToDouble(value -> value.getWidth() + 2).sum();
-				float lineHeight = (float)line.stream().mapToDouble(Span::getHeight).max().orElse(1);
+				float lineHeight = (float)line.stream().mapToDouble(span1 -> span1.getHeight() ).max().orElse(1);
 				if(centred)
 					curX = (getTextWidth() - lineWidth) / 2;
 				for(Span span : line){
@@ -184,11 +184,11 @@ public class TextFormatter{
 		
 		public void render(DrawContext ctx, int x, int y, float scale){
 			ResearchEntryScreen screen = (ResearchEntryScreen)(MinecraftClient.getInstance().currentScreen);
-			ctx.drawTexture(screen.bg, (int)(x + (getTextWidth() - 86) / 2), y + 3, 29, 184, 86, 3);
+			ctx.drawTexture(screen.bg, (int)(x + (getTextWidth() - 86) / 2), y + 2, 29, 184, 86, 3);
 		}
 		
 		public float getHeight(){
-			return 6;
+			return 7;
 		}
 	}
 	
@@ -336,11 +336,11 @@ public class TextFormatter{
 		//    {$config:arcana:General.MaxAlembicAir}
 		// An open brace, a dollar sign, a formatting type, colon separated parameters, and a closing brace.
 		// There's currently only config-formatted sections, but hey, might wanna extend that later.
-		if(section != null/* && ArcanaConfig.ENTRY_TITLES.get()*/){
+		if(section != null){
 			Entry entry = Research.getEntry(section.getIn());
 			// add titles to initial sections
 			if(entry.sections().get(0).equals(section) && !entry.meta().contains("untitled"))
-				in = "{c}{size:1.5}" + I18n.translate(entry.name()) + "{r}{~sep}" + in;
+				in = "{c}{size:1.3}" + I18n.translate(entry.name()) + "{r}{~sep}" + in;
 			else{
 				// add titles to addenda initial sections
 				for(Addendum addendum : entry.addenda())

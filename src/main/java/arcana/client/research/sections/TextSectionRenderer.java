@@ -38,7 +38,7 @@ public class TextSectionRenderer implements EntrySectionRenderer<TextSection>{
 			if((curPageHeight + paragraph.getHeight()) < pageHeight()){
 				if(curPage == pageIdx){
 					paragraph.render(ctx, (int)lineX, (int)curY, scaling());
-					curY += paragraph.getHeight() + 6;
+					curY += paragraph.getHeight() + PARAGRAPH_SPACING;
 				}
 				curPageHeight += paragraph.getHeight() + PARAGRAPH_SPACING;
 			}else{
@@ -49,7 +49,7 @@ public class TextSectionRenderer implements EntrySectionRenderer<TextSection>{
 					i--;
 				else if(curPage == pageIdx){
 					paragraph.render(ctx, (int)lineX, (int)curY, scaling());
-					curY += paragraph.getHeight() + 6;
+					curY += paragraph.getHeight() + PARAGRAPH_SPACING;
 				}
 			}
 			

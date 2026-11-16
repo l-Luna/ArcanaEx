@@ -15,6 +15,7 @@ import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
@@ -75,7 +76,7 @@ public class ResearchEntryScreen extends Screen{
 			updateButtons();
 		}));
 		var mc = client;
-		addDrawableChild(new ReturnToBookButton(width / 2 - 7, (height - 181) / 2 - 26, b -> mc.setScreen(parent)));
+		addDrawableChild(new ReturnToBookButton(x - dist - 10, (height - bgHeight) / 2 - 22, b -> mc.setScreen(parent)));
 		String text = I18n.translate("research.entry.continue");
 		var w = mc.textRenderer.getWidth(text);
 		cont = addDrawableChild(new ButtonWidget(x - w / 2 + 2, y + 15, w + 10, 16, Text.literal(text), button -> {
@@ -95,9 +96,28 @@ public class ResearchEntryScreen extends Screen{
 	public void render(DrawContext ctx, int mouseX, int mouseY, float delta){
 		renderBackground(ctx, mouseX, mouseY, delta);
 		super.render(ctx, mouseX, mouseY, delta);
-		ctx.drawTexture(bg, (width - 256) / 2, (height - 181) / 2 - heightOffset, 0, 0, 256, 181);
+		int pageX = (width - 256) / 2;
+		int pageY = (height - bgHeight) / 2 - heightOffset;
+		ctx.drawTexture(bg, pageX, pageY, 0, 0, 256, 181);
 		
-		// Main rendering
+		// page title & icons
+		if(!entry.meta().contains("untitled")){
+			MutableText name = Text.translatable(entry.name());
+			int nameWidth = textRenderer.getWidth(name);
+			int nameX = (width - nameWidth) / 2;
+			ctx.drawText(textRenderer, name, nameX, pageY - 12, 0xFAE8CC, false);
+			// attached to the name
+			// TODO: support different entry icon rendering modes (when those are properly implemented)
+			if(!entry.icons().isEmpty()){
+				int frames = entry.getIntMeta("icon_frames");
+				Icon icon = entry.icons().get((int)(((client.world.getTime() + delta) / 30) % entry.icons().size()));
+				RenderHelper.renderIcon(ctx, icon, nameX - 18, pageY - 17, 0, 1, frames);
+			}
+			// attached to the "back to category" button
+			RenderHelper.renderIcon(ctx, entry.category().icon(), width / 2 - 133 + 1, pageY - 14, 0);
+		}
+		
+		// page rendering
 		if(totalLength() > idx){
 			EntrySection section = getSectionAtIndex(idx);
 			if(section != null)
@@ -109,7 +129,7 @@ public class ResearchEntryScreen extends Screen{
 				EntrySectionRenderer.get(section).render(ctx, section, sectionIndex(idx + 1), width, height, mouseX, mouseY, true);
 		}
 		
-		// Requirements
+		// requirements
 		var player = client.player;
 		Researcher r = Researcher.from(player);
 		if(r.entryStage(entry) < entry.sections().size() && !entry.sections().get(r.entryStage(entry)).getRequirements().isEmpty()){
@@ -137,7 +157,7 @@ public class ResearchEntryScreen extends Screen{
 				}
 		}
 		
-		// After-renders (e.g. tooltips)
+		// after-renders (e.g. tooltips)
 		if(totalLength() > idx){
 			EntrySection section = getSectionAtIndex(idx);
 			if(section != null)
@@ -149,7 +169,7 @@ public class ResearchEntryScreen extends Screen{
 				EntrySectionRenderer.get(section).renderAfter(ctx, section, sectionIndex(idx + 1), width, height, mouseX, mouseY, true);
 		}
 		
-		// Pins
+		// pins
 		pins.forEach(button -> button.renderAfter(ctx, mouseX, mouseY));
 	}
 	
@@ -346,7 +366,7 @@ public class ResearchEntryScreen extends Screen{
 		public void renderWidget(DrawContext ctx, int mouseX, int mouseY, float delta){
 			if(visible){
 				hovered = mouseX >= getX() && mouseY >= getY() && mouseX < getX() + width && mouseY < getY() + height;
-				float mult = hovered ? 1f : 0.5f;
+				float mult = hovered ? 1f : 0.75f;
 				int texX = right ? 12 : 0;
 				int texY = 185;
 				RenderSystem.setShaderTexture(0, bg);
@@ -364,7 +384,7 @@ public class ResearchEntryScreen extends Screen{
 		public void renderWidget(DrawContext ctx, int mouseX, int mouseY, float delta){
 			if(visible){
 				hovered = mouseX >= getX() && mouseY >= getY() && mouseX < getX() + width && mouseY < getY() + height;
-				float mult = hovered ? 1f : 0.5f;
+				float mult = hovered ? 1f : 0.75f;
 				int texX = 41;
 				int texY = 204;
 				RenderSystem.setShaderTexture(0, bg);

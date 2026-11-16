@@ -182,6 +182,8 @@ public class CourierBlock extends BlockWithEntity{
 			// but do load them immediately (instead of waiting for the first tick) if there ever was any
 			if(!symbolsUnchanged){
 				symbols.clear();
+				sourceSymbols.clear();
+				sinkSymbols.clear();
 				if(syncing)
 					loadDelayedSymbols();
 			}else

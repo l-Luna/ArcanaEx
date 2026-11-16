@@ -8,20 +8,30 @@ import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.TransferVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount;
+import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.Packet;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class CourierBlock extends BlockWithEntity{
 	
@@ -35,6 +45,10 @@ public class CourierBlock extends BlockWithEntity{
 	
 	protected MapCodec<? extends BlockWithEntity> getCodec(){
 		return CODEC;
+	}
+	
+	protected BlockRenderType getRenderType(BlockState state){
+		return BlockRenderType.MODEL;
 	}
 	
 	public BlockEntity createBlockEntity(BlockPos pos, BlockState state){
@@ -65,7 +79,10 @@ public class CourierBlock extends BlockWithEntity{
 		private int stateTicks;
 		
 		// reloading
-		private List<BlockPos> symbolsToLoad = new ArrayList<>();
+		private List<BlockPos> delayedSymbols = new ArrayList<>();
+		private int delayedTransferSourceIdx = -1, delayedTransferSinkIdx, delayedTransferHandleIdx;
+		private boolean delayedTransferIsFluid;
+		private ResourceAmount<?> delayedTransferStack;
 		
 		public BE(BlockPos pos, BlockState state){
 			super(ArcanaRegistry.COURIER_BE, pos, state);
@@ -75,6 +92,14 @@ public class CourierBlock extends BlockWithEntity{
 			return state;
 		}
 		
+		public int getStateTicks(){
+			return stateTicks;
+		}
+		
+		public QueuedTransfer<?> getCurrentTransfer(){
+			return currentTransfer;
+		}
+		
 		public SymbolInstance addSymbolFromBlock(ControlSymbolBlock.BE symbolBe, BlockState symbolState){
 			BlockPos pos = symbolBe.getPos();
 			SymbolInstance symInst = new SymbolInstance();
@@ -82,12 +107,13 @@ public class CourierBlock extends BlockWithEntity{
 			SymbolStorage storage = symbolBe.symbolType.storage().apply(new SymbolContext(world, symbolState.get(ControlSymbolBlock.FACING), symbolBe.relativeVolume.offset(pos.getX(), pos.getY(), pos.getZ())));
 			symInst.storage = storage != null ? storage : new EmptySymbolStorage();
 			symInst.config = symbolBe.config;
-			symInst.lastVersion = 0;
+			symInst.lastVersion = -1;
 			addSymbol(symInst);
 			return symInst;
 		}
 		
-		public void addSymbol(SymbolInstance symbol){
+		// could be made public for addons, but would need extra work in persistence
+		private void addSymbol(SymbolInstance symbol){
 			symbols.add(symbol);
 			updateSymbol(symbol);
 		}
@@ -96,12 +122,15 @@ public class CourierBlock extends BlockWithEntity{
 			sourceSymbols.remove(symbol);
 			sinkSymbols.remove(symbol);
 			(symbol.config.direction == SymbolDirection.SOURCE ? sourceSymbols : sinkSymbols).add(symbol);
+			markDirtyAndSync();
 		}
 		
 		public void removeSymbol(SymbolInstance symbol){
 			symbols.remove(symbol);
 			sourceSymbols.remove(symbol);
 			sinkSymbols.remove(symbol);
+			markDirtyAndSync();
+			// TODO: handle removing symbol involved in transfer
 		}
 		
 		public List<SymbolInstance> getSymbols(){
@@ -113,31 +142,110 @@ public class CourierBlock extends BlockWithEntity{
 		protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){
 			super.writeNbt(nbt, registryLookup);
 			nbt.putLongArray("symbol_positions", symbols.stream().mapToLong(x -> x.pos.asLong()).toArray());
-			// FIXME: store other state
+			if(currentTransfer != null){
+				NbtCompound transferTag = new NbtCompound();
+				transferTag.putInt("source_idx", symbols.indexOf(currentTransfer.source()));
+				transferTag.putInt("sink_idx", symbols.indexOf(currentTransfer.sink()));
+				transferTag.putInt("handle_idx", currentTransfer.sourceHandleIdx());
+				TransferVariant<?> resource = currentTransfer.stack().resource();
+				transferTag.putBoolean("is_fluid", resource instanceof FluidVariant);
+				// in case the handle doesn't exist (on client, or already picked up)
+				if(resource instanceof ItemVariant iv){
+					transferTag.put("stack", iv.toStack((int)currentTransfer.stack().amount()).encode(registryLookup));
+				}else if(resource instanceof FluidVariant fv){
+					transferTag.putString("fluid_type", fv.getRegistryEntry().getIdAsString());
+					transferTag.putLong("fluid_amount", currentTransfer.stack().amount());
+				}
+				nbt.put("delayed_transfer", transferTag);
+			}
+			nbt.putString("state", state.name().toLowerCase(Locale.ROOT));
+			nbt.putInt("state_ticks", stateTicks);
 		}
 		
 		protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup){
 			super.readNbt(nbt, registryLookup);
+			boolean syncing = nbt.getBoolean("syncing");
+			
+			delayedSymbols.clear();
 			for(long posLong : nbt.getLongArray("symbol_positions"))
-				symbolsToLoad.add(BlockPos.fromLong(posLong));
+				delayedSymbols.add(BlockPos.fromLong(posLong));
+			
+			// if reloading symbols on client, avoid recreating symbol instances unless actually changed
+			// the server should send the same order if they haven't
+			boolean symbolsUnchanged = symbols.size() == delayedSymbols.size();
+			if(symbolsUnchanged)
+				for(int i = 0; i < symbols.size(); i++)
+					if(!symbols.get(i).pos.equals(delayedSymbols.get(i))){
+						symbolsUnchanged = false;
+						break;
+					}
+			// but do load them immediately (instead of waiting for the first tick) if there ever was any
+			if(!symbolsUnchanged){
+				symbols.clear();
+				if(syncing)
+					loadDelayedSymbols();
+			}else
+				delayedSymbols.clear();
+			
+			if(nbt.contains("delayed_transfer", NbtElement.COMPOUND_TYPE)){
+				NbtCompound transferTag = nbt.getCompound("delayed_transfer");
+				delayedTransferSourceIdx = transferTag.getInt("source_idx");
+				delayedTransferSinkIdx = transferTag.getInt("sink_idx");
+				delayedTransferHandleIdx = transferTag.getInt("handle_idx");
+				delayedTransferIsFluid = transferTag.getBoolean("is_fluid");
+				if(!delayedTransferIsFluid){
+					ItemStack stack = ItemStack.fromNbtOrEmpty(registryLookup, transferTag.getCompound("stack"));
+					delayedTransferStack = new ResourceAmount<>(ItemVariant.of(stack), stack.getCount());
+				}else{
+					delayedTransferStack = new ResourceAmount<>(
+							FluidVariant.of(Registries.FLUID.get(Identifier.of(transferTag.getString("fluid_type")))),
+							transferTag.getLong("fluid_amount")
+					);
+				}
+				if(syncing)
+					loadDelayedTransfer(true);
+			}else
+				delayedTransferSourceIdx = -1;
+			state = CourierState.valueOf(nbt.getString("state").toUpperCase(Locale.ROOT));
+			stateTicks = nbt.getInt("state_ticks");
+		}
+		
+		private void markDirtyAndSync(){
+			markDirty();
+			if(world instanceof ServerWorld sw)
+				sw.getChunkManager().markForUpdate(pos);
+		}
+		
+		public Packet<ClientPlayPacketListener> toUpdatePacket(){
+			return BlockEntityUpdateS2CPacket.create(this, (__, registryLookup) -> toClientUpdateNbt(registryLookup));
+		}
+		
+		public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup){
+			return createNbt(registryLookup);
+		}
+		
+		private NbtCompound toClientUpdateNbt(RegistryWrapper.WrapperLookup registryLookup){
+			NbtCompound nbt = createNbt(registryLookup);
+			nbt.putBoolean("syncing", true);
+			return nbt;
 		}
 		
 		//
 		
 		private void tick(){
+			stateTicks++;
+			markDirty();
+			if(world.isClient)
+				return;
+			
 			// wait until first tick to load symbols
-			if(!symbolsToLoad.isEmpty()){
-				for(BlockPos blockPos : symbolsToLoad)
-					if(world.getBlockEntity(blockPos) instanceof ControlSymbolBlock.BE symbolBe)
-						symbolBe.instance = addSymbolFromBlock(symbolBe, world.getBlockState(blockPos));
-				symbolsToLoad.clear();
-			}
+			loadDelayedSymbols();
+			loadDelayedTransfer(false);
 			
 			// check after a transfer is made, or if versions update
 			boolean shouldCheck = false, justFinished = false;
 			
 			// continue current transfer
-			stateTicks++;
 			if(stateTicks >= STATE_TIME && state != CourierState.SLEEP){
 				switch(state){
 					case SPIN_UP -> state = CourierState.MOVE_TO_SOURCE;
@@ -145,7 +253,7 @@ public class CourierBlock extends BlockWithEntity{
 						if(!currentTransfer.sourceValid())
 							justFinished = true;
 						else
-							currentTransfer.source().take(currentTransfer.stack().amount(), false);
+							currentTransfer.sourceHandle().take(currentTransfer.stack().amount(), false);
 						state = CourierState.PICKUP;
 					}
 					case PICKUP -> state = CourierState.MOVE_TO_SINK;
@@ -173,6 +281,7 @@ public class CourierBlock extends BlockWithEntity{
 					}
 				}
 				stateTicks = 0;
+				markDirtyAndSync();
 			}
 			
 			if(justFinished){
@@ -201,16 +310,51 @@ public class CourierBlock extends BlockWithEntity{
 			if(shouldCheck)
 				check();
 			
+			CourierState oldState = state;
 			if(currentTransfer == null)
 				state = CourierState.SLEEP;
 			else if(justFinished)
 				state = CourierState.MOVE_TO_SOURCE;
 			else if(state == CourierState.SLEEP)
 				state = CourierState.SPIN_UP;
+			if(state != oldState)
+				markDirtyAndSync();
+		}
+		
+		private void loadDelayedSymbols(){
+			if(!delayedSymbols.isEmpty()){
+				for(BlockPos blockPos : delayedSymbols)
+					if(world.getBlockEntity(blockPos) instanceof ControlSymbolBlock.BE symbolBe){
+						symbolBe.instance = addSymbolFromBlock(symbolBe, world.getBlockState(blockPos));
+						symbolBe.linkedCourierPos = pos;
+					}
+				delayedSymbols.clear();
+				markDirtyAndSync();
+			}
+		}
+		
+		@SuppressWarnings({"rawtypes", "unchecked"}) // avoid splitting the method in two for items/fluids, when everything becomes ? anyways
+		private void loadDelayedTransfer(boolean client){
+			if(delayedTransferSourceIdx != -1){
+				SymbolInstance source = symbols.get(delayedTransferSourceIdx), sink = symbols.get(delayedTransferSinkIdx);
+				boolean getHandle = !client && (state == CourierState.SPIN_UP || state == CourierState.MOVE_TO_SOURCE);
+				SymbolStorage.ResourceHandle handle = getHandle
+						? (delayedTransferIsFluid ? source.storage.getFluids() : source.storage.getItems()).get(delayedTransferHandleIdx)
+						: new SymbolStorage.DummyResourceHandle(delayedTransferStack);
+				currentTransfer = new QueuedTransfer(source, handle, delayedTransferHandleIdx, sink, delayedTransferStack);
+				delayedTransferSourceIdx = -1;
+				if(!client)
+					markDirtyAndSync();
+			}
 		}
 		
 		private void onRemoved(){
-		
+			for(SymbolInstance symbol : symbols)
+				if(world.getBlockEntity(symbol.pos) instanceof ControlSymbolBlock.BE symbolBe){
+					symbolBe.instance = null;
+					symbolBe.linkedCourierPos = null;
+					symbolBe.markDirty();
+				}
 		}
 		
 		//
@@ -232,22 +376,23 @@ public class CourierBlock extends BlockWithEntity{
 		}
 		
 		private boolean tryQueueTransfer(SymbolInstance source, SymbolInstance sink){
-			return tryQueueTransferFrom(sink, source.storage.getItems()) || tryQueueTransferFrom(sink, source.storage.getFluids());
+			return tryQueueTransferFrom(source, sink, source.storage.getItems()) || tryQueueTransferFrom(source, sink, source.storage.getFluids());
 		}
 		
-		private <T extends TransferVariant<?>> boolean tryQueueTransferFrom(SymbolInstance sink, List<? extends SymbolStorage.ResourceHandle<T>> from){
-			for(SymbolStorage.ResourceHandle<T> handle : from){
+		private <T extends TransferVariant<?>> boolean tryQueueTransferFrom(SymbolInstance source, SymbolInstance sink, List<? extends SymbolStorage.ResourceHandle<T>> from){
+			for(int i = 0; i < from.size(); i++){
+				SymbolStorage.ResourceHandle<T> handle = from.get(i);
 				ResourceAmount<T> stack = handle.getStack();
 				long inserted = sink.storage.insert(stack, true);
 				if(inserted == stack.amount()){
 					// transfer the full amount
-					currentTransfer = new QueuedTransfer<>(handle, sink, stack);
+					currentTransfer = new QueuedTransfer<>(source, handle, i, sink, stack);
 					return true;
 				}else if(inserted > 0){
 					// otherwise, try to extract the max permitted amount
 					// which might not be possible with e.g. non-splittable fluid containers like buckets
 					if(handle.take(inserted, true) == inserted)
-						currentTransfer = new QueuedTransfer<>(handle, sink, new ResourceAmount<>(stack.resource(), inserted));
+						currentTransfer = new QueuedTransfer<>(source, handle, i, sink, new ResourceAmount<>(stack.resource(), inserted));
 				}
 			}
 			return false;

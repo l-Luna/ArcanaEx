@@ -5,6 +5,7 @@ import arcana.blocks.courier.SymbolConfig.SymbolDirection;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
@@ -13,6 +14,9 @@ import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtOps;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.Packet;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
@@ -64,6 +68,10 @@ public class ControlSymbolBlock extends BlockWithEntity{
 		return super.getPlacementState(ctx).with(FACING, ctx.getSide().getOpposite());
 	}
 	
+	protected BlockRenderType getRenderType(BlockState state){
+		return BlockRenderType.MODEL;
+	}
+	
 	public BlockEntity createBlockEntity(BlockPos pos, BlockState state){
 		BE be = new BE(pos, state);
 		be.symbolType = symbolType;
@@ -77,6 +85,7 @@ public class ControlSymbolBlock extends BlockWithEntity{
 				be.config.direction = be.config.direction == SymbolDirection.SOURCE ? SymbolDirection.SINK : SymbolDirection.SOURCE;
 				if(be.linkedCourierPos != null && world.getBlockEntity(be.linkedCourierPos) instanceof CourierBlock.BE courierBe)
 					courierBe.updateSymbol(be.instance);
+				be.markDirtyAndSync();
 			}else if(world instanceof ServerWorld sw){
 				// temp link to courier
 				getNearestCourier(pos, sw).ifPresent(courierBe -> {
@@ -87,6 +96,7 @@ public class ControlSymbolBlock extends BlockWithEntity{
 					
 					be.instance = courierBe.addSymbolFromBlock(be, state);
 					be.linkedCourierPos = courierBe.getPos();
+					be.markDirty();
 				});
 			}
 			return ActionResult.SUCCESS;
@@ -95,9 +105,9 @@ public class ControlSymbolBlock extends BlockWithEntity{
 	}
 	
 	protected void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved){
-		super.onStateReplaced(state, world, pos, newState, moved);
 		if(!state.isOf(newState.getBlock()) && world.getBlockEntity(pos) instanceof BE be)
 			be.onRemoved();
+		super.onStateReplaced(state, world, pos, newState, moved);
 	}
 	
 	private static @NotNull Optional<CourierBlock.BE> getNearestCourier(BlockPos pos, ServerWorld sw){
@@ -150,6 +160,20 @@ public class ControlSymbolBlock extends BlockWithEntity{
 				config = SymbolConfig.CODEC.decode(NbtOps.INSTANCE, nbt.getCompound("config")).getOrThrow().getFirst();
 			if(nbt.contains("relative_volume", NbtElement.COMPOUND_TYPE))
 				relativeVolume = BlockBox.CODEC.decode(NbtOps.INSTANCE, nbt.getCompound("relative_volume")).getOrThrow().getFirst();
+		}
+		
+		public Packet<ClientPlayPacketListener> toUpdatePacket(){
+			return BlockEntityUpdateS2CPacket.create(this);
+		}
+		
+		public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup){
+			return createNbt(registryLookup);
+		}
+		
+		private void markDirtyAndSync(){
+			markDirty();
+			if(world instanceof ServerWorld sw)
+				sw.getChunkManager().markForUpdate(pos);
 		}
 	}
 }

@@ -4,12 +4,14 @@ import net.fabricmc.fabric.api.transfer.v1.storage.TransferVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount;
 
 public record QueuedTransfer<T extends TransferVariant<?>>(
-		SymbolStorage.ResourceHandle<T> source,
+		SymbolInstance source, // for syncing
+		SymbolStorage.ResourceHandle<T> sourceHandle,
+		int sourceHandleIdx, // for syncing
 		SymbolInstance sink,
 		ResourceAmount<T> stack
 ){
 	
 	public boolean sourceValid(){
-		return source.valid() && source.getStack().resource().equals(stack.resource()) && source.getStack().amount() <= stack.amount();
+		return sourceHandle.valid() && sourceHandle.getStack().resource().equals(stack.resource()) && sourceHandle.getStack().amount() <= stack.amount();
 	}
 }

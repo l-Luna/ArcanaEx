@@ -18,6 +18,17 @@ public interface SymbolStorage{
 		boolean valid();
 	}
 	
+	record DummyResourceHandle<T extends TransferVariant<?>>(ResourceAmount<T> getStack) implements ResourceHandle<T>{
+		
+		public long take(long amount, boolean simulate){
+			return 0;
+		}
+		
+		public boolean valid(){
+			return false;
+		}
+	}
+	
 	long version();
 	
 	List<? extends ResourceHandle<ItemVariant>> getItems();

@@ -6,7 +6,6 @@ import arcana.aspects.Aspects;
 import arcana.items.FocusItem;
 import arcana.items.WandItem;
 import com.google.common.collect.Lists;
-import com.unascribed.lib39.phantom.api.PhaseableWorld;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -54,7 +53,7 @@ public class PortableHoleFocusItem extends FocusItem{
 					if(!state.isAir())
 						didPhase = true;
 					if(state.getHardness(world, local) != -1)
-						((PhaseableWorld)world).phaseBlock(local, 100, 20 * z);
+						world.phaseBlock(local, 100, 0);
 				}
 			}
 			

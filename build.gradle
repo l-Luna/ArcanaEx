@@ -14,6 +14,8 @@ repositories {
 	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
 	// for more information about repositories.
 
+	mavenLocal()
+
 	maven {
 		name = "TerraformersMC"
 		url = "https://maven.terraformersmc.com/"
@@ -89,12 +91,12 @@ dependencies {
 	modImplementation "software.bernie.geckolib:geckolib-fabric-1.21.1:${geckolib_version}"
 	modImplementation "com.terraformersmc:biolith-fabric:${biolith_version}"
 
-//	for(String lib39_module : ["core", "dessicant", "phantom", "tunnel", "weld"])
-//		modApi include("com.unascribed:lib39-${lib39_module}:${lib39_version}+${minecraft_version}"){
-//			exclude(group: "net.fabricmc.fabric-api")
-//			exclude(group: "net.fabricmc", module: "fabric-loader")
-//		}
-	modApi project(path: ":Lib39")
+	for(String lib39_module : ["core", "dessicant", "phantom", "tunnel", "weld"])
+		modApi include("com.unascribed:lib39-${lib39_module}:${lib39_version}+${minecraft_version}"){
+			exclude(group: "net.fabricmc.fabric-api")
+			exclude(group: "net.fabricmc", module: "fabric-loader")
+		}
+	// modApi project(path: ":Lib39")
 	modApi include("dev.emi:trinkets:${trinkets_version}"){
 		exclude(group: "net.fabricmc.fabric-api")
 		exclude(group: "net.fabricmc", module: "fabric-loader")

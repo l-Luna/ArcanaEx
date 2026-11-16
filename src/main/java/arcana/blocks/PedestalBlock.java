@@ -2,12 +2,10 @@ package arcana.blocks;
 
 import arcana.blocks.be.PedestalBlockEntity;
 import com.mojang.serialization.MapCodec;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockEntityProvider;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ShapeContext;
+import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -20,8 +18,9 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
 
-public class PedestalBlock extends WaterloggableBlock implements BlockEntityProvider{
+public class PedestalBlock extends WaterloggableBlock implements BlockEntityProvider, InventoryProvider{
 	
 	private static final MapCodec<PedestalBlock> CODEC = createCodec(PedestalBlock::new);
 	
@@ -83,9 +82,7 @@ public class PedestalBlock extends WaterloggableBlock implements BlockEntityProv
 		return new PedestalBlockEntity(pos, state);
 	}
 	
-	public boolean onSyncedBlockEvent(BlockState state, World world, BlockPos pos, int type, int data){
-		super.onSyncedBlockEvent(state, world, pos, type, data);
-		BlockEntity be = world.getBlockEntity(pos);
-		return be != null && be.onSyncedBlockEvent(type, data);
+	public SidedInventory getInventory(BlockState state, WorldAccess world, BlockPos pos){
+		return world.getBlockEntity(pos) instanceof PedestalBlockEntity be ? be.getInventory() : null;
 	}
 }

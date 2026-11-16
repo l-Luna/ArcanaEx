@@ -1,10 +1,8 @@
 package arcana.blocks.be;
 
 import arcana.ArcanaRegistry;
-import arcana.util.ArrayInventory;
 import arcana.util.SidedArrayInventory;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.InventoryProvider;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
@@ -13,13 +11,14 @@ import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.WorldAccess;
 
-public class PedestalBlockEntity extends BlockEntity implements InventoryProvider{
+public class PedestalBlockEntity extends BlockEntity{
 	
 	private final SidedArrayInventory inventory = new SidedArrayInventory(1)
-			.withDefaultSidedSlots(0);
+			.withDefaultSidedSlots(0)
+			.withListener(__ -> markDirtyAndSync());
 	
 	public PedestalBlockEntity(BlockPos pos, BlockState state){
 		super(ArcanaRegistry.PEDESTAL_BE, pos, state);
@@ -31,7 +30,6 @@ public class PedestalBlockEntity extends BlockEntity implements InventoryProvide
 	
 	public void setStack(ItemStack stack){
 		inventory.setStack(0, stack);
-		markDirty();
 	}
 	
 	protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup){
@@ -52,11 +50,13 @@ public class PedestalBlockEntity extends BlockEntity implements InventoryProvide
 		return createNbt(registryLookup);
 	}
 	
-	public ArrayInventory getInventory(){
-		return inventory;
+	private void markDirtyAndSync(){
+		markDirty();
+		if(world instanceof ServerWorld sw)
+			sw.getChunkManager().markForUpdate(pos);
 	}
 	
-	public SidedInventory getInventory(BlockState state, WorldAccess world, BlockPos pos){
+	public SidedInventory getInventory(){
 		return inventory;
 	}
 }

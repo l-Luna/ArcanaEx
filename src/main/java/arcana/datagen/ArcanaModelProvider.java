@@ -2,6 +2,7 @@ package arcana.datagen;
 
 import arcana.aspects.Aspects;
 import arcana.blocks.CrystalClusterBlock;
+import arcana.blocks.courier.ControlSymbolBlock;
 import arcana.items.ScalpelItem;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
@@ -16,9 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static arcana.Arcana.arcId;
 import static arcana.ArcanaRegistry.*;
 
 public final class ArcanaModelProvider extends FabricModelProvider{
+	
+	private static final Model CONTROL_SYMBOL_MODEL = block("control_symbol", TextureKey.TEXTURE);
 	
 	private final List<Item> noAutoGen = new ArrayList<>();
 	
@@ -64,6 +68,7 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		blockGen.registerSimpleCubeAll(GLEAMING_GREATWOOD_PLANKS);
 		blockGen.registerSimpleCubeAll(SOLAR_GLEAMING_GREATWOOD_PLANKS);
 		blockGen.registerSimpleCubeAll(ARCANIUM_PLATING);
+		blockGen.registerSimpleCubeAll(COURIER);
 		
 		// TODO: cleanup; these are mostly no-ops now
 		registerCross(SILVERWOOD_SAPLING, blockGen);
@@ -119,6 +124,15 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 			);
 		}
 		
+		for(ControlSymbolBlock symbolBlock : CONTROL_SYMBOLS){
+			Identifier modelId = symbolBlock.symbolType.id().withPrefixedPath("block/control_symbol/");
+			blockGen.blockStateCollector.accept(VariantsBlockStateSupplier
+					.create(symbolBlock, BlockStateVariant.create().put(VariantSettings.MODEL, modelId))
+					.coordinate(blockGen.createUpDefaultFacingVariantMap())
+			);
+			CONTROL_SYMBOL_MODEL.upload(symbolBlock, TextureMap.texture(symbolBlock), blockGen.modelCollector);
+		}
+		
 		Aspects.crystalBlocks.values().forEach(blockGen::registerSimpleCubeAll);
 	}
 	
@@ -166,6 +180,11 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		for(CrystalClusterBlock value : Aspects.clusters.values()){
 			noAutoGen.add(value.asItem());
 			itemGen.register(value.asItem(), Models.GENERATED);
+		}
+		
+		for(ControlSymbolBlock symbolBlock : CONTROL_SYMBOLS){
+			noAutoGen.add(symbolBlock.asItem());
+			Models.GENERATED.upload(ModelIds.getItemModelId(symbolBlock.asItem()), TextureMap.layer0(symbolBlock), itemGen.writer);
 		}
 		
 		for(Item item : ITEMS)
@@ -236,5 +255,13 @@ public final class ArcanaModelProvider extends FabricModelProvider{
 		);
 		// extremely unclear why this is necessary here
 		blockGen.excludeFromSimpleItemModelGeneration(block);
+	}
+	
+	private static Model block(String parent, TextureKey... requiredTextureKeys){
+		return new Model(Optional.of(arcId("block/" + parent)), Optional.empty(), requiredTextureKeys);
+	}
+	
+	private static Model block(String parent, String variant, TextureKey... requiredTextureKeys){
+		return new Model(Optional.of(arcId("block/" + parent)), Optional.of(variant), requiredTextureKeys);
 	}
 }

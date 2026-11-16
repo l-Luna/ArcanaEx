@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "arcana:block/control_symbol/void",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "arcana:block/control_symbol/void",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "arcana:block/control_symbol/void",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "arcana:block/control_symbol/void",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
+      "model": "arcana:block/control_symbol/void"
+    },
+    "facing=west": {
+      "model": "arcana:block/control_symbol/void",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

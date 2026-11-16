@@ -1,0 +1,6 @@
+{
+  "parent": "arcana:block/control_symbol",
+  "textures": {
+    "texture": "arcana:block/control_symbol/pedestal_item"
+  }
+}

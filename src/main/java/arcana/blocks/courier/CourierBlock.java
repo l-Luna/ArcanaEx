@@ -243,6 +243,9 @@ public class CourierBlock extends BlockWithEntity{
 			// wait until first tick to load symbols
 			loadDelayedSymbols();
 			loadDelayedTransfer(false);
+			// in case of invalid saves
+			if(state != CourierState.SLEEP && currentTransfer == null)
+				state = CourierState.SLEEP;
 			
 			// check after a transfer is made, or if versions update
 			boolean shouldCheck = false, justFinished = false;
@@ -340,8 +343,10 @@ public class CourierBlock extends BlockWithEntity{
 			if(delayedTransferSourceIdx != -1){
 				SymbolInstance source = symbols.get(delayedTransferSourceIdx), sink = symbols.get(delayedTransferSinkIdx);
 				boolean getHandle = !client && (state == CourierState.SPIN_UP || state == CourierState.MOVE_TO_SOURCE);
-				SymbolStorage.ResourceHandle handle = getHandle
-						? (delayedTransferIsFluid ? source.storage.getFluids() : source.storage.getItems()).get(delayedTransferHandleIdx)
+				var handles = delayedTransferIsFluid ? source.storage.getFluids() : source.storage.getItems();
+				// hackfix, should not occur ideally
+				SymbolStorage.ResourceHandle handle = (getHandle && handles.size() > delayedTransferHandleIdx)
+						? handles.get(delayedTransferHandleIdx)
 						: new SymbolStorage.DummyResourceHandle(delayedTransferStack);
 				currentTransfer = new QueuedTransfer(source, handle, delayedTransferHandleIdx, sink, delayedTransferStack);
 				delayedTransferSourceIdx = -1;

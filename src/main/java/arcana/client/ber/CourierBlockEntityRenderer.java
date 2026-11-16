@@ -1,10 +1,8 @@
 package arcana.client.ber;
 
-import arcana.blocks.courier.CourierBlock;
-import arcana.blocks.courier.QueuedTransfer;
-import arcana.blocks.courier.SymbolConfig;
-import arcana.blocks.courier.SymbolInstance;
+import arcana.blocks.courier.*;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
@@ -15,7 +13,9 @@ import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 
 public class CourierBlockEntityRenderer implements BlockEntityRenderer<CourierBlock.BE>{
 	
@@ -25,6 +25,7 @@ public class CourierBlockEntityRenderer implements BlockEntityRenderer<CourierBl
 	                   VertexConsumerProvider vertexConsumers,
 	                   int light,
 	                   int overlay){
+		World world = entity.getWorld();
 		BlockPos pos = entity.getPos();
 		Vec3d cPos = pos.toCenterPos();
 		matrices.push();
@@ -45,7 +46,7 @@ public class CourierBlockEntityRenderer implements BlockEntityRenderer<CourierBl
 				if(transfer != null && transfer.stack().resource() instanceof ItemVariant iv){
 					ItemStack stack = iv.toStack((int)transfer.stack().amount());
 					
-					Vec3d sourcePos = transfer.source().pos.toCenterPos().subtract(cPos);
+					Vec3d sourcePos = transfer.source().pos.toCenterPos().subtract(cPos).add(symbolDirection(world, transfer.source()).multiply(0.48f * (1 - stateLerp)));
 					matrices.translate(0.5f, 0.5f + stateLerp, 0.5f);
 					matrices.translate(sourcePos.x, sourcePos.y, sourcePos.z);
 					
@@ -57,7 +58,7 @@ public class CourierBlockEntityRenderer implements BlockEntityRenderer<CourierBl
 							overlay,
 							matrices,
 							vertexConsumers,
-							entity.getWorld(),
+							world,
 							0
 					);
 				}
@@ -78,7 +79,7 @@ public class CourierBlockEntityRenderer implements BlockEntityRenderer<CourierBl
 							overlay,
 							matrices,
 							vertexConsumers,
-							entity.getWorld(),
+							world,
 							0
 					);
 				}
@@ -87,7 +88,7 @@ public class CourierBlockEntityRenderer implements BlockEntityRenderer<CourierBl
 				if(transfer != null && transfer.stack().resource() instanceof ItemVariant iv){
 					ItemStack stack = iv.toStack((int)transfer.stack().amount());
 					
-					Vec3d sinkPos = transfer.sink().pos.toCenterPos().subtract(cPos);
+					Vec3d sinkPos = transfer.sink().pos.toCenterPos().subtract(cPos).add(symbolDirection(world, transfer.sink()).multiply(0.48f * stateLerp));
 					matrices.translate(0.5f, 1.5f - stateLerp, 0.5f);
 					matrices.translate(sinkPos.x, sinkPos.y, sinkPos.z);
 					
@@ -99,7 +100,7 @@ public class CourierBlockEntityRenderer implements BlockEntityRenderer<CourierBl
 							overlay,
 							matrices,
 							vertexConsumers,
-							entity.getWorld(),
+							world,
 							0
 					);
 					
@@ -116,7 +117,7 @@ public class CourierBlockEntityRenderer implements BlockEntityRenderer<CourierBl
 		for(SymbolInstance symbol : entity.getSymbols()){
 			BlockPos symPos = symbol.pos;
 			boolean source = symbol.config.direction == SymbolConfig.SymbolDirection.SOURCE;
-			Vec3d from = symPos.toCenterPos(), to = pos.toCenterPos();
+			Vec3d from = symPos.toCenterPos().add(symbolDirection(world, symbol).multiply(0.48f)), to = pos.toCenterPos();
 			Vec3d diff = from.subtract(to);
 			Vec3d normal = diff.normalize();
 			buffer.vertex(entry, 0, 0, 0)
@@ -127,5 +128,11 @@ public class CourierBlockEntityRenderer implements BlockEntityRenderer<CourierBl
 					.normal(entry, (float)normal.x, (float)normal.y, (float)normal.z);
 		}
 		matrices.pop();
+	}
+	
+	private Vec3d symbolDirection(World world, SymbolInstance symbol){
+		BlockState symState = world.getBlockState(symbol.pos);
+		Direction symDir = symState.getProperties().contains(ControlSymbolBlock.FACING) ? symState.get(ControlSymbolBlock.FACING) : Direction.DOWN;
+		return new Vec3d(symDir.getUnitVector());
 	}
 }

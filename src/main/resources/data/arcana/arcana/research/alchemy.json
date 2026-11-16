@@ -661,7 +661,7 @@
           "requirements": [
             "#minecraft:diamond_ores",
             "2*#minecraft:lapis_ores",
-            "3*#c:quartz_ores",
+            "3*#c:ores/quartz",
             "4*#arcana:primal_clusters",
             "5*#arcana:secondary_phials",
             "6*minecraft:tnt"

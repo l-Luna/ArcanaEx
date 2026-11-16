@@ -932,6 +932,7 @@
       "item": "{}x {}",
       "item.have": "Have: {}",
       "tag": "Any from {}",
+      "tag.invalid": "Any from {}, which is empty!",
       "puzzles_completed": "Complete {} puzzles",
       "puzzles_completed.progress": "{}/{} complete",
       "foci_cast": "Cast {} foci",

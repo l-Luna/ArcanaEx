@@ -19,15 +19,18 @@ public class ItemTagRequirementRenderer implements RequirementRenderer<ItemTagRe
 	
 	public void render(DrawContext ctx, int x, int y, ItemTagRequirement requirement, int time, float delta){
 		List<Item> choices = ArcanaTags.itemsIn(requirement.getTag());
-		ItemStack choice = new ItemStack(choices.get((time / 30) % choices.size()));
-		
-		ctx.drawItem(choice, x, y);
+		if(!choices.isEmpty()){
+			ItemStack choice = new ItemStack(choices.get((time / 30) % choices.size()));
+			ctx.drawItem(choice, x, y);
+		}
 	}
 	
 	public List<Text> tooltip(ItemTagRequirement requirement, int time){
 		List<Item> choices = ArcanaTags.itemsIn(requirement.getTag());
-		ItemStack choice = new ItemStack(choices.get((time / 30) % choices.size()));
+		if(choices.isEmpty())
+			return List.of(Text.translatable("research.requirement.arcana.tag.invalid", name(requirement.getTag())).formatted(Formatting.RED));
 		
+		ItemStack choice = new ItemStack(choices.get((time / 30) % choices.size()));
 		List<Text> tooltips = choice.getTooltip(
 				Item.TooltipContext.create(client().world),
 				client().player,

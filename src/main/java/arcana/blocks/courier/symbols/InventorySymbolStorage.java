@@ -14,6 +14,7 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.InventoryChangedListener;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.Direction;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -23,15 +24,18 @@ import java.util.Optional;
 public class InventorySymbolStorage implements SymbolStorage, InventoryChangedListener{
 	
 	private final Inventory inventory;
+	private final Direction insertDirection;
 	private int version;
 	
-	public InventorySymbolStorage(SimpleInventory inventory){
+	public InventorySymbolStorage(SimpleInventory inventory, Direction insertDirection){
 		this.inventory = inventory;
+		this.insertDirection = insertDirection;
 		InventoryListenerHooks.addHook(inventory, this);
 	}
 	
-	public InventorySymbolStorage(BlockEntity inventory){
+	public InventorySymbolStorage(BlockEntity inventory, Direction insertDirection){
 		this.inventory = (Inventory)inventory;
+		this.insertDirection = insertDirection;
 		InventoryListenerHooks.addHook(inventory, this);
 	}
 	
@@ -39,9 +43,9 @@ public class InventorySymbolStorage implements SymbolStorage, InventoryChangedLi
 		return ctx.getSingleBlock().flatMap(pos -> {
 			Inventory there = HopperBlockEntity.getInventoryAt(ctx.world(), pos);
 			if(there instanceof SimpleInventory si)
-				return Optional.of(new InventorySymbolStorage(si));
+				return Optional.of(new InventorySymbolStorage(si, ctx.symbolFacing().getOpposite()));
 			else if(there instanceof BlockEntity be)
-				return Optional.of(new InventorySymbolStorage(be));
+				return Optional.of(new InventorySymbolStorage(be, ctx.symbolFacing().getOpposite()));
 			return Optional.empty();
 		}).orElse(null);
 	}
@@ -62,7 +66,7 @@ public class InventorySymbolStorage implements SymbolStorage, InventoryChangedLi
 		// slightly lazy, uses fabric-transfer just for easy simulate mode
 		long amountInserted;
 		try(Transaction transaction = Transaction.openOuter()){
-			amountInserted = InventoryStorage.of(inventory, null).insert(stack.resource(), stack.amount(), transaction);
+			amountInserted = InventoryStorage.of(inventory, insertDirection).insert(stack.resource(), stack.amount(), transaction);
 			if(!simulate)
 				transaction.commit();
 		}

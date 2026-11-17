@@ -17,6 +17,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,6 +90,17 @@ public interface EntrySectionRenderer<T extends EntrySection>{
 	default void tooltipArea(DrawContext ctx, ItemStack stack, int mouseX, int mouseY, int areaX, int areaY){
 		if(mouseX >= areaX && mouseX < areaX + 16 && mouseY >= areaY && mouseY < areaY + 16)
 			drawTooltip(ctx, stack, mouseX, mouseY);
+	}
+	
+	default void tooltipArea(DrawContext ctx, ItemStack stack, List<Text> extra, int mouseX, int mouseY, int areaX, int areaY){
+		if(mouseX >= areaX && mouseX < areaX + 16 && mouseY >= areaY && mouseY < areaY + 16){
+			List<Text> tooltip = Screen.getTooltipFromItem(client(), stack);
+			if(extra != null && !extra.isEmpty()){
+				tooltip = new ArrayList<>(tooltip);
+				tooltip.addAll(extra);
+			}
+			drawTooltip(ctx, tooltip, mouseX, mouseY);
+		}
 	}
 	
 	default void tooltipArea(DrawContext ctx, Aspect aspect, int mouseX, int mouseY, int areaX, int areaY){

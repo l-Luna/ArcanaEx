@@ -10,10 +10,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.structure.Structure;
 
+import java.util.List;
 import java.util.Optional;
 
 import static arcana.Arcana.arcId;
@@ -70,9 +72,12 @@ public class LocatorsSectionRenderer implements EntrySectionRenderer<LocatorsSec
 		
 		getLocators(section).ifPresent(locators -> {
 			for(int i = pageIdx * 5; i < locators.size() && i < (pageIdx + 1) * 5; i++){
-				var locator = locators.get(i).value();
+				Locator locator = locators.get(i).value();
 				int dIdx = i - pageIdx * 5;
-				tooltipArea(ctx, AbstractRecipeSectionRenderer.displayStack(locator.input().getMatchingStacks()), mouseX, mouseY, x - 2, y + 30 * dIdx);
+				List<Text> extra = null;
+				if(!locator.consumed())
+					extra = List.of(Text.translatable("research.locators.non_consumed").formatted(Formatting.AQUA));
+				tooltipArea(ctx, AbstractRecipeSectionRenderer.displayStack(locator.input().getMatchingStacks()), extra, mouseX, mouseY, x - 2, y + 30 * dIdx);
 			}
 		});
 	}

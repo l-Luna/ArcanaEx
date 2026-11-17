@@ -983,7 +983,8 @@
     "locators": {
       "node": "Nearest Node",
       "new_node": "Untapped Node",
-      "exploration_map_target": "Map's Target"
+      "exploration_map_target": "Map's Target",
+      "non_consumed": "Non-consumed"
     }
   },
   

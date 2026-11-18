@@ -1703,7 +1703,7 @@
 
     "follow_me_focus": {
       "title": "Wand Focus: Follow Me",
-      "text": "By burning a sample of material with Follow Me, I can create a trail to a destination of my liking. Typically the material must be sourced from that destination, but objects with very strong affinities to specific places will also work (like Eyes of Ender and strongholds).\nThe destinations initially available to me is listed at the {u}end{r} of this entry. I may gain access to more through further research."
+      "text": "By burning a sample of material with Follow Me, I can create a trail to a destination of my liking. Typically the material must be sourced from that destination, but objects with very strong affinities to specific places will also work (like Eyes of Ender and strongholds).\nI can remove the trail by sneaking while casting, at no vis expense.\nThe destinations initially available to me is listed at the {u}end{r} of this entry. I may gain access to more through further research."
     },
     "treasure_hunting": {
       "title": "Treasure Hunting",

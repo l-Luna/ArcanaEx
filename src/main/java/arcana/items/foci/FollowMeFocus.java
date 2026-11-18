@@ -16,6 +16,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Pair;
 import net.minecraft.util.hit.EntityHitResult;
@@ -40,6 +42,13 @@ public class FollowMeFocus extends FocusItem{
 	
 	public ActionResult cast(ItemStack wand, ItemStack focus, PlayerEntity user){
 		World world = user.getWorld();
+		// if sneaking, dispell instead
+		if(user.isSneaking()){
+			if(user.hasAttached(ArcanaDataComponents.FOLLOW_ME_TARGET))
+				world.playSound(user, user.getBlockPos(), SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.PLAYERS, 1, 1);
+			user.removeAttached(ArcanaDataComponents.FOLLOW_ME_TARGET);
+			return ActionResult.FAIL;
+		}
 		// find the item being clicked on
 		double reach = user.getAttributeValue(EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE);
 		Vec3d from = user.getEyePos();
@@ -52,6 +61,7 @@ public class FollowMeFocus extends FocusItem{
 			for(Locator locator : Locator.getRegistry(world)){
 				Parent research = locator.requiredResearch();
 				if(locator.input().test(stack) && (research == null || researcher.isEntryPartComplete(research))){
+					world.playSound(user, user.getBlockPos(), SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.PLAYERS, 1, 1);
 					if(world instanceof ServerWorld sw){
 						Pair<BlockPos, Optional<Heightmap.Type>> end = locator.destination().getLocation(stack, sw, user.getBlockPos(), user);
 						// only consume item if locating was successful, may take many tries for e.g. rare biomes

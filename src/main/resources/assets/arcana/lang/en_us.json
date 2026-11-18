@@ -64,7 +64,8 @@
     },
     "structure": {
       "minecraft": {
-        "eye_of_ender_located": "Strongholds"
+        "eye_of_ender_located": "Strongholds",
+        "village": "Villages"
       },
       "arcana": {
         "crimson": "Crimson Outposts"
@@ -213,7 +214,9 @@
       "bastion_remnant": "Bastion Remnant",
       "pillager_outpost": "Pillager Outpost",
       "trail_ruins": "Trail Ruins",
-      "trial_chambers": "Trial Chambers"
+      "trial_chambers": "Trial Chambers",
+      "ancient_city": "Ancient City",
+      "fortress": "Fortress"
     }
   },
 

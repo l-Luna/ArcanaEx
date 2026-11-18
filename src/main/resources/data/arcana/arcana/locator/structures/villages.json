@@ -1,0 +1,9 @@
+{
+  "input": {
+    "item": "minecraft:hay_block"
+  },
+  "destination": {
+    "type": "structure",
+    "structure": "#minecraft:village"
+  }
+}

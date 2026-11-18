@@ -1,0 +1,9 @@
+{
+  "input": {
+    "item": "minecraft:chiseled_deepslate"
+  },
+  "destination": {
+    "type": "structure",
+    "structure": "minecraft:ancient_city"
+  }
+}

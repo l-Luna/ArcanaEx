@@ -1,0 +1,9 @@
+{
+  "input": {
+    "item": "minecraft:vine"
+  },
+  "destination": {
+    "type": "biome",
+    "biome": "minecraft:swamp"
+  }
+}

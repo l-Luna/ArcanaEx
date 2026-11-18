@@ -7,6 +7,7 @@
     "arcana:biomes/savanna",
     "arcana:biomes/taiga",
     "arcana:biomes/jungle",
+    "arcana:biomes/swamp",
     "arcana:biomes/mangrove_swamp",
 
     "arcana:biomes/ocean",
@@ -24,10 +25,13 @@
     "arcana:structures/floral_archive",
     "arcana:structures/crimson_structures",
 
+    "arcana:structures/villages",
     "arcana:structures/pillager_outpost",
     "arcana:structures/trail_ruins",
     "arcana:structures/trial_chambers",
+    "arcana:structures/nether_fortress",
     "arcana:structures/bastion_remnant",
+    "arcana:structures/ancient_city",
     "arcana:structures/stronghold"
   ]
 }

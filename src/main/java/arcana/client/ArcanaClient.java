@@ -6,6 +6,7 @@ import arcana.ReflectivelyUtilized;
 import arcana.aspects.*;
 import arcana.blocks.ArcanaBlockSettings;
 import arcana.blocks.be.CrucibleBlockEntity;
+import arcana.blocks.be.WardedJarBlockEntity;
 import arcana.cca_components.Researcher;
 import arcana.client.ber.*;
 import arcana.client.entity.*;
@@ -114,6 +115,8 @@ public final class ArcanaClient implements ClientModInitializer{
 		ClientTickEvents.START_CLIENT_TICK.register(FocusSwitcherRenderer::tick);
 		
 		ModelLoadingPlugin.register(new WandModel.Provider());
+		BuiltinItemRendererRegistry.INSTANCE.register(ArcanaRegistry.WARDED_JAR, new WardedJarItemRenderer(ArcanaRegistry.WARDED_JAR.getDefaultState(), 128));
+		BuiltinItemRendererRegistry.INSTANCE.register(ArcanaRegistry.VOID_JAR, new WardedJarItemRenderer(ArcanaRegistry.VOID_JAR.getDefaultState(), 128));
 		
 		ModelLoadingPlugin.register(ctx -> {
 			ctx.addModels(arcId("item/crimson_leech_attacking"));
@@ -188,7 +191,7 @@ public final class ArcanaClient implements ClientModInitializer{
 		BlockEntityRendererRegistry.register(ArcanaRegistry.INFUSION_PILLAR_BE, ctx -> new InfusionPillarBlockEntityRenderer());
 		BlockEntityRendererRegistry.register(ArcanaRegistry.INFUSION_MATRIX_BE, ctx -> new InfusionMatrixBlockEntityRenderer());
 		BlockEntityRendererRegistry.register(ArcanaRegistry.WARDED_JAR_BE, ctx -> new WardedJarBlockEntityRenderer());
-		BlockEntityRendererRegistry.register(ArcanaRegistry.VOID_JAR_BE, ctx -> new WardedJarBlockEntityRenderer());
+		BlockEntityRendererRegistry.register(ArcanaRegistry.VOID_JAR_BE, (BlockEntityRendererFactory<WardedJarBlockEntity>)ctx -> new WardedJarBlockEntityRenderer());
 		BlockEntityRendererRegistry.register(ArcanaRegistry.MYSTIC_MIST_BE, ctx -> new MysticMistBlockEntityRenderer());
 		BlockEntityRendererRegistry.register(ArcanaRegistry.ESSENTIA_VALVE_BE, ctx -> new EssentiaValveBlockEntityRenderer());
 		BlockEntityRendererRegistry.register(ArcanaRegistry.ALEMBIC_BE, ctx -> new AlembicBlockEntityRenderer());

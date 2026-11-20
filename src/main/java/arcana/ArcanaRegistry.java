@@ -649,8 +649,8 @@ public final class ArcanaRegistry{
 	public static BlockEntityType<ArcaneLevitatorBlockEntity> ARCANE_LEVITATOR_BE = FabricBlockEntityTypeBuilder.create(ArcaneLevitatorBlockEntity::new, ARCANE_LEVITATOR).build();
 	public static BlockEntityType<InfusionPillarBlockEntity> INFUSION_PILLAR_BE = FabricBlockEntityTypeBuilder.create(InfusionPillarBlockEntity::new, INFUSION_PILLAR).build();
 	public static BlockEntityType<InfusionMatrixBlockEntity> INFUSION_MATRIX_BE = FabricBlockEntityTypeBuilder.create(InfusionMatrixBlockEntity::new, INFUSION_MATRIX).build();
-	public static BlockEntityType<WardedJarBlockEntity> WARDED_JAR_BE = FabricBlockEntityTypeBuilder.create((pos, state) -> new WardedJarBlockEntity(pos, state, false), WARDED_JAR).build();
-	public static BlockEntityType<WardedJarBlockEntity> VOID_JAR_BE = FabricBlockEntityTypeBuilder.create((pos, state) -> new WardedJarBlockEntity(pos, state, true), VOID_JAR).build();
+	public static BlockEntityType<WardedJarBlockEntity> WARDED_JAR_BE = FabricBlockEntityTypeBuilder.create(WardedJarBlockEntity::new, WARDED_JAR).build();
+	public static BlockEntityType<VoidJarBlockEntity> VOID_JAR_BE = FabricBlockEntityTypeBuilder.create(VoidJarBlockEntity::new, VOID_JAR).build();
 	public static BlockEntityType<CrystallizationPressBlockEntity> CRYSTALLIZATION_PRESS_BE = FabricBlockEntityTypeBuilder.create(CrystallizationPressBlockEntity::new, CRYSTALLIZATION_PRESS).build();
 	public static BlockEntityType<MysticMistBlockEntity> MYSTIC_MIST_BE = FabricBlockEntityTypeBuilder.create(MysticMistBlockEntity::new, MYSTIC_MIST).build();
 	public static BlockEntityType<WardedCampfireBlockEntity> WARDED_CAMPFIRE_BE = FabricBlockEntityTypeBuilder.create(WardedCampfireBlockEntity::new, WARDED_CAMPFIRE).build();

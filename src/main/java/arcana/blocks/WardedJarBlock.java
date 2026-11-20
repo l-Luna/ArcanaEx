@@ -2,8 +2,10 @@ package arcana.blocks;
 
 import arcana.api.AspectIo;
 import arcana.aspects.AspectStack;
+import arcana.blocks.be.VoidJarBlockEntity;
 import arcana.blocks.be.WardedJarBlockEntity;
 import arcana.blocks.tubes.EssentiaTubeBlock;
+import arcana.items.components.ArcanaDataComponents;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -11,12 +13,9 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.NbtComponent;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.text.Text;
@@ -80,7 +79,7 @@ public class WardedJarBlock extends BlockWithEntity implements AspectIo{
 	}
 	
 	public BlockEntity createBlockEntity(BlockPos pos, BlockState state){
-		return new WardedJarBlockEntity(pos, state, isVoidJar);
+		return isVoidJar ? new VoidJarBlockEntity(pos, state) : new WardedJarBlockEntity(pos, state);
 	}
 	
 	public BlockRenderType getRenderType(BlockState state){
@@ -90,10 +89,8 @@ public class WardedJarBlock extends BlockWithEntity implements AspectIo{
 	@Environment(EnvType.CLIENT)
 	public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType options){
 		super.appendTooltip(stack, context, tooltip, options);
-		NbtCompound nbt = stack.getOrDefault(DataComponentTypes.BLOCK_ENTITY_DATA, NbtComponent.DEFAULT).copyNbt();
-		if(nbt != null && nbt.contains("stored")){
-			AspectStack stored = AspectStack.fromNbt(nbt.getCompound("stored"));
+		AspectStack stored = stack.get(ArcanaDataComponents.STORED_SINGLE_ASPECT);
+		if(stored != null)
 			tooltip.add(Text.translatable("tooltip.arcana.wand.focus_cost.individual", stored.amount(), stored.type().name()));
-		}
 	}
 }

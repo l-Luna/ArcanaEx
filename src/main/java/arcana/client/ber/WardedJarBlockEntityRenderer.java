@@ -24,9 +24,9 @@ import static arcana.Arcana.arcId;
 
 public class WardedJarBlockEntityRenderer implements BlockEntityRenderer<WardedJarBlockEntity>{
 	
-	public static final Identifier topTexture = arcId("block/jar_fluid/top");
-	public static final Identifier sideTexture = arcId("block/jar_fluid/side");
-	public static final Identifier bottomTexture = arcId("block/jar_fluid/bottom");
+	public static final Identifier TOP_TEXTURE = arcId("block/jar_fluid/top");
+	public static final Identifier SIDE_TEXTURE = arcId("block/jar_fluid/side");
+	public static final Identifier BOTTOM_TEXTURE = arcId("block/jar_fluid/bottom");
 	
 	public void render(WardedJarBlockEntity entity,
 	                   float tickDelta,
@@ -37,58 +37,7 @@ public class WardedJarBlockEntityRenderer implements BlockEntityRenderer<WardedJ
 		AspectStack stack = entity.getStored();
 		if(stack != null){
 			// render liquid contents
-			Function<Identifier, Sprite> sprites = MinecraftClient.getInstance().getSpriteAtlas(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE);
-			Sprite top = sprites.apply(topTexture);
-			Sprite side = sprites.apply(sideTexture);
-			Sprite bottom = sprites.apply(bottomTexture);
-			
-			VertexConsumer cons = vcs.getBuffer(RenderLayer.getSolid());
-			int colour = stack.type().colour() + 0xFF000000;
-			float height = stack.amount() / 100f;
-			
-			matrices.push();
-			matrices.translate(.25, .075, .25);
-			matrices.scale(.5f, .6f * height, .5f);
-			
-			// top
-			vertex(cons, matrices, colour, 0, 1, 1, top, 0, 0.75f, light);
-			vertex(cons, matrices, colour, 1, 1, 1, top, 0.75f, 0.75f, light);
-			vertex(cons, matrices, colour, 1, 1, 0, top, 0.75f, 0, light);
-			vertex(cons, matrices, colour, 0, 1, 0, top, 0, 0, light);
-			
-			// bottom
-			vertex(cons, matrices, colour, 0, 0, 0, bottom, 0, 0, light);
-			vertex(cons, matrices, colour, 1, 0, 0, bottom, 0.75f, 0, light);
-			vertex(cons, matrices, colour, 1, 0, 1, bottom, 0.75f, 0.75f, light);
-			vertex(cons, matrices, colour, 0, 0, 1, bottom, 0, 0.75f, light);
-			
-			float heightU = 1-height;
-			
-			// east (+X) face
-			vertex(cons, matrices, colour, 1, 1, 0, side, 0, heightU, light);
-			vertex(cons, matrices, colour, 1, 1, 1, side, 0.75f, heightU, light);
-			vertex(cons, matrices, colour, 1, 0, 1, side, 0.75f, 1, light);
-			vertex(cons, matrices, colour, 1, 0, 0, side, 0, 1, light);
-			
-			// west (-X) face
-			vertex(cons, matrices, colour, 0, 1, 0, side, 0, heightU, light);
-			vertex(cons, matrices, colour, 0, 0, 0, side, 0, 1, light);
-			vertex(cons, matrices, colour, 0, 0, 1, side, 0.75f, 1, light);
-			vertex(cons, matrices, colour, 0, 1, 1, side, 0.75f, heightU, light);
-			
-			// north (-Z) face
-			vertex(cons, matrices, colour, 1, 0, 0, side, 0.75f, 1, light);
-			vertex(cons, matrices, colour, 0, 0, 0, side, 0, 1, light);
-			vertex(cons, matrices, colour, 0, 1, 0, side, 0, heightU, light);
-			vertex(cons, matrices, colour, 1, 1, 0, side, 0.75f, heightU, light);
-			
-			// south (+Z) face
-			vertex(cons, matrices, colour, 0, 0, 1, side, 0, 1, light);
-			vertex(cons, matrices, colour, 1, 0, 1, side, 0.75f, 1, light);
-			vertex(cons, matrices, colour, 1, 1, 1, side, 0.75f, heightU, light);
-			vertex(cons, matrices, colour, 0, 1, 1, side, 0, heightU, light);
-			
-			matrices.pop();
+			renderInner(matrices, vcs, light, stack, entity.getCapacity());
 			
 			// render pop-out aspect
 			ClientPlayerEntity player = MinecraftClient.getInstance().player;
@@ -98,7 +47,62 @@ public class WardedJarBlockEntityRenderer implements BlockEntityRenderer<WardedJ
 		}
 	}
 	
-	private void vertex(VertexConsumer cons, MatrixStack ms, int colour, float x, float y, float z, Sprite sprite, float uFrac, float vFrac, int light){
+	public static void renderInner(MatrixStack matrices, VertexConsumerProvider vcs, int light, AspectStack stack, int capacity){
+		Function<Identifier, Sprite> sprites = MinecraftClient.getInstance().getSpriteAtlas(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE);
+		Sprite top = sprites.apply(TOP_TEXTURE);
+		Sprite side = sprites.apply(SIDE_TEXTURE);
+		Sprite bottom = sprites.apply(BOTTOM_TEXTURE);
+		
+		VertexConsumer cons = vcs.getBuffer(RenderLayer.getSolid());
+		int colour = stack.type().colour() + 0xFF000000;
+		float height = (float)stack.amount() / capacity;
+		
+		matrices.push();
+		matrices.translate(.25, .075, .25);
+		matrices.scale(.5f, .6f * height, .5f);
+		
+		// top
+		vertex(cons, matrices, colour, 0, 1, 1, top, 0, 0.75f, light);
+		vertex(cons, matrices, colour, 1, 1, 1, top, 0.75f, 0.75f, light);
+		vertex(cons, matrices, colour, 1, 1, 0, top, 0.75f, 0, light);
+		vertex(cons, matrices, colour, 0, 1, 0, top, 0, 0, light);
+		
+		// bottom
+		vertex(cons, matrices, colour, 0, 0, 0, bottom, 0, 0, light);
+		vertex(cons, matrices, colour, 1, 0, 0, bottom, 0.75f, 0, light);
+		vertex(cons, matrices, colour, 1, 0, 1, bottom, 0.75f, 0.75f, light);
+		vertex(cons, matrices, colour, 0, 0, 1, bottom, 0, 0.75f, light);
+		
+		float heightU = 1-height;
+		
+		// east (+X) face
+		vertex(cons, matrices, colour, 1, 1, 0, side, 0, heightU, light);
+		vertex(cons, matrices, colour, 1, 1, 1, side, 0.75f, heightU, light);
+		vertex(cons, matrices, colour, 1, 0, 1, side, 0.75f, 1, light);
+		vertex(cons, matrices, colour, 1, 0, 0, side, 0, 1, light);
+		
+		// west (-X) face
+		vertex(cons, matrices, colour, 0, 1, 0, side, 0, heightU, light);
+		vertex(cons, matrices, colour, 0, 0, 0, side, 0, 1, light);
+		vertex(cons, matrices, colour, 0, 0, 1, side, 0.75f, 1, light);
+		vertex(cons, matrices, colour, 0, 1, 1, side, 0.75f, heightU, light);
+		
+		// north (-Z) face
+		vertex(cons, matrices, colour, 1, 0, 0, side, 0.75f, 1, light);
+		vertex(cons, matrices, colour, 0, 0, 0, side, 0, 1, light);
+		vertex(cons, matrices, colour, 0, 1, 0, side, 0, heightU, light);
+		vertex(cons, matrices, colour, 1, 1, 0, side, 0.75f, heightU, light);
+		
+		// south (+Z) face
+		vertex(cons, matrices, colour, 0, 0, 1, side, 0, 1, light);
+		vertex(cons, matrices, colour, 1, 0, 1, side, 0.75f, 1, light);
+		vertex(cons, matrices, colour, 1, 1, 1, side, 0.75f, heightU, light);
+		vertex(cons, matrices, colour, 0, 1, 1, side, 0, heightU, light);
+		
+		matrices.pop();
+	}
+	
+	private static void vertex(VertexConsumer cons, MatrixStack ms, int colour, float x, float y, float z, Sprite sprite, float uFrac, float vFrac, int light){
 		cons.vertex(ms.peek().getPositionMatrix(), x, y, z)
 				.color(colour)
 				.texture(MathHelper.lerp(uFrac, sprite.getMinU(), sprite.getMaxU()), MathHelper.lerp(vFrac, sprite.getMinV(), sprite.getMaxV()))

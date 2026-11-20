@@ -55,11 +55,11 @@
         "is_savanna": "Savannas",
         "is_taiga": "Taigas",
         "is_jungle": "Jungles",
-        "oceans": "Oceans"
+        "is_ocean": "Oceans"
       },
       "c": {
         "is_birch_forest": "Birch Forests",
-        "desert": "Deserts"
+        "is_desert": "Deserts"
       }
     },
     "structure": {

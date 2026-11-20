@@ -4,6 +4,6 @@
   },
   "destination": {
     "type": "biome",
-    "biome": "#c:desert"
+    "biome": "#c:is_desert"
   }
 }

@@ -91,7 +91,7 @@ dependencies {
 	modImplementation "software.bernie.geckolib:geckolib-fabric-1.21.1:${geckolib_version}"
 	modImplementation "com.terraformersmc:biolith-fabric:${biolith_version}"
 
-	for(String lib39_module : ["core", "dessicant", "phantom", "tunnel", "weld"])
+	for(String lib39_module : ["core", "dessicant", "phantom", "tunnel", "weld", "lockpick"])
 		modApi include("com.unascribed:lib39-${lib39_module}:${lib39_version}+${minecraft_version}"){
 			exclude(group: "net.fabricmc.fabric-api")
 			exclude(group: "net.fabricmc", module: "fabric-loader")

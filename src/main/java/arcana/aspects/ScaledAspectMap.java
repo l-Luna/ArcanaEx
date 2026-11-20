@@ -21,6 +21,10 @@ public record ScaledAspectMap(AspectMap underlying, float scale){
 			underlying.set(aspect, (int)Math.floor((get(aspect) * multiplier.apply(aspect)) / scale));
 	}
 	
+	public void addCapped(Aspect aspect, float amount, float cap){
+		underlying.addCapped(aspect, (int)Math.floor(amount / scale), (int)Math.floor(cap / scale));
+	}
+	
 	// everything else is implemented in terms of the above
 	
 	public void add(AspectStack stack){
@@ -67,11 +71,12 @@ public record ScaledAspectMap(AspectMap underlying, float scale){
 		return other.underlying.aspectSet().stream().allMatch(x -> contains(x, other.get(x)));
 	}
 	
-	public void addCapped(Aspect aspect, float amount, float cap){
-		add(aspect, Math.max(0, amount + Math.min(0, cap - get(aspect) - amount)));
-	}
-	
 	public void addCapped(AspectStack stack, int cap){
 		addCapped(stack.type(), stack.amount(), cap);
+	}
+	
+	public void addCapped(ScaledAspectMap map, float cap){
+		for(Aspect aspect : map.underlying.aspectSet())
+			addCapped(aspect, map.get(aspect), cap);
 	}
 }

@@ -4,6 +4,6 @@
   },
   "destination": {
     "type": "biome",
-    "biome": "#minecraft:oceans"
+    "biome": "#minecraft:is_ocean"
   }
 }

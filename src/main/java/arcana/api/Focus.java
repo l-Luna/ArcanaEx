@@ -1,6 +1,5 @@
 package arcana.api;
 
-import arcana.aspects.Aspect;
 import arcana.aspects.AspectMap;
 import arcana.aspects.ScaledAspectMap;
 import arcana.items.WandItem;
@@ -79,10 +78,7 @@ public interface Focus{
 		}
 		
 		public void recharge(ScaledAspectMap added){
-			WandItem.updateAspects(wand, stored -> {
-				for(Aspect aspect : added.underlying().aspectSet())
-					stored.addCapped(aspect, added.get(aspect), WandItem.capacity(wand));
-			});
+			WandItem.updateAspects(wand, stored -> stored.addCapped(added, WandItem.capacity(wand)));
 		}
 		
 		public void stop(){

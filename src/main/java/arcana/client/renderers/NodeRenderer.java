@@ -25,6 +25,7 @@ import net.minecraft.util.math.Position;
 import net.minecraft.util.math.RotationAxis;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.WorldChunk;
 import org.joml.Matrix4f;
 import org.joml.Matrix4fStack;
 import org.joml.Quaternionf;
@@ -70,11 +71,12 @@ public final class NodeRenderer{
 		Camera camera = context.camera();
 		ClientWorld world = context.world();
 		
+		context.profiler().push("gather");
 		AuraWorld auraWorld = AuraWorld.from(world);
-		List<Node> allVisible = ((LoadedChunksCache)world).fabric_getLoadedChunks().stream()
-				.map(AuraChunk::from)
-				.flatMap(x -> x.nodes().stream())
-				.toList();
+		List<Node> allVisible = new ArrayList<>();
+		for(WorldChunk chunk : ((LoadedChunksCache)world).fabric_getLoadedChunks())
+			allVisible.addAll(AuraChunk.from(chunk).nodes());
+		context.profiler().pop();
 		
 		Map<NodeType, List<Node>> nodesByType = new HashMap<>();
 		for(Node node : allVisible)

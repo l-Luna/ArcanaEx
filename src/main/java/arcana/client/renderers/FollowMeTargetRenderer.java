@@ -46,6 +46,8 @@ public class FollowMeTargetRenderer{
 		if(!world.getRegistryKey().getValue().equals(target.world()))
 			return;
 		
+		context.profiler().push("arcana:follow_me_target");
+		
 		// reset temp data when a new target is chosen
 		if(lastTarget == null || lastTarget.get() != target){
 			lastTarget = new WeakReference<>(target);
@@ -120,5 +122,7 @@ public class FollowMeTargetRenderer{
 			NodeRenderer.drawQuad(context.camera(), markerPos, new Vector3f(-0.5f + ArcanaClient.osc2(3, i / 3f) * 0.06f, -0.5f + ArcanaClient.osc2(3, 0.25f + i / 3f) * 0.06f, -0.5f), buffer, 0.45f / (i + 1) + 0.2f, 1, 0, 1, 1, LightmapTextureManager.MAX_LIGHT_COORDINATE);
 		RenderHelper.drawBuffer(buffer);
 		RenderSystem.enableDepthTest();
+		
+		context.profiler().pop();
 	}
 }

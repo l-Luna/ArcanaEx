@@ -21,12 +21,14 @@ public final class ZoneEffects{
 	private static final Object2FloatMap<Zone> cameraZoneDensities = new Object2FloatOpenHashMap<>();
 	
 	public static void onFrameStart(WorldRenderContext ctx){
+		ctx.profiler().push("arcana:gather_zones");
 		cameraZoneDensities.clear();
 		for(Zone zone : Zone.getRegistry(ctx.world())){
 			float density = Zones.getZoneDensity(ctx.world(), zone, ctx.camera().getPos());
 			if(density > 0)
 				cameraZoneDensities.put(zone, density);
 		}
+		ctx.profiler().pop();
 	}
 	
 	//

@@ -32,6 +32,7 @@ import arcana.world.Taint;
 import arcana.world.zones.DensityProvider;
 import arcana.world.zones.Zone;
 import arcana.world.zones.density.InfestationDensityProvider;
+import arcana.world.zones.density.NodeProximityDensityProvider;
 import arcana.worldgen.ArcanaFeatures;
 import arcana.worldgen.ArcanaOverworldBiomes;
 import com.unascribed.lib39.dessicant.api.DessicantControl;
@@ -91,6 +92,7 @@ public final class Arcana implements ModInitializer{
 		
 		DynamicRegistries.registerSynced(Zone.REGISTRY_KEY, Zone.DIRECT_CODEC);
 		DensityProvider.TYPES.put("infestation", InfestationDensityProvider.CODEC);
+		DensityProvider.TYPES.put("node_proximity", NodeProximityDensityProvider.CODEC);
 		
 		Research.setup();
 		WarpEvents.setup();

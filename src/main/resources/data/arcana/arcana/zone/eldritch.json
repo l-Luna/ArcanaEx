@@ -1,0 +1,13 @@
+{
+  "density_provider": {
+    "type": "node_proximity",
+    "node_type": "arcana:eldritch",
+    "max_distance": 32,
+    "ease": "quad_in_out"
+  },
+  "effects": {
+    "fog_color": [0.5, 0.5, 0.5],
+    "fog_distance": 0.8,
+    "light_color": [-0.07, -0.07, -0.07]
+  }
+}

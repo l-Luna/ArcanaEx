@@ -1,4 +1,4 @@
-package arcana.aura;
+package arcana.world;
 
 import arcana.cca_components.ChunkLayer;
 import arcana.util.MathUtil;

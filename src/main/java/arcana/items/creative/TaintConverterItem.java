@@ -1,11 +1,11 @@
 package arcana.items.creative;
 
 import arcana.ArcanaRegistry;
-import arcana.aura.InfestedChunk;
-import arcana.aura.Taint;
 import arcana.client.particles.CubeParticleEffect;
 import arcana.client.particles.CubeParticleStyle;
 import arcana.items.components.ArcanaDataComponents;
+import arcana.world.InfestedChunk;
+import arcana.world.Taint;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

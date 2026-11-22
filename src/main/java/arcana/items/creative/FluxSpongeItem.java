@@ -1,6 +1,6 @@
 package arcana.items.creative;
 
-import arcana.aura.AuraChunk;
+import arcana.world.AuraChunk;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

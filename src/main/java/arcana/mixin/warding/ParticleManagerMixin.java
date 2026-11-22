@@ -1,10 +1,10 @@
 package arcana.mixin.warding;
 
 import arcana.ArcanaRegistry;
-import arcana.aura.InfestedChunk;
-import arcana.aura.WardedChunk;
 import arcana.client.particles.CubeParticleEffect;
 import arcana.client.particles.CubeParticleStyle;
+import arcana.world.InfestedChunk;
+import arcana.world.WardedChunk;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;

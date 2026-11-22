@@ -1,7 +1,6 @@
 package arcana;
 
 import arcana.aspects.ItemAspectRegistry;
-import arcana.aura.Taint;
 import arcana.blocks.WardedCampfireBlock;
 import arcana.commands.ArcanaCommands;
 import arcana.duck.ArcanaPlayerEntity;
@@ -29,6 +28,10 @@ import arcana.research.ResearchLoader;
 import arcana.util.InventoryUtil;
 import arcana.util.RegistryMappingLoader;
 import arcana.warp.WarpEvents;
+import arcana.world.Taint;
+import arcana.world.zones.DensityProvider;
+import arcana.world.zones.Zone;
+import arcana.world.zones.density.InfestationDensityProvider;
 import arcana.worldgen.ArcanaFeatures;
 import arcana.worldgen.ArcanaOverworldBiomes;
 import com.unascribed.lib39.dessicant.api.DessicantControl;
@@ -85,6 +88,9 @@ public final class Arcana implements ModInitializer{
 		Destination.TYPES.put("structure", StructureDestination.CODEC);
 		Destination.TYPES.put("node", NodeDestination.CODEC);
 		Destination.TYPES.put("exploration_map_target", ExplorerMapTargetDestination.CODEC);
+		
+		DynamicRegistries.registerSynced(Zone.REGISTRY_KEY, Zone.DIRECT_CODEC);
+		DensityProvider.TYPES.put("infestation", InfestationDensityProvider.CODEC);
 		
 		Research.setup();
 		WarpEvents.setup();

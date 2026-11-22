@@ -1,10 +1,10 @@
 package arcana.mixin;
 
 import arcana.Arcana;
-import arcana.aura.AuraWorld;
-import arcana.aura.Node;
-import arcana.aura.NodeType;
-import arcana.aura.NodeTypes;
+import arcana.world.AuraWorld;
+import arcana.world.Node;
+import arcana.world.NodeType;
+import arcana.world.NodeTypes;
 import com.unascribed.lib39.core.mixinsupport.AutoMixinEligible;
 import net.minecraft.structure.StructureTemplate;
 import net.minecraft.util.BlockMirror;

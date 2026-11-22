@@ -2,10 +2,10 @@ package arcana.entities;
 
 import arcana.ArcanaRegistry;
 import arcana.aspects.Aspects;
-import arcana.aura.AuraWorld;
-import arcana.aura.FluxOrigin;
-import arcana.aura.InfestedChunk;
-import arcana.aura.Taint;
+import arcana.world.AuraWorld;
+import arcana.world.FluxOrigin;
+import arcana.world.InfestedChunk;
+import arcana.world.Taint;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity;

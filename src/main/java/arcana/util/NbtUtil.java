@@ -1,6 +1,6 @@
 package arcana.util;
 
-import arcana.aura.NodeReference;
+import arcana.world.NodeReference;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;

@@ -2,11 +2,11 @@ package arcana.research;
 
 import arcana.ArcanaRegistry;
 import arcana.ArcanaTags;
-import arcana.aura.AuraChunk;
-import arcana.aura.AuraWorld;
-import arcana.aura.Node;
-import arcana.aura.NodeTypes;
 import arcana.cca_components.Researcher;
+import arcana.world.AuraChunk;
+import arcana.world.AuraWorld;
+import arcana.world.Node;
+import arcana.world.NodeTypes;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;

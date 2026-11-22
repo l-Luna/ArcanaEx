@@ -1,6 +1,6 @@
 package arcana.mixin.warding;
 
-import arcana.aura.WardedChunk;
+import arcana.world.WardedChunk;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NbtCompound;

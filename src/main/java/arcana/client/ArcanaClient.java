@@ -19,6 +19,7 @@ import arcana.client.research.sections.TextSectionRenderer;
 import arcana.client.tooltip.ItemAspectsTooltipComponent;
 import arcana.client.tooltip.MagicMirrorTooltipComponent;
 import arcana.client.tooltip.WandAspectsTooltipComponent;
+import arcana.client.zones.ZoneEffects;
 import arcana.fluids.ArcanaFluid;
 import arcana.items.MagicMirrorTooltipData;
 import arcana.items.components.ArcanaDataComponents;
@@ -103,6 +104,7 @@ public final class ArcanaClient implements ClientModInitializer{
 				lines.add(1, Text.translatable("tooltip.arcana.fragile").formatted(Formatting.GRAY));
 		});
 		
+		WorldRenderEvents.START.register(ZoneEffects::onFrameStart);
 		WorldRenderEvents.LAST.register(NodeRenderer::render);
 		WorldRenderEvents.LAST.register(FollowMeTargetRenderer::render);
 		WorldRenderEvents.BEFORE_BLOCK_OUTLINE.register((ctx1, hit) -> {

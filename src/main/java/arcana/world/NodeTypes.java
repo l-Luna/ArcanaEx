@@ -1,4 +1,4 @@
-package arcana.aura;
+package arcana.world;
 
 import arcana.Arcana;
 import arcana.ArcanaDamageSources;

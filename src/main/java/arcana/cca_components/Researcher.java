@@ -1,13 +1,13 @@
 package arcana.cca_components;
 
 import arcana.api.WarpingItem;
-import arcana.aura.AuraWorld;
-import arcana.aura.NodeTypes;
 import arcana.enchantments.ArcanaEnchantmentComponents;
 import arcana.items.FocusItem;
 import arcana.research.*;
 import arcana.util.InventoryUtil;
 import arcana.util.NbtUtil;
+import arcana.world.AuraWorld;
+import arcana.world.NodeTypes;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentLevelBasedValue;

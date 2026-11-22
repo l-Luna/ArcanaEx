@@ -1,8 +1,8 @@
 package arcana.worldgen.vegetation;
 
-import arcana.aura.AuraWorld;
-import arcana.aura.Node;
-import arcana.aura.NodeTypes;
+import arcana.world.AuraWorld;
+import arcana.world.Node;
+import arcana.world.NodeTypes;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.block.BlockState;

@@ -12,15 +12,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Heightmap;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 
 public interface Destination{
 	
 	BiMap<String, MapCodec<? extends Destination>> TYPES = HashBiMap.create();
-	Codec<Destination> TYPE_CODEC = Codec.STRING
-			.<MapCodec<? extends Destination>>xmap(key -> Objects.requireNonNull(TYPES.get(key)), Objects.requireNonNull(TYPES.inverse()::get))
+	Codec<Destination> TYPE_CODEC = Codec
+			.<MapCodec<? extends Destination>>stringResolver(TYPES.inverse()::get, TYPES::get)
 			.dispatch(Destination::getCodec, Function.identity());
 	
 	MapCodec<? extends Destination> getCodec();

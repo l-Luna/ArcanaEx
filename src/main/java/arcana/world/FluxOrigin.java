@@ -1,4 +1,4 @@
-package arcana.aura;
+package arcana.world;
 
 import arcana.ArcanaRegistry;
 import net.minecraft.item.ItemConvertible;

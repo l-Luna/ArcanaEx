@@ -1,4 +1,4 @@
-package arcana.aura;
+package arcana.world;
 
 import arcana.util.NbtUtil;
 import net.minecraft.nbt.NbtCompound;

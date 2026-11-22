@@ -1,7 +1,7 @@
 package arcana.items.foci.follow_me;
 
-import arcana.aura.AuraWorld;
-import arcana.aura.Node;
+import arcana.world.AuraWorld;
+import arcana.world.Node;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

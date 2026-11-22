@@ -1,6 +1,6 @@
 package arcana.mixin.zones;
 
-import arcana.client.ZoneEffects;
+import arcana.client.zones.ZoneEffects;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -15,6 +15,6 @@ public class LightmapTextureManagerMixin{
 
 	@ModifyReturnValue(method = "getDarkness", at = @At("RETURN"))
 	float applyZoneLightModifier(float original, LivingEntity entity, float factor, float delta){
-		return original - ZoneEffects.lightModifier(entity.getWorld(), entity.getEyePos());
+		return original - ZoneEffects.lightModifierAtCamera();
 	}
 }

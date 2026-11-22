@@ -2,7 +2,7 @@ package arcana.blocks;
 
 import arcana.ArcanaDamageSources;
 import arcana.ArcanaRegistry;
-import arcana.aura.AuraChunk;
+import arcana.world.AuraChunk;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;

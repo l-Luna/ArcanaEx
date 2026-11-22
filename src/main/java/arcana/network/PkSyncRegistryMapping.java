@@ -1,9 +1,9 @@
 package arcana.network;
 
 import arcana.ReflectivelyUtilized;
-import arcana.aura.Taint;
 import arcana.enchantments.LootSwapEffect;
 import arcana.util.RegistryMapping;
+import arcana.world.Taint;
 import com.unascribed.lib39.tunnel.api.NetworkContext;
 import com.unascribed.lib39.tunnel.api.S2CMessage;
 import com.unascribed.lib39.tunnel.api.annotation.field.MarshalledAs;

@@ -1,9 +1,9 @@
 package arcana.cca_components;
 
-import arcana.aura.AuraChunk;
-import arcana.aura.AuraWorld;
-import arcana.aura.InfestedChunk;
-import arcana.aura.WardedChunk;
+import arcana.world.AuraChunk;
+import arcana.world.AuraWorld;
+import arcana.world.InfestedChunk;
+import arcana.world.WardedChunk;
 import net.minecraft.entity.projectile.ArrowEntity;
 import org.ladysnake.cca.api.v3.chunk.ChunkComponentFactoryRegistry;
 import org.ladysnake.cca.api.v3.chunk.ChunkComponentInitializer;

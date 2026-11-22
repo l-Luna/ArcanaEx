@@ -1,4 +1,4 @@
-package arcana.aura;
+package arcana.world;
 
 import arcana.aspects.Aspect;
 import arcana.aspects.AspectMap;

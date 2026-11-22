@@ -1,0 +1,17 @@
+{
+  "density_provider": {
+    "type": "infestation"
+  },
+  "effects": {
+    "sky_color": [1, 0.4, 1],
+    "fog_color": [0.1, 0, 0.1],
+    "fog_distance": 0.1,
+    "light_color": [-0.15, -0.15, -0.15],
+    "ambient_particle": {
+      "options": {
+        "type": "arcana:taint_spore"
+      },
+      "probability": 0.03
+    }
+  }
+}

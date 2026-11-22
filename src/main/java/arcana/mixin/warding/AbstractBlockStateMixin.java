@@ -1,7 +1,7 @@
 package arcana.mixin.warding;
 
-import arcana.aura.InfestedChunk;
-import arcana.aura.WardedChunk;
+import arcana.world.InfestedChunk;
+import arcana.world.WardedChunk;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;

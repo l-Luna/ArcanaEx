@@ -1,4 +1,4 @@
-package arcana.aura;
+package arcana.world;
 
 import arcana.util.NbtUtil;
 import com.unascribed.lib39.tunnel.api.ImmutableMarshallable;

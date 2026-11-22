@@ -1,7 +1,7 @@
 package arcana.items.creative;
 
-import arcana.aura.AuraWorld;
-import arcana.aura.Node;
+import arcana.world.AuraWorld;
+import arcana.world.Node;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

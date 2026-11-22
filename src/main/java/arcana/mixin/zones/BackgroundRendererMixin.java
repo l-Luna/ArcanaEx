@@ -1,6 +1,6 @@
 package arcana.mixin.zones;
 
-import arcana.client.ZoneEffects;
+import arcana.client.zones.ZoneEffects;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.api.EnvType;
@@ -22,16 +22,16 @@ public class BackgroundRendererMixin{
 	                       at = @At(value = "INVOKE",
 	                                target = "Lnet/minecraft/util/CubicSampler;sampleColor(Lnet/minecraft/util/math/Vec3d;Lnet/minecraft/util/CubicSampler$RgbFetcher;)Lnet/minecraft/util/math/Vec3d;"))
 	private static Vec3d applyZoneFogColour(Vec3d original, Camera camera, float tickDelta, ClientWorld world, int viewDistance, float skyDarkness){
-		return ZoneEffects.fogColour(original, world, camera.getPos());
+		return ZoneEffects.fogColourAtCamera(original);
 	}
 	
 	@Inject(method = "applyFog",
 	        at = @At("TAIL"))
 	private static void applyZoneFogDensity(Camera camera, BackgroundRenderer.FogType fogType, float viewDistance, boolean thickFog, float tickDelta, CallbackInfo ci){
 		if(camera.getFocusedEntity() != null){
-			float density = ZoneEffects.fogDensity(camera.getFocusedEntity().getWorld(), camera.getPos());
-			RenderSystem.setShaderFogStart(RenderSystem.getShaderFogStart() * density);
-			RenderSystem.setShaderFogEnd(RenderSystem.getShaderFogEnd() * density);
+			float distance = ZoneEffects.fogDistanceAtCamera();
+			RenderSystem.setShaderFogStart(RenderSystem.getShaderFogStart() * distance);
+			RenderSystem.setShaderFogEnd(RenderSystem.getShaderFogEnd() * distance);
 		}
 	}
 }

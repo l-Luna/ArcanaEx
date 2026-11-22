@@ -1,10 +1,10 @@
 package arcana.client.research.sections;
 
 import arcana.Arcana;
-import arcana.aura.AuraWorld;
-import arcana.aura.FluxOrigin;
 import arcana.client.research.EntrySectionRenderer;
 import arcana.research.sections.FluxStatsSection;
+import arcana.world.AuraWorld;
+import arcana.world.FluxOrigin;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;

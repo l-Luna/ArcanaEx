@@ -1,10 +1,10 @@
 package arcana.blocks.be;
 
 import arcana.ArcanaRegistry;
-import arcana.aura.AuraWorld;
-import arcana.aura.FluxOrigin;
 import arcana.blocks.ArcaneLevitatorBlock;
 import arcana.duck.ArcanaPushableEntity;
+import arcana.world.AuraWorld;
+import arcana.world.FluxOrigin;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;

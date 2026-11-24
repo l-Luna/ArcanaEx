@@ -40,6 +40,7 @@ import arcana.util.RandomChanceOnceLootCondition;
 import arcana.util.TagGiftLootEntry;
 import arcana.worldgen.nodes.HangingNodeFeature;
 import arcana.worldgen.nodes.SurfaceNodeFeature;
+import arcana.worldgen.structure.WardStructureProcessor;
 import arcana.worldgen.underground.ColumnFeature;
 import arcana.worldgen.underground.ExposedPlacementModifier;
 import arcana.worldgen.underground.NodalGeodeFeature;
@@ -95,6 +96,7 @@ import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
+import net.minecraft.structure.processor.StructureProcessorType;
 import net.minecraft.text.Text;
 import net.minecraft.util.ColorCode;
 import net.minecraft.util.Rarity;
@@ -1376,6 +1378,8 @@ public final class ArcanaRegistry{
 		
 		registerPlacementModifier("exposed", ExposedPlacementModifier.TYPE);
 		
+		registerStructureProcessor("ward", WardStructureProcessor.TYPE);
+		
 		// particle types
 		registerParticleType("taint_bubble", TAINT_BUBBLE);
 		registerParticleType("flame", FLAME);
@@ -1494,6 +1498,10 @@ public final class ArcanaRegistry{
 	
 	private static void registerPlacementModifier(String name, PlacementModifierType<?> placementMod){
 		Registry.register(Registries.PLACEMENT_MODIFIER_TYPE, arcId(name), placementMod);
+	}
+	
+	private static void registerStructureProcessor(String name, StructureProcessorType<?> processor){
+		Registry.register(Registries.STRUCTURE_PROCESSOR, arcId(name), processor);
 	}
 	
 	private static void registerParticleType(String name, ParticleType<?> particleType){

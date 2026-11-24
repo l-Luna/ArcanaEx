@@ -9,7 +9,15 @@
         "projection": "rigid",
         "processors": [
           {
-            "processor_type": "arcana:ward"
+            "processor_type": "arcana:ward",
+            "whitelist": [
+              "arcana:arcane_stone",
+              "arcana:arcane_stone_bricks",
+              "arcana:arcane_stone_tiles",
+              "arcana:arcane_stone_gleaming_tiles",
+              "arcana:arcane_stone_inscribed_tiles",
+              "minecraft:tinted_glass"
+            ]
           }
         ]
       }

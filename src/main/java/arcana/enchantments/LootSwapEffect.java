@@ -60,14 +60,14 @@ public record LootSwapEffect(EnchantmentLevelBasedValue chance, Identifier mappi
 	public static void processStack(LootSwapEffect enchantment, Random rng, int level, ItemStack in, Consumer<ItemStack> out){
 		// TODO: allow custom ones
 		RegistryMapping<Item> mapping = enchantment.mapping().equals(arcId("purifying")) ? PURIFYING_MAP :
-				enchantment.mapping().equals(arcId("purifying")) ? PURIFYING_MAP :
+				enchantment.mapping().equals(arcId("transmutative")) ? TRANSMUTATIVE_MAP :
 				null;
 		if(mapping == null){
 			out.accept(in);
 			return;
 		}
 		Item targetItem = mapping.apply(in.getItem()).orElse(null);
-		float chance = level * enchantment.chance.getValue(level);
+		float chance = enchantment.chance.getValue(level);
 		if(targetItem != null){
 			if(chance >= 1)
 				out.accept(new ItemStack(targetItem, in.getCount()));
